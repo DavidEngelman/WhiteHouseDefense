@@ -1,0 +1,18 @@
+Diagrammes de classe:
+
+Catégories:
+
+jeu
+profils
+chat
+login/authentification
+servers
+client
+interface/GUI
+
+
+
+Use Case:
+re-utiliser les besoins fonctionnels de l'utilisateur
+
+
