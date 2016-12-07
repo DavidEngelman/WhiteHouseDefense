@@ -16,3 +16,17 @@ Use Case:
 re-utiliser les besoins fonctionnels de l'utilisateur
 
 
+
+
+Acteurs: 
+Joueur
+Serveur?
+
+
+Sequence:
+
+
+
+Activité:
+
+
