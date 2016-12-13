@@ -1,0 +1,14 @@
+Diagrammes de séquence:
+
+login
+register
+lancement d'une partie (dont matchmaking)
+chat
+gestion de liste amis (ajout & suppression)
+déroulement d'une partie
+
+?? voir/modifier profil
+?? voir classements
+
+
+
