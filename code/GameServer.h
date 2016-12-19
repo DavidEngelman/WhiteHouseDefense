@@ -7,5 +7,5 @@ public:
 
 	void parseCommands(int changes);
 
-	void sendGameState(int gameState);
+	void sendGameState(gameState);
 };

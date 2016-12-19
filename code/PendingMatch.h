@@ -2,7 +2,7 @@ class PendingMatch {
 
 
 public:
-	void addPlayer(int client);
+	void addPlayer(string client);
 
-	void isMatchFull();
+	bool isMatchFull();
 };

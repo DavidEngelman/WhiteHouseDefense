@@ -4,5 +4,5 @@ class ChatServer : Server {
 public:
 	void getNewMessageRequests();
 
-	void broadcast(int message);
+	void broadcast(Message message);
 };

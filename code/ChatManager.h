@@ -6,7 +6,7 @@ private:
 public:
 	void getMessages();
 
-	void sendMessageToServer(int message);
+	void sendMessageToServer(Message message);
 
-	void getNewMessagesFromServer();
+	Message[] getNewMessagesFromServer();
 };

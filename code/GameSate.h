@@ -2,7 +2,7 @@ class GameSate {
 
 
 public:
-	void applyChanges(int changes);
+	void applyChanges(changes);
 
 	void updateGameState(int commands);
 };

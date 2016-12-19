@@ -5,11 +5,11 @@ private:
 	int coord_y;
 
 public:
-	void getCoord_x();
+	int getCoord_x();
 
 	void setCoord_x(int coord_x);
 
-	void getCoord_y();
+	int getCoord_y();
 
 	void setCoord_y(int coord_y);
 };

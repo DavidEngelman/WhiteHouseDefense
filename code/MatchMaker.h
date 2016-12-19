@@ -1,13 +1,13 @@
 class MatchMaker : Server {
 
-public:
+private:
 	int pendingMatches;
+
+public:
 
 	void getNewClients();
 
-	void getPendingMatch(int mode);
+	void getPendingMatches(string mode);
 
-	void getPendingMatches();
-
-	void setPendingMatches(int pendingMatches);
+	void addPendingMatch(string mode);
 };

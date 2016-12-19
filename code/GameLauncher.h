@@ -2,5 +2,5 @@ class GameLauncher {
 
 
 public:
-	void sendJoinRequest(int account);
+	void sendJoinRequest(string account);
 };

@@ -1,10 +1,10 @@
 class FriendList {
 
 private:
-	string friends;
+	string[] friends;
 
 public:
-	void addFriend(int username);
+	void addFriend(string username);
 
-	void removeFriend(int username);
+	void removeFriend(string username);
 };

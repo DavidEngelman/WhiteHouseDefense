@@ -4,7 +4,7 @@ private:
 	FriendListUI friendListUI;
 
 public:
-	void addFriend(int username);
+	void addFriend(string username);
 
-	void deleteFriend(int username);
+	void deleteFriend(string username);
 };

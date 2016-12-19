@@ -4,7 +4,7 @@ private:
 	LoginUI loginUI;
 
 public:
-	void attemptLogin(int name, int password);
+	void attemptLogin(string name, string password);
 
-	void checkCredentialsValidity(int name, int password);
+	void checkCredentialsValidity(string name, string password);
 };

@@ -4,7 +4,7 @@ private:
 	RegisterUI registerUI;
 
 public:
-	void attemptRegister(int name, int password);
+	void attemptRegister(string name, string password);
 
-	void checkCredentialsValidity(int name, int password);
+	bool checkCredentialsValidity(string name, string password);
 };

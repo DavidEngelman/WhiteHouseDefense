@@ -3,8 +3,8 @@ class PlayerState {
 private:
 	int hp;
 	int money;
-	boolean isSupported;
-	boolean isWinner;
+	bool isSupported;
+	bool isWinner;
 	Account account;
 
 public:
@@ -18,11 +18,11 @@ public:
 
 	void getIsSupported();
 
-	void setIsSupported(int isSupported);
+	void setIsSupported(bool isSupported);
 
 	void getIsWinner();
 
-	void setIsWinner(int isWinner);
+	void setIsWinner(bool isWinner);
 
 	void getAccount();
 

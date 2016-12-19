@@ -2,7 +2,7 @@ class AccountServer : Server {
 
 
 public:
-	void attemptCreateAccount(int name, int password);
+	void attemptCreateAccount(string name, string password);
 
-	void checkCredentials(int name, int password);
+	void checkCredentials(string name, string password);
 };

@@ -4,7 +4,7 @@ class GameUI {
 public:
 	void getUserCommands();
 
-	void draw(int gameState);
+	void draw(gameState);
 
 	void showNoInternetError();
 

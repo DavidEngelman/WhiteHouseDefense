@@ -10,11 +10,11 @@ private:
 public:
 	string getUsername();
 
-	void setUsername(int username);
+	void setUsername(string username);
 
 	FriendList getFriendList();
 
-	void setFriendList(int friendList);
+	void setFriendList(FriendList friendList);
 
 	int getNbOfvictories();
 
@@ -26,5 +26,5 @@ public:
 
 	string getPassword();
 
-	void setPassword(int password);
+	void setPassword(string password);
 };

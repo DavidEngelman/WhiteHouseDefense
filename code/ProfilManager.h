@@ -4,5 +4,5 @@ private:
 	ProfilUI profilUI;
 
 public:
-	void getInfo(int username);
+	void getInfo(string username);
 };

@@ -2,7 +2,7 @@ class ChatUI {
 
 
 public:
-	void showNewMessage(int message);
+	void showNewMessage(Message message);
 
 	void display();
 };
