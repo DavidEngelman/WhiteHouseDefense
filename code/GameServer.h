@@ -5,7 +5,7 @@ public:
 
 	void getReceivedChanges();
 
-	void parseCommands(int changes);
+	void parseCommands(changes);
 
 	void sendGameState(gameState);
 };
