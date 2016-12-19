@@ -1,0 +1,41 @@
+Besoins utilisateur:
+
+	menu
+
+		pouvoir lancer une partie
+		choisir le mode jeu
+		construier son profil
+		consulter le classement
+		gérer une liste d'amis
+		consulter son profil
+		consulter le profil des amis
+		chater avec ses amis 
+		supporter un ami
+
+	in game
+
+		acheter des tours 
+		revendre ses tours
+		abandonner une partie en cours
+
+Besoin système :
+
+	1)connexion
+		s'authentifier
+
+
+	2)gestion des comptes
+
+		cree un compte
+		supprimer un compte
+		modifier les infos
+
+	3)créer une partie :
+		matchmaking
+
+	4)gerer une partie :
+		-connection/deco
+		- gestion de pnj
+		-gestion de l'argent
+		-gestion du score
+		-choix du vainqueur
