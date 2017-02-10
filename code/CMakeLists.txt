@@ -5,6 +5,6 @@ set(CLIENT_FILES main.cpp)
 add_executable(client ${CLIENT_FILES})
 
 
-set(SERVER_FILES main.cpp)
+set(SERVER_FILES serverLauncher.cpp)
 add_executable(server ${SERVER_FILES})
 
