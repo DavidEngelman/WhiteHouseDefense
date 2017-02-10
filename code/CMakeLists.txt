@@ -1,5 +1,10 @@
 cmake_minimum_required(VERSION 3.6)
 set(CMAKE_CXX_STANDARD 14)
 
-set(SOURCE_FILES main.cpp)
-add_executable(projet ${SOURCE_FILES})
+set(CLIENT_FILES main.cpp)
+add_executable(client ${CLIENT_FILES})
+
+
+set(SERVER_FILES main.cpp)
+add_executable(server ${SERVER_FILES})
+
