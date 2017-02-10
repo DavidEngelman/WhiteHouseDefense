@@ -6,7 +6,7 @@ ssize_t receive(int socket_fd, void *message, size_t length) {
     return recv(socket_fd, message, length, 0);
 }
 
-char * get_data(int socket_fd, char *buffer, size_t size) {
+char *get_data(int socket_fd, char *buffer, size_t size) {
     ssize_t data_bytes_read = receive(socket_fd, buffer, size);
 
     if (data_bytes_read == -1) {
@@ -28,11 +28,22 @@ size_t get_message_length(int socket_fd) {
     return length * sizeof(char);
 }
 
+void ensure_buffer_is_big_enough(char *buffer, int length) {
+    if (buffer == NULL) {
+        buffer = malloc(length);
+    } else if (sizeof(buffer) < length) {
+        buffer = realloc(buffer, length);
+        if (buffer == NULL) {
+            perror("Receive_data - Couldn't grow buffer");
+            exit(EXIT_FAILURE);
+        }
+    }
+}
+
 /*
  * TODO: est-ce que receive_data et receive_new_data recoivent un buffer et l'utilise en espérant
- * qu'ils soit assez grand, ou font-t-il un malloc/realloc du buffer?
+ * qu'il soit assez grand, ou font-t-il un malloc/realloc du buffer?
  */
-
 
 /*
  * Read from the socket and puts the data in the buffer.
@@ -42,27 +53,27 @@ size_t get_message_length(int socket_fd) {
  */
 char *receive_data(int socket_fd, char *buffer) {
     size_t length = get_message_length(socket_fd);
-//    if (buffer == NULL){
-//        buffer = malloc(length);
-//    } else if (sizeof(buffer) < length) {
-//        buffer = realloc(buffer, length);
-//        if (buffer == NULL){
-//            perror("Receive_data - Couldn't grow buffer");
-//            exit(EXIT_FAILURE);
-//        }
-//    }
+
+//    ensure_buffer_is_big_enough(buffer, length);
+
     get_data(socket_fd, buffer, length);
     return buffer;
 }
 
-char *receive_new_data(int socket_fd, char * buffer) {
+char *receive_new_data(int socket_fd, char *buffer) {
     size_t length = get_message_length(socket_fd);
 
 //    size_t size = min((int) length, MAX_SENTENCE_SIZE) * sizeof(char);
 //    char *message = malloc(size);
-    get_data(socket_fd, message, length);
+
+
+
+//    ensure_buffer_is_big_enough(buffer, length);
+    get_data(socket_fd, buffer, length);
     return message;
 }
+
+
 
 
 // Send
