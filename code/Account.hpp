@@ -4,7 +4,7 @@ private:
 	string username;
 	string password;
 	FriendList friendList;
-	int nbOfvictories;
+	int nbOfVictories;
 	int nbPnjKilled;
 
 public:
@@ -16,9 +16,9 @@ public:
 
 	void setFriendList(FriendList friendList);
 
-	int getNbOfvictories();
+	int getNbOfVictories();
 
-	void setNbOfvictories(int nbOfvictories);
+	void setNbOfVictories(int nbOfVictories);
 
 	int getNbPnjKilled();
 
