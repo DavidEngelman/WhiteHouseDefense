@@ -64,6 +64,10 @@ char *receive_data(int socket_fd, char *buffer) {
 
 void send_data(int socket_fd, char *message) {
     size_t length = strlen(message) + 1;
-    send(socket_fd, &length, sizeof(length), 0); // Send the length
-    send(socket_fd, message, length, 0);         // Send the data
+
+    if (send(socket_fd, &length, sizeof(length), 0) == - 1) // Send the length
+        perror("Send");
+    if (send(socket_fd, message, length, 0) == -1 ) // Send the data
+        perror("Send");
+
 }
