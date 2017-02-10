@@ -6,11 +6,6 @@ class Server {
 
     int accept();
 
-
-
-
-
-
 };
 
 int main(){
