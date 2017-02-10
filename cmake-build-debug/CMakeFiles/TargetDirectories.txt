@@ -1,6 +1,0 @@
-/home/benjamin/CLionProjects/Group4/cmake-build-debug/CMakeFiles/edit_cache.dir
-/home/benjamin/CLionProjects/Group4/cmake-build-debug/CMakeFiles/rebuild_cache.dir
-/home/benjamin/CLionProjects/Group4/cmake-build-debug/code/CMakeFiles/edit_cache.dir
-/home/benjamin/CLionProjects/Group4/cmake-build-debug/code/CMakeFiles/rebuild_cache.dir
-/home/benjamin/CLionProjects/Group4/cmake-build-debug/code/CMakeFiles/server.dir
-/home/benjamin/CLionProjects/Group4/cmake-build-debug/code/CMakeFiles/client.dir
