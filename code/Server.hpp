@@ -23,8 +23,11 @@ private:
 
     //Private methods
     void init();
+
     int create_socket();
+
     void bind_socket_to_address(struct sockaddr *address);
+
     int accept_connection();
 
     struct sockaddr_in build_address();
