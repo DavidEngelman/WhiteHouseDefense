@@ -6,7 +6,7 @@ ssize_t receive(int socket_fd, void *message, size_t length) {
     return recv(socket_fd, message, length, 0);
 }
 
-char *get_data(int socket_fd, char *buffer, size_t size) {
+char *get_data_from_socket(int socket_fd, char *buffer, size_t size) {
     ssize_t data_bytes_read = receive(socket_fd, buffer, size);
 
     if (data_bytes_read == -1) {
@@ -52,11 +52,11 @@ void ensure_buffer_is_big_enough(char *buffer, int length) {
  * Return value: a pointer to the buffer.
  */
 char *receive_data(int socket_fd, char *buffer) {
-    size_t length = get_message_length(socket_fd);
+    size_t length = get_message_length(socket_fd);  // Gets the length
 
 //    ensure_buffer_is_big_enough(buffer, length);
 
-    get_data(socket_fd, buffer, length);
+    get_data_from_socket(socket_fd, buffer, length);  // Gets the data
     return buffer;
 }
 
