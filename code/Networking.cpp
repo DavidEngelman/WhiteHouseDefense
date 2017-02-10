@@ -2,7 +2,7 @@
 
 // Receive
 
-ssize_t receive(int socket_fd, void *message, size_t length) {
+ssize_t receive_data(int socket_fd, void *message, size_t length) {
     return recv(socket_fd, message, length, 0);
 }
 
@@ -51,7 +51,7 @@ void ensure_buffer_is_big_enough(char *buffer, int length) {
  * If the buffer is too small, it grows it to have enough space for the data.
  * Return value: a pointer to the buffer.
  */
-char *receive_data(int socket_fd, char *buffer) {
+char *receive_message(int socket_fd, char *buffer) {
     size_t length = get_message_length(socket_fd);  // Gets the length
 
 //    ensure_buffer_is_big_enough(buffer, length);
@@ -62,12 +62,14 @@ char *receive_data(int socket_fd, char *buffer) {
 
 // Send
 
-void send_data(int socket_fd, char *message) {
+void send_data(int socket_fd, char *buffer, int length){
+    if (send(socket_fd, buffer, sizeof(length), 0) == - 1) {
+        perror("Send");
+    }
+}
+
+void send_message(int socket_fd, char *message) {
     size_t length = strlen(message) + 1;
-
-    if (send(socket_fd, &length, sizeof(length), 0) == - 1) // Send the length
-        perror("Send");
-    if (send(socket_fd, message, length, 0) == -1 ) // Send the data
-        perror("Send");
-
+    send_data(socket_fd, &length, sizeof(length)); // Send the length
+    send_data(socket_fd, message, length);         // Send the data
 }
