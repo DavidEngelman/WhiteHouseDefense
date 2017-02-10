@@ -60,22 +60,6 @@ char *receive_data(int socket_fd, char *buffer) {
     return buffer;
 }
 
-char *receive_new_data(int socket_fd, char *buffer) {
-    size_t length = get_message_length(socket_fd);
-
-//    size_t size = min((int) length, MAX_SENTENCE_SIZE) * sizeof(char);
-//    char *message = malloc(size);
-
-
-
-//    ensure_buffer_is_big_enough(buffer, length);
-    get_data(socket_fd, buffer, length);
-    return message;
-}
-
-
-
-
 // Send
 
 void send_data(int socket_fd, char *message) {
