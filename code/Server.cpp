@@ -1,31 +1,29 @@
 #include "Server.hpp"
 
-Server::Server() {
+Server::Server(int portNumber): socket_fd(0), port(portNumber) {
 
     init();
+    std::cout << "server created with success!" << std::endl;
 }
 
 void Server::init(){
 
-    struct sockaddr_in server_addr;
-    int server_socket;
+    struct sockaddr_in my_address;
 
     //Creation du socket
-    this.socket_fd = create_socket();
+    socket_fd = create_socket();
 
-    //Config du sockaddr_in server_addr
-    server_addr.sin_family = AF_INET;
-    server_addr.sin_addr.s_addr = INADDR_ANY;
-    server_addr.sin_port = htons(PORT);
-
-    //binding du socket
-    bind_socket_to_address();
+    //Build address
+    my_address = build_address();
+    struct sockaddr *address = (struct sockaddr *) &my_address;
+    //Binding du socket
+    bind_socket_to_address(address);
 
 }
 
-void Server::bind_socket_to_address(struct sockaddr *address) {
+void Server::bind_socket_to_address(struct sockaddr* address) {
 
-    int result = bind(this.socket_fd, address, sizeof(struct sockaddr));
+    int result = bind(socket_fd, address, sizeof(struct sockaddr));
     if (result == -1) {
         perror("Bind");
         exit(EXIT_FAILURE);
@@ -51,14 +49,14 @@ int Server::accept_connection(){
     struct sockaddr_in client_addr;
     socklen_t sin_size = sizeof(struct sockaddr_in);
 
-    return accept(this.socket_fd , (struct sockaddr *)&client_addr, &sin_size);
+    return accept(socket_fd , (struct sockaddr *)&client_addr, &sin_size);
 }
 
-struct Server::sockaddr_in build_address(){
+struct sockaddr_in Server::build_address(){
 
     struct sockaddr_in my_address;
     my_address.sin_family = AF_INET;
-    my_address.sin_port = htons((uint16_t) this.port);
+    my_address.sin_port = htons((uint16_t) port);
     my_address.sin_addr.s_addr = INADDR_ANY;
 
     // On met sin_zero à 0
@@ -69,11 +67,17 @@ struct Server::sockaddr_in build_address(){
 
 void Server::start_socket_listen() {
 
-    int error_code = listen(this.socket_fd, BACKLOG);
+    int error_code = listen(socket_fd, BACKLOG);
     if (error_code == -1) {
         perror("Listen");
         exit(1);
     }
+
+    //Cette méthode est pas appellée dans le init comme ça on peut créer un server sans commencer directement
+    //a listen, je sais pas si c'est une bonne idée ou pas -_-
 }
 
-Server::~Server() {}
+Server::~Server() {
+
+    close(socket_fd);
+}

@@ -8,6 +8,7 @@
 #include <arpa/inet.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
+#include <iostream>
 
 #define BACKLOG 5
 
@@ -21,25 +22,21 @@ private:
     int socket_fd;
 
     //Private methods
-    int init();
+    void init();
     int create_socket();
     void bind_socket_to_address(struct sockaddr *address);
     int accept_connection();
 
-    struct sockaddr_in build_address(char *address, int port);
+    struct sockaddr_in build_address();
 
 
 public:
 
-    Server();
+    Server(int);
 
     void start_socket_listen();
 
     ~Server();
-
-
-
-
 
 
 };
