@@ -30,12 +30,14 @@ private:
 
     int accept_connection();
 
+    int get_readable_socket(int * sockets, int num_sockets);
+
     struct sockaddr_in build_address();
 
 
 public:
 
-    Server(int);
+    Server(int port);
 
     void start_socket_listen();
 
