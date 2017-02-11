@@ -4,7 +4,7 @@
 
 #include "AccountServer.hpp"
 
-AccountServer::AccountServer(int port, const char* databaseName): Server(port), myDataBase(Database(databaseName)){}
+AccountServer::AccountServer(int port, const char* databaseName): Server(port), myDatabase(Database(databaseName)){}
 
 void AccountServer::run(){
 
