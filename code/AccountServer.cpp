@@ -4,7 +4,7 @@
 
 #include "AccountServer.hpp"
 
-AccountServer::AccountServer(int port): Server(port){}
+AccountServer::AccountServer(int port, const char* databaseName): Server(port), myDataBase(Database(databaseName)){}
 
 void AccountServer::run(){
 
@@ -83,6 +83,24 @@ std::vector<std::string> AccountServer::get_username_and_password (char* data){
     return username_password;
 }
 
-void AccountServer::attemptCreateAccount(std::string name, std::string password) {}
+//Partie Register
 
-void AccountServer::checkCredentials(std::string name, std::string password) {}
+void insert_account_in_db(std::string username, std::string password){
+
+    if (myDatabase.insert_account(username, password) == -1 ){
+        perror("Account creation")
+        //TODO: Faudra dire au client que y a un problème (ex: le username est deja utilisé)
+    }
+    else{
+        //TODO: Faudra dire au client que ca a marché
+    }
+}
+
+void AccountServer::attemptCreateAccount(std::string username, std::string password) {
+
+    insert_account_in_db(username, password);
+}
+
+//Partie Login
+
+void AccountServer::checkCredentials(std::string username, std::string password) {}

@@ -10,7 +10,7 @@
 int main() {
     std::cout << "Hello, World!" << std::endl;
 
-    AccountServer myTestServer = AccountServer(5555);
+    AccountServer myTestServer = AccountServer(5555, "database.db");
 
     return 0;
 }

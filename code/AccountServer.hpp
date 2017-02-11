@@ -6,17 +6,17 @@ class AccountServer : public Server {
 
 private:
 
-	Database myDataBase;
+	Database myDatabase;
 
 public:
 
-    AccountServer(int port);
+    AccountServer(int port, const char* databaseName);
 
     void run() override;
 
 	std::vector<std::string> get_username_and_password (char* data);
 
-	void attemptCreateAccount(std::string name, std::string password);
+	void attemptCreateAccount(std::string username, std::string password);
 
-	void checkCredentials(std::string name, std::string password);
+	void checkCredentials(std::string username, std::string password);
 };
