@@ -51,6 +51,8 @@ int Database::insert_account(const std::string& username, const std:: string& pa
 
     std::stringstream strm;
 
+    //Je sais pas pq CLion souligne ça en rouge...Ca marche :|
+
     strm << "insert into Accounts(id,username,password) values(" << id
          << ",'" << username << "','" << password << "')";
 
