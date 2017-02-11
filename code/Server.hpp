@@ -17,10 +17,6 @@ class Server {
 
 private:
 
-    //Attributes
-    int port;
-    int socket_fd;
-
     //Private methods
     void init();
 
@@ -28,12 +24,17 @@ private:
 
     void bind_socket_to_address(struct sockaddr *address);
 
+    struct sockaddr_in build_address();
+
+protected:
+
+    //Attributes
+    int port;
+    int socket_fd;
+
     int accept_connection();
 
     int get_readable_socket(int * sockets, int num_sockets);
-
-    struct sockaddr_in build_address();
-
 
 public:
 
