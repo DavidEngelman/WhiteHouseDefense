@@ -6,7 +6,7 @@ class AccountServer : public Server {
 
 public:
 
-    AccountServer(int port);
+    AccountServer(int port): Server(port){}
 
     void run() override ;
 
