@@ -1,6 +1,6 @@
 #include "Server.hpp"
 #include <string.h>
-#include "Database.h"
+#include "Database.hpp"
 
 class AccountServer : public Server {
 
