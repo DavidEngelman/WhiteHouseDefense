@@ -1,11 +1,16 @@
-class AccountServer : Server {
+#include "Server.hpp"
+#include <string.h>
+
+class AccountServer : public Server {
 
 
 public:
 
+    AccountServer(int port);
+
     void run() override ;
 
-	void attemptCreateAccount(string name, string password);
+	void attemptCreateAccount(std::string name, std::string password);
 
-	void checkCredentials(string name, string password);
+	void checkCredentials(std::string name, std::string password);
 };
