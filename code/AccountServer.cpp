@@ -4,7 +4,7 @@
 
 #include "AccountServer.hpp"
 
-AccountServer::AccountServer(int port, const char* databaseName): Server(port), myDataBase(Database(databaseName)){}
+AccountServer::AccountServer(int port, const char* databaseName): Server(port), myDatabase(Database(databaseName)){}
 
 void AccountServer::run(){
 
@@ -16,12 +16,11 @@ void AccountServer::run(){
 
         if ( !fork() ){
 
-            char* username_password[500];
+            char* username_password[500]; //Je met 500 par défaut pour l'instant;
             std::vector<std::string> username_password_vect;
 
             //Get the the username and password from client
-            char buffer[500]; //Je met 500 par défaut pour l'instant
-            username_password = receive_message(newClient, buffer);
+            receive_message(newClient, username_password);
 
             //Process the username and password
             username_password_vect = get_username_and_password(username_password); // TODO: check pq ça marche pas
@@ -85,10 +84,10 @@ std::vector<std::string> AccountServer::get_username_and_password (char* data){
 
 //Partie Register
 
-void insert_account_in_db(std::string username, std::string password){
+void AccountServer::insert_account_in_db(std::string username, std::string password){
 
     if (myDatabase.insert_account(username, password) == -1 ){
-        perror("Account creation")
+        perror("Account creation");
         //TODO: Faudra dire au client que y a un problème (ex: le username est deja utilisé)
     }
     else{
@@ -98,7 +97,7 @@ void insert_account_in_db(std::string username, std::string password){
 
 void AccountServer::attemptCreateAccount(std::string username, std::string password) {
 
-    insert_account_in_db(username, password);
+    insert_account_in_db (username, password);
 }
 
 //Partie Login
