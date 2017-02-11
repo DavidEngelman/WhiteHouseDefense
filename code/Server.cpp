@@ -45,6 +45,10 @@ int Server::accept_connection() {
     return accept(socket_fd, (struct sockaddr *) &client_addr, &sin_size);
 }
 
+void Server::add_new_client(int his_socket) {
+    client_sockets.push_back(his_socket);
+}
+
 struct sockaddr_in Server::build_address() {
     struct sockaddr_in my_address;
     my_address.sin_family = AF_INET;
