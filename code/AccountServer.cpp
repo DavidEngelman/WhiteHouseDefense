@@ -4,6 +4,7 @@
 
 #include "AccountServer.hpp"
 
+
 AccountServer::AccountServer(int port, const char* databaseName): Server(port), myDatabase(Database(databaseName)){}
 
 void AccountServer::run(){
@@ -16,17 +17,17 @@ void AccountServer::run(){
 
         if ( !fork() ){
 
-            char* username_password[500]; //Je met 500 par défaut pour l'instant;
+            char *username_password[500];
             std::vector<std::string> username_password_vect;
 
             //Get the the username and password from client
-            receive_message(newClient, username_password);
+            receive_message(newClient, (char *) username_password);
 
             //Process the username and password
-            username_password_vect = get_username_and_password(username_password); // TODO: check pq ça marche pas
+            username_password_vect = get_username_and_password((char *) username_password);
 
             //Account creation
-            attemptCreateAccount(username_password[0], username_password[1]);
+            attemptCreateAccount(username_password_vect[0], username_password_vect[1]);
 
 
         }

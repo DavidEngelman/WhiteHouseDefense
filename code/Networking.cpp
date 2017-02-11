@@ -7,7 +7,7 @@ ssize_t receive_data(int socket_fd, void *message, size_t length) {
 }
 
 char *get_data_from_socket(int socket_fd, char *buffer, size_t size) {
-    ssize_t data_bytes_read = receive(socket_fd, buffer, size);
+    ssize_t data_bytes_read = receive_data(socket_fd, buffer, size);
 
     if (data_bytes_read == -1) {
         perror("Receive: packet data");
@@ -19,7 +19,7 @@ char *get_data_from_socket(int socket_fd, char *buffer, size_t size) {
 
 size_t get_message_length(int socket_fd) {
     size_t length;
-    ssize_t length_bytes_read = receive(socket_fd, &length, sizeof(length));
+    ssize_t length_bytes_read = receive_data(socket_fd, &length, sizeof(length));
 
     if (length_bytes_read == -1) {
         perror("Receive: packet length");
@@ -28,6 +28,7 @@ size_t get_message_length(int socket_fd) {
     return length * sizeof(char);
 }
 
+/* TODO: y avait un probleme avec cette methode, je l ai mis en comm pour le moment
 void ensure_buffer_is_big_enough(char *buffer, int length) {
     if (buffer == NULL) {
         buffer = malloc(length);
@@ -39,6 +40,8 @@ void ensure_buffer_is_big_enough(char *buffer, int length) {
         }
     }
 }
+*/
+
 
 /*
  * TODO: est-ce que receive_data et receive_new_data recoivent un buffer et l'utilise en espérant
@@ -70,6 +73,7 @@ void send_data(int socket_fd, char *buffer, int length){
 
 void send_message(int socket_fd, char *message) {
     size_t length = strlen(message) + 1;
-    send_data(socket_fd, &length, sizeof(length)); // Send the length
-    send_data(socket_fd, message, length);         // Send the data
+    send(socket_fd, &length, sizeof(length), 0); // Send the length
+    send(socket_fd, message, length, 0);         // Send the data
+    //TODO remmettre send_data mais y avait un probleme
 }
