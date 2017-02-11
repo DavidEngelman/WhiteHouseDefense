@@ -4,9 +4,9 @@
 #include "AccountServer.hpp"
 
 
-AccountServer::AccountServer(int port) {}
+AccountServer::AccountServer(int port): Server(port){}
 
-void AccountServer::run() {}
+void AccountServer::run(){}
 
 void AccountServer::attemptCreateAccount(std::string name, std::string password) {}
 
