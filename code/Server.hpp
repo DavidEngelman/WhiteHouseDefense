@@ -41,6 +41,8 @@ public:
 
     void start_socket_listen();
 
+    virtual void run() = 0;
+
     virtual ~Server();
 
 
