@@ -6,7 +6,14 @@
 
 AccountServer::AccountServer(int port): Server(port){}
 
-void AccountServer::run(){}
+void AccountServer::run(){
+    int newClient;
+
+    while (1){
+        newClient = accept_connection();
+
+    }
+}
 
 void AccountServer::attemptCreateAccount(std::string name, std::string password) {}
 
