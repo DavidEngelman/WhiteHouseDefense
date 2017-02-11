@@ -65,6 +65,7 @@ int Database::insert_account(const std::string& username, const std:: string& pa
     if( rc != SQLITE_OK ){
         fprintf(stderr, "SQL error: %s\n", zErrMsg);
         sqlite3_free(zErrMsg);
+        return -1;
     }
 
     else{
@@ -78,6 +79,7 @@ int Database::insert_account(const std::string& username, const std:: string& pa
 
 int Database::get_last_entry() {
 
+    /*Utilisé pour obtenir le prochain id disponible lors du rajout d'un compte dans la database*/
 
     char *zErrMsg = 0;
     char *query = "select Count(*) from Accounts";
