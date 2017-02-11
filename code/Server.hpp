@@ -9,6 +9,7 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <iostream>
+#include <vector>
 
 #define BACKLOG 5
 
@@ -31,8 +32,11 @@ protected:
     //Attributes
     int port;
     int socket_fd;
+    std::vector<int> client_sockets;
 
     int accept_connection();
+
+    void add_new_client(int his_socket);
 
     int get_readable_socket(int * sockets, int num_sockets);
 

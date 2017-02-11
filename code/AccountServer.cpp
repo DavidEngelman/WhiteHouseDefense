@@ -11,6 +11,9 @@ void AccountServer::run(){
 
     while (1){
         newClient = accept_connection();
+        add_new_client(newClient);
+
+
 
     }
 }
