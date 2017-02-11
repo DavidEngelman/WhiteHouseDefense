@@ -10,6 +10,7 @@
 #include <netinet/in.h>
 #include <iostream>
 #include <vector>
+#include "Networking.h"
 
 #define BACKLOG 5
 
@@ -32,7 +33,7 @@ protected:
     //Attributes
     int port;
     int socket_fd;
-    std::vector<int> client_sockets;
+    //std::vector<int> client_sockets; Peut etre on aura besoin mais pas sur
 
     int accept_connection();
 

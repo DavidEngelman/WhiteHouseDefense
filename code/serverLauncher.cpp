@@ -4,12 +4,13 @@
 //
 
 #include "Server.hpp"
+#include "AccountServer.hpp"
 
 
 int main() {
     std::cout << "Hello, World!" << std::endl;
 
-    Server myTestServer = Server(5555);
+    AccountServer myTestServer = AccountServer(5555);
 
     return 0;
 }
