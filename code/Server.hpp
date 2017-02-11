@@ -41,7 +41,7 @@ public:
 
     void start_socket_listen();
 
-    ~Server();
+    virtual ~Server();
 
 
 };
