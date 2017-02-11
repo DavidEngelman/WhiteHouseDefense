@@ -8,7 +8,7 @@ public:
 
     AccountServer(int port);
 
-    void run() override ;
+    void run() override;
 
 	void attemptCreateAccount(std::string name, std::string password);
 
