@@ -18,7 +18,7 @@ void AccountServer::run() {
         if (!fork()) {
             char message_buffer[BUFFER_SIZE];
             Command command;
-            Credentials * credentials = &command.credentials;
+            Credentials credentials = command.credentials;
 
             //Get the the username and password from client
             receive_message(newClient, (char *) message_buffer);
@@ -27,9 +27,9 @@ void AccountServer::run() {
             parse_command((char *) message_buffer, &command);
 
             if (command.action == "login"){
-                handle_login(credentials->username, credentials->password);
+                handle_login(credentials);
             } else if (command.action == "register") {
-                handle_register(credentials->username, credentials->password);
+                handle_register(credentials);
             } else {
                 // Show "unknown command" error
             }
@@ -59,23 +59,23 @@ void AccountServer::parse_command(char *data, Command *command) {
 
     // Extracts the username (ex: bob)
     while (data[i] != ',') {
-        (command->credentials).username += data[i];
+        (command->credentials).getUsername() += data[i];
         i++;
     }
     i++; // passe la virgule
 
     // Extracts the password (ex: leponge)
     while (data[i] != ';') {
-        (command->credentials).password += data[i];
+        (command->credentials).getPassword() += data[i];
         i++;
     }
 }
 
 //Partie Register
 
-bool AccountServer::insert_account_in_db(std::string& username, std::string& password) {
+bool AccountServer::insert_account_in_db(Credentials credentials) {
 
-    if (myDatabase.insert_account(username, password) == -1) {
+    if (myDatabase.insert_account(credentials) == -1) {
         perror("Account creation");
         // TODO: complete
     } else {
@@ -86,12 +86,12 @@ bool AccountServer::insert_account_in_db(std::string& username, std::string& pas
     return false;
 }
 
-bool AccountServer::attemptCreateAccount(std::string& username, std::string& password) {
-    return insert_account_in_db(username, password);
+bool AccountServer::attemptCreateAccount(Credentials credentials) {
+    return insert_account_in_db(credentials);
 }
 
-void AccountServer::handle_register(std::string &username, std::string &password) {
-    if (attemptCreateAccount(username, password)) {
+void AccountServer::handle_register(Credentials credentials) {
+    if (attemptCreateAccount(credentials)) {
         // TODO: Faudra dire au client que ca a marché
     } else {
         // TODO: Faudra dire au client que y a un problème (ex: le username est deja utilisé)
@@ -102,13 +102,13 @@ void AccountServer::handle_register(std::string &username, std::string &password
 
 //Partie Login
 
-bool AccountServer::checkCredentials(const std::string& username, const std::string& password) {
+bool AccountServer::checkCredentials(Credentials credentials) {
     // TODO: Check database
     return false;
 }
 
-void AccountServer::handle_login(std::string &username, std::string &password) {
-    if (checkCredentials(username, password)){
+void AccountServer::handle_login(Credentials credentials) {
+    if (checkCredentials(credentials)){
         // Send success message
     } else {
         // Send error message

@@ -1,13 +1,9 @@
 #include "Server.hpp"
 #include <string.h>
 #include "Database.hpp"
+#include "Credentials.h"
 
 static const int BUFFER_SIZE = 500;
-
-typedef struct Credentials {
-    std::string username;
-    std::string password;
-} Credentials;
 
 typedef struct Command {
     std::string action;
@@ -36,15 +32,15 @@ public:
 
     void run() override;
 
-    bool insert_account_in_db(std::string& username, std::string& password);
+    bool insert_account_in_db(Credentials credentials);
 
-    bool attemptCreateAccount(std::string& username, std::string& password);
+    bool attemptCreateAccount(Credentials credentials);
 
-    bool checkCredentials(const std::string &username, const std::string& password);
+    bool checkCredentials(Credentials credentials);
 
     void parse_command(char *data, Command *command);
 
-    void handle_login(std::string &username, std::string &password);
+    void handle_login(Credentials credentials);
 
-    void handle_register(std::string &username, std::string &password);
+    void handle_register(Credentials credentials);
 };
