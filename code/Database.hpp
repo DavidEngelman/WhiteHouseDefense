@@ -24,11 +24,12 @@ public:
     Database(const char* filename);
 
     static int callback(void *NotUsed, int argc, char **argv, char **azColName);
-    static int callback_get_last_entry(void *count, int argc, char **argv, char **azColName);
+    static int callback_counter(void *count, int argc, char **argv, char **azColName);
 
     int open();
     int insert_account(const std::string& username, const std:: string& password);
-    int get_last_entry();
+    int get_nb_entries();
+    bool is_identifiers_valid(const std::string& username, const std::string& password);
     void update_record();
     void delete_record();
 

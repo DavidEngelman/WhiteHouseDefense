@@ -37,7 +37,7 @@ int Database::callback(void *NotUsed, int argc, char **argv, char **azColName){
     return 0;
 }
 
-int Database::callback_get_last_entry(void *count, int argc, char **argv, char **azColName){
+int Database::callback_counter(void *count, int argc, char **argv, char **azColName){
     int *c = (int*)count;
     *c = atoi(argv[0]);
     return 0;
@@ -47,7 +47,7 @@ int Database::insert_account(const std::string& username, const std:: string& pa
 
 
     char *zErrMsg = 0;
-    int id = get_last_entry() + 1;
+    int id = get_nb_entries() + 1;
 
     std::stringstream strm;
 
@@ -77,7 +77,7 @@ int Database::insert_account(const std::string& username, const std:: string& pa
     return 0;
 }
 
-int Database::get_last_entry() {
+int Database::get_nb_entries() {
 
     /*Utilisé pour obtenir le prochain id disponible lors du rajout d'un compte dans la database*/
 
@@ -85,7 +85,7 @@ int Database::get_last_entry() {
     char *query = "select Count(*) from Accounts";
     int count = 1;
 
-    rc = sqlite3_exec(db, query, callback_get_last_entry, &count, &zErrMsg);
+    rc = sqlite3_exec(db, query, callback_counter, &count, &zErrMsg);
     if( rc != SQLITE_OK ){
         fprintf(stderr, "SQL error: %s\n", zErrMsg);
         sqlite3_free(zErrMsg);
@@ -94,6 +94,33 @@ int Database::get_last_entry() {
 
     return count;
 
+}
+
+bool Database::is_identifiers_valid(const std::string& username, const std::string& password) {
+
+    char *zErrMsg = 0;
+    int count = 0;
+    bool valid = false;
+    std::stringstream strm;
+
+    strm << "select COUNT(username) FROM Accounts WHERE username='" << username << "' AND password='" << password << "'";
+
+    std::string s = strm.str();
+    char *str = &s[0];
+    char *query = str;
+
+    rc = sqlite3_exec(db, query, callback_counter, &count, &zErrMsg);
+    if( rc != SQLITE_OK ){
+        fprintf(stderr, "SQL error: %s\n", zErrMsg);
+        sqlite3_free(zErrMsg);
+        return false;
+    }
+
+    if (count == 1)
+        valid = true;
+
+
+    return valid;
 }
 
 Database::~Database() {
