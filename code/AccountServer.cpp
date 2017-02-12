@@ -27,10 +27,12 @@ void AccountServer::run() {
             parse_command((char *) message_buffer, &command);
 
             if (command.action == "login"){
-                handle_login(credentials);
-            } else if (command.action == "register") {
-                handle_register(credentials);
-            } else {
+                handle_login(credentials, newClient);
+            }
+            else if (command.action == "register") {
+                handle_register(credentials, newClient);
+            }
+            else {
                 // Show "unknown command" error
             }
         }
@@ -74,46 +76,50 @@ void AccountServer::parse_command(char *data, Command *command) {
 //Partie Register
 
 bool AccountServer::insert_account_in_db(Credentials credentials) {
+    //Return True si ca c'est bien passé, false sinon
 
-    if (myDatabase.insert_account(credentials) == -1) {
-        perror("Account creation");
-        // TODO: complete
-    } else {
-        // TODO: complete
-    }
-
-    // TODO: modifier ceci pour que ça renvoie True si ça c'est bien passé, False sinon
-    return false;
+    return myDatabase.insert_account(credentials) != -1;
 }
 
 bool AccountServer::attemptCreateAccount(Credentials credentials) {
     return insert_account_in_db(credentials);
 }
 
-void AccountServer::handle_register(Credentials credentials) {
+void AccountServer::handle_register(Credentials credentials, int client_sock_fd) {
     if (attemptCreateAccount(credentials)) {
-        // TODO: Faudra dire au client que ca a marché
+        //Success
+        send_success_account_creation(client_sock_fd);
     } else {
-        // TODO: Faudra dire au client que y a un problème (ex: le username est deja utilisé)
+        //Error
+        send_error_account_creation(client_sock_fd);
     }
 }
 
+void AccountServer::send_error_account_creation(int client_sock_fd){
+    send_message(client_sock_fd, "-1");
 
+}
 
-//Partie Login
+void AccountServer::send_success_account_creation(int client_sock_fd){
+    send_message(client_sock_fd, "1");
+}
+
+//Partie Login TODO: faire cette parie
 
 bool AccountServer::checkCredentials(Credentials credentials) {
     // TODO: Check database
     return false;
 }
 
-void AccountServer::handle_login(Credentials credentials) {
+void AccountServer::handle_login(Credentials credentials, int client_sock_fd) {
     if (checkCredentials(credentials)){
         // Send success message
     } else {
         // Send error message
     }
 }
+
+
 
 
 

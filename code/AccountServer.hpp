@@ -38,9 +38,12 @@ public:
 
     bool checkCredentials(Credentials credentials);
 
+    void send_error_account_creation(int client_sock_fd);
+    void send_success_account_creation(int client_sock_fd);
+
     void parse_command(char *data, Command *command);
 
-    void handle_login(Credentials credentials);
+    void handle_login(Credentials credentials, int client_sock_fd);
 
-    void handle_register(Credentials credentials);
+    void handle_register(Credentials credentials, int client_sock_fd);
 };

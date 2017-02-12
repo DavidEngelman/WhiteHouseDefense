@@ -17,6 +17,6 @@ char *receive_message(int socket_fd, char *buffer);
 
 
 void send_data(int socket_fd, char *buffer, int length);
-void send_message(int socket_fd, char *message);
+void send_message(int socket_fd, const char *message);
 
 #endif //PROJET_NETWORKING_H
