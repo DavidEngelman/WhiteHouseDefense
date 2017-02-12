@@ -4,33 +4,23 @@
 
 #include "RegisterUI.hpp"
 
-RegisterUI::RegisterUI() {
 
-    ask_username();
-    ask_password();
-}
-
-std::string RegisterUI::ask_username() {
-
-    std::string username;
+void RegisterUI::ask_username() {
     std::cout << "Enter a username:" << std::endl;
-    std::cin >> username;
-
-    return username;
+    std::cin >> username_entry;
 }
 
-std::string RegisterUI::ask_password() {
-
-    std::string password;
+void RegisterUI::ask_password() {
     std::cout << "Enter a password:" << std::endl;
-    std::cin >> password;
-
-    return password;
+    std::cin >> password_entry;
 }
 
 
 void RegisterUI::displayError() {
-
     std::cout << "Error : username or password incorrect, please try again\n";
 }
 
+void RegisterUI::display() {
+    ask_username();
+    ask_password();
+}
