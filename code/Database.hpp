@@ -11,6 +11,7 @@
 #include <iostream>
 #include <sstream>
 #include <string.h>
+#include "Credentials.h"
 
 
 class Database {
@@ -27,9 +28,9 @@ public:
     static int callback_counter(void *count, int argc, char **argv, char **azColName);
 
     int open();
-    int insert_account(const std::string& username, const std:: string& password);
+    int insert_account(Credentials credentials);
     int get_nb_entries();
-    bool is_identifiers_valid(const std::string& username, const std::string& password);
+    bool is_identifiers_valid(Credentials credentials);
     void update_record();
     void delete_record();
 

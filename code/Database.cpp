@@ -43,7 +43,7 @@ int Database::callback_counter(void *count, int argc, char **argv, char **azColN
     return 0;
 }
 
-int Database::insert_account(const std::string& username, const std:: string& password) {
+int Database::insert_account(Credentials credentials) {
 
 
     char *zErrMsg = 0;
@@ -54,7 +54,7 @@ int Database::insert_account(const std::string& username, const std:: string& pa
     //Je sais pas pq CLion souligne ça en rouge...Ca marche :|
 
     strm << "insert into Accounts(id,username,password) values(" << id
-         << ",'" << username << "','" << password << "')";
+         << ",'" << credentials.getUsername() << "','" << credentials.getPassword() << "')";
 
 
     std::string s = strm.str();
@@ -96,14 +96,14 @@ int Database::get_nb_entries() {
 
 }
 
-bool Database::is_identifiers_valid(const std::string& username, const std::string& password) {
+bool Database::is_identifiers_valid(Credentials credentials) {
 
     char *zErrMsg = 0;
     int count = 0;
     bool valid = false;
     std::stringstream strm;
 
-    strm << "select COUNT(username) FROM Accounts WHERE username='" << username << "' AND password='" << password << "'";
+    strm << "select COUNT(username) FROM Accounts WHERE username='" << credentials.getUsername() << "' AND password='" << credentials.getPassword() << "'";
 
     std::string s = strm.str();
     char *str = &s[0];
