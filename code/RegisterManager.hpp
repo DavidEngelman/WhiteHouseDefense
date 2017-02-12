@@ -4,7 +4,9 @@ private:
 	RegisterUI registerUI;
 
 public:
-	void attemptRegister(Credentials credentials);
 
+    RegisterManager() = default;
+
+	void attemptRegister(Credentials credentials);
 	bool checkCredentialsValidity(Credentials credentials);
 };

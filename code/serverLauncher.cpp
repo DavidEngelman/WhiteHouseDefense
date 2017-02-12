@@ -12,5 +12,9 @@ int main() {
 
     AccountServer myTestServer = AccountServer(5555, "database.db");
 
+    myTestServer.start_socket_listen();
+
+    myTestServer.run();
+
     return 0;
 }
