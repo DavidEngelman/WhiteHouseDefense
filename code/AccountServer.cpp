@@ -88,34 +88,34 @@ bool AccountServer::attemptCreateAccount(Credentials credentials) {
 void AccountServer::handle_register(Credentials credentials, int client_sock_fd) {
     if (attemptCreateAccount(credentials)) {
         //Success
-        send_success_account_creation(client_sock_fd);
+        send_success(client_sock_fd);
     } else {
         //Error
-        send_error_account_creation(client_sock_fd);
+        send_error(client_sock_fd);
     }
 }
 
-void AccountServer::send_error_account_creation(int client_sock_fd){
+void AccountServer::send_error(int client_sock_fd){
     send_message(client_sock_fd, "-1");
 
 }
 
-void AccountServer::send_success_account_creation(int client_sock_fd){
+void AccountServer::send_success(int client_sock_fd){
     send_message(client_sock_fd, "1");
 }
 
-//Partie Login TODO: faire cette parie
+//Partie Login
 
 bool AccountServer::checkCredentials(Credentials credentials) {
-    // TODO: Check database
-    return false;
+
+    return  myDatabase.is_identifiers_valid(credentials);
 }
 
 void AccountServer::handle_login(Credentials credentials, int client_sock_fd) {
     if (checkCredentials(credentials)){
-        // Send success message
+        send_success(client_sock_fd);
     } else {
-        // Send error message
+        send_error(client_sock_fd);
     }
 }
 

@@ -38,8 +38,8 @@ public:
 
     bool checkCredentials(Credentials credentials);
 
-    void send_error_account_creation(int client_sock_fd);
-    void send_success_account_creation(int client_sock_fd);
+    void send_error(int client_sock_fd);
+    void send_success(int client_sock_fd);
 
     void parse_command(char *data, Command *command);
 
