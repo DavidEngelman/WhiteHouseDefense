@@ -36,11 +36,15 @@ public:
 
     void run() override;
 
-    void insert_account_in_db(std::string username, std::string password);
+    bool insert_account_in_db(std::string& username, std::string& password);
 
-    void attemptCreateAccount(std::string username, std::string password);
+    bool attemptCreateAccount(std::string& username, std::string& password);
 
-    void checkCredentials(std::string username, std::string password);
+    bool checkCredentials(const std::string &username, const std::string& password);
 
     void parse_command(char *data, Command *command);
+
+    void handle_login(std::string &username, std::string &password);
+
+    void handle_register(std::string &username, std::string &password);
 };

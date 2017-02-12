@@ -27,9 +27,9 @@ void AccountServer::run() {
             parse_command((char *) message_buffer, &command);
 
             if (command.action == "login"){
-                // Check credentials
+                handle_login(credentials->username, credentials->password);
             } else if (command.action == "register") {
-                attemptCreateAccount(credentials->username, credentials->password);
+                handle_register(credentials->username, credentials->password);
             } else {
                 // Show "unknown command" error
             }
@@ -73,22 +73,48 @@ void AccountServer::parse_command(char *data, Command *command) {
 
 //Partie Register
 
-void AccountServer::insert_account_in_db(std::string username, std::string password) {
+bool AccountServer::insert_account_in_db(std::string& username, std::string& password) {
 
     if (myDatabase.insert_account(username, password) == -1) {
         perror("Account creation");
-        //TODO: Faudra dire au client que y a un problème (ex: le username est deja utilisé)
+        // TODO: complete
     } else {
-        //TODO: Faudra dire au client que ca a marché
+        // TODO: complete
+    }
+
+    // TODO: modifier ceci pour que ça renvoie True si ça c'est bien passé, False sinon
+    return false;
+}
+
+bool AccountServer::attemptCreateAccount(std::string& username, std::string& password) {
+    return insert_account_in_db(username, password);
+}
+
+void AccountServer::handle_register(std::string &username, std::string &password) {
+    if (attemptCreateAccount(username, password)) {
+        // TODO: Faudra dire au client que ca a marché
+    } else {
+        // TODO: Faudra dire au client que y a un problème (ex: le username est deja utilisé)
     }
 }
 
-void AccountServer::attemptCreateAccount(std::string username, std::string password) {
-    insert_account_in_db(username, password);
-}
+
 
 //Partie Login
 
-void AccountServer::checkCredentials(std::string username, std::string password) {}
+bool AccountServer::checkCredentials(const std::string& username, const std::string& password) {
+    // TODO: Check database
+    return false;
+}
+
+void AccountServer::handle_login(std::string &username, std::string &password) {
+    if (checkCredentials(username, password)){
+        // Send success message
+    } else {
+        // Send error message
+    }
+}
+
+
 
 
