@@ -107,7 +107,6 @@ void AccountServer::send_success(int client_sock_fd){
 //Partie Login
 
 bool AccountServer::checkCredentials(Credentials credentials) {
-
     return  myDatabase.is_identifiers_valid(credentials);
 }
 
