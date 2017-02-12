@@ -17,50 +17,56 @@ void AccountServer::run() {
 
         if (!fork()) {
             char username_password[BUFFER_SIZE];
-            Credentials credentials;
+            Command command;
+            Credentials * credentials = &command.credentials;
 
             //Get the the username and password from client
             receive_message(newClient, (char *) username_password);
 
             //Process the username and password
-            get_username_and_password((char *) username_password, &credentials);
+            parse_command((char *) username_password, &command);
 
-            attemptCreateAccount(credentials.username, credentials.password);
+            if (command.action == "login"){
+                // Check credentials
+            } else if (command.action == "register") {
+                attemptCreateAccount(credentials->username, credentials->password);
+            } else {
+                // Show "unknown command" error
+            }
         }
 
         //TODO: Finir ça
-
-
-
     }
 }
 
-void AccountServer::get_username_and_password(char *data, Credentials *credentials) {
-    /*
+void AccountServer::parse_command(char *data, Command *command) {
+    /* Parses a string formatted into "command,username,password;" into a
+     * Command object.
      *
-     * Le format de data doit être "username,password;"
-
-     * Remplis le struct Credentials avec les données dans data
+     * Example: "login,bob,leponge" -> Command{"command", Credentials{"bob", "leponge"}}
      */
+
+    // TODO? Gerer les cas où le message n'est pas correct (genre "login,bob;")
+
     int i = 0;
-    char currentChar = data[0];
 
-    //extracting username
-    while (currentChar != ',') {
-        credentials->username += currentChar;
-        currentChar = data[i + 1];
-
+    // Extracts action string (ex: login)
+    while (data[i] != ',') {
+        command->action += data[i];
         i++;
     }
+    i++; // passe la virgule
 
-    currentChar = data[i + 1]; // passe la virgule
-    i++;
+    // Extracts the username (ex: bob)
+    while (data[i] != ',') {
+        (command->credentials).username += data[i];
+        i++;
+    }
+    i++; // passe la virgule
 
-    //extracting password
-    while (currentChar != ';') {
-        credentials->password += currentChar;
-        currentChar = data[i + 1];
-
+    // Extracts the password (ex: leponge)
+    while (data[i] != ';') {
+        (command->credentials).password += data[i];
         i++;
     }
 }
@@ -84,3 +90,5 @@ void AccountServer::attemptCreateAccount(std::string username, std::string passw
 //Partie Login
 
 void AccountServer::checkCredentials(std::string username, std::string password) {}
+
+

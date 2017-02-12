@@ -9,6 +9,21 @@ typedef struct Credentials {
     std::string password;
 } Credentials;
 
+typedef struct Command {
+    std::string action;
+    Credentials credentials;
+};
+
+/* Ceci serait peut être mieux, je ne suis pas sur...
+
+typedef struct Command {
+    std::string action;
+    std::string username;
+    std::string password;
+};
+
+ * */
+
 class AccountServer : public Server {
 
 private:
@@ -21,11 +36,11 @@ public:
 
     void run() override;
 
-    void get_username_and_password(char *data, Credentials *credentials);
-
     void insert_account_in_db(std::string username, std::string password);
 
     void attemptCreateAccount(std::string username, std::string password);
 
     void checkCredentials(std::string username, std::string password);
+
+    void parse_command(char *data, Command *command);
 };
