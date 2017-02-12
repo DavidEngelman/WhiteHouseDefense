@@ -16,15 +16,15 @@ void AccountServer::run() {
         //add_new_client(newClient); Je laisse ca la au cas ou
 
         if (!fork()) {
-            char username_password[BUFFER_SIZE];
+            char message_buffer[BUFFER_SIZE];
             Command command;
             Credentials * credentials = &command.credentials;
 
             //Get the the username and password from client
-            receive_message(newClient, (char *) username_password);
+            receive_message(newClient, (char *) message_buffer);
 
             //Process the username and password
-            parse_command((char *) username_password, &command);
+            parse_command((char *) message_buffer, &command);
 
             if (command.action == "login"){
                 // Check credentials
