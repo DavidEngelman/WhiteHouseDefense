@@ -20,18 +20,56 @@ private:
     // mode3PendingMatch
     // (J'ai oublié le nom des modes, mais ça devrait etre qq chose ddu genre)
 
-public:
+    // genre, ce n'est qu'une suggestion, fait revert si tu veux :)
+    // n'aie pas peur d'enlever 
+    PendingMatch classicModeMatch;
+    PendingMatch timedModeMatch;
+    PendingMatch teamModeMatch;
 
-    MatchMaker(int port);
+    /*
+     * Ce qui suit n'est que du pseudocode, donc c'est juste un prototype
+     * ça risque de changer pas mal, si on se rend compte que l'organization
+     * est debile et meme pas digne d'un singe avec 5 points de QI
+     */
+
+    void addPlayerToPendingMatch(int id, std::string mode) {
+    	/*
+	PendingMatch match = getMatch(); <- Insert magic here
+	
+	match.add_player_to_queue(id);
+	if (match.is_full()){
+             launchMatch(match);
+	     removePendingMatch();
+	}
+	*/
+    }
+
+    void launchMatch(PendingMatch match) {
+    	/* PseudoCode:
+	creataGameServer(match);
+	for (int player in match.player) {
+		announceMatchStart(player, match);
+
+	}
+	*/
+    }
+
+public:
+    MatchMaker(int port) {
+    	classicModeMatch = new PendingMatch("Classic");
+	timedModeMatch = new PendingMatch("Timed");
+	teamModeMatch = new PendingMatch("Team");
+    };
+
+    
 
     void run() override;
-	void getNewClients();
-
+    void getNewClients();
 	
-	// Ces 2 methodes sont supposé faire quoi?
-	void getPendingMatches(std::string mode);
+    // Ces 2 methodes sont supposé faire quoi?
+    void getPendingMatches(std::string mode);
 
-	// Il ne faudra pas ajouter des joueurs dans la signature
-	// Ça sert à quoi cette function 
-	void addPendingMatch(std::string mode);
+    // Il ne faudra pas ajouter des joueurs dans la signature
+    // Ça sert à quoi cette function 
+    void addPendingMatch(std::string mode);
 };
