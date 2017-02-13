@@ -6,12 +6,12 @@ LoginUI::LoginUI() {
 }
 
 void LoginUI::ask_username() {
-    std::cout << "Enter a username:" << std::endl;
+    std::cout << "Enter your username:" << std::endl;
     std::cin >> username_entry;
 }
 
 void LoginUI::ask_password() {
-    std::cout << "Enter a password:" << std::endl;
+    std::cout << "Enter your password:" << std::endl;
     std::cin >> password_entry;
 }
 
