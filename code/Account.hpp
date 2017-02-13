@@ -1,5 +1,6 @@
 #include <string>
 #include "Credentials.h"
+#include "FriendList.hpp" //TODO
 
 class Account {
 
@@ -13,7 +14,7 @@ private:
 public:
 	std::string getUsername();
 
-	void setUsername(string username);
+	void setUsername(std::string username);
 
 	FriendList getFriendList();
 
