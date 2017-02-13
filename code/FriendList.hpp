@@ -1,10 +1,12 @@
+#include <string>
+
 class FriendList {
 
 private:
-	string[] friends;
+	std::string friends;
 
 public:
-	void addFriend(string username);
+	void addFriend(std::string username);
 
-	void removeFriend(string username);
+	void removeFriend(std::string username);
 };

@@ -1,7 +1,9 @@
 
 #include "LoginManager.hpp"
 
-LoginManager::LoginManager() {};
+LoginManager::LoginManager(int port, char* adress): Manager(port, adress) {
+    login_process();
+};
 
 void LoginManager::login_process() {
     bool success = false;
@@ -34,5 +36,13 @@ bool LoginManager::checkCredentialsValidity(std::string name, std::string passwo
 }
 
 bool LoginManager::attemptLogin(std::string name, std::string password) {
+    char server_response[10];
 
+    std::string message = "login," + name + "," + password + ";";
+    send_message(server_socket, message.c_str());
+    receive_message(server_socket,server_response);
+    if (server_response[0] == '1') {
+        return true;
+    }
+    return false;
 }

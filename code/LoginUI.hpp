@@ -1,3 +1,6 @@
+#include <string>
+#include <iostream>
+
 class LoginUI {
 
 private:

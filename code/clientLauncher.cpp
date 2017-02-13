@@ -1,4 +1,4 @@
-#include "Manager.h"
+#include "LoginManager.hpp"
 
 int main(int argc, char *argv[]) {
     std::cout << "Hello, World!" << std::endl;
@@ -8,7 +8,7 @@ int main(int argc, char *argv[]) {
         exit(1);
     }
 
-    Manager myTestManager = Manager(5555, argv[1]);
+    LoginManager myTestManager = LoginManager(5555, argv[1]);
 
     return 0;
 }

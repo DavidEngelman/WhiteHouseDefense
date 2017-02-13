@@ -11,9 +11,9 @@ private:
 	LoginUI loginUI;
 
 public:
-	LoginManager();
+	LoginManager(int port, char* adress);
 	bool attemptLogin(std::string name, std::string password);
-	void sendDataToServer(std::string name, std::password);
+	void sendDataToServer(std::string name, std::string password);
 	bool checkCredentialsValidity(std::string name, std::string password);
 	void login_process();
 };
