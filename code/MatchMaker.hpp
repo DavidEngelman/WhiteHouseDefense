@@ -27,7 +27,11 @@ public:
     void run() override;
 	void getNewClients();
 
+	
+	// Ces 2 methodes sont supposé faire quoi?
 	void getPendingMatches(std::string mode);
 
+	// Il ne faudra pas ajouter des joueurs dans la signature
+	// Ça sert à quoi cette function 
 	void addPendingMatch(std::string mode);
 };
