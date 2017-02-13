@@ -1,7 +1,7 @@
 
 #include "LoginManager.hpp"
 
-LoginManager::LoginManager(int port, char* adress): Manager(port, adress) {
+LoginManager::LoginManager(int port, char* address): Manager(port, address) {
     login_process();
 };
 

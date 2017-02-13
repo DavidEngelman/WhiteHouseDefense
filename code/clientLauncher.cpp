@@ -1,4 +1,5 @@
 #include "LoginManager.hpp"
+#include "RegisterManager.hpp"
 
 int main(int argc, char *argv[]) {
     std::cout << "Hello, World!" << std::endl;
@@ -8,7 +9,23 @@ int main(int argc, char *argv[]) {
         exit(1);
     }
 
-    LoginManager myTestManager = LoginManager(5555, argv[1]);
+    int choice = 0;
+
+    while (choice != 1 || choice != 2) {
+        std::cout << "Press 1 to log in or 2 to register a new account" << std::endl;
+        std::cin >> choice;
+
+
+        if (choice == 1)
+            LoginManager myLoginManager = LoginManager(5555, argv[1]);
+
+        else if (choice == 2)
+            RegisterManager myRegisterManager = RegisterManager(5555, argv[1]);
+
+        else
+            std::cout << "Please enter 1 or 2" << std::endl;
+
+    }
 
     return 0;
 }

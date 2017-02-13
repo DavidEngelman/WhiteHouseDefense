@@ -11,7 +11,7 @@ private:
 
 public:
 
-    RegisterManager() = default;
+	RegisterManager(int port, char* address);
 
 	bool attemptRegister(Credentials credentials);
 	bool checkCredentialsValidity(Credentials credentials);

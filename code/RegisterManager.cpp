@@ -1,9 +1,8 @@
-//
-// Created by david on 12/02/17.
-//
-
 #include "RegisterManager.hpp"
 
+RegisterManager::RegisterManager(int port, char* address): Manager(port, address) {
+    registerUser();
+};
 
 void RegisterManager::registerUser() {
     Credentials toRegister;
