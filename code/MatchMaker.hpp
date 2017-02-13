@@ -9,7 +9,10 @@ class MatchMaker : public Server {
 
 private:
 
-    std::vector<PendingMatch> pendingMatches;
+    PendingMatch classicPendingMatches;
+	PendingMatch againstTimePendingMatches;
+	PendingMatch teamPendingMatches;
+
 	// Je sais pas si c'est peut etre pas mieux 3 listes, une pour chaque
     // mode de jeu
 
@@ -20,7 +23,10 @@ private:
     // mode3PendingMatch
     // (J'ai oublié le nom des modes, mais ça devrait etre qq chose ddu genre)
 
-    // genre, ce n'est qu'une suggestion, fait revert si tu veux :)
+	//hein oui je sais pas pq j'ai dit ça :D
+    
+	
+// genre, ce n'est qu'une suggestion, fait revert si tu veux :)
     // n'aie pas peur d'enlever 
     PendingMatch classicModeMatch;
     PendingMatch timedModeMatch;
