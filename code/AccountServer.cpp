@@ -8,6 +8,7 @@
 AccountServer::AccountServer(int port, const char *databaseName) : Server(port), myDatabase(Database(databaseName)) {}
 
 void AccountServer::run() {
+    start_socket_listen();
 
     int newClient;
 
