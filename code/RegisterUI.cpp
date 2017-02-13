@@ -17,7 +17,7 @@ void RegisterUI::ask_password() {
 
 
 void RegisterUI::displayError() {
-    std::cout << "Error : username or password incorrect, please try again\n";
+    std::cout << "Error : This username is already used or is not valid \n";
 }
 
 void RegisterUI::display() {
