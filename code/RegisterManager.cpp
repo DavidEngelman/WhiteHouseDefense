@@ -10,15 +10,16 @@ void RegisterManager::registerUser() {
     bool correctCredentials = false;
     while( !registered ){
         registerUI.display();
-        if (checkCredentialsValidity(registerUI.get_username_entry(), registerUI.get_password_entry())) {
+        toRegister.setUsername(registerUI.get_username_entry());
+        toRegister.setPassword(registerUI.get_password_entry());
+
+        if (checkCredentialsValidity(toRegister)) {
             correctCredentials = true;
         }
         else{
             registerUI.displayError();
         }
     }
-    toRegister.setUsername(registerUI.get_username_entry());
-    toRegister.setPassword(registerUI.get_password_entry());
 
     if (attemptRegister(toRegister)){
         std::cout<< "Your account was successfully registered, you can now login normally.\n";
@@ -57,4 +58,5 @@ bool RegisterManager::checkCredentialsValidity(Credentials credentials) {
     }
 
     return credentialsValidity;
+
 }
