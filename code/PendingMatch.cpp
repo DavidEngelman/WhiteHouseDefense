@@ -21,3 +21,7 @@ void PendingMatch::add_player_to_queue(int id) {
 void PendingMatch::remove_player_from_queue(int id) {
     queue.erase(std::remove(queue.begin(), queue.end(), id));
 }
+
+void PendingMatch::clear() {
+    queue.clear();
+}

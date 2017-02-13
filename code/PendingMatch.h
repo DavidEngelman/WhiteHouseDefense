@@ -29,6 +29,8 @@ public:
     void add_player_to_queue     (int id); //suis pas sur id ou username
     void remove_player_from_queue(int id);
     bool is_full();
+
+    void clear();
 };
 
 
