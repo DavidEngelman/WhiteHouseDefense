@@ -1,4 +1,6 @@
-class RegisterManager {
+#include "Manager.h"
+
+class RegisterManager: public Manager {
 
 private:
 	RegisterUI registerUI;

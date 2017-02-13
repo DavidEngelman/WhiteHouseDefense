@@ -1,4 +1,6 @@
-class LoginManager {
+#include "Manager.h"
+
+class LoginManager : public Manager {
 
 private:
 	LoginUI loginUI;
