@@ -9,7 +9,6 @@ Database::Database(const char* filename) : filename(filename) {
 }
 
 int Database::open() {
-
     rc = sqlite3_open(filename, &db);
 
     if( rc ){
@@ -121,6 +120,21 @@ bool Database::is_identifiers_valid(Credentials credentials) {
 
 
     return valid;
+}
+
+void Database::testMethod() {
+
+
+    char *zErrMsg = 0;
+    char *query = "SELECT name FROM sqlite_master WHERE type = \"table\"";
+    int count = 1;
+
+    rc = sqlite3_exec(db, query, callback, &count, &zErrMsg);
+    if( rc != SQLITE_OK ){
+        fprintf(stderr, "SQL error: %s\n", zErrMsg);
+        sqlite3_free(zErrMsg);
+    }
+
 }
 
 Database::~Database() {
