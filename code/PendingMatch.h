@@ -5,6 +5,8 @@
 #include <string>
 #include <algorithm>
 
+#define MAX_SIZE 4
+
 class PendingMatch {
 
 private:

@@ -25,3 +25,7 @@ void PendingMatch::remove_player_from_queue(int id) {
 void PendingMatch::clear() {
     queue.clear();
 }
+
+bool PendingMatch::is_full(){
+    return (queue.size() == MAX_SIZE);
+}
