@@ -22,11 +22,11 @@ public:
 
 	int getNbOfVictories();
 
-	void setNbOfVictories(int nbOfVictories);
+	void setNbOfVictories(int nbr);
 
 	int getNbPnjKilled();
 
-	void setNbPnjKilled(int nbPnjKilled);
+	void setNbPnjKilled(int nbr);
 
 	std::string getPassword();
 

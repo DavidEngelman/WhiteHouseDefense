@@ -18,15 +18,17 @@ void AccountServer::run() {
         //add_new_client(newClient); Je laisse ca la au cas ou
 
         if (!fork()) {
+            //TODO: Rajouter une boucle pour que si le client se rate une fois il puisse rééssayer
             char message_buffer[BUFFER_SIZE];
             Command command;
-            Credentials credentials = command.credentials;
+            Credentials credentials;
 
             //Get the the username and password from client
             receive_message(newClient, (char *) message_buffer);
 
             //Process the username and password
             parse_command((char *) message_buffer, &command);
+            credentials = command.credentials;
 
             if (command.action == "login"){
                 handle_login(credentials, newClient);
@@ -52,6 +54,8 @@ void AccountServer::parse_command(char *data, Command *command) {
 
     // TODO? Gerer les cas où le message n'est pas correct (genre "login,bob;")
 
+    std::string username;
+    std::string password;
     int i = 0;
 
     // Extracts action string (ex: login)
@@ -63,16 +67,21 @@ void AccountServer::parse_command(char *data, Command *command) {
 
     // Extracts the username (ex: bob)
     while (data[i] != ',') {
-        (command->credentials).getUsername() += data[i];
+
+        username += data[i];
         i++;
     }
     i++; // passe la virgule
 
     // Extracts the password (ex: leponge)
     while (data[i] != ';') {
-        (command->credentials).getPassword() += data[i];
+        password += data[i];
         i++;
     }
+
+    command->credentials.setUsername(username);
+    command->credentials.setPassword(password);
+
 }
 
 //Partie Register

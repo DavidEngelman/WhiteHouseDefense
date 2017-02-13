@@ -34,6 +34,7 @@ public:
     void update_record();
     void delete_record();
 
+    void testMethod();
 
     virtual ~Database();
 
