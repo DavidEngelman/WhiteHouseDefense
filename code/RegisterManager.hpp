@@ -2,6 +2,7 @@
 #include "RegisterUI.hpp"
 #include "Networking.h"
 #include "Credentials.h"
+#include "LoginManager.hpp"
 
 class RegisterManager: public Manager {
 

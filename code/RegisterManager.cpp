@@ -22,6 +22,8 @@ void RegisterManager::registerUser() {
 
     if (attemptRegister(toRegister)){
         std::cout<< "Your account was successfully registered, you can now login normally.\n";
+        LoginManager loginManager(port, ip_address); // On crée un loginManager pour qu'il puisse se connecter
+
     }else{
         registerUI.displayError();
     }

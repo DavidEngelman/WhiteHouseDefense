@@ -10,7 +10,7 @@ private:
 
 public:
 
-	LoginUI() = default;
+	LoginUI();
 	std::string get_username_entry() { return username_entry; };
 	std::string get_password_entry() { return password_entry; };
 	void ask_username();

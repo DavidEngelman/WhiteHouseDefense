@@ -4,6 +4,9 @@
 
 #include "RegisterUI.hpp"
 
+RegisterUI::RegisterUI() {
+    std::cout << "REGISTER SCREEN\n" << std::endl;
+}
 
 void RegisterUI::ask_username() {
     std::cout << "Enter a username:" << std::endl;

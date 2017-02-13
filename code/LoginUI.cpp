@@ -1,6 +1,9 @@
 
 #include "LoginUI.hpp"
 
+LoginUI::LoginUI() {
+    std::cout << "LOGIN SCREEN\n" << std::endl;
+}
 
 void LoginUI::ask_username() {
     std::cout << "Enter a username:" << std::endl;

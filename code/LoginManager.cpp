@@ -27,6 +27,7 @@ void LoginManager::login_process() {
     }
 
     std::cout << "Connection succeeded" << std::endl;
+    //MainManager mainManager; //On lance le jeu
 
 }
 
