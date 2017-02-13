@@ -18,6 +18,7 @@ void AccountServer::run() {
         //add_new_client(newClient); Je laisse ca la au cas ou
 
         if (!fork()) {
+            //TODO: Rajouter une boucle pour que si le client se rate une fois il puisse rééssayer
             char message_buffer[BUFFER_SIZE];
             Command command;
             Credentials credentials;
