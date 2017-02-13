@@ -8,7 +8,7 @@
 void RegisterManager::registerUser() {
     Credentials toRegister;
     bool correctCredentials = false;
-    while( !registered ){
+    while( !correctCredentials ){
         registerUI.display();
         toRegister.setUsername(registerUI.get_username_entry());
         toRegister.setPassword(registerUI.get_password_entry());
