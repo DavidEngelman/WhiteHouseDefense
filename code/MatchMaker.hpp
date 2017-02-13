@@ -9,8 +9,16 @@ class MatchMaker : public Server {
 
 private:
 
-    std::vector<PendingMatch> pendingMatches; // Je sais pas si c'est peut etre pas mieux 3 listes, une pour chaque
-                                              // mode de jeu
+    std::vector<PendingMatch> pendingMatches;
+	// Je sais pas si c'est peut etre pas mieux 3 listes, une pour chaque
+    // mode de jeu
+
+    // Pourquoi est-ce qu'il faut 3 listes?
+    // Ca ne suffirait pas d'avoir un
+    // mode1PendingMatch
+    // mode2PendingMatch
+    // mode3PendingMatch
+    // (J'ai oublié le nom des modes, mais ça devrait etre qq chose ddu genre)
 
 public:
 
