@@ -9,7 +9,7 @@ MatchMaker::MatchMaker(int port) : Server(port),
                                    timedPendingMatch(PendingMatch(TIMED_MODE)),
                                    teamPendingMatch(PendingMatch(TEAM_MODE)) {
     std::cout << "Constructor" << std::endl;
-
+    //Nice print
 };
 
 
@@ -48,9 +48,26 @@ void MatchMaker::addPlayerToPendingMatch(int id, std::string mode) {
 
 void MatchMaker::run() { std::cout << "hi" << std::endl; }
 
-void MatchMaker::getNewClients() {}
+void MatchMaker::getNewClients() {
+    /*
+     * Je me souviens plus ce qu'un avait dit que faisait cette fct -_- elle fait un receive c'est ça ?
+     *
+    */
+}
 
-void MatchMaker::getPendingMatches(std::string mode) {}
+void MatchMaker::getPendingMatches(std::string mode) {
+
+
+}
 
 void MatchMaker::addPendingMatch(std::string mode) {}
 
+void announceMatchStart(int player){
+    //TODO
+    /*
+     * Un truc du genre:
+     * send_message(player, MATCHSTARTING) //Ou MATCHSTARTING serait un nombre (par exemple 32) et du coté du MainManager
+     *                                     // on saurait que 32 veut dire afficher :"La partie va commencer"
+     *                                     //Je ferais ca demain je suis fatigué
+     */
+}
