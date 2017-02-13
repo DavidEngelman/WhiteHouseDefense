@@ -1,14 +1,17 @@
+#include <string>
+#include "Credentials.h"
+
 class Account {
 
 private:
-	string username;
-	string password;
+
+    Credentials creds; // username + password
 	FriendList friendList;
 	int nbOfVictories;
 	int nbPnjKilled;
 
 public:
-	string getUsername();
+	std::string getUsername();
 
 	void setUsername(string username);
 
@@ -24,7 +27,7 @@ public:
 
 	void setNbPnjKilled(int nbPnjKilled);
 
-	string getPassword();
+	std::string getPassword();
 
-	void setPassword(string password);
+	void setPassword(std::string password);
 };
