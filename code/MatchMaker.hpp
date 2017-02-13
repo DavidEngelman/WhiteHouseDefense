@@ -1,4 +1,8 @@
-class MatchMaker : Server {
+#include "Server.hpp"
+#include <iostream>
+#include <string>
+
+class MatchMaker : public Server {
 
 private:
 	int pendingMatches;
@@ -7,7 +11,7 @@ public:
 
 	void getNewClients();
 
-	void getPendingMatches(string mode);
+	void getPendingMatches(std::string mode);
 
-	void addPendingMatch(string mode);
+	void addPendingMatch(std::string mode);
 };
