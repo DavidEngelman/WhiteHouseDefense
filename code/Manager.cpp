@@ -12,7 +12,7 @@ void Manager::init() {
         exit(1);
     }
 
-    int server_socket = create_socket();
+    server_socket = create_socket();
     if (connect_to_server(server_socket, he) == -1) {
         perror("connect");
         exit(1);
