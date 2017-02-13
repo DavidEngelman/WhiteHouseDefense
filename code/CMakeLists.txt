@@ -4,7 +4,7 @@ set(CMAKE_CXX_STANDARD 14)
 set(CLIENT_FILES main.cpp)
 add_executable(client ${CLIENT_FILES})
 
-set(SERVER_FILES "serverLauncher.cpp" "Networking.cpp" "Server.cpp" "AccountServer.cpp" "Database.cpp" Credentials.cpp Credentials.h MatchMaker.cpp PendingMatch.cpp PendingMatch.h)
+set(SERVER_FILES "serverLauncher.cpp" "Networking.cpp" "Server.cpp" "AccountServer.cpp" "Database.cpp" Credentials.cpp MatchMaker.cpp PendingMatch.cpp)
 add_executable(server ${SERVER_FILES})
 
 include_directories(/usr/include)

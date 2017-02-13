@@ -10,7 +10,7 @@ class PendingMatch {
 private:
 
     std::string mode;
-    std::vector queue;
+    std::vector<int> queue;
 
 public:
 
@@ -18,9 +18,9 @@ public:
 
     const std::string &getMode() const;
 
-    const std::vector &getQueue() const;
+    const std::vector<int> &getQueue() const;
 
-    void add_player_to_queue(int id); //suis pas sur id ou username
+    void add_player_to_queue     (int id); //suis pas sur id ou username
     void remove_player_from_queue(int id);
 };
 

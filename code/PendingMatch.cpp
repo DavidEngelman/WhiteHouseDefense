@@ -10,7 +10,7 @@ const std::string &PendingMatch::getMode() const {
     return mode;
 }
 
-const std::vector &PendingMatch::getQueue() const {
+const std::vector<int> &PendingMatch::getQueue() const {
     return queue;
 }
 

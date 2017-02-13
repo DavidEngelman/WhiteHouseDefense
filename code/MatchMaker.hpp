@@ -1,15 +1,16 @@
 #include "Server.hpp"
+#include "PendingMatch.h"
+
 #include <iostream>
 #include <string>
-#include <queue>
+#include <vector>
 
 class MatchMaker : public Server {
 
 private:
 
-	std::queue classicPendingMatches;
-    std::queue againstTimePendingMatches;
-    std::queue teamPendingMatches;
+    std::vector<PendingMatch> pendingMatches; // Je sais pas si c'est peut etre pas mieux 3 listes, une pour chaque
+                                              // mode de jeu
 
 public:
 
