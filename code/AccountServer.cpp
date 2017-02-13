@@ -14,6 +14,7 @@ void AccountServer::run() {
 
     while (1) {
         newClient = accept_connection();
+        std::cout << "New client connected wouhouuu" << std::endl;
         //add_new_client(newClient); Je laisse ca la au cas ou
 
         if (!fork()) {
