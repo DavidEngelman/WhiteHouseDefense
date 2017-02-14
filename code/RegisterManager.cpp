@@ -72,5 +72,6 @@ bool RegisterManager::attemptRegister(Credentials credentials){
 
 
 bool RegisterManager::checkCredentialsValidity(Credentials credentials) {
-    return credentials.getUsername().length() != 0 && credentials.getPassword().length()!= 0;
+    return 0 < credentials.getUsername().length() <= 16 && credentials.getPassword().length()!= 0 ;
+
 }

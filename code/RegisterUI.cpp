@@ -21,7 +21,7 @@ RegisterUI::RegisterUI() {
 }
 
 void RegisterUI::ask_username() {
-    std::cout << "   Enter a username:" << std::endl;
+    std::cout << "   Enter a username:     ( 16 characters max. )" << std::endl;
     std::cin >> username_entry;
     std::cin.ignore(100,'\n');
 }

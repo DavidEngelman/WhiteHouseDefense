@@ -34,7 +34,7 @@ void LoginManager::login_process() {
 }
 
 bool LoginManager::checkCredentialsValidity(Credentials credentials) {
-    return credentials.getUsername().length() != 0 && credentials.getPassword().length()!= 0;
+    return 0 < credentials.getUsername().length() <= 16 && credentials.getPassword().length()!= 0 ;
     //TODO Peut etre faire une verif plus approfondie :D
 }
 
