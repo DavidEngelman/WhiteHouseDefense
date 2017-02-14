@@ -32,6 +32,8 @@ public:
 
     void run() override;
 
+    void get_and_process_command(int client, char* message_buffer);
+
     bool insert_account_in_db(Credentials credentials);
 
     bool attemptCreateAccount(Credentials credentials);
@@ -43,7 +45,7 @@ public:
 
     void parse_command(char *data, Command *command);
 
-    void handle_login(Credentials credentials, int client_sock_fd);
+    bool handle_login(Credentials credentials, int client_sock_fd);
 
-    void handle_register(Credentials credentials, int client_sock_fd);
+    bool handle_register(Credentials credentials, int client_sock_fd);
 };
