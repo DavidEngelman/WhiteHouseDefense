@@ -23,11 +23,13 @@ RegisterUI::RegisterUI() {
 void RegisterUI::ask_username() {
     std::cout << "   Enter a username:" << std::endl;
     std::cin >> username_entry;
+    std::cin.ignore(100,'\n');
 }
 
 void RegisterUI::ask_password() {
     std::cout << "   Enter a password:" << std::endl;
     std::cin >> password_entry;
+    std::cin.ignore(100,'\n');
 }
 
 

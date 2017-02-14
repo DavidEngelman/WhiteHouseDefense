@@ -13,13 +13,15 @@ void LoginManager::login_process() {
 
         while (not valid) {
             loginUI.display(); //demande le  username et pswrd
-            valid = checkCredentialsValidity(loginUI.get_username_entry(), loginUI.get_password_entry());
+            toLogin.setUsername(loginUI.get_username_entry());
+            toLogin.setPassword(loginUI.get_password_entry());
+            valid = checkCredentialsValidity(toLogin);
             if (not valid) {
                 loginUI.displayError();
             }
         }
 
-        success = attemptLogin(loginUI.get_username_entry(), loginUI.get_password_entry());
+        success = attemptLogin(toLogin);
         if (not success){
             loginUI.displayError();
             valid = false;
@@ -31,15 +33,15 @@ void LoginManager::login_process() {
 
 }
 
-bool LoginManager::checkCredentialsValidity(std::string name, std::string password) {
-    return name.length() != 0 && password.length()!= 0;
+bool LoginManager::checkCredentialsValidity(Credentials credentials) {
+    return credentials.getUsername().length() != 0 && credentials.getPassword().length()!= 0;
     //TODO Peut etre faire une verif plus approfondie :D
 }
 
-bool LoginManager::attemptLogin(std::string name, std::string password) {
+bool LoginManager::attemptLogin(Credentials credentials) {
     char server_response[10];
 
-    std::string message = "login," + name + "," + password + ";";
+    std::string message = "login," + credentials.getUsername() + "," + credentials.getPassword() + ";";
     send_message(server_socket, message.c_str());
     receive_message(server_socket,server_response);
     if (server_response[0] == '1') {

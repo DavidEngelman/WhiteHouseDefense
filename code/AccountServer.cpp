@@ -9,7 +9,6 @@ AccountServer::AccountServer(int port, const char *databaseName) : Server(port),
 
 void AccountServer::run() {
     start_socket_listen();
-
     int newClient;
 
     while (1) {
@@ -18,30 +17,9 @@ void AccountServer::run() {
         //add_new_client(newClient); Je laisse ca la au cas ou
 
         if (!fork()) {
-            //TODO: Rajouter une boucle pour que si le client se rate une fois il puisse rééssayer
             char message_buffer[BUFFER_SIZE];
-            Command command;
-            Credentials credentials;
-
-            //Get the the username and password from client
-            receive_message(newClient, (char *) message_buffer);
-
-            //Process the username and password
-            parse_command((char *) message_buffer, &command);
-            credentials = command.credentials;
-
-            if (command.action == "login"){
-                handle_login(credentials, newClient);
-            }
-            else if (command.action == "register") {
-                handle_register(credentials, newClient);
-            }
-            else {
-                // Show "unknown command" error
-            }
+            get_and_process_command(newClient, message_buffer);
         }
-
-        //TODO: Finir ça
     }
 }
 
@@ -96,14 +74,18 @@ bool AccountServer::attemptCreateAccount(Credentials credentials) {
     return insert_account_in_db(credentials);
 }
 
-void AccountServer::handle_register(Credentials credentials, int client_sock_fd) {
+bool AccountServer::handle_register(Credentials credentials, int client_sock_fd) {
+    bool success = false;
+
     if (attemptCreateAccount(credentials)) {
         //Success
         send_success(client_sock_fd);
+        success = true;
     } else {
         //Error
         send_error(client_sock_fd);
     }
+    return success;
 }
 
 void AccountServer::send_error(int client_sock_fd){
@@ -121,11 +103,45 @@ bool AccountServer::checkCredentials(Credentials credentials) {
     return  myDatabase.is_identifiers_valid(credentials);
 }
 
-void AccountServer::handle_login(Credentials credentials, int client_sock_fd) {
+bool AccountServer::handle_login(Credentials credentials, int client_sock_fd) {
+    bool success = false;
+
     if (checkCredentials(credentials)){
         send_success(client_sock_fd);
-    } else {
+        success = true;
+
+    }
+    else {
         send_error(client_sock_fd);
+    }
+    return success;
+}
+
+void AccountServer::get_and_process_command(int client, char* message_buffer){
+    Command command;
+    bool ok = false;
+
+    while (!ok){
+        receive_message(client, message_buffer);
+        parse_command(message_buffer, &command);
+
+        Credentials credentials = command.credentials;
+        std::cout << command.action << std::endl;
+        if (command.action == "login"){
+            ok = handle_login(credentials, client);
+        }
+        else if (command.action == "register") {
+            ok = handle_register(credentials, client);
+        }
+        else {
+            // Show "unknown command" error
+        }
+
+        //On re-init la commande
+        command.action ="";
+        command.credentials.setUsername("");
+        command.credentials.setPassword("");
+
     }
 }
 
