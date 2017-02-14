@@ -1,13 +1,15 @@
 class PlayerState {
 
 private:
+
 	int hp;
 	int money;
 	bool isSupported;
 	bool isWinner;
-	Account account;
+	Account account; // pas sur que ce soit tres utile
 
 public:
+
 	int getHp();
 
 	void setHp(int hp);
