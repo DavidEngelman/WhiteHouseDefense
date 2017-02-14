@@ -3,8 +3,6 @@
 #include "MainManager.hpp"
 
 int main(int argc, char *argv[]) {
-    // Pour le test
-    MainManager mainMan = MainManager();
 
     std::cout << "Hello, World!" << std::endl;
 
