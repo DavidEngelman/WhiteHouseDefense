@@ -4,10 +4,10 @@
 #include <string>
 #include "ProfilUI.hpp"
 
-class ProfilManager {
+class ProfileManager {
 
 private:
-	ProfilUI profilUI;
+	ProfileUI profileUI;
 
 public:
 	void getInfo(std::string username);
