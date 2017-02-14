@@ -32,15 +32,10 @@ int MainUI::select(){
     std::cout << "Enter your choice --> ";
     std::cin >> x;
     while(std::cin.fail() or 0>x or x>6){
-        std::cout << "Error" << std::endl;
+        std::cout << "Error, enter a integer between 1 and 5 " << std::endl;
         std::cin.clear();
         std::cin.ignore(256,'\n');
         std::cout << "Enter your choice --> ";
         std::cin >> x;
     }
-
-    std::cout << "ok" << std::endl;
-    std::cout << "x:"<< x << std::endl;
-
-
 }
