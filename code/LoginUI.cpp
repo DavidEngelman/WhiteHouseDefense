@@ -27,8 +27,6 @@ void LoginUI::ask_password() {
     std::cin >> password_entry;
 }
 
-
-
 void LoginUI::displayError() {
     std::cout << "   Error : username or password incorrect, please try again\n";
 }
