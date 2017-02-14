@@ -1,3 +1,6 @@
+#ifndef FRIENDLIST_HPP
+#define FRIENDLIST_HPP
+
 #include <string>
 
 class FriendList {
@@ -10,3 +13,5 @@ public:
 
 	void removeFriend(std::string username);
 };
+
+#endif
