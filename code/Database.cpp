@@ -39,8 +39,8 @@ int Database::callback(void *NotUsed, int argc, char **argv, char **azColName){
 int Database::callback_ranking(void *ptr, int argc, char **argv, char **azColName){
     std::vector<RankingInfos> *list = reinterpret_cast<std::vector<RankingInfos> *>(ptr);
     RankingInfos res;
-    res.username = argv[1];
-    res.victories= atoi(argv[2]);
+    res.username = argv[0];
+    res.victories= atoi(argv[1]);
     list->push_back(res);
     return 0;
 }
@@ -135,10 +135,13 @@ std::vector<RankingInfos> Database::getRanking() {
     /*
      * Renvoi un vector d'element RankingInfos trié par ordre décroissant selon le nombre de victoires.
      * Un élement RankingInfos est composé d'un attribut username et d'un attribut victories
+     * Ex: [elem1, elem2, elem3]
+     * elem1.username = Bob , elem1.victories = 60 | elem2.username = Bobette , elem2.victories = 21 | ect...
+     *
      * */
     std::vector<RankingInfos> list;
     char *zErrMsg = 0;
-    char *query = "select id, username, victories from Accounts order by victories DESC";
+    char *query = "select username, victories from Accounts order by victories DESC";
 
     rc = sqlite3_exec(db, query, callback_ranking, &list, &zErrMsg);
     if( rc != SQLITE_OK ){
