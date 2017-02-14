@@ -1,8 +1,7 @@
-
-#include "MainUI.hpp"
-
 #ifndef MAINMANAGER_HPP
 #define MAINMANAGER_HPP
+
+#include "MainUI.hpp"
 
 class MainManager {
 

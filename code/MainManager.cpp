@@ -3,7 +3,6 @@
 #include "GameLauncher.hpp"
 #include "ProfileManager.hpp"
 #include "FriendList.hpp"
-#include <iostream>
 
 
 MainManager::MainManager() {
@@ -11,6 +10,7 @@ MainManager::MainManager() {
     mainUI.display();
     switch (mainUI.select()) {
         case 1: {
+            std::cout << "Game Launcher !" << std::endl;
             GameLauncher game = GameLauncher();
             break;
         }
@@ -28,6 +28,8 @@ MainManager::MainManager() {
             break;
         }
         case 5: {
+            std::cout << "Exit !" << std::endl;
+            mainUI.exit();
             break;
         }
     }
