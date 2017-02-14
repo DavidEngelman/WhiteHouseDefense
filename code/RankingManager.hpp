@@ -4,6 +4,7 @@
 
 #include "Manager.hpp"
 #include "RankingUI.hpp"
+#include "Networking.h"
 
 class RankingManager : public Manager  {
 
@@ -11,7 +12,8 @@ private:
 	RankingUI rankingUI;
 
 public:
-	void getInfo();
+	std::string getRanking();
+	void sendRequest();
 };
 
 #endif
