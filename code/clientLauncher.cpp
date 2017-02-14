@@ -3,9 +3,10 @@
 #include "MainManager.hpp"
 
 int main(int argc, char *argv[]) {
+    // Pour le test
     MainManager mainMan = MainManager();
 
-    /*
+
     std::cout << "Hello, World!" << std::endl;
 
     if (argc <= 1){
@@ -33,7 +34,6 @@ int main(int argc, char *argv[]) {
             std::cout << "Please enter 1 or 2" << std::endl;
 
     }
-    */
 
     return 0;
 }
