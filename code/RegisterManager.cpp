@@ -72,19 +72,5 @@ bool RegisterManager::attemptRegister(Credentials credentials){
 
 
 bool RegisterManager::checkCredentialsValidity(Credentials credentials) {
-    bool credentialsValidity;
-
-    if ((credentials.getUsername().length() == 0 || credentials.getPassword().size() == 0)) {
-        // check for spaces in username || password
-        for (int i = 0 ; i < credentials.getUsername().length() ;i++){
-            if(credentials.getUsername() == " " || credentials.getPassword() == " "){
-                credentialsValidity = false;
-            }
-        }
-    } else {
-        credentialsValidity = true;
-    }
-
-    return credentialsValidity;
-
+    return credentials.getUsername().length() != 0 && credentials.getPassword().length()!= 0;
 }
