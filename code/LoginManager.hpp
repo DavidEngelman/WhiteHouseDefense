@@ -1,7 +1,7 @@
 #ifndef LOGINMANAGER_H
 #define LOGINMANAGER_H
 
-#include "Manager.h"
+#include "Manager.hpp"
 #include "LoginUI.hpp"
 #include "Networking.h"
 #include "MainManager.hpp"
