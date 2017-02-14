@@ -36,6 +36,15 @@ int Database::callback(void *NotUsed, int argc, char **argv, char **azColName){
     return 0;
 }
 
+int Database::callback_ranking(void *ptr, int argc, char **argv, char **azColName){
+    std::vector<RankingInfos> *list = reinterpret_cast<std::vector<RankingInfos> *>(ptr);
+    RankingInfos res;
+    res.username = argv[1];
+    res.victories= atoi(argv[2]);
+    list->push_back(res);
+    return 0;
+}
+
 int Database::callback_counter(void *count, int argc, char **argv, char **azColName){
     int *c = (int*)count;
     *c = atoi(argv[0]);
@@ -122,18 +131,23 @@ bool Database::is_identifiers_valid(Credentials credentials) {
     return valid;
 }
 
-void Database::testMethod() {
-
-
+std::vector<RankingInfos> Database::getRanking() {
+    /*
+     * Renvoi un vector d'element RankingInfos trié par ordre décroissant selon le nombre de victoires.
+     * Un élement RankingInfos est composé d'un attribut username et d'un attribut victories
+     * */
+    std::vector<RankingInfos> list;
     char *zErrMsg = 0;
-    char *query = "SELECT name FROM sqlite_master WHERE type = \"table\"";
-    int count = 1;
+    char *query = "select id, username, victories from Accounts order by victories DESC";
 
-    rc = sqlite3_exec(db, query, callback, &count, &zErrMsg);
+    rc = sqlite3_exec(db, query, callback_ranking, &list, &zErrMsg);
     if( rc != SQLITE_OK ){
         fprintf(stderr, "SQL error: %s\n", zErrMsg);
         sqlite3_free(zErrMsg);
     }
+
+
+    return list;
 
 }
 
