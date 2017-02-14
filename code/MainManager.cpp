@@ -1,8 +1,9 @@
 
 #include "MainManager.hpp"
 #include "GameLauncher.hpp"
-#include "ProfilManager.hpp"
+#include "ProfileManager.hpp"
 #include "FriendList.hpp"
+#include <iostream>
 
 
 MainManager::MainManager() {
@@ -14,10 +15,12 @@ MainManager::MainManager() {
             break;
         }
         case 2: {
-            ProfilManager profile = ProfilManager();
+            std::cout << "Profile !" << std::endl;
+            ProfileManager profile = ProfileManager();
             break;
         }
         case 3: {
+            std::cout << "Friendlist !" << std::endl;
             FriendList friendList = FriendList();
             break;
         }
