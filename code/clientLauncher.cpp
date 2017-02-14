@@ -1,8 +1,10 @@
 #include "LoginManager.hpp"
 #include "RegisterManager.hpp"
+#include "MainManager.hpp"
 
 int main(int argc, char *argv[]) {
-    std::cout << "Hello, World!" << std::endl;
+
+    std::cout << "Welcome in White House Defense" << std::endl;
 
     if (argc <= 1){
         std::cout << "Don't forget the ip_adress of the server as argument! ;)" << std::endl;

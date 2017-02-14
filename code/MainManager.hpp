@@ -1,5 +1,6 @@
+#ifndef MAINMANAGER_HPP
+#define MAINMANAGER_HPP
 
-#include <iostream>
 #include "MainUI.hpp"
 
 class MainManager {
@@ -9,5 +10,6 @@ private:
 
 public:
     MainManager();
-
 };
+
+#endif

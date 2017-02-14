@@ -1,10 +1,12 @@
+#include "GameState.hpp"
+
 class GameUI {
 
 
 public:
 	void getUserCommands();
 
-	void draw(gameState);
+	void draw(GameState gameState);
 
 	void showNoInternetError();
 
