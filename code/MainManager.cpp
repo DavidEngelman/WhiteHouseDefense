@@ -9,18 +9,23 @@ MainManager::MainManager() {
     mainUI = MainUI();
     mainUI.display();
     switch (mainUI.select()) {
-        case 1:
+        case 1: {
             GameLauncher game = GameLauncher();
             break;
-        case 2:
+        }
+        case 2: {
             ProfilManager profile = ProfilManager();
             break;
-        case 3:
+        }
+        case 3: {
             FriendList friendList = FriendList();
             break;
-        case 4:
+        }
+        case 4: {
             break;
-        case 5:
+        }
+        case 5: {
             break;
+        }
     }
 }
