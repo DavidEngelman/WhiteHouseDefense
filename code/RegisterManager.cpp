@@ -4,8 +4,7 @@ RegisterManager::RegisterManager(int port, char* address): Manager(port, address
     registerUser();
 };
 
-void RegisterManager::registerUser() {
-    Credentials toRegister;
+/*void RegisterManager::registerUser() {
     bool correctCredentials = false;
     while( !correctCredentials ){
         registerUI.display();
@@ -28,6 +27,34 @@ void RegisterManager::registerUser() {
         registerUI.displayError();
     }
 
+}*/
+
+void RegisterManager::registerUser() {
+    bool success = false;
+    bool valid = false; // bool qui check si les donnés sont corrects (champs non vide) et peuvent être envoyées au serveur
+
+    while (not success) {
+
+        while (not valid) {
+            registerUI.display(); //demande le  username et pswrd
+            toRegister.setUsername(registerUI.get_username_entry());
+            toRegister.setPassword(registerUI.get_password_entry());
+            valid = checkCredentialsValidity(toRegister);
+            if (not valid) {
+                registerUI.displayError();
+            }
+        }
+
+        success = attemptRegister(toRegister);
+        if (not success){
+            registerUI.displayError();
+            valid = false;
+        }
+    }
+
+    std::cout<< "Your account was successfully registered, you can now login normally.\n";
+    LoginManager loginManager(port, ip_address); // On crée un loginManager pour qu'il puisse se connecter
+
 }
 
 bool RegisterManager::attemptRegister(Credentials credentials){
@@ -45,19 +72,6 @@ bool RegisterManager::attemptRegister(Credentials credentials){
 
 
 bool RegisterManager::checkCredentialsValidity(Credentials credentials) {
-    bool credentialsValidity;
-
-    if ((credentials.getUsername().length() == 0 || credentials.getPassword().size() == 0)) {
-        // check for spaces in username || password
-        for (int i = 0 ; i < credentials.getUsername().length() ;i++){
-            if(credentials.getUsername() == " " || credentials.getPassword() == " "){
-                credentialsValidity = false;
-            }
-        }
-    } else {
-        credentialsValidity = true;
-    }
-
-    return credentialsValidity;
-
+    return ((credentials.getUsername().length() != 0) && (credentials.getPassword().length()!= 0) &&
+            (credentials.getUsername().length() <= 16));
 }

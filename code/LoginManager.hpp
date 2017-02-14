@@ -1,21 +1,22 @@
 #ifndef LOGINMANAGER_H
 #define LOGINMANAGER_H
 
-#include "Manager.h"
+#include "Manager.hpp"
 #include "LoginUI.hpp"
 #include "Networking.h"
 #include "MainManager.hpp"
+#include "Credentials.h"
 
 class LoginManager : public Manager {
 
 private:
 	LoginUI loginUI;
+	Credentials toLogin;
 
 public:
 	LoginManager(int port, char* address);
-	bool attemptLogin(std::string name, std::string password);
-	void sendDataToServer(std::string name, std::string password);
-	bool checkCredentialsValidity(std::string name, std::string password);
+	bool attemptLogin(Credentials credentials);
+	bool checkCredentialsValidity(Credentials credentials);
 	void login_process();
 };
 
