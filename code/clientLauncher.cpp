@@ -6,7 +6,6 @@ int main(int argc, char *argv[]) {
     // Pour le test
     MainManager mainMan = MainManager();
 
-
     std::cout << "Hello, World!" << std::endl;
 
     if (argc <= 1){
