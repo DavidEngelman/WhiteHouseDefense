@@ -9,5 +9,4 @@ private:
 
 public:
     MainManager();
-
 };
