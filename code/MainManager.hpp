@@ -2,6 +2,9 @@
 #include <iostream>
 #include "MainUI.hpp"
 
+#ifndef MAINMANAGER_HPP
+#define MAINMANAGER_HPP
+
 class MainManager {
 
 private:
@@ -10,3 +13,5 @@ private:
 public:
     MainManager();
 };
+
+#endif
