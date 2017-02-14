@@ -29,12 +29,18 @@ void MainUI::display() {
 
 int MainUI::select(){
     int x = -1;
-    while(0>x or x>6){
-        std::cout << "Enter your choice --> " << std::endl;
+    std::cout << "Enter your choice --> ";
+    std::cin >> x;
+    while(std::cin.fail() or 0>x or x>6){
+        std::cout << "Error" << std::endl;
+        std::cin.clear();
+        std::cin.ignore(256,'\n');
+        std::cout << "Enter your choice --> ";
         std::cin >> x;
     }
 
     std::cout << "ok" << std::endl;
+    std::cout << "x:"<< x << std::endl;
 
 
 }
