@@ -9,6 +9,16 @@
 #define TIMED_MODE "Timed"
 #define TEAM_MODE "Team"
 
+typedef struct Command{
+    std::string mode;
+    int player_id;
+};
+
+typedef struct Id{
+    int socket ;
+    int player_id;
+};
+
 class MatchMaker : public Server {
 
 private:
@@ -38,7 +48,7 @@ private:
      * est debile et meme pas digne d'un singe avec 5 points de QI
      */
 
-    void addPlayerToPendingMatch(int id, std::string mode);
+    void addPlayerToPendingMatch(Id id, std::string mode);
 
     PendingMatch &getMatch(std::string mode);
 
@@ -58,4 +68,6 @@ public:
     // Il ne faudra pas ajouter des joueurs dans la signature
     // Ça sert à quoi cette function 
     void addPendingMatch(std::string mode); //Celle la elle
+    void get_and_process_command(int client_socket, char* command);
+    void parse_command(char *data, Command *command);
 };

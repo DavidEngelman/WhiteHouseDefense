@@ -3,8 +3,6 @@
 #include "Database.hpp"
 #include "Credentials.h"
 
-static const int BUFFER_SIZE = 500;
-
 typedef struct Command {
     std::string action;
     Credentials credentials;
