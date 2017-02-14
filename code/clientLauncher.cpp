@@ -1,13 +1,8 @@
 #include "LoginManager.hpp"
 #include "RegisterManager.hpp"
-#include "MainManager.hpp"
-#include "Map.hpp"
 
 int main(int argc, char *argv[]) {
 
-    Map map = Map();
-    map.display();
-/*
     std::cout << "Welcome in White House Defense" << std::endl;
 
     if (argc <= 1){
@@ -35,6 +30,6 @@ int main(int argc, char *argv[]) {
             std::cout << "Please enter 1 or 2" << std::endl;
 
     }
-*/
+
     return 0;
 }

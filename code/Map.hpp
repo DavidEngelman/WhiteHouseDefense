@@ -1,18 +1,25 @@
 #ifndef MAP_HPP
 #define MAP_HPP
 
+#define HEIGHT 20
+#define WIDTH 20
+
+#define GRASS "⬛"
+#define PATH "⬜"
+#define ERROR "❎"
+
 #include <string>
 
 class Map {
 private:
-    static const int height = 20;
-    static const int width = 20;
-    int matrix[width][height];
+    int matrix[HEIGHT][WIDTH];
 
 public:
     Map();
     Map(std::string filename);
     void display();
+    void generateRandomMatrix();
+    bool isNextToPath(int x, int y);
 };
 
 #endif
