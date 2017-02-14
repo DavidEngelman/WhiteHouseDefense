@@ -1,8 +1,8 @@
-#ifndef PROFILMANAGER_HPP
-#define PROFILMANAGER_HPP
+#ifndef PROFILEMANAGER_HPP
+#define PROFILEMANAGER_HPP
 
 #include <string>
-#include "ProfilUI.hpp"
+#include "ProfileUI.hpp"
 
 class ProfileManager {
 

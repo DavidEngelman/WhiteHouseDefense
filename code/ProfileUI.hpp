@@ -1,5 +1,5 @@
-#ifndef PROFILUI_HPP
-#define PROFILUI_HPP
+#ifndef PROFILEUI_HPP
+#define PROFILEUI_HPP
 
 class ProfileUI {
 
