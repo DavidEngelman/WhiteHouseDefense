@@ -4,7 +4,6 @@
 
 
 MainManager::MainManager() {
-    MainUI mainUI = MainUI();
+    mainUI = MainUI();
     mainUI.display();
-
 }
