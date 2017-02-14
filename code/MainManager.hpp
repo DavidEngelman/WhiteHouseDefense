@@ -1,5 +1,4 @@
 
-#include <iostream>
 #include "MainUI.hpp"
 
 #ifndef MAINMANAGER_HPP
