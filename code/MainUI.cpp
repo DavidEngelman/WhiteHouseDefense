@@ -26,3 +26,15 @@ void MainUI::display() {
     std::cout << "   ======================================   " << std::endl;
 
 }
+
+int MainUI::select(){
+    int x = -1;
+    while(0>x or x>6){
+        std::cout << "Enter your choice --> " << std::endl;
+        std::cin >> x;
+    }
+
+    std::cout << "ok" << std::endl;
+
+
+}

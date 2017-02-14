@@ -9,6 +9,7 @@ class MainUI {
 
 public:
 	void display();
+	int select();
 
 };
 
