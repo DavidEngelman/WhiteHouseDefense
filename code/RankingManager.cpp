@@ -2,7 +2,6 @@
 #include "RankingManager.hpp"
 
 RankingManager::RankingManager(int port, char* address): Manager(port, address) {
-    sendRequest();
     std::string ranking = createRanking(getRanking());
     rankingUI.display(ranking);
 }
@@ -13,6 +12,8 @@ void RankingManager::sendRequest() {
 }
 
 std::string RankingManager::getRanking() {
+    sendRequest();
+
     char buffer[1000]; //TODO mettre une constante a la place de 1000
     receive_message(server_socket, buffer); //receive the ranking send by AccountServer
     return std::string(buffer);
