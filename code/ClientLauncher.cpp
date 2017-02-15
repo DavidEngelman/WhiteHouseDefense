@@ -29,7 +29,8 @@ int main(int argc, char *argv[]) {
         }
         else
             std::cout << "Please enter 1 or 2" << std::endl;
-
+        std::cin.clear();
+        std::cin.ignore();
     }
 
     return 0;
