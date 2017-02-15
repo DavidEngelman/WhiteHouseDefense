@@ -12,6 +12,35 @@ MatchMaker::MatchMaker(int port) : Server(port),
     //Nice print
 };
 
+void MatchMaker::run() {
+    while(1){
+        int newClient = accept_connection();
+        std::cout << "New client in the matchmaking" << std::endl;
+
+        if (!fork()){
+            get_and_process_command(newClient);
+        }
+    }
+}
+
+void MatchMaker::get_and_process_command(int socket_fd){
+    char command_buffer[BUFFER_SIZE];
+    receive_message(socket_fd, command_buffer);
+
+    MatchmakingCommand matchmakingCommand(socket_fd);
+    matchmakingCommand.parse(command_buffer);
+
+    addPlayerToPendingMatch(matchmakingCommand.getPlayerConnection(), matchmakingCommand.getMode());
+}
+
+void MatchMaker::addPlayerToPendingMatch(PlayerConnection player_connection, std::string mode) {
+    PendingMatch match = getMatch(mode);
+    match.add_player_to_queue(player_connection);
+    if (match.is_full()) {
+        launchMatch(match); // Ici il faut que ça passe par valeur pour que ça marche
+        match.clear();
+    }
+}
 
 PendingMatch &MatchMaker::getMatch(std::string mode) {
     if (mode == CLASSIC_MODE) {
@@ -26,6 +55,7 @@ PendingMatch &MatchMaker::getMatch(std::string mode) {
     }
 }
 
+
 void MatchMaker::launchMatch(PendingMatch match) {
     launchGameServer(match);
     const std::vector<PlayerConnection> &players = match.getPlayerConnections();
@@ -36,81 +66,6 @@ void MatchMaker::launchMatch(PendingMatch match) {
 
 void MatchMaker::launchGameServer(PendingMatch match){
     // TODO: completer une fois qu'il y a la classe GameServer
-}
-
-void MatchMaker::addPlayerToPendingMatch(PlayerConnection id, std::string mode) {
-    PendingMatch match = getMatch(mode);
-    match.add_player_to_queue(id);
-    if (match.is_full()) {
-        launchMatch(match); // Ici il faut que ça passe par valeur pour que ça marche
-        match.clear();
-    }
-}
-
-
-void MatchMaker::run() {
-
-    while(1){
-        int newClient = accept_connection();
-        std::cout << "New client in the matchmaking" << std::endl;
-
-        if (!fork()){
-            get_and_process_command(newClient);
-        }
-
-    }
-}
-
-void MatchMaker::getNewClients() {
-    //Je sais pas si c est tres util cette methode
-
-}
-
-void MatchMaker::get_and_process_command(int socket_fd){
-    char command_buffer[BUFFER_SIZE];
-    receive_message(socket_fd, command_buffer);
-
-    MatchmakingCommand matchmakingCommand(socket_fd);
-    matchmakingCommand.parse(command_buffer);
-
-
-
-    addPlayerToPendingMatch(matchmakingCommand.getPlayerConnection(), matchmakingCommand.getMode());
-}
-
-void MatchMaker::parse_command(char *data, Command *command){
-    /*
-     * Disons qu'une commande se présente s'envoie dans un string de type : mode,player_id;
-     *
-     * Ex: si bob veut jouer en classic et que le playerID de bob est 18 -> data = classic,18;
-     *
-     */
-    int i = 0;
-
-    // Extracts mode (ex: classic)
-    while (data[i] != ',') {
-        command->mode += data[i];
-        i++;
-    }
-    i++; // passe la virgule
-
-    // Extracts the player_id (ex: 18)
-    std::string string_player_id;
-    while (data[i] != ';') {
-        string_player_id += data[i];
-        i++;
-    }
-    command->player_id = atoi(string_player_id); // "18" -> 18
-
-}
-
-void MatchMaker::getPendingMatches(std::string mode) {
-
-
-}
-
-void MatchMaker::addPendingMatch(std::string mode) {
-
 }
 
 void MatchMaker::announceMatchStart(PlayerConnection playerConnection){
