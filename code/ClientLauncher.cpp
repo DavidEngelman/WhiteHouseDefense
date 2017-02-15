@@ -4,7 +4,6 @@
 
 int main(int argc, char *argv[]) {
 
-    Drawing::drawWhiteHouse("LAUNCHER");
 
     if (argc <= 1){
         std::cout << "Don't forget the ip_adress of the server as argument! ;)" << std::endl;
@@ -16,6 +15,7 @@ int main(int argc, char *argv[]) {
     bool ok = false;
 
     while (!ok) {
+        Drawing::drawWhiteHouse("LAUNCHER");
         std::cout << "Press 1 to log in or 2 to register a new account" << std::endl;
         std::cin >> choice;
 
