@@ -5,30 +5,33 @@
 class Account {
 
 private:
-
+	int id;
     Credentials creds; // username + password
 	FriendList friendList;
 	int nbOfVictories;
 	int nbPnjKilled;
 
 public:
-	std::string getUsername();
 
 	void setUsername(std::string username);
 
-	FriendList getFriendList();
+	void setPassword(std::string password);
+
+	FriendList getFriendList() const;
 
 	void setFriendList(FriendList friendList);
 
-	int getNbOfVictories();
+	int getNbOfVictories() const;
 
 	void setNbOfVictories(int nbr);
 
-	int getNbPnjKilled();
+	int getNbPnjKilled() const;
 
 	void setNbPnjKilled(int nbr);
 
-	std::string getPassword();
+	void setId(int id);
 
-	void setPassword(std::string password);
+	int getId() const;
+
+	const Credentials &getCreds() const;
 };
