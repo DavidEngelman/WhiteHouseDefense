@@ -1,10 +1,17 @@
+#ifndef FRIENDLIST_HPP
+#define FRIENDLIST_HPP
+
+#include <string>
+
 class FriendList {
 
 private:
-	string[] friends;
+	std::string friends; // j'ai mis string pour l'instant sinon ca faisait chier pour un autre truc
 
 public:
-	void addFriend(string username);
+	void addFriend(std::string username);
 
-	void removeFriend(string username);
+	void removeFriend(std::string username);
 };
+
+#endif

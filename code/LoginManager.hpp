@@ -1,10 +1,23 @@
-class LoginManager {
+#ifndef LOGINMANAGER_H
+#define LOGINMANAGER_H
+
+#include "Manager.hpp"
+#include "LoginUI.hpp"
+#include "Networking.h"
+#include "MainManager.hpp"
+#include "Credentials.h"
+
+class LoginManager : public Manager {
 
 private:
 	LoginUI loginUI;
+	Credentials toLogin;
 
 public:
-	void attemptLogin(string name, string password);
-
-	void checkCredentialsValidity(string name, string password);
+	LoginManager(int port, char* address);
+	bool attemptLogin(Credentials credentials);
+	bool checkCredentialsValidity(Credentials credentials);
+	void login_process();
 };
+
+#endif

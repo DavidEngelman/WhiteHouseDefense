@@ -1,77 +1,23 @@
-//
-// Created by benjamin on 11/02/17.
-//
-
 #include "AccountServer.hpp"
-
 
 AccountServer::AccountServer(int port, const char *databaseName) : Server(port), myDatabase(Database(databaseName)) {}
 
 void AccountServer::run() {
-
+    start_socket_listen();
     int newClient;
 
     while (1) {
         newClient = accept_connection();
+        std::cout << "New client connected wouhouuu" << std::endl;
         //add_new_client(newClient); Je laisse ca la au cas ou
 
         if (!fork()) {
             char message_buffer[BUFFER_SIZE];
-            Command command;
-            Credentials credentials = command.credentials;
-
-            //Get the the username and password from client
-            receive_message(newClient, (char *) message_buffer);
-
-            //Process the username and password
-            parse_command((char *) message_buffer, &command);
-
-            if (command.action == "login"){
-                handle_login(credentials, newClient);
-            }
-            else if (command.action == "register") {
-                handle_register(credentials, newClient);
-            }
-            else {
-                // Show "unknown command" error
-            }
+            get_and_process_command(newClient, message_buffer);
         }
-
-        //TODO: Finir ça
     }
 }
 
-void AccountServer::parse_command(char *data, Command *command) {
-    /* Parses a string formatted into "command,username,password;" into a
-     * Command object.
-     *
-     * Example: "login,bob,leponge" -> Command{"command", Credentials{"bob", "leponge"}}
-     */
-
-    // TODO? Gerer les cas où le message n'est pas correct (genre "login,bob;")
-
-    int i = 0;
-
-    // Extracts action string (ex: login)
-    while (data[i] != ',') {
-        command->action += data[i];
-        i++;
-    }
-    i++; // passe la virgule
-
-    // Extracts the username (ex: bob)
-    while (data[i] != ',') {
-        (command->credentials).getUsername() += data[i];
-        i++;
-    }
-    i++; // passe la virgule
-
-    // Extracts the password (ex: leponge)
-    while (data[i] != ';') {
-        (command->credentials).getPassword() += data[i];
-        i++;
-    }
-}
 
 //Partie Register
 
@@ -85,14 +31,18 @@ bool AccountServer::attemptCreateAccount(Credentials credentials) {
     return insert_account_in_db(credentials);
 }
 
-void AccountServer::handle_register(Credentials credentials, int client_sock_fd) {
+bool AccountServer::handle_register(Credentials credentials, int client_sock_fd) {
+    bool success = false;
+
     if (attemptCreateAccount(credentials)) {
         //Success
         send_success(client_sock_fd);
+        success = true;
     } else {
         //Error
         send_error(client_sock_fd);
     }
+    return success;
 }
 
 void AccountServer::send_error(int client_sock_fd){
@@ -110,12 +60,95 @@ bool AccountServer::checkCredentials(Credentials credentials) {
     return  myDatabase.is_identifiers_valid(credentials);
 }
 
-void AccountServer::handle_login(Credentials credentials, int client_sock_fd) {
+bool AccountServer::handle_login(Credentials credentials, int client_sock_fd) {
+    bool success = false;
+
     if (checkCredentials(credentials)){
         send_success(client_sock_fd);
-    } else {
+        success = true;
+
+    }
+    else {
         send_error(client_sock_fd);
     }
+    return success;
+}
+
+//Partie Ranking
+
+std::vector<RankingInfos> AccountServer::getRanking() {
+    return myDatabase.getRanking();
+}
+
+bool AccountServer::handle_ranking(int client_sock_fd) {
+
+    //TODO : je sais pas comment faire pour envoyé un vector au client
+
+}
+
+
+void AccountServer::get_and_process_command(int client, char* message_buffer){
+    bool ok = false;
+
+    while (!ok){
+        receive_message(client, message_buffer);
+        std::string command_type = get_command_type(message_buffer);
+        std::cout << command_type << std::endl;
+
+        if ( (command_type == "login") || (command_type == "register")){
+
+            //Si on est dans le cas ou quelqu'un essaye de se connecter/register
+
+            LoginRegisterCommand command;
+            command.parse(message_buffer);
+            Credentials credentials = command.getCreds();
+
+            if (command.getAction() == "login"){
+                std::cout << "ok je suis la" << std::endl;
+
+                ok = handle_login(credentials, client);
+            }
+            else if (command.getAction() == "register") {
+                ok = handle_register(credentials, client);
+            }
+            else {
+                // Show "unknown command" error
+            }
+        }
+        else if ( command_type == "ranking" ){
+
+            //Si on est dans le cas ou un user veut voir le ranking
+
+            Command command;
+
+            //TODO handle_ranking();
+        }
+        else if ( command_type == "profile" ){
+            //TODO: ProfileCommand
+            //TODO: handle_profle();
+        }
+    }
+}
+
+std::string AccountServer::get_command_type(char* data){
+
+    /*
+     * Determine le type de commande (login/register, ranking, profile,...)
+     */
+
+    int i = 0;
+    std::string command_type;
+    std::cout << "hi" << std::endl;
+
+
+    while ((data[i] != ',') && (data[i] != ';')) { // comme ça une commande peut etre juste par ex: "ranking;"
+        command_type += data[i];                        // au lieu de "ranking," c'est un peu plus clean
+        i++;
+    }
+    std::cout << command_type << std::endl;
+
+    return command_type;
+
 }
 
 

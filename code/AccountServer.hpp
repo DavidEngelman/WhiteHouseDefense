@@ -2,11 +2,9 @@
 #include <string.h>
 #include "Database.hpp"
 #include "Credentials.h"
+#include "LoginRegisterCommand.hpp"
+#include "Command.hpp"
 
-typedef struct Command {
-    std::string action;
-    Credentials credentials;
-};
 
 /* Ceci serait peut être mieux, je ne suis pas sur...
 
@@ -30,6 +28,8 @@ public:
 
     void run() override;
 
+    void get_and_process_command(int client, char* message_buffer);
+
     bool insert_account_in_db(Credentials credentials);
 
     bool attemptCreateAccount(Credentials credentials);
@@ -41,7 +41,12 @@ public:
 
     void parse_command(char *data, Command *command);
 
-    void handle_login(Credentials credentials, int client_sock_fd);
+    bool handle_login(Credentials credentials, int client_sock_fd);
 
-    void handle_register(Credentials credentials, int client_sock_fd);
+    bool handle_register(Credentials credentials, int client_sock_fd);
+
+    bool handle_ranking(int client_sock_fd);
+    std::vector<RankingInfos> getRanking();
+
+    std::string get_command_type(char* data);
 };

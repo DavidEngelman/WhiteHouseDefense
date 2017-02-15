@@ -1,30 +1,37 @@
+#include <string>
+#include "Credentials.h"
+#include "FriendList.hpp" //TODO
+
 class Account {
 
 private:
-	string username;
-	string password;
+	int id;
+    Credentials creds; // username + password
 	FriendList friendList;
 	int nbOfVictories;
 	int nbPnjKilled;
 
 public:
-	string getUsername();
 
-	void setUsername(string username);
+	void setUsername(std::string username);
 
-	FriendList getFriendList();
+	void setPassword(std::string password);
+
+	FriendList getFriendList() const;
 
 	void setFriendList(FriendList friendList);
 
-	int getNbOfVictories();
+	int getNbOfVictories() const;
 
-	void setNbOfVictories(int nbOfVictories);
+	void setNbOfVictories(int nbr);
 
-	int getNbPnjKilled();
+	int getNbPnjKilled() const;
 
-	void setNbPnjKilled(int nbPnjKilled);
+	void setNbPnjKilled(int nbr);
 
-	string getPassword();
+	void setId(int id);
 
-	void setPassword(string password);
+	int getId() const;
+
+	const Credentials &getCreds() const;
 };

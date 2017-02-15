@@ -9,7 +9,6 @@ Database::Database(const char* filename) : filename(filename) {
 }
 
 int Database::open() {
-
     rc = sqlite3_open(filename, &db);
 
     if( rc ){
@@ -37,9 +36,26 @@ int Database::callback(void *NotUsed, int argc, char **argv, char **azColName){
     return 0;
 }
 
+int Database::callback_ranking(void *ptr, int argc, char **argv, char **azColName){
+    std::vector<RankingInfos> *list = reinterpret_cast<std::vector<RankingInfos> *>(ptr);
+    RankingInfos res;
+    res.username = argv[0];
+    res.victories= atoi(argv[1]);
+    list->push_back(res);
+    return 0;
+}
+
 int Database::callback_counter(void *count, int argc, char **argv, char **azColName){
     int *c = (int*)count;
     *c = atoi(argv[0]);
+    return 0;
+}
+
+int Database::callback_account_usrname(void *ptr, int argc, char **argv, char **azColName){
+    PublicAccountInfos *infos = reinterpret_cast<PublicAccountInfos*>(ptr);
+    infos->username = argv[0];
+    infos->victories = atoi(argv[1]);
+    infos->pnjKilled = atoi(argv[2]);
     return 0;
 }
 
@@ -121,6 +137,49 @@ bool Database::is_identifiers_valid(Credentials credentials) {
 
 
     return valid;
+}
+
+std::vector<RankingInfos> Database::getRanking() {
+    /*
+     * Renvoi un vector d'element RankingInfos trié par ordre décroissant selon le nombre de victoires.
+     * Un élement RankingInfos est composé d'un attribut username et d'un attribut victories
+     * Ex: [elem1, elem2, elem3]
+     * elem1.username = Bob , elem1.victories = 60 | elem2.username = Bobette , elem2.victories = 21 | ect...
+     *
+     * */
+    std::vector<RankingInfos> list;
+    char *zErrMsg = 0;
+    char *query = "select username, victories from Accounts order by victories DESC";
+
+    rc = sqlite3_exec(db, query, callback_ranking, &list, &zErrMsg);
+    if( rc != SQLITE_OK ){
+        fprintf(stderr, "SQL error: %s\n", zErrMsg);
+        sqlite3_free(zErrMsg);
+    }
+
+
+    return list;
+
+}
+
+PublicAccountInfos Database::getUsrInfosByUsrname(std::string username) {
+    PublicAccountInfos infos;
+    char *zErrMsg = 0;
+    std::stringstream strm;
+    strm << "select username, victories, pnjKilled from Accounts WHERE username='" << username << "'";
+
+    std::string s = strm.str();
+    char *str = &s[0];
+    char *query = str;
+
+    rc = sqlite3_exec(db, query, callback_account_usrname, &infos, &zErrMsg);
+    if( rc != SQLITE_OK ){
+        fprintf(stderr, "SQL error: %s\n", zErrMsg);
+        sqlite3_free(zErrMsg);
+    }
+
+    return infos;
+
 }
 
 Database::~Database() {
