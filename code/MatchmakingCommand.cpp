@@ -1,6 +1,6 @@
 #include "MatchmakingCommand.hpp"
 
-void MatchmakingCommand::parse(char* data) override {
+void MatchmakingCommand::parse(char* data)  {
     /*
     * Disons qu'une commande se présente s'envoie dans un string de type : mode,player_id;
     *
@@ -23,7 +23,7 @@ void MatchmakingCommand::parse(char* data) override {
         i++;
     }
 
-    playerConnection.player_id = atoi(string_player_id); // "18" -> 18
+    playerConnection.player_id = atoi(string_player_id.c_str()); // "18" -> 18
 }
 
 const PlayerConnection MatchmakingCommand::getPlayerConnection() const {
