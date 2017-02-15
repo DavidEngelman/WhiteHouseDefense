@@ -23,19 +23,6 @@ int Database::open() {
 
 }
 
-
-int Database::callback(void *NotUsed, int argc, char **argv, char **azColName){
-    int i;
-
-    for(i=0; i<argc; i++){
-        printf("%s = %s\n", azColName[i], argv[i] ? argv[i] : "NULL");
-    }
-
-
-    printf("\n");
-    return 0;
-}
-
 int Database::callback_ranking(void *ptr, int argc, char **argv, char **azColName){
     std::vector<RankingInfos> *list = reinterpret_cast<std::vector<RankingInfos> *>(ptr);
     RankingInfos res;
@@ -77,7 +64,7 @@ int Database::insert_account(Credentials credentials) {
     char *str = &s[0];
     char *query = str;
 
-    rc = sqlite3_exec(db, query, callback, 0, &zErrMsg);
+    rc = sqlite3_exec(db, query, NULL, 0, &zErrMsg);
     if( rc != SQLITE_OK ){
         fprintf(stderr, "SQL error: %s\n", zErrMsg);
         sqlite3_free(zErrMsg);

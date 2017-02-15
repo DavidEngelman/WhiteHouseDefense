@@ -1,9 +1,9 @@
 #include "LoginManager.hpp"
 #include "RegisterManager.hpp"
+#include "Drawing.hpp"
 
 int main(int argc, char *argv[]) {
 
-    std::cout << "Welcome in White House Defense" << std::endl;
 
     if (argc <= 1){
         std::cout << "Don't forget the ip_adress of the server as argument! ;)" << std::endl;
@@ -15,6 +15,7 @@ int main(int argc, char *argv[]) {
     bool ok = false;
 
     while (!ok) {
+        Drawing::drawWhiteHouse("LAUNCHER");
         std::cout << "Press 1 to log in or 2 to register a new account" << std::endl;
         std::cin >> choice;
 
@@ -27,9 +28,10 @@ int main(int argc, char *argv[]) {
             RegisterManager myRegisterManager = RegisterManager(5555, argv[1]);
             ok = true;
         }
-        else
-            std::cout << "Please enter 1 or 2" << std::endl;
+        else std::cout << "Please enter 1 or 2" << std::endl;
 
+        std::cin.clear();
+        std::cin.ignore();
     }
 
     return 0;

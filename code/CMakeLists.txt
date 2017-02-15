@@ -4,7 +4,7 @@ file(GLOB code database.db)
 
 set(CLIENT_FILES  "Manager.cpp" "ClientLauncher.cpp" "LoginManager.cpp" "LoginUI.cpp"
         "RegisterManager.cpp" "RegisterUI.cpp" "Networking.cpp" "Credentials.cpp"
-        MainManager.cpp MainUI.cpp GameManager.cpp Map.cpp RankingUI.cpp RankingManager.cpp)
+        MainManager.cpp MainUI.cpp GameManager.cpp Map.cpp Drawing.cpp Drawing.hpp)
 
 add_executable(client ${CLIENT_FILES})
 

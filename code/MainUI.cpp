@@ -1,22 +1,12 @@
 
 #include "MainUI.hpp"
+#include "Drawing.hpp"
 
 void MainUI::display() {
     /*Show user's menu*/
 
-    std::cout << "                _ _.-''-._ _                " << std::endl;
-    std::cout << "               ;.'________'.;               " << std::endl;
-    std::cout << "    _________n.[____________].n_________    " << std::endl;
-    std::cout << "   |\"\"_\"\"_\"\"_\"\"||==||==||==||\"\"_\"\"_\"\"_\"\"]   " << std::endl;
-    std::cout << "   |\"\"\"\"\"\"\"\"\"\"\"||..||..||..||\"\"\"\"\"\"\"\"\"\"\"|   " << std::endl;
-    std::cout << "   |LI LI LI LI||LI||LI||LI||LI LI LI LI|   " << std::endl;
-    std::cout << "   |.. .. .. ..||..||..||..||.. .. .. ..|   " << std::endl;
-    std::cout << "   |LI LI LI LI||LI||LI||LI||LI LI LI LI|   " << std::endl;
-    std::cout << "   ======================================   " << std::endl;
-    std::cout << "   |        WHITE HOUSE DEFENSE         |   " << std::endl;
-    std::cout << "   ======================================   " << std::endl;
-    std::cout << "   |           MENU SELECTION           |   " << std::endl;
-    std::cout << "   ======================================   " << std::endl;
+    Drawing::drawWhiteHouse("MENU SELECTION");
+
     std::cout << "   |                                    |   " << std::endl;
     std::cout << "   |        1. New Game                 |   " << std::endl;
     std::cout << "   |        2. Profile                  |   " << std::endl;
