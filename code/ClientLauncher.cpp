@@ -1,9 +1,10 @@
 #include "LoginManager.hpp"
 #include "RegisterManager.hpp"
+#include "Drawing.hpp"
 
 int main(int argc, char *argv[]) {
 
-    std::cout << "Welcome in White House Defense" << std::endl;
+    Drawing::drawWhiteHouse("LAUNCHER");
 
     if (argc <= 1){
         std::cout << "Don't forget the ip_adress of the server as argument! ;)" << std::endl;
