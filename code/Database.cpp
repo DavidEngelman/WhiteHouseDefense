@@ -51,6 +51,14 @@ int Database::callback_counter(void *count, int argc, char **argv, char **azColN
     return 0;
 }
 
+int Database::callback_account_usrname(void *ptr, int argc, char **argv, char **azColName){
+    PublicAccountInfos *infos = reinterpret_cast<PublicAccountInfos*>(ptr);
+    infos->username = argv[0];
+    infos->victories = atoi(argv[1]);
+    infos->pnjKilled = atoi(argv[2]);
+    return 0;
+}
+
 int Database::insert_account(Credentials credentials) {
 
 
@@ -151,6 +159,26 @@ std::vector<RankingInfos> Database::getRanking() {
 
 
     return list;
+
+}
+
+PublicAccountInfos Database::getUsrInfosByUsrname(std::string username) {
+    PublicAccountInfos infos;
+    char *zErrMsg = 0;
+    std::stringstream strm;
+    strm << "select username, victories, pnjKilled from Accounts WHERE username='" << username << "'";
+
+    std::string s = strm.str();
+    char *str = &s[0];
+    char *query = str;
+
+    rc = sqlite3_exec(db, query, callback_account_usrname, &infos, &zErrMsg);
+    if( rc != SQLITE_OK ){
+        fprintf(stderr, "SQL error: %s\n", zErrMsg);
+        sqlite3_free(zErrMsg);
+    }
+
+    return infos;
 
 }
 
