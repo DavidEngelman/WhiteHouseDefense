@@ -88,7 +88,7 @@ int Database::get_nb_entries() {
     /*Utilisé pour obtenir le prochain id disponible lors du rajout d'un compte dans la database*/
 
     char *zErrMsg = 0;
-    char *query = "select Count(*) from Accounts";
+    char *query = (char *)"select Count(*) from Accounts";
     int count = 1;
 
     rc = sqlite3_exec(db, query, callback_counter, &count, &zErrMsg);
@@ -139,7 +139,7 @@ std::vector<RankingInfos> Database::getRanking() {
      * */
     std::vector<RankingInfos> list;
     char *zErrMsg = 0;
-    char *query = "select username, victories from Accounts order by victories DESC";
+    char *query = (char *)"select username, victories from Accounts order by victories DESC";
 
     rc = sqlite3_exec(db, query, callback_ranking, &list, &zErrMsg);
     if( rc != SQLITE_OK ){
