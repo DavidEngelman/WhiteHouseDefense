@@ -80,6 +80,20 @@ bool AccountServer::handle_login(Credentials credentials, int client_sock_fd) {
     return success;
 }
 
+//Partie Ranking
+
+std::vector<RankingInfos> AccountServer::getRanking() {
+    return myDatabase.getRanking();
+}
+
+bool AccountServer::handle_ranking(int client_sock_fd) {
+
+    //TODO : je sais pas comment faire pour envoyé un vector au client
+}
+
+
+
+
 void AccountServer::get_and_process_command(int client, char* message_buffer){
     bool ok = false;
 
