@@ -200,7 +200,7 @@ int Database::sendFriendRequest(std::string username, std::string toAdd) {
 
 int Database::acceptFriendRequest(std::string username, std::string toAccept) {
     // The user who got the request accepts it and he is added to the requester friend's list and vice versa
-    // Friendrequests && pendingInvitations are accordingly updated too
+    // Friendrequests && pendingInvitations are accordingly updated too.
     std::string currentFriendList = addToString(getUsrInfosByUsrname(username).friendList, toAccept);
     std::string currentFriendList2 = addToString(getUsrInfosByUsrname(toAccept).friendList,username);
     std::string currentFriendRequests = removeFromString(getUsrInfosByUsrname(username).friendRequests, toAccept);
