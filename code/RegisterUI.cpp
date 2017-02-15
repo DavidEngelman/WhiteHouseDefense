@@ -18,7 +18,7 @@ void RegisterUI::ask_password() {
     std::cin >> password_entry;
     std::cin.clear();
     std::cin.ignore();
-    password_entry = crypt(password_entry.c_str(), "g4");
+    //password_entry = crypt(password_entry.c_str(), "g4");
 }
 
 
