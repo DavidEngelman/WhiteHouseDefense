@@ -1,10 +1,4 @@
-//
-// Created by benjamin on 11/02/17.
-//
-
 #include "AccountServer.hpp"
-
-
 
 AccountServer::AccountServer(int port, const char *databaseName) : Server(port), myDatabase(Database(databaseName)) {}
 
@@ -89,9 +83,8 @@ std::vector<RankingInfos> AccountServer::getRanking() {
 bool AccountServer::handle_ranking(int client_sock_fd) {
 
     //TODO : je sais pas comment faire pour envoyé un vector au client
+
 }
-
-
 
 
 void AccountServer::get_and_process_command(int client, char* message_buffer){
@@ -138,6 +131,10 @@ void AccountServer::get_and_process_command(int client, char* message_buffer){
 }
 
 std::string AccountServer::get_command_type(char* data){
+
+    /*
+     * Determine le type de commande (login/register, ranking, profile,...)
+     */
 
     int i = 0;
     std::string command_type;
