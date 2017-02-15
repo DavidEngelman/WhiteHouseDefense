@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.6)
+tcmake_minimum_required(VERSION 3.6)
 set(CMAKE_CXX_STANDARD 14)
 file(GLOB code database.db)
 
@@ -16,4 +16,4 @@ add_executable(server ${SERVER_FILES})
 
 include_directories(/usr/include)
 link_directories(/usr/lib)
-target_link_libraries( server sqlite3)
+target_link_libraries( server sqlite3
