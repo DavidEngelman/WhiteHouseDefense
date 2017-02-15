@@ -12,6 +12,35 @@ MatchMaker::MatchMaker(int port) : Server(port),
     //Nice print
 };
 
+void MatchMaker::run() {
+    while(1){
+        int client_socket_fd = accept_connection();
+        std::cout << "New client in the matchmaking" << std::endl;
+
+        if (!fork()){
+            get_and_process_command(client_socket_fd);
+        }
+    }
+}
+
+void MatchMaker::get_and_process_command(int socket_fd){
+    char command_buffer[BUFFER_SIZE];
+    receive_message(socket_fd, command_buffer);
+
+    MatchmakingCommand matchmakingCommand(socket_fd);
+    matchmakingCommand.parse(command_buffer);
+
+    addPlayerToPendingMatch(matchmakingCommand.getPlayerConnection(), matchmakingCommand.getMode());
+}
+
+void MatchMaker::addPlayerToPendingMatch(PlayerConnection player_connection, std::string mode) {
+    PendingMatch match = getMatch(mode);
+    match.add_player_to_queue(player_connection);
+    if (match.is_full()) {
+        launchMatch(match); // Ici il faut que ça passe par valeur pour que ça marche
+        match.clear();
+    }
+}
 
 PendingMatch &MatchMaker::getMatch(std::string mode) {
     if (mode == CLASSIC_MODE) {
@@ -26,6 +55,7 @@ PendingMatch &MatchMaker::getMatch(std::string mode) {
     }
 }
 
+
 void MatchMaker::launchMatch(PendingMatch match) {
     launchGameServer(match);
     const std::vector<PlayerConnection> &players = match.getPlayerConnections();
@@ -38,86 +68,6 @@ void MatchMaker::launchGameServer(PendingMatch match){
     // TODO: completer une fois qu'il y a la classe GameServer
 }
 
-void MatchMaker::addPlayerToPendingMatch(PlayerConnection id, std::string mode) {
-    PendingMatch match = getMatch(mode);
-    match.add_player_to_queue(id);
-    if (match.is_full()) {
-        launchMatch(match); // Ici il faut que ça passe par valeur pour que ça marche
-        match.clear();
-    }
-}
-
-
-void MatchMaker::run() {
-
-    while(1){
-        int newClient = accept_connection();
-        std::cout << "New client in the matchmaking" << std::endl;
-
-        if (!fork()){
-            char command_buffer[BUFFER_SIZE];
-            get_and_process_command(newClient, command_buffer);
-        }
-
-    }
-}
-
-void MatchMaker::getNewClients() {
-    //Je sais pas si c est tres util cette methode
-
-}
-
-void MatchMaker::get_and_process_command(int client_socket, char* command_buffer){
-    Command command;
-    PlayerConnection playerConnection; // (la struct {socket, player_id}
-
-    receive_message(client_socket, command_buffer); // Recois la commande
-
-    parse_command(command_buffer, &command);
-
-    playerConnection.socket_fd = client_socket;
-    playerConnection.player_id = command.player_id;
-
-    addPlayerToPendingMatch(playerConnection, command.mode);
-
-
-}
-
-void MatchMaker::parse_command(char *data, Command *command){
-    /*
-     * Disons qu'une commande se présente s'envoie dans un string de type : mode,player_id;
-     *
-     * Ex: si bob veut jouer en classic et que le playerID de bob est 18 -> data = classic,18;
-     *
-     */
-    int i = 0;
-
-    // Extracts mode (ex: classic)
-    while (data[i] != ',') {
-        command->mode += data[i];
-        i++;
-    }
-    i++; // passe la virgule
-
-    // Extracts the player_id (ex: 18)
-    std::string string_player_id;
-    while (data[i] != ';') {
-        string_player_id += data[i];
-        i++;
-    }
-    command->player_id = atoi(string_player_id); // "18" -> 18
-
-}
-
-void MatchMaker::getPendingMatches(std::string mode) {
-
-
-}
-
-void MatchMaker::addPendingMatch(std::string mode) {
-
-}
-
 void MatchMaker::announceMatchStart(PlayerConnection playerConnection){
     //TODO
     /*
@@ -126,11 +76,7 @@ void MatchMaker::announceMatchStart(PlayerConnection playerConnection){
      *                                     // on saurait que 32 veut dire afficher :"La partie va commencer"
      *                                     //Je ferais ca demain je suis fatigué
      */
-
-    // TODO: ça va probablement changer si on modifie la signature de la fonction et
-    // de ce qu'il y a dans le std::vector de Pending Match
-    // Soit un trouve un moyen d'obtenir le socket d'un joueur, soit on modifie la signature et
-    // ça prend direct le socket_fd
+    // Pour l'instant, ça envoie un bete string
 
     // TODO: si il y a plusieurs servers de jeu d'un meme mode, il faudra trouver un moyen de
     // lui signaler vers lequel il doit parler

@@ -1,7 +1,3 @@
-//
-// Created by benjamin on 15/02/17.
-//
-
 #include "Command.hpp"
 
 std::string Command::getAction() const {

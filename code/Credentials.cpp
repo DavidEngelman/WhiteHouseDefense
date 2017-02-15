@@ -1,7 +1,3 @@
-//
-// Created by benjamin on 12/02/17.
-//
-
 #include "Credentials.h"
 
 Credentials::Credentials(): username("\0"), password("\0"){}

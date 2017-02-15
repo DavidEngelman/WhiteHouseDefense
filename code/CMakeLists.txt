@@ -6,6 +6,7 @@ set(CLIENT_FILES  "Manager.cpp" "ClientLauncher.cpp" "LoginManager.cpp" "LoginUI
         "RegisterManager.cpp" "RegisterUI.cpp" "Networking.cpp" "Credentials.cpp"
         MainManager.cpp MainUI.cpp GameManager.cpp Map.cpp Drawing.cpp Drawing.hpp "RankingManager.cpp" "RankingUI.cpp")
 
+
 add_executable(client ${CLIENT_FILES})
 
 set(SERVER_FILES "serverLauncher.cpp" "Networking.cpp" "Server.cpp" "AccountServer.cpp" "Database.cpp"

@@ -1,12 +1,30 @@
-//
-// Created by benjamin on 15/02/17.
-//
-
 #ifndef PROJET_MATCHMAKINGCOMMAND_HPP
 #define PROJET_MATCHMAKINGCOMMAND_HPP
 
 
-class MatchmakingCommand {
+#include "Command.hpp"
+#include "PendingMatch.h"
+
+class MatchmakingCommand : Command {
+private:
+
+    PlayerConnection playerConnection;
+    std::string mode;
+
+public:
+
+    MatchmakingCommand() = delete;
+    MatchmakingCommand(int socket_fd): Command() {
+        playerConnection.socket_fd = socket_fd;
+    }
+
+    ~MatchmakingCommand() = default;
+
+    void parse(char* data) override;
+
+    const PlayerConnection getPlayerConnection() const;
+
+    const std::string getMode() const;
 
 };
 
