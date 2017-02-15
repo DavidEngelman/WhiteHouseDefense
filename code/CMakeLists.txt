@@ -5,7 +5,7 @@ file(GLOB code database.db)
 set(CLIENT_FILES  "Manager.cpp" "ClientLauncher.cpp" "LoginManager.cpp" "LoginUI.cpp"  "RegisterManager.cpp" "RegisterUI.cpp" "Networking.cpp" "Credentials.cpp" MainManager.cpp MainUI.cpp GameManager.cpp Map.cpp)
 add_executable(client ${CLIENT_FILES})
 
-set(SERVER_FILES "serverLauncher.cpp" "Networking.cpp" "Server.cpp" "AccountServer.cpp" "Database.cpp" Credentials.cpp Credentials.h Account.cpp)
+set(SERVER_FILES "serverLauncher.cpp" "Networking.cpp" "Server.cpp" "AccountServer.cpp" "Database.cpp" Credentials.cpp Credentials.h Account.cpp Command.cpp Command.hpp LoginRegisterCommand.cpp LoginRegisterCommand.hpp)
 add_executable(server ${SERVER_FILES})
 
 include_directories(/usr/include)
