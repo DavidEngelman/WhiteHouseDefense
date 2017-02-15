@@ -27,16 +27,18 @@ PendingMatch &MatchMaker::getMatch(std::string mode) {
 }
 
 void MatchMaker::launchMatch(PendingMatch match) {
-    /* PseudoCode:
-    creataGameServer(match);
-    for (int player in match.player) {
-        announceMatchStart(player, match);
-
+    launchGameServer(match);
+    const std::vector<PlayerConnection> &players = match.getPlayerConnections();
+    for (auto iterator = players.begin(); iterator != players.end(); iterator++){
+        announceMatchStart(*iterator);
     }
-    */
 }
 
-void MatchMaker::addPlayerToPendingMatch(Id id, std::string mode) {
+void MatchMaker::launchGameServer(PendingMatch match){
+    // TODO: completer une fois qu'il y a la classe GameServer
+}
+
+void MatchMaker::addPlayerToPendingMatch(PlayerConnection id, std::string mode) {
     PendingMatch match = getMatch(mode);
     match.add_player_to_queue(id);
     if (match.is_full()) {
@@ -67,16 +69,16 @@ void MatchMaker::getNewClients() {
 
 void MatchMaker::get_and_process_command(int client_socket, char* command_buffer){
     Command command;
-    Id client_id; // (la struct {socket, player_id}
+    PlayerConnection playerConnection; // (la struct {socket, player_id}
 
     receive_message(client_socket, command_buffer); // Recois la commande
 
     parse_command(command_buffer, &command);
 
-    client_id.socket = client_socket;
-    client_id.player_id = command.player_id;
+    playerConnection.socket_fd = client_socket;
+    playerConnection.player_id = command.player_id;
 
-    addPlayerToPendingMatch(client_id, command.mode);
+    addPlayerToPendingMatch(playerConnection, command.mode);
 
 
 }
@@ -116,7 +118,7 @@ void MatchMaker::addPendingMatch(std::string mode) {
 
 }
 
-void announceMatchStart(int player){
+void MatchMaker::announceMatchStart(PlayerConnection playerConnection){
     //TODO
     /*
      * Un truc du genre:
@@ -124,4 +126,14 @@ void announceMatchStart(int player){
      *                                     // on saurait que 32 veut dire afficher :"La partie va commencer"
      *                                     //Je ferais ca demain je suis fatigué
      */
+
+    // TODO: ça va probablement changer si on modifie la signature de la fonction et
+    // de ce qu'il y a dans le std::vector de Pending Match
+    // Soit un trouve un moyen d'obtenir le socket d'un joueur, soit on modifie la signature et
+    // ça prend direct le socket_fd
+
+    // TODO: si il y a plusieurs servers de jeu d'un meme mode, il faudra trouver un moyen de
+    // lui signaler vers lequel il doit parler
+
+    send_message(playerConnection.socket_fd, GAME_STARTING_STRING);
 }

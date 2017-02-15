@@ -7,29 +7,26 @@
 
 #define MAX_SIZE 4
 
+struct PlayerConnection {
+    int socket_fd;
+    int player_id;
+};
+
 class PendingMatch {
 
 private:
-
     std::string mode;
-
-    // Faudra indiquer ce que represente le int
-    // 1) Numero du socket
-    // 2) Numero du joueur dans la partie
-    // 3) ID du joueur
-    // ????
-    std::vector<int> queue;
-
+    std::vector<PlayerConnection> playerConnections;
 public:
 
     PendingMatch(std::string modeName);
 
     const std::string &getMode() const;
-    const std::vector<int> &getQueue() const;
+    const std::vector<PlayerConnection> &getPlayerConnections() const;
 
 
-    void add_player_to_queue     (int id); //suis pas sur id ou username
-    void remove_player_from_queue(int id);
+    void add_player_to_queue     (PlayerConnection playerConnection); //suis pas sur id ou username
+    void remove_player_from_queue(PlayerConnection playerConnection);
     bool is_full();
 
     void clear();

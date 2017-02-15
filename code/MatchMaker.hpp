@@ -9,15 +9,12 @@
 #define TIMED_MODE "Timed"
 #define TEAM_MODE "Team"
 
-typedef struct Command{
+struct Command{
     std::string mode;
     int player_id;
 };
 
-typedef struct Id{
-    int socket ;
-    int player_id;
-};
+#define GAME_STARTING_STRING "GameStarting"
 
 class MatchMaker : public Server {
 
@@ -39,20 +36,15 @@ private:
 
     //hein oui je sais pas pq j'ai dit ça :D
 
-
-// genre, ce n'est qu'une suggestion, fait revert si tu veux :)
-    // n'aie pas peur d'enlever 
-    /*
-     * Ce qui suit n'est que du pseudocode, donc c'est juste un prototype
-     * ça risque de changer pas mal, si on se rend compte que l'organization
-     * est debile et meme pas digne d'un singe avec 5 points de QI
-     */
-
-    void addPlayerToPendingMatch(Id id, std::string mode);
+    void addPlayerToPendingMatch(PlayerConnection id, std::string mode);
 
     PendingMatch &getMatch(std::string mode);
 
     void launchMatch(PendingMatch match);
+
+    void launchGameServer(PendingMatch match);
+
+    void announceMatchStart(PlayerConnection playerConnection);
 
 public:
     MatchMaker(int port);
