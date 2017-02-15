@@ -1,6 +1,6 @@
-
 #include "RegisterUI.hpp"
 #include "Drawing.hpp"
+#include "unistd.h"
 
 RegisterUI::RegisterUI() {
     Drawing::drawWhiteHouse("REGISTER SCREEN");
@@ -9,13 +9,16 @@ RegisterUI::RegisterUI() {
 void RegisterUI::ask_username() {
     std::cout << "   Enter a username:     ( 16 characters max. )" << std::endl << "   ";
     std::cin >> username_entry;
-    std::cin.ignore(100,'\n');
+    std::cin.clear();
+    std::cin.ignore();
 }
 
 void RegisterUI::ask_password() {
     std::cout << "   Enter a password:" << std::endl << "   ";
     std::cin >> password_entry;
-    std::cin.ignore(100,'\n');
+    std::cin.clear();
+    std::cin.ignore();
+    password_entry = crypt(password_entry.c_str(), "g4");
 }
 
 
