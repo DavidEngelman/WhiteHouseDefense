@@ -11,6 +11,8 @@ protected:
 
 public:
 
+    const std::string &getAction() const;
+
     Command(char* data);
 
     virtual int extract_action(char* data);
@@ -18,6 +20,8 @@ public:
     virtual void parse(char* data);
 
     virtual ~Command();
+
+
 
 };
 

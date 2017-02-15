@@ -2,13 +2,10 @@
 #include <string.h>
 #include "Database.hpp"
 #include "Credentials.h"
+#include "LoginRegisterCommand.hpp"
+#include "Command.hpp"
 
 static const int BUFFER_SIZE = 500;
-
-typedef struct Command {
-    std::string action;
-    Credentials credentials;
-};
 
 /* Ceci serait peut être mieux, je ne suis pas sur...
 
@@ -48,4 +45,6 @@ public:
     bool handle_login(Credentials credentials, int client_sock_fd);
 
     bool handle_register(Credentials credentials, int client_sock_fd);
+
+    std::string get_command_type(char* data);
 };

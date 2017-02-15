@@ -5,6 +5,7 @@
 #include "AccountServer.hpp"
 
 
+
 AccountServer::AccountServer(int port, const char *databaseName) : Server(port), myDatabase(Database(databaseName)) {}
 
 void AccountServer::run() {
@@ -23,44 +24,6 @@ void AccountServer::run() {
     }
 }
 
-void AccountServer::parse_command(char *data, Command *command) {
-    /* Parses a string formatted into "command,username,password;" into a
-     * Command object.
-     *
-     * Example: "login,bob,leponge" -> Command{"command", Credentials{"bob", "leponge"}}
-     */
-
-    // TODO? Gerer les cas où le message n'est pas correct (genre "login,bob;")
-
-    std::string username;
-    std::string password;
-    int i = 0;
-
-    // Extracts action string (ex: login)
-    while (data[i] != ',') {
-        command->action += data[i];
-        i++;
-    }
-    i++; // passe la virgule
-
-    // Extracts the username (ex: bob)
-    while (data[i] != ',') {
-
-        username += data[i];
-        i++;
-    }
-    i++; // passe la virgule
-
-    // Extracts the password (ex: leponge)
-    while (data[i] != ';') {
-        password += data[i];
-        i++;
-    }
-
-    command->credentials.setUsername(username);
-    command->credentials.setPassword(password);
-
-}
 
 //Partie Register
 
@@ -118,31 +81,57 @@ bool AccountServer::handle_login(Credentials credentials, int client_sock_fd) {
 }
 
 void AccountServer::get_and_process_command(int client, char* message_buffer){
-    Command command;
     bool ok = false;
 
     while (!ok){
         receive_message(client, message_buffer);
-        parse_command(message_buffer, &command);
+        std::string command_type = get_command_type(message_buffer);
 
-        Credentials credentials = command.credentials;
-        std::cout << command.action << std::endl;
-        if (command.action == "login"){
-            ok = handle_login(credentials, client);
-        }
-        else if (command.action == "register") {
-            ok = handle_register(credentials, client);
-        }
-        else {
-            // Show "unknown command" error
-        }
+        if ( (command_type == "login") || (command_type == "register")){
 
-        //On re-init la commande
-        command.action ="";
-        command.credentials.setUsername("");
-        command.credentials.setPassword("");
+            //Si on est dans le cas ou quelqu'un essaye de se connecter/register
 
+
+            LoginRegisterCommand command(message_buffer);
+            Credentials credentials = command.getCreds();
+
+            if (command.getAction() == "login"){
+                ok = handle_login(credentials, client);
+            }
+            else if (command.getAction() == "register") {
+                ok = handle_register(credentials, client);
+            }
+            else {
+                // Show "unknown command" error
+            }
+        }
+        else if ( command_type == "ranking" ){
+
+            //Si on est dans le cas ou un user veut voir le ranking
+
+            Command command(message_buffer);
+
+            //TODO handle_ranking();
+        }
+        else if ( command_type == "profile" ){
+            //TODO: ProfileCommand
+            //TODO: handle_profle();
+        }
     }
+}
+
+std::string get_command_type(char* data){
+
+    int i = 0;
+    std::string command_type;
+
+    while ((data[i] != ',') ||(data[i] != ';')) { // comme ça une commande peut etre juste par ex: "ranking;"
+        command_type += data[i];                        // au lieu de "ranking," c'est un peu plus clean
+        i++;
+    }
+
+    return command_type;
+
 }
 
 

@@ -34,3 +34,7 @@ void LoginRegisterCommand::parse(char *data) {
     creds.setUsername(username);
     creds.setPassword(password);
 }
+
+const Credentials &LoginRegisterCommand::getCreds() const {
+    return creds;
+}

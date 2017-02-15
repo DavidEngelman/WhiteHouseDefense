@@ -18,6 +18,8 @@ public:
 
     ~LoginRegisterCommand() = default;
 
+    const Credentials &getCreds() const;
+
 };
 
 
