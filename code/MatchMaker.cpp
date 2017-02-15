@@ -76,11 +76,7 @@ void MatchMaker::announceMatchStart(PlayerConnection playerConnection){
      *                                     // on saurait que 32 veut dire afficher :"La partie va commencer"
      *                                     //Je ferais ca demain je suis fatigué
      */
-
-    // TODO: ça va probablement changer si on modifie la signature de la fonction et
-    // de ce qu'il y a dans le std::vector de Pending Match
-    // Soit un trouve un moyen d'obtenir le socket d'un joueur, soit on modifie la signature et
-    // ça prend direct le socket_fd
+    // Pour l'instant, ça envoie un bete string
 
     // TODO: si il y a plusieurs servers de jeu d'un meme mode, il faudra trouver un moyen de
     // lui signaler vers lequel il doit parler
