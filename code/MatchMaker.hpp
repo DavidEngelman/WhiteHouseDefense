@@ -1,5 +1,6 @@
 #include "Server.hpp"
 #include "PendingMatch.h"
+#include "MatchmakingCommand.hpp"
 
 #include <iostream>
 #include <string>

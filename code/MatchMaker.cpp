@@ -55,8 +55,7 @@ void MatchMaker::run() {
         std::cout << "New client in the matchmaking" << std::endl;
 
         if (!fork()){
-            char command_buffer[BUFFER_SIZE];
-            get_and_process_command(newClient, command_buffer);
+            get_and_process_command(newClient);
         }
 
     }
@@ -67,20 +66,16 @@ void MatchMaker::getNewClients() {
 
 }
 
-void MatchMaker::get_and_process_command(int client_socket, char* command_buffer){
-    Command command;
-    PlayerConnection playerConnection; // (la struct {socket, player_id}
+void MatchMaker::get_and_process_command(int socket_fd){
+    char command_buffer[BUFFER_SIZE];
+    receive_message(socket_fd, command_buffer);
 
-    receive_message(client_socket, command_buffer); // Recois la commande
-
-    parse_command(command_buffer, &command);
-
-    playerConnection.socket_fd = client_socket;
-    playerConnection.player_id = command.player_id;
-
-    addPlayerToPendingMatch(playerConnection, command.mode);
+    MatchmakingCommand matchmakingCommand(socket_fd);
+    matchmakingCommand.parse(command_buffer);
 
 
+
+    addPlayerToPendingMatch(matchmakingCommand.getPlayerConnection(), matchmakingCommand.getMode());
 }
 
 void MatchMaker::parse_command(char *data, Command *command){
