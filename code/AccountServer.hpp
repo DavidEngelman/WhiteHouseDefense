@@ -46,5 +46,8 @@ public:
 
     bool handle_register(Credentials credentials, int client_sock_fd);
 
+    bool handle_ranking(int client_sock_fd);
+    std::vector<RankingInfos> getRanking();
+
     std::string get_command_type(char* data);
 };
