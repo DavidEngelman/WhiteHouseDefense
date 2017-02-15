@@ -20,8 +20,8 @@ public:
     Credentials();
     Credentials(const std::string& usr, const std::string& pswrd);
 
-    std::string getUsername();
-    std::string getPassword();
+    std::string getUsername() const;
+    std::string getPassword() const;
 
     void setUsername(const std::string& newUserName);
     void setPassword(const std::string& newPassword);

@@ -4,11 +4,7 @@
 
 #include "Command.hpp"
 
-Command::Command(char *data) {
-    parse(data);
-}
-
-const std::string &Command::getAction() const {
+std::string Command::getAction() const {
     return action;
 }
 
@@ -26,7 +22,7 @@ int Command::extract_action(char* data){
     int i = 0;
     std::string temp_action;
 
-    while ((data[i] != ',') ||(data[i] != ';')) { // comme ça une commande peut etre juste par ex: "ranking;"
+    while ((data[i] != ',') && (data[i] != ';')) { // comme ça une commande peut etre juste par ex: "ranking;"
         temp_action += data[i];                        // au lieu de "ranking," c'est un peu plus clean
         i++;
     }

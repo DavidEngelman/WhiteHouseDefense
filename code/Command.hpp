@@ -9,17 +9,17 @@ protected:
 
     std::string action;
 
+
 public:
 
-    const std::string &getAction() const;
-
-    Command(char* data);
+    std::string getAction() const;
+    Command() = default;
 
     virtual int extract_action(char* data);
 
     virtual void parse(char* data);
 
-    virtual ~Command();
+    virtual ~Command()= default;
 
 
 

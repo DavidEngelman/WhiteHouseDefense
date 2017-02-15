@@ -4,7 +4,7 @@
 #include "Command.hpp"
 #include "Credentials.h"
 
-class LoginRegisterCommand : Command{
+class LoginRegisterCommand : public Command{
 
 private:
 
@@ -12,7 +12,7 @@ private:
 
 public:
 
-    LoginRegisterCommand(char* data);
+    LoginRegisterCommand() = default;
 
     void parse(char* data) override ;
 

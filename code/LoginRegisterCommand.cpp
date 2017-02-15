@@ -1,7 +1,5 @@
 #include "LoginRegisterCommand.hpp"
 
-LoginRegisterCommand::LoginRegisterCommand(char *data): Command(data) {}
-
 void LoginRegisterCommand::parse(char *data) {
 
 /* Parses a string formatted into "command,username,password;" into a
@@ -16,6 +14,7 @@ void LoginRegisterCommand::parse(char *data) {
     std::string password;
 
     int i = extract_action(data);
+    std::cout << data[i] << std::endl;
 
     // Extracts the username (ex: bob)
     while (data[i] != ',') {
