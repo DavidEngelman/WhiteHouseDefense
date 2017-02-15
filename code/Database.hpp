@@ -38,7 +38,6 @@ private:
 public:
     Database(const char* filename);
 
-    static int callback(void *NotUsed, int argc, char **argv, char **azColName);
     static int callback_counter(void *count, int argc, char **argv, char **azColName);
     static int callback_ranking(void *ptr, int argc, char **argv, char **azColName);
     static int callback_account_usrname(void *ptr, int argc, char **argv, char **azColName);

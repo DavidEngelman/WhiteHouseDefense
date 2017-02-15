@@ -1,35 +1,24 @@
-//
-// Created by david on 12/02/17.
-//
-
 #include "RegisterUI.hpp"
+#include "Drawing.hpp"
+#include "unistd.h"
 
 RegisterUI::RegisterUI() {
-    std::cout << "                _ _.-''-._ _                " << std::endl;
-    std::cout << "               ;.'________'.;               " << std::endl;
-    std::cout << "    _________n.[____________].n_________    " << std::endl;
-    std::cout << "   |\"\"_\"\"_\"\"_\"\"||==||==||==||\"\"_\"\"_\"\"_\"\"]   " << std::endl;
-    std::cout << "   |\"\"\"\"\"\"\"\"\"\"\"||..||..||..||\"\"\"\"\"\"\"\"\"\"\"|   " << std::endl;
-    std::cout << "   |LI LI LI LI||LI||LI||LI||LI LI LI LI|   " << std::endl;
-    std::cout << "   |.. .. .. ..||..||..||..||.. .. .. ..|   " << std::endl;
-    std::cout << "   |LI LI LI LI||LI||LI||LI||LI LI LI LI|   " << std::endl;
-    std::cout << "   ======================================   " << std::endl;
-    std::cout << "   |        WHITE HOUSE DEFENSE         |   " << std::endl;
-    std::cout << "   ======================================   " << std::endl;
-    std::cout << "   |          REGISTER SCREEN           |   " << std::endl;
-    std::cout << "   ======================================   " << std::endl;
+    Drawing::drawWhiteHouse("REGISTER SCREEN");
 }
 
 void RegisterUI::ask_username() {
-    std::cout << "   Enter a username:     ( 16 characters max. )" << std::endl;
+    std::cout << "   Enter a username:     ( 16 characters max. )" << std::endl << "   ";
     std::cin >> username_entry;
-    std::cin.ignore(100,'\n');
+    std::cin.clear();
+    std::cin.ignore();
 }
 
 void RegisterUI::ask_password() {
-    std::cout << "   Enter a password:" << std::endl;
+    std::cout << "   Enter a password:" << std::endl << "   ";
     std::cin >> password_entry;
-    std::cin.ignore(100,'\n');
+    std::cin.clear();
+    std::cin.ignore();
+    password_entry = crypt(password_entry.c_str(), "g4");
 }
 
 
