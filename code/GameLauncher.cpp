@@ -5,7 +5,7 @@ GameLauncher::GameLauncher(int port, char *address) : Manager(port, address) {
 
 void GameLauncher::sendJoinRequest(std::string mode) {
     int player_id = 0; // TODO: get real player ID
-    char server_response[10];
+    char server_response[20];
 
     std::string message = mode + "," + player_id + ";";
     send_message(server_socket, message.c_str());
