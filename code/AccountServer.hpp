@@ -47,6 +47,7 @@ public:
 
     bool handle_ranking(int client_sock_fd);
     std::vector<RankingInfos> getRanking();
+    std::string vectorTostring(std::vector<RankingInfos> vect);
 
     std::string get_command_type(char* data);
 };

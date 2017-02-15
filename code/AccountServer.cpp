@@ -81,9 +81,22 @@ std::vector<RankingInfos> AccountServer::getRanking() {
 }
 
 bool AccountServer::handle_ranking(int client_sock_fd) {
+    send_message(client_sock_fd, vectorTostring(getRanking()).c_str());
+    return true;
+}
 
-    //TODO : je sais pas comment faire pour envoyé un vector au client
+std::string AccountServer::vectorTostring(std::vector<RankingInfos> vect) {
 
+    /*creation d'un string du type "username,nbVictories|username,nvVictories|*/
+
+    std::string result = "";
+    for (int i = 0; i < vect.size(); i++) {
+        result+=vect[i].username;
+        result+=",";
+        result+= std::to_string(vect[i].victories);
+        result+="|";
+    }
+    return result;
 }
 
 
@@ -93,7 +106,6 @@ void AccountServer::get_and_process_command(int client, char* message_buffer){
     while (!ok){
         receive_message(client, message_buffer);
         std::string command_type = get_command_type(message_buffer);
-        std::cout << command_type << std::endl;
 
         if ( (command_type == "login") || (command_type == "register")){
 
@@ -104,8 +116,6 @@ void AccountServer::get_and_process_command(int client, char* message_buffer){
             Credentials credentials = command.getCreds();
 
             if (command.getAction() == "login"){
-                std::cout << "ok je suis la" << std::endl;
-
                 ok = handle_login(credentials, client);
             }
             else if (command.getAction() == "register") {
@@ -120,8 +130,9 @@ void AccountServer::get_and_process_command(int client, char* message_buffer){
             //Si on est dans le cas ou un user veut voir le ranking
 
             Command command;
+            command.parse(message_buffer);
+            ok = handle_ranking(client);
 
-            //TODO handle_ranking();
         }
         else if ( command_type == "profile" ){
             //TODO: ProfileCommand
@@ -138,14 +149,12 @@ std::string AccountServer::get_command_type(char* data){
 
     int i = 0;
     std::string command_type;
-    std::cout << "hi" << std::endl;
 
 
     while ((data[i] != ',') && (data[i] != ';')) { // comme ça une commande peut etre juste par ex: "ranking;"
         command_type += data[i];                        // au lieu de "ranking," c'est un peu plus clean
         i++;
     }
-    std::cout << command_type << std::endl;
 
     return command_type;
 

@@ -2,11 +2,15 @@
 #ifndef __RANKINGUI__
 #define __RANKINGUI__
 
+#include <string>
+#include <iostream>
+
 class RankingUI {
 
 
 public:
-	void display();
+	RankingUI() = default;
+	void display(std::string ranking);
 };
 
 #endif
