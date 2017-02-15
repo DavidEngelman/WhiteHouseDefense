@@ -15,6 +15,7 @@ void RankingManager::sendRequest() {
 std::string RankingManager::getRanking() {
     char buffer[1000]; //TODO mettre une constante a la place de 1000
     receive_message(server_socket, buffer); //receive the ranking send by AccountServer
+                                            //format : "usr,nbVictories|usr,nbVictories|...|
     return std::string(buffer);
 
 }
