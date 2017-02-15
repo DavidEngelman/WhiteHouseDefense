@@ -9,7 +9,7 @@ void GameLauncher::sendJoinRequest(std::string mode) {
 
     std::string message = mode + "," + player_id + ";";
     send_message(server_socket, message.c_str());
-    receive_message(server_socket, server_response); // Elle vient d'ou cette fonction
+    receive_message(server_socket, server_response);
 
     if (strcmp(server_response, GAME_STARTING_STRING) == 0) {
         // Start game
