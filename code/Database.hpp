@@ -51,6 +51,7 @@ public:
     PublicAccountInfos getUsrInfosByUsrname(std::string);
     int sendFriendRequest(std::string username, std::string toAdd);
     int acceptFriendRequest(std::string username, std::string toAccept);
+    int removeFriend(std::string username, std::string toRemove);
     std::string addToString(std::string original, std::string toAdd);
     std::string removeFromString(std::string original, std::string toAdd);
 

@@ -229,6 +229,32 @@ int Database::acceptFriendRequest(std::string username, std::string toAccept) {
     return 0;
 }
 
+int Database::removeFriend(std::string username, std::string toRemove){
+    std::string currentFriendList = removeFromString(getUsrInfosByUsrname(username).friendRequests, toRemove);
+    std::string currentFriendList2 = removeFromString(getUsrInfosByUsrname(toRemove).friendRequests, username);
+
+    char *zErrMsg = 0;
+    std::stringstream strm;
+    strm << "UPDATE Accounts SET friendList='"<<currentFriendList<< "' WHERE username='"<<username<< "';"
+         << "UPDATE Accounts SET friendList='"<<currentFriendList2<< "' WHERE username='"<<toRemove<< "';";
+
+    std::string s = strm.str();
+
+    char *str = &s[0];
+    char *query = str;
+
+    rc = sqlite3_exec(db, query, NULL, 0, &zErrMsg);
+    if( rc != SQLITE_OK ){
+        fprintf(stderr, "SQL error: %s\n", zErrMsg);
+        sqlite3_free(zErrMsg);
+        return -1;
+    }else{
+        fprintf(stdout, "Friend successfully removed, i'm sorry it had to end this way : ( . \n");
+    }
+    return 0;
+
+}
+
 std::string Database::addToString(std::string original, std::string toAdd){
     if(original.size()== 0 ){
         original = toAdd;
