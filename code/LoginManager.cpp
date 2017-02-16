@@ -13,15 +13,15 @@ void LoginManager::login_process() {
 
         while (not valid) {
             loginUI.display(); //demande le  username et pswrd
-            toLogin.setUsername(loginUI.get_username_entry());
-            toLogin.setPassword(loginUI.get_password_entry());
-            valid = checkCredentialsValidity(toLogin);
+            loginCredentials.setUsername(loginUI.get_username_entry());
+            loginCredentials.setPassword(loginUI.get_password_entry());
+            valid = checkCredentialsValidity(loginCredentials);
             if (not valid) {
                 loginUI.displayError();
             }
         }
 
-        success = attemptLogin(toLogin);
+        success = attemptLogin(loginCredentials);
         if (not success){
             loginUI.displayError();
             valid = false;
