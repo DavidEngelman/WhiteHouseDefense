@@ -8,6 +8,12 @@ void AccountServer::run() {
 
     while (1) {
         newClient = accept_connection();
+        struct timeval tv;
+
+        tv.tv_sec = 10;  /* 30 Secs Timeout */
+        tv.tv_usec = 0;  // Not init'ing this can cause strange errors
+
+        setsockopt(newClient, SOL_SOCKET, SO_RCVTIMEO, (char *)&tv,sizeof(struct timeval));
         std::cout << "New client connected wouhouuu" << std::endl;
         //add_new_client(newClient); Je laisse ca la au cas ou
 
@@ -106,8 +112,8 @@ void AccountServer::get_and_process_command(int client, char* message_buffer){
     bool ok = false;
 
     while (!ok){
-        std::cout << "hi greg" << std::endl;
         receive_message(client, message_buffer);
+        std::cout << "hi greg" << std::endl;
         std::string command_type = get_command_type(message_buffer);
         //std::cout << message_buffer << std::endl;
 
