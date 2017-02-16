@@ -8,12 +8,6 @@ void AccountServer::run() {
 
     while (1) {
         newClient = accept_connection();
-        struct timeval tv;
-
-        tv.tv_sec = 10;  /* 30 Secs Timeout */
-        tv.tv_usec = 0;  // Not init'ing this can cause strange errors
-
-        setsockopt(newClient, SOL_SOCKET, SO_RCVTIMEO, (char *)&tv,sizeof(struct timeval));
         std::cout << "New client connected wouhouuu" << std::endl;
         //add_new_client(newClient); Je laisse ca la au cas ou
 
