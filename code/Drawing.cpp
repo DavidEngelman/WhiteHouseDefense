@@ -2,6 +2,7 @@
 #include <iostream>
 
 void Drawing::drawWhiteHouse(std::string title) {
+    std::cout << std::string(50, '\n');
     if (title.length() > 36) return;
     unsigned long nbSpace = (36 - title.length()) / 2;
     std::cout << "                _ _.-''-._ _                " << std::endl;

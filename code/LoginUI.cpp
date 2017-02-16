@@ -21,9 +21,13 @@ void LoginUI::ask_password() {
     std::cin.clear();
     std::cin.ignore();
     password_entry = crypt(password_entry.c_str(), "g4");
+    for (unsigned i = 0; i < password_entry.length(); i++) {
+        if (password_entry[i] == ',' || password_entry[i] == ';') password_entry.erase(i);
+    }
 }
 
 void LoginUI::displayError() {
+    Drawing::drawWhiteHouse("LOGIN SCREEN");
     std::cout << "   Error : username or password incorrect, please try again\n";
 }
 
