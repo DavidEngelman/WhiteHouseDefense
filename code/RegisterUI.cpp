@@ -28,6 +28,7 @@ void RegisterUI::ask_password() {
 
 
 void RegisterUI::displayError() {
+    Drawing::drawWhiteHouse("REGISTER SCREEN");
     std::cout << "   Error : This username is already used or is not valid \n";
 }
 

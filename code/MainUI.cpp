@@ -4,7 +4,6 @@
 
 void MainUI::display() {
     /*Show user's menu*/
-
     Drawing::drawWhiteHouse("MENU SELECTION");
 
     std::cout << "   |                                    |   " << std::endl;
@@ -23,7 +22,7 @@ int MainUI::select(){
     int x = -1;
     std::cout << "   Enter your choice: ";
     std::cin >> x;
-    while(std::cin.fail() or 0>x or x>6){
+    while(std::cin.fail() or 0>x or x>=6){
         display();
         std::cout << "   Error, enter a integer between 1 and 5 " << std::endl;
         std::cout << "   Enter your choice: ";

@@ -27,6 +27,7 @@ void LoginUI::ask_password() {
 }
 
 void LoginUI::displayError() {
+    Drawing::drawWhiteHouse("LOGIN SCREEN");
     std::cout << "   Error : username or password incorrect, please try again\n";
 }
 

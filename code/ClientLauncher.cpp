@@ -28,7 +28,9 @@ int main(int argc, char *argv[]) {
             RegisterManager myRegisterManager = RegisterManager(5555, argv[1]);
             ok = true;
         }
-        else std::cout << "Please enter 1 or 2" << std::endl;
+        else {
+            std::cout << "Please enter 1 or 2" << std::endl;
+        }
 
         std::cin.clear();
         std::cin.ignore();
