@@ -11,7 +11,7 @@ class LoginManager : public Manager {
 
 private:
 	LoginUI loginUI;
-	Credentials toLogin;
+	Credentials loginCredentials;
 
 public:
 	LoginManager(int port, char* address);
