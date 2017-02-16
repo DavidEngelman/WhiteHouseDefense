@@ -31,6 +31,10 @@ void LoginManager::login_process() {
     std::cout << "Connection succeeded" << std::endl;
     MainManager mainManager; //On lance le jeu
 
+    // TODO: les transitions entre managers sont un peu bizarres, parce que l'objet LoginManager ne disparait
+    // pas vraiment. Faudrait trouver un moyen de detruire le loginManager et donner le controle à MainManager
+    // Pas d'idée pour l'instant
+
 }
 
 bool LoginManager::checkCredentialsValidity(Credentials credentials) {
