@@ -3,11 +3,11 @@
 
 #include <string>
 #include "../common/Networking.h"
-#include "Manager.hpp"
+#include "NetworkedManager.hpp"
 #include "../server/MatchMaker.hpp"
 // TODO: faudra probablement faire un fichier qui reprend tous les strings
 
-class GameLauncher : Manager {
+class GameLauncher : NetworkedManager {
 
 
 public:

@@ -4,11 +4,11 @@
 #define MAX_BUFF_SIZE 1000
 
 
-#include "Manager.hpp"
+#include "NetworkedManager.hpp"
 #include "RankingUI.hpp"
 #include "../common/Networking.h"
 
-class RankingManager : public Manager  {
+class RankingManager : public NetworkedManager  {
 
 private:
 	RankingUI rankingUI;
