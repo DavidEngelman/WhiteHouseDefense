@@ -1,0 +1,6 @@
+#ifndef PROJET_STRINGS_HPP
+#define PROJET_STRINGS_HPP
+
+#define GAME_STARTING_STRING "GameStarting"
+
+#endif //PROJET_STRINGS_HPP
