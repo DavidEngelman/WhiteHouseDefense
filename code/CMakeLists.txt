@@ -4,7 +4,8 @@ file(GLOB code database.db)
 
 set(CLIENT_FILES  "Manager.cpp" "ClientLauncher.cpp" "LoginManager.cpp" "LoginUI.cpp"
         "RegisterManager.cpp" "RegisterUI.cpp" "Networking.cpp" "Credentials.cpp"
-        MainManager.cpp MainUI.cpp GameManager.cpp Map.cpp Drawing.cpp Drawing.hpp)
+        MainManager.cpp MainUI.cpp GameManager.cpp Map.cpp Drawing.cpp Drawing.hpp "RankingManager.cpp" "RankingUI.cpp")
+
 
 add_executable(client ${CLIENT_FILES})
 
@@ -17,3 +18,4 @@ add_executable(server ${SERVER_FILES})
 include_directories(/usr/include)
 link_directories(/usr/lib)
 target_link_libraries( server sqlite3)
+target_link_libraries( client crypt)

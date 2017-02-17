@@ -1,6 +1,6 @@
 #include "MatchmakingCommand.hpp"
 
-void MatchmakingCommand::parse(char* data) {
+void MatchmakingCommand::parse(char* data)  {
     /*
     * Disons qu'une commande se présente s'envoie dans un string de type : mode,player_id;
     *

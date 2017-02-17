@@ -11,7 +11,6 @@
 #include <iostream>
 #include <sstream>
 #include <string.h>
-
 #include "Credentials.h"
 #include <vector>
 
@@ -24,7 +23,9 @@ typedef struct RankingInfos  {
 typedef struct PublicAccountInfos  {
     int victories, pnjKilled;
     std::string username;
-
+    std::string friendList;
+    std::string friendRequests;
+    std::string pendingInvitation;
 }PublicAccountInfos;
 
 
@@ -48,6 +49,13 @@ public:
     bool is_identifiers_valid(Credentials credentials);
     std::vector<RankingInfos> getRanking();
     PublicAccountInfos getUsrInfosByUsrname(std::string);
+    int sendFriendRequest(std::string username, std::string toAdd);
+    int acceptFriendRequest(std::string username, std::string toAccept);
+    int removeFriend(std::string username, std::string toRemove);
+    std::string addToString(std::string original, std::string toAdd);
+    std::string removeFromString(std::string original, std::string toAdd);
+
+
     void update_record();
     void delete_record();
 

@@ -20,7 +20,7 @@ public:
 
     ~MatchmakingCommand() = default;
 
-    void parse(char* data);
+    void parse(char* data) override;
 
     const PlayerConnection getPlayerConnection() const;
 

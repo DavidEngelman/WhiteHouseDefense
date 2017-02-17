@@ -63,6 +63,30 @@ char *receive_message(int socket_fd, char *buffer) {
     return buffer;
 }
 
+char *receive_message_with_timeout(int socket_fd, char *buffer, int timeout_val){
+    fd_set set;
+    struct timeval timeout;
+    FD_ZERO(&set);
+    FD_SET(socket_fd, &set);
+
+    timeout.tv_sec = timeout_val;
+    timeout.tv_usec = 0;
+    int rv = select(socket_fd + 1, &set, NULL, NULL, &timeout);
+
+    if (rv == -1){
+        perror("select error");
+        //TODO:Peut etre faire quelque chose d'autre je sais pas :D
+    }
+    else if (rv == 0){
+        //timeout
+        //Je sais pas trop quoi mettre là mais c'est la ou on gère le bordel
+    }
+    else{
+        //receive the message
+        return receive_message(socket_fd, buffer);
+    }
+}
+
 // Send
 
 void send_data(int socket_fd, char *buffer, int length){

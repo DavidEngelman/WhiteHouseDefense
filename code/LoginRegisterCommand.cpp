@@ -14,7 +14,7 @@ void LoginRegisterCommand::parse(char *data) {
     std::string password;
 
     int i = extract_action(data);
-    std::cout << data[i] << std::endl;
+    //std::cout << data[i] << std::endl;
 
     // Extracts the username (ex: bob)
     while (data[i] != ',') {

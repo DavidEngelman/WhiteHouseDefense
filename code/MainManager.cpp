@@ -3,9 +3,10 @@
 #include "GameLauncher.hpp"
 #include "ProfileManager.hpp"
 #include "FriendList.hpp"
+#include "RankingManager.hpp"
 
 
-MainManager::MainManager() {
+MainManager::MainManager() : Manager(5555, (char *)"127.0.0.1")/*TEMPORAIRE*/{
     mainUI = MainUI();
     mainUI.display();
     switch (mainUI.select()) {
@@ -25,9 +26,10 @@ MainManager::MainManager() {
             break;
         }
         case 4: {
+            RankingManager rankingManager(5555,ip_address);
             break;
         }
-        case 5: {
+        default: {
             std::cout << "Exit !" << std::endl;
             mainUI.exit();
             break;
