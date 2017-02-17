@@ -1,4 +1,5 @@
 #include "GameLauncher.hpp"
+#include "../server/MatchMaker.hpp"
 
 GameLauncher::GameLauncher(int port, char *address) : Manager(port, address) {
 };
@@ -7,7 +8,7 @@ void GameLauncher::sendJoinRequest(std::string mode) {
     int player_id = 0; // TODO: get real player ID
     char server_response[20];
 
-    std::string message = mode + "," + player_id + ";";
+    std::string message = mode + "," + std::to_string(player_id) + ";";
     send_message(server_socket, message.c_str());
     receive_message(server_socket, server_response);
 

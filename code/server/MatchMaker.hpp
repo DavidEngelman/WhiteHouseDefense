@@ -1,3 +1,6 @@
+#ifndef MATCHMAKER_HPP
+#define MATCHMAKER_HPP
+
 #include "Server.hpp"
 #include <string>
 
@@ -14,3 +17,5 @@ public:
 
 	void addPendingMatch(std::string mode);
 };
+
+#endif
