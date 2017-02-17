@@ -1,6 +1,8 @@
 
 #ifndef __RANKINGMANAGER__
 #define __RANKINGMANAGER__
+#define MAX_BUFF_SIZE 1000
+
 
 #include "Manager.hpp"
 #include "RankingUI.hpp"
