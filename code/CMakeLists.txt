@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.6)
 set(CMAKE_CXX_STANDARD 14)
 file(GLOB code database.db)
 
-set(CLIENT_FILES  "client/Manager.cpp" "client/ClientLauncher.cpp" "client/LoginManager.cpp" "client/LoginUI.cpp"
+set(CLIENT_FILES  "client/NetworkedManager.cpp" "client/ClientLauncher.cpp" "client/LoginManager.cpp" "client/LoginUI.cpp"
         "client/RegisterManager.cpp" "client/RegisterUI.cpp" "common/Networking.cpp" "common/Credentials.cpp"
         client/MainManager.cpp client/MainUI.cpp client/GameManager.cpp common/Map.cpp client/Drawing.cpp client/Drawing.hpp "client/RankingManager.cpp" "client/RankingUI.cpp" "client/GameLauncher.cpp")
 
@@ -11,7 +11,7 @@ add_executable(client ${CLIENT_FILES})
 
 set(SERVER_FILES "server/ServerLauncher.cpp" "common/Networking.cpp" "server/Server.cpp" "server/AccountServer.cpp" "server/Database.cpp"
         "common/Credentials.cpp" "common/Account.cpp" "server/Command.cpp" "server/LoginRegisterCommand.cpp"
-        "server/MatchmakingCommand.cpp")
+        "server/MatchmakingCommand.cpp" "server/MatchMaker.cpp" "server/MatchMaker.cpp")
 
 add_executable(server ${SERVER_FILES})
 

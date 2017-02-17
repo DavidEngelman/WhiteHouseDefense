@@ -106,7 +106,11 @@ void AccountServer::get_and_process_command(int client, char* message_buffer){
     bool ok = false;
 
     while (!ok){
-        receive_message(client, message_buffer);
+        bool success = receive_message_with_timeout(client, message_buffer, 300);
+        if (!success){
+            return;
+        }
+
         std::cout << "hi greg" << std::endl;
         std::string command_type = get_command_type(message_buffer);
         //std::cout << message_buffer << std::endl;

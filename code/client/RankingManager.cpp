@@ -1,7 +1,7 @@
 
 #include "RankingManager.hpp"
 
-RankingManager::RankingManager(int port, char* address): Manager(port, address) {
+RankingManager::RankingManager(int port, char* address): NetworkedManager(port, address) {
     std::string ranking = createRanking(getRanking());
     rankingUI.display(ranking);
 }
@@ -14,7 +14,7 @@ void RankingManager::sendRequest() {
 std::string RankingManager::getRanking() {
     sendRequest();
 
-    char buffer[1000]; //TODO mettre une constante a la place de 1000
+    char buffer[MAX_BUFF_SIZE];
     receive_message(server_socket, buffer); //receive the ranking send by AccountServer
                                             //format : "usr,nbVictories|usr,nbVictories|...|
     return std::string(buffer);

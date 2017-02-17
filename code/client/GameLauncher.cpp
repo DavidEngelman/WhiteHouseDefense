@@ -1,7 +1,7 @@
 #include "GameLauncher.hpp"
 #include "../common/Strings.hpp"
 
-GameLauncher::GameLauncher(int port, char *address) : Manager(port, address) {
+GameLauncher::GameLauncher(int port, char *address) : NetworkedManager(port, address) {
 };
 
 void GameLauncher::sendJoinRequest(std::string mode) {

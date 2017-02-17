@@ -1,12 +1,13 @@
+#include <iostream>
 #include "Networking.h"
 
 // Receive
 
-ssize_t receive_data(int socket_fd, void *message, size_t length) {
-    return recv(socket_fd, message, length, 0);
+ssize_t receive_data(int socket_fd, void *message, int length) {
+    return recv(socket_fd, message, (size_t) length, 0);
 }
 
-char *get_data_from_socket(int socket_fd, char *buffer, size_t size) {
+char *get_data_from_socket(int socket_fd, char *buffer, int size) {
     ssize_t data_bytes_read = receive_data(socket_fd, buffer, size);
 
     if (data_bytes_read == -1) {
@@ -17,15 +18,24 @@ char *get_data_from_socket(int socket_fd, char *buffer, size_t size) {
     return buffer;
 }
 
-size_t get_message_length(int socket_fd) {
+int get_message_length(int socket_fd) {
+    /*
+     * Tries to get the length of the message
+     * If can't read from the socket, throws an error
+     * If the socket is closed, returns -1
+     * Otherwise, returns the length of the message
+     * */
     size_t length;
     ssize_t length_bytes_read = receive_data(socket_fd, &length, sizeof(length));
 
     if (length_bytes_read == -1) {
         perror("Receive: packet length");
         exit(EXIT_FAILURE);
+    } else if (length_bytes_read == 0){
+        // Le client a fermé le socket
+        return -1;
     }
-    return length * sizeof(char);
+    return (int) (length * sizeof(char));
 }
 
 /* TODO: y avait un probleme avec cette methode, je l ai mis en comm pour le moment
@@ -49,21 +59,28 @@ void ensure_buffer_is_big_enough(char *buffer, int length) {
  */
 
 /*
- * Read from the socket and puts the data in the buffer.
- * If the buffer is NULL, it creates a buffer of the appropriate size.
- * If the buffer is too small, it grows it to have enough space for the data.
- * Return value: a pointer to the buffer.
+ * Reads from the socket and puts the result in the buffer.
+ * If the socket is closed, doesn't modify the buffer and returns -1.
+ * Otherwise, puts the message in the buffer and return the length of the message.
  */
-char *receive_message(int socket_fd, char *buffer) {
-    size_t length = get_message_length(socket_fd);  // Gets the length
+int receive_message(int socket_fd, char *buffer) {
+    int length = get_message_length(socket_fd);  // Gets the length
+    if (length == -1){ // Socket fermé
+        return -1;
+    }
 
 //    ensure_buffer_is_big_enough(buffer, length);
 
     get_data_from_socket(socket_fd, buffer, length);  // Gets the data
-    return buffer;
+    return length;
 }
 
-char *receive_message_with_timeout(int socket_fd, char *buffer, int timeout_val){
+/*
+ * Tries to receive from the socket, but stops after a timeout.
+ * Returns True if the read was succesful.
+ * Returns False otherwise.
+ */
+bool receive_message_with_timeout(int socket_fd, char *buffer, int timeout_val){
     fd_set set;
     struct timeval timeout;
     FD_ZERO(&set);
@@ -71,20 +88,18 @@ char *receive_message_with_timeout(int socket_fd, char *buffer, int timeout_val)
 
     timeout.tv_sec = timeout_val;
     timeout.tv_usec = 0;
-    int rv = select(socket_fd + 1, &set, NULL, NULL, &timeout);
 
-    if (rv == -1){
-        perror("select error");
-        //TODO:Peut etre faire quelque chose d'autre je sais pas :D
+    bool success = false;
+
+    int num_ready_descriptors = select(socket_fd + 1, &set, NULL, NULL, &timeout);
+    if (num_ready_descriptors > 0){  // There is a readable socket
+        int num_bytes_read = receive_message(socket_fd, buffer);
+
+        if (num_bytes_read > 0){
+            success = true;
+        }
     }
-    else if (rv == 0){
-        //timeout
-        //Je sais pas trop quoi mettre là mais c'est la ou on gère le bordel
-    }
-    else{
-        //receive the message
-        return receive_message(socket_fd, buffer);
-    }
+    return success;
 }
 
 // Send

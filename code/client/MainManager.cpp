@@ -6,7 +6,7 @@
 #include "RankingManager.hpp"
 
 
-MainManager::MainManager() : Manager(5555, (char *)"127.0.0.1") /*TEMPORAIRE*/{
+MainManager::MainManager(){
     mainUI = MainUI();
     mainUI.display();
     switch (mainUI.select()) {
@@ -26,7 +26,7 @@ MainManager::MainManager() : Manager(5555, (char *)"127.0.0.1") /*TEMPORAIRE*/{
             break;
         }
         case 4: {
-            RankingManager rankingManager(5555,ip_address);
+            RankingManager rankingManager(5555, (char *)"127.0.0.1");
             break;
         }
         default: {
