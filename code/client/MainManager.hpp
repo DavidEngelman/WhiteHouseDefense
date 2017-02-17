@@ -4,7 +4,7 @@
 #include "MainUI.hpp"
 #include "NetworkedManager.hpp"
 
-class MainManager :public NetworkedManager{
+class MainManager {
 
 private:
 	MainUI mainUI;
