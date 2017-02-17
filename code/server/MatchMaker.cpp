@@ -12,8 +12,12 @@ MatchMaker::MatchMaker(int port) : Server(port),
 };
 
 void MatchMaker::run() {
+    start_socket_listen();
+    int client_socket_fd;
+
     while(1){
-        int client_socket_fd = accept_connection();
+
+        client_socket_fd = accept_connection();
         std::cout << "New client in the matchmaking" << std::endl;
 
         if (!fork()){

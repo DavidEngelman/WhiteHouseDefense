@@ -4,16 +4,12 @@
 
 
 void * launch_account_server(void * bla){
-    std::cout << "coucou" << std::endl;
-
     AccountServer accountServer = AccountServer(5555, "database.db");
     accountServer.run();
     return nullptr;
 }
 
 void * launch_matchmaking_server(void * dummy){
-    std::cout << "coucou2" << std::endl;
-
     MatchMaker matchMaker = MatchMaker(5556);
     matchMaker.run();
     return nullptr;
