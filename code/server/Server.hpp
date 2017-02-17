@@ -47,7 +47,7 @@ public:
 
     Server(int port);
 
-    void start_socket_listen();
+    virtual void start_socket_listen();
 
     virtual void run() = 0;
 

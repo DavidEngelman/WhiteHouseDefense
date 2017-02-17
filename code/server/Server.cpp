@@ -25,7 +25,7 @@ void Server::bind_socket_to_address(struct sockaddr *address) {
 }
 
 int Server::create_socket() {
-    int socket_descriptor = socket(PF_INET, SOCK_STREAM, 0);
+    int socket_descriptor = socket(AF_INET, SOCK_STREAM, 0);
     if (socket_descriptor == -1) {
         perror("Error during socket creation");
         exit(1);
