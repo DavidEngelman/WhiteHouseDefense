@@ -18,7 +18,6 @@ void MatchMaker::run() {
     while(1){
 
         client_socket_fd = accept_connection();
-        std::cout << client_socket_fd << std::endl;
         std::cout << "New client in the matchmaking" << std::endl;
 
         if (!fork()){
