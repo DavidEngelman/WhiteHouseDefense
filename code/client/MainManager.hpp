@@ -2,9 +2,9 @@
 #define MAINMANAGER_HPP
 
 #include "MainUI.hpp"
-#include "Manager.hpp"
+#include "NetworkedManager.hpp"
 
-class MainManager :public Manager{
+class MainManager :public NetworkedManager{
 
 private:
 	MainUI mainUI;

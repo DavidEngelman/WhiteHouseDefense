@@ -1,6 +1,6 @@
 #include "RegisterManager.hpp"
 
-RegisterManager::RegisterManager(int port, char* address): Manager(port, address) {
+RegisterManager::RegisterManager(int port, char* address): NetworkedManager(port, address) {
     registerUser();
 };
 

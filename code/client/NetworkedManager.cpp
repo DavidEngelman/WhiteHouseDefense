@@ -1,11 +1,11 @@
 
-#include "Manager.hpp"
+#include "NetworkedManager.hpp"
 
-Manager::Manager(int port, char *address) : port(port), ip_address(address) {
+NetworkedManager::NetworkedManager(int port, char *address) : port(port), ip_address(address) {
     init();
 }
 
-void Manager::init() {
+void NetworkedManager::init() {
     struct hostent *he;
     if ((he=gethostbyname(ip_address)) == NULL) {
         perror("gethostbyname");
@@ -20,7 +20,7 @@ void Manager::init() {
 
 }
 
-int Manager::create_socket() {
+int NetworkedManager::create_socket() {
     int sockfd;
 
     if ((sockfd = socket(AF_INET, SOCK_STREAM, 0)) == -1) {
@@ -32,7 +32,7 @@ int Manager::create_socket() {
 
 }
 
-int Manager::connect_to_server(int socket, struct hostent *addr) {
+int NetworkedManager::connect_to_server(int socket, struct hostent *addr) {
     struct sockaddr_in their_addr;
 
     their_addr.sin_family = AF_INET;    // host byte order

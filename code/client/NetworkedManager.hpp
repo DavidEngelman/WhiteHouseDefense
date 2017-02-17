@@ -14,7 +14,7 @@
 #include <iostream>
 
 
-class Manager {
+class NetworkedManager {
 
 protected:
     int port;
@@ -23,7 +23,7 @@ protected:
 
 public:
 
-    Manager(int port, char* address);
+    NetworkedManager(int port, char* address);
     void init();
     int create_socket();
     int connect_to_server(int socket, struct hostent* addr);

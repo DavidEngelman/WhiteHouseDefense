@@ -6,7 +6,7 @@
 #include "RankingManager.hpp"
 
 
-MainManager::MainManager() : Manager(5555, (char *)"127.0.0.1") /*TEMPORAIRE*/{
+MainManager::MainManager() : NetworkedManager(5555, (char *)"127.0.0.1") /*TEMPORAIRE*/{
     mainUI = MainUI();
     mainUI.display();
     switch (mainUI.select()) {

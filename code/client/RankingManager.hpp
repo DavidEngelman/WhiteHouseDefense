@@ -2,11 +2,11 @@
 #ifndef __RANKINGMANAGER__
 #define __RANKINGMANAGER__
 
-#include "Manager.hpp"
+#include "NetworkedManager.hpp"
 #include "RankingUI.hpp"
 #include "../common/Networking.h"
 
-class RankingManager : public Manager  {
+class RankingManager : public NetworkedManager  {
 
 private:
 	RankingUI rankingUI;
