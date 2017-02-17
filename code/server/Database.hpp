@@ -23,11 +23,8 @@ typedef struct RankingInfos  {
 typedef struct PublicAccountInfos  {
     int victories, pnjKilled;
     std::string username;
-    std::string friendList;
-    std::string friendRequests;
-    std::string pendingInvitation;
+    int ID;
 }PublicAccountInfos;
-
 
 class Database {
 
@@ -52,8 +49,8 @@ public:
     int sendFriendRequest(std::string username, std::string toAdd);
     int acceptFriendRequest(std::string username, std::string toAccept);
     int removeFriend(std::string username, std::string toRemove);
-    std::string addToString(std::string original, std::string toAdd);
-    std::string removeFromString(std::string original, std::string toAdd);
+    int declineFriendRequest(std::string username, std::string toDecline);
+
 
 
     void update_record();
