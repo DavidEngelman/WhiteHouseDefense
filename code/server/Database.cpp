@@ -47,6 +47,12 @@ int Database::callback_account_usrname(void *ptr, int argc, char **argv, char **
     return 0;
 }
 
+int Database::callback_account_id(void *ptr, int argc, char **argv, char **azColName){
+    std::string *c = (std::string*)ptr;
+    *c = argv[0];
+    return 0;
+}
+
 
 int Database::insert_account(Credentials credentials) {
 
@@ -161,6 +167,26 @@ PublicAccountInfos Database::getUsrInfosByUsrname(std::string username) {
     char *query = str;
 
     rc = sqlite3_exec(db, query, callback_account_usrname, &infos, &zErrMsg);
+    if( rc != SQLITE_OK ){
+        fprintf(stderr, "SQL error: %s\n", zErrMsg);
+        sqlite3_free(zErrMsg);
+    }
+
+    return infos;
+}
+
+std::string Database::getInfosById(int id) {
+    std::string infos;
+    char *zErrMsg = 0;
+    std::stringstream strm;
+
+    strm << "select username from Accounts WHERE id='" << id << "'";
+
+    std::string s = strm.str();
+    char *str = &s[0];
+    char *query = str;
+
+    rc = sqlite3_exec(db, query, callback_account_id, &infos, &zErrMsg);
     if( rc != SQLITE_OK ){
         fprintf(stderr, "SQL error: %s\n", zErrMsg);
         sqlite3_free(zErrMsg);
