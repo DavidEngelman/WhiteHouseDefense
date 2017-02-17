@@ -32,6 +32,9 @@ Map::Map(std::string filename) {
                 case ';':
                     matrix[x][y] = -2;
                     break;
+                case '|':
+                    matrix[x][y] = -3;
+                    break;
                 default:
                     matrix[x][y] = 0;
                     break;
@@ -54,6 +57,9 @@ void Map::display() {
                 case -2:
                     std::cout << LIMIT;
                     break;
+                case -3:
+                    std::cout << PNG;
+                    break;
                 default:
                     std::cout << TOWER;
                     break;
@@ -63,8 +69,6 @@ void Map::display() {
     }
 }
 
-
-
 void Map::generateRandomMatrix() {
    initMap();
 }
@@ -72,26 +76,12 @@ void Map::generateRandomMatrix() {
 void Map::initMap() {
     for (int x = 0; x < HEIGHT; x++) {
         for (int y = 0; y < WIDTH; y++) {
-            if(x==y or x+y==HEIGHT-1){
-                matrix[x][y]=-2;
-            }
-            else{
-                matrix[x][y]=-1;
-            }
-        }
-    }
-    int x=(HEIGHT/2);
-    int y=(WIDTH/2);
-    matrix[x][y]=0;
-    display();
-}
-
-void Map::basicMap(){
-    for (int x = 0; x < HEIGHT; x++){
-        for (int y = 0; y < WIDTH; y++){
-            if(x==HEIGHT/2 or y==WIDTH/2){
-                matrix[x][y]=0;
+            if (x == y or x + y == HEIGHT - 1) {
+                matrix[x][y] = -2;
+            } else {
+                matrix[x][y] = -1;
             }
         }
     }
+    matrix[HEIGHT/2][WIDTH/2]=0;
 }

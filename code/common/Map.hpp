@@ -6,8 +6,9 @@
 
 #define GRASS "⬛"
 #define PATH "⬜"
-#define LIMIT "❎"
+#define LIMIT "\033[34m❎\033[0m"
 #define TOWER "\033[31m⬛\033[0m"
+#define PNG "\033[33m⬛\033[0m"
 
 #include <string>
 
@@ -21,7 +22,6 @@ public:
     void display();
     void generateRandomMatrix();
     void initMap();
-    void basicMap();
 };
 
 #endif
