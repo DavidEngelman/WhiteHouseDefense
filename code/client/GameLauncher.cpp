@@ -1,5 +1,5 @@
 #include "GameLauncher.hpp"
-#include "../server/MatchMaker.hpp"
+#include "../common/Strings.hpp"
 
 GameLauncher::GameLauncher(int port, char *address) : Manager(port, address) {
 };
