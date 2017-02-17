@@ -3,9 +3,9 @@
 
 #include "Manager.hpp"
 #include "LoginUI.hpp"
-#include "Networking.h"
+#include "../common/Networking.h"
 #include "MainManager.hpp"
-#include "Credentials.h"
+#include "../common/Credentials.h"
 
 class LoginManager : public Manager {
 

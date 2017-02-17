@@ -1,7 +1,7 @@
 #ifndef GAMEMANAGER_HPP
 #define GAMEMANAGER_HPP
 
-#include "GameState.hpp"
+#include "../common/GameState.hpp"
 #include "GameUI.hpp"
 
 class GameManager {

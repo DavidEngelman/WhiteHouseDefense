@@ -1,7 +1,7 @@
 #include "Server.hpp"
 #include <string.h>
 #include "Database.hpp"
-#include "Credentials.h"
+#include "../common/Credentials.h"
 #include "LoginRegisterCommand.hpp"
 #include "Command.hpp"
 

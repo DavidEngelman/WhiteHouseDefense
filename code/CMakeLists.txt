@@ -2,16 +2,16 @@ cmake_minimum_required(VERSION 3.6)
 set(CMAKE_CXX_STANDARD 14)
 file(GLOB code database.db)
 
-set(CLIENT_FILES  "Manager.cpp" "ClientLauncher.cpp" "LoginManager.cpp" "LoginUI.cpp"
-        "RegisterManager.cpp" "RegisterUI.cpp" "Networking.cpp" "Credentials.cpp"
-        MainManager.cpp MainUI.cpp GameManager.cpp Map.cpp Drawing.cpp Drawing.hpp "RankingManager.cpp" "RankingUI.cpp")
+set(CLIENT_FILES  "client/Manager.cpp" "client/ClientLauncher.cpp" "client/LoginManager.cpp" "client/LoginUI.cpp"
+        "client/RegisterManager.cpp" "client/RegisterUI.cpp" "common/Networking.cpp" "common/Credentials.cpp"
+        client/MainManager.cpp client/MainUI.cpp client/GameManager.cpp common/Map.cpp client/Drawing.cpp client/Drawing.hpp "client/RankingManager.cpp" "client/RankingUI.cpp")
 
 
 add_executable(client ${CLIENT_FILES})
 
-set(SERVER_FILES "serverLauncher.cpp" "Networking.cpp" "Server.cpp" "AccountServer.cpp" "Database.cpp"
-        "Credentials.cpp" "Account.cpp" "Command.cpp" "LoginRegisterCommand.cpp"
-        "MatchmakingCommand.cpp")
+set(SERVER_FILES "server/ServerLauncher.cpp" "common/Networking.cpp" "server/Server.cpp" "server/AccountServer.cpp" "server/Database.cpp"
+        "common/Credentials.cpp" "common/Account.cpp" "server/Command.cpp" "server/LoginRegisterCommand.cpp"
+        "server/MatchmakingCommand.cpp")
 
 add_executable(server ${SERVER_FILES})
 

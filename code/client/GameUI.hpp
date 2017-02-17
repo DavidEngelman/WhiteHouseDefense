@@ -1,4 +1,4 @@
-#include "GameState.hpp"
+#include "../common/GameState.hpp"
 
 class GameUI {
 

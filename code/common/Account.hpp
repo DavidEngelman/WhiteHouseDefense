@@ -1,6 +1,6 @@
 #include <string>
 #include "Credentials.h"
-#include "FriendList.hpp" //TODO
+#include "../client/FriendList.hpp"
 
 class Account {
 

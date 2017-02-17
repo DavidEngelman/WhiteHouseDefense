@@ -4,7 +4,7 @@
 
 #include "Manager.hpp"
 #include "RankingUI.hpp"
-#include "Networking.h"
+#include "../common/Networking.h"
 
 class RankingManager : public Manager  {
 

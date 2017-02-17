@@ -6,13 +6,13 @@
 #include "RankingManager.hpp"
 
 
-MainManager::MainManager() : Manager(5555, (char *)"127.0.0.1")/*TEMPORAIRE*/{
+MainManager::MainManager() : Manager(5555, (char *)"127.0.0.1") /*TEMPORAIRE*/{
     mainUI = MainUI();
     mainUI.display();
     switch (mainUI.select()) {
         case 1: {
             std::cout << "Game Launcher !" << std::endl;
-            GameLauncher game = GameLauncher();
+            GameLauncher game = GameLauncher(5556, (char *)"127.0.0.1");
             break;
         }
         case 2: {
