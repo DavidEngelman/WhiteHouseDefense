@@ -62,6 +62,8 @@ bool AccountServer::checkCredentials(Credentials credentials) {
 
 bool AccountServer::handle_login(Credentials credentials, int client_sock_fd) {
     bool success = false;
+    //std::cout << credentials.getUsername() << std::endl;
+    //std::cout << credentials.getPassword() << std::endl;
 
     if (checkCredentials(credentials)){
         send_success(client_sock_fd);
@@ -105,7 +107,9 @@ void AccountServer::get_and_process_command(int client, char* message_buffer){
 
     while (!ok){
         receive_message(client, message_buffer);
+        std::cout << "hi greg" << std::endl;
         std::string command_type = get_command_type(message_buffer);
+        //std::cout << message_buffer << std::endl;
 
         if ( (command_type == "login") || (command_type == "register")){
 

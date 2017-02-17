@@ -13,15 +13,15 @@ void LoginManager::login_process() {
 
         while (not valid) {
             loginUI.display(); //demande le  username et pswrd
-            toLogin.setUsername(loginUI.get_username_entry());
-            toLogin.setPassword(loginUI.get_password_entry());
-            valid = checkCredentialsValidity(toLogin);
+            loginCredentials.setUsername(loginUI.get_username_entry());
+            loginCredentials.setPassword(loginUI.get_password_entry());
+            valid = checkCredentialsValidity(loginCredentials);
             if (not valid) {
                 loginUI.displayError();
             }
         }
 
-        success = attemptLogin(toLogin);
+        success = attemptLogin(loginCredentials);
         if (not success){
             loginUI.displayError();
             valid = false;
@@ -30,6 +30,10 @@ void LoginManager::login_process() {
 
     std::cout << "Connection succeeded" << std::endl;
     MainManager mainManager; //On lance le jeu
+
+    // TODO: les transitions entre managers sont un peu bizarres, parce que l'objet LoginManager ne disparait
+    // pas vraiment. Faudrait trouver un moyen de detruire le loginManager et donner le controle à MainManager
+    // Pas d'idée pour l'instant
 
 }
 

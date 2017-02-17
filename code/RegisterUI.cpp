@@ -1,3 +1,5 @@
+
+
 #include "RegisterUI.hpp"
 #include "Drawing.hpp"
 #include "unistd.h"
@@ -18,11 +20,15 @@ void RegisterUI::ask_password() {
     std::cin >> password_entry;
     std::cin.clear();
     std::cin.ignore();
-    //password_entry = crypt(password_entry.c_str(), "g4");
+    password_entry = crypt(password_entry.c_str(), "g4");
+    for (unsigned i = 0; i < password_entry.length(); i++) {
+        if (password_entry[i] == ',' || password_entry[i] == ';') password_entry.erase(i);
+    }
 }
 
 
 void RegisterUI::displayError() {
+    Drawing::drawWhiteHouse("REGISTER SCREEN");
     std::cout << "   Error : This username is already used or is not valid \n";
 }
 

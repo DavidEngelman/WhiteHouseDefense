@@ -16,6 +16,7 @@ std::string RankingManager::getRanking() {
 
     char buffer[1000]; //TODO mettre une constante a la place de 1000
     receive_message(server_socket, buffer); //receive the ranking send by AccountServer
+                                            //format : "usr,nbVictories|usr,nbVictories|...|
     return std::string(buffer);
 
 }
@@ -33,11 +34,13 @@ std::string RankingManager::createRanking(std::string message_from_server) {
     while (i < message_from_server.size()){
 
         if (message_from_server[i] == ','){
-            result += " -- ";
+            result += "\t\t\t\t\t";
             i++;
         }
 
         if (message_from_server[i] == '|'){
+
+            result += " victories";
 
             if (i != message_from_server.size() - 1){
 
