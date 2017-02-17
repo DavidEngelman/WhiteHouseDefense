@@ -142,6 +142,7 @@ void AccountServer::get_and_process_command(int client, char* message_buffer){
             //TODO: ProfileCommand
             //TODO: handle_profle();
         }
+
     }
 }
 
