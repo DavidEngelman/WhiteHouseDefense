@@ -63,24 +63,34 @@ void Map::display() {
     }
 }
 
-bool Map::isNextToPath(int x, int y) {
-    //TODO
-    return false;
-}
+
 
 void Map::generateRandomMatrix() {
-    srand((unsigned int) time(NULL));
-    int end = rand() % WIDTH;
+   initMap();
+}
 
-    for (int x = 1; x < HEIGHT; x++) {
+void Map::initMap() {
+    for (int x = 0; x < HEIGHT; x++) {
         for (int y = 0; y < WIDTH; y++) {
-            if (y == end) matrix[0][y] = 0;
-            else matrix[0][y] = -1;
+            if(x==y or x+y==HEIGHT-1){
+                matrix[x][y]=-2;
+            }
+            else{
+                matrix[x][y]=-1;
+            }
+        }
+    }
+    int x=(HEIGHT/2);
+    int y=(WIDTH/2);
+    matrix[x][y]=0;
+    display();
+}
 
-            if (isNextToPath(x, y)) {
-                matrix[x][y] = 0;
-            } else {
-                matrix[x][y] = -1;
+void Map::basicMap(){
+    for (int x = 0; x < HEIGHT; x++){
+        for (int y = 0; y < WIDTH; y++){
+            if(x==HEIGHT/2 or y==WIDTH/2){
+                matrix[x][y]=0;
             }
         }
     }

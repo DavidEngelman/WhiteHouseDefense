@@ -20,7 +20,8 @@ public:
     Map(std::string filename);
     void display();
     void generateRandomMatrix();
-    bool isNextToPath(int x, int y);
+    void initMap();
+    void basicMap();
 };
 
 #endif
