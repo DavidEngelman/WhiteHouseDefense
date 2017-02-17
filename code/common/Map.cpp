@@ -70,18 +70,32 @@ void Map::display() {
 }
 
 void Map::generateRandomMatrix() {
-   initMap();
+    initMap();
+    generateQuarterMap();
 }
 
 void Map::initMap() {
     for (int x = 0; x < HEIGHT; x++) {
         for (int y = 0; y < WIDTH; y++) {
-            if (x == y or x + y == HEIGHT - 1) {
+            if (y == WIDTH/2 and HEIGHT/2-2 <= x and x <= HEIGHT/2+2) {
+                matrix[x][y] = 0;
+            } else if (x == HEIGHT/2 and WIDTH/2-2 <= y and y <= WIDTH/2+2) {
+                matrix[x][y] = 0;
+            } else if (x == y or x + y == HEIGHT-1) {
                 matrix[x][y] = -2;
             } else {
                 matrix[x][y] = -1;
             }
         }
     }
-    matrix[HEIGHT/2][WIDTH/2]=0;
+    matrix[HEIGHT/2][WIDTH/2] = 0;
+}
+
+void Map::generateQuarterMap() {
+    //int quarter[HEIGHT/2][WIDTH];
+    for (int x = 0; x < HEIGHT/2; x++) {
+        for (int y = 0; y < WIDTH; y++) {
+            
+        }
+    }
 }

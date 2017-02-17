@@ -15,13 +15,14 @@
 class Map {
 private:
     int matrix[HEIGHT][WIDTH];
+    void generateRandomMatrix();
+    void initMap();
+    void generateQuarterMap();
 
 public:
     Map();
     Map(std::string filename);
     void display();
-    void generateRandomMatrix();
-    void initMap();
 };
 
 #endif
