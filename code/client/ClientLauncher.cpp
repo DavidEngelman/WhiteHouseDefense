@@ -1,9 +1,9 @@
 #include "LoginManager.hpp"
 #include "RegisterManager.hpp"
 #include "Drawing.hpp"
+#include "../common/Map.hpp"
 
 int main(int argc, char *argv[]) {
-
 
     if (argc <= 1){
         std::cout << "Don't forget the ip_adress of the server as argument! ;)" << std::endl;

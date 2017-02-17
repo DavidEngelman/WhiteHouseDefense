@@ -1,12 +1,13 @@
 #ifndef MAP_HPP
 #define MAP_HPP
 
-#define HEIGHT 20
-#define WIDTH 20
+#define HEIGHT 21
+#define WIDTH 21
 
 #define GRASS "⬛"
 #define PATH "⬜"
-#define ERROR "❎"
+#define LIMIT "❎"
+#define TOWER "\033[31m⬛\033[0m"
 
 #include <string>
 

@@ -23,14 +23,17 @@ Map::Map(std::string filename) {
         getline(mapFile, line);
         for (int y = 0; y < WIDTH; y++) {
             switch (line[y]) {
+                case 'o':
+                    matrix[x][y] = x+y*WIDTH;
+                    break;
                 case '#':
                     matrix[x][y] = -1;
                     break;
-                case ' ':
-                    matrix[x][y] = 0;
+                case ';':
+                    matrix[x][y] = -2;
                     break;
                 default:
-                    matrix[x][y] = -2; //Error flag
+                    matrix[x][y] = 0;
                     break;
             }
         }
@@ -48,8 +51,11 @@ void Map::display() {
                 case 0:
                     std::cout << PATH;
                     break;
+                case -2:
+                    std::cout << LIMIT;
+                    break;
                 default:
-                    std::cout << ERROR;
+                    std::cout << TOWER;
                     break;
             }
         }
