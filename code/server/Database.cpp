@@ -38,6 +38,7 @@ int Database::callback_counter(void *count, int argc, char **argv, char **azColN
     return 0;
 }
 
+
 int Database::callback_account_usrname(void *ptr, int argc, char **argv, char **azColName){
     PublicAccountInfos *infos = reinterpret_cast<PublicAccountInfos*>(ptr);
     infos->username = argv[0];

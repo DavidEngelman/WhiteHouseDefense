@@ -48,6 +48,7 @@ public:
     std::vector<RankingInfos> getRanking();
     PublicAccountInfos getUsrInfosByUsrname(std::string);
     std::string getInfosById(int id);
+
     int sendFriendRequest(std::string username, std::string toAdd);
     int acceptFriendRequest(std::string username, std::string toAccept);
     int removeFriend(std::string username, std::string toRemove);
