@@ -15,7 +15,7 @@ private:
 
 public:
 	LoginManager(int port, char* address);
-	bool attemptLogin(Credentials credentials);
+	std::string attemptLogin(Credentials credentials);
 	bool checkCredentialsValidity(Credentials credentials);
 	void login_process();
 };
