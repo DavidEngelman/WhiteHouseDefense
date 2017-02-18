@@ -1,6 +1,8 @@
 class Tower {
 
 private:
+
+	int owner; //l'id du joueur qui possède la tour
 	int price;
 	int attackDamage;
 	Position position;

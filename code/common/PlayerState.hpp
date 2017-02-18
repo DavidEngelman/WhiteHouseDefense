@@ -31,4 +31,8 @@ public:
 	void setAccount(int account);
 
 	void spendMoney(int amount);
+
+	void decrease_hp(int amount);
+    void increase_hp(int amount);
+
 };

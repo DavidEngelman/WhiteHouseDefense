@@ -13,7 +13,7 @@ void GameLauncher::sendJoinRequest(std::string mode) {
     receive_message(server_socket, server_response);
 
     if (strcmp(server_response, GAME_STARTING_STRING) == 0) {
-        // Start game
+        std::cout << "Game start !";
     } else {
         std::cout << "Invalid response from server." << std::endl;
     }
