@@ -11,6 +11,8 @@ private:
 
 	int player_id;
 
+	std::string bool_to_string(bool my_bool);
+
 public:
 
 	std::string serialize();

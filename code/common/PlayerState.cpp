@@ -1,11 +1,26 @@
 #include "PlayerState.hpp"
 
+std::string PlayerState::bool_to_string(bool my_bool){
+    return my_bool ? "true" : "false";
+}
+
+
 int PlayerState::getHp(){
     return hp;
 }
 
 std::string PlayerState::serialize() {
-    //TODO
+    /*
+     * Return a string like this : player_id,money,hp,isSupported,isWinner;
+     */
+
+    std::string res;
+    res += std::to_string(player_id) + "," + std::to_string(money) + "," +
+            std::to_string(hp) + "," +  "," + bool_to_string(isSupported)+
+            "," + bool_to_string(isWinner) + ";";
+
+    return res;
+
 }
 
 void PlayerState::setHp(int newHp){
