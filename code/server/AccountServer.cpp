@@ -45,13 +45,25 @@ bool AccountServer::handle_register(Credentials credentials, int client_sock_fd)
     return success;
 }
 
+void AccountServer::send_success(int client_sock_fd){
+    send_message(client_sock_fd, "1");
+
+}
+
 void AccountServer::send_error(int client_sock_fd){
     send_message(client_sock_fd, "-1");
 
 }
 
-void AccountServer::send_success(int client_sock_fd){
-    send_message(client_sock_fd, "1");
+void AccountServer::send_success_id(int client_sock_fd, std::string username){
+    /*
+     * Renvoi l'id du user qui s'est connecté
+     */
+
+    int id = myDatabase.getIDbyUsername(username);
+    std::string string_id = std::to_string(id);
+    send_message(client_sock_fd,string_id.c_str());
+    //send_message(client_sock_fd, "1");
 }
 
 //Partie Login
@@ -66,7 +78,7 @@ bool AccountServer::handle_login(Credentials credentials, int client_sock_fd) {
     //std::cout << credentials.getPassword() << std::endl;
 
     if (checkCredentials(credentials)){
-        send_success(client_sock_fd);
+        send_success_id(client_sock_fd, credentials.getUsername());
         success = true;
 
     }
