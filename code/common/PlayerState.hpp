@@ -1,3 +1,5 @@
+#include <string>
+
 class PlayerState {
 
 private:
@@ -10,6 +12,8 @@ private:
 	int player_id;
 
 public:
+
+	std::string serialize();
 
 	int getHp();
 

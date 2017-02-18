@@ -4,6 +4,10 @@ int PlayerState::getHp(){
     return hp;
 }
 
+std::string PlayerState::serialize() {
+    //TODO
+}
+
 void PlayerState::setHp(int newHp){
     hp = newHp;
 }
