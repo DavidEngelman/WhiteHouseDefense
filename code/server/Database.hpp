@@ -49,6 +49,7 @@ public:
     std::vector<RankingInfos> getRanking();
     PublicAccountInfos getUsrInfosByUsrname(std::string);
     int getIDbyUsername(std::string username);
+
     std::string getInfosById(int id);
     std::vector<std::string> getFriendList(int id);
     std::vector<std::string> getFriendRequests(int id);
