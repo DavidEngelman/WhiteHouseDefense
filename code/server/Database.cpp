@@ -183,7 +183,9 @@ PublicAccountInfos Database::getUsrInfosByUsrname(std::string username) {
 
     return infos;
 }
-
+int Database::getIDbyUsername(std::string username) {
+    return getUsrInfosByUsrname(username).ID;
+}
 std::string Database::getInfosById(int id) {
     std::string infos;
     char *zErrMsg = 0;
