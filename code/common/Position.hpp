@@ -6,6 +6,8 @@ private:
 
 public:
 
+    Position(int x, int y);
+
 	int getX();
 
 	void setX(int x);
