@@ -8,6 +8,7 @@
 class TowerCommand : public Command {
 
 private:
+    std::string tower_type;
     Position tower_position;
 
 public:

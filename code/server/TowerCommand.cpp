@@ -3,11 +3,19 @@
 
 
 void TowerCommand::parse(char *data) {
-    // parse une une chaine de caractere de la forme (place_tower,10,14;)
+    // parse une une chaine de caractere de la forme (place_tower,tower_type,10,14;)
 
-    std::string coord_x, coord_y;
+    std::string coord_x, coord_y, type;
 
     int i = extract_action(data);
+
+    // Extracts tower_type
+    while (data[i] != ',') {
+
+        type += data[i];
+        i++;
+    }
+    i++;
 
     // Extracts the coord_x
     while (data[i] != ',') {
@@ -23,6 +31,7 @@ void TowerCommand::parse(char *data) {
         i++;
     }
 
+    tower_type = type;
     tower_position.setCoord_x(std::stoi(coord_x));
     tower_position.setCoord_y(std::stoi(coord_y));
 }
