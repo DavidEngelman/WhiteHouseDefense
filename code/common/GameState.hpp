@@ -24,7 +24,7 @@ public:
 
     void add_tower();
 
-    void applyChanges(int changes);
+    void applyChanges(std::string changes); //Pourquoi on a et ApplyChanges et UpdateGameState ?
 
 	void updateGameState(int commands);
 
