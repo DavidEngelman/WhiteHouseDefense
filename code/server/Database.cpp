@@ -186,6 +186,7 @@ PublicAccountInfos Database::getUsrInfosByUsrname(std::string username) {
 int Database::getIDbyUsername(std::string username) {
     return getUsrInfosByUsrname(username).ID;
 }
+
 std::string Database::getInfosById(int id) {
     std::string infos;
     char *zErrMsg = 0;
@@ -269,8 +270,8 @@ int Database::removeFriend(std::string username, std::string toRemove){
 
     char *zErrMsg = 0;
     std::stringstream strm;
-    strm<< "DELETE FROM `FriendList` WHERE `ID1`='"<<username<<"';"
-        << "DELETE FROM `FriendList` WHERE `ID1`='"<<toRemove<<"';";
+    strm<< "DELETE FROM `FriendList` WHERE `ID1`='"<<username<<"' AND `ID2`='"<<toRemove<<"' ;"
+        << "DELETE FROM `FriendList` WHERE `ID1`='"<<toRemove<<"' AND `ID2`='"<<username<<"' ;";
 
     std::string s = strm.str();
 

@@ -2,8 +2,8 @@
 #include "MainManager.hpp"
 #include "GameLauncher.hpp"
 #include "ProfileManager.hpp"
-#include "FriendList.hpp"
 #include "RankingManager.hpp"
+#include "FriendListManager.hpp"
 
 
 MainManager::MainManager(char* ip_addr, int id) : server_ip_adress(ip_addr), player_id(id){
@@ -26,7 +26,7 @@ void MainManager::start_display() {
         }
         case 3: {
             std::cout << "Friendlist !" << std::endl;
-            FriendList friendList = FriendList();
+            FriendListManager friendList(5555, server_ip_adress, player_id);
             break;
         }
         case 4: {
