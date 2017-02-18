@@ -49,5 +49,4 @@ public:
     std::vector<RankingInfos> getRanking();
     std::string vectorTostring(std::vector<RankingInfos> vect);
 
-    std::string get_command_type(char* data);
 };

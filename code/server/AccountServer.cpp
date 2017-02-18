@@ -150,24 +150,7 @@ void AccountServer::get_and_process_command(int client, char* message_buffer){
     }
 }
 
-std::string AccountServer::get_command_type(char* data){
 
-    /*
-     * Determine le type de commande (login/register, ranking, profile,...)
-     */
-
-    int i = 0;
-    std::string command_type;
-
-
-    while ((data[i] != ',') && (data[i] != ';')) { // comme ça une commande peut etre juste par ex: "ranking;"
-        command_type += data[i];                        // au lieu de "ranking," c'est un peu plus clean
-        i++;
-    }
-
-    return command_type;
-
-}
 
 
 
