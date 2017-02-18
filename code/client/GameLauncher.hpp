@@ -9,9 +9,13 @@
 
 class GameLauncher : NetworkedManager {
 
+private:
+
+    int player_id;
+
 
 public:
-    GameLauncher(int port, char* address);
+    GameLauncher(int port, char* address, int id);
     void sendJoinRequest(std::string mode);
 };
 

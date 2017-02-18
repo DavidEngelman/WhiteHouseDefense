@@ -38,6 +38,8 @@ public:
 
     void send_error(int client_sock_fd);
     void send_success(int client_sock_fd);
+    void send_success_id(int client_sock_fd, std::string username);
+
 
     void parse_command(char *data, Command *command);
 
