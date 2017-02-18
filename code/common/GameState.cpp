@@ -9,3 +9,7 @@ void GameState::increase_player_hp(PlayerState& player, int amount){
 }
 
 std::string GameState::serialize() {}
+
+void GameState::add_tower(Position position) {
+    // TODO
+}
