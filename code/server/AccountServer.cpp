@@ -13,7 +13,7 @@ void AccountServer::run() {
 
         if (!fork()) {
             char message_buffer[BUFFER_SIZE];
-            get_and_process_command(newClient, message_buffer);
+            get_and_process_commands(newClient, message_buffer);
         }
     }
 }
@@ -114,7 +114,7 @@ std::string AccountServer::vectorTostring(std::vector<RankingInfos> vect) {
 }
 
 
-void AccountServer::get_and_process_command(int client, char* message_buffer){
+void AccountServer::get_and_process_commands(int client, char *message_buffer){
     bool ok = false;
 
     while (!ok){
