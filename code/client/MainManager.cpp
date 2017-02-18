@@ -16,7 +16,7 @@ void MainManager::start_display() {
     switch (mainUI.select()) {
         case 1: {
             std::cout << "Game Launcher !" << std::endl;
-            GameLauncher game = GameLauncher(5556, server_ip_adress);
+            GameLauncher game = GameLauncher(5556, server_ip_adress, player_id);
             break;
         }
         case 2: {
