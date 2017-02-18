@@ -8,9 +8,13 @@ class MainManager {
 
 private:
 	MainUI mainUI;
+	char* server_ip_adress;
+	int player_id;
+
+	void start_display();
 
 public:
-    MainManager();
+    MainManager(char* ip_addr, int id);
 };
 
 #endif
