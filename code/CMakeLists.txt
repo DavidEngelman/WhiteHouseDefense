@@ -14,7 +14,8 @@ find_package (Threads)
 
 set(SERVER_FILES "server/ServerLauncher.cpp" "common/Networking.cpp" "server/Server.cpp" "server/AccountServer.cpp" "server/Database.cpp"
         "common/Credentials.cpp" "common/Account.cpp" "server/Command.cpp" "server/LoginRegisterCommand.cpp"
-        "server/MatchmakingCommand.cpp" "server/MatchMaker.cpp" "server/MatchMaker.cpp" "server/PendingMatch.cpp" common/GameState.cpp)
+        "server/MatchmakingCommand.cpp" "server/MatchMaker.cpp" "server/MatchMaker.cpp" "server/PendingMatch.cpp" common/GameState.cpp
+        "server/GameServer.cpp")
 
 add_executable(server ${SERVER_FILES})
 
