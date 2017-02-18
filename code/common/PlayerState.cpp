@@ -32,12 +32,12 @@ void PlayerState::setIsWinner(bool newValue){
     isWinner = newValue;
 }
 
-void PlayerState::getAccount(){
-    //TODO: utile ?
+void PlayerState::getPlayer_id(){
+    return player_id;
 }
 
-void PlayerState::setAccount(int account){
-    //TODO: utile ?
+void PlayerState::setPlayer_id(int newId){
+    player_id = newId;
 }
 
 void PlayerState::spendMoney(int amount){

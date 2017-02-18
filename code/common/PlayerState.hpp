@@ -6,7 +6,8 @@ private:
 	int money;
 	bool isSupported;
 	bool isWinner;
-	Account account; // pas sur que ce soit tres utile
+
+	int player_id;
 
 public:
 
@@ -26,9 +27,9 @@ public:
 
 	void setIsWinner(bool isWinner);
 
-	void getAccount();
+	void getPlayer_id();
 
-	void setAccount(int account);
+	void setPlayer_id(int newId);
 
 	void spendMoney(int amount);
 
