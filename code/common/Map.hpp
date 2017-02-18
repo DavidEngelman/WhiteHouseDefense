@@ -17,7 +17,13 @@ private:
     int matrix[HEIGHT][WIDTH];
     void generateRandomMatrix();
     void initMap();
-    void generateQuarterMap();
+    struct Pos {
+        int x;
+        int y;
+    };
+    bool generateQuarterMap(Pos position);
+    bool isNextToPath(Pos position);
+    std::string posToString(Pos position);
 
 public:
     Map();
