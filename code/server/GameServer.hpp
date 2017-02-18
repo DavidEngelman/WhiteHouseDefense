@@ -7,6 +7,8 @@
 class GameServer : public Server {
 
 public:
+
+    GameServer(int port);
     GameState serverGamesSate;
 
     void getReceivedChanges();
