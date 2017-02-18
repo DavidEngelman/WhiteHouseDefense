@@ -1,11 +1,10 @@
 #include "GameLauncher.hpp"
 #include "../common/Strings.hpp"
 
-GameLauncher::GameLauncher(int port, char *address) : NetworkedManager(port, address) {
+GameLauncher::GameLauncher(int port, char *address, int id) : NetworkedManager(port, address), player_id(id) {
 };
 
 void GameLauncher::sendJoinRequest(std::string mode) {
-    int player_id = 0; // TODO: get real player ID
     char server_response[20];
 
     std::string message = mode + "," + std::to_string(player_id) + ";";
