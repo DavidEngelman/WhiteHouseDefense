@@ -7,4 +7,6 @@
 #define TEAM_MODE "TeamMode"
 
 
+#define PLACE_TOWER_COMMAND_STRING "PlaceTower"
+
 #endif //PROJET_STRINGS_HPP
