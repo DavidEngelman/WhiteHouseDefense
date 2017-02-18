@@ -40,6 +40,7 @@ public:
     static int callback_ranking(void *ptr, int argc, char **argv, char **azColName);
     static int callback_account_usrname(void *ptr, int argc, char **argv, char **azColName);
     static int callback_account_id(void *ptr, int argc, char **argv, char **azColName);
+    static int callback_FriendList(void *ptr, int argc, char **argv, char **azColName);
 
     int open();
     int insert_account(Credentials credentials);
@@ -48,6 +49,8 @@ public:
     std::vector<RankingInfos> getRanking();
     PublicAccountInfos getUsrInfosByUsrname(std::string);
     std::string getInfosById(int id);
+    std::vector<std::string> getFriendList(int id);
+    std::vector<std::string> getFriendRequests(int id);
 
     int sendFriendRequest(std::string username, std::string toAdd);
     int acceptFriendRequest(std::string username, std::string toAccept);
