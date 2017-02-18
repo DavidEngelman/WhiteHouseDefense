@@ -1,3 +1,5 @@
+#include "../common/Position.hpp"
+
 class Tower {
 
 private:
