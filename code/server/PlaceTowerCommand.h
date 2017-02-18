@@ -2,19 +2,25 @@
 #define PROJET_PLACETOWERCOMMAND_H
 
 #include "../common/Position.hpp"
+#include "Command.hpp"
+#include <string>
 
-class PlaceTowerCommand {
+
+class PlaceTowerCommand : public Command {
 private:
-    Position position;
     int player_id;
+    Position position;
+    std::string tower_type;
 public:
-    PlaceTowerCommand(int x, int y, int player_id);
-
-    PlaceTowerCommand(Position position, int player_id);
-
     Position &getPosition();
 
     int getPlayerID();
+
+    std::string& getTowerType();
+
+    void parse(char *data) override;
+
+    ~PlaceTowerCommand() = default;
 };
 
 
