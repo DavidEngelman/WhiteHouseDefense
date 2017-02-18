@@ -5,7 +5,7 @@
 #include "PendingMatch.h"
 #include "MatchmakingCommand.hpp"
 #include "../common/Strings.hpp"
-#include <string>
+#include "PlayerConnection.hpp"
 
 class MatchMaker : public Server {
 
