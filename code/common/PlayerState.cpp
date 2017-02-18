@@ -43,3 +43,11 @@ void PlayerState::setAccount(int account){
 void PlayerState::spendMoney(int amount){
     money -= amount;
 }
+
+void PlayerState::decrease_hp(int amount) {
+    setHp(getHp() - amount);
+}
+
+void PlayerState::decrease_hp(int amount) {
+    setHp(getHp() + amount);
+}

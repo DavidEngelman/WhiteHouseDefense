@@ -5,6 +5,7 @@ private:
 	int coord_y;
 
 public:
+
 	int getCoord_x();
 
 	void setCoord_x(int coord_x);
