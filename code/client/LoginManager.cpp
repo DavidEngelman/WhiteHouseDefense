@@ -6,7 +6,9 @@ LoginManager::LoginManager(int port, char* address): NetworkedManager(port, addr
 };
 
 void LoginManager::login_process() {
-    std::string success = "-1";
+    std::string success = "-1"; // En fait success contiendra soit -1 si la co a échouée soit l'id du joueur si ca a réussi
+                                // C est peut etre pas très clair :D
+
     bool valid = false; // bool qui check si les donnés sont corrects (champs non vide) et peuvent être envoyées au serveur
 
     while (success == "-1") {
