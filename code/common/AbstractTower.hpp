@@ -8,27 +8,24 @@ class AbstractTower {
 
 private:
 
-	int owner; //ID du joueur qui possède la tour
-	int typeOfTower;
-	int price;
-	int damage;
-	Position position;
+    int owner; // player ID
+    const int price;
+    Position position;
 
 public:
 
-	virtual void shoot(PNJ target);
+    virtual void shoot(PNJ target); // HAS TO BE DEFINED BY INHERITORS
 
-	/* The price of the tower must be a constant in the constructor
-	int getPrice() const;
+    virtual int getOwner() const;
 
-	void setPrice(int price);
-	*/
+    virtual void setOwner(int owner);
 
-	/* The position is defined in the map class
-	Position getPosition() const;
+    virtual const int getPrice() const;
 
-	void setPosition(int x, int y);
-	*/
+    virtual Position getPosition() const;
+
+    //The position is defined in the map class
+    virtual void setPosition(Position position);
 };
 
 #endif // PROJET_ABSTRACTTOWER_H
