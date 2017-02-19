@@ -25,3 +25,7 @@ std::string GameState::serialize() {
 void GameState::add_tower(Position position) {
     // TODO
 }
+
+bool GameState::is_only_one_alive() {
+    //TODO
+}
