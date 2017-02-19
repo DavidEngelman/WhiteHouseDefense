@@ -3,6 +3,7 @@
 
 
 #include "AbstractTower.hpp"
+#include "PNJ.hpp"
 
 class AttackTower : public AbstractTower {
 

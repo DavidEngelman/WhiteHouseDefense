@@ -1,3 +1,6 @@
+#ifndef __PNJ__
+#define __PNJ__
+
 class PNJ {
 
 private:
@@ -22,3 +25,5 @@ public:
 
 	void setPosition(int x, int y);
 };
+
+#endif
