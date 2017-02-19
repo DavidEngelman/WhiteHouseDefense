@@ -15,7 +15,7 @@ void FriendListUI::display() {
     std::cout << "   |       5. remove friend             |   " << std::endl;
     std::cout << "   |       6. accept friend             |   " << std::endl;
     std::cout << "   |       7. decline friend            |   " << std::endl;
-    std::cout << "   |       8. exit                      |   " << std::endl;
+    std::cout << "   |       8. Return to Main menu       |   " << std::endl;
     std::cout << "   ======================================   " << std::endl;
 
 

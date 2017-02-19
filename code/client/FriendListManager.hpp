@@ -4,9 +4,11 @@
 
 #include "NetworkedManager.hpp"
 #include "../common/Networking.h"
-#include "string"
 #include "FriendListUI.hpp"
 #include "FriendList.hpp"
+#include "MainManager.hpp"
+#include <iostream>
+
 
 class FriendListManager: NetworkedManager {
 
