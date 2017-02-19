@@ -3,6 +3,7 @@
 
 #include "../common/Position.hpp"
 #include "PNJ.hpp"
+#include <string>
 
 class AbstractTower {
 
@@ -26,6 +27,8 @@ public:
 
     //The position is defined in the map class
     virtual void setPosition(Position position);
+
+    virtual std::string serialize(std::string str) = 0;
 };
 
 #endif // PROJET_ABSTRACTTOWER_H
