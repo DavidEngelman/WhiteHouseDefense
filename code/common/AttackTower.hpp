@@ -3,6 +3,7 @@
 
 
 #include "AbstractTower.hpp"
+#include "PNJ.hpp"
 
 class AttackTower : public AbstractTower {
 
@@ -19,6 +20,8 @@ public:
     virtual void shoot(PNJ target);
 
     virtual void dealDamageTo(PNJ pnj);
+
+    virtual std::string serialize() override;
 
 };
 
