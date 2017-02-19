@@ -16,6 +16,8 @@ public:
 
     virtual void setDamageAmount(int damageAmount);
 
+    virtual void shoot(PNJ target);
+
     virtual void dealDamageTo(PNJ pnj);
 
 };
