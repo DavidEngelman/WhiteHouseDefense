@@ -73,7 +73,28 @@ void GameServer::runWave() {
         shouldSendData = false;
         waveHasFinished = false;
     }
+
 }
+
+// pq on exectuerait pas 2 threads dans la boucle while !waveHasFinished.
+// 1 qui fait des gamestate.update() tous les x temps
+// et 1 qui fait des sendGameStateToPlayers() tous les x temps ?
+// on peut faire genre une fct comme ca :
+/*
+void GameServer::doUpdate(){ //fct pour le 1er thread
+    while(1){
+        gameState.update;
+    }
+}
+
+void GameServer::doSending() { //fct pour le 2eme thread
+    while(1){
+        sleep(x); //temps à déterminer
+        sendGameStateToPlayers();
+    }
+
+}
+*/
 
 void GameServer::run() {
     bool gameHasEnded = false;
