@@ -87,7 +87,7 @@ void GameServer::run() {
 }
 
 bool GameServer::isFinishedClassic() {
-    return gameState.isOnlyOneAlive();
+    return gameState.is_only_one_alive();
 }
 
 bool GameServer::isFinishedCoop() {
