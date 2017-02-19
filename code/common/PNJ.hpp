@@ -1,3 +1,5 @@
+#include "Position.hpp"
+
 class PNJ {
 
 private:
