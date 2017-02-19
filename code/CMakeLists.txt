@@ -16,7 +16,7 @@ find_package (Threads)
 set(SERVER_FILES "server/ServerLauncher.cpp" "common/Networking.cpp" "server/Server.cpp" "server/AccountServer.cpp" "server/Database.cpp"
         "common/Credentials.cpp" "common/Account.cpp" "server/Command.cpp" "server/LoginRegisterCommand.cpp"
         "server/MatchmakingCommand.cpp" "server/MatchMaker.cpp" "server/MatchMaker.cpp" "server/PendingMatch.cpp"
-        "server/FriendListCommand.cpp" common/AbstractTower.cpp common/DamageTower.cpp common/DamageTower.h)
+        "server/FriendListCommand.cpp" common/AbstractTower.cpp common/DamageTower.cpp common/DamageTower.h server/PlayerConnection.cpp)
 
 add_executable(server ${SERVER_FILES})
 
