@@ -19,7 +19,7 @@ public:
 
     PlayerState(int id);
 
-	std::string serialize(std::string& str);
+	std::string serialize();
 
 	int getHp();
 
