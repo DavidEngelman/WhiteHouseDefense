@@ -1,10 +1,12 @@
 class PNJ {
 
 private:
+
 	int hp;
 	Position positon;
 
 public:
+
 	int getHp();
 
 	void decreaseHp(int damage);
