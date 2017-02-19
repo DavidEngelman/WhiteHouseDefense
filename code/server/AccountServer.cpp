@@ -274,7 +274,7 @@ void AccountServer::get_and_process_command(int client, char* message_buffer) {
             } else if (action == "removeFriend") {
                 std::cout << friendListCommand.getAction() << " : " << receiverUsername << " of " << requesterID
                           << std::endl;
-                handle_removeFriend(client, receiverUsername, receiverUsername);
+                handle_removeFriend(client, requesterUsername, receiverUsername);
 
             } else if (action == "acceptFriendRequest") {
                 std::cout << friendListCommand.getAction() << " : " << receiverUsername << " of " << requesterID
