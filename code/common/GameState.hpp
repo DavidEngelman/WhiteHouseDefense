@@ -16,6 +16,8 @@ class GameState {
     Map map;
 public:
 
+    bool is_only_one_alive();
+
     void decrease_player_hp(PlayerState &player, int amount);
 
     void increase_player_hp(PlayerState &player, int amount);
