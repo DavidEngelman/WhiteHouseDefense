@@ -21,9 +21,10 @@ void PendingMatch::add_player_to_queue(PlayerConnection playerConnection) {
     playerConnections.push_back(playerConnection);
 }
 
-//void PendingMatch::remove_player_from_queue(PlayerConnection playerConnection) {
-//    playerConnections.erase(std::remove(playerConnections.begin(), playerConnections.end(), playerConnection));
-//} TODO: Cette method marche pas
+void PendingMatch::remove_player_from_queue(PlayerConnection playerConnection) {
+    playerConnections.erase(std::remove(playerConnections.begin(), playerConnections.end(), playerConnection));
+}
+//TODO: Cette method marche pas
 
 void PendingMatch::clear() {
     playerConnections.clear();
