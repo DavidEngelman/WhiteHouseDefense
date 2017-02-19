@@ -12,6 +12,8 @@ private:
 
 public:
 
+    virtual std::string serialize() override;
+
     virtual int getSpeedReduction() const;
 
     virtual void setSpeedReduction(int speedReduction);
@@ -19,6 +21,8 @@ public:
     virtual void shoot(PNJ target);
 
     virtual void reduceMovementSpeedOf(PNJ target);
+
+
 };
 
 
