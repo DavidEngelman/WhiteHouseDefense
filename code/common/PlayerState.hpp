@@ -1,4 +1,6 @@
 #include <string>
+#define STARTING_HP 100
+#define STARTING_MONEY 500
 
 class PlayerState {
 
@@ -14,6 +16,8 @@ private:
 	std::string bool_to_string(bool my_bool);
 
 public:
+
+    PlayerState(int id);
 
 	std::string serialize(std::string& str);
 
