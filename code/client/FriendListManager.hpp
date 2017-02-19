@@ -25,6 +25,7 @@ public:
 
     std::string getFriendList();
     std::string getFriendRequests();
+    std::string getPendingInvitations();
 
     void friendListProcess();
 

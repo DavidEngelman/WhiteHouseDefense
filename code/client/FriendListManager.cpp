@@ -20,30 +20,43 @@ void FriendListManager::friendListProcess() {
             std::cout<< "Your Friend requests :  ";
             friendListUI.displayFriendList(getFriendRequests());
         }else if (choice == 3) {
+            std::cout<<"Your Friend Invitations :  ";
+            friendListUI.displayFriendList(getPendingInvitations());
+
+        }else if (choice == 4) {
             std::cout<<"Send Friend Request to : ";
             std::string toAdd ;
             std::cin >> toAdd;
             std::cout<<std::endl;
-            sendFriendRequest(toAdd);
-        }else if (choice == 4 ){
+            if(sendFriendRequest(toAdd)){
+                std::cout<<"Invitation Sent"<<std::endl;
+            };
+
+        }else if (choice == 5 ){
             std::cout<<"Remove Friend : ";
             std::string toRemove;
             std::cin >> toRemove;
             std::cout<<std::endl;
-            removeFriend(toRemove);
-        }else if (choice == 5){
+            if(removeFriend(toRemove)){
+                std::cout<<"Friend removed successfully"<<std::endl;
+            };
+        }else if (choice == 6){
             std::cout<< "accept Friend : ";
             std::string toAccept;
             std::cin >> toAccept;
             std::cout<<std::endl;
-            acceptFriendRequest(toAccept);
-        }else if (choice == 6){
+            if (acceptFriendRequest(toAccept)){
+                std::cout<<"Friend request accepted"<<std::endl;
+            };
+        }else if (choice == 7){
             std::cout<< "decline Friend : ";
             std::string toAccept;
             std::cin >> toAccept;
             std::cout<<std::endl;
-            declineFriendRequest(toAccept);
-        }else if (choice == 7 ){
+            if(declineFriendRequest(toAccept)){
+                std::cout<<"Friend request declined"<<std::endl;
+            };
+        }else if (choice == 8 ){
             // todo revenir au mainManager
         }
         friendListUI.display();
@@ -69,6 +82,13 @@ std::string FriendListManager::getFriendRequests() {
     receive_message(server_socket, buffer);
     return std::string(buffer);
 
+}
+std::string FriendListManager::getPendingInvitations() {
+    std::string message = "getPendingInvitations;" + std::to_string(player_id)+ ";";
+    send_message(server_socket, message.c_str());
+    char buffer[MAX_BUFF_SIZE];
+    receive_message(server_socket, buffer);
+    return std::string(buffer);
 }
 
 bool FriendListManager::sendFriendRequest(std::string toAdd){
@@ -104,7 +124,6 @@ bool FriendListManager::acceptFriendRequest(std::string toAccept) {
     if (server_response[0] == '1') {
         return true;
     }
-
     return false;
 
 }
