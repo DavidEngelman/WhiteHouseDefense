@@ -20,6 +20,8 @@ std::string GameState::serialize() {
     for (Wave wave: waves){
         wave.serialize(serialized_me);
     }
+
+    return serialized_me;
 }
 
 void GameState::add_tower(Position position) {
@@ -27,5 +29,12 @@ void GameState::add_tower(Position position) {
 }
 
 bool GameState::is_only_one_alive() {
-    //TODO
+    int nmbr_of_alive;
+    for (PlayerState ps: player_states){
+        if (ps.getHp() > 0){
+            nmbr_of_alive++;
+        }
+    }
+    return  (nmbr_of_alive == 1);
 }
+
