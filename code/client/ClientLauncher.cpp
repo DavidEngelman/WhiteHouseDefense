@@ -5,9 +5,8 @@
 
 
 int main(int argc, char *argv[]) {
-    Map map = Map();
 
-    /*
+
     if (argc <= 1){
         std::cout << "Don't forget the ip_adress of the server as argument! ;)" << std::endl;
         exit(1);
@@ -38,6 +37,6 @@ int main(int argc, char *argv[]) {
         std::cin.clear();
         std::cin.ignore();
     }
-    */
+
     return 0;
 }

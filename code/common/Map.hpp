@@ -11,10 +11,12 @@
 #define PNG "\033[33m⬛\033[0m"
 
 #include <string>
+#include <vector>
 
 class Map {
 private:
     int matrix[HEIGHT][WIDTH];
+
     void generateRandomMatrix();
     void initMap();
     struct Pos {
@@ -29,6 +31,8 @@ public:
     Map();
     Map(std::string filename);
     void display();
+    bool addTower(int x, int y, int typeOfTower);
+    bool removeTower(int x, int y);
 };
 
 #endif
