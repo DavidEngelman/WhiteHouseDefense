@@ -12,6 +12,9 @@ std::string GameState::serialize() {
     std::string serialized_me;
 
     for (PlayerState pstate: player_states){
+        // C'est un peu bizarre comme fonction. Intuitivement, on dirait qu'il va
+        // mettre le resultat dans serialized_me, au lieu de faire un append.
+        // C'est ce que j'ai pensé quand j'ai vu ça
         pstate.serialize(serialized_me);
     }
     for (Tower tower: towers){
