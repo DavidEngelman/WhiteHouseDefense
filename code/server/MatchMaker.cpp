@@ -84,5 +84,5 @@ void MatchMaker::announceMatchStart(PlayerConnection playerConnection){
     // TODO: si il y a plusieurs servers de jeu d'un meme mode, il faudra trouver un moyen de
     // lui signaler vers lequel il doit parler
 
-    send_message(playerConnection.socket_fd, GAME_STARTING_STRING);
+    send_message(playerConnection.getSocket_fd(), GAME_STARTING_STRING);
 }
