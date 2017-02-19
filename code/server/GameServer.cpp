@@ -99,7 +99,7 @@ void GameServer::doSending() { //fct pour le 2eme thread
 /*
  * L'idée des threads est bonne à mon avis, mais je vois pas trop le besoin pour ce cas ci
  * On pourrait faire tout simplement
- * void runGame(){
+ * void runWave(){
      * start = time()
      * while (1) {
      *     current = time()
