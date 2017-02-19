@@ -245,7 +245,6 @@ int Database::acceptFriendRequest(std::string username, std::string toAccept) {
     std::stringstream strm;
 
     strm << "insert into FriendList(ID1, ID2) values('" << username << "','" << toAccept << "') ;"
-         << "insert into FriendList(ID1, ID2) values('" << toAccept << "','" << username << "') ;"
          << "DELETE FROM `FriendRequests` WHERE `ReceiverID`='"<<username<<"' AND `SenderID`='"<<toAccept<<"' ;"
          << "DELETE FROM `PendingInvitations` WHERE `RequesterID`='"<<toAccept<<"' AND `ReceiverID`='"<<username<<"' ;";
 
@@ -325,7 +324,8 @@ std::vector<std::string> Database::getFriendList(int id){
     char *zErrMsg = 0;
     std::stringstream strm;
 
-    strm << "select ID2 from FriendList WHERE ID1 ='"<<username<<"'";
+    strm << "select ID2 from FriendList WHERE ID1 ='"<<username<<"';"
+         << "select ID1 from FriendList WHERE ID2 ='"<<username<<"';";
     std::string s = strm.str();
 
     char *str = &s[0];
