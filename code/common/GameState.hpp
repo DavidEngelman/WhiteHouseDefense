@@ -14,7 +14,10 @@ class GameState {
     std::vector<Wave> waves;
 
     Map map;
+
 public:
+
+    std::string serialize();
 
     bool is_only_one_alive();
 
@@ -23,9 +26,6 @@ public:
     void increase_player_hp(PlayerState &player, int amount);
 
     void add_tower(Position position);
-
-    // Oui, cette fonctio ne sert plus à grand chose. Je crois qu'on peut l'eliminer
-    void applyChanges(std::string changes); //Pourquoi on a et ApplyChanges et UpdateGameState ?
 
     // Cette fonction aussi
     void updateGameState(int commands);
@@ -36,7 +36,6 @@ public:
     // où est cette classe comptabilise le temps écoulé et fait les calculs pour voir de combien
     // les mexicains ont avancé (entre autres)
 
-    std::string serialize();
 };
 
 #endif
