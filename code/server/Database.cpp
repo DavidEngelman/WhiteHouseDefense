@@ -42,8 +42,8 @@ int Database::callback_counter(void *count, int argc, char **argv, char **azColN
 int Database::callback_account_usrname(void *ptr, int argc, char **argv, char **azColName){
     PublicAccountInfos *infos = reinterpret_cast<PublicAccountInfos*>(ptr);
     infos->username = argv[0];
-    infos->victories = atoi(argv[1]);
-    infos->pnjKilled = atoi(argv[2]);
+    infos->victories = argv[1];
+    infos->pnjKilled = argv[2];
     infos->ID = atoi(argv[3]);
     return 0;
 }

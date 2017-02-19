@@ -1,7 +1,5 @@
-#include "Position.hpp"
-
-#ifdef PROJET_PNJ_H
-#define PROJET_PNJ_H
+#ifndef PNJ_HPP
+#define PNJ_HPP
 
 class PNJ {
 
@@ -13,13 +11,15 @@ private:
 
 public:
 
+    PNJ();
+
 	int getHealthPoints() const;
 
 	void receiveDamage(int damageAmount);
 
 	int getMovementSpeed() const;
 
-	void setMovementSpeed();
+	void setMovementSpeed(int newMovementSpeed);
 
     void receiveMovementPenalty(int speedReduction);
 
@@ -28,4 +28,4 @@ public:
 	void setPosition(int x, int y);
 };
 
-#endif // PROJET_PNJ_H
+#endif
