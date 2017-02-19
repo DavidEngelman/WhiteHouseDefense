@@ -21,6 +21,8 @@ public:
 
     virtual void dealDamageTo(PNJ pnj);
 
+    virtual std::string serialize() override;
+
 };
 
 
