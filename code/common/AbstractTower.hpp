@@ -2,6 +2,7 @@
 #define PROJET_ABSTRACTTOWER_H
 
 #include "../common/Position.hpp"
+#include "PNJ.hpp"
 
 class AbstractTower {
 
@@ -15,10 +16,12 @@ public:
 
     virtual void shoot(PNJ target); // HAS TO BE DEFINED BY INHERITORS
 
+    // The price of a tower must be a constant
     virtual int getOwner() const;
 
     virtual void setOwner(int owner);
 
+    //The position is defined in the map class
     virtual int getPrice() const;
 
     virtual void setPrice(int price);
