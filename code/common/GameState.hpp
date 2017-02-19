@@ -4,14 +4,14 @@
 #include <vector>
 #include "PlayerState.hpp"
 #include "Tower.hpp"
-#include "PNJ.hpp"
+#include "Wave.h"
 #include "Map.hpp"
 
 class GameState {
 
     std::vector<PlayerState> player_states;
     std::vector<Tower> towers;
-    std::vector<PNJ> pnjs;
+    std::vector<Wave> waves;
 
     Map map;
 public:
