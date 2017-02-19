@@ -16,7 +16,9 @@ public:
 
     virtual void setSpeedReduction(int speedReduction);
 
-    virtual void reduceMovementSpeedOf(PNJ pnj);
+    virtual void shoot(PNJ target);
+
+    virtual void reduceMovementSpeedOf(PNJ target);
 };
 
 

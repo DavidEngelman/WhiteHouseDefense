@@ -4,4 +4,6 @@ int AttackTower::getDamageAmount() const { return damageAmount; }
 
 void AttackTower::setDamageAmount(int damageAmount) { this->damageAmount = damageAmount; }
 
-void AttackTower::dealDamageTo(PNJ pnj) { pnj.receiveDamage(this->getDamageAmount()); }
+void AttackTower::shoot(PNJ target) { this->dealDamageTo(target); }
+
+void AttackTower::dealDamageTo(PNJ target) { target.receiveDamage(this->getDamageAmount()); }
