@@ -21,6 +21,10 @@ private:
 
     void addTowerInGameState(PlaceTowerCommand &command);
 
+    bool isFinishedClassic();    //pour le mode classic
+    bool isFinishedCoop();       //pour le mode par équipe
+    bool isFinishedVsTime();     //pour le mode contre la montre
+
 public:
 
     GameServer(int port, std::vector<PlayerConnection> &playerConnections);

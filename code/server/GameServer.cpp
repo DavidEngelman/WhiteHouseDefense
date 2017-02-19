@@ -85,3 +85,15 @@ void GameServer::run() {
         gameHasEnded = false;
     }
 }
+
+bool GameServer::isFinishedClassic() {
+    return gameState.isOnlyOneAlive();
+}
+
+bool GameServer::isFinishedCoop() {
+    //TODO
+}
+
+bool GameServer::isFinishedVsTime() {
+    //TODO
+}
