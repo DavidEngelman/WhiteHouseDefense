@@ -9,12 +9,15 @@
 
 class GameState {
 
+private:
     std::vector<PlayerState> player_states;
     std::vector<Tower> towers;
     std::vector<PNJ> pnjs;
-
     Map map;
+
 public:
+
+    bool isOnlyOneAlive();
 
     void decrease_player_hp(PlayerState &player, int amount);
 
