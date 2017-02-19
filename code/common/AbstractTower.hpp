@@ -11,6 +11,7 @@ private:
 
     int owner; // player ID
     const int price;
+    int radius;
     Position position;
 
 public:
@@ -22,6 +23,12 @@ public:
     virtual void setOwner(int owner);
 
     virtual const int getPrice() const;
+
+    virtual const int getRadius() const;
+
+    virtual void setRadius(int radius);
+
+    virtual
 
     virtual Position getPosition() const;
 
