@@ -2,7 +2,9 @@
 #define PROJET_SLOWTOWER_HPP
 
 
-class SlowTower {
+#include "AbstractTower.hpp"
+
+class SlowTower : public AbstractTower{
 
 private:
 
@@ -10,8 +12,11 @@ private:
 
 public:
 
+    virtual int getSpeedReduction() const;
 
+    virtual void setSpeedReduction(int speedReduction);
 
+    virtual void reduceMovementSpeedOf(PNJ pnj);
 };
 
 
