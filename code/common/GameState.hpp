@@ -3,7 +3,7 @@
 
 #include <vector>
 #include "PlayerState.hpp"
-#include "Tower.hpp"
+#include "AbstractTower.hpp"
 #include "PNJ.hpp"
 #include "Map.hpp"
 
