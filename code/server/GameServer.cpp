@@ -45,12 +45,6 @@ GameServer::GameServer(int port, std::vector<PlayerConnection> &playerConnection
         Server(port), playerConnections(playerConnections.data()) {}
 
 void GameServer::runWave() {
-
-    // TODO: il faut controller le rythme auquel on envoie des informations
-    // On sait peut etre faire un update du jeu 10000x par seconde, mais on veut surement pas
-    // envoyer 10000x par seconde des données au client
-    // Il faudra donc un mecanisme pour controler le temps
-
     Timer timer;
     timer.start();
     while (!gameState.isWaveFinished() && !gameState.isFinished()) {
@@ -117,18 +111,4 @@ void GameServer::run() {
         processClientCommands();
         runWave();
     }
-}
-
-// Je trouve que ces 3 fonctions devraient être dans GameState, c'est leur responsabilité
-// de determiner si le jeu est fini, et pas au GameServer
-bool GameServer::isFinishedClassic() {
-    return gameState.is_only_one_alive();
-}
-
-bool GameServer::isFinishedCoop() {
-    //TODO
-}
-
-bool GameServer::isFinishedVsTime() {
-    //TODO
 }
