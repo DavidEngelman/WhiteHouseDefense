@@ -1,11 +1,15 @@
 #include "AbstractTower.hpp"
 
-virtual int AbstractTower::getOwner() const { return owner; }
+int AbstractTower::getOwner() const { return owner; }
 
-virtual void AbstractTower::setOwner(int owner) { this->owner = owner; }
+void AbstractTower::setOwner(int owner) { this->owner = owner; }
 
-virtual const int AbstractTower::getPrice() const { return price; }
+const int AbstractTower::getPrice() const { return price; }
 
-virtual Position AbstractTower::getPosition() const { return position; }
+const int AbstractTower::getRadius() const { return radius; }
 
-virtual void AbstractTower::setPosition(Position position) { this->position = position; }
+void AbstractTower::setRadius(int radius) { this->radius = radius; }
+
+Position AbstractTower::getPosition() const { return position; }
+
+void AbstractTower::setPosition(Position position) { this->position = position; }
