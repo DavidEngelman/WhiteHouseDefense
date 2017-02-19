@@ -6,12 +6,17 @@
 #include "Tower.hpp"
 #include "Wave.h"
 #include "Map.hpp"
+#include "../common/Strings.hpp"
+
+const static std::vector<std::string> validModes = {CLASSIC_MODE, TEAM_MODE, TIMED_MODE};
 
 class GameState {
 
     std::vector<PlayerState> player_states;
     std::vector<Tower> towers;
     std::vector<Wave> waves;
+
+    std::string mode;
 
     Map map;
 
@@ -20,6 +25,8 @@ public:
     std::string serialize();
 
     bool is_only_one_alive();
+
+    bool isFinished();
 
     void decrease_player_hp(PlayerState &player, int amount);
 
