@@ -17,9 +17,15 @@ void GameServer::processClientCommands() {
 
     // TODO: cette condition devra être modifiée. Il faut que ça s'arrete au bout de X secondes,
     // c'est à dire la phase où les clients peuvent placer les tours.
-    while (1){
+    time_t end_wait;
+    time_t current = time(NULL);
+    time_t time_to_wait = 60; //60 secondes pour placer ses tours
+    end_wait = current + time_to_wait;
+
+    while (current < end_wait){
         int client_socket_fd = accept_connection();
         get_and_process_command(client_socket_fd, message_buffer);
+        current = time(NULL);
     }
 
 }

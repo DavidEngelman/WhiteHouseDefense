@@ -5,6 +5,7 @@
 #include "PlayerConnection.hpp"
 #include "../common/Strings.hpp"
 #include "PlaceTowerCommand.h"
+#include <time.h>
 
 
 static const int NUM_PLAYERS = 4;
