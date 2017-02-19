@@ -1,5 +1,8 @@
 #include "PlayerState.hpp"
 
+
+PlayerState::PlayerState(int id) : player_id(id), hp(STARTING_HP), money(STARTING_MONEY) {}
+
 std::string PlayerState::bool_to_string(bool my_bool){
     return my_bool ? "true" : "false";
 }
