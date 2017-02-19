@@ -246,8 +246,8 @@ int Database::acceptFriendRequest(std::string username, std::string toAccept) {
 
     strm << "insert into FriendList(ID1, ID2) values('" << username << "','" << toAccept << "') ;"
          << "insert into FriendList(ID1, ID2) values('" << toAccept << "','" << username << "') ;"
-         << "DELETE FROM `FriendRequests` WHERE `ReceiverID`='"<<username<<"';"
-         << "DELETE FROM `PendingInvitations` WHERE `RequesterID`='"<<toAccept<<"';";
+         << "DELETE FROM `FriendRequests` WHERE `ReceiverID`='"<<username<<"' AND `SenderID`='"<<toAccept<<"' ;"
+         << "DELETE FROM `PendingInvitations` WHERE `RequesterID`='"<<toAccept<<"' AND `ReceiverID`='"<<username<<"' ;";
 
 
     std::string s = strm.str();
@@ -289,17 +289,18 @@ int Database::removeFriend(std::string username, std::string toRemove){
     return 0;
 }
 
-int Database::declineFriendRequest(std::string username, std::string toAccept) {
+int Database::declineFriendRequest(std::string username, std::string toDecline) {
     // The user who got the request accepts it and he is added to the requester friend's list and vice versa
     // Friendrequests && pendingInvitations are accordingly updated too
     int id1 = getUsrInfosByUsrname(username).ID;
-    int id2 = getUsrInfosByUsrname(toAccept).ID;
+    int id2 = getUsrInfosByUsrname(toDecline).ID;
 
     char *zErrMsg = 0;
     std::stringstream strm;
 
-    strm << "DELETE FROM `FriendRequests` WHERE `ReceiverID`='"<<username<<"';"
-         << "DELETE FROM `PendingInvitations` WHERE `RequesterID`='"<<toAccept<<"';";
+    strm << "DELETE FROM `FriendRequests` WHERE `ReceiverID`='"<<username<<"' AND `SenderID`='"<<toDecline<<"' ;"
+         << "DELETE FROM `PendingInvitations` WHERE `RequesterID`='"<<toDecline<<"' AND `ReceiverID`='"<<username<<"' ;";
+
 
 
     std::string s = strm.str();
