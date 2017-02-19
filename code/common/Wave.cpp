@@ -12,7 +12,7 @@ std::string Wave::serialize(std::string &str) {
      * fill a string like this : Wave,serialized(PNJ1),serialized(PNJ2),...;
      */
 
-    str += "Wave";
+    str += "Wave,";
     for (PNJ pnj: my_wave){
         serialized_pnj = pnj.serialize();
         str += serialized_pnj;
