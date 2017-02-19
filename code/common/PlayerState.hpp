@@ -15,7 +15,7 @@ private:
 
 public:
 
-	std::string serialize();
+	std::string serialize(std::string& str);
 
 	int getHp();
 

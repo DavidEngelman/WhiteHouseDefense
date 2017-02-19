@@ -9,11 +9,17 @@
 class Wave {
 
 private:
-    std::vector<PNJ> wave;
+    std::vector<PNJ> my_wave;
 
 public:
+
+    std::string serialize(std::string& str);
+
+    Wave() = default; //not sure
     Wave(int nb_of_pnj);
     void remove_pnj(int pnj_id);
+
+
 
 };
 
