@@ -135,6 +135,9 @@ bool AccountServer::declineFriendRequest(std::string requester, std::string rece
 bool AccountServer::removeFriend(std::string requester, std::string receiver) {
     return myDatabase.removeFriend(requester,receiver) != -1 ;
 }
+std::vector<std::string> AccountServer::getPendingInvitations(int id){
+    return myDatabase.getPendingInvitations(id);
+}
 
 bool AccountServer::handle_getFriendList(int client_sock_fd, int requesterID) {
     send_message(client_sock_fd, vectorTostring(getFriendList(requesterID)).c_str());
@@ -144,13 +147,17 @@ bool AccountServer::handle_getFriendRequests(int client_sock_fd, int requesterID
     send_message(client_sock_fd, vectorTostring(getFriendRequests(requesterID)).c_str());
     return true;
 }
+bool AccountServer::handle_getPendingInvitations(int client_sock_fd, int requesterID) {
+    send_message(client_sock_fd, vectorTostring(getPendingInvitations(requesterID)).c_str());
+    return true;
+}
 
 bool AccountServer::handle_acceptFriendRequest(int client_sock_fd, std::string requester, std::string toAccept) {
     bool success = false;
 
     if (acceptFriendRequest(requester, toAccept)){
         send_success(client_sock_fd);
-        success = true;
+        success = true; 
     }
     else {
         send_error(client_sock_fd);
@@ -249,7 +256,8 @@ void AccountServer::get_and_process_command(int client, char* message_buffer) {
 
         } else if (command_type == "getFriendList" || command_type == "getFriendRequests" ||
                    command_type == "addFriend" || command_type == "removeFriend" ||
-                   command_type == "acceptFriendRequest" || command_type == "declineFriendRequest") {
+                   command_type == "acceptFriendRequest" || command_type == "declineFriendRequest" ||
+                   command_type == "getPendingInvitations") {
 
             FriendListCommand friendListCommand;
             friendListCommand.parse(message_buffer);
@@ -259,32 +267,32 @@ void AccountServer::get_and_process_command(int client, char* message_buffer) {
             std::string action = friendListCommand.getAction();
 
             if (action == "getFriendList") {
-                std::cout << vectorTostring(getFriendList(requesterID)).c_str() << std::endl;
+
                 handle_getFriendList(client, requesterID);
 
             } else if (action == "getFriendRequests") {
-                std::cout << friendListCommand.getAction() << " of " << requesterID << std::endl;
+
                 handle_getFriendRequests(client, requesterID);
 
             } else if (action == "addFriend") {
-                std::cout << friendListCommand.getAction() << " : " << receiverUsername << " to " << requesterID
-                          << std::endl;
-                handle_sendFriendRequest(client, requesterUsername, receiverUsername);
 
+                handle_sendFriendRequest(client, requesterUsername, receiverUsername);
+                
+            }else if (action == "getPendingInvitations") {
+                
+                handle_getPendingInvitations(client, requesterID); 
+                
             } else if (action == "removeFriend") {
-                std::cout << friendListCommand.getAction() << " : " << receiverUsername << " of " << requesterID
-                          << std::endl;
+
                 handle_removeFriend(client, requesterUsername, receiverUsername);
 
             } else if (action == "acceptFriendRequest") {
-                std::cout << friendListCommand.getAction() << " : " << receiverUsername << " of " << requesterID
-                          << std::endl;
+
                 handle_acceptFriendRequest(client, requesterUsername, receiverUsername);
 
             } else if (action == "declineFriendRequest") {
-                std::cout << friendListCommand.getAction() << receiverUsername << " to " << requesterID << std::endl;
-                handle_declineFriendRequest(client, requesterUsername, receiverUsername);
 
+                handle_declineFriendRequest(client, requesterUsername, receiverUsername);
             }
         }
     }

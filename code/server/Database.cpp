@@ -362,6 +362,27 @@ std::vector<std::string> Database::getFriendRequests(int id){
 
     return friendRequests;
 }
+std::vector<std::string> Database::getPendingInvitations(int id){
+    std::vector<std::string> friendRequests;
+    std::string username = getInfosById(id);
+    char *zErrMsg = 0;
+    std::stringstream strm;
+
+    strm << "select ReceiverID from PendingInvitations WHERE RequesterID ='"<<username<<"'";
+    std::string s = strm.str();
+
+    char *str = &s[0];
+    char *query = str;
+
+    rc = sqlite3_exec(db, query, callback_FriendList, &friendRequests, &zErrMsg);
+
+    if( rc != SQLITE_OK ){
+        fprintf(stderr, "SQL error: %s\n", zErrMsg);
+        sqlite3_free(zErrMsg);
+    }
+
+    return friendRequests;
+}
 
 
 Database::~Database() {

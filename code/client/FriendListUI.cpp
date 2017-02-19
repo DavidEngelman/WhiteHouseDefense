@@ -8,14 +8,14 @@
 void FriendListUI::display() {
     /*Show user's menu*/
     std::cout << "   ======================================   " << std::endl;
-    std::cout << "   |                                    |   " << std::endl;
     std::cout << "   |       1. My Friends                |   " << std::endl;
     std::cout << "   |       2. My FriendRequests         |   " << std::endl;
-    std::cout << "   |       3. Add a new Friend          |   " << std::endl;
-    std::cout << "   |       4. remove friend             |   " << std::endl;
-    std::cout << "   |       5. accept friend             |   " << std::endl;
-    std::cout << "   |       6. decline friend            |   " << std::endl;
-    std::cout << "   |       7. exit                      |   " << std::endl;
+    std::cout << "   |       3. Pending Invitations       |   " << std::endl;
+    std::cout << "   |       4. Add a new Friend          |   " << std::endl;
+    std::cout << "   |       5. remove friend             |   " << std::endl;
+    std::cout << "   |       6. accept friend             |   " << std::endl;
+    std::cout << "   |       7. decline friend            |   " << std::endl;
+    std::cout << "   |       8. exit                      |   " << std::endl;
     std::cout << "   ======================================   " << std::endl;
 
 
@@ -39,9 +39,9 @@ int FriendListUI::select(){
     int x = -1;
     std::cout << "   Enter your choice: ";
     std::cin >> x;
-    while(std::cin.fail() or 0>x or x>7){
+    while(std::cin.fail() or 0>x or x>8){
         display();
-        std::cout << "   Error, enter a integer between 1 and 7" << std::endl;
+        std::cout << "   Error, enter a integer between 1 and 8" << std::endl;
         std::cout << "   Enter your choice: ";
 
         std::cin.clear();
