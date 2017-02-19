@@ -1,5 +1,6 @@
 
 #include "GameServer.hpp"
+#include "Timer.h"
 
 void GameServer::sendGameStateToPlayers() {
     for (int i = 0; i < NUM_PLAYERS; i++) {
@@ -15,19 +16,13 @@ void GameServer::sendGameStateToPlayer(PlayerConnection &connection) {
 void GameServer::processClientCommands() {
     char message_buffer[BUFFER_SIZE];
 
-    // TODO: cette condition devra être modifiée. Il faut que ça s'arrete au bout de X secondes,
-    // c'est à dire la phase où les clients peuvent placer les tours.
-    time_t end_wait;
-    time_t current = time(NULL);
-    time_t time_to_wait = 60; //60 secondes pour placer ses tours
-    end_wait = current + time_to_wait;
-
-    while (current < end_wait){
+    Timer timer;
+    timer.start();
+    // TODO: choisir le temps d'attente et le mettre comme une constante
+    while (timer.elapsedTimeInSeconds() < 60) {
         int client_socket_fd = accept_connection();
         get_and_process_command(client_socket_fd, message_buffer);
-        current = time(NULL);
     }
-
 }
 
 void GameServer::get_and_process_command(int client_socket_fd, char *buffer) {
@@ -46,9 +41,8 @@ void GameServer::addTowerInGameState(PlaceTowerCommand &command) {
 //    gameState.add_tower(command.getPosition());
 }
 
-GameServer::GameServer(int port, std::vector<PlayerConnection> &playerConnections):
-        Server(port), playerConnections(playerConnections.data())
-{}
+GameServer::GameServer(int port, std::vector<PlayerConnection> &playerConnections) :
+        Server(port), playerConnections(playerConnections.data()) {}
 
 void GameServer::runWave() {
 
@@ -57,23 +51,17 @@ void GameServer::runWave() {
     // envoyer 10000x par seconde des données au client
     // Il faudra donc un mecanisme pour controler le temps
 
-    // TODO: il faut aussi faire update de cette condition, pour que ça s'arrete quand la vague est finie.
-    bool waveHasFinished = false;
-    while (!waveHasFinished){
-        bool shouldSendData = false;
-        while (!shouldSendData){
+    Timer timer;
+    timer.start();
+    while (!gameState.isWaveFinished() && !gameState.isFinished()) {
+        // TODO: choisir une meilleure valeur et la mettre comme constant
+        while (!timer.elapsedTimeInMiliseconds() < 1000) {
             // gameState.update(); // ou peut etre gameState.update(timeEllapsed)?
-            // TODO: Il faudra voir comment est-ce qu'on fait evoluer le jeu en fonction du temps
-            shouldSendData = false; // TODO: update
         }
 
         sendGameStateToPlayers();
-
-        // En attendant
-        shouldSendData = false;
-        waveHasFinished = false;
+        timer.reset();
     }
-
 }
 
 // pq on exectuerait pas 2 threads dans la boucle while !waveHasFinished.
@@ -125,7 +113,7 @@ void GameServer::doSending() { //fct pour le 2eme thread
  */
 
 void GameServer::run() {
-    while (!gameState.isFinished()){
+    while (!gameState.isFinished()) {
         processClientCommands();
         runWave();
     }
