@@ -21,7 +21,7 @@ typedef struct RankingInfos  {
 }RankingInfos;
 
 typedef struct PublicAccountInfos  {
-    int victories, pnjKilled;
+    std::string victories, pnjKilled;
     std::string username;
     int ID;
 }PublicAccountInfos;

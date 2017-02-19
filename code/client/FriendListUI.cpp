@@ -20,19 +20,41 @@ void FriendListUI::display() {
 
 
 }
-void FriendListUI::displayFriendList(std::string friendlist){
-    std::string prettyList = " | ";
-    int i = 0;
-    while (i != friendlist.size()){
-        if (friendlist[i] != ',') {
-            prettyList += friendlist[i];
-            i++;
-        }else{
-            prettyList += " | ";
-            i++;
+void FriendListUI::displayFriendList(std::string friendlist, std::string command) {
+    if (friendlist.size() == 0) {
+        if (command == "pending"){
+            std::cout << "You have no pending Invitation "<<std::endl;
+        }else {
+            std::cout << "Sadly, you have no " << command << " :( "<<std::endl;
         }
+    } else {
+        if (command == "pending"){
+            std::cout << "Your pending Invitations :  " ;
+        }else if (command == "friends"){
+            std::cout << "Your Friends  :  ";
+        }else{
+            std::cout << "Your Friend Requests : ";
+        }
+        std::string prettyList = " | ";
+        int i = 0;
+        while (i != friendlist.size()) {
+            if (friendlist[i] != ',') {
+                prettyList += friendlist[i];
+                i++;
+            } else {
+                prettyList += " | ";
+                i++;
+            }
+        }
+        std::cout << prettyList + " | " << std::endl;
     }
-    std::cout<< prettyList + " | " << std::endl;
+}
+
+std::string FriendListUI::askUsername() {
+    std::string username ;
+    std::cin >> username;
+    std::cout<<std::endl;
+    return username;
 }
 int FriendListUI::select(){
     /* Ask at the user his choice */
