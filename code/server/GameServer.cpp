@@ -96,6 +96,34 @@ void GameServer::doSending() { //fct pour le 2eme thread
 }
 */
 
+/*
+ * L'idée des threads est bonne à mon avis, mais je vois pas trop le besoin pour ce cas ci
+ * On pourrait faire tout simplement
+ * void runGame(){
+     * start = time()
+     * while (1) {
+     *     current = time()
+     *     while (current - start < X) {
+     *          gameState.update()
+     *          current = time()
+     *     }
+     *     sendGameStateToPlayers()
+     *     start = time()
+     * }
+ * }
+ *
+ * L'avantage que je vois est que on ferait des gameUpdate un peu plus regulierement, mais je ne sais pas
+ * si c'est vraiment un probleme ça.
+ *
+ * Je crois que ça va surtout être utile quand on le client pourra placer des tours pendant une vague.
+ *
+ * Par exemple on pourrait faire tourner en parallèle sur 2 threads les
+ * fonctions runGame (dans mon exemple) et processClientCommands, avec un mutex pour assurer la coherence.
+ *
+ *
+ *
+ */
+
 void GameServer::run() {
     bool gameHasEnded = false;
     while (!gameHasEnded){
@@ -107,6 +135,8 @@ void GameServer::run() {
     }
 }
 
+// Je trouve que ces 3 fonctions devraient être dans GameState, c'est leur responsabilité
+// de determiner si le jeu est fini, et pas au GameServer
 bool GameServer::isFinishedClassic() {
     return gameState.is_only_one_alive();
 }
