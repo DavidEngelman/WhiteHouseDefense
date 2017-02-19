@@ -212,6 +212,17 @@ std::string AccountServer::vectorTostring(std::vector<std::string> vect) {
     }
     return result;
 }
+// partie profil
+PublicAccountInfos AccountServer::getPublicAccountInfos(int id){
+    return myDatabase.getUsrInfosByUsrname(myDatabase.getInfosById(id));
+}
+
+bool AccountServer::handle_profile(int client_sock_fd, int player_id) {
+    PublicAccountInfos profile = getPublicAccountInfos(player_id);
+    std::string stringProfile = profile.username + "," + profile.victories + "," + profile.pnjKilled + ";";
+    send_message(client_sock_fd,stringProfile.c_str());
+    return true;
+}
 
 
 ///////////////////////////////////////////////////////////////////////////
@@ -250,9 +261,16 @@ void AccountServer::get_and_process_command(int client, char* message_buffer) {
             command.parse(message_buffer);
             ok = handle_ranking(client);
 
-        } else if (command_type == "profile") {
-            //TODO: ProfileCommand
-            //TODO: handle_profle();
+        } else if (command_type == "getProfileByID" || command_type == "getProfileByUsername") {
+            FriendListCommand friendListCommand;
+            friendListCommand.parse(message_buffer);
+            if (command_type == "getProfileByID") {
+                int requesterID = atoi(friendListCommand.getRequester().c_str());
+                handle_profile(client, requesterID);
+            }else if (command_type == "getProfileByUsername"){
+                int requesterID = myDatabase.getUsrInfosByUsrname(friendListCommand.getRequester()).ID;
+                handle_profile(client, requesterID);
+            }
 
         } else if (command_type == "getFriendList" || command_type == "getFriendRequests" ||
                    command_type == "addFriend" || command_type == "removeFriend" ||
