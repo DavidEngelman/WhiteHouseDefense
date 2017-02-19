@@ -7,7 +7,7 @@
 
 class AbstractTower {
 
-private:
+protected:
 
     int owner; // player ID
     const int price;
@@ -33,7 +33,7 @@ public:
     //The position is defined in the map class
     virtual void setPosition(Position position);
 
-    virtual std::string serialize(std::string str) = 0;
+    virtual std::string serialize();
 };
 
 #endif // PROJET_ABSTRACTTOWER_H
