@@ -58,53 +58,6 @@ void GameServer::runWave() {
     }
 }
 
-// pq on exectuerait pas 2 threads dans la boucle while !waveHasFinished.
-// 1 qui fait des gamestate.update() tous les x temps
-// et 1 qui fait des sendGameStateToPlayers() tous les x temps ?
-// on peut faire genre une fct comme ca :
-/*
-void GameServer::doUpdate(){ //fct pour le 1er thread
-    while(1){
-        gameState.update;
-    }
-}
-
-void GameServer::doSending() { //fct pour le 2eme thread
-    while(1){
-        sleep(x); //temps à déterminer
-        sendGameStateToPlayers();
-    }
-
-}
-*/
-
-/*
- * L'idée des threads est bonne à mon avis, mais je vois pas trop le besoin pour ce cas ci
- * On pourrait faire tout simplement
- * void runWave(){
-     * start = time()
-     * while (1) {
-     *     current = time()
-     *     while (current - start < X) {
-     *          gameState.update()
-     *          current = time()
-     *     }
-     *     sendGameStateToPlayers()
-     *     start = time()
-     * }
- * }
- *
- * L'avantage que je vois est que on ferait des gameUpdate un peu plus regulierement, mais je ne sais pas
- * si c'est vraiment un probleme ça.
- *
- * Je crois que ça va surtout être utile quand on le client pourra placer des tours pendant une vague.
- *
- * Par exemple on pourrait faire tourner en parallèle sur 2 threads les
- * fonctions runGame (dans mon exemple) et processClientCommands, avec un mutex pour assurer la coherence.
- *
- *
- *
- */
 
 void GameServer::run() {
     while (!gameState.isFinished()) {
