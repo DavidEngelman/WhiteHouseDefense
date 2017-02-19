@@ -125,13 +125,9 @@ void GameServer::doSending() { //fct pour le 2eme thread
  */
 
 void GameServer::run() {
-    bool gameHasEnded = false;
-    while (!gameHasEnded){
+    while (!gameState.isFinished()){
         processClientCommands();
         runWave();
-
-        // TODO: faudra trouver un moyen de voir quand le jeu est fini
-        gameHasEnded = false;
     }
 }
 
