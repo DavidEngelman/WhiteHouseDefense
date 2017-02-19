@@ -20,9 +20,7 @@ public:
 
     virtual void setOwner(int owner);
 
-    virtual int getPrice() const;
-
-    virtual void setPrice(int price);
+    virtual const int getPrice() const;
 
     virtual Position getPosition() const;
 
