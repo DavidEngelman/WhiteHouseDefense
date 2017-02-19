@@ -18,11 +18,15 @@ void * launch_matchmaking_server(void * dummy){
 int main() {
     std::cout << "Hello, World!" << std::endl;
 
-    pthread_t account_server_thread;
-    pthread_create(&account_server_thread, NULL, &launch_account_server, NULL);
+    pthread_t server_threads[2];
 
-    pthread_t matchmaker_thread;
-    pthread_create(&matchmaker_thread, NULL, &launch_matchmaking_server, NULL);
+    pthread_create(&server_threads[0], NULL, &launch_account_server, NULL);
+    pthread_create(&server_threads[1], NULL, &launch_matchmaking_server, NULL);
+
+    for (int i=0; i<2; i++){
+        pthread_join(server_threads[i],NULL);
+    }
+
 
     return 0;
 }

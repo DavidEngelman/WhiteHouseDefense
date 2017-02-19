@@ -23,11 +23,8 @@ typedef struct RankingInfos  {
 typedef struct PublicAccountInfos  {
     int victories, pnjKilled;
     std::string username;
-    std::string friendList;
-    std::string friendRequests;
-    std::string pendingInvitation;
+    int ID;
 }PublicAccountInfos;
-
 
 class Database {
 
@@ -42,6 +39,7 @@ public:
     static int callback_counter(void *count, int argc, char **argv, char **azColName);
     static int callback_ranking(void *ptr, int argc, char **argv, char **azColName);
     static int callback_account_usrname(void *ptr, int argc, char **argv, char **azColName);
+    static int callback_account_id(void *ptr, int argc, char **argv, char **azColName);
 
     int open();
     int insert_account(Credentials credentials);
@@ -49,11 +47,13 @@ public:
     bool is_identifiers_valid(Credentials credentials);
     std::vector<RankingInfos> getRanking();
     PublicAccountInfos getUsrInfosByUsrname(std::string);
+    std::string getInfosById(int id);
+
     int sendFriendRequest(std::string username, std::string toAdd);
     int acceptFriendRequest(std::string username, std::string toAccept);
     int removeFriend(std::string username, std::string toRemove);
-    std::string addToString(std::string original, std::string toAdd);
-    std::string removeFromString(std::string original, std::string toAdd);
+    int declineFriendRequest(std::string username, std::string toDecline);
+
 
 
     void update_record();

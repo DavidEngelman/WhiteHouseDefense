@@ -38,19 +38,24 @@ int Database::callback_counter(void *count, int argc, char **argv, char **azColN
     return 0;
 }
 
+
 int Database::callback_account_usrname(void *ptr, int argc, char **argv, char **azColName){
     PublicAccountInfos *infos = reinterpret_cast<PublicAccountInfos*>(ptr);
     infos->username = argv[0];
     infos->victories = atoi(argv[1]);
     infos->pnjKilled = atoi(argv[2]);
-    infos->friendList = argv[3];
-    infos->friendRequests = argv[4];
-    infos->pendingInvitation = argv[5];
+    infos->ID = atoi(argv[3]);
     return 0;
 }
 
-int Database::insert_account(Credentials credentials) {
+int Database::callback_account_id(void *ptr, int argc, char **argv, char **azColName){
+    std::string *c = (std::string*)ptr;
+    *c = argv[0];
+    return 0;
+}
 
+
+int Database::insert_account(Credentials credentials) {
 
     char *zErrMsg = 0;
     int id = get_nb_entries() + 1;
@@ -156,7 +161,7 @@ PublicAccountInfos Database::getUsrInfosByUsrname(std::string username) {
     PublicAccountInfos infos;
     char *zErrMsg = 0;
     std::stringstream strm;
-    strm << "select username, victories, pnjKilled, friendList, friendRequests, pendingInvitation from Accounts WHERE username='" << username << "'";
+    strm << "select username, victories, pnjKilled, id from Accounts WHERE username='" << username << "'";
 
     std::string s = strm.str();
     char *str = &s[0];
@@ -171,16 +176,38 @@ PublicAccountInfos Database::getUsrInfosByUsrname(std::string username) {
     return infos;
 }
 
+std::string Database::getInfosById(int id) {
+    std::string infos;
+    char *zErrMsg = 0;
+    std::stringstream strm;
+
+    strm << "select username from Accounts WHERE id='" << id << "'";
+
+    std::string s = strm.str();
+    char *str = &s[0];
+    char *query = str;
+
+    rc = sqlite3_exec(db, query, callback_account_id, &infos, &zErrMsg);
+    if( rc != SQLITE_OK ){
+        fprintf(stderr, "SQL error: %s\n", zErrMsg);
+        sqlite3_free(zErrMsg);
+    }
+
+    return infos;
+}
+
 int Database::sendFriendRequest(std::string username, std::string toAdd) {
     // Request for friendship is sent, friendrequests and pendingInvitations are updated accordingly
 
-    std::string currentPendingInvit = addToString(getUsrInfosByUsrname(username).pendingInvitation,toAdd);
-    std::string currentFriendRequests = addToString(getUsrInfosByUsrname(toAdd).friendRequests, username);
+    int id1 = getUsrInfosByUsrname(username).ID;
+    int id2 = getUsrInfosByUsrname(toAdd).ID;
 
     char *zErrMsg = 0;
     std::stringstream strm;
-    strm << "UPDATE Accounts SET pendingInvitation='"<<currentPendingInvit<< "' WHERE username='"<<username<< "';"
-         << "UPDATE Accounts SET friendRequests='"<<currentFriendRequests<< "' WHERE username='"<<toAdd<< "'" ;
+
+    strm << "insert into FriendRequests(ReceiverID, SenderID) values(" << id2 << ",'" << id1 << "') ;"
+         << "insert into PendingInvitations(RequesterID, ReceiverID) values(" << id1 << ",'" << id2 << "') ;";
+
 
     std::string s = strm.str();
     char *str = &s[0];
@@ -198,20 +225,21 @@ int Database::sendFriendRequest(std::string username, std::string toAdd) {
     return 0;
 }
 
+
 int Database::acceptFriendRequest(std::string username, std::string toAccept) {
     // The user who got the request accepts it and he is added to the requester friend's list and vice versa
-    // Friendrequests && pendingInvitations are accordingly updated too.
-    std::string currentFriendList = addToString(getUsrInfosByUsrname(username).friendList, toAccept);
-    std::string currentFriendList2 = addToString(getUsrInfosByUsrname(toAccept).friendList,username);
-    std::string currentFriendRequests = removeFromString(getUsrInfosByUsrname(username).friendRequests, toAccept);
-    std::string currentPendingInvit = removeFromString(getUsrInfosByUsrname(toAccept).friendList,username);
+    // Friendrequests && pendingInvitations are accordingly updated too
+    int id1 = getUsrInfosByUsrname(username).ID;
+    int id2 = getUsrInfosByUsrname(toAccept).ID;
 
     char *zErrMsg = 0;
     std::stringstream strm;
-    strm << "UPDATE Accounts SET friendList='"<<currentFriendList<< "' WHERE username='"<<username<< "';"
-         << "UPDATE Accounts SET friendList='"<<currentFriendList2<< "' WHERE username='"<<toAccept<< "';"
-         << "UPDATE Accounts SET friendRequests='"<<currentFriendRequests<< "' WHERE username='"<<username<< "';"
-         << "UPDATE Accounts SET pendingInvitation='"<<currentPendingInvit<< "' WHERE username='"<<toAccept<< "'";
+
+    strm << "insert into FriendList(ID1, ID2) values(" << id1 << ",'" << id2 << "') ;"
+         << "insert into FriendList(ID1, ID2) values(" << id2 << ",'" << id1 << "') ;"
+         << "DELETE FROM `FriendRequests` WHERE `ReceiverID`='"<<id1<<"';"
+         << "DELETE FROM `PendingInvitations` WHERE `RequesterID`='"<<id2<<"';";
+
 
     std::string s = strm.str();
 
@@ -230,13 +258,13 @@ int Database::acceptFriendRequest(std::string username, std::string toAccept) {
 }
 
 int Database::removeFriend(std::string username, std::string toRemove){
-    std::string currentFriendList = removeFromString(getUsrInfosByUsrname(username).friendRequests, toRemove);
-    std::string currentFriendList2 = removeFromString(getUsrInfosByUsrname(toRemove).friendRequests, username);
+    int id1 = getUsrInfosByUsrname(username).ID;
+    int id2 = getUsrInfosByUsrname(toRemove).ID;
 
     char *zErrMsg = 0;
     std::stringstream strm;
-    strm << "UPDATE Accounts SET friendList='"<<currentFriendList<< "' WHERE username='"<<username<< "';"
-         << "UPDATE Accounts SET friendList='"<<currentFriendList2<< "' WHERE username='"<<toRemove<< "';";
+    strm<< "DELETE FROM `FriendList` WHERE `ID1`='"<<id1<<"';"
+        << "DELETE FROM `FriendList` WHERE `ID1`='"<<id2<<"';";
 
     std::string s = strm.str();
 
@@ -252,35 +280,37 @@ int Database::removeFriend(std::string username, std::string toRemove){
         fprintf(stdout, "Friend successfully removed, i'm sorry it had to end this way : ( . \n");
     }
     return 0;
-
 }
 
-std::string Database::addToString(std::string original, std::string toAdd){
-    if(original.size()== 0 ){
-        original = toAdd;
+int Database::declineFriendRequest(std::string username, std::string toAccept) {
+    // The user who got the request accepts it and he is added to the requester friend's list and vice versa
+    // Friendrequests && pendingInvitations are accordingly updated too
+    int id1 = getUsrInfosByUsrname(username).ID;
+    int id2 = getUsrInfosByUsrname(toAccept).ID;
+
+    char *zErrMsg = 0;
+    std::stringstream strm;
+
+    strm << "DELETE FROM `FriendRequests` WHERE `ReceiverID`='"<<id1<<"';"
+         << "DELETE FROM `PendingInvitations` WHERE `RequesterID`='"<<id2<<"';";
+
+
+    std::string s = strm.str();
+
+    char *str = &s[0];
+    char *query = str;
+
+    rc = sqlite3_exec(db, query, NULL, 0, &zErrMsg);
+    if( rc != SQLITE_OK ){
+        fprintf(stderr, "SQL error: %s\n", zErrMsg);
+        sqlite3_free(zErrMsg);
+        return -1;
     }else{
-        original = original + "," + toAdd;
+        fprintf(stdout, "Friend request declined\n");
     }
-    return original;
+    return 0;
 }
 
-std::string Database::removeFromString(std::string original, std::string toRemove){
-    std::string newString = "";
-    int index = 0 ;
-
-    while( index < original.size() ){
-        std::string tempstring = "";
-        while (original[index] != ',' && index < original.size() ){
-            tempstring += original[index];
-            index++;
-        }
-        if (tempstring != toRemove){
-            newString += tempstring;
-        }
-        index++;
-    }
-    return newString;
-}
 
 Database::~Database() {
     sqlite3_close(db);
