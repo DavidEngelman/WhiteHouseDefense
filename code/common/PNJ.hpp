@@ -2,16 +2,21 @@ class PNJ {
 
 private:
 
-	int hp;
-	Position positon;
+	int healthPoints;
+	int movementSpeed;
+	Position position;
 
 public:
 
-	int getHp();
+	int getHealthPoints() const;
 
-	void decreaseHp(int damage);
+	void receiveDamage(int damageAmount);
 
-	Position getPosition();
+	int getMovementSpeed() const;
+
+	void setMovementSpeed();
+
+	Position getPosition() const;
 
 	void setPosition(int x, int y);
 };
