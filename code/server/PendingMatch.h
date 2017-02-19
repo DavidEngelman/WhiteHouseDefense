@@ -4,13 +4,9 @@
 #include <vector>
 #include <string>
 #include <algorithm>
+#include "PlayerConnection.hpp"
 
 #define MAX_SIZE 4
-
-struct PlayerConnection {
-    int socket_fd;
-    int player_id;
-};
 
 class PendingMatch {
 

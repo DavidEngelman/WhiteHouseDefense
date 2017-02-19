@@ -1,15 +1,19 @@
 class Position {
 
 private:
-	int coord_x;
-	int coord_y;
+
+	int x;
+	int y;
 
 public:
-	int getCoord_x();
 
-	void setCoord_x(int coord_x);
+    Position(int x, int y);
 
-	int getCoord_y();
+	int getX();
 
-	void setCoord_y(int coord_y);
+	void setX(int x);
+
+	int getY();
+
+	void setY(int y);
 };

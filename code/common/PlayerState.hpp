@@ -1,3 +1,5 @@
+#include <string>
+
 class PlayerState {
 
 private:
@@ -6,9 +8,14 @@ private:
 	int money;
 	bool isSupported;
 	bool isWinner;
-	Account account; // pas sur que ce soit tres utile
+
+	int player_id;
+
+	std::string bool_to_string(bool my_bool);
 
 public:
+
+	std::string serialize();
 
 	int getHp();
 
@@ -26,9 +33,13 @@ public:
 
 	void setIsWinner(bool isWinner);
 
-	void getAccount();
+	void getPlayer_id();
 
-	void setAccount(int account);
+	void setPlayer_id(int newId);
 
 	void spendMoney(int amount);
+
+	void decrease_hp(int amount);
+    void increase_hp(int amount);
+
 };
