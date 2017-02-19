@@ -9,18 +9,17 @@ int PlayerState::getHp(){
     return hp;
 }
 
-std::string PlayerState::serialize() {
+std::string PlayerState::serialize(std::string& str) {
     /*
-     * Return a string like this : player_id,money,hp,isSupported,isWinner;
+     * fill a string like this : PlayerState,player_id,money,hp,isSupported,isWinner;
      */
 
-    std::string res;
-    res += std::to_string(player_id) + "," + std::to_string(money) + "," +
+
+    str += "PlayerState," + std::to_string(player_id) + "," + std::to_string(money) + "," +
             std::to_string(hp) + "," +  "," + bool_to_string(isSupported)+
             "," + bool_to_string(isWinner) + ";";
 
-    return res;
-
+    return str;
 }
 
 void PlayerState::setHp(int newHp){
