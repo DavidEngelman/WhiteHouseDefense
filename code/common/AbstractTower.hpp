@@ -1,5 +1,5 @@
-#ifndef DEF_ABSTRACTTOWER
-#define DEF_ABSTRACTTOWER
+#ifndef PROJET_ABSTRACTTOWER_H
+#define PROJET_ABSTRACTTOWER_H
 
 #include "../common/Position.hpp"
 
@@ -18,11 +18,11 @@ public:
 
 	int getPrice() const;
 
-	void setPrice(int price) const;
+	void setPrice(int price);
 
 	Position getPosition() const;
 
-	void setPosition(int x, int y) const;
+	void setPosition(int x, int y);
 };
 
-#endif
+#endif // PROJET_ABSTRACTTOWER_H
