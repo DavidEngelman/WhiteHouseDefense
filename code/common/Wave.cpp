@@ -7,12 +7,13 @@ void Wave::remove_pnj(int pnj_id) {
     my_wave.erase(pnj_id);
 }
 
-std::string Wave::serialize(std::string &str) {
+std::string Wave::serialize() {
     /*
      * fill a string like this : Wave,serialized(PNJ1),serialized(PNJ2),...;
      */
 
-    str += "Wave,";
+    std::string serialized_me;
+    serialized_me += "Wave,";
     for (PNJ pnj: my_wave){
         serialized_pnj = pnj.serialize();
         str += serialized_pnj;
