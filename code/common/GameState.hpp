@@ -43,6 +43,7 @@ public:
     // où est cette classe comptabilise le temps écoulé et fait les calculs pour voir de combien
     // les mexicains ont avancé (entre autres)
 
+    bool isWaveFinished();
 };
 
 #endif
