@@ -19,7 +19,7 @@ public:
 
 	int getMovementSpeed() const;
 
-	void setMovementSpeed();
+	void setMovementSpeed(int movementSpeed);
 
     void receiveMovementPenalty(int speedReduction);
 
