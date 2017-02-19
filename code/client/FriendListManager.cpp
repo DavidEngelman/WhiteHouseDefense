@@ -48,21 +48,21 @@ void FriendListManager::friendListProcess() {
             if (acceptFriendRequest(toAccept)){
                 std::cout<<"Friend request accepted"<<std::endl;
             };
-        }else if (choice == 7){
-            std::cout<< "decline Friend : ";
+        }else if (choice == 7) {
+            std::cout << "decline Friend : ";
             std::string toAccept;
             std::cin >> toAccept;
-            std::cout<<std::endl;
-            if(declineFriendRequest(toAccept)){
-                std::cout<<"Friend request declined"<<std::endl;
+            std::cout << std::endl;
+            if (declineFriendRequest(toAccept)) {
+                std::cout << "Friend request declined" << std::endl;
             };
-        }else if (choice == 8 ){
-            // todo revenir au mainManager
         }
         friendListUI.display();
         choice = friendListUI.select();
 
     }
+    MainManager mainManager(ip_address, player_id); // Permet de revenir au main menu , je ne sais pas si
+                                                    // c'est le meilleur moyen pour faire ca
 }
 
 
