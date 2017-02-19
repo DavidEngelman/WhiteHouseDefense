@@ -1,4 +1,4 @@
-class Position {
+class Position { // There is already a struct in the map class
 
 private:
 
