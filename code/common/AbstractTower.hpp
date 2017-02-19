@@ -24,11 +24,9 @@ public:
 
     virtual const int getPrice() const;
 
-    virtual const int getRadius() const;
+    virtual int getRadius() const;
 
     virtual void setRadius(int radius);
-
-    virtual
 
     virtual Position getPosition() const;
 

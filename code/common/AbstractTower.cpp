@@ -6,7 +6,7 @@ void AbstractTower::setOwner(int owner) { this->owner = owner; }
 
 const int AbstractTower::getPrice() const { return price; }
 
-const int AbstractTower::getRadius() const { return radius; }
+int AbstractTower::getRadius() const { return radius; }
 
 void AbstractTower::setRadius(int radius) { this->radius = radius; }
 
