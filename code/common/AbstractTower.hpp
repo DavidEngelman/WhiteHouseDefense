@@ -16,7 +16,7 @@ protected:
 
 public:
 
-    virtual void shoot(PNJ target); // HAS TO BE DEFINED BY INHERITORS
+    virtual void shoot(PNJ target) = 0; // HAS TO BE DEFINED BY INHERITORS
 
     virtual int getOwner() const;
 
