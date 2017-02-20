@@ -20,6 +20,7 @@ void FriendListManager::friendListProcess() {
         }else if (choice == 3) {
             friendListUI.displayFriendList(getRequestServer("getPendingInvitations;",username), "pending");
 
+
         }else if (choice == 4) {
             std::cout<<"Send Friend Request to : ";
             std::string toAdd = friendListUI.askUsername();
@@ -39,6 +40,7 @@ void FriendListManager::friendListProcess() {
             if (sendRequestServer( "acceptFriendRequest;"  ,toAccept)){
                 std::cout<<"Friend request accepted"<<std::endl;
             };
+
         }else if (choice == 7) {
             std::cout << "decline Friend : ";
             std::string toDecline = friendListUI.askUsername();
@@ -51,7 +53,7 @@ void FriendListManager::friendListProcess() {
 
     }
     MainManager mainManager(ip_address, player_id, username); // Permet de revenir au main menu , je ne sais pas si
-                                                    // c'est le meilleur moyen pour faire ca
+                                                              // c'est le meilleur moyen pour faire ca
 }
 
 std::string FriendListManager::getRequestServer(std::string action, std::string username ){
