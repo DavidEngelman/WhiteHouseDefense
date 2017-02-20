@@ -1,3 +1,6 @@
+#ifndef __REGISTERMANAGER__
+#define __REGISTERMANAGER__
+
 #include "NetworkedManager.hpp"
 #include "RegisterUI.hpp"
 #include "../common/Networking.h"
@@ -5,7 +8,7 @@
 #include "LoginManager.hpp"
 #include "App.hpp"
 
-class RegisterManager: public NetworkedManager {
+class RegisterManager : public NetworkedManager {
 
 private:
 	RegisterUI registerUI;
@@ -21,3 +24,5 @@ public:
 	void run() override;
 
 };
+
+#endif

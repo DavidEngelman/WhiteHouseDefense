@@ -1,6 +1,8 @@
 #ifndef PROJET_APP_HPP
 #define PROJET_APP_HPP
 
+#include "WelcomeManager.h"
+
 class AbstractManager;
 
 class App {

@@ -6,6 +6,8 @@
 
 #include "AbstractManager.h"
 #include "WelcomeUI.h"
+#include "LoginManager.hpp"
+#include "RegisterManager.hpp"
 
 class WelcomeManager : public AbstractManager {
 

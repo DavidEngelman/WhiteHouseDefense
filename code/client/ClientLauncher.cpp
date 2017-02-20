@@ -15,7 +15,7 @@ int main(int argc, char *argv[]) {
 
     Drawing::drawWhiteHouse("LAUNCHER");
 
-    WelcomeManager welcomeManager(argv[1]);
+    App app(argv[1]);
 
 
 
