@@ -146,6 +146,7 @@ bool AccountServer::handle_getFriendList(int client_sock_fd, std::string request
 bool AccountServer::handle_getFriendRequests(int client_sock_fd, std::string requester) {
     send_message(client_sock_fd, vectorTostring(getFriendRequests(requester)).c_str());
     return true;
+
 }
 bool AccountServer::handle_getPendingInvitations(int client_sock_fd, std::string requester) {
     send_message(client_sock_fd, vectorTostring(getPendingInvitations(requester)).c_str());
