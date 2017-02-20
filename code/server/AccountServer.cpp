@@ -115,12 +115,12 @@ std::string AccountServer::vectorTostring(std::vector<RankingInfos> vect) {
 }
 
 // partie friendlist /////////////////////////////////////////////////////
-std::vector<std::string> AccountServer::getFriendList(int id) {
-    return myDatabase.getFriendList(id);
+std::vector<std::string> AccountServer::getFriendList(std::string username) {
+    return myDatabase.getFriendList(username);
 }
 
-std::vector<std::string> AccountServer::getFriendRequests(int id){
-    return myDatabase.getFriendRequests(id);
+std::vector<std::string> AccountServer::getFriendRequests(std::string username){
+    return myDatabase.getFriendRequests(username);
 }
 
 bool AccountServer::sendFriendRequest(std::string requester, std::string receiver) {
@@ -135,20 +135,20 @@ bool AccountServer::declineFriendRequest(std::string requester, std::string rece
 bool AccountServer::removeFriend(std::string requester, std::string receiver) {
     return myDatabase.removeFriend(requester,receiver) != -1 ;
 }
-std::vector<std::string> AccountServer::getPendingInvitations(int id){
-    return myDatabase.getPendingInvitations(id);
+std::vector<std::string> AccountServer::getPendingInvitations(std::string username){
+    return myDatabase.getPendingInvitations(username);
 }
 
-bool AccountServer::handle_getFriendList(int client_sock_fd, int requesterID) {
-    send_message(client_sock_fd, vectorTostring(getFriendList(requesterID)).c_str());
+bool AccountServer::handle_getFriendList(int client_sock_fd, std::string requester) {
+    send_message(client_sock_fd, vectorTostring(getFriendList(requester)).c_str());
     return true;
 }
-bool AccountServer::handle_getFriendRequests(int client_sock_fd, int requesterID) {
-    send_message(client_sock_fd, vectorTostring(getFriendRequests(requesterID)).c_str());
+bool AccountServer::handle_getFriendRequests(int client_sock_fd, std::string requester) {
+    send_message(client_sock_fd, vectorTostring(getFriendRequests(requester)).c_str());
     return true;
 }
-bool AccountServer::handle_getPendingInvitations(int client_sock_fd, int requesterID) {
-    send_message(client_sock_fd, vectorTostring(getPendingInvitations(requesterID)).c_str());
+bool AccountServer::handle_getPendingInvitations(int client_sock_fd, std::string requester) {
+    send_message(client_sock_fd, vectorTostring(getPendingInvitations(requester)).c_str());
     return true;
 }
 
@@ -213,12 +213,12 @@ std::string AccountServer::vectorTostring(std::vector<std::string> vect) {
     return result;
 }
 // partie profil
-PublicAccountInfos AccountServer::getPublicAccountInfos(int id){
-    return myDatabase.getUsrInfosByUsrname(myDatabase.getInfosById(id));
+PublicAccountInfos AccountServer::getPublicAccountInfos(std::string username){
+    return myDatabase.getUsrInfosByUsrname(username);
 }
 
-bool AccountServer::handle_profile(int client_sock_fd, int player_id) {
-    PublicAccountInfos profile = getPublicAccountInfos(player_id);
+bool AccountServer::handle_profile(int client_sock_fd, std::string username) {
+    PublicAccountInfos profile = getPublicAccountInfos(username);
     std::string stringProfile = profile.username + "," + profile.victories + "," + profile.pnjKilled + ";";
     send_message(client_sock_fd,stringProfile.c_str());
     return true;
@@ -261,16 +261,10 @@ void AccountServer::get_and_process_command(int client, char* message_buffer) {
             command.parse(message_buffer);
             ok = handle_ranking(client);
 
-        } else if (command_type == "getProfileByID" || command_type == "getProfileByUsername") {
+        } else if (command_type == "getProfileByUsername") {
             FriendListCommand friendListCommand;
             friendListCommand.parse(message_buffer);
-            if (command_type == "getProfileByID") {
-                int requesterID = atoi(friendListCommand.getRequester().c_str());
-                handle_profile(client, requesterID);
-            }else if (command_type == "getProfileByUsername"){
-                int requesterID = myDatabase.getUsrInfosByUsrname(friendListCommand.getRequester()).ID;
-                handle_profile(client, requesterID);
-            }
+            handle_profile(client,friendListCommand.getRequester());
 
         } else if (command_type == "getFriendList" || command_type == "getFriendRequests" ||
                    command_type == "addFriend" || command_type == "removeFriend" ||
@@ -279,38 +273,36 @@ void AccountServer::get_and_process_command(int client, char* message_buffer) {
 
             FriendListCommand friendListCommand;
             friendListCommand.parse(message_buffer);
-            int requesterID = atoi(friendListCommand.getRequester().c_str());
-            std::string requesterUsername = myDatabase.getInfosById(requesterID);
-            std::string receiverUsername = friendListCommand.getReceiver();
             std::string action = friendListCommand.getAction();
 
             if (action == "getFriendList") {
 
-                handle_getFriendList(client, requesterID);
+                handle_getFriendList(client, friendListCommand.getRequester());
 
             } else if (action == "getFriendRequests") {
 
-                handle_getFriendRequests(client, requesterID);
+                handle_getFriendRequests(client, friendListCommand.getRequester());
 
             } else if (action == "addFriend") {
+                std::cout<<friendListCommand.getRequester() + " added " + friendListCommand.getReceiver();
 
-                handle_sendFriendRequest(client, requesterUsername, receiverUsername);
+                handle_sendFriendRequest(client, friendListCommand.getRequester(), friendListCommand.getReceiver());
                 
             }else if (action == "getPendingInvitations") {
                 
-                handle_getPendingInvitations(client, requesterID); 
+                handle_getPendingInvitations(client, friendListCommand.getRequester());
                 
             } else if (action == "removeFriend") {
 
-                handle_removeFriend(client, requesterUsername, receiverUsername);
+                handle_removeFriend(client, friendListCommand.getRequester(), friendListCommand.getReceiver());
 
             } else if (action == "acceptFriendRequest") {
 
-                handle_acceptFriendRequest(client, requesterUsername, receiverUsername);
+                handle_acceptFriendRequest(client, friendListCommand.getRequester(), friendListCommand.getReceiver());
 
             } else if (action == "declineFriendRequest") {
 
-                handle_declineFriendRequest(client, requesterUsername, receiverUsername);
+                handle_declineFriendRequest(client, friendListCommand.getRequester(), friendListCommand.getReceiver());
             }
         }
     }

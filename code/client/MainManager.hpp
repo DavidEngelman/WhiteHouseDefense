@@ -10,11 +10,12 @@ private:
 	MainUI mainUI;
 	char* server_ip_adress;
 	int player_id;
+	std::string username;
 
 	void start_display();
 
 public:
-    MainManager(char* ip_addr, int id);
+    MainManager(char* ip_addr, int id, std::string username);
 };
 
 #endif
