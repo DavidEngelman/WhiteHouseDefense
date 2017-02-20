@@ -1,6 +1,6 @@
 #include "Position.hpp"
 
-#ifdef PROJET_PNJ_H
+#ifndef PROJET_PNJ_H
 #define PROJET_PNJ_H
 
 class PNJ {
