@@ -33,3 +33,6 @@ Position PNJ::getPosition() const {
 void PNJ::setPosition(Position position){
     this->position = position;
 }
+
+PNJ::PNJ(Position position, int healthPoints, int movementSpeed) :
+        position(position), healthPoints(healthPoints), movementSpeed(movementSpeed) {}

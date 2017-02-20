@@ -13,7 +13,7 @@ private:
 
 public:
 
-    PNJ();
+    PNJ(Position position, int healthPoints, int movementSpeed);
 
 	int getHealthPoints() const;
 

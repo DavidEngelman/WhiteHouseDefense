@@ -19,7 +19,10 @@ std::string AbstractTower::serialize() {
     std::string serialized_me;
 
     serialized_me += std::to_string(owner) + "," + std::to_string(price) + "," +
-                     std::to_string(radius)+","/* + TODO:position.serialize()*/ + ";";
+                     std::to_string(radius) + ","/* + TODO:position.serialize()*/ + ";";
 
     return serialized_me;
 }
+
+AbstractTower::AbstractTower(Position position, int price, int owner, int radius):
+    position(position), price(price), owner(owner), radius(owner) {}

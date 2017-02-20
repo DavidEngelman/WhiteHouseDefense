@@ -16,6 +16,8 @@ protected:
 
 public:
 
+    AbstractTower(Position position, int price, int owner, int radius);
+
     virtual void shoot(PNJ target) = 0; // HAS TO BE DEFINED BY INHERITORS
 
     virtual int getOwner() const;
