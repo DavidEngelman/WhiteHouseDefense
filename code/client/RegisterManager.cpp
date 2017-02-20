@@ -1,6 +1,7 @@
 #include "RegisterManager.hpp"
 
-RegisterManager::RegisterManager(int port, char* address): NetworkedManager(port, address) {};
+RegisterManager::RegisterManager(int port, char* address):
+        NetworkedManager(port, address) {};
 
 /*void RegisterManager::registerUser() {
     bool correctCredentials = false;

@@ -1,7 +1,8 @@
 
 #include "RankingManager.hpp"
 
-RankingManager::RankingManager(int port, char* address): NetworkedManager(port, address) {}
+RankingManager::RankingManager(int port, char* address):
+        NetworkedManager(port, address) {}
 
 void RankingManager::sendRequest() {
     std::string message = "ranking;";

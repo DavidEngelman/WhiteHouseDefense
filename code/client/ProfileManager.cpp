@@ -4,7 +4,9 @@
 
 #include "ProfileManager.hpp"
 
-ProfileManager::ProfileManager(int port, char *address, int id) : NetworkedManager(port, address), player_id(id) {
+ProfileManager::ProfileManager(int port, char *address, int id) :
+        NetworkedManager(port, address), player_id(id) {
+
     ProfileManagerProcess();
 }
 
@@ -27,8 +29,9 @@ void ProfileManager::ProfileManagerProcess() {
         profileUI.display();
         choice = profileUI.select();
     }
-    MainManager mainManager(ip_address, player_id); // Permet de revenir au main menu , je ne sais pas si
-                                                    // c'est le meilleur moyen pour faire ca
+    MainManager mainManager(ip_address, player_id, my_master_app);
+    my_master_app.transition(mainManager);
+
 }
 
 std::string ProfileManager::getProfile(std::string username) {

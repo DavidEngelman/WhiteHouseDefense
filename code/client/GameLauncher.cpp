@@ -2,7 +2,8 @@
 #include "GameLauncher.hpp"
 #include "../common/Strings.hpp"
 
-GameLauncher::GameLauncher(int port, char *address, int id) : NetworkedManager(port, address), player_id(id) {
+GameLauncher::GameLauncher(int port, char *address, int id) :
+        NetworkedManager(port, address), player_id(id) {
     sendJoinRequest(CLASSIC_MODE);
 };
 
