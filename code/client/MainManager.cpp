@@ -15,24 +15,24 @@ void MainManager::start_display() {
         case 1: {
             std::cout << "Game Launcher !" << std::endl;
             GameLauncher game = GameLauncher(5556, server_ip_adress, player_id);
-            my_master_app.transition(game);
+            my_master_app->transition(&game);
             break;
         }
         case 2: {
             std::cout << "Profile !" << std::endl;
             ProfileManager profile = ProfileManager(5555, server_ip_adress, player_id);
-            my_master_app.transition(profile);
+            my_master_app->transition(&profile);
             break;
         }
         case 3: {
             std::cout << "Friendlist !" << std::endl;
             FriendListManager friendList(5555, server_ip_adress, player_id);
-            my_master_app.transition(friendList);
+            my_master_app->transition(&friendList);
             break;
         }
         case 4: {
             RankingManager rankingManager(5555, server_ip_adress);
-            my_master_app.transition(rankingManager);
+            my_master_app->transition(&rankingManager);
             break;
         }
         default: {

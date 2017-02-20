@@ -3,9 +3,7 @@
 #include "../common/Strings.hpp"
 
 GameLauncher::GameLauncher(int port, char *address, int id) :
-        NetworkedManager(port, address), player_id(id) {
-    sendJoinRequest(CLASSIC_MODE);
-};
+        NetworkedManager(port, address), player_id(id) {}
 
 void GameLauncher::sendJoinRequest(std::string mode) {
 
@@ -22,4 +20,9 @@ void GameLauncher::sendJoinRequest(std::string mode) {
     assert(strcmp(server_response, GAME_STARTING_STRING) == 0);
 
     std::cout << "Game start" << std::endl;
+}
+
+void GameLauncher::run() {
+    sendJoinRequest(CLASSIC_MODE);
+
 }

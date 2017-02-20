@@ -7,6 +7,7 @@
 #include "../common/Networking.h"
 #include "NetworkedManager.hpp"
 #include "MainManager.hpp"
+#include "App.hpp"
 
 
 class ProfileManager : public NetworkedManager {

@@ -49,8 +49,8 @@ void FriendListManager::friendListProcess() {
         choice = friendListUI.select();
 
     }
-    MainManager mainManager(ip_address, player_id, my_master_app);
-    my_master_app.transition(mainManager);
+    MainManager mainManager(ip_address, player_id);
+    my_master_app->transition(&mainManager);
 
 }
 

@@ -3,6 +3,7 @@
 #include "../common/Networking.h"
 #include "../common/Credentials.h"
 #include "LoginManager.hpp"
+#include "App.hpp"
 
 class RegisterManager: public NetworkedManager {
 
