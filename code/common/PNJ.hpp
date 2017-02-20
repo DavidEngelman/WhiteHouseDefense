@@ -13,6 +13,8 @@ private:
 
 public:
 
+    PNJ();
+
 	int getHealthPoints() const;
 
 	void receiveDamage(int damageAmount);
@@ -25,7 +27,7 @@ public:
 
 	Position getPosition() const;
 
-	void setPosition(int x, int y);
+	void setPosition(Position position);
 };
 
 #endif // PROJET_PNJ_H
