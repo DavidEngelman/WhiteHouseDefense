@@ -1,10 +1,10 @@
 #include "PNJ.hpp"
 
-PNJ::PNJ(){
-    healthPoints = 100;
-    movementSpeed = 100;
-    //position(0,0); TODO: initialiser avec un paramètre de type Position.
+PNJ::PNJ(): PNJ(Position(100, 100), 100, 100){
 }
+
+PNJ::PNJ(Position position, int healthPoints, int movementSpeed) :
+position(position), healthPoints(healthPoints), movementSpeed(movementSpeed) {}
 
 int PNJ::getHealthPoints() const {
     return this->healthPoints;
@@ -33,6 +33,3 @@ Position PNJ::getPosition() const {
 void PNJ::setPosition(Position position){
     this->position = position;
 }
-
-PNJ::PNJ(Position position, int healthPoints, int movementSpeed) :
-        position(position), healthPoints(healthPoints), movementSpeed(movementSpeed) {}

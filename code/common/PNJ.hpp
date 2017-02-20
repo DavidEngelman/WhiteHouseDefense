@@ -8,10 +8,12 @@ class PNJ{
 private:
 
 	int healthPoints;
+
 	int movementSpeed;
 	Position position;
-
 public:
+
+	PNJ();
 
     PNJ(Position position, int healthPoints, int movementSpeed);
 
