@@ -15,7 +15,7 @@ public:
 
     AttackTower(int damageAmount);
 
-    ~AttackTower();
+    virtual ~AttackTower() = default;
 
     virtual int getDamageAmount() const;
 
