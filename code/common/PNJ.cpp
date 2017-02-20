@@ -13,7 +13,13 @@ int PNJ::getHealthPoints() const {
 }
 
 void PNJ::receiveDamage(int damageAmount) {
-    this->healthPoints -= damageAmount;
+    if (this->healthPoints -= damageAmount < 0){
+        this->healthPoints = 0;
+    }
+    else{
+        this->healthPoints -= damageAmount;
+    }
+
 }
 
 int PNJ::getMovementSpeed() const {
