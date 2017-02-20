@@ -6,6 +6,8 @@ PNJ::PNJ(): PNJ(Position(100, 100), 100, 100){
 PNJ::PNJ(Position position, int healthPoints, int movementSpeed) :
 position(position), healthPoints(healthPoints), movementSpeed(movementSpeed) {}
 
+PNJ::~PNJ() {}
+
 int PNJ::getHealthPoints() const {
     return this->healthPoints;
 }
