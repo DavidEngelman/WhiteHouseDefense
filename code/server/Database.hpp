@@ -51,9 +51,9 @@ public:
     int getIDbyUsername(std::string username);
 
     std::string getInfosById(int id);
-    std::vector<std::string> getFriendList(int id);
-    std::vector<std::string> getFriendRequests(int id);
-    std::vector<std::string> getPendingInvitations(int id);
+    std::vector<std::string> getFriendList(std::string username);
+    std::vector<std::string> getFriendRequests(std::string username);
+    std::vector<std::string> getPendingInvitations(std::string username);
 
     int sendFriendRequest(std::string username, std::string toAdd);
     int acceptFriendRequest(std::string username, std::string toAccept);

@@ -6,7 +6,7 @@
 #include "FriendListManager.hpp"
 
 
-MainManager::MainManager(char* ip_addr, int id) : server_ip_adress(ip_addr), player_id(id){
+MainManager::MainManager(char* ip_addr, int id, std::string username) : server_ip_adress(ip_addr), player_id(id), username(username){
     std::cout << "this is your player id: " << player_id << std::endl; //print juste pour test que ca marche
     start_display();
 }
@@ -21,12 +21,12 @@ void MainManager::start_display() {
         }
         case 2: {
             std::cout << "Profile !" << std::endl;
-            ProfileManager profile = ProfileManager(5555, server_ip_adress, player_id);
+            ProfileManager profile = ProfileManager(5555, server_ip_adress, player_id, username);
             break;
         }
         case 3: {
             std::cout << "Friendlist !" << std::endl;
-            FriendListManager friendList(5555, server_ip_adress, player_id);
+            FriendListManager friendList(5555, server_ip_adress,player_id, username);
             break;
         }
         case 4: {

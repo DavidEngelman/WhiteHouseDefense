@@ -13,11 +13,15 @@ private:
 
 public:
 
+    AttackTower(int damageAmount);
+
+    virtual ~AttackTower() = default;
+
     virtual int getDamageAmount() const;
 
-    virtual void setDamageAmount(int damageAmount);
+    virtual void setDamageAmount(int newDamageAmount);
 
-    virtual void shoot(PNJ target);
+    virtual void shoot(PNJ target) override;
 
     virtual void dealDamageTo(PNJ pnj);
 

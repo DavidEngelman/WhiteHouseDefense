@@ -52,21 +52,21 @@ public:
     std::string vectorTostring(std::vector<RankingInfos> vect);
     std::string vectorTostring(std::vector<std::string> vect);
 
-    PublicAccountInfos getPublicAccountInfos(int id);
-    bool handle_profile(int client_sock_fd, int player_id);
+    PublicAccountInfos getPublicAccountInfos(std::string username);
+    bool handle_profile(int client_sock_fd, std::string username);
 
-    std::vector<std::string> getFriendList(int id);
-    std::vector<std::string> getFriendRequests(int id);
-    std::vector<std::string> getPendingInvitations(int id);
+    std::vector<std::string> getFriendList(std::string username);
+    std::vector<std::string> getFriendRequests(std::string username);
+    std::vector<std::string> getPendingInvitations(std::string username);
 
     bool removeFriend(std::string requester, std::string receiver);
     bool acceptFriendRequest(std::string requester, std::string receiver);
     bool sendFriendRequest(std::string requester, std::string receiver);
     bool declineFriendRequest(std::string requester, std::string receiver);
     
-    bool handle_getFriendList(int client_sock_fd, int requesterID);
-    bool handle_getFriendRequests(int client_sock_fd, int requesterID);
-    bool handle_getPendingInvitations(int client_sock_fd, int requesterID);
+    bool handle_getFriendList(int client_sock_fd, std::string requester);
+    bool handle_getFriendRequests(int client_sock_fd, std::string requester);
+    bool handle_getPendingInvitations(int client_sock_fd, std::string requester);
     bool handle_sendFriendRequest(int client_sock_fd, std::string requester, std::string toAdd);
     bool handle_removeFriend(int client_sock_fd, std::string requester, std::string toRemove);
     bool handle_acceptFriendRequest(int client_sock_fd, std::string requester,std::string toAccept );

@@ -16,22 +16,26 @@ protected:
 
 public:
 
-    virtual void shoot(PNJ target); // HAS TO BE DEFINED BY INHERITORS
+    AbstractTower(Position position, int price, int owner, int radius);
+
+    virtual ~AbstractTower() = default;
+
+    virtual void shoot(PNJ target) = 0; // HAS TO BE DEFINED BY INHERITORS
 
     virtual int getOwner() const;
 
-    virtual void setOwner(int owner);
+    virtual void setOwner(int newOwner);
 
     virtual const int getPrice() const;
 
     virtual int getRadius() const;
 
-    virtual void setRadius(int radius);
+    virtual void setRadius(int newRadius);
 
     virtual Position getPosition() const;
 
     //The position is defined in the map class
-    virtual void setPosition(Position position);
+    virtual void setPosition(Position newPosition);
 
     virtual std::string serialize();
 };

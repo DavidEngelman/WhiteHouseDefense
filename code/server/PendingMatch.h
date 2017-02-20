@@ -21,8 +21,8 @@ public:
     const std::vector<PlayerConnection> &getPlayerConnections() const;
 
 
-    void add_player_to_queue     (PlayerConnection playerConnection); //suis pas sur id ou username
-    void remove_player_from_queue(PlayerConnection playerConnection);
+    void add_player_to_queue     (PlayerConnection& playerConnection); //suis pas sur id ou username
+    void remove_player_from_queue(PlayerConnection& playerConnection);
     bool is_full();
 
     void clear();

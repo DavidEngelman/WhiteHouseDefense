@@ -1,19 +1,24 @@
 #include "Position.hpp"
 
-#ifdef PROJET_PNJ_H
+#ifndef PROJET_PNJ_H
 #define PROJET_PNJ_H
 
-class PNJ {
+class PNJ{
 
 private:
 
 	int healthPoints;
+
 	int movementSpeed;
 	Position position;
 
 public:
 
-    PNJ();
+	PNJ();
+
+    PNJ(Position position, int healthPoints, int movementSpeed);
+
+    ~PNJ() = default;
 
 	int getHealthPoints() const;
 
@@ -21,7 +26,7 @@ public:
 
 	int getMovementSpeed() const;
 
-	void setMovementSpeed(int movementSpeed);
+	void setMovementSpeed(int newMovementSpeed);
 
     void receiveMovementPenalty(int speedReduction);
 

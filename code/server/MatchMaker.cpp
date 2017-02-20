@@ -15,18 +15,19 @@ void MatchMaker::run() {
     start_socket_listen();
     int client_socket_fd;
 
-    while(1){
+    while (1) {
 
         client_socket_fd = accept_connection();
         std::cout << "New client in the matchmaking" << std::endl;
 
-        if (!fork()){
-            get_and_process_command(client_socket_fd);
-        }
+        // TODO: demander à l'assistant si il faut toujours des threads/forks pour processus
+        // Fork est pas bon ici
+        // Utiliser threads
+        get_and_process_command(client_socket_fd);
     }
 }
 
-void MatchMaker::get_and_process_command(int socket_fd){
+void MatchMaker::get_and_process_command(int socket_fd) {
     char command_buffer[BUFFER_SIZE];
     receive_message(socket_fd, command_buffer);
 
@@ -37,7 +38,7 @@ void MatchMaker::get_and_process_command(int socket_fd){
 }
 
 void MatchMaker::addPlayerToPendingMatch(PlayerConnection player_connection, std::string mode) {
-    PendingMatch match = getMatch(mode);
+    PendingMatch& match = getMatch(mode);
     match.add_player_to_queue(player_connection);
     std::cout << "player_added" << std::endl;
     std::cout << match.getPlayerConnections().size() << std::endl;
@@ -65,16 +66,16 @@ PendingMatch &MatchMaker::getMatch(std::string mode) {
 void MatchMaker::launchMatch(PendingMatch match) {
     launchGameServer(match);
     const std::vector<PlayerConnection> &players = match.getPlayerConnections();
-    for (auto iterator = players.begin(); iterator != players.end(); iterator++){
+    for (auto iterator = players.begin(); iterator != players.end(); iterator++) {
         announceMatchStart(*iterator);
     }
 }
 
-void MatchMaker::launchGameServer(PendingMatch match){
+void MatchMaker::launchGameServer(PendingMatch& match) {
     // TODO: completer une fois qu'il y a la classe GameServer
 }
 
-void MatchMaker::announceMatchStart(PlayerConnection playerConnection){
+void MatchMaker::announceMatchStart(PlayerConnection playerConnection) {
     //TODO
     /*
      * Un truc du genre:
