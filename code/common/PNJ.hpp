@@ -3,7 +3,7 @@
 #ifdef PROJET_PNJ_H
 #define PROJET_PNJ_H
 
-class PNJ {
+class PNJ{
 
 private:
 

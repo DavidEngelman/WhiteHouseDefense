@@ -1,3 +1,5 @@
+#ifndef __POSITION__
+#define __POSITION__
 class Position { // There is already a struct in the map class
 
 private:
@@ -17,3 +19,5 @@ public:
 
 	void setY(int y);
 };
+
+#endif
