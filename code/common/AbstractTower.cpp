@@ -1,5 +1,10 @@
 #include "AbstractTower.hpp"
 
+AbstractTower::AbstractTower(Position position, int price, int owner, int radius):
+        position(position), price(price), owner(owner), radius(owner) {}
+
+AbstractTower::~AbstractTower() {}
+
 int AbstractTower::getOwner() const { return owner; }
 
 void AbstractTower::setOwner(int owner) { this->owner = owner; }
@@ -23,6 +28,3 @@ std::string AbstractTower::serialize() {
 
     return serialized_me;
 }
-
-AbstractTower::AbstractTower(Position position, int price, int owner, int radius):
-    position(position), price(price), owner(owner), radius(owner) {}

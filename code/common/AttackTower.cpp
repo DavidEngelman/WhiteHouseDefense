@@ -2,6 +2,8 @@
 
 AttackTower::AttackTower(int damageAmount): damageAmount(damageAmount) {}
 
+AttackTower::~AttackTower() {}
+
 int AttackTower::getDamageAmount() const { return damageAmount; }
 
 void AttackTower::setDamageAmount(int damageAmount) { this->damageAmount = damageAmount; }
