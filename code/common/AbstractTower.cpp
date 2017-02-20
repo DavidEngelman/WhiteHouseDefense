@@ -3,8 +3,6 @@
 AbstractTower::AbstractTower(Position position, int price, int owner, int radius):
         position(position), price(price), owner(owner), radius(owner) {}
 
-AbstractTower::~AbstractTower() {}
-
 int AbstractTower::getOwner() const { return owner; }
 
 void AbstractTower::setOwner(int newOwner) { owner = newOwner; }
