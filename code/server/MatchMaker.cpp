@@ -71,7 +71,7 @@ void MatchMaker::launchMatch(PendingMatch match) {
     }
 }
 
-void MatchMaker::launchGameServer(PendingMatch match) {
+void MatchMaker::launchGameServer(PendingMatch& match) {
     // TODO: completer une fois qu'il y a la classe GameServer
 }
 
