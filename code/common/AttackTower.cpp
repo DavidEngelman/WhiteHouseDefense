@@ -2,11 +2,9 @@
 
 AttackTower::AttackTower(int damageAmount): damageAmount(damageAmount) {}
 
-AttackTower::~AttackTower() {}
-
 int AttackTower::getDamageAmount() const { return damageAmount; }
 
-void AttackTower::setDamageAmount(int damageAmount) { this->damageAmount = damageAmount; }
+void AttackTower::setDamageAmount(int newDamageAmount) { damageAmount = newDamageAmount; }
 
 void AttackTower::shoot(PNJ target) { this->dealDamageTo(target); }
 
