@@ -12,9 +12,10 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <iostream>
+#include "AbstractManager.h"
 
 
-class NetworkedManager {
+class NetworkedManager : public AbstractManager {
 
 protected:
     int port;

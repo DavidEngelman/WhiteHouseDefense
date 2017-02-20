@@ -18,6 +18,7 @@ public:
 	std::string attemptLogin(Credentials credentials);
 	bool checkCredentialsValidity(Credentials credentials);
 	void login_process();
+	void run() override;
 };
 
 #endif

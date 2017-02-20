@@ -28,6 +28,8 @@ public:
     std::string getPendingInvitations();
 
     void friendListProcess();
+	void run() override;
+
 
 };
 

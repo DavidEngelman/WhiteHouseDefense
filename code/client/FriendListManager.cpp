@@ -4,9 +4,7 @@
 
 #include "FriendListManager.hpp"
 
-FriendListManager::FriendListManager(int port, char* address, int id): NetworkedManager(port, address), player_id(id){
-    friendListProcess();
-};
+FriendListManager::FriendListManager(int port, char* address, int id): NetworkedManager(port, address), player_id(id){}
 
 void FriendListManager::friendListProcess() {
     friendListUI.display();
@@ -129,4 +127,8 @@ bool FriendListManager::declineFriendRequest(std::string toDecline) {
     }
     return false;
 
+}
+
+void FriendListManager::run() {
+    friendListProcess();
 }

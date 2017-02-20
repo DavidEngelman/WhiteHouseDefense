@@ -1,9 +1,7 @@
 
 #include "LoginManager.hpp"
 
-LoginManager::LoginManager(int port, char* address): NetworkedManager(port, address) {
-    login_process();
-};
+LoginManager::LoginManager(int port, char* address): NetworkedManager(port, address) {}
 
 void LoginManager::login_process() {
     std::string success = "-1"; // En fait success contiendra soit -1 si la co a échouée soit l'id du joueur si ca a réussi
@@ -55,4 +53,8 @@ std::string LoginManager::attemptLogin(Credentials credentials) {
     receive_message(server_socket,server_response);
     std::string ret = std::string(server_response);
     return server_response;
+}
+
+void LoginManager::run() {
+    login_process();
 }
