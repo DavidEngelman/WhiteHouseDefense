@@ -38,7 +38,7 @@ void MatchMaker::get_and_process_command(int socket_fd) {
 }
 
 void MatchMaker::addPlayerToPendingMatch(PlayerConnection player_connection, std::string mode) {
-    PendingMatch match = getMatch(mode);
+    PendingMatch& match = getMatch(mode);
     match.add_player_to_queue(player_connection);
     std::cout << "player_added" << std::endl;
     std::cout << match.getPlayerConnections().size() << std::endl;
