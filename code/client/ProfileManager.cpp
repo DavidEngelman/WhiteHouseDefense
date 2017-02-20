@@ -4,7 +4,7 @@
 
 #include "ProfileManager.hpp"
 
-ProfileManager::ProfileManager(int port, char *address, int id) : NetworkedManager(port, address), player_id(id) {
+ProfileManager::ProfileManager(int port, char *address, int id, std::string username) : NetworkedManager(port, address), player_id(id), username(username) {
     ProfileManagerProcess();
 }
 
@@ -13,7 +13,7 @@ void ProfileManager::ProfileManagerProcess() {
     int choice = profileUI.select();
     while (choice != 3){
         if (choice == 1){
-            profileUI.displayProfile(getProfile(player_id));
+            profileUI.displayProfile(getProfile(username));
         }else if (choice == 2){
             
             std::string profile = profileUI.askUsername();
@@ -27,7 +27,7 @@ void ProfileManager::ProfileManagerProcess() {
         profileUI.display();
         choice = profileUI.select();
     }
-    MainManager mainManager(ip_address, player_id); // Permet de revenir au main menu , je ne sais pas si
+    MainManager mainManager(ip_address, player_id, username); // Permet de revenir au main menu , je ne sais pas si
                                                     // c'est le meilleur moyen pour faire ca
 }
 
@@ -39,11 +39,4 @@ std::string ProfileManager::getProfile(std::string username) {
     return std::string(buffer);
 }
 
-std::string ProfileManager::getProfile(int id) {
-    std::string message = "getProfileByID;" + std::to_string(player_id)+ ";";
-    send_message(server_socket, message.c_str());
-    char buffer[MAX_BUFF_SIZE];
-    receive_message(server_socket, buffer);
-    return std::string(buffer);
-}
 
