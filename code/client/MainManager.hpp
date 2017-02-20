@@ -15,6 +15,10 @@ private:
 
 	void start_display();
 
+	int player_id;
+
+	void start_display();
+
 public:
     MainManager(char* ip_addr, int id);
 	void run() override;

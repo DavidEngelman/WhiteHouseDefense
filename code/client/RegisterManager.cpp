@@ -20,7 +20,7 @@ RegisterManager::RegisterManager(int port, char* address):
 
     if (attemptRegister(toRegister)){
         std::cout<< "Your account was successfully registered, you can now login normally.\n";
-        LoginManager loginManager(port, ip_address); // On crée un loginManager pour qu'il puisse se connecter
+        LoginManager loginManager(port, server_ip_address); // On crée un loginManager pour qu'il puisse se connecter
 
     }else{
         registerUI.displayError();
@@ -52,7 +52,7 @@ void RegisterManager::registerUser() {
     }
 
     std::cout<< "Your account was successfully registered, you can now login normally.\n";
-    LoginManager loginManager(port, ip_address);
+    LoginManager loginManager(port, server_ip_address);
     my_master_app->transition(&loginManager);
 }
 

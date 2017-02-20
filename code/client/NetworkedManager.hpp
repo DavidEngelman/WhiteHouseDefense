@@ -20,7 +20,6 @@ class NetworkedManager : public AbstractManager {
 
 protected:
     int port;
-    char *ip_address;
     int server_socket;
 
 public:
