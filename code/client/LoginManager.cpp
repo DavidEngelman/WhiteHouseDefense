@@ -31,7 +31,7 @@ void LoginManager::login_process() {
     std::cout << "Connection succeeded" << std::endl;
     std::cout << "your id is" << success <<  std::endl;
 
-    MainManager mainManager(server_ip_address, stoi(success));
+    MainManager mainManager(ip_address, stoi(success));
     my_master_app->transition(&mainManager);//On lance le jeu
 
     // TODO: les transitions entre managers sont un peu bizarres, parce que l'objet LoginManager ne disparait

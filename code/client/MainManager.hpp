@@ -10,6 +10,10 @@ class MainManager : public AbstractManager {
 
 private:
 	MainUI mainUI;
+	char* server_ip_adress;
+	int player_id;
+
+	void start_display();
 
 	int player_id;
 
