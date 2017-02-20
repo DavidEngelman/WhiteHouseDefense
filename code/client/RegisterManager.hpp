@@ -8,6 +8,7 @@
 #include "LoginManager.hpp"
 #include "App.hpp"
 
+
 class RegisterManager : public NetworkedManager {
 
 private:
