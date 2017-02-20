@@ -1,11 +1,12 @@
-#ifndef __POSITION__
-#define __POSITION__
+#ifndef POSITION_HPP
+#define #ifndef POSITION_HPP
+
 class Position { // There is already a struct in the map class
 
 private:
 
-	int x;
-	int y;
+	int _x;
+	int _y;
 
 public:
 
@@ -19,5 +20,7 @@ public:
 
 	void setY(int y);
 };
+
+#endif // POSITION_HPP
 
 #endif

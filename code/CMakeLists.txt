@@ -5,7 +5,7 @@ file(GLOB code database.db)
 set(CLIENT_FILES  "client/NetworkedManager.cpp" "client/ClientLauncher.cpp" "client/LoginManager.cpp" "client/LoginUI.cpp"
         "client/RegisterManager.cpp" "client/RegisterUI.cpp" "common/Networking.cpp" "common/Credentials.cpp"
         client/MainManager.cpp client/MainUI.cpp common/Map.cpp client/Drawing.cpp client/Drawing.hpp "client/RankingManager.cpp" "client/RankingUI.cpp" "client/GameLauncher.cpp"
-        "client/FriendListManager.cpp" "client/FriendListUI.cpp" common/AbstractTower.cpp "client/ProfileManager.cpp" "client/ProfileUI.cpp")
+        "client/FriendListManager.cpp" "client/FriendListUI.cpp" common/AbstractTower.cpp "client/ProfileManager.cpp" "client/ProfileUI.cpp" common/Position.cpp)
 
 
 add_executable(client ${CLIENT_FILES})
@@ -17,7 +17,7 @@ set(SERVER_FILES "server/ServerLauncher.cpp" "common/Networking.cpp" "server/Ser
         "common/Credentials.cpp" "common/Account.cpp" "server/Command.cpp" "server/LoginRegisterCommand.cpp"
         "server/MatchmakingCommand.cpp" "server/MatchMaker.cpp" "server/MatchMaker.cpp" "server/PendingMatch.cpp"
         "server/FriendListCommand.cpp" common/AbstractTower.cpp server/PlayerConnection.cpp
-        "common/PNJ.cpp")
+        "common/PNJ.cpp" "common/Position.hpp" common/Position.cpp)
 
 add_executable(server ${SERVER_FILES})
 
