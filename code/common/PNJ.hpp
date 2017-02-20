@@ -11,6 +11,7 @@ private:
 
 	int movementSpeed;
 	Position position;
+
 public:
 
 	PNJ();
