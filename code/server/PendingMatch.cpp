@@ -1,7 +1,3 @@
-//
-// Created by benjamin on 13/02/17.
-//
-
 #include "PendingMatch.h"
 
 // TODO: bien reflechir à ce qu'on garde comme information dans le std::vector
@@ -17,11 +13,11 @@ const std::vector<PlayerConnection> &PendingMatch::getPlayerConnections() const 
     return playerConnections;
 }
 
-void PendingMatch::add_player_to_queue(PlayerConnection playerConnection) {
+void PendingMatch::add_player_to_queue(PlayerConnection& playerConnection) {
     playerConnections.push_back(playerConnection);
 }
 
-void PendingMatch::remove_player_from_queue(PlayerConnection playerConnection) {
+void PendingMatch::remove_player_from_queue(PlayerConnection& playerConnection) {
     playerConnections.erase(std::remove(playerConnections.begin(), playerConnections.end(), playerConnection));
 }
 //TODO: Cette method marche pas
