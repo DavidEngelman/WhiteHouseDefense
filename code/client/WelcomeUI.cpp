@@ -1,5 +1,4 @@
 
-
 #include "WelcomeUI.h"
 
 void WelcomeUI::display() {
