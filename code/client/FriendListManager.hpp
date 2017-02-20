@@ -15,17 +15,13 @@ class FriendListManager: public NetworkedManager {
 private:
 	FriendListUI friendListUI;
 	int player_id;
+	std::string username;
 
 public:
-    FriendListManager(int port, char* address, int id);
-	bool sendFriendRequest(std::string toAdd);
-	bool removeFriend(std::string toRemove);
-    bool acceptFriendRequest(std::string toAccept);
-    bool declineFriendRequest(std::string toDecline);
+    FriendListManager(int port, char* address,int id, std::string username);
 
-    std::string getFriendList();
-    std::string getFriendRequests();
-    std::string getPendingInvitations();
+	std::string getRequestServer(std::string action, std::string username);
+	bool sendRequestServer(std::string action, std::string requester);
 
     void friendListProcess();
 
