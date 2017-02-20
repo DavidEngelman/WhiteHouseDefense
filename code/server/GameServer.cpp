@@ -20,6 +20,7 @@ void GameServer::processClientCommands() {
     timer.start();
     // TODO: choisir le temps d'attente et le mettre comme une constante
     while (timer.elapsedTimeInSeconds() < 60) {
+        // TODO: faire un select sur les sockets des joueurs dans PlayerConnection.
         int client_socket_fd = accept_connection();
         get_and_process_command(client_socket_fd, message_buffer);
     }
