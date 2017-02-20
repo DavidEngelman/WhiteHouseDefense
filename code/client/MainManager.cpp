@@ -6,8 +6,7 @@
 #include "FriendListManager.hpp"
 
 
-MainManager::MainManager(char* ip_addr, int id) :server_ip_address(ip_addr),
-                                                               player_id(id){}
+MainManager::MainManager(char* ip_addr, int id) :AbstractManager(ip_addr), player_id(id){}
 
 void MainManager::start_display() {
     mainUI.display();

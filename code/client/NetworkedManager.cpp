@@ -1,7 +1,7 @@
 
 #include "NetworkedManager.hpp"
 
-NetworkedManager::NetworkedManager(int port, char* address) :server_ip_address(address), port(port) {
+NetworkedManager::NetworkedManager(int port, char* address) :AbstractManager(address), port(port) {
     init();
 }
 

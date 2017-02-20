@@ -1,9 +1,6 @@
-#include "LoginManager.hpp"
-#include "RegisterManager.hpp"
 #include "Drawing.hpp"
 #include "../common/Map.hpp"
-#include "WelcomeManager.h"
-
+#include "App.hpp"
 
 int main(int argc, char *argv[]) {
 
@@ -16,9 +13,6 @@ int main(int argc, char *argv[]) {
     Drawing::drawWhiteHouse("LAUNCHER");
 
     App app(argv[1]);
-
-
-
 
     return 0;
 }

@@ -11,6 +11,7 @@ protected:
     char* server_ip_address;
 
 public:
+    AbstractManager(char* addr);
 
     virtual void run() = 0;
     virtual ~AbstractManager() = default;

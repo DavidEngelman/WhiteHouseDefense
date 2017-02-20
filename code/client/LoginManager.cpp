@@ -57,5 +57,6 @@ std::string LoginManager::attemptLogin(Credentials credentials) {
 }
 
 void LoginManager::run() {
+    std::cout << "running login" << std::endl;
     login_process();
 }

@@ -3,13 +3,16 @@
 
 #include "WelcomeManager.h"
 
-WelcomeManager::WelcomeManager(char *ip_addr) : server_ip_address(ip_addr) {}
+WelcomeManager::WelcomeManager(char *ip_addr) : AbstractManager(ip_addr) {
+    run();
+}
 
 void WelcomeManager::welcome_process() {
     welcomeUI.display();
     int choice = welcomeUI.select();
 
     if (choice == 1) {
+
         LoginManager loginManager(5555, server_ip_address);
         my_master_app->transition(&loginManager);
 

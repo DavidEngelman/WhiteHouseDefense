@@ -13,7 +13,6 @@
 #include <netinet/in.h>
 #include <iostream>
 #include "AbstractManager.h"
-#include "App.hpp"
 
 
 class NetworkedManager : public AbstractManager {
@@ -24,7 +23,7 @@ protected:
 
 public:
 
-    NetworkedManager(int port, char* address);
+    NetworkedManager(int port, char* adress);
     void init();
     int create_socket();
     int connect_to_server(int socket, struct hostent* addr);
