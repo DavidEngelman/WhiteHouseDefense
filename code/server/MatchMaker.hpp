@@ -16,7 +16,7 @@ private:
     PendingMatch teamPendingMatch;
 
     void announceMatchStart(PlayerConnection playerConnection);
-    void launchGameServer(PendingMatch match);
+    void launchGameServer(PendingMatch& match);
     void launchMatch(PendingMatch match);
     PendingMatch& getMatch(std::string mode);
     void addPlayerToPendingMatch(PlayerConnection player_connection, std::string mode);
