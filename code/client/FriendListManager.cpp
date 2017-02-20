@@ -51,7 +51,7 @@ void FriendListManager::friendListProcess() {
 
     }
     MainManager mainManager(ip_address, player_id, username); // Permet de revenir au main menu , je ne sais pas si
-                                                    // c'est le meilleur moyen pour faire ca
+                                                              // c'est le meilleur moyen pour faire ca
 }
 
 std::string FriendListManager::getRequestServer(std::string action, std::string username ){

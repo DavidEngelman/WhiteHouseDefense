@@ -19,7 +19,7 @@ void ProfileManager::ProfileManagerProcess() {
             std::string profile = profileUI.askUsername();
             std::string serv_resp = getProfile(profile);
             if (serv_resp.size() == 3 ){ // le serveur renvoie ,,;
-                std::cout<< "No profile was found with that username";
+                std::cout<< "No profile was found with that username"<<std::endl;
             }else{
                 profileUI.displayProfile(serv_resp);
             }
