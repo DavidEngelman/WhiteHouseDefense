@@ -14,6 +14,8 @@ public:
 
     SlowTower(int speedReduction);
 
+    ~SlowTower();
+
     virtual std::string serialize() override;
 
     virtual int getSpeedReduction() const;
