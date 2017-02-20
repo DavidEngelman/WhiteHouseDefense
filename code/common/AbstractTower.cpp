@@ -13,3 +13,13 @@ void AbstractTower::setRadius(int radius) { this->radius = radius; }
 Position AbstractTower::getPosition() const { return position; }
 
 void AbstractTower::setPosition(Position position) { this->position = position; }
+
+std::string AbstractTower::serialize() {
+
+    std::string serialized_me;
+
+    serialized_me += std::to_string(owner) + "," + std::to_string(price) + "," +
+                     std::to_string(radius)+","/* + TODO:position.serialize()*/ + ";";
+
+    return serialized_me;
+}

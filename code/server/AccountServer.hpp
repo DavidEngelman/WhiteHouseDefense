@@ -52,6 +52,8 @@ public:
     std::string vectorTostring(std::vector<RankingInfos> vect);
     std::string vectorTostring(std::vector<std::string> vect);
 
+    PublicAccountInfos getPublicAccountInfos(int id);
+    bool handle_profile(int client_sock_fd, int player_id);
 
     std::vector<std::string> getFriendList(int id);
     std::vector<std::string> getFriendRequests(int id);

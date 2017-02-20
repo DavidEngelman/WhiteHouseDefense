@@ -21,7 +21,7 @@ void MainManager::start_display() {
         }
         case 2: {
             std::cout << "Profile !" << std::endl;
-            ProfileManager profile = ProfileManager();
+            ProfileManager profile = ProfileManager(5555, server_ip_adress, player_id);
             break;
         }
         case 3: {
