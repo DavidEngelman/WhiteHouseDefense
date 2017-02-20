@@ -6,7 +6,7 @@ SlowTower::~SlowTower() {}
 
 int SlowTower::getSpeedReduction() const { return this->speedReduction; }
 
-void SlowTower::setSpeedReduction(int speedReduction) { this->speedReduction = speedReduction; }
+void SlowTower::setSpeedReduction(int newSpeedReduction) { speedReduction = newSpeedReduction; }
 
 void SlowTower::shoot(PNJ target) { this->reduceMovementSpeedOf(target); }
 

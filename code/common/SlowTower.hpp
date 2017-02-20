@@ -20,7 +20,7 @@ public:
 
     virtual int getSpeedReduction() const;
 
-    virtual void setSpeedReduction(int speedReduction);
+    virtual void setSpeedReduction(int newSpeedReduction);
 
     virtual void shoot(PNJ target) override;
 
