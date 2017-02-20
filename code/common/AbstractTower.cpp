@@ -7,17 +7,17 @@ AbstractTower::~AbstractTower() {}
 
 int AbstractTower::getOwner() const { return owner; }
 
-void AbstractTower::setOwner(int owner) { this->owner = owner; }
+void AbstractTower::setOwner(int newOwner) { owner = newOwner; }
 
 const int AbstractTower::getPrice() const { return price; }
 
 int AbstractTower::getRadius() const { return radius; }
 
-void AbstractTower::setRadius(int radius) { this->radius = radius; }
+void AbstractTower::setRadius(int newRadius) { radius = newRadius; }
 
 Position AbstractTower::getPosition() const { return position; }
 
-void AbstractTower::setPosition(Position position) { this->position = position; }
+void AbstractTower::setPosition(Position newPosition) { position = newPosition; }
 
 std::string AbstractTower::serialize() {
 

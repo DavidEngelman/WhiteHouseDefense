@@ -19,7 +19,7 @@ public:
 
     virtual int getDamageAmount() const;
 
-    virtual void setDamageAmount(int damageAmount);
+    virtual void setDamageAmount(int newDamageAmount);
 
     virtual void shoot(PNJ target) override;
 
