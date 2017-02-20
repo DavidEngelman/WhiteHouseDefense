@@ -1,5 +1,7 @@
 #include "SlowTower.hpp"
 
+SlowTower(int speedReduction): speedReduction(speedReduction) {}
+
 int SlowTower::getSpeedReduction() const { return this->speedReduction; }
 
 void SlowTower::setSpeedReduction(int speedReduction) { this->speedReduction = speedReduction; }

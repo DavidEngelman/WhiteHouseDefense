@@ -1,5 +1,7 @@
 #include "AttackTower.hpp"
 
+AttackTower::AttackTower(int damageAmount): damageAmount(damageAmount) {}
+
 int AttackTower::getDamageAmount() const { return damageAmount; }
 
 void AttackTower::setDamageAmount(int damageAmount) { this->damageAmount = damageAmount; }
