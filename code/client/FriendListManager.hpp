@@ -10,11 +10,10 @@
 #include <iostream>
 
 
-class FriendListManager: NetworkedManager {
+class FriendListManager: public NetworkedManager {
 
 private:
 	FriendListUI friendListUI;
-	//FriendList friendList;
 	int player_id;
 
 public:
@@ -23,7 +22,6 @@ public:
 	bool removeFriend(std::string toRemove);
     bool acceptFriendRequest(std::string toAccept);
     bool declineFriendRequest(std::string toDecline);
-    bool exitFriendList();
 
     std::string getFriendList();
     std::string getFriendRequests();

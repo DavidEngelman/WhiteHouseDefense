@@ -7,8 +7,9 @@ class FriendListUI {
 	
 public:
 	void display();
-	void displayFriendList(std::string friendlist);
+	void displayFriendList(std::string friendlist, std::string command);
     int select();
+	std::string askUsername();
 };
 
 
