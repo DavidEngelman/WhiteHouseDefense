@@ -30,5 +30,5 @@ bool PlayerConnection::operator!=(const PlayerConnection &rhs) const {
 }
 
 PlayerConnection::~PlayerConnection() {
-    close(socket_fd);
+//    close(socket_fd);
 }
