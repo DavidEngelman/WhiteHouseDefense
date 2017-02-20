@@ -1,13 +1,13 @@
 
 #include "NetworkedManager.hpp"
 
-NetworkedManager::NetworkedManager(int port, char *address) : port(port), ip_address(address) {
+NetworkedManager::NetworkedManager(int port, char* address) :server_ip_address(address), port(port) {
     init();
 }
 
 void NetworkedManager::init() {
     struct hostent *he;
-    if ((he=gethostbyname(ip_address)) == NULL) {
+    if ((he=gethostbyname(server_ip_address)) == NULL) {
         perror("gethostbyname");
         exit(1);
     }

@@ -8,6 +8,7 @@ class AbstractManager {
 protected:
 
     App* my_master_app;
+    char* server_ip_address;
 
 public:
 

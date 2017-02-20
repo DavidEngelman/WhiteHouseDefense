@@ -2,6 +2,7 @@
 #include "RegisterManager.hpp"
 #include "Drawing.hpp"
 #include "../common/Map.hpp"
+#include "WelcomeManager.h"
 
 
 int main(int argc, char *argv[]) {
@@ -12,31 +13,12 @@ int main(int argc, char *argv[]) {
         exit(1);
     }
 
+    Drawing::drawWhiteHouse("LAUNCHER");
 
-    int choice = 0;
-    bool ok = false;
+    WelcomeManager welcomeManager(argv[1]);
 
-    while (!ok) {
-        Drawing::drawWhiteHouse("LAUNCHER");
-        std::cout << "Press 1 to log in or 2 to register a new account" << std::endl;
-        std::cin >> choice;
 
-        if (choice == 1) {
-            LoginManager myLoginManager = LoginManager(5555, argv[1]);
-            ok = true;
-        }
 
-        else if (choice == 2) {
-            RegisterManager myRegisterManager = RegisterManager(5555, argv[1]);
-            ok = true;
-        }
-        else {
-            std::cout << "Please enter 1 or 2" << std::endl;
-        }
-
-        std::cin.clear();
-        std::cin.ignore();
-    }
 
     return 0;
 }

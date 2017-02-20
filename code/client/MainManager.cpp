@@ -6,7 +6,7 @@
 #include "FriendListManager.hpp"
 
 
-MainManager::MainManager(char* ip_addr, int id) :server_ip_adress(ip_addr),
+MainManager::MainManager(char* ip_addr, int id) :server_ip_address(ip_addr),
                                                                player_id(id){}
 
 void MainManager::start_display() {
@@ -14,24 +14,24 @@ void MainManager::start_display() {
     switch (mainUI.select()) {
         case 1: {
             std::cout << "Game Launcher !" << std::endl;
-            GameLauncher game = GameLauncher(5556, server_ip_adress, player_id);
+            GameLauncher game = GameLauncher(5556, server_ip_address, player_id);
             my_master_app->transition(&game);
             break;
         }
         case 2: {
             std::cout << "Profile !" << std::endl;
-            ProfileManager profile = ProfileManager(5555, server_ip_adress, player_id);
+            ProfileManager profile = ProfileManager(5555, server_ip_address, player_id);
             my_master_app->transition(&profile);
             break;
         }
         case 3: {
             std::cout << "Friendlist !" << std::endl;
-            FriendListManager friendList(5555, server_ip_adress, player_id);
+            FriendListManager friendList(5555, server_ip_address, player_id);
             my_master_app->transition(&friendList);
             break;
         }
         case 4: {
-            RankingManager rankingManager(5555, server_ip_adress);
+            RankingManager rankingManager(5555, server_ip_address);
             my_master_app->transition(&rankingManager);
             break;
         }
