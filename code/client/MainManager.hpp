@@ -4,6 +4,7 @@
 #include "MainUI.hpp"
 #include "NetworkedManager.hpp"
 #include "AbstractManager.h"
+#include "App.hpp"
 
 class MainManager : public AbstractManager {
 

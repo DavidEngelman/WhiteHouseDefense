@@ -1,11 +1,5 @@
-//
-//
-
 #ifndef PROJET_APP_HPP
 #define PROJET_APP_HPP
-
-
-#include "AbstractManager.h"
 
 class AbstractManager;
 
@@ -13,13 +7,13 @@ class App {
 
 private:
 
-    AbstractManager current_mamanger;
+    AbstractManager* current_manager;
 
 public:
 
     App(char* server_ip_addr);
 
-    virtual void transition(AbstractManager new_manager);
+    virtual void transition(AbstractManager *new_manager);
 
     virtual ~App() = default;
 

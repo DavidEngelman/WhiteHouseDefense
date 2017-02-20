@@ -1,10 +1,13 @@
 #ifndef PROJET_ABSTRACTMANAGER_H
 #define PROJET_ABSTRACTMANAGER_H
 
-#include "App.hpp"
+class App;
 
 class AbstractManager {
 
+protected:
+
+    App* my_master_app;
 
 public:
 

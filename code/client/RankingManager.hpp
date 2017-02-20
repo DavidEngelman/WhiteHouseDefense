@@ -7,6 +7,7 @@
 #include "NetworkedManager.hpp"
 #include "RankingUI.hpp"
 #include "../common/Networking.h"
+#include "App.hpp"
 
 class RankingManager : public NetworkedManager  {
 

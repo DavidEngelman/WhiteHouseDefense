@@ -5,10 +5,7 @@
 #include "ProfileManager.hpp"
 
 ProfileManager::ProfileManager(int port, char *address, int id) :
-        NetworkedManager(port, address), player_id(id) {
-
-    ProfileManagerProcess();
-}
+        NetworkedManager(port, address), player_id(id) {}
 
 void ProfileManager::ProfileManagerProcess() {
     profileUI.display();
@@ -29,8 +26,8 @@ void ProfileManager::ProfileManagerProcess() {
         profileUI.display();
         choice = profileUI.select();
     }
-    MainManager mainManager(ip_address, player_id, my_master_app);
-    my_master_app.transition(mainManager);
+    MainManager mainManager(ip_address, player_id);
+    my_master_app->transition(&mainManager);
 
 }
 
@@ -50,3 +47,7 @@ std::string ProfileManager::getProfile(int id) {
     return std::string(buffer);
 }
 
+void ProfileManager::run() {
+    ProfileManagerProcess();
+
+}

@@ -6,6 +6,7 @@
 #include "../common/Networking.h"
 #include "MainManager.hpp"
 #include "../common/Credentials.h"
+#include "App.hpp"
 
 class LoginManager : public NetworkedManager {
 

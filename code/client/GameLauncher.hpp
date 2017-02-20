@@ -7,7 +7,7 @@
 #include "../server/MatchMaker.hpp"
 // TODO: faudra probablement faire un fichier qui reprend tous les strings
 
-class GameLauncher : NetworkedManager {
+class GameLauncher : public NetworkedManager {
 
 private:
 
@@ -17,6 +17,7 @@ private:
 public:
     GameLauncher(int port, char* address, int id);
     void sendJoinRequest(std::string mode);
+    void run() override;
 };
 
 #endif

@@ -13,6 +13,7 @@
 #include <netinet/in.h>
 #include <iostream>
 #include "AbstractManager.h"
+#include "App.hpp"
 
 
 class NetworkedManager : public AbstractManager {
