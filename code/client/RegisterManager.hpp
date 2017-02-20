@@ -17,4 +17,6 @@ public:
 	bool attemptRegister(Credentials credentials);
 	bool checkCredentialsValidity(Credentials credentials);
 	void registerUser();
+	void run() override;
+
 };

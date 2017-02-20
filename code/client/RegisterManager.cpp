@@ -1,8 +1,6 @@
 #include "RegisterManager.hpp"
 
-RegisterManager::RegisterManager(int port, char* address): NetworkedManager(port, address) {
-    registerUser();
-};
+RegisterManager::RegisterManager(int port, char* address): NetworkedManager(port, address) {};
 
 /*void RegisterManager::registerUser() {
     bool correctCredentials = false;
@@ -73,4 +71,9 @@ bool RegisterManager::attemptRegister(Credentials credentials){
 bool RegisterManager::checkCredentialsValidity(Credentials credentials) {
     return ((credentials.getUsername().length() != 0) && (credentials.getPassword().length()!= 0) &&
             (credentials.getUsername().length() <= 16));
+}
+
+
+void RegisterManager::run() {
+    registerUser();
 }

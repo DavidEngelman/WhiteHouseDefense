@@ -20,6 +20,8 @@ public:
 	void ProfileManagerProcess();
 	std::string getProfile(std::string username);
 	std::string getProfile(int id);
+	void run() override;
+
 };
 
 

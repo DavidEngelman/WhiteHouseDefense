@@ -3,8 +3,9 @@
 
 #include "MainUI.hpp"
 #include "NetworkedManager.hpp"
+#include "AbstractManager.h"
 
-class MainManager {
+class MainManager : public AbstractManager {
 
 private:
 	MainUI mainUI;
@@ -15,6 +16,7 @@ private:
 
 public:
     MainManager(char* ip_addr, int id);
+	void run() override;
 };
 
 #endif

@@ -18,6 +18,8 @@ public:
 	std::string getRanking();
 	void sendRequest();
 	std::string createRanking(std::string);
+	void run() override;
+
 };
 
 #endif

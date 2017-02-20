@@ -8,7 +8,6 @@
 
 MainManager::MainManager(char* ip_addr, int id) : server_ip_adress(ip_addr), player_id(id){
     std::cout << "this is your player id: " << player_id << std::endl; //print juste pour test que ca marche
-    start_display();
 }
 
 void MainManager::start_display() {
@@ -39,4 +38,8 @@ void MainManager::start_display() {
             break;
         }
     }
+}
+
+void MainManager::run() {
+    start_display();
 }
