@@ -2,8 +2,6 @@
 
 SlowTower(int speedReduction): speedReduction(speedReduction) {}
 
-SlowTower::~SlowTower() {}
-
 int SlowTower::getSpeedReduction() const { return this->speedReduction; }
 
 void SlowTower::setSpeedReduction(int newSpeedReduction) { speedReduction = newSpeedReduction; }
