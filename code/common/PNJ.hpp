@@ -17,13 +17,15 @@ public:
 
     PNJ(Position position, int healthPoints, int movementSpeed);
 
+    ~PNJ() = default;
+
 	int getHealthPoints() const;
 
 	void receiveDamage(int damageAmount);
 
 	int getMovementSpeed() const;
 
-	void setMovementSpeed(int movementSpeed);
+	void setMovementSpeed(int newMovementSpeed);
 
     void receiveMovementPenalty(int speedReduction);
 
