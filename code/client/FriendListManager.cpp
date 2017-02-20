@@ -40,6 +40,7 @@ void FriendListManager::friendListProcess() {
             if (sendRequestServer( "acceptFriendRequest;"  ,toAccept)){
                 std::cout<<"Friend request accepted"<<std::endl;
             };
+
         }else if (choice == 7) {
             std::cout << "decline Friend : ";
             std::string toDecline = friendListUI.askUsername();
