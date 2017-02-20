@@ -71,13 +71,11 @@ void Map::display() {
 }
 
 void Map::generateRandomMatrix() {
-    initMap();
-    Pos begin;
-    begin.y = HEIGHT/2-2;
-    begin.x = WIDTH/2;
     srand((unsigned)time(0));
+    initMap();
+    Position begin(WIDTH/2, HEIGHT/2-2);
     generateQuarterMap(begin);
-    display();
+    copyQuarter();
 }
 
 void Map::initMap() {
@@ -97,16 +95,14 @@ void Map::initMap() {
     matrix[HEIGHT/2][WIDTH/2] = 0;
 }
 
-bool Map::generateQuarterMap(Map::Pos end) {
+bool Map::generateQuarterMap(Position end) {
     if (end.y == 0) {
         return true;
     }
 
-    std::vector<Pos> possibleWays;
-    Pos nextToEnd;
-
-    nextToEnd.y = end.y-1;
-    nextToEnd.x = end.x;
+    std::vector<Position> possibleWays;
+    Position nextToEnd(end.x, end.y-1);
+    std::cout << matrix[nextToEnd.y][nextToEnd.x] << std::endl;
     if (matrix[nextToEnd.y][nextToEnd.x] != -2 && !isNextToPath(nextToEnd)) possibleWays.push_back(nextToEnd);
     nextToEnd.y = end.y;
     nextToEnd.x = end.x-1;
@@ -123,14 +119,10 @@ bool Map::generateQuarterMap(Map::Pos end) {
     return false;
 }
 
-std::string Map::posToString(Map::Pos position) {
-    return "(" + std::to_string(position.y) + ", " + std::to_string(position.x) + ")";
-}
-
-bool Map::isNextToPath(Map::Pos position) {
+bool Map::isNextToPath(Position position) {
     int count = 0;
     if (matrix[position.y+1][position.x] == 0) count++;
-    if (matrix[position.y-1][position.x] == 0) count++;
+    if (position.y > 0 && matrix[position.y-1][position.x] == 0) count++;
     if (matrix[position.y][position.x+1] == 0) count++;
     if (matrix[position.y][position.x-1] == 0) count++;
     return count >= 2;
@@ -150,4 +142,8 @@ bool Map::removeTower(int x, int y) {
         return true;
     }
     return false;
+}
+
+void Map::copyQuarter() {
+    
 }

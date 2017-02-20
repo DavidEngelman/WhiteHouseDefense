@@ -12,6 +12,7 @@
 
 #include <string>
 #include <vector>
+#include "Position.hpp"
 
 class Map {
 private:
@@ -19,13 +20,9 @@ private:
 
     void generateRandomMatrix();
     void initMap();
-    struct Pos {
-        int x;
-        int y;
-    };
-    bool generateQuarterMap(Pos position);
-    bool isNextToPath(Pos position);
-    std::string posToString(Pos position);
+    bool generateQuarterMap(Position position);
+    bool isNextToPath(Position position);
+    void copyQuarter();
 
 public:
     Map();
