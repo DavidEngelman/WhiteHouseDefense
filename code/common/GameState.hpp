@@ -3,17 +3,17 @@
 
 #include <vector>
 #include "PlayerState.hpp"
-#include "Tower.hpp"
-#include "Wave.h"
+#include "AbstractTower.hpp"
+#include "PNJ.hpp"
 #include "Map.hpp"
+#include "Wave.h"
 #include "../common/Strings.hpp"
 
 const static std::vector<std::string> validModes = {CLASSIC_MODE, TEAM_MODE, TIMED_MODE};
 
 class GameState {
-
-    std::vector<PlayerState> player_states;
-    std::vector<Tower> towers;
+	std::vector<PlayerState> player_states;
+	std::vector<AbstractTower>       towers;
     std::vector<Wave> waves;
 
     std::string mode;

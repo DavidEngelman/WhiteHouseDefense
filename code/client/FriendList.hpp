@@ -2,16 +2,22 @@
 #define FRIENDLIST_HPP
 
 #include <string>
+#include <vector>
+#include <algorithm>
+#include <iostream>
+#include <sstream>
+
 
 class FriendList {
 
 private:
-	std::string friends; // j'ai mis string pour l'instant sinon ca faisait chier pour un autre truc
-
+	std::vector<std::string> friendlist;
 public:
-	void addFriend(std::string username);
+	FriendList(std::string friendlist);
+	void update(std::string friendlist);
+	bool is_present(std::string friendlist);
+	std::vector<std::string> getFriendList();
 
-	void removeFriend(std::string username);
 };
 
 #endif

@@ -22,8 +22,8 @@ void MatchmakingCommand::parse(char* data)  {
         string_player_id += data[i];
         i++;
     }
-
-    playerConnection.player_id = atoi(string_player_id.c_str()); // "18" -> 18
+    int int_player_id = atoi(string_player_id.c_str());
+    playerConnection.setPlayer_id(int_player_id); // "18" -> 18
 }
 
 const PlayerConnection MatchmakingCommand::getPlayerConnection() const {

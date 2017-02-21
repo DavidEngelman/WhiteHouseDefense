@@ -11,7 +11,7 @@ void LoginManager::login_process() {
 
     bool valid = false; // bool qui check si les donnés sont corrects (champs non vide) et peuvent être envoyées au serveur
 
-    while (success == "-1") {
+    while (success == "-1" || success == "-2") {
 
         while (not valid) {
             loginUI.display(); //demande le  username et pswrd
@@ -28,12 +28,16 @@ void LoginManager::login_process() {
             loginUI.displayError();
             valid = false;
         }
+        else if (success == "-2"){
+            loginUI.display_already_co_message();
+            valid = false;
+        }
     }
 
     std::cout << "Connection succeeded" << std::endl;
     std::cout << "your id is" << success <<  std::endl;
 
-    MainManager mainManager(ip_address, stoi(success)); //On lance le jeu
+    MainManager mainManager(ip_address, stoi(success), loginCredentials.getUsername()); //On lance le jeu
 
     // TODO: les transitions entre managers sont un peu bizarres, parce que l'objet LoginManager ne disparait
     // pas vraiment. Faudrait trouver un moyen de detruire le loginManager et donner le controle à MainManager

@@ -1,18 +1,15 @@
+#ifndef POSITION_HPP
+#define POSITION_HPP
+
+#include <iosfwd>
+#include <string>
+
 class Position {
 
-private:
-	int x;
-	int y;
-
 public:
-
-    Position(int x, int y);
-
-	int getX();
-
-	void setX(int x);
-
-	int getY();
-
-	void setY(int y);
+    int x;
+    int y;
+    Position(int _x, int _y);
 };
+
+#endif // POSITION_HPP

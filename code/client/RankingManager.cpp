@@ -61,4 +61,3 @@ std::string RankingManager::createRanking(std::string message_from_server) {
     return result;
 
 }
-

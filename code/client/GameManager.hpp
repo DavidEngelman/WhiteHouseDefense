@@ -11,6 +11,8 @@ private:
     GameUI gameUI;
 
 public:
+    GameManager();
+
     void sendUserCommands();
 
     void getReceivedChanges();

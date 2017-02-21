@@ -1,15 +1,38 @@
-class PNJ {
+#include "Position.hpp"
+
+#ifndef PROJET_PNJ_H
+#define PROJET_PNJ_H
+
+class PNJ{
 
 private:
-	int hp;
-	Position positon;
+
+	int healthPoints;
+
+	int movementSpeed;
+	Position position;
 
 public:
-	int getHp();
 
-	void decreaseHp(int damage);
+	PNJ();
 
-	Position getPosition();
+    PNJ(Position position, int healthPoints, int movementSpeed);
 
-	void setPosition(int x, int y);
+    ~PNJ() = default;
+
+	int getHealthPoints() const;
+
+	void receiveDamage(int damageAmount);
+
+	int getMovementSpeed() const;
+
+	void setMovementSpeed(int newMovementSpeed);
+
+    void receiveMovementPenalty(int speedReduction);
+
+	Position getPosition() const;
+
+	void setPosition(Position position);
 };
+
+#endif // PROJET_PNJ_H
