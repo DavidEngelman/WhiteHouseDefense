@@ -47,3 +47,8 @@ void PlaceTowerCommand::parse(char *data) {
     position.setY(std::stoi(coord_y));
 }
 
+PlaceTowerCommand::PlaceTowerCommand() : position(Position(-1, -1)) // Position bidon
+{
+
+}
+
