@@ -17,4 +17,5 @@ public:
 	void ask_password();
 	void display();
 	void displayError();
+	void display_already_co_message();
 };

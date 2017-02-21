@@ -15,7 +15,7 @@ public:
 
     MatchmakingCommand() = delete;
     MatchmakingCommand(int socket_fd): Command() {
-        playerConnection.socket_fd = socket_fd;
+        playerConnection.setSocket_fd(socket_fd);
     }
 
     ~MatchmakingCommand() = default;
