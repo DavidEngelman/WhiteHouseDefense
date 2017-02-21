@@ -4,6 +4,7 @@
 RankingManager::RankingManager(int port, char* address): NetworkedManager(port, address) {
     std::string ranking = createRanking(getRanking());
     rankingUI.display(ranking);
+
 }
 
 void RankingManager::sendRequest() {
