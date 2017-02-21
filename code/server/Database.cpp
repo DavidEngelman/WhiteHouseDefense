@@ -188,7 +188,7 @@ int Database::acceptFriendRequest(std::string username, std::string toAccept) {
     std::stringstream strm;
     std::string command = "";
     command += "insert into FriendList(ID1, ID2) values('" + username + "','" + toAccept + "') ;" +
-            "DELETE FROM `PendingInvitations` WHERE `RequesterID`='" + username + "' AND `SenderID`='" + toAccept +
+            "DELETE FROM `FriendRequests` WHERE `RequesterID`='" + username + "' AND `SenderID`='" + toAccept +
             "' ;" +  "DELETE FROM `PendingInvitations` WHERE `RequesterID`='" + toAccept + "' AND `ReceiverID`='" +
             username + "' ;";
 
