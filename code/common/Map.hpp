@@ -1,8 +1,7 @@
 #ifndef MAP_HPP
 #define MAP_HPP
 
-#define HEIGHT 21
-#define WIDTH 21
+#define SIZE 31 //Not > 41 because it's too big for a screen
 
 #define GRASS "⬛"
 #define PATH "⬜"
@@ -16,17 +15,18 @@
 
 class Map {
 private:
-    int matrix[HEIGHT][WIDTH];
+    int matrix[SIZE][SIZE];
 
     void generateRandomMatrix();
     void initMap();
     bool generateQuarterMap(Position position);
     bool isNextToPath(Position position);
     void copyQuarter();
+    void basicMap();
 
 public:
     Map();
-    Map(std::string filename);
+    Map(unsigned seed);
     void display();
     bool addTower(int x, int y, int typeOfTower);
     bool removeTower(int x, int y);
