@@ -14,37 +14,37 @@ void FriendListManager::friendListProcess() {
     int choice = friendListUI.select();
     while ( choice!=8 ){
         if (choice == 1){
-            friendListUI.displayFriendList(getRequestServer("getFriendList;", username), "friends");
+            friendListUI.displayFriendList(getRequestServer(GET_FRIENDLIST, username), "friends");
         }else if (choice == 2 ){
-            friendListUI.displayFriendList(getRequestServer("getFriendRequests;", username), "friend requests");
+            friendListUI.displayFriendList(getRequestServer(GET_FRIEND_REQUESTS, username), "friend requests");
         }else if (choice == 3) {
-            friendListUI.displayFriendList(getRequestServer("getPendingInvitations;",username), "pending");
+            friendListUI.displayFriendList(getRequestServer(GET_PENDING_INVITATIONS,username), "pending");
 
 
         }else if (choice == 4) {
             std::cout<<"Send Friend Request to : ";
             std::string toAdd = friendListUI.askUsername();
-            if(sendRequestServer("addFriend;" , toAdd)){
+            if(sendRequestServer(ADD_FRIEND , toAdd)){
                 std::cout<<"Invitation Sent"<<std::endl;
             };
 
         }else if (choice == 5 ){
             std::cout<<"Remove Friend : ";
             std::string toRemove = friendListUI.askUsername();
-            if(sendRequestServer( "removeFriend;" ,toRemove)){
+            if(sendRequestServer( REMOVE_FRIEND ,toRemove)){
                 std::cout<<"Friend removed successfully"<<std::endl;
             };
         }else if (choice == 6){
             std::cout<< "accept Friend : ";
             std::string toAccept = friendListUI.askUsername();
-            if (sendRequestServer( "acceptFriendRequest;"  ,toAccept)){
+            if (sendRequestServer( ACCEPT_FRIEND_REQUEST  ,toAccept)){
                 std::cout<<"Friend request accepted"<<std::endl;
             };
 
         }else if (choice == 7) {
             std::cout << "decline Friend : ";
             std::string toDecline = friendListUI.askUsername();
-            if (sendRequestServer( "declineFriendRequest;" ,toDecline)) {
+            if (sendRequestServer( DECLINE_FRIEND_REQUEST ,toDecline)) {
                 std::cout << "Friend request declined" << std::endl;
             };
         }
