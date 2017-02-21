@@ -52,8 +52,6 @@ void FriendListManager::friendListProcess() {
         choice = friendListUI.select();
 
     }
-    MainManager mainManager(ip_address, player_id, username); // Permet de revenir au main menu , je ne sais pas si
-                                                              // c'est le meilleur moyen pour faire ca
 }
 
 std::string FriendListManager::getRequestServer(std::string action, std::string username ){
@@ -70,9 +68,6 @@ bool FriendListManager::sendRequestServer(std::string action, std::string otherU
     std::string message = action + username + "," + otherUser+ ";" ;
     send_message(server_socket, message.c_str());
     receive_message(server_socket,server_response);
-    if (server_response[0] == '1') {
-        return true;
-    }
-    return false;
+    return server_response[0] == '1';
 }
 
