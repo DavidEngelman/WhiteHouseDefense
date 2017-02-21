@@ -8,7 +8,7 @@
 #include "FriendList.hpp"
 #include "MainManager.hpp"
 #include <iostream>
-
+#include "../common/Strings.hpp"
 
 class FriendListManager: public NetworkedManager {
 
