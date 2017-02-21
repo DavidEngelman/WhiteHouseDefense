@@ -10,6 +10,8 @@ public:
     int x;
     int y;
 
+    Position();
+    
     int getY() const;
 
     void setY(int y);
