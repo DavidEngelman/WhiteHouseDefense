@@ -1,2 +1,9 @@
 .idea/
 cmake-build-debug/
+code/.MatchMaker.cpp.un~
+code/.MatchMaker.hpp.un~
+code/.PendingMatch.h.un~
+code/MatchMaker.hpp~
+code/PendingMatch.h~
+code/database.db
+database2.db
