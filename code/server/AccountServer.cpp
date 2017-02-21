@@ -12,19 +12,10 @@ void AccountServer::run() {
         std::cout << "New client connected wouhouuu" << std::endl;
         //add_new_client(newClient); Je laisse ca la au cas ou
 
-<<<<<<< HEAD
-        if (!fork()) {
-            char message_buffer[BUFFER_SIZE];
-            get_and_process_commands(newClient, message_buffer);
-        }
-=======
         //TODO: j'ai du virer le fork
         char message_buffer[BUFFER_SIZE];
         get_and_process_command(newClient, message_buffer);
-
->>>>>>> master
     }
-
 }
 
 

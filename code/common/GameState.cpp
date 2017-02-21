@@ -17,7 +17,7 @@ std::string GameState::serialize() {
         // C'est ce que j'ai pensé quand j'ai vu ça
         serialized_me += pstate.serialize();
     }
-    for (Tower tower: towers){
+    for (AbstractTower tower: towers){
         serialized_me += tower.serialize();
     }
     for (Wave wave: waves){
