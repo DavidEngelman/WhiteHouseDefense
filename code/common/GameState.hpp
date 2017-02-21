@@ -10,7 +10,7 @@
 class GameState {
 
 	std::vector<PlayerState> player_states;
-	std::vector<Tower>       towers;
+	std::vector<AbstractTower>       towers;
 	std::vector<PNJ>         pnjs;
 
 	Map map;
