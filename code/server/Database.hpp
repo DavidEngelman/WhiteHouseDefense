@@ -50,7 +50,6 @@ public:
     PublicAccountInfos getUsrInfosByUsrname(std::string);
     int getIDbyUsername(std::string username);
 
-    std::string getInfosById(int id);
     std::vector<std::string> getFriendList(std::string username);
     std::vector<std::string> getFriendRequests(std::string username);
     std::vector<std::string> getPendingInvitations(std::string username);

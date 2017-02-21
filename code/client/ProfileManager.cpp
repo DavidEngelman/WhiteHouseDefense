@@ -4,6 +4,7 @@
 
 #include "ProfileManager.hpp"
 
+
 ProfileManager::ProfileManager(int port, char *address, int id, std::string username) : NetworkedManager(port, address), player_id(id), username(username) {
     ProfileManagerProcess();
 }
@@ -30,7 +31,7 @@ void ProfileManager::ProfileManagerProcess() {
 }
 
 std::string ProfileManager::getProfile(std::string username) {
-    std::string message = "getProfileByUsername;" + username+ ";";
+    std::string message = GET_PROFILE + username+ ";";
     send_message(server_socket, message.c_str());
     char buffer[MAX_BUFF_SIZE];
     receive_message(server_socket, buffer);

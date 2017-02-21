@@ -187,26 +187,6 @@ int Database::getIDbyUsername(std::string username) {
     return getUsrInfosByUsrname(username).ID;
 }
 
-std::string Database::getInfosById(int id) {
-    std::string infos;
-    char *zErrMsg = 0;
-    std::stringstream strm;
-
-    strm << "select username from Accounts WHERE id='" << id << "'";
-
-    std::string s = strm.str();
-    char *str = &s[0];
-    char *query = str;
-
-    rc = sqlite3_exec(db, query, callback_account_id, &infos, &zErrMsg);
-    if( rc != SQLITE_OK ){
-        fprintf(stderr, "SQL error: %s\n", zErrMsg);
-        sqlite3_free(zErrMsg);
-    }
-
-    return infos;
-}
-
 int Database::sendFriendRequest(std::string username, std::string toAdd) {
     // Request for friendship is sent, friendrequests and pendingInvitations are updated accordingly
 

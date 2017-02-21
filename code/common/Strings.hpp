@@ -16,5 +16,6 @@
 #define REMOVE_FRIEND "removeFriend;"
 #define ACCEPT_FRIEND_REQUEST "acceptFriendRequest;"
 #define DECLINE_FRIEND_REQUEST "declineFriendRequest;"
+#define GET_PROFILE "getProfileByUsername;"
 
 #endif //PROJET_STRINGS_HPP
