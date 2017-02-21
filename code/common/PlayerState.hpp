@@ -29,15 +29,15 @@ public:
 
 	void earnMoney(int amount);
 
-	void getIsSupported();
+	bool getIsSupported();
 
 	void setIsSupported(bool isSupported);
 
-	void getIsWinner();
+	bool getIsWinner();
 
 	void setIsWinner(bool isWinner);
 
-	void getPlayer_id();
+	int getPlayer_id();
 
 	void setPlayer_id(int newId);
 

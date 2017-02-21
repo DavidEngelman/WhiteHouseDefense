@@ -37,7 +37,7 @@ void PlayerState::earnMoney(int amount){
     money += amount;
 }
 
-void PlayerState::getIsSupported(){
+bool PlayerState::getIsSupported(){
     return isSupported;
 }
 
@@ -45,7 +45,7 @@ void PlayerState::setIsSupported(bool isSupported){
     isSupported = isSupported;
 }
 
-void PlayerState::getIsWinner(){
+bool PlayerState::getIsWinner(){
     return isWinner;
 }
 
@@ -53,7 +53,7 @@ void PlayerState::setIsWinner(bool newValue){
     isWinner = newValue;
 }
 
-void PlayerState::getPlayer_id(){
+int PlayerState::getPlayer_id(){
     return player_id;
 }
 
@@ -69,6 +69,6 @@ void PlayerState::decrease_hp(int amount) {
     setHp(getHp() - amount);
 }
 
-void PlayerState::decrease_hp(int amount) {
+void PlayerState::increase_hp(int amount) {
     setHp(getHp() + amount);
 }

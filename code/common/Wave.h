@@ -3,6 +3,7 @@
 #ifndef PROJET_WAVE_H
 #define PROJET_WAVE_H
 
+#include <vector>
 #include "PNJ.hpp"
 
 
@@ -17,9 +18,6 @@ public:
 
     Wave() = default; //not sure
     Wave(int nb_of_pnj);
-    void remove_pnj(int pnj_id);
-
-
 
 };
 

@@ -43,7 +43,7 @@ void GameServer::addTowerInGameState(PlaceTowerCommand &command) {
 }
 
 GameServer::GameServer(int port, std::vector<PlayerConnection> &playerConnections) :
-        Server(port), playerConnections(playerConnections.data()) {}
+        Server(port), playerConnections(playerConnections) {}
 
 void GameServer::runWave() {
     Timer timer;

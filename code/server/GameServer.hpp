@@ -13,7 +13,7 @@ static const int NUM_PLAYERS = 4;
 class GameServer : public Server {
 private:
     GameState gameState;
-    PlayerConnection playerConnections[NUM_PLAYERS];
+    std::vector<PlayerConnection> playerConnections;
 
     void sendGameStateToPlayer(PlayerConnection &connection);
 
