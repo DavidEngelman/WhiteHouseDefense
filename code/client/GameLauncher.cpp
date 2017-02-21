@@ -1,20 +1,24 @@
+#include <assert.h>
 #include "GameLauncher.hpp"
 #include "../common/Strings.hpp"
 
-GameLauncher::GameLauncher(int port, char *address) : NetworkedManager(port, address) {
+GameLauncher::GameLauncher(int port, char *address, int id) : NetworkedManager(port, address), player_id(id) {
+    sendJoinRequest(CLASSIC_MODE);
 };
 
 void GameLauncher::sendJoinRequest(std::string mode) {
-    int player_id = 0; // TODO: get real player ID
-    char server_response[20];
+
+    /* Partie 1: envoyer demanded pour rejoindre le jeu */
+    char server_response[20] = "HOHOHOHOHOHOHOHOHOH";
 
     std::string message = mode + "," + std::to_string(player_id) + ";";
     send_message(server_socket, message.c_str());
-    receive_message(server_socket, server_response);
+    std::cout << "In Queue... avec le socket " << server_socket << std::endl;
 
-    if (strcmp(server_response, GAME_STARTING_STRING) == 0) {
-        // Start game
-    } else {
-        std::cout << "Invalid response from server." << std::endl;
-    }
+
+    /* Recevoir reponse du server */
+    receive_message(server_socket, server_response);
+    assert(strcmp(server_response, GAME_STARTING_STRING) == 0);
+
+    std::cout << "Game start" << std::endl;
 }

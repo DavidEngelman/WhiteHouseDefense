@@ -21,7 +21,7 @@ typedef struct RankingInfos  {
 }RankingInfos;
 
 typedef struct PublicAccountInfos  {
-    int victories, pnjKilled;
+    std::string victories, pnjKilled;
     std::string username;
     int ID;
 }PublicAccountInfos;
@@ -40,6 +40,7 @@ public:
     static int callback_ranking(void *ptr, int argc, char **argv, char **azColName);
     static int callback_account_usrname(void *ptr, int argc, char **argv, char **azColName);
     static int callback_account_id(void *ptr, int argc, char **argv, char **azColName);
+    static int callback_FriendList(void *ptr, int argc, char **argv, char **azColName);
 
     int open();
     int insert_account(Credentials credentials);
@@ -47,7 +48,12 @@ public:
     bool is_identifiers_valid(Credentials credentials);
     std::vector<RankingInfos> getRanking();
     PublicAccountInfos getUsrInfosByUsrname(std::string);
+    int getIDbyUsername(std::string username);
+
     std::string getInfosById(int id);
+    std::vector<std::string> getFriendList(std::string username);
+    std::vector<std::string> getFriendRequests(std::string username);
+    std::vector<std::string> getPendingInvitations(std::string username);
 
     int sendFriendRequest(std::string username, std::string toAdd);
     int acceptFriendRequest(std::string username, std::string toAccept);

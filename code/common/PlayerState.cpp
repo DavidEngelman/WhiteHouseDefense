@@ -1,7 +1,26 @@
 #include "PlayerState.hpp"
 
+std::string PlayerState::bool_to_string(bool my_bool){
+    return my_bool ? "true" : "false";
+}
+
+
 int PlayerState::getHp(){
     return hp;
+}
+
+std::string PlayerState::serialize() {
+    /*
+     * Return a string like this : player_id,money,hp,isSupported,isWinner;
+     */
+
+    std::string res;
+    res += std::to_string(player_id) + "," + std::to_string(money) + "," +
+            std::to_string(hp) + "," +  "," + bool_to_string(isSupported)+
+            "," + bool_to_string(isWinner) + ";";
+
+    return res;
+
 }
 
 void PlayerState::setHp(int newHp){
@@ -32,14 +51,22 @@ void PlayerState::setIsWinner(bool newValue){
     isWinner = newValue;
 }
 
-void PlayerState::getAccount(){
-    //TODO: utile ?
+void PlayerState::getPlayer_id(){
+    return player_id;
 }
 
-void PlayerState::setAccount(int account){
-    //TODO: utile ?
+void PlayerState::setPlayer_id(int newId){
+    player_id = newId;
 }
 
 void PlayerState::spendMoney(int amount){
     money -= amount;
+}
+
+void PlayerState::decrease_hp(int amount) {
+    setHp(getHp() - amount);
+}
+
+void PlayerState::decrease_hp(int amount) {
+    setHp(getHp() + amount);
 }

@@ -99,6 +99,25 @@ int Server::get_readable_socket(int * sockets, int num_sockets) {
     return socket_num;
 }
 
+std::string Server::get_command_type(char* data){
+
+    /*
+     * Determine le type de commande (login/register, ranking, profile,...)
+     */
+
+    int i = 0;
+    std::string command_type;
+
+
+    while ((data[i] != ',') && (data[i] != ';')) { // comme ça une commande peut etre juste par ex: "ranking;"
+        command_type += data[i];                        // au lieu de "ranking," c'est un peu plus clean
+        i++;
+    }
+
+    return command_type;
+
+}
+
 Server::~Server() {
     close(socket_fd);
 }

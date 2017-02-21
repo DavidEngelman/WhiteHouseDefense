@@ -43,6 +43,8 @@ protected:
 
     int get_readable_socket(int * sockets, int num_sockets);
 
+    std::string get_command_type(char* data);
+
 public:
 
     Server(int port);

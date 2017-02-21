@@ -66,6 +66,7 @@ void ensure_buffer_is_big_enough(char *buffer, int length) {
 int receive_message(int socket_fd, char *buffer) {
     int length = get_message_length(socket_fd);  // Gets the length
     if (length == -1){ // Socket fermé
+        std::cout << "Le socket " << socket_fd << " est fermé " << std::endl;
         return -1;
     }
 
