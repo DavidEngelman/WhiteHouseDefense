@@ -4,7 +4,10 @@
 #include "../common/Credentials.h"
 #include "LoginRegisterCommand.hpp"
 #include "Command.hpp"
+#include "PlayerConnection.hpp"
+#include <algorithm>
 
+#define ALREADY_CO "-2"
 
 /* Ceci serait peut être mieux, je ne suis pas sur...
 
@@ -21,8 +24,15 @@ class AccountServer : public Server {
 private:
 
     Database myDatabase;
+    std::vector<PlayerConnection> connectedPlayers;
 
 public:
+
+    const std::vector<PlayerConnection> &getConnectedPlayers() const;
+
+    bool is_player_already_connected(PlayerConnection& player);
+
+    void add_connected_player(PlayerConnection& player);
 
     AccountServer(int port, const char *databaseName);
 
@@ -38,7 +48,8 @@ public:
 
     void send_error(int client_sock_fd);
     void send_success(int client_sock_fd);
-    void send_success_id(int client_sock_fd, std::string username);
+    void send_success_id(int client_sock_fd, int player_id);
+    void send_already_connected_error(int client_sock);
 
 
     void parse_command(char *data, Command *command);

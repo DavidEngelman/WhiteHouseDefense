@@ -39,8 +39,6 @@ protected:
 
     int accept_connection();
 
-    void add_new_client(int his_socket);
-
     int get_readable_socket(int * sockets, int num_sockets);
 
     std::string get_command_type(char* data);
