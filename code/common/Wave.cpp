@@ -1,11 +1,23 @@
-
-
 #include "Wave.h"
 
+Wave::Wave(int nb_of_pnj)  : my_wave(nb_of_pnj){}
 
-Wave::Wave(int nb_of_pnj)  : wave(nb_of_pnj){}
 
-void Wave::remove_pnj(int pnj_id) {
-    /*Retire un pnj de la wave si il meurt*/
-    wave.erase(pnj_id);
+
+std::string Wave::serialize() {
+    /*
+     * fill a string like this : Wave,serialized(PNJ1),serialized(PNJ2),...;
+     */
+
+    std::string serialized_me;
+    serialized_me += "Wave,";
+    for (PNJ pnj: my_wave){
+
+        //TODO:Pnj.serialize()
+        //std::string serialized_pnj = pnj.serialize();
+        //serialized_me += serialized_pnj;
+    }
+    serialized_me += ";";
+
+    return serialized_me;
 }

@@ -1,4 +1,6 @@
 #include <string>
+#define STARTING_HP 100
+#define STARTING_MONEY 500
 
 class PlayerState {
 
@@ -15,6 +17,8 @@ private:
 
 public:
 
+    PlayerState(int id);
+
 	std::string serialize();
 
 	int getHp();
@@ -25,15 +29,15 @@ public:
 
 	void earnMoney(int amount);
 
-	void getIsSupported();
+	bool getIsSupported();
 
 	void setIsSupported(bool isSupported);
 
-	void getIsWinner();
+	bool getIsWinner();
 
 	void setIsWinner(bool isWinner);
 
-	void getPlayer_id();
+	int getPlayer_id();
 
 	void setPlayer_id(int newId);
 

@@ -12,6 +12,8 @@ private:
     Position position;
     std::string tower_type;
 public:
+    PlaceTowerCommand();
+
     Position &getPosition();
 
     int getPlayerID();

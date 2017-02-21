@@ -3,6 +3,9 @@
 #include "../common/GameState.hpp"
 #include "PendingMatch.h"
 #include "PlayerConnection.hpp"
+#include "../common/Strings.hpp"
+#include "PlaceTowerCommand.h"
+#include <time.h>
 
 
 static const int NUM_PLAYERS = 4;
@@ -10,16 +13,21 @@ static const int NUM_PLAYERS = 4;
 class GameServer : public Server {
 private:
     GameState gameState;
-    PlayerConnection playerConnections[NUM_PLAYERS];
+    std::vector<PlayerConnection> playerConnections;
 
-    void sendGameStateToPlayer(PlayerConnection& connection);
+    void sendGameStateToPlayer(PlayerConnection &connection);
+
+    void get_and_process_command(int client_socket_fd, char buffer[]);
+
+    void addTowerInGameState(PlaceTowerCommand &command);
+
+    bool isFinishedClassic();    //pour le mode classic
+    bool isFinishedCoop();       //pour le mode par équipe
+    bool isFinishedVsTime();     //pour le mode contre la montre
 
 public:
 
-    GameServer(int port);
-    GameState serverGamesSate;
-
-    GameServer(int port);
+    GameServer(int port, std::vector<PlayerConnection> &playerConnections);
 
     void getReceivedChanges();
 
@@ -37,10 +45,12 @@ public:
      * }
      */
 
-    void sendGameStateToPlayer();
+    void processClientCommands();
 
+    void sendGameStateToPlayers();
 
+    // TODO: trouver un meilleur nom, celui ci n'est pas genial
+    void runWave();
 
-
-    void sendGameStateToPlayer(int socket_fd);
+    void run();
 };

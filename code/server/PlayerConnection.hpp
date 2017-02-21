@@ -8,6 +8,11 @@ private:
     int socket_fd;
 
 public:
+
+    PlayerConnection() = default;
+
+    PlayerConnection(int id, int socket);
+
     int getPlayer_id() const;
 
     int getSocket_fd() const;

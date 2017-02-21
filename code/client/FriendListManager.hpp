@@ -13,6 +13,9 @@
 class FriendListManager: public NetworkedManager {
 
 private:
+    FriendList friendList;
+    FriendList friendRequests;
+    FriendList pendingInvitations;
 	FriendListUI friendListUI;
 	int player_id;
 	std::string username;
@@ -22,7 +25,8 @@ public:
 
 	std::string getRequestServer(std::string action, std::string username);
 	bool sendRequestServer(std::string action, std::string requester);
-
+    std::string request_validity(std::string request, std::string requester, std::string optionalUser);
+    void updateFriendLists();
     void friendListProcess();
 
 };

@@ -33,7 +33,3 @@ int MainUI::select(){
     }
     return x;
 }
-
-void MainUI::exit() {
-    //TODO
-}

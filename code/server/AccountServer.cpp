@@ -12,12 +12,10 @@ void AccountServer::run() {
         std::cout << "New client connected wouhouuu" << std::endl;
         //add_new_client(newClient); Je laisse ca la au cas ou
 
-        if (!fork()) {
-            char message_buffer[BUFFER_SIZE];
-            get_and_process_command(newClient, message_buffer);
-        }
+        //TODO: j'ai du virer le fork
+        char message_buffer[BUFFER_SIZE];
+        get_and_process_command(newClient, message_buffer);
     }
-
 }
 
 
@@ -57,35 +55,46 @@ void AccountServer::send_error(int client_sock_fd){
 
 }
 
-void AccountServer::send_success_id(int client_sock_fd, std::string username){
+
+
+//Partie Login
+
+void AccountServer::send_success_id(int client_sock_fd, int player_id){
     /*
      * Renvoi l'id du user qui s'est connecté
      */
 
-    int id = myDatabase.getIDbyUsername(username);
-    std::string string_id = std::to_string(id);
+    std::string string_id = std::to_string(player_id);
     send_message(client_sock_fd,string_id.c_str());
-    //send_message(client_sock_fd, "1");
 }
 
-//Partie Login
-
+void AccountServer::send_already_connected_error(int client_sock) {
+    send_message(client_sock, ALREADY_CO);
+}
 bool AccountServer::checkCredentials(Credentials credentials) {
     return  myDatabase.is_identifiers_valid(credentials);
 }
+
 
 bool AccountServer::handle_login(Credentials credentials, int client_sock_fd) {
     bool success = false;
     //std::cout << credentials.getUsername() << std::endl;
     //std::cout << credentials.getPassword() << std::endl;
 
-    if (checkCredentials(credentials)){
-        send_success_id(client_sock_fd, credentials.getUsername());
+    int player_id = myDatabase.getIDbyUsername(credentials.getUsername()); // Retrieve id of the player
+    PlayerConnection player = PlayerConnection(player_id,client_sock_fd);
+
+    if (checkCredentials(credentials) && (!is_player_already_connected(player))){
+        add_connected_player(player);
+        send_success_id(client_sock_fd, player_id);
         success = true;
 
     }
-    else {
+    else if (!checkCredentials(credentials)) {
         send_error(client_sock_fd);
+    }
+    else{
+        send_already_connected_error(client_sock_fd);
     }
     return success;
 }
@@ -226,7 +235,6 @@ bool AccountServer::handle_profile(int client_sock_fd, std::string username) {
     return true;
 }
 
-
 ///////////////////////////////////////////////////////////////////////////
 void AccountServer::get_and_process_command(int client, char* message_buffer) {
     bool ok = false;
@@ -237,7 +245,6 @@ void AccountServer::get_and_process_command(int client, char* message_buffer) {
             return;
         }
 
-        std::cout << "hi greg" << std::endl;
         std::string command_type = get_command_type(message_buffer);
 
         if ((command_type == "login") || (command_type == "register")) {
@@ -308,6 +315,19 @@ void AccountServer::get_and_process_command(int client, char* message_buffer) {
             }
         }
     }
+}
+
+const std::vector<PlayerConnection> &AccountServer::getConnectedPlayers() const {
+    return connectedPlayers;
+}
+
+void AccountServer::add_connected_player(PlayerConnection& player) {
+    this->connectedPlayers.push_back(player);
+
+}
+
+bool AccountServer::is_player_already_connected(PlayerConnection& player){
+    return (std::find(connectedPlayers.begin(), connectedPlayers.end(), player) != connectedPlayers.end());
 }
 
 

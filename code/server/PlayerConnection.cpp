@@ -4,6 +4,8 @@
 #include "PlayerConnection.hpp"
 #include "../common/Networking.h" //for close
 
+PlayerConnection::PlayerConnection(int id, int socket) : player_id(id), socket_fd(socket){}
+
 int PlayerConnection::getPlayer_id() const {
     return player_id;
 }

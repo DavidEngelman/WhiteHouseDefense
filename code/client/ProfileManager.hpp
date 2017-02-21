@@ -5,6 +5,7 @@
 #include <iostream>
 #include "ProfileUI.hpp"
 #include "../common/Networking.h"
+#include "../common/Strings.hpp"
 #include "NetworkedManager.hpp"
 #include "MainManager.hpp"
 

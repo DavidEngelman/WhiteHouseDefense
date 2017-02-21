@@ -1,5 +1,8 @@
 #include "PlayerState.hpp"
 
+
+PlayerState::PlayerState(int id) : player_id(id), hp(STARTING_HP), money(STARTING_MONEY) {}
+
 std::string PlayerState::bool_to_string(bool my_bool){
     return my_bool ? "true" : "false";
 }
@@ -11,16 +14,15 @@ int PlayerState::getHp(){
 
 std::string PlayerState::serialize() {
     /*
-     * Return a string like this : player_id,money,hp,isSupported,isWinner;
+     * fill a string like this : PlayerState,player_id,money,hp,isSupported,isWinner;
      */
 
-    std::string res;
-    res += std::to_string(player_id) + "," + std::to_string(money) + "," +
+    std::string serialized_me;
+    serialized_me += "PlayerState," + std::to_string(player_id) + "," + std::to_string(money) + "," +
             std::to_string(hp) + "," +  "," + bool_to_string(isSupported)+
             "," + bool_to_string(isWinner) + ";";
 
-    return res;
-
+    return serialized_me;
 }
 
 void PlayerState::setHp(int newHp){
@@ -35,7 +37,7 @@ void PlayerState::earnMoney(int amount){
     money += amount;
 }
 
-void PlayerState::getIsSupported(){
+bool PlayerState::getIsSupported(){
     return isSupported;
 }
 
@@ -43,7 +45,7 @@ void PlayerState::setIsSupported(bool isSupported){
     isSupported = isSupported;
 }
 
-void PlayerState::getIsWinner(){
+bool PlayerState::getIsWinner(){
     return isWinner;
 }
 
@@ -51,7 +53,7 @@ void PlayerState::setIsWinner(bool newValue){
     isWinner = newValue;
 }
 
-void PlayerState::getPlayer_id(){
+int PlayerState::getPlayer_id(){
     return player_id;
 }
 
@@ -67,6 +69,6 @@ void PlayerState::decrease_hp(int amount) {
     setHp(getHp() - amount);
 }
 
-void PlayerState::decrease_hp(int amount) {
+void PlayerState::increase_hp(int amount) {
     setHp(getHp() + amount);
 }

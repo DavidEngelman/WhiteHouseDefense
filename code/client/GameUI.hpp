@@ -1,3 +1,6 @@
+#ifndef GAMEUI_HPP
+#define GAMEUI_HPP
+
 #include "../common/GameState.hpp"
 
 class GameUI {
@@ -12,3 +15,5 @@ public:
 
 	void display();
 };
+
+#endif
