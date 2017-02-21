@@ -78,7 +78,6 @@ int Database::insert_account(Credentials credentials) {
     char *zErrMsg = 0;
     int id = get_nb_entries() + 1;
 
-    std::stringstream strm;
     std::string command = "";
     command += "insert into Accounts(id,username,password) values(" + std::to_string(id) + ",'" + credentials.getUsername() + "','"
             + credentials.getPassword() + "')";
@@ -111,7 +110,6 @@ bool Database::is_identifiers_valid(Credentials credentials) {
     char *zErrMsg = 0;
     int count = 0;
     bool valid = false;
-    std::stringstream strm;
     std::string command = "";
     command += "select COUNT(username) FROM Accounts WHERE username='" + credentials.getUsername() + "' AND password='" +
             credentials.getPassword() + "'";
@@ -149,7 +147,6 @@ std::vector<RankingInfos> Database::getRanking() {
 PublicAccountInfos Database::getUsrInfosByUsrname(std::string username) {
     PublicAccountInfos infos;
     char *zErrMsg = 0;
-    std::stringstream strm;
     std::string command = "";
     command += "select username, victories, pnjKilled, id from Accounts WHERE username='" + username + "'";
 
@@ -167,7 +164,6 @@ int Database::sendFriendRequest(std::string username, std::string toAdd) {
     // Request for friendship is sent, friendrequests and pendingInvitations are updated accordingly
 
     char *zErrMsg = 0;
-    std::stringstream strm;
     std::string command = "";
     command += "insert into FriendRequests(ReceiverID, SenderID) values('" + toAdd + "','" + username + "') ;"
             + "insert into PendingInvitations(RequesterID, ReceiverID) values('" + username + "','" + toAdd + "') ;";
@@ -185,7 +181,6 @@ int Database::acceptFriendRequest(std::string username, std::string toAccept) {
     // The user who got the request accepts it and he is added to the requester friend's list and vice versa
     // Friendrequests && pendingInvitations are accordingly updated too
     char *zErrMsg = 0;
-    std::stringstream strm;
     std::string command = "";
     command += "insert into FriendList(ID1, ID2) values('" + username + "','" + toAccept + "') ;" +
             "DELETE FROM `FriendRequests` WHERE `RequesterID`='" + username + "' AND `SenderID`='" + toAccept +
@@ -203,7 +198,6 @@ int Database::acceptFriendRequest(std::string username, std::string toAccept) {
 int Database::removeFriend(std::string username, std::string toRemove){
 
     char *zErrMsg = 0;
-    std::stringstream strm;
     std::string command = "";
     command += "DELETE FROM `FriendList` WHERE `ID1`='" + username + "' AND `ID2`='" + toRemove + "' ;" +
             "DELETE FROM `FriendList` WHERE `ID1`='" + toRemove + "' AND `ID2`='" + username + "' ;";
@@ -221,7 +215,6 @@ int Database::declineFriendRequest(std::string username, std::string toDecline) 
     int id2 = getUsrInfosByUsrname(toDecline).ID;
 
     char *zErrMsg = 0;
-    std::stringstream strm;
     std::string command = "";
     command += "DELETE FROM `FriendRequests` WHERE `ReceiverID`='" + username + "' AND `SenderID`='" + toDecline +
             "' ;" + "DELETE FROM `PendingInvitations` WHERE `RequesterID`='" + toDecline + "' AND `ReceiverID`='" +
@@ -237,7 +230,6 @@ int Database::declineFriendRequest(std::string username, std::string toDecline) 
 std::vector<std::string> Database::getFriendList(std::string username){
     std::vector<std::string> friendList;
     char *zErrMsg = 0;
-    std::stringstream strm;
     std::string command = "";
     command += "select ID2 from FriendList WHERE ID1 ='" + username + "';" + "select ID1 from FriendList WHERE ID2 ='" +
             username + "';";
@@ -251,7 +243,6 @@ std::vector<std::string> Database::getFriendList(std::string username){
 std::vector<std::string> Database::getFriendRequests(std::string username){
     std::vector<std::string> friendRequests;
     char *zErrMsg = 0;
-    std::stringstream strm;
     std::string command = "";
     command += "select SenderID from FriendRequests WHERE ReceiverID ='" + username + "'";
 
@@ -264,7 +255,6 @@ std::vector<std::string> Database::getFriendRequests(std::string username){
 std::vector<std::string> Database::getPendingInvitations(std::string username){
     std::vector<std::string> friendRequests;
     char *zErrMsg = 0;
-    std::stringstream strm;
     std::string command = "";
     command += "select ReceiverID from PendingInvitations WHERE RequesterID ='" + username + "'";
 
@@ -275,11 +265,6 @@ std::vector<std::string> Database::getPendingInvitations(std::string username){
     return friendRequests;
 }
 
-char* Database::construct_query(std::stringstream& strm){
-    std::string s = strm.str();
-    char *str = &s[0];
-    return str;
-}
 
 
 Database::~Database() {

@@ -60,12 +60,8 @@ public:
     int removeFriend(std::string username, std::string toRemove);
     int declineFriendRequest(std::string username, std::string toDecline);
 
-    char *construct_query(std::stringstream& strm);
 
 
-    void update_record();
-    void delete_record();
-    void testMethod();
 
     virtual ~Database();
 
