@@ -118,8 +118,6 @@ bool Database::is_identifiers_valid(Credentials credentials) {
 
     char* query = (char *) command.c_str();
 
-    std::cout << query << std::endl;
-
     exec(query, callback_counter, &count, zErrMsg);
 
 
