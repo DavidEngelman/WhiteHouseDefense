@@ -47,4 +47,7 @@ bool GameState::is_only_one_alive() {
 bool GameState::isWaveFinished() {
     // TODO
 }
+bool GameState::isFinished() {
+    // TODO
+}
 

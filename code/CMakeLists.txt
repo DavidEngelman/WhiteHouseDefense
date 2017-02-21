@@ -19,7 +19,7 @@ set(SERVER_FILES "server/ServerLauncher.cpp" "common/Networking.cpp" "server/Ser
         "server/MatchmakingCommand.cpp" "server/MatchMaker.cpp" "server/MatchMaker.cpp" "server/PendingMatch.cpp"
         common/GameState.cpp "server/GameServer.cpp" "server/PlaceTowerCommand.cpp" "server/Timer.cpp"
         "server/FriendListCommand.cpp" common/AbstractTower.cpp server/PlayerConnection.cpp common/PlayerState.cpp common/Wave.cpp
-        "common/PNJ.cpp" "common/Position.cpp")
+        "common/PNJ.cpp" "common/Position.cpp" common/Map.cpp)
 
 add_executable(server ${SERVER_FILES})
 
