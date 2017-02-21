@@ -1,9 +1,9 @@
 
 #include "GameManager.hpp"
 
-
-void GameManager::sendUserCommands() {
-
+GameManager::GameManager() {
+    GameState playerGameState= GameState();
+    GameUI gameUI = GameUI();
 }
 
 void GameManager::getReceivedChanges() {
