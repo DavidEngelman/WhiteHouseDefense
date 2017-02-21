@@ -15,7 +15,7 @@ private:
 	RankingUI rankingUI;
 
 public:
-	RankingManager(int port, char* address);
+	RankingManager(int port, char* address, App* my_app);
 	std::string getRanking();
 	void sendRequest();
 	std::string createRanking(std::string);

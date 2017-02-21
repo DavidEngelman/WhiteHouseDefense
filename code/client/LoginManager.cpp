@@ -1,7 +1,7 @@
 
 #include "LoginManager.hpp"
 
-LoginManager::LoginManager(int port, char* address): NetworkedManager(port, address) {}
+LoginManager::LoginManager(int port, char* address, App* my_app): NetworkedManager(port, address, my_app) {}
 
 void LoginManager::login_process() {
     std::string success = "-1"; // En fait success contiendra soit -1 si la co a échouée soit l'id du joueur si ca a réussi
@@ -31,8 +31,9 @@ void LoginManager::login_process() {
     std::cout << "Connection succeeded" << std::endl;
     std::cout << "your id is" << success <<  std::endl;
 
-    MainManager mainManager(server_ip_address, stoi(success));
-    my_master_app->transition(&mainManager);//On lance le jeu
+    //MainManager mainManager(server_ip_address, stoi(success), my_master_app);
+    MainManager* mainManager = new MainManager(server_ip_address, stoi(success), my_master_app);
+    my_master_app->transition(mainManager);//On lance le jeu
 
     // TODO: les transitions entre managers sont un peu bizarres, parce que l'objet LoginManager ne disparait
     // pas vraiment. Faudrait trouver un moyen de detruire le loginManager et donner le controle à MainManager

@@ -11,10 +11,10 @@ protected:
     char* server_ip_address;
 
 public:
-    AbstractManager(char* addr);
+    AbstractManager(char* addr, App* my_app);
 
     virtual void run() = 0;
-    virtual ~AbstractManager() = default;
+    virtual ~AbstractManager();
 
 };
 

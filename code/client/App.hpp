@@ -16,8 +16,6 @@ public:
     //App() = default;
 
     App(char* server_ip_addr);
-
-    virtual void init(char* addr);
     virtual void transition(AbstractManager *new_manager);
 
     ~App() = default;

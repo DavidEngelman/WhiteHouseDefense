@@ -4,8 +4,8 @@
 
 #include "FriendListManager.hpp"
 
-FriendListManager::FriendListManager(int port, char* address, int id):
-        NetworkedManager(port, address), player_id(id){}
+FriendListManager::FriendListManager(int port, char* address, int id, App* my_app):
+        NetworkedManager(port, address, my_app), player_id(id){}
 
 void FriendListManager::friendListProcess() {
     friendListUI.display();
@@ -49,7 +49,7 @@ void FriendListManager::friendListProcess() {
         choice = friendListUI.select();
 
     }
-    MainManager mainManager(server_ip_address, player_id);
+    MainManager mainManager(server_ip_address, player_id, my_master_app);
     my_master_app->transition(&mainManager);
 
 }

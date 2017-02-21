@@ -14,7 +14,7 @@ private:
 	void start_display();
 
 public:
-    MainManager(char* ip_addr, int id);
+    MainManager(char* ip_addr, int id, App* my_app);
 	void run() override;
 };
 

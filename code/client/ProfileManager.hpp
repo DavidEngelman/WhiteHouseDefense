@@ -17,7 +17,7 @@ private:
 	ProfileUI profileUI;
 
 public:
-	ProfileManager(int port, char* address, int id);
+	ProfileManager(int port, char* address, int id, App* my_app);
 	void ProfileManagerProcess();
 	std::string getProfile(std::string username);
 	std::string getProfile(int id);

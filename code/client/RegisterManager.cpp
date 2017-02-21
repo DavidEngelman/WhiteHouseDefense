@@ -1,7 +1,7 @@
 #include "RegisterManager.hpp"
 
-RegisterManager::RegisterManager(int port, char* address):
-        NetworkedManager(port, address) {};
+RegisterManager::RegisterManager(int port, char* address, App* my_app):
+        NetworkedManager(port, address, my_app) {};
 
 /*void RegisterManager::registerUser() {
     bool correctCredentials = false;
@@ -52,7 +52,7 @@ void RegisterManager::registerUser() {
     }
 
     std::cout<< "Your account was successfully registered, you can now login normally.\n";
-    LoginManager loginManager(port, server_ip_address);
+    LoginManager loginManager(port, server_ip_address, my_master_app);
     my_master_app->transition(&loginManager);
 }
 

@@ -17,7 +17,7 @@ private:
 	int player_id;
 
 public:
-    FriendListManager(int port, char* address, int id);
+    FriendListManager(int port, char* address, int id, App* my_app);
 	bool sendFriendRequest(std::string toAdd);
 	bool removeFriend(std::string toRemove);
     bool acceptFriendRequest(std::string toAccept);

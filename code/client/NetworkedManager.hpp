@@ -23,7 +23,7 @@ protected:
 
 public:
 
-    NetworkedManager(int port, char* adress);
+    NetworkedManager(int port, char* adress, App* my_app);
     void init();
     int create_socket();
     int connect_to_server(int socket, struct hostent* addr);
