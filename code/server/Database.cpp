@@ -79,13 +79,12 @@ int Database::insert_account(Credentials credentials) {
     int id = get_nb_entries() + 1;
 
     std::stringstream strm;
+    std::string command = "";
+    command += "insert into Accounts(id,username,password) values(" + std::to_string(id) + ",'" + credentials.getUsername() + "','"
+            + credentials.getPassword() + "')";
 
-    //Je sais pas pq CLion souligne ça en rouge...Ca marche :|
 
-    strm << "insert into Accounts(id,username,password) values(" << id
-         << ",'" << credentials.getUsername() << "','" << credentials.getPassword() << "')";
-
-    char* query = construct_query(strm);
+    char* query = (char *) command.c_str();
 
     exec(query, NULL, 0, zErrMsg);
 
@@ -113,10 +112,13 @@ bool Database::is_identifiers_valid(Credentials credentials) {
     int count = 0;
     bool valid = false;
     std::stringstream strm;
+    std::string command = "";
+    command += "select COUNT(username) FROM Accounts WHERE username='" + credentials.getUsername() + "' AND password='" +
+            credentials.getPassword() + "'";
 
-    strm << "select COUNT(username) FROM Accounts WHERE username='" << credentials.getUsername() << "' AND password='" << credentials.getPassword() << "'";
+    char* query = (char *) command.c_str();
 
-    char* query = construct_query(strm);
+    std::cout << query << std::endl;
 
     exec(query, callback_counter, &count, zErrMsg);
 
@@ -150,9 +152,10 @@ PublicAccountInfos Database::getUsrInfosByUsrname(std::string username) {
     PublicAccountInfos infos;
     char *zErrMsg = 0;
     std::stringstream strm;
-    strm << "select username, victories, pnjKilled, id from Accounts WHERE username='" << username << "'";
+    std::string command = "";
+    command += "select username, victories, pnjKilled, id from Accounts WHERE username='" + username + "'";
 
-    char* query = construct_query(strm);
+    char* query = (char *) command.c_str();
 
     exec(query, callback_account_usrname, &infos, zErrMsg);
 
@@ -167,11 +170,11 @@ int Database::sendFriendRequest(std::string username, std::string toAdd) {
 
     char *zErrMsg = 0;
     std::stringstream strm;
+    std::string command = "";
+    command += "insert into FriendRequests(ReceiverID, SenderID) values('" + toAdd + "','" + username + "') ;"
+            + "insert into PendingInvitations(RequesterID, ReceiverID) values('" + username + "','" + toAdd + "') ;";
 
-    strm << "insert into FriendRequests(ReceiverID, SenderID) values('" << toAdd << "','" << username << "') ;"
-         << "insert into PendingInvitations(RequesterID, ReceiverID) values('" << username << "','" << toAdd << "') ;";
-
-    char* query = construct_query(strm);
+    char* query = (char *) command.c_str();
 
     exec(query, NULL, 0, zErrMsg);
 
@@ -185,13 +188,14 @@ int Database::acceptFriendRequest(std::string username, std::string toAccept) {
     // Friendrequests && pendingInvitations are accordingly updated too
     char *zErrMsg = 0;
     std::stringstream strm;
+    std::string command = "";
+    command += "insert into FriendList(ID1, ID2) values('" + username + "','" + toAccept + "') ;" +
+            "DELETE FROM `PendingInvitations` WHERE `RequesterID`='" + username + "' AND `SenderID`='" + toAccept +
+            "' ;" +  "DELETE FROM `PendingInvitations` WHERE `RequesterID`='" + toAccept + "' AND `ReceiverID`='" +
+            username + "' ;";
 
-    strm << "insert into FriendList(ID1, ID2) values('" << username << "','" << toAccept << "') ;"
-         << "DELETE FROM `FriendRequests` WHERE `ReceiverID`='"<<username<<"' AND `SenderID`='"<<toAccept<<"' ;"
-         << "DELETE FROM `PendingInvitations` WHERE `RequesterID`='"<<toAccept<<"' AND `ReceiverID`='"<<username<<"' ;";
 
-
-    char* query = construct_query(strm);
+    char* query = (char *) command.c_str();
 
     exec(query, NULL, 0, zErrMsg);
 
@@ -202,10 +206,11 @@ int Database::removeFriend(std::string username, std::string toRemove){
 
     char *zErrMsg = 0;
     std::stringstream strm;
-    strm<< "DELETE FROM `FriendList` WHERE `ID1`='"<<username<<"' AND `ID2`='"<<toRemove<<"' ;"
-        << "DELETE FROM `FriendList` WHERE `ID1`='"<<toRemove<<"' AND `ID2`='"<<username<<"' ;";
+    std::string command = "";
+    command += "DELETE FROM `FriendList` WHERE `ID1`='" + username + "' AND `ID2`='" + toRemove + "' ;" +
+            "DELETE FROM `FriendList` WHERE `ID1`='" + toRemove + "' AND `ID2`='" + username + "' ;";
 
-    char* query = construct_query(strm);
+    char* query = (char *) command.c_str();
 
     exec(query, NULL, 0, zErrMsg);
     return 0;
@@ -219,11 +224,13 @@ int Database::declineFriendRequest(std::string username, std::string toDecline) 
 
     char *zErrMsg = 0;
     std::stringstream strm;
+    std::string command = "";
+    command += "DELETE FROM `FriendRequests` WHERE `ReceiverID`='" + username + "' AND `SenderID`='" + toDecline +
+            "' ;" + "DELETE FROM `PendingInvitations` WHERE `RequesterID`='" + toDecline + "' AND `ReceiverID`='" +
+            username + "' ;";
 
-    strm << "DELETE FROM `FriendRequests` WHERE `ReceiverID`='"<<username<<"' AND `SenderID`='"<<toDecline<<"' ;"
-         << "DELETE FROM `PendingInvitations` WHERE `RequesterID`='"<<toDecline<<"' AND `ReceiverID`='"<<username<<"' ;";
 
-    char* query = construct_query(strm);
+    char* query = (char *) command.c_str();
 
     exec(query, NULL, 0, zErrMsg);
     return 0;
@@ -233,10 +240,11 @@ std::vector<std::string> Database::getFriendList(std::string username){
     std::vector<std::string> friendList;
     char *zErrMsg = 0;
     std::stringstream strm;
+    std::string command = "";
+    command += "select ID2 from FriendList WHERE ID1 ='" + username + "';" + "select ID1 from FriendList WHERE ID2 ='" +
+            username + "';";
 
-    strm << "select ID2 from FriendList WHERE ID1 ='"<<username<<"';"
-         << "select ID1 from FriendList WHERE ID2 ='"<<username<<"';";
-    char* query = construct_query(strm);
+    char* query = (char *) command.c_str();
 
     exec(query, callback_FriendList, &friendList, zErrMsg);
     return friendList;
@@ -246,12 +254,12 @@ std::vector<std::string> Database::getFriendRequests(std::string username){
     std::vector<std::string> friendRequests;
     char *zErrMsg = 0;
     std::stringstream strm;
+    std::string command = "";
+    command += "select SenderID from FriendRequests WHERE ReceiverID ='" + username + "'";
 
-    strm << "select SenderID from FriendRequests WHERE ReceiverID ='"<<username<<"'";
-    char* query = construct_query(strm);
+    char* query = (char *) command.c_str();
 
     exec(query, callback_FriendList, &friendRequests, zErrMsg);
-
 
     return friendRequests;
 }
@@ -259,10 +267,10 @@ std::vector<std::string> Database::getPendingInvitations(std::string username){
     std::vector<std::string> friendRequests;
     char *zErrMsg = 0;
     std::stringstream strm;
+    std::string command = "";
+    command += "select ReceiverID from PendingInvitations WHERE RequesterID ='" + username + "'";
 
-    strm << "select ReceiverID from PendingInvitations WHERE RequesterID ='"<<username<<"'";
-
-    char* query = construct_query(strm);
+    char* query = (char *) command.c_str();
 
     exec(query, callback_FriendList, &friendRequests, zErrMsg);
 
