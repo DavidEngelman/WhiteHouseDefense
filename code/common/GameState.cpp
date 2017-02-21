@@ -28,7 +28,8 @@ std::string GameState::serialize() {
 }
 
 void GameState::add_tower(Position position) {
-    // TODO
+    void GameState::add_tower() {
+        towers.push_back(Tower tower);
 }
 
 bool GameState::is_only_one_alive() {
