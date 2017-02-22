@@ -8,6 +8,7 @@
 #include "../common/Strings.hpp"
 #include "NetworkedManager.hpp"
 #include "MainManager.hpp"
+#include "App.hpp"
 
 
 class ProfileManager : public NetworkedManager {
@@ -18,9 +19,10 @@ private:
 	std::string username;
 
 public:
-	ProfileManager(int port, char* address, int id, std::string username);
+	ProfileManager(int port, char* address, int id, std::string username, App* my_app);
 	void ProfileManagerProcess();
 	std::string getProfile(std::string username);
+	void run() override;
 };
 
 

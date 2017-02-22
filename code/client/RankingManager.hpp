@@ -7,6 +7,7 @@
 #include "NetworkedManager.hpp"
 #include "RankingUI.hpp"
 #include "../common/Networking.h"
+#include "App.hpp"
 
 class RankingManager : public NetworkedManager  {
 
@@ -14,10 +15,12 @@ private:
 	RankingUI rankingUI;
 
 public:
-	RankingManager(int port, char* address);
+	RankingManager(int port, char* address, App* my_app);
 	std::string getRanking();
 	void sendRequest();
 	std::string createRanking(std::string);
+	void run() override;
+
 };
 
 #endif

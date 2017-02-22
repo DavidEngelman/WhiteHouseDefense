@@ -1,7 +1,7 @@
 #ifndef PROJET_ABSTRACTMANAGER_H
 #define PROJET_ABSTRACTMANAGER_H
 
-class App;
+#include "App.hpp"
 
 class AbstractManager {
 
@@ -14,7 +14,7 @@ public:
     AbstractManager(char* addr, App* my_app);
 
     virtual void run() = 0;
-    virtual ~AbstractManager() = default;
+    virtual ~AbstractManager();
 
 };
 

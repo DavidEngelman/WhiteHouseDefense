@@ -1,8 +1,7 @@
 #include "RegisterManager.hpp"
 
-RegisterManager::RegisterManager(int port, char* address): NetworkedManager(port, address) {
-    registerUser();
-};
+RegisterManager::RegisterManager(int port, char* address, App* my_app):
+        NetworkedManager(port, address, my_app) {};
 
 /*void RegisterManager::registerUser() {
     bool correctCredentials = false;
@@ -21,7 +20,7 @@ RegisterManager::RegisterManager(int port, char* address): NetworkedManager(port
 
     if (attemptRegister(toRegister)){
         std::cout<< "Your account was successfully registered, you can now login normally.\n";
-        LoginManager loginManager(port, ip_address); // On crée un loginManager pour qu'il puisse se connecter
+        LoginManager loginManager(port, server_ip_address); // On crée un loginManager pour qu'il puisse se connecter
 
     }else{
         registerUI.displayError();
@@ -53,8 +52,8 @@ void RegisterManager::registerUser() {
     }
 
     std::cout<< "Your account was successfully registered, you can now login normally.\n";
-    LoginManager loginManager(port, ip_address); // On crée un loginManager pour qu'il puisse se connecter
-
+    LoginManager loginManager(port, server_ip_address, my_master_app);
+    my_master_app->transition(&loginManager);
 }
 
 bool RegisterManager::attemptRegister(Credentials credentials){
@@ -73,4 +72,9 @@ bool RegisterManager::attemptRegister(Credentials credentials){
 bool RegisterManager::checkCredentialsValidity(Credentials credentials) {
     return ((credentials.getUsername().length() != 0) && (credentials.getPassword().length()!= 0) &&
             (credentials.getUsername().length() <= 16));
+}
+
+
+void RegisterManager::run() {
+    registerUser();
 }

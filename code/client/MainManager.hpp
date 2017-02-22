@@ -3,19 +3,20 @@
 
 #include "MainUI.hpp"
 #include "NetworkedManager.hpp"
+#include "AbstractManager.h"
+#include "App.hpp"
 
-class MainManager {
+class MainManager : public AbstractManager {
 
 private:
 	MainUI mainUI;
-	char* server_ip_adress;
 	int player_id;
 	std::string username;
-
 	void start_display();
 
 public:
-    MainManager(char* ip_addr, int id, std::string username);
+	MainManager(char* ip_addr, int id, std::string username, App* my_app);
+	void run() override;
 };
 
 #endif

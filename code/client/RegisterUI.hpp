@@ -1,3 +1,6 @@
+#ifndef __REGISTERUI__
+#define  __REGISTERUI__
+
 #include <iostream>
 #include <string>
 
@@ -18,3 +21,5 @@ public:
 	void displayError();
 
 };
+
+#endif

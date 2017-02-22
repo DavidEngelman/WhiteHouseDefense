@@ -12,18 +12,18 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <iostream>
+#include "AbstractManager.h"
 
 
-class NetworkedManager {
+class NetworkedManager : public AbstractManager {
 
 protected:
     int port;
-    char *ip_address;
     int server_socket;
 
 public:
 
-    NetworkedManager(int port, char* address);
+    NetworkedManager(int port, char* adress, App* my_app);
     void init();
     int create_socket();
     int connect_to_server(int socket, struct hostent* addr);
