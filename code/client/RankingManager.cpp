@@ -68,5 +68,5 @@ void RankingManager::run() {
     // TODO: completer
 //    MainManager * mainManager = new MainManager(server_ip_address, player_id, username, my_master_app);
 
-    my_master_app->transition(mainManager);
+//    my_master_app->transition(mainManager);
 }
