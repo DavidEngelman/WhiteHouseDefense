@@ -34,11 +34,6 @@ void LoginManager::login_process() {
     //MainManager mainManager(server_ip_address, stoi(success), my_master_app);
     MainManager* mainManager = new MainManager(server_ip_address, stoi(success), my_master_app);
     my_master_app->transition(mainManager);//On lance le jeu
-
-    // TODO: les transitions entre managers sont un peu bizarres, parce que l'objet LoginManager ne disparait
-    // pas vraiment. Faudrait trouver un moyen de detruire le loginManager et donner le controle à MainManager
-    // Pas d'idée pour l'instant
-
 }
 
 bool LoginManager::checkCredentialsValidity(Credentials credentials) {

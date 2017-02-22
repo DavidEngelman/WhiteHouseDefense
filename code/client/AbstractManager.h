@@ -1,7 +1,7 @@
 #ifndef PROJET_ABSTRACTMANAGER_H
 #define PROJET_ABSTRACTMANAGER_H
 
-class App;
+#include "App.hpp"
 
 class AbstractManager {
 
