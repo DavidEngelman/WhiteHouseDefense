@@ -26,7 +26,6 @@ public:
 
     virtual void reduceMovementSpeedOf(PNJ target);
 
-
 };
 
 
