@@ -26,8 +26,8 @@ void ProfileManager::ProfileManagerProcess() {
         profileUI.display();
         choice = profileUI.select();
     }
-    MainManager mainManager(server_ip_address, player_id, username, my_master_app);
-    my_master_app->transition(&mainManager);
+    MainManager * mainManager = new MainManager(server_ip_address, player_id, username, my_master_app);
+    my_master_app->transition(mainManager);
 }
 
 std::string ProfileManager::getProfile(std::string username) {

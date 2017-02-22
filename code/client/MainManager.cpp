@@ -20,19 +20,19 @@ void MainManager::start_display() {
         }
         case 2: {
             std::cout << "Profile !" << std::endl;
-            ProfileManager profile = ProfileManager(5555, server_ip_address, player_id, username, my_master_app);
-            my_master_app->transition(&profile);
+            ProfileManager * profile = new ProfileManager(5555, server_ip_address, player_id, username, my_master_app);
+            my_master_app->transition(profile);
             break;
         }
         case 3: {
             std::cout << "Friendlist !" << std::endl;
-            FriendListManager friendList(5555, server_ip_address, player_id, username, my_master_app);
-            my_master_app->transition(&friendList);
+            FriendListManager * friendList = new FriendListManager(5555, server_ip_address, player_id, username, my_master_app);
+            my_master_app->transition(friendList);
             break;
         }
         case 4: {
-            RankingManager rankingManager(5555, server_ip_address, my_master_app);
-            my_master_app->transition(&rankingManager);
+            RankingManager * rankingManager = new RankingManager(5555, server_ip_address, my_master_app);
+            my_master_app->transition(rankingManager);
             break;
         }
         default: {

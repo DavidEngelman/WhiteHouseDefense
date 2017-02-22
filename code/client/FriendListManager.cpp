@@ -65,8 +65,8 @@ void FriendListManager::friendListProcess() {
         choice = friendListUI.select();
 
     }
-    MainManager mainManager(server_ip_address, player_id, username, my_master_app);
-    my_master_app->transition(&mainManager); // Permet de revenir au main menu , je ne sais pas si
+    MainManager * mainManager = new MainManager(server_ip_address, player_id, username, my_master_app);
+    my_master_app->transition(mainManager); // Permet de revenir au main menu , je ne sais pas si
                                                     // c'est le meilleur moyen pour faire ca
 }
 
