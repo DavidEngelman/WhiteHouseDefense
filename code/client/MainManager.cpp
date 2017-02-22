@@ -9,7 +9,7 @@
 MainManager::MainManager(char* ip_addr, int id, std::string username, App* my_app) :
     AbstractManager(ip_addr, my_app), player_id(id), username(username){}
 
-void MainManager::start_display() {
+void MainManager::run() {
     mainUI.display();
     switch (mainUI.select()) {
         case 1: {
@@ -41,8 +41,4 @@ void MainManager::start_display() {
             break;
         }
     }
-}
-
-void MainManager::run() {
-    start_display();
 }

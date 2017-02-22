@@ -3,7 +3,7 @@
 
 LoginManager::LoginManager(int port, char* address, App* my_app): NetworkedManager(port, address, my_app) {}
 
-void LoginManager::login_process() {
+void LoginManager::run() {
     std::string success = "-1"; // En fait success contiendra soit -1 si la co a échouée soit l'id du joueur si ca a réussi
                                 // C est peut etre pas très clair :D
 
@@ -51,11 +51,7 @@ std::string LoginManager::attemptLogin(Credentials credentials) {
 
     std::string message = "login," + credentials.getUsername() + "," + credentials.getPassword() + ";";
     send_message(server_socket, message.c_str());
-    receive_message(server_socket,server_response);
+    receive_message(server_socket, server_response);
     std::string ret = std::string(server_response);
-    return server_response;
-}
-
-void LoginManager::run() {
-    login_process();
+    return ret;
 }

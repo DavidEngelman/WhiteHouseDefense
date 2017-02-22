@@ -31,7 +31,6 @@ public:
 	bool sendRequestServer(std::string action, std::string requester);
     std::string request_validity(std::string request, std::string requester, std::string optionalUser);
     void updateFriendLists();
-    void friendListProcess();
 	void run() override;
 
 
