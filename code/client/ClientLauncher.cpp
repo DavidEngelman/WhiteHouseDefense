@@ -1,3 +1,4 @@
+#include <iostream>
 #include "Drawing.hpp"
 #include "../common/Map.hpp"
 #include "App.hpp"

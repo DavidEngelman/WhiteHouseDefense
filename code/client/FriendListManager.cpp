@@ -1,7 +1,7 @@
 #include "FriendListManager.hpp"
 
-FriendListManager::FriendListManager(int port, char* address, int id, App* my_master_app):
-        NetworkedManager(port, address, my_master_app), player_id(id){
+FriendListManager::FriendListManager(int port, char* address, int id, std::string username, App* my_master_app):
+        NetworkedManager(port, address, my_master_app), player_id(id), username(username){
     friendListProcess();
 };
 
