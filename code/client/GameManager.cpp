@@ -13,10 +13,6 @@ void GameManager::placeTower(){
     gameUI.display();
     coord=gameUI.getCoordTower();
     //send_message(server_socket, coord.c_str());
-
-}
-void GameManager::getReceivedChanges() {
-
 }
 
 void GameManager::displayWave() {

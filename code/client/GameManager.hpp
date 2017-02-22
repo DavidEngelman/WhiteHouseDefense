@@ -17,7 +17,6 @@ public:
 
     void displayWave();
 
-    void getReceivedChanges();
 };
 
 #endif
