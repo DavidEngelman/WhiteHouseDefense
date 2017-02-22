@@ -3,8 +3,8 @@
 #include "../common/Strings.hpp"
 #include "GameManager.hpp"
 
-GameLauncher::GameLauncher(int port, char *address, int id) :
-        NetworkedManager(port, address, my_master_app), player_id(id) {}
+GameLauncher::GameLauncher(int port, char *address, int id, App* app) :
+        NetworkedManager(port, address, app), player_id(id) {}
 
 void GameLauncher::sendJoinRequest(std::string mode) {
 
