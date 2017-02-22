@@ -10,6 +10,7 @@ class MainUI {
 public:
 	void display();
 	int select();
+	void exit();
 };
 
 #endif

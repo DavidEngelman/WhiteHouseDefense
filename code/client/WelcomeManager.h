@@ -1,6 +1,3 @@
-//
-//
-
 #ifndef PROJET_WELCOMEMANAGER_H
 #define PROJET_WELCOMEMANAGER_H
 
