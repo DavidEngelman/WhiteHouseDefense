@@ -31,7 +31,7 @@ void MainManager::start_display() {
             break;
         }
         case 4: {
-            RankingManager * rankingManager = new RankingManager(5555, server_ip_address, my_master_app);
+            RankingManager * rankingManager = new RankingManager(5555, server_ip_address, player_id, username, my_master_app);
             my_master_app->transition(rankingManager);
             break;
         }

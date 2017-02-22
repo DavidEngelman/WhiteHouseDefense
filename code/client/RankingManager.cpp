@@ -2,8 +2,10 @@
 #include "RankingManager.hpp"
 #include "MainManager.hpp"
 
-RankingManager::RankingManager(int port, char* address, App* my_app):
-        NetworkedManager(port, address, my_app) {}
+RankingManager::RankingManager(int port, char *address, int player_id, std::string username, App *my_app):
+        NetworkedManager(port, address, my_app), player_id(player_id), username(username)
+
+{}
 
 void RankingManager::sendRequest() {
     std::string message = "ranking;";
@@ -65,8 +67,8 @@ void RankingManager::run() {
     std::string ranking = createRanking(getRanking());
     rankingUI.display(ranking);
 
-    // TODO: completer
-//    MainManager * mainManager = new MainManager(server_ip_address, player_id, username, my_master_app);
-
-//    my_master_app->transition(mainManager);
+    MainManager * mainManager = new MainManager(server_ip_address, player_id, username, my_master_app);
+    my_master_app->transition(mainManager);
 }
+
+
