@@ -3,10 +3,9 @@
 FriendListManager::FriendListManager(int port, char* address, int id, std::string username, App* my_master_app):
         NetworkedManager(port, address, my_master_app), player_id(id), username(username),friendList(getRequestServer(GET_FRIENDLIST, username)),
         friendRequests(getRequestServer(GET_FRIEND_REQUESTS, username)), pendingInvitations(getRequestServer(GET_PENDING_INVITATIONS,username)){
-    friendListProcess();
 };
 
-void FriendListManager::friendListProcess() {
+void FriendListManager::run() {
     friendListUI.display();
 
     int choice = friendListUI.select();
@@ -122,8 +121,4 @@ void FriendListManager::updateFriendLists() {
     friendList.update(getRequestServer(GET_FRIENDLIST, username));
     friendRequests.update(getRequestServer(GET_FRIEND_REQUESTS,username));
     pendingInvitations.update(getRequestServer(GET_PENDING_INVITATIONS,username));
-}
-
-void FriendListManager::run() {
-    friendListProcess();
 }

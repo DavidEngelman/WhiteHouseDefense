@@ -6,8 +6,7 @@ App::App(char* server_ip_addr) : current_manager(new WelcomeManager(server_ip_ad
 }
 
 void App::transition(AbstractManager *new_manager) {
-    delete(current_manager);  // Le bug est declenché par cette ligne
+    delete(current_manager);
     current_manager = new_manager;
     current_manager->run();
-
 }

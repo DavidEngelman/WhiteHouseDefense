@@ -28,7 +28,7 @@ RegisterManager::RegisterManager(int port, char* address, App* my_app):
 
 }*/
 
-void RegisterManager::registerUser() {
+void RegisterManager::run() {
     bool success = false;
     bool valid = false; // bool qui check si les donnés sont corrects (champs non vide) et peuvent être envoyées au serveur
 
@@ -72,9 +72,4 @@ bool RegisterManager::attemptRegister(Credentials credentials){
 bool RegisterManager::checkCredentialsValidity(Credentials credentials) {
     return ((credentials.getUsername().length() != 0) && (credentials.getPassword().length()!= 0) &&
             (credentials.getUsername().length() <= 16));
-}
-
-
-void RegisterManager::run() {
-    registerUser();
 }
