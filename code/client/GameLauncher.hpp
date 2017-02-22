@@ -15,7 +15,7 @@ private:
 
 
 public:
-    GameLauncher(int port, char* address, int id);
+    GameLauncher(int port, char* address, int id, App* app);
     void sendJoinRequest(std::string mode);
 };
 

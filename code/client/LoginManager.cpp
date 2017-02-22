@@ -1,9 +1,7 @@
 
 #include "LoginManager.hpp"
 
-LoginManager::LoginManager(int port, char* address): NetworkedManager(port, address) {
-    login_process();
-};
+LoginManager::LoginManager(int port, char* address, App* my_app): NetworkedManager(port, address, my_app) {}
 
 void LoginManager::login_process() {
     std::string success = "-1"; // En fait success contiendra soit -1 si la co a échouée soit l'id du joueur si ca a réussi
@@ -11,7 +9,7 @@ void LoginManager::login_process() {
 
     bool valid = false; // bool qui check si les donnés sont corrects (champs non vide) et peuvent être envoyées au serveur
 
-    while (success == "-1" || success == "-2") {
+    while (success == "-1") {
 
         while (not valid) {
             loginUI.display(); //demande le  username et pswrd
@@ -28,16 +26,14 @@ void LoginManager::login_process() {
             loginUI.displayError();
             valid = false;
         }
-        else if (success == "-2"){
-            loginUI.display_already_co_message();
-            valid = false;
-        }
     }
 
     std::cout << "Connection succeeded" << std::endl;
     std::cout << "your id is" << success <<  std::endl;
 
-    MainManager mainManager(ip_address, stoi(success), loginCredentials.getUsername()); //On lance le jeu
+    //MainManager mainManager(server_ip_address, stoi(success), my_master_app);
+    MainManager mainManager = MainManager(server_ip_address, stoi(success), my_master_app);
+    my_master_app->transition(&mainManager);//On lance le jeu
 
     // TODO: les transitions entre managers sont un peu bizarres, parce que l'objet LoginManager ne disparait
     // pas vraiment. Faudrait trouver un moyen de detruire le loginManager et donner le controle à MainManager
@@ -59,4 +55,9 @@ std::string LoginManager::attemptLogin(Credentials credentials) {
     receive_message(server_socket,server_response);
     std::string ret = std::string(server_response);
     return server_response;
+}
+
+void LoginManager::run() {
+    std::cout << "running login" << std::endl;
+    login_process();
 }

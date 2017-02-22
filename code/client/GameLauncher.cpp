@@ -1,11 +1,9 @@
 #include <assert.h>
 #include "GameLauncher.hpp"
 #include "../common/Strings.hpp"
-#include "GameManager.hpp"
 
-GameLauncher::GameLauncher(int port, char *address, int id) : NetworkedManager(port, address), player_id(id) {
-    sendJoinRequest(CLASSIC_MODE);
-};
+GameLauncher::GameLauncher(int port, char *address, int id, App* app) :
+        NetworkedManager(port, address, app), player_id(id) {}
 
 void GameLauncher::sendJoinRequest(std::string mode) {
 
@@ -22,5 +20,9 @@ void GameLauncher::sendJoinRequest(std::string mode) {
     assert(strcmp(server_response, GAME_STARTING_STRING) == 0);
 
     std::cout << "Game start" << std::endl;
-    GameManager gameManager = GameManager();
+}
+
+void GameLauncher::run() {
+    sendJoinRequest(CLASSIC_MODE);
+
 }
