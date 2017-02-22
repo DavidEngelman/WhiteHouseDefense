@@ -26,8 +26,8 @@ void MainManager::start_display() {
         }
         case 3: {
             std::cout << "Friendlist !" << std::endl;
-            FriendListManager * friendList = new FriendListManager(5555, server_ip_address, player_id, username, my_master_app);
-            my_master_app->transition(friendList);
+            FriendListManager * friendListManager = new FriendListManager(5555, server_ip_address, player_id, username, my_master_app);
+            my_master_app->transition(friendListManager);
             break;
         }
         case 4: {
