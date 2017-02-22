@@ -18,7 +18,16 @@ Map::Map(unsigned seed) {
 
 void Map::display() {
     std::cout << std::string(50, '\n');
+
+    std::cout << "\t";
+    for (int x = 0; x < SIZE; x++) {
+        std::cout << x << " ";
+        if (x < 10) std::cout << " ";
+    }
+    std::cout << std::endl;
+
     for (int y = 0; y < SIZE; y++) {
+        std::cout << y << "\t";
         for (int x = 0; x < SIZE; x++) {
             switch (matrix[y][x]) {
                 case -1:
@@ -38,8 +47,15 @@ void Map::display() {
                     break;
             }
         }
-        std::cout << std::endl;
+        std::cout << y << std::endl;
     }
+
+    std::cout << "\t";
+    for (int x = 0; x < SIZE; x++) {
+        std::cout << x << " ";
+        if (x < 10) std::cout << " ";
+    }
+    std::cout << std::endl;
 }
 
 void Map::generateRandomMatrix() {
@@ -100,7 +116,7 @@ bool Map::isNextToPath(Position position) {
 
 bool Map::addTower(int x, int y, int typeOfTower) {
     if (matrix[y][x] == -1) {
-        matrix[y][x] = typeOfTower*10; // 10 = number of upgrades per tower possible
+        matrix[y][x] = typeOfTower*10+1; // 10 = number of upgrades per tower possible
         return true;
     }
     return false;
@@ -140,4 +156,8 @@ void Map::basicMap() {
             }
         }
     }
+}
+
+bool Map::isPath(int x, int y) {
+    return matrix[y][x] == 0;
 }

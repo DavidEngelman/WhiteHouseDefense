@@ -5,7 +5,10 @@
 #include "GameManager.hpp"
 
 int main(int argc, char *argv[]) {
+    Map map = Map();
+    map.display();
 
+    /*
     if (argc <= 1){
         std::cout << "Don't forget the ip_adress of the server as argument! ;)" << std::endl;
         exit(1);
