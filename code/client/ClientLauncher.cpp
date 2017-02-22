@@ -1,5 +1,4 @@
 #include <iostream>
-#include "../common/Map.hpp"
 #include "App.hpp"
 
 int main(int argc, char *argv[]) {

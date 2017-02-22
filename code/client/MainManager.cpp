@@ -13,19 +13,16 @@ void MainManager::run() {
     mainUI.display();
     switch (mainUI.select()) {
         case 1: {
-            std::cout << "Game Launcher !" << std::endl;
             GameLauncher game = GameLauncher(5556, server_ip_address, player_id, my_master_app);
             my_master_app->transition(&game);
             break;
         }
         case 2: {
-            std::cout << "Profile !" << std::endl;
             ProfileManager * profile = new ProfileManager(5555, server_ip_address, player_id, username, my_master_app);
             my_master_app->transition(profile);
             break;
         }
         case 3: {
-            std::cout << "Friendlist !" << std::endl;
             FriendListManager * friendListManager = new FriendListManager(5555, server_ip_address, player_id, username, my_master_app);
             my_master_app->transition(friendListManager);
             break;
@@ -37,7 +34,6 @@ void MainManager::run() {
         }
         default: {
             std::cout << "Exit !" << std::endl;
-            mainUI.exit();
             break;
         }
     }
