@@ -3,11 +3,11 @@
 
 #define SIZE 31 //Not > 41 because it's too big for a screen
 
-#define GRASS "⬛"
-#define PATH "⬜"
-#define LIMIT "\033[34m❎\033[0m"
-#define TOWER "\033[31m⬛\033[0m"
-#define PNG "\033[33m⬛\033[0m"
+#define GRASS "◼  "
+#define PATH "   "
+#define LIMIT "\033[34m◼\033[0m  "
+#define TOWER "\033[31m◼\033[0m  "
+#define PNG "\033[33m◼\033[0m  "
 
 #include <string>
 #include <vector>
