@@ -29,7 +29,7 @@ private:
 
 public:
 
-    void client_handler(int client_sock);
+    void *client_handler(int client_sock);
 
     const std::vector<PlayerConnection> &getConnectedPlayers() const;
 

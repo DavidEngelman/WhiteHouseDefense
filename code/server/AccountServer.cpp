@@ -3,7 +3,7 @@
 
 AccountServer::AccountServer(int port, const char *databaseName) : Server(port), myDatabase(Database(databaseName)) {}
 
-void AccountServer::client_handler(int client_sock) {
+void* AccountServer::client_handler(int client_sock) {
 
     char message_buffer[BUFFER_SIZE];
     get_and_process_command(client_sock, message_buffer);
@@ -22,8 +22,7 @@ void AccountServer::run() {
         //add_new_client(newClient); Je laisse ca la au cas ou
 
         std::thread t1(&AccountServer::client_handler, this, newClient);
-        t1.detach();
-
+        t1.detach(); // TODO: bien comprendre et verifier si c'est bien ce qu'on veut
     }
 }
 
