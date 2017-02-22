@@ -12,9 +12,10 @@ std::string &PlaceTowerCommand::getTowerType() {
     return tower_type;
 }
 
-
+// TODO: ça serait mieux que toutes les methodes parse renvoient un booleen qui indiquent si le
+// parse a été successful.
 void PlaceTowerCommand::parse(char *data) {
-    // parse une une chaine de caractere de la forme "place_tower,tower_type,10,14;"
+    // parse une une chaine de caractere de la forme "PlaceTower,tower_type,10,14;"
     std::string coord_x, coord_y, type;
 
     int i = extract_action(data);
@@ -44,5 +45,10 @@ void PlaceTowerCommand::parse(char *data) {
     tower_type = type;
     position.setX(std::stoi(coord_x));
     position.setY(std::stoi(coord_y));
+}
+
+PlaceTowerCommand::PlaceTowerCommand() : position(Position(-1, -1)) // Position bidon
+{
+
 }
 

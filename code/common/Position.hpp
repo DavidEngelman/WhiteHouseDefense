@@ -1,24 +1,26 @@
 #ifndef POSITION_HPP
 #define POSITION_HPP
 
-class Position { // There is already a struct in the map class
+#include <iosfwd>
+#include <string>
 
-private:
-
-	int _x;
-	int _y;
+class Position {
 
 public:
+    int x;
+    int y;
 
-    Position(int x, int y);
+    Position();
+    
+    int getY() const;
 
-	int getX();
+    void setY(int y);
 
-	void setX(int x);
+    int getX() const;
 
-	int getY();
+    void setX(int x);
 
-	void setY(int y);
+    Position(int _x, int _y);
 };
 
 #endif // POSITION_HPP

@@ -38,6 +38,9 @@ int Server::create_socket() {
     return socket_descriptor;
 }
 
+/*
+ * Accepts a new connection and returns the new socket descriptor (or -1 if there is an error).
+ */
 int Server::accept_connection() {
     struct sockaddr_in client_addr;
     socklen_t sin_size = sizeof(struct sockaddr_in);

@@ -4,50 +4,22 @@
 #include <ctime>
 
 Map::Map() {
+    srand((unsigned)time(0));
     generateRandomMatrix();
 }
 
-Map::Map(std::string filename) {
-    std::ifstream mapFile;
-    mapFile.open(filename, std::ios::in);
-
-    if (mapFile.fail()) {
-        std::cerr << "Failed to open the file" << std::endl;
-        std::cerr << "Creating a random map instead" << std::endl;
+Map::Map(unsigned seed) {
+    if (seed == 0) basicMap();
+    else {
+        srand(seed);
         generateRandomMatrix();
-        return;
     }
-
-    std::string line;
-    for (int x = 0; x < HEIGHT; x++) {
-        getline(mapFile, line);
-        for (int y = 0; y < WIDTH; y++) {
-            switch (line[y]) {
-                case 'o':
-                    matrix[x][y] = x+y*WIDTH;
-                    break;
-                case '#':
-                    matrix[x][y] = -1;
-                    break;
-                case ';':
-                    matrix[x][y] = -2;
-                    break;
-                case '|':
-                    matrix[x][y] = -3;
-                    break;
-                default:
-                    matrix[x][y] = 0;
-                    break;
-            }
-        }
-    }
-
 }
 
 void Map::display() {
     std::cout << std::string(50, '\n');
-    for (int y = 0; y < HEIGHT; y++) {
-        for (int x = 0; x < WIDTH; x++) {
+    for (int y = 0; y < SIZE; y++) {
+        for (int x = 0; x < SIZE; x++) {
             switch (matrix[y][x]) {
                 case -1:
                     std::cout << GRASS;
@@ -72,41 +44,35 @@ void Map::display() {
 
 void Map::generateRandomMatrix() {
     initMap();
-    Pos begin;
-    begin.y = HEIGHT/2-2;
-    begin.x = WIDTH/2;
-    srand((unsigned)time(0));
+    Position begin(SIZE/2, SIZE/2-2);
     generateQuarterMap(begin);
-    display();
+    copyQuarter();
 }
 
 void Map::initMap() {
-    for (int y = 0; y < HEIGHT; y++) {
-        for (int x = 0; x < WIDTH; x++) {
-            if (x == WIDTH/2 and HEIGHT/2-2 <= y and y <= HEIGHT/2+2) {
+    for (int y = 0; y < SIZE; y++) {
+        for (int x = 0; x < SIZE; x++) {
+            if (x == SIZE/2 and SIZE/2-2 <= y and y <= SIZE/2+2) {
                 matrix[y][x] = 0;
-            } else if (y == HEIGHT/2 and WIDTH/2-2 <= x and x <= WIDTH/2+2) {
+            } else if (y == SIZE/2 and SIZE/2-2 <= x and x <= SIZE/2+2) {
                 matrix[y][x] = 0;
-            } else if (x == y or x + y == HEIGHT-1) {
+            } else if (x == y or x + y == SIZE-1) {
                 matrix[y][x] = -2;
             } else {
                 matrix[y][x] = -1;
             }
         }
     }
-    matrix[HEIGHT/2][WIDTH/2] = 0;
 }
 
-bool Map::generateQuarterMap(Map::Pos end) {
+bool Map::generateQuarterMap(Position end) {
     if (end.y == 0) {
         return true;
     }
 
-    std::vector<Pos> possibleWays;
-    Pos nextToEnd;
-
-    nextToEnd.y = end.y-1;
-    nextToEnd.x = end.x;
+    std::vector<Position> possibleWays;
+    Position nextToEnd(end.x, end.y-1);
+    std::cout << matrix[nextToEnd.y][nextToEnd.x] << std::endl;
     if (matrix[nextToEnd.y][nextToEnd.x] != -2 && !isNextToPath(nextToEnd)) possibleWays.push_back(nextToEnd);
     nextToEnd.y = end.y;
     nextToEnd.x = end.x-1;
@@ -123,14 +89,10 @@ bool Map::generateQuarterMap(Map::Pos end) {
     return false;
 }
 
-std::string Map::posToString(Map::Pos position) {
-    return "(" + std::to_string(position.y) + ", " + std::to_string(position.x) + ")";
-}
-
-bool Map::isNextToPath(Map::Pos position) {
+bool Map::isNextToPath(Position position) {
     int count = 0;
     if (matrix[position.y+1][position.x] == 0) count++;
-    if (matrix[position.y-1][position.x] == 0) count++;
+    if (position.y > 0 && matrix[position.y-1][position.x] == 0) count++;
     if (matrix[position.y][position.x+1] == 0) count++;
     if (matrix[position.y][position.x-1] == 0) count++;
     return count >= 2;
@@ -150,4 +112,32 @@ bool Map::removeTower(int x, int y) {
         return true;
     }
     return false;
+}
+
+void Map::copyQuarter() {
+    for (int y = 0; y < SIZE; y++) {
+        for (int x = 0; x < SIZE; x++) {
+            if (y < x and x+y < SIZE) {
+                matrix[x][SIZE-1-y] = matrix[y][x];
+                matrix[SIZE-1-y][SIZE-1-x] = matrix[y][x];
+                matrix[SIZE-1-x][y] = matrix[y][x];
+            }
+        }
+    }
+}
+
+void Map::basicMap() {
+    for (int y = 0; y < SIZE; y++) {
+        for (int x = 0; x < SIZE; x++) {
+            if (x == SIZE/2 and 0 <= y and y < SIZE) {
+                matrix[y][x] = 0;
+            } else if (y == SIZE/2 and 0 <= x and x < SIZE) {
+                matrix[y][x] = 0;
+            } else if (x == y or x + y == SIZE-1) {
+                matrix[y][x] = -2;
+            } else {
+                matrix[y][x] = -1;
+            }
+        }
+    }
 }

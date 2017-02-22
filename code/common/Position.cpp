@@ -1,21 +1,22 @@
 
 #include "Position.hpp"
 
-Position::Position(int x, int y) : _x(x), _y(y) {
-}
+Position::Position() : x(0), y(0) {};
 
-int Position::getX() {
-    return _x;
+Position::Position(int _x, int _y) : x(_x), y(_y) {}
+
+int Position::getX() const {
+    return x;
 }
 
 void Position::setX(int x) {
-    _x = x;
+    Position::x = x;
 }
 
-int Position::getY() {
-    return _y;
+int Position::getY() const {
+    return y;
 }
 
 void Position::setY(int y) {
-    _y = y;
+    Position::y = y;
 }

@@ -6,7 +6,8 @@
 #include "FriendListManager.hpp"
 
 
-MainManager::MainManager(char* ip_addr, int id, App* my_app) :AbstractManager(ip_addr, my_app), player_id(id){}
+MainManager::MainManager(char* ip_addr, int id, std::string username, App* my_app) :
+    AbstractManager(ip_addr, my_app), player_id(id), username(username){}
 
 void MainManager::start_display() {
     mainUI.display();
@@ -19,13 +20,13 @@ void MainManager::start_display() {
         }
         case 2: {
             std::cout << "Profile !" << std::endl;
-            ProfileManager profile = ProfileManager(5555, server_ip_address, player_id, my_master_app);
+            ProfileManager profile = ProfileManager(5555, server_ip_address, player_id, username, my_master_app);
             my_master_app->transition(&profile);
             break;
         }
         case 3: {
             std::cout << "Friendlist !" << std::endl;
-            FriendListManager friendList(5555, server_ip_address, player_id, my_master_app);
+            FriendListManager friendList(5555, server_ip_address, player_id, username, my_master_app);
             my_master_app->transition(&friendList);
             break;
         }

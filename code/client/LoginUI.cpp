@@ -35,4 +35,8 @@ void LoginUI::display() {
     ask_username();
     ask_password();
 }
+void LoginUI::display_already_co_message() {
+    Drawing::drawWhiteHouse("LOGIN SCREEN");
+    std::cout << "   Error : Someone is already connected on this account :(\n";
+}
 

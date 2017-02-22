@@ -12,10 +12,9 @@ void AccountServer::run() {
         std::cout << "New client connected wouhouuu" << std::endl;
         //add_new_client(newClient); Je laisse ca la au cas ou
 
-        if (!fork()) {
-            char message_buffer[BUFFER_SIZE];
-            get_and_process_command(newClient, message_buffer);
-        }
+        //TODO: j'ai du virer le fork
+        char message_buffer[BUFFER_SIZE];
+        get_and_process_command(newClient, message_buffer);
     }
 }
 
@@ -56,35 +55,46 @@ void AccountServer::send_error(int client_sock_fd){
 
 }
 
-void AccountServer::send_success_id(int client_sock_fd, std::string username){
+
+
+//Partie Login
+
+void AccountServer::send_success_id(int client_sock_fd, int player_id){
     /*
      * Renvoi l'id du user qui s'est connecté
      */
 
-    int id = myDatabase.getIDbyUsername(username);
-    std::string string_id = std::to_string(id);
+    std::string string_id = std::to_string(player_id);
     send_message(client_sock_fd,string_id.c_str());
-    //send_message(client_sock_fd, "1");
 }
 
-//Partie Login
-
+void AccountServer::send_already_connected_error(int client_sock) {
+    send_message(client_sock, ALREADY_CO);
+}
 bool AccountServer::checkCredentials(Credentials credentials) {
     return  myDatabase.is_identifiers_valid(credentials);
 }
+
 
 bool AccountServer::handle_login(Credentials credentials, int client_sock_fd) {
     bool success = false;
     //std::cout << credentials.getUsername() << std::endl;
     //std::cout << credentials.getPassword() << std::endl;
 
-    if (checkCredentials(credentials)){
-        send_success_id(client_sock_fd, credentials.getUsername());
+    int player_id = myDatabase.getIDbyUsername(credentials.getUsername()); // Retrieve id of the player
+    PlayerConnection player = PlayerConnection(player_id,client_sock_fd);
+
+    if (checkCredentials(credentials) && (!is_player_already_connected(player))){
+        add_connected_player(player);
+        send_success_id(client_sock_fd, player_id);
         success = true;
 
     }
-    else {
+    else if (!checkCredentials(credentials)) {
         send_error(client_sock_fd);
+    }
+    else{
+        send_already_connected_error(client_sock_fd);
     }
     return success;
 }
@@ -115,12 +125,12 @@ std::string AccountServer::vectorTostring(std::vector<RankingInfos> vect) {
 }
 
 // partie friendlist /////////////////////////////////////////////////////
-std::vector<std::string> AccountServer::getFriendList(int id) {
-    return myDatabase.getFriendList(id);
+std::vector<std::string> AccountServer::getFriendList(std::string username) {
+    return myDatabase.getFriendList(username);
 }
 
-std::vector<std::string> AccountServer::getFriendRequests(int id){
-    return myDatabase.getFriendRequests(id);
+std::vector<std::string> AccountServer::getFriendRequests(std::string username){
+    return myDatabase.getFriendRequests(username);
 }
 
 bool AccountServer::sendFriendRequest(std::string requester, std::string receiver) {
@@ -135,20 +145,21 @@ bool AccountServer::declineFriendRequest(std::string requester, std::string rece
 bool AccountServer::removeFriend(std::string requester, std::string receiver) {
     return myDatabase.removeFriend(requester,receiver) != -1 ;
 }
-std::vector<std::string> AccountServer::getPendingInvitations(int id){
-    return myDatabase.getPendingInvitations(id);
+std::vector<std::string> AccountServer::getPendingInvitations(std::string username){
+    return myDatabase.getPendingInvitations(username);
 }
 
-bool AccountServer::handle_getFriendList(int client_sock_fd, int requesterID) {
-    send_message(client_sock_fd, vectorTostring(getFriendList(requesterID)).c_str());
+bool AccountServer::handle_getFriendList(int client_sock_fd, std::string requester) {
+    send_message(client_sock_fd, vectorTostring(getFriendList(requester)).c_str());
     return true;
 }
-bool AccountServer::handle_getFriendRequests(int client_sock_fd, int requesterID) {
-    send_message(client_sock_fd, vectorTostring(getFriendRequests(requesterID)).c_str());
+bool AccountServer::handle_getFriendRequests(int client_sock_fd, std::string requester) {
+    send_message(client_sock_fd, vectorTostring(getFriendRequests(requester)).c_str());
     return true;
+
 }
-bool AccountServer::handle_getPendingInvitations(int client_sock_fd, int requesterID) {
-    send_message(client_sock_fd, vectorTostring(getPendingInvitations(requesterID)).c_str());
+bool AccountServer::handle_getPendingInvitations(int client_sock_fd, std::string requester) {
+    send_message(client_sock_fd, vectorTostring(getPendingInvitations(requester)).c_str());
     return true;
 }
 
@@ -213,17 +224,16 @@ std::string AccountServer::vectorTostring(std::vector<std::string> vect) {
     return result;
 }
 // partie profil
-PublicAccountInfos AccountServer::getPublicAccountInfos(int id){
-    return myDatabase.getUsrInfosByUsrname(myDatabase.getInfosById(id));
+PublicAccountInfos AccountServer::getPublicAccountInfos(std::string username){
+    return myDatabase.getUsrInfosByUsrname(username);
 }
 
-bool AccountServer::handle_profile(int client_sock_fd, int player_id) {
-    PublicAccountInfos profile = getPublicAccountInfos(player_id);
+bool AccountServer::handle_profile(int client_sock_fd, std::string username) {
+    PublicAccountInfos profile = getPublicAccountInfos(username);
     std::string stringProfile = profile.username + "," + profile.victories + "," + profile.pnjKilled + ";";
     send_message(client_sock_fd,stringProfile.c_str());
     return true;
 }
-
 
 ///////////////////////////////////////////////////////////////////////////
 void AccountServer::get_and_process_command(int client, char* message_buffer) {
@@ -235,7 +245,6 @@ void AccountServer::get_and_process_command(int client, char* message_buffer) {
             return;
         }
 
-        std::cout << "hi greg" << std::endl;
         std::string command_type = get_command_type(message_buffer);
 
         if ((command_type == "login") || (command_type == "register")) {
@@ -261,16 +270,10 @@ void AccountServer::get_and_process_command(int client, char* message_buffer) {
             command.parse(message_buffer);
             ok = handle_ranking(client);
 
-        } else if (command_type == "getProfileByID" || command_type == "getProfileByUsername") {
+        } else if (command_type == "getProfileByUsername") {
             FriendListCommand friendListCommand;
             friendListCommand.parse(message_buffer);
-            if (command_type == "getProfileByID") {
-                int requesterID = atoi(friendListCommand.getRequester().c_str());
-                handle_profile(client, requesterID);
-            }else if (command_type == "getProfileByUsername"){
-                int requesterID = myDatabase.getUsrInfosByUsrname(friendListCommand.getRequester()).ID;
-                handle_profile(client, requesterID);
-            }
+            handle_profile(client,friendListCommand.getRequester());
 
         } else if (command_type == "getFriendList" || command_type == "getFriendRequests" ||
                    command_type == "addFriend" || command_type == "removeFriend" ||
@@ -279,41 +282,52 @@ void AccountServer::get_and_process_command(int client, char* message_buffer) {
 
             FriendListCommand friendListCommand;
             friendListCommand.parse(message_buffer);
-            int requesterID = atoi(friendListCommand.getRequester().c_str());
-            std::string requesterUsername = myDatabase.getInfosById(requesterID);
-            std::string receiverUsername = friendListCommand.getReceiver();
             std::string action = friendListCommand.getAction();
 
             if (action == "getFriendList") {
 
-                handle_getFriendList(client, requesterID);
+                handle_getFriendList(client, friendListCommand.getRequester());
 
             } else if (action == "getFriendRequests") {
 
-                handle_getFriendRequests(client, requesterID);
+                handle_getFriendRequests(client, friendListCommand.getRequester());
 
             } else if (action == "addFriend") {
+                std::cout<<friendListCommand.getRequester() + " added " + friendListCommand.getReceiver();
 
-                handle_sendFriendRequest(client, requesterUsername, receiverUsername);
+                handle_sendFriendRequest(client, friendListCommand.getRequester(), friendListCommand.getReceiver());
                 
             }else if (action == "getPendingInvitations") {
                 
-                handle_getPendingInvitations(client, requesterID); 
+                handle_getPendingInvitations(client, friendListCommand.getRequester());
                 
             } else if (action == "removeFriend") {
 
-                handle_removeFriend(client, requesterUsername, receiverUsername);
+                handle_removeFriend(client, friendListCommand.getRequester(), friendListCommand.getReceiver());
 
             } else if (action == "acceptFriendRequest") {
 
-                handle_acceptFriendRequest(client, requesterUsername, receiverUsername);
+                handle_acceptFriendRequest(client, friendListCommand.getRequester(), friendListCommand.getReceiver());
 
             } else if (action == "declineFriendRequest") {
 
-                handle_declineFriendRequest(client, requesterUsername, receiverUsername);
+                handle_declineFriendRequest(client, friendListCommand.getRequester(), friendListCommand.getReceiver());
             }
         }
     }
+}
+
+const std::vector<PlayerConnection> &AccountServer::getConnectedPlayers() const {
+    return connectedPlayers;
+}
+
+void AccountServer::add_connected_player(PlayerConnection& player) {
+    this->connectedPlayers.push_back(player);
+
+}
+
+bool AccountServer::is_player_already_connected(PlayerConnection& player){
+    return (std::find(connectedPlayers.begin(), connectedPlayers.end(), player) != connectedPlayers.end());
 }
 
 

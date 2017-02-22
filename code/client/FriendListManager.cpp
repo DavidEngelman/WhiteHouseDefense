@@ -1,11 +1,9 @@
-//
-// Created by jurgen on 2/18/17.
-//
-
 #include "FriendListManager.hpp"
 
-FriendListManager::FriendListManager(int port, char* address, int id, App* my_app):
-        NetworkedManager(port, address, my_app), player_id(id){}
+FriendListManager::FriendListManager(int port, char* address, int id, App* my_master_app):
+        NetworkedManager(port, address, my_master_app), player_id(id){
+    friendListProcess();
+};
 
 void FriendListManager::friendListProcess() {
     friendListUI.display();
@@ -13,122 +11,116 @@ void FriendListManager::friendListProcess() {
     int choice = friendListUI.select();
     while ( choice!=8 ){
         if (choice == 1){
-            friendListUI.displayFriendList(getFriendList(), "friends");
+            friendListUI.displayFriendList(getRequestServer(GET_FRIENDLIST, username), "friends");
         }else if (choice == 2 ){
-            friendListUI.displayFriendList(getFriendRequests(), "friend requests");
+            friendListUI.displayFriendList(getRequestServer(GET_FRIEND_REQUESTS, username), "friend requests");
         }else if (choice == 3) {
-            friendListUI.displayFriendList(getPendingInvitations(), "pending");
+            friendListUI.displayFriendList(getRequestServer(GET_PENDING_INVITATIONS,username), "pending");
+
 
         }else if (choice == 4) {
             std::cout<<"Send Friend Request to : ";
             std::string toAdd = friendListUI.askUsername();
-            if(sendFriendRequest(toAdd)){
-                std::cout<<"Invitation Sent"<<std::endl;
-            };
+            std::string error = request_validity(ADD_FRIEND, username, toAdd);
+            if (error.size() == 0) {
+                sendRequestServer(ADD_FRIEND, toAdd);
+                std::cout << "Invitation Sent to " <<toAdd<< std::endl;
+            }else{
+                std::cout<<error<<std::endl;
+            }
 
         }else if (choice == 5 ){
             std::cout<<"Remove Friend : ";
             std::string toRemove = friendListUI.askUsername();
-            if(removeFriend(toRemove)){
-                std::cout<<"Friend removed successfully"<<std::endl;
-            };
+            std::string error = request_validity(REMOVE_FRIEND, username, toRemove);
+            if (error.size() == 0) {
+                sendRequestServer(REMOVE_FRIEND, toRemove);
+                std::cout << "Friend removed successfully, sorry it had to end this way" << std::endl;
+            }else{
+                std::cout << error << std::endl;
+            }
         }else if (choice == 6){
             std::cout<< "accept Friend : ";
             std::string toAccept = friendListUI.askUsername();
-            if (acceptFriendRequest(toAccept)){
-                std::cout<<"Friend request accepted"<<std::endl;
-            };
+            std::string error = request_validity(ACCEPT_FRIEND_REQUEST, username, toAccept);
+            if (error.size() == 0) {
+                sendRequestServer(ACCEPT_FRIEND_REQUEST, toAccept);
+                std::cout << "Friend request accepted, " <<toAccept<<" is now your friend !"<<std::endl;
+            }else{
+                std::cout << error << std::endl;
+            }
         }else if (choice == 7) {
             std::cout << "decline Friend : ";
             std::string toDecline = friendListUI.askUsername();
-            if (declineFriendRequest(toDecline)) {
-                std::cout << "Friend request declined" << std::endl;
-            };
+            std::string error = request_validity(DECLINE_FRIEND_REQUEST, username, toDecline);
+            if (error.size() == 0) {
+                sendRequestServer(DECLINE_FRIEND_REQUEST, toDecline);
+                std::cout << "Friend request declined." << std::endl;
+            }else{
+                std::cout << error << std::endl;
+            }
         }
         friendListUI.display();
         choice = friendListUI.select();
 
     }
-    MainManager mainManager(server_ip_address, player_id, my_master_app);
-    my_master_app->transition(&mainManager);
-
+    MainManager mainManager(server_ip_address, player_id, username, my_master_app);
+    my_master_app->transition(&mainManager); // Permet de revenir au main menu , je ne sais pas si
+                                                    // c'est le meilleur moyen pour faire ca
 }
 
-
-std::string FriendListManager::getFriendList() {
-    std::string message = "getFriendList;" + std::to_string(player_id)+ ";";
+std::string FriendListManager::getRequestServer(std::string action, std::string username ){
+    std::string message = action + username+ ";";
     send_message(server_socket, message.c_str());
     char buffer[MAX_BUFF_SIZE];
     receive_message(server_socket, buffer);
     return std::string(buffer);
 }
 
-std::string FriendListManager::getFriendRequests() {
-
-    std::string message = "getFriendRequests;" + std::to_string(player_id)+ ";";
-    send_message(server_socket, message.c_str());
-    char buffer[MAX_BUFF_SIZE];
-    receive_message(server_socket, buffer);
-    return std::string(buffer);
-
-}
-std::string FriendListManager::getPendingInvitations() {
-    std::string message = "getPendingInvitations;" + std::to_string(player_id)+ ";";
-    send_message(server_socket, message.c_str());
-    char buffer[MAX_BUFF_SIZE];
-    receive_message(server_socket, buffer);
-    return std::string(buffer);
-}
-
-bool FriendListManager::sendFriendRequest(std::string toAdd){
+bool FriendListManager::sendRequestServer(std::string action, std::string otherUser){
 
     char server_response[10];
-    std::string message = "addFriend;"+ std::to_string(player_id) + "," + toAdd+ ";" ;
+    std::string message = action + username + "," + otherUser+ ";" ;
     send_message(server_socket, message.c_str());
     receive_message(server_socket,server_response);
-    if (server_response[0] == '1') {
-        return true;
-    }
-    return false;
+    return server_response[0] == '1';
 }
 
-bool FriendListManager::removeFriend(std::string toRemove) {
-
-    char server_response[10];
-    std::string message = "removeFriend;"+ std::to_string(player_id) + "," + toRemove+ ";";
-    send_message(server_socket, message.c_str());
-    receive_message(server_socket,server_response);
-    if (server_response[0] == '1') {
-        return true;
+std::string FriendListManager::request_validity(std::string request, std::string requester, std::string receiver) {
+    updateFriendLists();
+    if (request == ADD_FRIEND) {
+        if (requester == receiver) {
+            return "You can't add yourself";
+        } else {
+            if (getRequestServer("getProfileByUsername;", receiver).size() == 3 ) {
+                 return "No Player was found with that username";
+            } else {
+                updateFriendLists();
+                if (friendList.is_present(receiver)) {
+                    return receiver + " is already your Friend";
+                } else if (friendRequests.is_present(receiver)) {
+                    return receiver + " already sent you an invitation";
+                } else if (pendingInvitations.is_present(receiver)) {
+                    return "You've already send an invitation to that user";
+                }
+            }
+        }
+    }else if (request == ACCEPT_FRIEND_REQUEST || request == DECLINE_FRIEND_REQUEST) {
+        if (!friendRequests.is_present(receiver)) {
+            return "You have no invitation with that username";
+        }
+    }else if (request == REMOVE_FRIEND){
+        if(!friendList.is_present(receiver)){
+            return "You have no Friend with that username";
+        }
     }
-    return false;
-
+    return "";
 }
-bool FriendListManager::acceptFriendRequest(std::string toAccept) {
 
-    char server_response[10];
-    std::string message = "acceptFriendRequest;"+ std::to_string(player_id) + "," + toAccept+ ";";
-    send_message(server_socket, message.c_str());
-    receive_message(server_socket,server_response);
-    if (server_response[0] == '1') {
-        return true;
-    }
-    return false;
-
-}
-
-
-bool FriendListManager::declineFriendRequest(std::string toDecline) {
-
-    char server_response[10];
-    std::string message = "declineFriendRequest;"+ std::to_string(player_id) + "," + toDecline+ ";";
-    send_message(server_socket, message.c_str());
-    receive_message(server_socket,server_response);
-    if (server_response[0] == '1') {
-        return true;
-    }
-    return false;
-
+void FriendListManager::updateFriendLists() {
+    friendList.update(getRequestServer(GET_FRIENDLIST, username));
+    friendRequests.update(getRequestServer(GET_FRIEND_REQUESTS,username));
+    pendingInvitations.update(getRequestServer(GET_PENDING_INVITATIONS,username));
 }
 
 void FriendListManager::run() {
