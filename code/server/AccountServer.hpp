@@ -6,7 +6,7 @@
 #include "Command.hpp"
 #include "PlayerConnection.hpp"
 #include <algorithm>
-#include <pthread.h>
+#include <thread>
 
 #define ALREADY_CO "-2"
 
@@ -29,7 +29,7 @@ private:
 
 public:
 
-    void *client_handler(void *arg);
+    void *client_handler(int client_sock);
 
     const std::vector<PlayerConnection> &getConnectedPlayers() const;
 

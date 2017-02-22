@@ -3,19 +3,16 @@
 
 AccountServer::AccountServer(int port, const char *databaseName) : Server(port), myDatabase(Database(databaseName)) {}
 
-void* AccountServer::client_handler(void *arg) {
+void* AccountServer::client_handler(int client_sock) {
 
-    int newClient = *(int*) arg;
     char message_buffer[BUFFER_SIZE];
-
-    get_and_process_command(newClient, message_buffer);
+    get_and_process_command(client_sock, message_buffer);
 
 }
 
 void AccountServer::run() {
     start_socket_listen();
     int newClient;
-    pthread_t client_thread;
 
     while (1) {
 
@@ -23,8 +20,7 @@ void AccountServer::run() {
         std::cout << "New client connected wouhouuu" << std::endl;
         //add_new_client(newClient); Je laisse ca la au cas ou
 
-        if (pthread_create(&client_thread, NULL, client_handler, (void*) &newClient)< 0)
-            perror("Thread creation");
+        std::thread t1(&AccountServer::client_handler, this, newClient);
 
     }
 }
