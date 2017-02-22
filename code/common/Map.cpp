@@ -116,7 +116,7 @@ bool Map::isNextToPath(Position position) {
 
 bool Map::addTower(int x, int y, int typeOfTower) {
     if (matrix[y][x] == -1) {
-        matrix[y][x] = typeOfTower*10; // 10 = number of upgrades per tower possible
+        matrix[y][x] = typeOfTower*10+1; // 10 = number of upgrades per tower possible
         return true;
     }
     return false;
@@ -156,4 +156,8 @@ void Map::basicMap() {
             }
         }
     }
+}
+
+bool Map::isPath(int x, int y) {
+    return matrix[y][x] == 0;
 }
