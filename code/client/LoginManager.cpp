@@ -32,8 +32,8 @@ void LoginManager::login_process() {
         }
     }
 
-    std::cout << "Connection succeeded" << std::endl;
-    std::cout << "your id is" << success <<  std::endl;
+    //std::cout << "Connection succeeded" << std::endl;
+    //std::cout << "your id is" << success <<  std::endl;
 
     //MainManager mainManager(server_ip_address, stoi(success), my_master_app);
     MainManager* mainManager = new MainManager(server_ip_address, stoi(success), loginCredentials.getUsername(), my_master_app);
@@ -57,6 +57,5 @@ std::string LoginManager::attemptLogin(Credentials credentials) {
 }
 
 void LoginManager::run() {
-    std::cout << "running login" << std::endl;
     login_process();
 }
