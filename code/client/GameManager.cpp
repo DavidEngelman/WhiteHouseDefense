@@ -1,5 +1,7 @@
 
 #include "GameManager.hpp"
+#include "../common/Networking.h"
+
 
 GameManager::GameManager() {
     GameState playerGameState= GameState();
@@ -10,6 +12,7 @@ void GameManager::placeTower(){
     std::string coord;
     gameUI.display();
     coord=gameUI.getCoordTower();
+    send_message(server_socket, coord.c_str());
 
 }
 void GameManager::getReceivedChanges() {
