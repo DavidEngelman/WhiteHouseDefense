@@ -14,6 +14,8 @@ public:
 
 	std::string getCoordTower();
 
+    bool checkCoord(int x, int y);
+
 	void showNoInternetError();
 
 	void display();

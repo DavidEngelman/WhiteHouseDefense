@@ -4,7 +4,7 @@
 
 
 GameManager::GameManager() {
-    GameState playerGameState= GameState();
+    GameState gameState= GameState();
     GameUI gameUI = GameUI();
     placeTower();
 }
@@ -12,7 +12,7 @@ void GameManager::placeTower(){
     std::string coord;
     gameUI.display();
     coord=gameUI.getCoordTower();
-    send_message(server_socket, coord.c_str());
+    //send_message(server_socket, coord.c_str());
 
 }
 void GameManager::getReceivedChanges() {

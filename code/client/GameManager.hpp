@@ -7,7 +7,7 @@
 class GameManager {
 
 private:
-    GameState playerGameState;
+    GameState gameState;
     GameUI gameUI;
 
 public:

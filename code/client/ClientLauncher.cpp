@@ -2,7 +2,7 @@
 #include "RegisterManager.hpp"
 #include "Drawing.hpp"
 #include "../common/Map.hpp"
-
+#include "GameManager.hpp"
 
 int main(int argc, char *argv[]) {
 
@@ -10,8 +10,9 @@ int main(int argc, char *argv[]) {
         std::cout << "Don't forget the ip_adress of the server as argument! ;)" << std::endl;
         exit(1);
     }
+    GameManager gamemanager=GameManager();
 
-
+    /*
     int choice = 0;
     bool ok = false;
 
@@ -38,4 +39,5 @@ int main(int argc, char *argv[]) {
     }
 
     return 0;
+     */
 }
