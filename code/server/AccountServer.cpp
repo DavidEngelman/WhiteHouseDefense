@@ -3,18 +3,26 @@
 
 AccountServer::AccountServer(int port, const char *databaseName) : Server(port), myDatabase(Database(databaseName)) {}
 
+void* AccountServer::client_handler(int client_sock) {
+
+    char message_buffer[BUFFER_SIZE];
+    get_and_process_command(client_sock, message_buffer);
+
+}
+
 void AccountServer::run() {
     start_socket_listen();
     int newClient;
+    std::thread t1;
 
     while (1) {
+
         newClient = accept_connection();
         std::cout << "New client connected wouhouuu" << std::endl;
         //add_new_client(newClient); Je laisse ca la au cas ou
 
-        //TODO: j'ai du virer le fork
-        char message_buffer[BUFFER_SIZE];
-        get_and_process_command(newClient, message_buffer);
+        std::thread t1(&AccountServer::client_handler, this, newClient);
+        t1.detach(); // TODO: bien comprendre et verifier si c'est bien ce qu'on veut
     }
 }
 
@@ -23,7 +31,6 @@ void AccountServer::run() {
 
 bool AccountServer::insert_account_in_db(Credentials credentials) {
     //Return True si ca c'est bien passé, false sinon
-
     return myDatabase.insert_account(credentials) != -1;
 }
 

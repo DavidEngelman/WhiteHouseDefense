@@ -6,35 +6,35 @@
 #include "FriendListManager.hpp"
 
 
-MainManager::MainManager(char* ip_addr, int id, std::string username) : server_ip_adress(ip_addr), player_id(id), username(username){
-    std::cout << "this is your player id: " << player_id << std::endl; //print juste pour test que ca marche
-    start_display();
-}
+MainManager::MainManager(char* ip_addr, int id, std::string username, App* my_app) :
+    AbstractManager(ip_addr, my_app), player_id(id), username(username){}
 
-void MainManager::start_display() {
-    while(1) {
-        mainUI.display();
-        switch (mainUI.select()) {
-            case 1: {
-                GameLauncher game = GameLauncher(5556, server_ip_adress, player_id);
-                break;
-            }
-            case 2: {
-                ProfileManager profile = ProfileManager(5555, server_ip_adress, player_id, username);
-                break;
-            }
-            case 3: {
-                FriendListManager friendList(5555, server_ip_adress,player_id, username);
-                break;
-            }
-            case 4: {
-                RankingManager rankingManager(5555, server_ip_adress);
-                break;
-            }
-            default: {
-                std::cout << "Exit !" << std::endl;
-                return;
-            }
+void MainManager::run() {
+    mainUI.display();
+    switch (mainUI.select()) {
+        case 1: {
+            GameLauncher game = GameLauncher(5556, server_ip_address, player_id, my_master_app);
+            my_master_app->transition(&game);
+            break;
+        }
+        case 2: {
+            ProfileManager * profile = new ProfileManager(5555, server_ip_address, player_id, username, my_master_app);
+            my_master_app->transition(profile);
+            break;
+        }
+        case 3: {
+            FriendListManager * friendListManager = new FriendListManager(5555, server_ip_address, player_id, username, my_master_app);
+            my_master_app->transition(friendListManager);
+            break;
+        }
+        case 4: {
+            RankingManager * rankingManager = new RankingManager(5555, server_ip_address, player_id, username, my_master_app);
+            my_master_app->transition(rankingManager);
+            break;
+        }
+        default: {
+            std::cout << "Exit !" << std::endl;
+            break;
         }
     }
 }

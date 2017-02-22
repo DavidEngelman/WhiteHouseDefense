@@ -11,6 +11,7 @@ class RankingUI {
 public:
 	RankingUI() = default;
 	void display(std::string ranking);
+	
 };
 
 #endif

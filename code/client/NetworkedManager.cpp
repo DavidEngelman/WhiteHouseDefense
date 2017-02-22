@@ -1,13 +1,13 @@
 
 #include "NetworkedManager.hpp"
 
-NetworkedManager::NetworkedManager(int port, char *address) : port(port), ip_address(address) {
+NetworkedManager::NetworkedManager(int port, char* address, App* my_app) :AbstractManager(address, my_app), port(port) {
     init();
 }
 
 void NetworkedManager::init() {
     struct hostent *he;
-    if ((he=gethostbyname(ip_address)) == NULL) {
+    if ((he=gethostbyname(server_ip_address)) == NULL) {
         perror("gethostbyname");
         exit(1);
     }
@@ -42,6 +42,10 @@ int NetworkedManager::connect_to_server(int socket, struct hostent *addr) {
     memset(&(their_addr.sin_zero), '\0', 8);  // zero the rest of the struct
 
     return connect(socket, (struct sockaddr *)&their_addr, sizeof(struct sockaddr));
+}
+
+NetworkedManager::~NetworkedManager() {
+    close(server_socket);
 }
 
 

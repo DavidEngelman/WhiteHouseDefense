@@ -6,6 +6,7 @@
 #include "Command.hpp"
 #include "PlayerConnection.hpp"
 #include <algorithm>
+#include <thread>
 
 #define ALREADY_CO "-2"
 
@@ -28,6 +29,8 @@ private:
 
 public:
 
+    void *client_handler(int client_sock);
+
     const std::vector<PlayerConnection> &getConnectedPlayers() const;
 
     bool is_player_already_connected(PlayerConnection& player);
@@ -38,7 +41,7 @@ public:
 
     void run() override;
 
-    void get_and_process_command(int client, char *message_buffer);
+    void get_and_process_command(int client_socket_fd, char *message_buffer);
 
     bool insert_account_in_db(Credentials credentials);
 
