@@ -13,7 +13,9 @@ private:
 public:
     GameManager();
 
-    void sendUserCommands();
+    void placeTower();
+
+    void displayWave();
 
     void getReceivedChanges();
 };

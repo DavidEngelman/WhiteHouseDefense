@@ -12,13 +12,13 @@ private:
 public:
     GameUI();
 
-	void getUserCommands();
-
-	void draw(GameState gameState);
+	std::string getCoordTower();
 
 	void showNoInternetError();
 
 	void display();
+
+	std::string concatCoord(int x, int y);
 };
 
 #endif
