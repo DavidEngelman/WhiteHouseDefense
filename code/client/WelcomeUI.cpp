@@ -1,9 +1,10 @@
 
 #include "WelcomeUI.h"
+#include "Drawing.hpp"
 
 void WelcomeUI::display() {
     /*Show user's menu*/
-    std::cout << "   ======================================   " << std::endl;
+    Drawing::drawWhiteHouse("LAUNCHER");
     std::cout << "   |       1. Log In                    |   " << std::endl;
     std::cout << "   |       2. Register                  |   " << std::endl;
     std::cout << "   |       3. Exit                      |   " << std::endl;
