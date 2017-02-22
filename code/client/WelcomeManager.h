@@ -14,7 +14,6 @@ private:
 
 public:
     WelcomeManager(char* ip_addr, App* my_app);
-    void welcome_process();
     void run() override;
 
 };

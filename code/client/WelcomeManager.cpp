@@ -7,7 +7,7 @@ WelcomeManager::WelcomeManager(char *ip_addr, App* my_app) : AbstractManager(ip_
 
 }
 
-void WelcomeManager::welcome_process() {
+void WelcomeManager::run() {
     welcomeUI.display();
     int choice = welcomeUI.select();
 
@@ -21,8 +21,3 @@ void WelcomeManager::welcome_process() {
         //
     }
 }
-
-void WelcomeManager::run() {
-    welcome_process();
-}
-
