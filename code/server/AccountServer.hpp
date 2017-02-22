@@ -41,7 +41,7 @@ public:
 
     void run() override;
 
-    void get_and_process_command(int client, char *message_buffer);
+    void get_and_process_command(int client_socket_fd, char *message_buffer);
 
     bool insert_account_in_db(Credentials credentials);
 

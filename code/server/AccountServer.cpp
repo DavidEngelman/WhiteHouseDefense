@@ -4,12 +4,9 @@
 AccountServer::AccountServer(int port, const char *databaseName) : Server(port), myDatabase(Database(databaseName)) {}
 
 void* AccountServer::client_handler(void *arg) {
-
-    int newClient = *(int*) arg;
+    int client_socket_fd = *(int*) arg;
     char message_buffer[BUFFER_SIZE];
-
-    get_and_process_command(newClient, message_buffer);
-
+    get_and_process_command(client_socket_fd, message_buffer);
 }
 
 void AccountServer::run() {
@@ -23,9 +20,9 @@ void AccountServer::run() {
         std::cout << "New client connected wouhouuu" << std::endl;
         //add_new_client(newClient); Je laisse ca la au cas ou
 
-        if (pthread_create(&client_thread, NULL, client_handler, (void*) &newClient)< 0)
+        if (pthread_create(&client_thread, NULL, client_handler, (void*) &newClient)< 0) {
             perror("Thread creation");
-
+        }
     }
 }
 
@@ -246,11 +243,11 @@ bool AccountServer::handle_profile(int client_sock_fd, std::string username) {
 }
 
 ///////////////////////////////////////////////////////////////////////////
-void AccountServer::get_and_process_command(int client, char* message_buffer) {
+void AccountServer::get_and_process_command(int client_socket_fd, char* message_buffer) {
     bool ok = false;
 
     while (!ok) {
-        bool success = receive_message_with_timeout(client, message_buffer, 300);
+        bool success = receive_message_with_timeout(client_socket_fd, message_buffer, 300);
         if (!success) {
             return;
         }
@@ -266,9 +263,9 @@ void AccountServer::get_and_process_command(int client, char* message_buffer) {
             Credentials credentials = command.getCreds();
 
             if (command.getAction() == "login") {
-                ok = handle_login(credentials, client);
+                ok = handle_login(credentials, client_socket_fd);
             } else if (command.getAction() == "register") {
-                ok = handle_register(credentials, client);
+                ok = handle_register(credentials, client_socket_fd);
             } else {
                 // Show "unknown command" error
             }
@@ -278,12 +275,12 @@ void AccountServer::get_and_process_command(int client, char* message_buffer) {
 
             Command command;
             command.parse(message_buffer);
-            ok = handle_ranking(client);
+            ok = handle_ranking(client_socket_fd);
 
         } else if (command_type == "getProfileByUsername") {
             FriendListCommand friendListCommand;
             friendListCommand.parse(message_buffer);
-            handle_profile(client,friendListCommand.getRequester());
+            handle_profile(client_socket_fd,friendListCommand.getRequester());
 
         } else if (command_type == "getFriendList" || command_type == "getFriendRequests" ||
                    command_type == "addFriend" || command_type == "removeFriend" ||
@@ -296,32 +293,32 @@ void AccountServer::get_and_process_command(int client, char* message_buffer) {
 
             if (action == "getFriendList") {
 
-                handle_getFriendList(client, friendListCommand.getRequester());
+                handle_getFriendList(client_socket_fd, friendListCommand.getRequester());
 
             } else if (action == "getFriendRequests") {
 
-                handle_getFriendRequests(client, friendListCommand.getRequester());
+                handle_getFriendRequests(client_socket_fd, friendListCommand.getRequester());
 
             } else if (action == "addFriend") {
                 std::cout<<friendListCommand.getRequester() + " added " + friendListCommand.getReceiver();
 
-                handle_sendFriendRequest(client, friendListCommand.getRequester(), friendListCommand.getReceiver());
+                handle_sendFriendRequest(client_socket_fd, friendListCommand.getRequester(), friendListCommand.getReceiver());
                 
             }else if (action == "getPendingInvitations") {
                 
-                handle_getPendingInvitations(client, friendListCommand.getRequester());
+                handle_getPendingInvitations(client_socket_fd, friendListCommand.getRequester());
                 
             } else if (action == "removeFriend") {
 
-                handle_removeFriend(client, friendListCommand.getRequester(), friendListCommand.getReceiver());
+                handle_removeFriend(client_socket_fd, friendListCommand.getRequester(), friendListCommand.getReceiver());
 
             } else if (action == "acceptFriendRequest") {
 
-                handle_acceptFriendRequest(client, friendListCommand.getRequester(), friendListCommand.getReceiver());
+                handle_acceptFriendRequest(client_socket_fd, friendListCommand.getRequester(), friendListCommand.getReceiver());
 
             } else if (action == "declineFriendRequest") {
 
-                handle_declineFriendRequest(client, friendListCommand.getRequester(), friendListCommand.getReceiver());
+                handle_declineFriendRequest(client_socket_fd, friendListCommand.getRequester(), friendListCommand.getReceiver());
             }
         }
     }
