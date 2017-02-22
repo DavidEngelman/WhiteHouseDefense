@@ -44,4 +44,8 @@ int NetworkedManager::connect_to_server(int socket, struct hostent *addr) {
     return connect(socket, (struct sockaddr *)&their_addr, sizeof(struct sockaddr));
 }
 
+NetworkedManager::~NetworkedManager() {
+    close(server_socket);
+}
+
 

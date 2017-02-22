@@ -11,5 +11,4 @@ void RankingUI::display(std::string ranking) {
     std::cin >>q;
     std::cin.clear();
     std::cin.ignore();
-
 }
