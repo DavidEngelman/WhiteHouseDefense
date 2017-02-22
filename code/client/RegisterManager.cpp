@@ -52,8 +52,8 @@ void RegisterManager::registerUser() {
     }
 
     std::cout<< "Your account was successfully registered, you can now login normally.\n";
-    LoginManager loginManager(port, server_ip_address, my_master_app);
-    my_master_app->transition(&loginManager);
+    LoginManager * loginManager = new LoginManager(port, server_ip_address, my_master_app);
+    my_master_app->transition(loginManager);
 }
 
 bool RegisterManager::attemptRegister(Credentials credentials){
