@@ -1,18 +1,15 @@
-//
-//
-
 #include "GameEngine.hpp"
 
 GameEngine::GameEngine() {
-    my_timer.start();
+    timer.start();
 }
 
-void GameEngine::update() {/*TODO*/}
-
-void GameEngine::move_pnj_forward(PNJ &pnj) {
-    Position current_pos = pnj.getPosition();
-
-
+void GameEngine::update() {
+    int numMilisecondsSinceStart = timer.elapsedTimeInMiliseconds();
+    int numStepsToDo = (numMilisecondsSinceStart / STEP_DURATION) - numStepsDone;
+    for (int i = 0; i < numStepsToDo; ++i) {
+        updateWaves();
+    }
 }
 
 void GameEngine::updateWaves() {
