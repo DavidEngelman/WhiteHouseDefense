@@ -1,5 +1,3 @@
-
-
 #ifndef PROJET_WAVE_H
 #define PROJET_WAVE_H
 
