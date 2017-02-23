@@ -13,7 +13,7 @@ class PNJ{
 private:
 
 	int healthPoints;
-
+	int direction;
 	int movementSpeed;
 	Position position;
 
@@ -25,7 +25,7 @@ public:
 
     ~PNJ() = default;
 
-	void advance(Wave, Map);
+	void advance(Map& map);
 
 	int getHealthPoints() const;
 
