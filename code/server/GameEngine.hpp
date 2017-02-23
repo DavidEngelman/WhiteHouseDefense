@@ -24,6 +24,12 @@ public:
 
 
     void updateWave(Wave &wave);
+
+    void dealDamage(std::vector<Wave> &waves);
+
+    void movePNJsInWaves(std::vector<Wave> &waves);
+
+    void movePNJsInWave(Wave &wave);
 };
 
 

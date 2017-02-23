@@ -184,7 +184,11 @@ Direction GameState::get_left_direction(int wave_id) {
     }
 }
 
-std::vector<Wave> &GameState::getWaves() const {
+std::vector<Wave> &GameState::getWaves() {
     return waves;
+}
+
+std::vector<AbstractTower> &GameState::getTowers() {
+    return towers;
 }
 

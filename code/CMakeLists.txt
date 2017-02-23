@@ -10,7 +10,7 @@ set(CLIENT_FILES  "client/NetworkedManager.cpp" "client/ClientLauncher.cpp" "cli
         client/WelcomeManager.cpp client/WelcomeUI.cpp
           client/FriendList.cpp client/GameManager.cpp
         "client/ProfileManager.cpp" "common/PNJ.cpp" client/GameUI.cpp common/PlayerState.cpp
-        common/GameState.cpp common/Wave.cpp)
+        common/GameState.cpp common/Wave.cpp common/Constants.h)
 
 
 add_executable(client ${CLIENT_FILES})
@@ -23,7 +23,7 @@ set(SERVER_FILES "server/ServerLauncher.cpp" "common/Networking.cpp" "server/Ser
         "server/MatchmakingCommand.cpp" "server/MatchMaker.cpp" "server/MatchMaker.cpp" "server/PendingMatch.cpp"
         common/GameState.cpp "server/GameServer.cpp" "server/PlaceTowerCommand.cpp" "server/Timer.cpp"
         "server/FriendListCommand.cpp" common/AbstractTower.cpp server/PlayerConnection.cpp common/PlayerState.cpp common/Wave.cpp
-        "common/PNJ.cpp" "common/Position.cpp" common/Map.cpp server/GameEngine.cpp server/GameEngine.hpp)
+        "common/PNJ.cpp" "common/Position.cpp" common/Map.cpp server/GameEngine.cpp server/GameEngine.hpp common/Constants.h)
 
 add_executable(server ${SERVER_FILES})
 

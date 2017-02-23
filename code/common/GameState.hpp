@@ -9,9 +9,9 @@
 #include "Wave.h"
 #include "../common/Strings.hpp"
 
-typedef struct Direction{
-	int x;
-	int y;
+typedef struct Direction {
+    int x;
+    int y;
 };
 
 const static std::vector<std::string> validModes = {CLASSIC_MODE, TEAM_MODE, TIMED_MODE};
@@ -19,8 +19,11 @@ const static std::vector<std::string> validModes = {CLASSIC_MODE, TEAM_MODE, TIM
 class GameState {
 private:
 
-	std::vector<PlayerState> player_states;
-	std::vector<AbstractTower>       towers;
+    std::vector<PlayerState> player_states;
+    std::vector<AbstractTower> towers;
+
+
+private:
     std::vector<Wave> waves;
 
     std::string mode;
@@ -29,7 +32,9 @@ private:
 
 public:
 
-    std::vector<Wave> &getWaves() const;
+    std::vector<Wave> &getWaves();
+
+    std::vector<AbstractTower> &getTowers();
 
     std::string serialize();
 
@@ -40,15 +45,21 @@ public:
     void decrease_player_hp(PlayerState &player, int amount);
 
     void increase_player_hp(PlayerState &player, int amount);
+
 /////////////////////////////////////////////////////////////////////
-	void move_waves_forward();
-	Direction get_forward_direction(int wave_id);
+    void move_waves_forward();
+
+    Direction get_forward_direction(int wave_id);
+
     Direction get_right_direction(int wave_id);
+
     Direction get_left_direction(int wave_id);
 
-    bool can_go_forward(int wave_id, Position& current_pos);
-    bool can_go_left(int wave_id, Position& current_pos, Position& last_pos);
-    bool can_go_right(int wave_id, Position& current_pos, Position& last_pos);
+    bool can_go_forward(int wave_id, Position &current_pos);
+
+    bool can_go_left(int wave_id, Position &current_pos, Position &last_pos);
+
+    bool can_go_right(int wave_id, Position &current_pos, Position &last_pos);
 /////////////////////////////////////////////////////////////////////
 
     void add_tower(Position position);
