@@ -20,10 +20,10 @@ public:
 
     void update();
     void move_pnj_forward(PNJ& pnj);
-    void move_waves_forward();
+    void updateWaves();
 
 
-    void move_wave_forward(Wave &wave);
+    void updateWave(Wave &wave);
 };
 
 

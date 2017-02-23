@@ -15,16 +15,18 @@ void GameEngine::move_pnj_forward(PNJ &pnj) {
 
 }
 
-void GameEngine::move_waves_forward() {
+void GameEngine::updateWaves() {
     for(Wave& wave: gameState.getWaves()){
-        move_wave_forward(wave);
+        updateWave(wave);
     }
 }
 
-void GameEngine::move_wave_forward(Wave &wave) {
+void GameEngine::updateWave(Wave &wave) {
     // On commence par infliger des degats, puis on bouge les PNJ
     // Pas sur que l'ordre soit important
 
-    for (PNJ& pnj: wave.getPnjs())
+
+    for (PNJ& pnj: wave.getPnjs()){
+    }
 
 }
