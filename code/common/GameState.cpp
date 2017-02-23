@@ -62,3 +62,7 @@ std::vector<AbstractTower> &GameState::getTowers() {
     return towers;
 }
 
+Map &GameState::getMap() const {
+    return map;
+}
+

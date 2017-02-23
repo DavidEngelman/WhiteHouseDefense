@@ -21,16 +21,13 @@ private:
 
     std::vector<PlayerState> player_states;
     std::vector<AbstractTower> towers;
-
-
-private:
     std::vector<Wave> waves;
 
     std::string mode;
 
     Map map;
-
 public:
+    Map &getMap() const;
 
     std::vector<Wave> &getWaves();
 
