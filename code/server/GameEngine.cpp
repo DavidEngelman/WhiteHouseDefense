@@ -48,6 +48,7 @@ void GameEngine::movePNJsInWaves(std::vector<Wave> &waves) {
 void GameEngine::movePNJsInWave(Wave &wave) {
     for (PNJ& pnj: wave.getPnjs()){
 
+
     }
 }
 

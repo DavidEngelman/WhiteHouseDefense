@@ -21,6 +21,10 @@ public:
     void setX(int x);
 
     Position(int _x, int _y);
+
+    bool operator==(const Position &rhs) const;
+
+    bool operator!=(const Position &rhs) const;
 };
 
 #endif // POSITION_HPP
