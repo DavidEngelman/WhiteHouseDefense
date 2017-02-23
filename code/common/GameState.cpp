@@ -36,7 +36,7 @@ void GameState::add_tower(Position position) {
 
 bool GameState::is_only_one_alive() {
     int nmbr_of_alive;
-    for (PlayerState ps: player_states){
+    for (PlayerState& ps: player_states){
         if (ps.getHp() > 0){
             nmbr_of_alive++;
         }
