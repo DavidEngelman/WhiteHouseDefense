@@ -3,7 +3,7 @@
 #include "GameManager.hpp"
 
 int main(int argc, char *argv[]) {
-    GameManager gameLauncher = GameManager();
+    GameManager gameManager = GameManager();
     /*
     if (argc <= 1){
         std::cout << "Don't forget the ip_adress of the server as argument! ;)" << std::endl;
