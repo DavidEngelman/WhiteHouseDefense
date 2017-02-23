@@ -28,9 +28,11 @@ public:
     Map();
     Map(unsigned seed);
     void display();
-    bool isPath(int x, int y);
     bool addTower(int x, int y, int typeOfTower);
     bool removeTower(int x, int y);
+    void addPNG(int x, int y);
+    void removePNG(int x, int y);
+    void movePNG(int x1, int y1, int x2, int y2);
 };
 
 #endif

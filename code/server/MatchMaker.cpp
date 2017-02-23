@@ -1,14 +1,10 @@
 #include "MatchMaker.hpp"
 
 MatchMaker::MatchMaker(int port) : Server(port),
-        // Pas sur que ça marche et que ça continue à exister après
-        // la fin du constructeur (faudra peut etre mettre sur le heap)
-        // TODO: à verifier
                                    classicPendingMatch(PendingMatch(CLASSIC_MODE)),
                                    timedPendingMatch(PendingMatch(TIMED_MODE)),
                                    teamPendingMatch(PendingMatch(TEAM_MODE)) {
     std::cout << "Constructor" << std::endl;
-    //Nice print
 };
 
 void MatchMaker::run() {

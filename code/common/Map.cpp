@@ -114,22 +114,6 @@ bool Map::isNextToPath(Position position) {
     return count >= 2;
 }
 
-bool Map::addTower(int x, int y, int typeOfTower) {
-    if (matrix[y][x] == -1) {
-        matrix[y][x] = typeOfTower*10+1; // 10 = number of upgrades per tower possible
-        return true;
-    }
-    return false;
-}
-
-bool Map::removeTower(int x, int y) {
-    if (matrix[y][x] > 0) {
-        matrix[y][x] = -1;
-        return true;
-    }
-    return false;
-}
-
 void Map::copyQuarter() {
     for (int y = 0; y < SIZE; y++) {
         for (int x = 0; x < SIZE; x++) {
@@ -158,6 +142,31 @@ void Map::basicMap() {
     }
 }
 
-bool Map::isPath(int x, int y) {
-    return matrix[y][x] == 0;
+
+bool Map::addTower(int x, int y, int typeOfTower) {
+    if (matrix[y][x] == -1) {
+        matrix[y][x] = typeOfTower*10+1; // 10 = number of upgrades per tower possible
+        return true;
+    }
+    return false;
+}
+
+bool Map::removeTower(int x, int y) {
+    if (matrix[y][x] > 0) {
+        matrix[y][x] = -1;
+        return true;
+    }
+    return false;
+}
+
+void Map::addPNG(int x, int y) {
+
+}
+
+void Map::removePNG(int x, int y) {
+
+}
+
+void Map::movePNG(int x1, int y1, int x2, int y2) {
+
 }

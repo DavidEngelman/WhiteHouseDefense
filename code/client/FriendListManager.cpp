@@ -1,19 +1,11 @@
-//
-// Created by jurgen on 2/18/17.
-//
-
 #include "FriendListManager.hpp"
 
-FriendListManager::FriendListManager(int port, char* address,int id, std::string username):
-                   NetworkedManager(port, address), player_id(id),username(username),
-                   friendList(getRequestServer(GET_FRIENDLIST, username)),
-                   friendRequests(getRequestServer(GET_FRIEND_REQUESTS, username)),
-                   pendingInvitations(getRequestServer(GET_PENDING_INVITATIONS,username))
-{
-    friendListProcess();
+FriendListManager::FriendListManager(int port, char* address, int id, std::string username, App* my_master_app):
+        NetworkedManager(port, address, my_master_app), player_id(id), username(username),friendList(getRequestServer(GET_FRIENDLIST, username)),
+        friendRequests(getRequestServer(GET_FRIEND_REQUESTS, username)), pendingInvitations(getRequestServer(GET_PENDING_INVITATIONS,username)){
 };
 
-void FriendListManager::friendListProcess() {
+void FriendListManager::run() {
     friendListUI.display();
 
     int choice = friendListUI.select();
@@ -72,6 +64,9 @@ void FriendListManager::friendListProcess() {
         choice = friendListUI.select();
 
     }
+    MainManager * mainManager = new MainManager(server_ip_address, player_id, username, my_master_app);
+    my_master_app->transition(mainManager); // Permet de revenir au main menu , je ne sais pas si
+                                                    // c'est le meilleur moyen pour faire ca
 }
 
 std::string FriendListManager::getRequestServer(std::string action, std::string username ){

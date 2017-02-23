@@ -16,8 +16,6 @@ public:
 
     bool checkCoord(int x, int y);
 
-	void showNoInternetError();
-
 	void display();
 
 	std::string concatCoord(int x, int y);
