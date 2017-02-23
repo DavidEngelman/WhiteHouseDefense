@@ -10,6 +10,10 @@ class AbstractTower {
 protected:
 
     int quadrant;
+public:
+    int getQuadrant() const;
+
+protected:
     const int price;
     int radius;
     Position position;
@@ -18,7 +22,7 @@ public:
 
     AbstractTower(Position position, int price, int radius);
 
-    void setQuadrant();
+    const int computeQuadrant();
 
     virtual ~AbstractTower() = default;
 
