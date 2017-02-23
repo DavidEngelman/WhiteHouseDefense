@@ -31,7 +31,7 @@ void GameState::add_tower(Position position) {
     // TODO: il faut modifier cette fonction, car on ne sait pas de quel type de tour on parle
     // il faut soit prendre un parametre de plus (le type), soit modifier la signature pour
     // qu'elle prenne une AbstractTower
-//        towers.push_back(Tower tower);
+    // towers.push_back(Tower tower);
 }
 
 bool GameState::is_only_one_alive() {
@@ -45,11 +45,17 @@ bool GameState::is_only_one_alive() {
 }
 
 bool GameState::isWaveFinished() {
-    // TODO
+    bool finished = true;
+    for (Wave &wave: waves) {
+        if (wave.getPnjs().size() > 0) {
+            finished = false;
+        }
+    }
+    return finished;
 }
 
 bool GameState::isFinished() {
-    // TODO
+    return is_only_one_alive();
 }
 
 

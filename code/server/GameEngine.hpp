@@ -1,5 +1,3 @@
-
-
 #ifndef PROJET_GAMEENGINE_HPP
 #define PROJET_GAMEENGINE_HPP
 
@@ -7,17 +5,18 @@
 #include "Timer.h"
 #include "../common/Direction.h"
 
+#define STEP_DURATION 1000
+
 class GameEngine {
 
 private:
+    GameState gameState;
+    int numStepsDone;
+
+    Timer timer;
+public:
 
     GameEngine();
-
-    GameState gameState;
-    Timer my_timer;
-
-
-public:
 
     void update();
     void move_pnj_forward(PNJ& pnj);
