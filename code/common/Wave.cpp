@@ -25,3 +25,7 @@ std::string Wave::serialize() {
 std::vector<PNJ> &Wave::getMy_pnjs(){
     return my_pnjs;
 }
+
+int Wave::getId() const {
+    return id;
+}
