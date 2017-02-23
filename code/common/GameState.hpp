@@ -9,6 +9,11 @@
 #include "Wave.h"
 #include "../common/Strings.hpp"
 
+typedef struct Direction{
+	int x;
+	int y;
+};
+
 const static std::vector<std::string> validModes = {CLASSIC_MODE, TEAM_MODE, TIMED_MODE};
 
 class GameState {
@@ -31,6 +36,11 @@ public:
     void decrease_player_hp(PlayerState &player, int amount);
 
     void increase_player_hp(PlayerState &player, int amount);
+
+	void move_waves_forward();
+	Direction get_forward_direction(int wave_id);
+    Direction get_right_direction(int wave_id);
+    Direction get_left_direction(int wave_id);
 
     void add_tower(Position position);
 

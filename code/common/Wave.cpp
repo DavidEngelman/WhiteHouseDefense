@@ -1,6 +1,6 @@
 #include "Wave.h"
 
-Wave::Wave(int nb_of_pnj)  : my_wave(nb_of_pnj){}
+Wave::Wave(int nb_of_pnj)  : my_pnjs(nb_of_pnj){}
 
 
 
@@ -11,7 +11,7 @@ std::string Wave::serialize() {
 
     std::string serialized_me;
     serialized_me += "Wave,";
-    for (PNJ pnj: my_wave){
+    for (PNJ& pnj: my_pnjs){
 
         //TODO:Pnj.serialize()
         //std::string serialized_pnj = pnj.serialize();
@@ -20,4 +20,8 @@ std::string Wave::serialize() {
     serialized_me += ";";
 
     return serialized_me;
+}
+
+std::vector<PNJ> &Wave::getMy_pnjs(){
+    return my_pnjs;
 }

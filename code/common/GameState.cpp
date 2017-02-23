@@ -51,3 +51,119 @@ bool GameState::isFinished() {
     // TODO
 }
 
+void GameState::move_waves_forward(){
+    for (Wave& wave: waves){
+        //TODO
+    }
+
+}
+
+Direction GameState::get_forward_direction(int wave_id) {
+    Direction direction;
+
+    if (wave_id == 0){ // wave du haut
+
+        direction.x = 0;
+        direction.y = 1;
+        return direction;
+
+    }
+
+    else if (wave_id == 1){ // wave de droite
+
+        direction.x = 1;
+        direction.y = 0;
+        return direction;
+
+    }
+
+    else if (wave_id == 2){ // wave du bas
+
+        direction.x = 0;
+        direction.y = -1;
+        return direction;
+
+    }
+
+    else if (wave_id == 3){ // wave de gauche
+
+        direction.x = 1;
+        direction.y = 0;
+        return direction;
+
+    }
+
+}
+
+Direction GameState::get_right_direction(int wave_id) {
+    Direction direction;
+
+    if (wave_id == 0){ // wave du haut
+
+        direction.x = 1;
+        direction.y = 0;
+        return direction;
+
+    }
+
+    else if (wave_id == 1){ // wave de droite
+
+        direction.x = 0;
+        direction.y = -1;
+        return direction;
+
+    }
+
+    else if (wave_id == 2){ // wave du bas
+
+        direction.x = 1;
+        direction.y = 0;
+        return direction;
+
+    }
+
+    else if (wave_id == 3){ // wave de gauche
+
+        direction.x = 0;
+        direction.y = 1;
+        return direction;
+
+    }
+}
+
+Direction GameState::get_left_direction(int wave_id) {
+    Direction direction;
+
+    if (wave_id == 0){ // wave du haut
+
+        direction.x = -1;
+        direction.y = 0;
+        return direction;
+
+    }
+
+    else if (wave_id == 1){ // wave de droite
+
+        direction.x = 0;
+        direction.y = 1;
+        return direction;
+
+    }
+
+    else if (wave_id == 2){ // wave du bas
+
+        direction.x = 1;
+        direction.y = 0;
+        return direction;
+
+    }
+
+    else if (wave_id == 3){ // wave de gauche
+
+        direction.x = 0;
+        direction.y = -1;
+        return direction;
+
+    }
+}
+

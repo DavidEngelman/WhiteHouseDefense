@@ -10,7 +10,7 @@
 class Wave {
 
 private:
-    std::vector<PNJ> my_wave;
+    std::vector<PNJ> my_pnjs;
 
 public:
 
@@ -19,6 +19,7 @@ public:
     Wave() = default; //not sure
     Wave(int nb_of_pnj);
 
+    std::vector<PNJ> &getMy_pnjs();
 };
 
 
