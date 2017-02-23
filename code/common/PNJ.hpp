@@ -1,4 +1,5 @@
 #include "Position.hpp"
+#include "Direction.h"
 
 
 
@@ -46,7 +47,7 @@ public:
 
 	Direction get_right_direction(int wave_id);
 
-	Directon get_left_direction(int wave_id);
+	Direction get_left_direction(int wave_id);
 
 };
 
