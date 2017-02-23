@@ -14,11 +14,13 @@ protected:
     int radius;
     Position position;
 
+    const int computeQuadrant();
+
 public:
 
     AbstractTower(Position position, int price, int radius);
 
-    void setQuadrant();
+    int getQuadrant() const;
 
     virtual ~AbstractTower() = default;
 
