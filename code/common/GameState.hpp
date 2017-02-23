@@ -21,6 +21,7 @@ class GameState {
     Map map;
 
 public:
+	GameState();
 
     std::string serialize();
 
@@ -30,7 +31,7 @@ public:
 
     void decrease_player_hp(PlayerState &player, int amount);
 
-    void increase_player_hp(PlayerState &player, int amount);
+    void increase_player_hp(PlayerState &player, int amount); //C'est possible ?
 
     void add_tower(Position position);
 

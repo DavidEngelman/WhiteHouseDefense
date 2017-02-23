@@ -51,3 +51,6 @@ bool GameState::isFinished() {
     // TODO
 }
 
+GameState::GameState() {
+}
+
