@@ -1,10 +1,12 @@
-#include "Position.hpp"
-#include "Direction.h"
-
 
 
 #ifndef PROJET_PNJ_H
 #define PROJET_PNJ_H
+
+#include "Position.hpp"
+#include "Direction.h"
+#include "Map.hpp"
+#include "Wave.h"
 
 class PNJ{
 
@@ -22,6 +24,8 @@ public:
     PNJ(Position position, int healthPoints, int movementSpeed);
 
     ~PNJ() = default;
+
+	void advance(Wave, Map);
 
 	int getHealthPoints() const;
 
