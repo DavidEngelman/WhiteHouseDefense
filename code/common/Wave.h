@@ -10,7 +10,7 @@
 class Wave {
 
 private:
-    std::vector<PNJ> my_pnjs;
+    std::vector<PNJ> pnjs;
     int id;
 
 public:
@@ -21,7 +21,7 @@ public:
     Wave() = default; //not sure
     Wave(int nb_of_pnj);
 
-    std::vector<PNJ> &getMy_pnjs();
+    std::vector<PNJ> &getPnjs();
 };
 
 

@@ -12,7 +12,7 @@ private:
 
     GameEngine();
 
-    GameState my_gamestate;
+    GameState gameState;
     Timer my_timer;
 
 
@@ -23,7 +23,7 @@ public:
     void move_waves_forward();
 
 
-
+    void move_wave_forward(Wave &wave);
 };
 
 

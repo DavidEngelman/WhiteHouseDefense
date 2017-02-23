@@ -17,6 +17,8 @@ typedef struct Direction{
 const static std::vector<std::string> validModes = {CLASSIC_MODE, TEAM_MODE, TIMED_MODE};
 
 class GameState {
+private:
+
 	std::vector<PlayerState> player_states;
 	std::vector<AbstractTower>       towers;
     std::vector<Wave> waves;
@@ -26,6 +28,8 @@ class GameState {
     Map map;
 
 public:
+
+    std::vector<Wave> &getWaves() const;
 
     std::string serialize();
 
