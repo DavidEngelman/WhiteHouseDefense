@@ -26,6 +26,6 @@ std::vector<PNJ> &Wave::getPnjs(){
     return pnjs;
 }
 
-int Wave::getId() const {
-    return id;
+int Wave::getQuadrant() const {
+    return quandrant;
 }

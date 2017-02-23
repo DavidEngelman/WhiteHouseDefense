@@ -21,20 +21,9 @@ void GameEngine::updateWaves() {
     movePNJsInWaves(waves);
 }
 
-void GameEngine::updateWave(Wave &wave) {
-    // On commence par infliger des degats, puis on bouge les PNJ
-    // Pas sur que l'ordre soit important
-    for (gameState.)
-
-    for (PNJ& pnj: wave.getPnjs()){
-        
-    }
-
-}
-
 void GameEngine::dealDamage(std::vector<Wave> &waves) {
     for (AbstractTower& tower: gameState.getTowers()){
-//        Wave wave = getWaveInSameQuandrant(tower, waves);
+        Wave& wave = getWaveInSameQuadrant(tower, waves);
         tower.attack(wave);
     }
 }
@@ -48,6 +37,15 @@ void GameEngine::movePNJsInWaves(std::vector<Wave> &waves) {
 void GameEngine::movePNJsInWave(Wave &wave) {
     for (PNJ& pnj: wave.getPnjs()){
 
+    }
+}
+
+Wave& GameEngine::getWaveInSameQuadrant(AbstractTower &tower, std::vector<Wave> &waves) {
+    int quadrant = tower.getQuadrant();
+    for (Wave& wave: waves) {
+        if (quadrant == wave.getQuadrant()) {
+            return wave;
+        }
     }
 }
 

@@ -30,6 +30,8 @@ public:
     void movePNJsInWaves(std::vector<Wave> &waves);
 
     void movePNJsInWave(Wave &wave);
+
+    Wave& getWaveInSameQuadrant(AbstractTower &tower, std::vector<Wave> &waves);
 };
 
 

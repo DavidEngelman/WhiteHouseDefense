@@ -11,10 +11,9 @@ class Wave {
 
 private:
     std::vector<PNJ> pnjs;
-    int id;
-
+    int quandrant;
 public:
-    int getId() const;
+    int getQuadrant() const;
 
     std::string serialize();
 
