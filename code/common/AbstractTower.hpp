@@ -9,14 +9,16 @@ class AbstractTower {
 
 protected:
 
-    int owner; // player ID
+    int quadrant;
     const int price;
     int radius;
     Position position;
 
 public:
 
-    AbstractTower(Position position, int price, int owner, int radius);
+    AbstractTower(Position position, int price, int radius);
+
+    void setQuadrant();
 
     virtual ~AbstractTower() = default;
 
