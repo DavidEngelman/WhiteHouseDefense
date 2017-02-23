@@ -52,11 +52,12 @@ bool GameState::isFinished() {
 }
 
 void GameState::move_waves_forward(){
-    for (Wave& wave: waves){
-
+    for (int i = 0; i<waves.size(); i++){
+        //TODO
     }
 
 }
+
 
 bool GameState::can_go_forward(int wave_id, Position &current_pos) {
     Direction dir  = get_forward_direction(wave_id);
