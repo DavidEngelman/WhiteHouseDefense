@@ -10,6 +10,8 @@ class GameEngine {
 
 private:
 
+    GameEngine();
+
     GameState my_gamestate;
     Timer my_timer;
 
@@ -17,6 +19,9 @@ private:
 public:
 
     void update();
+    void move_pnj_forward(PNJ& pnj);
+    void move_all_pnj_forward();
+
 
 
 };
