@@ -8,11 +8,9 @@
 #include "Map.hpp"
 #include "Wave.h"
 #include "../common/Strings.hpp"
+#include ""
 
-typedef struct Direction {
-    int x;
-    int y;
-};
+
 
 const static std::vector<std::string> validModes = {CLASSIC_MODE, TEAM_MODE, TIMED_MODE};
 

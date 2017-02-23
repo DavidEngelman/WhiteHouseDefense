@@ -35,7 +35,7 @@ void GameEngine::updateWave(Wave &wave) {
 void GameEngine::dealDamage(std::vector<Wave> &waves) {
     for (AbstractTower& tower: gameState.getTowers()){
 //        Wave wave = getWaveInSameQuandrant(tower, waves);
-        tower.attack(wave);
+        tower.shoot(wave);
     }
 }
 
