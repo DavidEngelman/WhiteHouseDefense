@@ -52,137 +52,7 @@ bool GameState::isFinished() {
     // TODO
 }
 
-bool GameState::can_go_forward(int wave_id, Position &current_pos) {
-    Direction dir = get_forward_direction(wave_id);
 
-    Position forward_pos = Position(current_pos.getX() + dir.x, current_pos.getY() + dir.y);
-
-    if (map.is_path(forward_pos)) {
-        return true;
-    }
-    return false;
-
-
-}
-
-bool GameState::can_go_left(int wave_id, Position &current_pos, Position &last_pos) {
-    Direction dir = get_left_direction(wave_id);
-
-    Position letf_pos = Position(current_pos.getX() + dir.x, current_pos.getY() + dir.y);
-
-    if (map.is_path(letf_pos) && letf_pos != last_pos) {
-        //TODO implement != for position
-        return true;
-    }
-    return false;
-
-
-}
-
-bool GameState::can_go_right(int wave_id, Position &current_pos, Position &last_pos) {
-    Direction dir = get_right_direction(wave_id);
-
-    Position right_pos = Position(current_pos.getX() + dir.x, current_pos.getY() + dir.y);
-
-    if (map.is_path(right_pos) && right_pos != last_pos) {
-        //TODO implement != for position
-        return true;
-    }
-    return false;
-
-
-}
-
-Direction GameState::get_forward_direction(int wave_id) {
-    Direction direction;
-
-    if (wave_id == 0) { // wave du haut
-
-        direction.x = 0;
-        direction.y = 1;
-        return direction;
-
-    } else if (wave_id == 1) { // wave de droite
-
-        direction.x = 1;
-        direction.y = 0;
-        return direction;
-
-    } else if (wave_id == 2) { // wave du bas
-
-        direction.x = 0;
-        direction.y = -1;
-        return direction;
-
-    } else if (wave_id == 3) { // wave de gauche
-
-        direction.x = 1;
-        direction.y = 0;
-        return direction;
-
-    }
-
-}
-
-Direction GameState::get_right_direction(int wave_id) {
-    Direction direction;
-
-    if (wave_id == 0) { // wave du haut
-
-        direction.x = 1;
-        direction.y = 0;
-        return direction;
-
-    } else if (wave_id == 1) { // wave de droite
-
-        direction.x = 0;
-        direction.y = -1;
-        return direction;
-
-    } else if (wave_id == 2) { // wave du bas
-
-        direction.x = 1;
-        direction.y = 0;
-        return direction;
-
-    } else if (wave_id == 3) { // wave de gauche
-
-        direction.x = 0;
-        direction.y = 1;
-        return direction;
-
-    }
-}
-
-Direction GameState::get_left_direction(int wave_id) {
-    Direction direction;
-
-    if (wave_id == 0) { // wave du haut
-
-        direction.x = -1;
-        direction.y = 0;
-        return direction;
-
-    } else if (wave_id == 1) { // wave de droite
-
-        direction.x = 0;
-        direction.y = 1;
-        return direction;
-
-    } else if (wave_id == 2) { // wave du bas
-
-        direction.x = 1;
-        direction.y = 0;
-        return direction;
-
-    } else if (wave_id == 3) { // wave de gauche
-
-        direction.x = 0;
-        direction.y = -1;
-        return direction;
-
-    }
-}
 
 std::vector<Wave> &GameState::getWaves() {
     return waves;
@@ -190,5 +60,9 @@ std::vector<Wave> &GameState::getWaves() {
 
 std::vector<AbstractTower> &GameState::getTowers() {
     return towers;
+}
+
+Map &GameState::getMap() const {
+    return map;
 }
 

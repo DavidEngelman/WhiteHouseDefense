@@ -19,16 +19,13 @@ private:
 
     std::vector<PlayerState> player_states;
     std::vector<AbstractTower> towers;
-
-
-private:
     std::vector<Wave> waves;
 
     std::string mode;
 
     Map map;
-
 public:
+    Map &getMap() const;
 
     std::vector<Wave> &getWaves();
 
@@ -44,21 +41,7 @@ public:
 
     void increase_player_hp(PlayerState &player, int amount);
 
-/////////////////////////////////////////////////////////////////////
-    void move_waves_forward();
 
-    Direction get_forward_direction(int wave_id);
-
-    Direction get_right_direction(int wave_id);
-
-    Direction get_left_direction(int wave_id);
-
-    bool can_go_forward(int wave_id, Position &current_pos);
-
-    bool can_go_left(int wave_id, Position &current_pos, Position &last_pos);
-
-    bool can_go_right(int wave_id, Position &current_pos, Position &last_pos);
-/////////////////////////////////////////////////////////////////////
 
     void add_tower(Position position);
 
