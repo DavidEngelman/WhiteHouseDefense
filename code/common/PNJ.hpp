@@ -1,5 +1,7 @@
 #include "Position.hpp"
 
+
+
 #ifndef PROJET_PNJ_H
 #define PROJET_PNJ_H
 
@@ -33,6 +35,19 @@ public:
 	Position getPosition() const;
 
 	void setPosition(Position position);
+
+	bool can_go_forward(int wave_id, Position &current_pos);
+
+	bool can_go_left(int wave_id, Position &current_pos, Position &last_pos);
+
+	bool can_go_right(int wave_id, Position &current_pos, Position &last_pos);
+
+	Direction get_forward_direction(int wave_id);
+
+	Direction get_right_direction(int wave_id);
+
+	Directon get_left_direction(int wave_id);
+
 };
 
 #endif // PROJET_PNJ_H
