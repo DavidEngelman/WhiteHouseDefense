@@ -31,6 +31,18 @@ public:
 
     void movePNJsInWave(Wave &wave);
 
+    bool can_go_forward(int wave_id, Position &current_pos);
+
+    bool can_go_left(int wave_id, Position &current_pos, Position &last_pos);
+
+    bool can_go_right(int wave_id, Position &current_pos, Position &last_pos);
+
+    Direction get_forward_direction(int wave_id);
+
+    Direction get_right_direction(int wave_id);
+
+    Direction get_left_direction(int wave_id);
+
     Wave& getWaveInSameQuadrant(AbstractTower &tower, std::vector<Wave> &waves);
 };
 
