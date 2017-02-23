@@ -9,6 +9,18 @@ position(position), healthPoints(healthPoints), movementSpeed(movementSpeed) {}
 
 void PNJ::advance(Map& map) {
 
+    if (can_go_forward(map)){
+        //TODO
+    }
+
+    else if (can_go_left(map)){
+        //TODO
+    }
+
+    else if (can_go_right(map)){
+        //TODO
+    }
+
 }
 
 int PNJ::getHealthPoints() const {
@@ -41,10 +53,10 @@ void PNJ::setPosition(Position position){
 }
 
 
-bool PNJ::can_go_forward(int wave_id, Position &current_pos) {
-    Direction dir = get_forward_direction(wave_id);
+bool PNJ::can_go_forward(Map& map) {
+    Direction dir = get_forward_direction();
 
-    Position forward_pos = Position(current_pos.getX() + dir.x, current_pos.getY() + dir.y);
+    Position forward_pos = Position(position.getX() + dir.x, position.getY() + dir.y);
 
     if (map.is_path(forward_pos)) {
         return true;
@@ -54,12 +66,12 @@ bool PNJ::can_go_forward(int wave_id, Position &current_pos) {
 
 }
 
-bool PNJ::can_go_left(int wave_id, Position &current_pos, Position &last_pos) {
-    Direction dir = get_left_direction(wave_id);
+bool PNJ::can_go_left(Map& map) {
+    Direction dir = get_left_direction();
 
-    Position letf_pos = Position(current_pos.getX() + dir.x, current_pos.getY() + dir.y);
+    Position left_pos = Position(position.getX() + dir.x, position.getY() + dir.y);
 
-    if (map.is_path(letf_pos) && letf_pos != last_pos) {
+    if (map.is_path(left_pos) && left_pos != last_pos) {
         //TODO implement != for position
         return true;
     }
@@ -68,10 +80,10 @@ bool PNJ::can_go_left(int wave_id, Position &current_pos, Position &last_pos) {
 
 }
 
-bool PNJ::can_go_right(int wave_id, Position &current_pos, Position &last_pos) {
-    Direction dir = get_right_direction(wave_id);
+bool PNJ::can_go_right(Map& map) {
+    Direction dir = get_right_direction();
 
-    Position right_pos = Position(current_pos.getX() + dir.x, current_pos.getY() + dir.y);
+    Position right_pos = Position(position.getX() + dir.x, position.getY() + dir.y);
 
     if (map.is_path(right_pos) && right_pos != last_pos) {
         //TODO implement != for position
@@ -82,93 +94,93 @@ bool PNJ::can_go_right(int wave_id, Position &current_pos, Position &last_pos) {
 
 }
 
-Direction PNJ::get_forward_direction(int wave_id) {
-    Direction direction;
+Direction PNJ::get_forward_direction() {
+    Direction move;
 
-    if (wave_id == 0) { // wave du haut
+    if (direction == 0) { // wave du haut
 
-        direction.x = 0;
-        direction.y = 1;
-        return direction;
+        move.x = 0;
+        move.y = 1;
+        return move;
 
-    } else if (wave_id == 1) { // wave de droite
+    } else if (direction == 1) { // wave de droite
 
-        direction.x = 1;
-        direction.y = 0;
-        return direction;
+        move.x = 1;
+        move.y = 0;
+        return move;
 
-    } else if (wave_id == 2) { // wave du bas
+    } else if (direction == 2) { // wave du bas
 
-        direction.x = 0;
-        direction.y = -1;
-        return direction;
+        move.x = 0;
+        move.y = -1;
+        return move;
 
-    } else if (wave_id == 3) { // wave de gauche
+    } else if (direction == 3) { // wave de gauche
 
-        direction.x = 1;
-        direction.y = 0;
-        return direction;
+        move.x = 1;
+        move.y = 0;
+        return move;
 
     }
 
 }
 
-Direction PNJ::get_right_direction(int wave_id) {
-    Direction direction;
+Direction PNJ::get_right_direction() {
+    Direction move;
 
-    if (wave_id == 0) { // wave du haut
+    if (direction == 0) { // wave du haut
 
-        direction.x = 1;
-        direction.y = 0;
-        return direction;
+        move.x = 1;
+        move.y = 0;
+        return move;
 
-    } else if (wave_id == 1) { // wave de droite
+    } else if (direction == 1) { // wave de droite
 
-        direction.x = 0;
-        direction.y = -1;
-        return direction;
+        move.x = 0;
+        move.y = -1;
+        return move;
 
-    } else if (wave_id == 2) { // wave du bas
+    } else if (direction == 2) { // wave du bas
 
-        direction.x = 1;
-        direction.y = 0;
-        return direction;
+        move.x = 1;
+        move.y = 0;
+        return move;
 
-    } else if (wave_id == 3) { // wave de gauche
+    } else if (direction == 3) { // wave de gauche
 
-        direction.x = 0;
-        direction.y = 1;
-        return direction;
+        move.x = 0;
+        move.y = 1;
+        return move;
 
     }
 }
 
-Direction PNJ::get_left_direction(int wave_id) {
-    Direction direction;
+Direction PNJ::get_left_direction() {
+    Direction move;
 
-    if (wave_id == 0) { // wave du haut
+    if (direction == 0) { // wave du haut
 
-        direction.x = -1;
-        direction.y = 0;
-        return direction;
+        move.x = -1;
+        move.y = 0;
+        return move;
 
-    } else if (wave_id == 1) { // wave de droite
+    } else if (direction == 1) { // wave de droite
 
-        direction.x = 0;
-        direction.y = 1;
-        return direction;
+        move.x = 0;
+        move.y = 1;
+        return move;
 
-    } else if (wave_id == 2) { // wave du bas
+    } else if (direction == 2) { // wave du bas
 
-        direction.x = 1;
-        direction.y = 0;
-        return direction;
+        move.x = 1;
+        move.y = 0;
+        return move;
 
-    } else if (wave_id == 3) { // wave de gauche
+    } else if (direction == 3) { // wave de gauche
 
-        direction.x = 0;
-        direction.y = -1;
-        return direction;
+        move.x = 0;
+        move.y = -1;
+        return move;
 
     }
 }
