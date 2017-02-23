@@ -1,13 +1,15 @@
 #include "PNJ.hpp"
 
 
-PNJ::PNJ(): PNJ(Position(100, 100), 100, 100){
+PNJ::PNJ(): PNJ(Position(15, 15), 100, 100){
 }
 
 PNJ::PNJ(Position position, int healthPoints, int movementSpeed) :
 position(position), healthPoints(healthPoints), movementSpeed(movementSpeed) {}
 
+void PNJ::advance(Map& map) {
 
+}
 
 int PNJ::getHealthPoints() const {
     return this->healthPoints;
