@@ -1,12 +1,29 @@
 #include "AbstractTower.hpp"
+#include "Map.hpp"
+#include "Constants.h"
 
 AbstractTower::AbstractTower(Position position, int price, int radius):
-        position(position), price(price), quadrant(0), radius(radius) {
-    AbstractTower::setQuadrant();
+        position(position), price(price), quadrant(computeQuadrant()), radius(radius) {
 }
 
-void AbstractTower::setQuadrant() {
+const int AbstractTower::computeQuadrant() {
+    int realY = SIZE - position.getY();
+    int realX = position.getX();
 
+    // La diagonale croissante est celle qui respecte y = x,
+    // et la diagonale decroissante est celle qui respecte y = -x
+    bool aboveGrowingDiagonal = realY > realX;
+    bool aboveDecreasingDiagonal = realY > -realX;
+
+    if (aboveGrowingDiagonal && aboveDecreasingDiagonal){
+        return NORTH;
+    } else if (!aboveGrowingDiagonal && !aboveDecreasingDiagonal){
+        return SOUTH;
+    } else if (aboveGrowingDiagonal && !aboveDecreasingDiagonal){
+        return WEST;
+    } else {
+        return EAST;
+    }
 }
 
 int AbstractTower::getOwner() const { return quadrant; }
@@ -31,4 +48,8 @@ std::string AbstractTower::serialize() {
                      std::to_string(radius) + ","/* + TODO:position.serialize()*/ + ";";
 
     return serialized_me;
+}
+
+int AbstractTower::getQuadrant() const {
+    return quadrant;
 }
