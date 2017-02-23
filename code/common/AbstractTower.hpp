@@ -3,6 +3,7 @@
 
 #include "../common/Position.hpp"
 #include "PNJ.hpp"
+#include "Wave.h"
 #include <string>
 
 class AbstractTower {
@@ -24,7 +25,7 @@ public:
 
     virtual ~AbstractTower() = default;
 
-    virtual void shoot(PNJ target) = 0; // HAS TO BE DEFINED BY INHERITORS
+    virtual void shoot(Wave& wave) = 0; // HAS TO BE DEFINED BY INHERITORS
 
     virtual int getOwner() const;
 

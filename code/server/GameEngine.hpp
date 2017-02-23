@@ -5,6 +5,7 @@
 
 #include "../common/GameState.hpp"
 #include "Timer.h"
+#include "../common/Direction.h"
 
 class GameEngine {
 
