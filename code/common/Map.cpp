@@ -143,30 +143,30 @@ void Map::basicMap() {
 }
 
 
-bool Map::addTower(int x, int y, int typeOfTower) {
-    if (matrix[y][x] == -1) {
-        matrix[y][x] = typeOfTower*10+1; // 10 = number of upgrades per tower possible
+bool Map::addTower(Position pos, int typeOfTower) {
+    if (matrix[pos.y][pos.x] == -1) {
+        matrix[pos.y][pos.x] = typeOfTower*10+1; // 10 = number of upgrades per tower possible
         return true;
     }
     return false;
 }
 
-bool Map::removeTower(int x, int y) {
-    if (matrix[y][x] > 0) {
-        matrix[y][x] = -1;
+bool Map::removeTower(Position pos) {
+    if (matrix[pos.y][pos.x] > 0) {
+        matrix[pos.y][pos.x] = -1;
         return true;
     }
     return false;
 }
 
-void Map::addPNG(int x, int y) {
-
+bool Map::addPNG(Position pos) {
+    return false;
 }
 
-void Map::removePNG(int x, int y) {
-
+bool Map::removePNG(Position pos) {
+    return false;
 }
 
-void Map::movePNG(int x1, int y1, int x2, int y2) {
-
+bool Map::movePNG(Position origin, Position nextPos) {
+    return false;
 }
