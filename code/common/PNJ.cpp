@@ -80,10 +80,7 @@ bool PNJ::can_go_forward(Map& map) {
 
     Position forward_pos = Position(getPosition().getX() + dir.x, getPosition().getY() + dir.y);
 
-    if (map.isPath(forward_pos)) {
-        return true;
-    }
-    return false;
+    return map.isPath(forward_pos);
 
 
 }
