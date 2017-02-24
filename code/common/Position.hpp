@@ -24,6 +24,8 @@ public:
     int getY() const;
 
     void setY(int y);
+
+    std::string serialize();
 };
 
 #endif // POSITION_HPP

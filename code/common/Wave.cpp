@@ -6,16 +6,14 @@ Wave::Wave(int number_of_pnjs)  : number_of_pnjs(number_of_pnjs), number_of_adde
 
 std::string Wave::serialize() {
     /*
-     * fill a string like this : Wave,serialized(PNJ1),serialized(PNJ2),...;
+     * fill a string like this : Wave,quandrant,x,y,heathpoints,x,y,healthpoints,....;
      */
 
     std::string serialized_me;
-    serialized_me += "Wave,";
+    serialized_me += "Wave," + std::to_string(quandrant);
     for (PNJ& pnj: pnjs){
-
-        //TODO:Pnj.serialize()
-        //std::string serialized_pnj = pnj.serialize();
-        //serialized_me += serialized_pnj;
+        std::string serialized_pnj = pnj.serialize();
+        serialized_me += serialized_pnj;
     }
     serialized_me += ";";
 

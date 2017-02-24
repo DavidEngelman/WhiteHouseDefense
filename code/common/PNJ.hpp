@@ -62,6 +62,9 @@ public:
     const Position &getLast_position() const;
 
     void setLast_position(const Position &last_position);
+
+	std::string serialize();
+
 };
 
 #endif // PROJET_PNJ_H
