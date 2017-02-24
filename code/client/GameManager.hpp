@@ -8,13 +8,17 @@
 #include "../common/Networking.h"
 #include "MainManager.hpp"
 
-class GameManager : NetworkedManager{
+#define WAVE 'w'
+#define PLACING_TOWER 't'
+
+class GameManager : public NetworkedManager{ //Tmp : public (à supprimer après tests)
 
 private:
     GameState gameState;
     GameUI gameUI;
     std::string player_username;
     int player_id; // Je sais plus si les deux sont utiles je les met au cas ou
+    char phase; // Phase de jeu (vague d'ennemis ou placement de tours)
 
 public:
     GameManager(char* ip_addr, int port, int id, std::string username, App* app);

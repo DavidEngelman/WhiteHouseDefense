@@ -4,13 +4,16 @@
 
 
 GameManager::GameManager(char* ip_addr, int port, int id, std::string username, App* app) :
-        NetworkedManager(port, ip_addr, app), player_id(id), player_username(username) {}
+        NetworkedManager(port, ip_addr, app), player_id(id), player_username(username), phase(PLACING_TOWER) {}
 
 
 void GameManager::placeTower(){
-    std::string coord;
-    gameUI.display();
-    coord = gameUI.getCoordTower();
+    if (gameUI.isBuyingTower()) {
+        gameUI.display();
+        Position pos = gameUI.getPosBuyingTower();
+    } else {
+        gameUI.display();
+    }
     //send_message(server_socket, coord.c_str());
 }
 
@@ -25,5 +28,10 @@ void GameManager::come_back_to_menu(){
 }
 
 void GameManager::run() {
-
+    gameUI.display();
+    if (phase == PLACING_TOWER) {
+        placeTower();
+    } else {
+        //TODO faire les vagues d'ennemis et afficher à l'écran
+    }
 }

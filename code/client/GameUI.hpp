@@ -12,13 +12,12 @@ private:
 public:
     GameUI();
 
-	std::string getCoordTower();
+	Position getPosBuyingTower();
+	bool isBuyingTower();
 
     bool checkCoord(int x, int y);
 
 	void display();
-
-	std::string concatCoord(int x, int y);
 };
 
 #endif

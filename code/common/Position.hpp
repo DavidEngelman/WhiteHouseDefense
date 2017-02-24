@@ -5,11 +5,11 @@
 #include <string>
 
 class Position {
-
-public:
+private:
     int x;
     int y;
 
+public:
     Position();
     Position(int _x, int _y);
 

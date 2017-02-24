@@ -15,7 +15,7 @@ void GameEngine::update() {
 
 void GameEngine::updateWaves() {
     std::vector<Wave> &waves = gameState.getWaves();
-    dealDamageToBase(waves);
+    dealDamageToBase(waves); // INSÉREZ BUG ICI :D
     removeDeadPNJs(); //avant de faire faire avancer les pnj on enlève les morts
     movePNJsInWaves(waves);
 }

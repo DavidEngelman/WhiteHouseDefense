@@ -9,7 +9,7 @@ GameUI::GameUI(){
     map = Map (); //rajouter seed
 }
 
-std::string GameUI::getCoordTower() {
+Position GameUI::getPosBuyingTower() {
     int x;
     int y;
 
@@ -21,7 +21,7 @@ std::string GameUI::getCoordTower() {
         std::cin >> y;
     } while (!checkCoord(x,y));
 
-    return concatCoord(x, y);
+    return Position(x, y);
 }
 
 bool GameUI::checkCoord(int x, int y){
@@ -31,22 +31,27 @@ bool GameUI::checkCoord(int x, int y){
     display();
     std::cout<< "Entrez un x et un y entre 0 et "<<SIZE-1<< std::endl;
     return false;
-
 }
 
 void GameUI::display() {
     map.display();
 }
 
-std::string GameUI::concatCoord(int x,int y){
-    std::string coord = "";
-    if (x < 10){
-        coord = "0";
-    }
-    coord += std::to_string(x) + " ";
-    if (y < 10){
-        coord = "0";
-    }
+bool GameUI::isBuyingTower() {
+    int response;
+    bool ok = false;
 
-    return coord + std::to_string(y);
+    do {
+        std::cout << "Voulez-vous :\n1) Acheter une tour ?\n2) Vendre une tour ?" << std::endl;
+        std::cin >> response;
+        if (!std::cin.fail() and (response == 1 or response == 2)) {
+            ok = true;
+        } else {
+            display();
+            std::cout << "Veuillez entrer '1' ou '2'" << std::endl;
+        }
+
+    } while (!ok);
+
+    return response == 1;
 }
