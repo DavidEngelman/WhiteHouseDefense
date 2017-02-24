@@ -72,15 +72,6 @@ void MatchMaker::launchGameServer(PendingMatch& match) {
 }
 
 void MatchMaker::announceMatchStart(PlayerConnection playerConnection) {
-    //TODO
-    /*
-     * Un truc du genre:
-     * send_message(player, MATCHSTARTING) //Ou MATCHSTARTING serait un nombre (par exemple 32) et du coté du MainManager
-     *                                     // on saurait que 32 veut dire afficher :"La partie va commencer"
-     *                                     //Je ferais ca demain je suis fatigué
-     */
-    // Pour l'instant, ça envoie un bete string
-
     // TODO: si il y a plusieurs servers de jeu d'un meme mode, il faudra trouver un moyen de
     // lui signaler vers lequel il doit parler
 
