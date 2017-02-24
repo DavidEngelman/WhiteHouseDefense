@@ -19,19 +19,18 @@ public:
     GameEngine();
 
     void update();
+
     void move_pnj_forward(PNJ& pnj);
     void updateWaves();
-
-
     void updateWave(Wave &wave);
-
     void dealDamage(std::vector<Wave> &waves);
-
     void movePNJsInWaves(std::vector<Wave> &waves);
-
     void movePNJsInWave(Wave &wave);
-
     void removeDeadPNJs();
+
+    void updatePlayerStates();
+    void updatePlayerState();
+    void dealDamage(std::vector<PlayerState>& playerStates);
 
 
     Wave& getWaveInSameQuadrant(AbstractTower &tower, std::vector<Wave> &waves);

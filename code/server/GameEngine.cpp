@@ -9,6 +9,7 @@ void GameEngine::update() {
     int numStepsToDo = (numMilisecondsSinceStart / STEP_DURATION) - numStepsDone;
     for (int i = 0; i < numStepsToDo; ++i) {
         updateWaves();
+        updatePlayerStates();
     }
 }
 
@@ -17,6 +18,30 @@ void GameEngine::updateWaves() {
     dealDamage(waves);
     removeDeadPNJs(); //avant de faire faire avancer les pnj on enlève les morts
     movePNJsInWaves(waves);
+}
+
+void GameEngine::updatePlayerStates() {
+    std::vector<PlayerState> &playerStates = gameState.getPlayerStates();
+    dealDamage(playerStates);
+}
+
+void GameEngine::dealDamage(std::vector<PlayerState> &playerStates) {
+    for (Wave& wave : gameState.getWaves()){
+        for (PNJ& pnj : wave.getPnjs()){
+            if(pnj.getPosition().getX() == -1 && pnj.getDirection() == WEST){
+                //TODO diminuer la vie du joueur a gauche
+            }
+            else if(pnj.getPosition().getX() == 31 && pnj.getDirection() == EAST){
+                //TODO diminuer la vie du joueur a droite
+            }
+            else if(pnj.getPosition().getY() == -1 && pnj.getDirection() == NORTH){
+                //TODO diminuer la vie du joueur en haut
+            }
+            else if(pnj.getPosition().getY() == 31 && pnj.getDirection() == SOUTH){
+                //TODO diminuer la vie du joueur en bas
+            }
+        }
+    }
 }
 
 void GameEngine::dealDamage(std::vector<Wave> &waves) {

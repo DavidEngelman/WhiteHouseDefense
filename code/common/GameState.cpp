@@ -71,3 +71,7 @@ Map &GameState::getMap() {
     return map;
 }
 
+std::vector<PlayerState> &GameState::getPlayerStates() {
+    return player_states;
+}
+
