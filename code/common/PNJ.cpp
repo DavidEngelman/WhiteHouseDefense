@@ -80,7 +80,7 @@ bool PNJ::can_go_forward(Map& map) {
 
     Position forward_pos = Position(getPosition().getX() + dir.x, getPosition().getY() + dir.y);
 
-    if (map.is_path(forward_pos)) {
+    if (map.isPath(forward_pos)) {
         return true;
     }
     return false;
@@ -93,10 +93,7 @@ bool PNJ::can_go_left(Map& map) {
 
     Position left_pos = Position(getPosition().getX() + dir.x, getPosition().getY() + dir.y);
 
-    if (map.is_path(left_pos) && left_pos != getLast_position()) {
-        return true;
-    }
-    return false;
+    return map.isPath(left_pos) && left_pos != getLast_position();
 
 
 }
@@ -106,10 +103,7 @@ bool PNJ::can_go_right(Map& map) {
 
     Position right_pos = Position(getPosition().getX() + dir.x, getPosition().getY() + dir.y);
 
-    if (map.is_path(right_pos) && right_pos != getLast_position()) {
-        return true;
-    }
-    return false;
+    return map.isPath(right_pos) && right_pos != getLast_position();
 
 
 }

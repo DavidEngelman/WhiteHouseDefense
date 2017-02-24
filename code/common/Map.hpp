@@ -7,12 +7,12 @@
 #define PATH "   "
 #define LIMIT "\033[34m◼\033[0m  "
 #define TOWER "\033[31m◼\033[0m  "
-#define PNG "\033[33m◼\033[0m  "
+#define NPC "\033[33m◼\033[0m  "
 
 #define GRASS_INT -1
 #define PATH_INT 0
 #define LIMIT_INT -2
-#define PNG_INT -3
+#define NPC_INT -3
 #define TOWER_INT 1
 
 #include <string>
@@ -37,9 +37,9 @@ public:
     bool isPath(Position pos);
     bool addTower(Position pos, int typeOfTower);
     bool removeTower(Position pos);
-    bool addPNG(Position pos);
-    bool removePNG(Position pos);
-    bool movePNG(Position origin, Position nextPos);
+    bool addNPC(Position pos);
+    bool removeNPC(Position pos);
+    bool moveNPC(Position origin, Position nextPos);
 };
 
 #endif

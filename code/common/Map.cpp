@@ -39,8 +39,8 @@ void Map::display() {
                 case LIMIT_INT:
                     std::cout << LIMIT;
                     break;
-                case PNG_INT:
-                    std::cout << PNG;
+                case NPC_INT:
+                    std::cout << NPC;
                     break;
                 default:
                     std::cout << TOWER;
@@ -162,14 +162,14 @@ bool Map::removeTower(Position pos) {
     return false;
 }
 
-bool Map::addPNG(Position pos) {
+bool Map::addNPC(Position pos) {
     return false;
 }
 
-bool Map::removePNG(Position pos) {
+bool Map::removeNPC(Position pos) {
     return false;
 }
 
-bool Map::movePNG(Position origin, Position nextPos) {
+bool Map::moveNPC(Position origin, Position nextPos) {
     return false;
 }

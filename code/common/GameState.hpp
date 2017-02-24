@@ -24,7 +24,7 @@ private:
 
     Map map;
 public:
-    Map &getMap() const;
+    Map &getMap();
 
     std::vector<Wave> &getWaves();
 
