@@ -4,6 +4,7 @@
 
 int main(int argc, char *argv[]) {
     GameManager gameManager = GameManager();
+
     /*
     if (argc <= 1){
         std::cout << "Don't forget the ip_adress of the server as argument! ;)" << std::endl;

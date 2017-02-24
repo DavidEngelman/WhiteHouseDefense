@@ -35,7 +35,7 @@ void GameState::add_tower(Position position) {
 }
 
 bool GameState::is_only_one_alive() {
-    int nmbr_of_alive;
+    int nmbr_of_alive = 0;
     for (PlayerState& ps: player_states){
         if (ps.getHp() > 0){
             nmbr_of_alive++;
@@ -52,5 +52,9 @@ bool GameState::isFinished() {
 }
 
 GameState::GameState() {
+}
+
+void GameState::updateGameState(int commands) {
+
 }
 
