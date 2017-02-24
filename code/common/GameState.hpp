@@ -23,6 +23,7 @@ private:
     std::string mode;
 
     Map map;
+
 public:
     Map &getMap();
 
