@@ -7,6 +7,7 @@
 #include "Direction.h"
 #include "Map.hpp"
 #include "Wave.h"
+#include "Constants.h"
 
 class PNJ{
 
@@ -16,12 +17,13 @@ private:
 	int direction;
 	int movementSpeed;
 	Position position;
+	Position last_position;
 
 public:
 
-	PNJ();
+	PNJ(int direction);
 
-    PNJ(Position position, int healthPoints, int movementSpeed);
+    PNJ(Position position, int healthPoints, int movementSpeed, Position last_pos, int direction);
 
     ~PNJ() = default;
 
@@ -53,6 +55,12 @@ public:
 	Direction get_right_direction();
 
 	Direction get_left_direction();
+
+    int getDirection() const;
+
+    const Position &getLast_position() const;
+
+    void setLast_position(const Position &last_position);
 };
 
 #endif // PROJET_PNJ_H
