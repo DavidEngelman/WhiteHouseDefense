@@ -26,6 +26,24 @@ const int AbstractTower::computeQuadrant() {
     }
 }
 
+PNJ& AbstractTower::get_closest_pnj(Wave &wave) {
+    int dist;
+    int best_dist;
+    PNJ closest_pnj;
+    for (PNJ& pnj: wave.getPnjs()){
+        int distance_x = position.getX() - pnj.getPosition().getX();
+        int distance_y = position.getY() - pnj.getPosition().getY();
+
+        dist = ((distance_x) * (distance_x)) + (distance_y * distance_y);
+        if (dist < best_dist){
+            best_dist = dist;
+            closest_pnj = pnj;
+        }
+    }
+    return  closest_pnj;
+}
+
+
 int AbstractTower::getOwner() const { return quadrant; }
 
 void AbstractTower::setOwner(int newOwner) { quadrant = newOwner; }
