@@ -1,4 +1,4 @@
-#include "GameEngine.hpp"
+ #include "GameEngine.hpp"
 
 GameEngine::GameEngine() {
     timer.start();
