@@ -3,11 +3,11 @@
 
 #define SIZE 31 //Not > 41 because it's too big for a screen
 
-#define GRASS "⬛"
-#define PATH "⬜"
-#define LIMIT "\033[34m❎\033[0m"
-#define TOWER "\033[31m⬛\033[0m"
-#define PNG "\033[33m⬛\033[0m"
+#define GRASS "◼  "
+#define PATH "   "
+#define LIMIT "\033[34m◼\033[0m  "
+#define TOWER "\033[31m◼\033[0m  "
+#define PNG "\033[33m◼\033[0m  "
 
 #include <string>
 #include <vector>
@@ -28,8 +28,11 @@ public:
     Map();
     Map(unsigned seed);
     void display();
-    bool addTower(int x, int y, int typeOfTower);
-    bool removeTower(int x, int y);
+    bool addTower(Position pos, int typeOfTower);
+    bool removeTower(Position pos);
+    bool addPNG(Position pos);
+    bool removePNG(Position pos);
+    bool movePNG(Position origin, Position nextPos);
 };
 
 #endif

@@ -11,15 +11,6 @@ public:
     int y;
 
     Position();
-    
-    int getY() const;
-
-    void setY(int y);
-
-    int getX() const;
-
-    void setX(int x);
-
     Position(int _x, int _y);
 
     bool operator==(const Position &rhs) const;

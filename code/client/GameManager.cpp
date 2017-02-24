@@ -1,15 +1,21 @@
 
 #include "GameManager.hpp"
+#include "../common/Networking.h"
 
-
-void GameManager::sendUserCommands() {
-
-}
-
-void GameManager::getReceivedChanges() {
-
-}
 
 GameManager::GameManager() {
+    GameState gameState = GameState();
+    GameUI gameUI = GameUI();
+    placeTower();
+}
+void GameManager::placeTower(){
+    std::string coord;
+    gameUI.display();
+    coord = gameUI.getCoordTower();
+    //send_message(server_socket, coord.c_str());
+}
+
+void GameManager::displayWave() {
+    gameUI.display();
 
 }
