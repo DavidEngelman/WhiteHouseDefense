@@ -30,16 +30,16 @@ void Map::display() {
         std::cout << y << "\t";
         for (int x = 0; x < SIZE; x++) {
             switch (matrix[y][x]) {
-                case -1:
+                case GRASS_INT:
                     std::cout << GRASS;
                     break;
-                case 0:
+                case PATH_INT:
                     std::cout << PATH;
                     break;
-                case -2:
+                case LIMIT_INT:
                     std::cout << LIMIT;
                     break;
-                case -3:
+                case PNG_INT:
                     std::cout << PNG;
                     break;
                 default:
@@ -69,13 +69,13 @@ void Map::initMap() {
     for (int y = 0; y < SIZE; y++) {
         for (int x = 0; x < SIZE; x++) {
             if (x == SIZE/2 and SIZE/2-2 <= y and y <= SIZE/2+2) {
-                matrix[y][x] = 0;
+                matrix[y][x] = PATH_INT;
             } else if (y == SIZE/2 and SIZE/2-2 <= x and x <= SIZE/2+2) {
-                matrix[y][x] = 0;
+                matrix[y][x] = PATH_INT;
             } else if (x == y or x + y == SIZE-1) {
-                matrix[y][x] = -2;
+                matrix[y][x] = LIMIT_INT;
             } else {
-                matrix[y][x] = -1;
+                matrix[y][x] = GRASS_INT;
             }
         }
     }
@@ -89,17 +89,17 @@ bool Map::generateQuarterMap(Position end) {
     std::vector<Position> possibleWays;
     Position nextToEnd(end.x, end.y-1);
     std::cout << matrix[nextToEnd.y][nextToEnd.x] << std::endl;
-    if (matrix[nextToEnd.y][nextToEnd.x] != -2 && !isNextToPath(nextToEnd)) possibleWays.push_back(nextToEnd);
+    if (matrix[nextToEnd.y][nextToEnd.x] != LIMIT_INT && !isNextToPath(nextToEnd)) possibleWays.push_back(nextToEnd);
     nextToEnd.y = end.y;
     nextToEnd.x = end.x-1;
-    if (matrix[nextToEnd.y][nextToEnd.x] != -2 && !isNextToPath(nextToEnd)) possibleWays.push_back(nextToEnd);
+    if (matrix[nextToEnd.y][nextToEnd.x] != LIMIT_INT && !isNextToPath(nextToEnd)) possibleWays.push_back(nextToEnd);
     nextToEnd.x = end.x+1;
-    if (matrix[nextToEnd.y][nextToEnd.x] != -2 && !isNextToPath(nextToEnd)) possibleWays.push_back(nextToEnd);
+    if (matrix[nextToEnd.y][nextToEnd.x] != LIMIT_INT && !isNextToPath(nextToEnd)) possibleWays.push_back(nextToEnd);
 
     unsigned int way = (unsigned int) (rand() % possibleWays.size());
 
     int save = matrix[possibleWays[way].y][possibleWays[way].x];
-    matrix[possibleWays[way].y][possibleWays[way].x] = 0;
+    matrix[possibleWays[way].y][possibleWays[way].x] = PATH_INT;
     if (generateQuarterMap(possibleWays[way])) return true;
     matrix[possibleWays[way].y][possibleWays[way].x] = save;
     return false;
@@ -107,10 +107,10 @@ bool Map::generateQuarterMap(Position end) {
 
 bool Map::isNextToPath(Position position) {
     int count = 0;
-    if (matrix[position.y+1][position.x] == 0) count++;
-    if (position.y > 0 && matrix[position.y-1][position.x] == 0) count++;
-    if (matrix[position.y][position.x+1] == 0) count++;
-    if (matrix[position.y][position.x-1] == 0) count++;
+    if (matrix[position.y+1][position.x] == PATH_INT) count++;
+    if (position.y > 0 && matrix[position.y-1][position.x] == PATH_INT) count++;
+    if (matrix[position.y][position.x+1] == PATH_INT) count++;
+    if (matrix[position.y][position.x-1] == PATH_INT) count++;
     return count >= 2;
 }
 
@@ -130,30 +130,33 @@ void Map::basicMap() {
     for (int y = 0; y < SIZE; y++) {
         for (int x = 0; x < SIZE; x++) {
             if (x == SIZE/2 and 0 <= y and y < SIZE) {
-                matrix[y][x] = 0;
+                matrix[y][x] = PATH_INT;
             } else if (y == SIZE/2 and 0 <= x and x < SIZE) {
-                matrix[y][x] = 0;
+                matrix[y][x] = PATH_INT;
             } else if (x == y or x + y == SIZE-1) {
-                matrix[y][x] = -2;
+                matrix[y][x] = LIMIT_INT;
             } else {
-                matrix[y][x] = -1;
+                matrix[y][x] = GRASS_INT;
             }
         }
     }
 }
 
+bool Map::isPath(Position pos) {
+    return matrix[pos.y][pos.x] == PATH_INT;
+}
 
 bool Map::addTower(Position pos, int typeOfTower) {
-    if (matrix[pos.y][pos.x] == -1) {
-        matrix[pos.y][pos.x] = typeOfTower*10+1; // 10 = number of upgrades per tower possible
+    if (matrix[pos.y][pos.x] == GRASS_INT) {
+        matrix[pos.y][pos.x] = typeOfTower*10+TOWER_INT; // 10 = number of upgrades per tower possible
         return true;
     }
     return false;
 }
 
 bool Map::removeTower(Position pos) {
-    if (matrix[pos.y][pos.x] > 0) {
-        matrix[pos.y][pos.x] = -1;
+    if (matrix[pos.y][pos.x] >= TOWER_INT) {
+        matrix[pos.y][pos.x] = GRASS_INT;
         return true;
     }
     return false;
