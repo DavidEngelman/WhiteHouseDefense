@@ -55,7 +55,7 @@ void PNJ::receiveDamage(int damageAmount) {
 }
 
 bool PNJ::isDead() {
-    return getHealthPoints() <= 0 ? true : false;
+    return getHealthPoints() <= 0;
 }
 
 int PNJ::getMovementSpeed() const {
