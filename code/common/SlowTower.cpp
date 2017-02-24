@@ -8,8 +8,10 @@ void SlowTower::setSpeedReduction(int newSpeedReduction) { speedReduction = newS
 
 void SlowTower::shoot(Wave& wave) {
     PNJ* my_target;
-    *my_target = get_closest_pnj(wave);
-    reduceMovementSpeedOf(*my_target);
+    my_target = get_closest_pnj(wave);
+    if (my_target != nullptr){
+        reduceMovementSpeedOf(*my_target)
+    }
 }
 
 void SlowTower::reduceMovementSpeedOf(PNJ& target) { target.receiveMovementPenalty(this->getSpeedReduction()); }

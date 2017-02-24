@@ -29,7 +29,7 @@ const int AbstractTower::computeQuadrant() {
 
 PNJ* AbstractTower::get_closest_pnj(Wave &wave) {
     int dist;
-    int best_dist;
+    int best_dist = 999999;
     PNJ* closest_pnj;
     for (PNJ& pnj: wave.getPnjs()){
         int distance_x = this->getPosition().getX() - pnj.getPosition().getX();
@@ -45,7 +45,6 @@ PNJ* AbstractTower::get_closest_pnj(Wave &wave) {
         return closest_pnj;
 
     }
-
     return  nullptr;
 }
 
