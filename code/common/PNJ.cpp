@@ -199,3 +199,11 @@ Direction PNJ::get_left_direction() {
 
     }
 }
+
+bool PNJ::operator==(const PNJ &rhs) const {
+    return *this == rhs;
+}
+
+bool PNJ::operator!=(const PNJ &rhs) const {
+    return !(rhs == *this);
+}

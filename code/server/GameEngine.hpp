@@ -31,6 +31,8 @@ public:
 
     void movePNJsInWave(Wave &wave);
 
+    void removeDeadPNJs();
+
 
     Wave& getWaveInSameQuadrant(AbstractTower &tower, std::vector<Wave> &waves);
 };

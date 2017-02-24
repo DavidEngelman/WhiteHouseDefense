@@ -20,6 +20,8 @@ public:
     Wave(int nb_of_pnj);
 
     std::vector<PNJ> &getPnjs();
+
+    void removeDeadPNJs();
 };
 
 

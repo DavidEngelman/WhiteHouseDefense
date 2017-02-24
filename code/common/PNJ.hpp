@@ -62,6 +62,10 @@ public:
     const Position &getLast_position() const;
 
     void setLast_position(const Position &last_position);
+
+    bool operator==(const PNJ &rhs) const;
+
+    bool operator!=(const PNJ &rhs) const;
 };
 
 #endif // PROJET_PNJ_H

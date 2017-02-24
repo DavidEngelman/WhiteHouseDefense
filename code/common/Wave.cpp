@@ -29,3 +29,14 @@ std::vector<PNJ> &Wave::getPnjs(){
 int Wave::getQuadrant() const {
     return quandrant;
 }
+
+void Wave::removeDeadPNJs() {
+    std::vector<PNJ>::iterator it;
+    for (it = pnjs.begin(); it != pnjs.end();) {
+        if ((*it).isDead()) {
+            it = pnjs.erase(it);
+        } else {
+            it++;
+        }
+    }
+}
