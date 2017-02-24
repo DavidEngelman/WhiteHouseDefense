@@ -45,7 +45,7 @@ void GameServer::addTowerInGameState(PlaceTowerCommand &command) {
 GameServer::GameServer(int port, std::vector<PlayerConnection> &playerConnections) :
         Server(port), playerConnections(playerConnections) {}
 
-void GameServer::runWave() {
+void GameServer::launchWave() {
     Timer timer;
     timer.start();
     while (!gameState.isWaveFinished() && !gameState.isFinished()) {
@@ -63,6 +63,6 @@ void GameServer::runWave() {
 void GameServer::run() {
     while (!gameState.isFinished()) {
         processClientCommands();
-        runWave();
+        launchWave();
     }
 }
