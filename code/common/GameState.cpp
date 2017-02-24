@@ -44,14 +44,13 @@ bool GameState::is_only_one_alive() {
     return (nmbr_of_alive == 1);
 }
 
-bool GameState::isWaveFinished() {
-    bool finished = true;
+bool GameState::isRoundFinished() {
     for (Wave &wave: waves) {
-        if (wave.getPnjs().size() > 0) {
-            finished = false;
+        if ( !wave.isEmpty()) {
+            return false;
         }
     }
-    return finished;
+    return true;
 }
 
 bool GameState::isFinished() {

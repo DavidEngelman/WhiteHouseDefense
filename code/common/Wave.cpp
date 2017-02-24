@@ -27,3 +27,5 @@ std::vector<PNJ> &Wave::getPnjs(){
 int Wave::getQuadrant() const {
     return quandrant;
 }
+
+bool Wave::isEmpty() { return pnjs.empty(); }
