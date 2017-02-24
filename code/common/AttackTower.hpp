@@ -21,9 +21,9 @@ public:
 
     virtual void setDamageAmount(int newDamageAmount);
 
-    virtual void shoot(PNJ target) override;
+    virtual void shoot(Wave& wave) override;
 
-    virtual void dealDamageTo(PNJ pnj);
+    virtual void dealDamageTo(PNJ& pnj);
 
     virtual std::string serialize() override;
 
