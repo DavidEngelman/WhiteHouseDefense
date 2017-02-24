@@ -10,7 +10,7 @@ void AttackTower::shoot(Wave& wave) {
     PNJ* my_target;
     my_target = get_closest_pnj(wave);
     if (my_target != nullptr){
-        dealDamageTo(*my_target)
+        dealDamageTo(*my_target);
     }
 }
 
