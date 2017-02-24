@@ -18,7 +18,16 @@ Map::Map(unsigned seed) {
 
 void Map::display() {
     std::cout << std::string(50, '\n');
+
+    std::cout << "\t";
+    for (int x = 0; x < SIZE; x++) {
+        std::cout << x << " ";
+        if (x < 10) std::cout << " ";
+    }
+    std::cout << std::endl;
+
     for (int y = 0; y < SIZE; y++) {
+        std::cout << y << "\t";
         for (int x = 0; x < SIZE; x++) {
             switch (matrix[y][x]) {
                 case -1:
@@ -38,8 +47,15 @@ void Map::display() {
                     break;
             }
         }
-        std::cout << std::endl;
+        std::cout << y << std::endl;
     }
+
+    std::cout << "\t";
+    for (int x = 0; x < SIZE; x++) {
+        std::cout << x << " ";
+        if (x < 10) std::cout << " ";
+    }
+    std::cout << std::endl;
 }
 
 void Map::generateRandomMatrix() {
@@ -98,22 +114,6 @@ bool Map::isNextToPath(Position position) {
     return count >= 2;
 }
 
-bool Map::addTower(int x, int y, int typeOfTower) {
-    if (matrix[y][x] == -1) {
-        matrix[y][x] = typeOfTower*10; // 10 = number of upgrades per tower possible
-        return true;
-    }
-    return false;
-}
-
-bool Map::removeTower(int x, int y) {
-    if (matrix[y][x] > 0) {
-        matrix[y][x] = -1;
-        return true;
-    }
-    return false;
-}
-
 void Map::copyQuarter() {
     for (int y = 0; y < SIZE; y++) {
         for (int x = 0; x < SIZE; x++) {
@@ -140,4 +140,33 @@ void Map::basicMap() {
             }
         }
     }
+}
+
+
+bool Map::addTower(Position pos, int typeOfTower) {
+    if (matrix[pos.y][pos.x] == -1) {
+        matrix[pos.y][pos.x] = typeOfTower*10+1; // 10 = number of upgrades per tower possible
+        return true;
+    }
+    return false;
+}
+
+bool Map::removeTower(Position pos) {
+    if (matrix[pos.y][pos.x] > 0) {
+        matrix[pos.y][pos.x] = -1;
+        return true;
+    }
+    return false;
+}
+
+bool Map::addPNG(Position pos) {
+    return false;
+}
+
+bool Map::removePNG(Position pos) {
+    return false;
+}
+
+bool Map::movePNG(Position origin, Position nextPos) {
+    return false;
 }

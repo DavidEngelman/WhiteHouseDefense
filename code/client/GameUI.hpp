@@ -2,18 +2,23 @@
 #define GAMEUI_HPP
 
 #include "../common/GameState.hpp"
+#include "../common/Map.hpp"
+
 
 class GameUI {
-
+private:
+    Map map;
 
 public:
-	void getUserCommands();
+    GameUI();
 
-	void draw(GameState gameState);
+	std::string getCoordTower();
 
-	void showNoInternetError();
+    bool checkCoord(int x, int y);
 
 	void display();
+
+	std::string concatCoord(int x, int y);
 };
 
 #endif

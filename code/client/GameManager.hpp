@@ -7,15 +7,16 @@
 class GameManager {
 
 private:
-    GameState playerGameState;
+    GameState gameState;
     GameUI gameUI;
 
 public:
     GameManager();
 
-    void sendUserCommands();
+    void placeTower();
 
-    void getReceivedChanges();
+    void displayWave();
+
 };
 
 #endif
