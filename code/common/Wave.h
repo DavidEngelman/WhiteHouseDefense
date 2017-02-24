@@ -10,6 +10,8 @@ class Wave {
 private:
     std::vector<PNJ> pnjs;
     int quandrant;
+    int number_of_pnjs;
+    int number_of_added_pnjs;
 public:
     int getQuadrant() const;
 

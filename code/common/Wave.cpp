@@ -1,6 +1,6 @@
 #include "Wave.h"
 
-Wave::Wave(int nb_of_pnj)  : pnjs(nb_of_pnj){}
+Wave::Wave(int number_of_pnjs)  : number_of_pnjs(number_of_pnjs), number_of_added_pnjs(0) {}
 
 
 

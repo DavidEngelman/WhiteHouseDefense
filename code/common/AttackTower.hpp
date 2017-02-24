@@ -13,7 +13,7 @@ private:
 
 public:
 
-    AttackTower(int damageAmount);
+    AttackTower(Position position, int price, int radius, int damageAmount);
 
     virtual ~AttackTower() = default;
 

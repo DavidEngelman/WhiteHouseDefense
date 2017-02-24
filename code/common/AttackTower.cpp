@@ -1,6 +1,7 @@
 #include "AttackTower.hpp"
 
-AttackTower::AttackTower(int damageAmount): damageAmount(damageAmount) {}
+AttackTower::AttackTower(Position position, int price, int radius, int damageAmount):
+        AbstractTower::AbstractTower(position, price, radius), damageAmount(damageAmount) {}
 
 int AttackTower::getDamageAmount() const { return damageAmount; }
 
