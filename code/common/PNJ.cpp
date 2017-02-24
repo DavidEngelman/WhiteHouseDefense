@@ -216,3 +216,17 @@ bool PNJ::operator==(const PNJ &rhs) const {
 bool PNJ::operator!=(const PNJ &rhs) const {
     return !(rhs == *this);
 }
+
+bool PNJ::isInPlayerBase() {
+    return (direction == NORTH && getPosition().getY() == -1)
+           ||
+           (direction == EAST && getPosition().getX() == 31)
+           ||
+           (direction == SOUTH && getPosition().getY() == 31)
+           ||
+           (direction == WEST && getPosition().getX() == -1);
+}
+
+void PNJ::setHealthPoints(int newHp) {
+    healthPoints = newHp;
+}

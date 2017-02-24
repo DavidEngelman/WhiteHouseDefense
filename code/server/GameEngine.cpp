@@ -15,30 +15,38 @@ void GameEngine::update() {
 
 void GameEngine::updateWaves() {
     std::vector<Wave> &waves = gameState.getWaves();
-    dealDamage(waves);
+    dealDamageToBase(waves);
     removeDeadPNJs(); //avant de faire faire avancer les pnj on enlève les morts
     movePNJsInWaves(waves);
 }
 
 void GameEngine::updatePlayerStates() {
     std::vector<PlayerState> &playerStates = gameState.getPlayerStates();
-    dealDamage(playerStates);
+    dealDamageToBase(playerStates);
 }
 
-void GameEngine::dealDamage(std::vector<PlayerState> &playerStates) {
+void GameEngine::dealDamageToBase(std::vector<PlayerState> &playerStates) {
     for (Wave& wave : gameState.getWaves()){
         for (PNJ& pnj : wave.getPnjs()){
-            if(pnj.getPosition().getX() == -1 && pnj.getDirection() == WEST){
-                //TODO diminuer la vie du joueur a gauche
+            if (pnj.isInPlayerBase() && wave.getQuadrant() == NORTH){
+                gameState.getPlayerStates()[0].decrease_hp(PNJ_DAMAGE);
+                pnj.setHealthPoints(0);
+
             }
-            else if(pnj.getPosition().getX() == 31 && pnj.getDirection() == EAST){
-                //TODO diminuer la vie du joueur a droite
+            else if (pnj.isInPlayerBase() && wave.getQuadrant() == EAST){
+                gameState.getPlayerStates()[1].decrease_hp(PNJ_DAMAGE);
+                pnj.setHealthPoints(0);
+
             }
-            else if(pnj.getPosition().getY() == -1 && pnj.getDirection() == NORTH){
-                //TODO diminuer la vie du joueur en haut
+
+            else if(pnj.isInPlayerBase() && wave.getQuadrant() == SOUTH){
+                gameState.getPlayerStates()[2].decrease_hp(PNJ_DAMAGE);
+                pnj.setHealthPoints(0);
+
             }
-            else if(pnj.getPosition().getY() == 31 && pnj.getDirection() == SOUTH){
-                //TODO diminuer la vie du joueur en bas
+            else if(pnj.isInPlayerBase() && wave.getQuadrant() == WEST){
+                gameState.getPlayerStates()[3].decrease_hp(PNJ_DAMAGE);
+                pnj.setHealthPoints(0);
             }
         }
     }

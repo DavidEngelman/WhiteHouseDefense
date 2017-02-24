@@ -34,6 +34,10 @@ public:
 
 	bool isDead();
 
+	void setHealthPoints(int newHp);
+
+	bool isInPlayerBase();
+
 	int getMovementSpeed() const;
 
 	void setMovementSpeed(int newMovementSpeed);
