@@ -41,12 +41,12 @@ PNJ* AbstractTower::get_closest_pnj(Wave &wave) {
             closest_pnj = &pnj;
         }
     }
-    if (radius >= sqrt(best_dist)){
-        return closest_pnj;
+    if (radius < sqrt(best_dist)){
+        closest_pnj = nullptr;
 
     }
 
-    return  nullptr;
+    return closest_pnj;
 }
 
 
