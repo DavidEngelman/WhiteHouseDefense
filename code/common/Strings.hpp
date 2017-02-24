@@ -8,6 +8,7 @@
 
 
 #define PLACE_TOWER_COMMAND_STRING "PlaceTower"
+#define END_OF_GAME "end"
 
 #define GET_FRIENDLIST "getFriendList;"
 #define GET_FRIEND_REQUESTS "getFriendRequests;"
