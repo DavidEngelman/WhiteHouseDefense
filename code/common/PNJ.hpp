@@ -7,25 +7,27 @@
 #include "Direction.h"
 #include "Map.hpp"
 #include "Wave.h"
+#include "Constants.h"
 
 class PNJ{
 
 private:
 
 	int healthPoints;
-
+	int direction;
 	int movementSpeed;
 	Position position;
+	Position last_position;
 
 public:
 
-	PNJ();
+	PNJ(int direction);
 
-    PNJ(Position position, int healthPoints, int movementSpeed);
+    PNJ(Position position, int healthPoints, int movementSpeed, Position last_pos, int direction);
 
     ~PNJ() = default;
 
-	void advance(Wave, Map);
+	void advance(Map& map);
 
 	int getHealthPoints() const;
 
@@ -41,18 +43,24 @@ public:
 
 	void setPosition(Position position);
 
-	bool can_go_forward(int wave_id, Position &current_pos);
 
-	bool can_go_left(int wave_id, Position &current_pos, Position &last_pos);
+	bool can_go_forward(Map &map);
 
-	bool can_go_right(int wave_id, Position &current_pos, Position &last_pos);
+	bool can_go_left(Map &map);
 
-	Direction get_forward_direction(int wave_id);
+	bool can_go_right(Map &map);
 
-	Direction get_right_direction(int wave_id);
+	Direction get_forward_direction();
 
-	Direction get_left_direction(int wave_id);
+	Direction get_right_direction();
 
+	Direction get_left_direction();
+
+    int getDirection() const;
+
+    const Position &getLast_position() const;
+
+    void setLast_position(const Position &last_position);
 };
 
 #endif // PROJET_PNJ_H
