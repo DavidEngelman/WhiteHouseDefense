@@ -31,6 +31,8 @@ public:
 
     std::vector<AbstractTower> &getTowers();
 
+    std::vector<PlayerState> &getPlayerStates();
+
     std::string serialize();
 
     bool is_only_one_alive();
