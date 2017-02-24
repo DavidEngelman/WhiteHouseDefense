@@ -12,10 +12,11 @@ class GameLauncher : public NetworkedManager {
 private:
 
     int player_id;
+    std::string player_name;
 
 
 public:
-    GameLauncher(int port, char* address, int id, App* app);
+    GameLauncher(int port, char* address, int id, std::string name, App* app);
     void sendJoinRequest(std::string mode);
     void run() override;
 };

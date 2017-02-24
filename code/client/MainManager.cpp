@@ -13,7 +13,7 @@ void MainManager::run() {
     mainUI.display();
     switch (mainUI.select()) {
         case 1: {
-            GameLauncher game = GameLauncher(5556, server_ip_address, player_id, my_master_app);
+            GameLauncher game = GameLauncher(5556, server_ip_address, player_id, username, my_master_app);
             my_master_app->transition(&game);
             break;
         }
