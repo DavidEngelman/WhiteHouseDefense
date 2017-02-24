@@ -32,6 +32,8 @@ public:
 
 	void receiveDamage(int damageAmount);
 
+	bool isDead();
+
 	int getMovementSpeed() const;
 
 	void setMovementSpeed(int newMovementSpeed);
