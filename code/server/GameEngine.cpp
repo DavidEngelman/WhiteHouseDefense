@@ -15,6 +15,7 @@ void GameEngine::update() {
 void GameEngine::updateWaves() {
     std::vector<Wave> &waves = gameState.getWaves();
     dealDamage(waves);
+    removeDeadPNJs(); //avant de faire faire avancer les pnj on enlève les morts
     movePNJsInWaves(waves);
 }
 
@@ -46,3 +47,8 @@ Wave& GameEngine::getWaveInSameQuadrant(AbstractTower &tower, std::vector<Wave> 
     }
 }
 
+ void GameEngine::removeDeadPNJs(){
+     for (Wave& wave : gameState.getWaves()){
+         wave.removeDeadPNJs();
+     }
+ }

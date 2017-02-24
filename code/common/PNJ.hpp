@@ -65,6 +65,10 @@ public:
 
 	std::string serialize();
 
+
+    bool operator==(const PNJ &rhs) const;
+
+    bool operator!=(const PNJ &rhs) const;
 };
 
 #endif // PROJET_PNJ_H

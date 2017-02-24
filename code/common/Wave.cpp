@@ -6,14 +6,16 @@ Wave::Wave(int number_of_pnjs)  : number_of_pnjs(number_of_pnjs), number_of_adde
 
 std::string Wave::serialize() {
     /*
-     * fill a string like this : Wave,quandrant,x,y,heathpoints,x,y,healthpoints,....;
+     * fill a string like this : Wave,serialized(PNJ1),serialized(PNJ2),...;
      */
 
     std::string serialized_me;
-    serialized_me += "Wave," + std::to_string(quandrant);
+    serialized_me += "Wave,";
     for (PNJ& pnj: pnjs){
-        std::string serialized_pnj = pnj.serialize();
-        serialized_me += serialized_pnj;
+
+        //TODO:Pnj.serialize()
+        //std::string serialized_pnj = pnj.serialize();
+        //serialized_me += serialized_pnj;
     }
     serialized_me += ";";
 
@@ -29,3 +31,14 @@ int Wave::getQuadrant() const {
 }
 
 bool Wave::isEmpty() { return pnjs.empty(); }
+
+void Wave::removeDeadPNJs() {
+    std::vector<PNJ>::iterator it;
+    for (it = pnjs.begin(); it != pnjs.end();) {
+        if ((*it).isDead()) {
+            it = pnjs.erase(it);
+        } else {
+            it++;
+        }
+    }
+}

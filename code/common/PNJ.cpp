@@ -208,3 +208,11 @@ std::string PNJ::serialize() {std::string serialized_me;
 
     return serialized_me;
 }
+
+bool PNJ::operator==(const PNJ &rhs) const {
+    return *this == rhs;
+}
+
+bool PNJ::operator!=(const PNJ &rhs) const {
+    return !(rhs == *this);
+}
