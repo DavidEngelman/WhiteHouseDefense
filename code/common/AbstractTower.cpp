@@ -1,3 +1,4 @@
+#include <cmath>
 #include "AbstractTower.hpp"
 #include "Map.hpp"
 #include "Constants.h"
@@ -40,7 +41,12 @@ PNJ* AbstractTower::get_closest_pnj(Wave &wave) {
             closest_pnj = &pnj;
         }
     }
-    return  closest_pnj;
+    if (radius >= sqrt(best_dist)){
+        return closest_pnj;
+
+    }
+
+    return  nullptr;
 }
 
 
