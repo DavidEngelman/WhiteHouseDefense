@@ -88,7 +88,6 @@ bool Map::generateQuarterMap(Position end) {
 
     std::vector<Position> possibleWays;
     Position nextToEnd(end.x, end.y-1);
-    std::cout << matrix[nextToEnd.y][nextToEnd.x] << std::endl;
     if (matrix[nextToEnd.y][nextToEnd.x] != LIMIT_INT && !isNextToPath(nextToEnd)) possibleWays.push_back(nextToEnd);
     nextToEnd.y = end.y;
     nextToEnd.x = end.x-1;
