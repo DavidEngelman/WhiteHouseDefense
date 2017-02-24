@@ -50,7 +50,7 @@ public:
     void sendGameStateToPlayers();
 
     // TODO: trouver un meilleur nom, celui ci n'est pas genial
-    void runWave();
+    void launchWave();
 
     void run();
 };
