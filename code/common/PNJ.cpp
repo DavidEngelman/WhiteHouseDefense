@@ -54,6 +54,10 @@ void PNJ::receiveDamage(int damageAmount) {
 
 }
 
+bool PNJ::isDead() {
+    return getHealthPoints() <= 0;
+}
+
 int PNJ::getMovementSpeed() const {
     return this->movementSpeed;
 }
@@ -80,10 +84,7 @@ bool PNJ::can_go_forward(Map& map) {
 
     Position forward_pos = Position(getPosition().getX() + dir.x, getPosition().getY() + dir.y);
 
-    if (map.isPath(forward_pos)) {
-        return true;
-    }
-    return false;
+    return map.isPath(forward_pos);
 
 
 }
@@ -114,7 +115,7 @@ Direction PNJ::get_forward_direction() {
     if (direction == 0) { // wave du haut
 
         move.x = 0;
-        move.y = 1;
+        move.y = -1;
         return move;
 
     } else if (direction == 1) { // wave de droite
@@ -126,12 +127,12 @@ Direction PNJ::get_forward_direction() {
     } else if (direction == 2) { // wave du bas
 
         move.x = 0;
-        move.y = -1;
+        move.y = 1;
         return move;
 
     } else if (direction == 3) { // wave de gauche
 
-        move.x = 1;
+        move.x = -1;
         move.y = 0;
         return move;
 
@@ -151,19 +152,19 @@ Direction PNJ::get_right_direction() {
     } else if (getDirection() == 1) { // wave de droite
 
         move.x = 0;
-        move.y = -1;
+        move.y = 1;
         return move;
 
     } else if (getDirection() == 2) { // wave du bas
 
-        move.x = 1;
+        move.x = -1;
         move.y = 0;
         return move;
 
     } else if (getDirection() == 3) { // wave de gauche
 
         move.x = 0;
-        move.y = 1;
+        move.y = -1;
         return move;
 
     }
@@ -181,7 +182,7 @@ Direction PNJ::get_left_direction() {
     } else if (getDirection() == 1) { // wave de droite
 
         move.x = 0;
-        move.y = 1;
+        move.y = -1;
         return move;
 
     } else if (getDirection() == 2) { // wave du bas
@@ -193,7 +194,7 @@ Direction PNJ::get_left_direction() {
     } else if (getDirection() == 3) { // wave de gauche
 
         move.x = 0;
-        move.y = -1;
+        move.y = 1;
         return move;
 
     }

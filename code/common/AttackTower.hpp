@@ -23,6 +23,12 @@ public:
 
     virtual void shoot(Wave& wave) override;
 
+
+
+
+
+
+
     virtual void dealDamageTo(PNJ& pnj);
 
     virtual std::string serialize() override;
