@@ -16,6 +16,14 @@ public:
     bool operator==(const Position &rhs) const;
 
     bool operator!=(const Position &rhs) const;
+
+    int getX() const;
+
+    void setX(int x);
+
+    int getY() const;
+
+    void setY(int y);
 };
 
 #endif // POSITION_HPP
