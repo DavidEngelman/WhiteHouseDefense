@@ -26,7 +26,7 @@ const int AbstractTower::computeQuadrant() {
     }
 }
 
-PNJ& AbstractTower::get_closest_pnj(Wave &wave) {
+PNJ* AbstractTower::get_closest_pnj(Wave &wave) {
     int dist;
     int best_dist;
     PNJ* closest_pnj;
@@ -40,7 +40,7 @@ PNJ& AbstractTower::get_closest_pnj(Wave &wave) {
             closest_pnj = &pnj;
         }
     }
-    return  *closest_pnj;
+    return  closest_pnj;
 }
 
 

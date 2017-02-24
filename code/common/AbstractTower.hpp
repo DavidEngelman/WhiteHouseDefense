@@ -28,7 +28,7 @@ public:
 
     virtual void shoot(Wave& wave) = 0; // HAS TO BE DEFINED BY INHERITORS
 
-    PNJ& get_closest_pnj(Wave& wave);
+    PNJ* get_closest_pnj(Wave& wave);
 
     virtual int getOwner() const;
 
