@@ -142,6 +142,9 @@ void Map::basicMap() {
     }
 }
 
+bool Map::isPath(Position pos) {
+    return matrix[pos.y][pos.x] == PATH_INT;
+}
 
 bool Map::addTower(Position pos, int typeOfTower) {
     if (matrix[pos.y][pos.x] == GRASS_INT) {

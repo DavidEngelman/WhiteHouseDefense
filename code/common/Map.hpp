@@ -34,6 +34,7 @@ public:
     Map();
     Map(unsigned seed);
     void display();
+    bool isPath(Position pos);
     bool addTower(Position pos, int typeOfTower);
     bool removeTower(Position pos);
     bool addPNG(Position pos);
