@@ -21,7 +21,7 @@ void GameLauncher::sendJoinRequest(std::string mode) {
     assert(strcmp(server_response, GAME_STARTING_STRING) == 0);
 
     std::cout << "Game start" << std::endl;
-    GameManager* manager = new GameManager(server_ip_address, port, player_id, player_name, my_master_app)
+    GameManager* manager = new GameManager(server_ip_address, port, player_id, player_name, my_master_app);
 }
 
 void GameLauncher::run() {

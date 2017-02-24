@@ -65,4 +65,17 @@ void GameServer::run() {
         processClientCommands();
         launchWave();
     }
+
+    handleEndOfGame();
+}
+
+void GameServer::sendEndToPlayer(PlayerConnection &connection) {
+    send_message(connection.getSocket_fd(), END_OF_GAME); //send "end" to client
+}
+
+
+void GameServer::handleEndOfGame() {
+    for (int i = 0; i < NUM_PLAYERS; i++) {
+        sendEndToPlayer(playerConnections[i]);
+    }
 }

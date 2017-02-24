@@ -16,12 +16,14 @@ void GameManager::placeTower(){
 
 void GameManager::displayWave() {
     gameUI.display();
-
 }
 
 void GameManager::come_back_to_menu(){
     MainManager * menu_manager = new MainManager(server_ip_address, player_id, player_username, my_master_app);
     my_master_app->transition(menu_manager);
 
+}
+
+void GameManager::run() {
 
 }

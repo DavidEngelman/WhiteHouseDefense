@@ -6,7 +6,7 @@
 #include <iostream>
 
 GameUI::GameUI(){
-    map = Map ();//rajouter seed
+    map = Map (); //rajouter seed
 }
 
 std::string GameUI::getCoordTower() {
