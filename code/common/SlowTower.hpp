@@ -22,9 +22,9 @@ public:
 
     virtual void setSpeedReduction(int newSpeedReduction);
 
-    virtual void shoot(PNJ target) override;
+    virtual void shoot(Wave& wave) override;
 
-    virtual void reduceMovementSpeedOf(PNJ target);
+    virtual void reduceMovementSpeedOf(PNJ& target);
 
 };
 
