@@ -3,7 +3,8 @@
 #include "GameManager.hpp"
 
 int main(int argc, char *argv[]) {
-    GameManager gameManager = GameManager();
+    //GameManager gameManager = GameManager();
+    GameState gameState = GameState();
 
     /*
     if (argc <= 1){

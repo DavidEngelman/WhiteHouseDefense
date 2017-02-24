@@ -6,7 +6,6 @@
 #include "Position.hpp"
 #include "Direction.h"
 #include "Map.hpp"
-#include "Wave.h"
 #include "Constants.h"
 
 class PNJ{
