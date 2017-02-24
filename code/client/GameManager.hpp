@@ -25,6 +25,7 @@ public:
 
     void come_back_to_menu();
 
+    void run();
 };
 
 #endif
