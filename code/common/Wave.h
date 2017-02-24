@@ -15,6 +15,8 @@ private:
 public:
     int getQuadrant() const;
 
+    bool isEmpty();
+
     std::string serialize();
 
     Wave(int nb_of_pnj);

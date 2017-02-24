@@ -13,9 +13,8 @@ std::string Wave::serialize() {
     serialized_me += "Wave,";
     for (PNJ& pnj: pnjs){
 
-        //TODO:Pnj.serialize()
-        //std::string serialized_pnj = pnj.serialize();
-        //serialized_me += serialized_pnj;
+        std::string serialized_pnj = pnj.serialize();
+        serialized_me += serialized_pnj;
     }
     serialized_me += ";";
 
@@ -29,6 +28,8 @@ std::vector<PNJ> &Wave::getPnjs(){
 int Wave::getQuadrant() const {
     return quandrant;
 }
+
+bool Wave::isEmpty() { return pnjs.empty(); }
 
 void Wave::removeDeadPNJs() {
     std::vector<PNJ>::iterator it;

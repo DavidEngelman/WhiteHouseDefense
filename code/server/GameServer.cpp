@@ -48,7 +48,7 @@ GameServer::GameServer(int port, std::vector<PlayerConnection> &playerConnection
 void GameServer::launchWave() {
     Timer timer;
     timer.start();
-    while (!gameState.isWaveFinished() && !gameState.isFinished()) {
+    while (!gameState.isRoundFinished() && !gameState.isFinished()) {
         // TODO: choisir une meilleure valeur et la mettre comme constant
         while (!timer.elapsedTimeInMiliseconds() < 1000) {
             // gameState.update(); // ou peut etre gameState.update(timeEllapsed)?

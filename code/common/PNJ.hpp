@@ -63,6 +63,9 @@ public:
 
     void setLast_position(const Position &last_position);
 
+	std::string serialize();
+
+
     bool operator==(const PNJ &rhs) const;
 
     bool operator!=(const PNJ &rhs) const;
