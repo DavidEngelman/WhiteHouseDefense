@@ -18,7 +18,6 @@ public:
     bool checkCoord(int x, int y);
 
 	void display();
-	void setSeed(int seed);
 };
 
 #endif
