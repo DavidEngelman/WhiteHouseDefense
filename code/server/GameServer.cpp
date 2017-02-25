@@ -2,6 +2,9 @@
 #include "GameServer.hpp"
 #include "Timer.h"
 
+GameServer::GameServer(int port, std::vector<PlayerConnection> &playerConnections) :
+Server(port), playerConnections(playerConnections) {}
+
 void GameServer::sendGameStateToPlayers() {
     for (int i = 0; i < NUM_PLAYERS; i++) {
         sendGameStateToPlayer(playerConnections[i]);
@@ -41,9 +44,6 @@ void GameServer::get_and_process_command(int client_socket_fd, char *buffer) {
 void GameServer::addTowerInGameState(PlaceTowerCommand &command) {
 //    gameState.add_tower(command.getPosition());
 }
-
-GameServer::GameServer(int port, std::vector<PlayerConnection> &playerConnections) :
-        Server(port), playerConnections(playerConnections) {}
 
 void GameServer::launchWave() {
     Timer timer;
