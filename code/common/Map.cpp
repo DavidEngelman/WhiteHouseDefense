@@ -146,9 +146,9 @@ bool Map::isPath(Position pos) {
     return matrix[pos.getY()][pos.getX()] == PATH_INT;
 }
 
-bool Map::addTower(Position pos, int typeOfTower) {
+bool Map::addTower(Position pos) {
     if (matrix[pos.getY()][pos.getX()] == GRASS_INT) {
-        matrix[pos.getY()][pos.getX()] = typeOfTower*10+TOWER_INT; // 10 = number of upgrades per tower possible
+        matrix[pos.getY()][pos.getX()] = TOWER_INT; // 10 = number of upgrades per tower possible
         return true;
     }
     return false;
@@ -175,5 +175,8 @@ bool Map::moveNPC(Position origin, Position nextPos) {
 }
 
 void Map::update(GameState &gameState) {
-
+    std::vector<AbstractTower> &towers = gameState.getTowers();
+    for (auto &tower : towers) {
+        addTower(tower.getPosition());
+    }
 }
