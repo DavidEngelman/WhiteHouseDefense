@@ -7,12 +7,13 @@
 
 class GameUI {
 private:
-    Map& map;
+    Map* map;
 
 public:
-    GameUI(Map& map);
+    GameUI(unsigned seed);
 
 	Position getPosBuyingTower();
+	Position getPosSellingTower();
 	bool isBuyingTower();
 
     bool checkCoord(int x, int y);

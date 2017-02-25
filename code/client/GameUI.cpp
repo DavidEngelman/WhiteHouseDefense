@@ -2,8 +2,7 @@
 #include <iostream>
 
 
-GameUI::GameUI(Map &map) : map(map) {
-}
+GameUI::GameUI(unsigned seed) : map(new Map(seed)) {}
 
 Position GameUI::getPosBuyingTower() {
     int x;
@@ -29,7 +28,7 @@ bool GameUI::checkCoord(int x, int y) {
 }
 
 void GameUI::display(GameState& gameState) {
-    map.display();
+    map->display();
 }
 
 bool GameUI::isBuyingTower() {
@@ -48,4 +47,19 @@ bool GameUI::isBuyingTower() {
     } while (!ok);
 
     return response == 1;
+}
+
+Position GameUI::getPosSellingTower() {
+    int x;
+    int y;
+
+    do {
+        std::cout << "Entrez les coordonnées de la tour que vous voulez vendre" << std::endl;
+        std::cout << "Entrez un X: ";
+        std::cin >> x;
+        std::cout << "Entrez un Y: ";
+        std::cin >> y;
+    } while (!checkCoord(x, y));
+
+    return Position(x, y);
 }
