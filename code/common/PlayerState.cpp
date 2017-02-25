@@ -14,7 +14,7 @@ int PlayerState::getHp(){
 
 std::string PlayerState::serialize() {
     /*
-     * fill a string like this : PlayerState,player_id,money,hp,isSupported,isWinner;
+     * fill a string like this : PlayerState,player_quadrant,money,hp,isSupported,isWinner;
      */
 
     std::string serialized_me;
