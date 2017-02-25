@@ -86,7 +86,7 @@ void GameServer::runWave() {
 
 void GameServer::run() {
     if (!DEBUG){
-        sendMapSeedToClient();
+        sendMapSeedToClients();
     }
 
     while (!gameEngine.isGameFinished()) {
@@ -136,7 +136,7 @@ void GameServer::handleEndOfGame() {
     }
 }
 */
-void GameServer::sendMapSeedToClient() {
+void GameServer::sendMapSeedToClients() {
     unsigned int mapSeed = gameEngine.getGameState().getMapSeed();
     std::string message = "seed";
     for (PlayerConnection& playerConnection : playerConnections) {

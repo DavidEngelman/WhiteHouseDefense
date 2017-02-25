@@ -52,7 +52,7 @@ public:
     void sendEndToPlayer(PlayerConnection &connection);
 
     void sendWinnerToPlayer(PlayerConnection &connection);
-    void sendMapSeedToClient();
+    void sendMapSeedToClients();
 
     void sendTowerPhase();
     void sendWavePhase();
