@@ -104,7 +104,11 @@ void GameEngine::createWaves() {
     gameState.clearWaves();
     increaseWaveDifficulty();
     for (const int direction: DIRECTIONS) {
-        Wave wave(numOfPNJsPerWave, direction);
+        Wave wave(0,direction);                                      //Je fait une wave vide et si le joueur est encore vivant
+        if (gameState.getPlayerStates()[direction].getHp() > 0)      //je met des pnj dedans, comme ca les joueurs morts on pas de wave
+            wave.setNumber_of_pnjs(numOfPNJsPerWave);                //je pense pas que c est la meilleur facon de le faire mais ca marche
+                                                                     //a mon avis
+
         // Ici je passe par valeur... si je passe par reference, je ne sais pas si ça va continuer
         // à exister à la sortie du bloc.
         // TODO: verifier

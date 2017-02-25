@@ -19,6 +19,8 @@ public:
     bool isEmpty();
     int getQuadrant() const;
 
+    void setNumber_of_pnjs(int number_of_pnjs);
+
     int getNumber_of_pnjs() const;
 
     int getNumber_of_added_pnjs() const;

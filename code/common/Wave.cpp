@@ -55,3 +55,7 @@ void Wave::addPNJ() {
     PNJ pnj(quadrant);
     pnjs.push_back(pnj);
 }
+
+void Wave::setNumber_of_pnjs(int number_of_pnjs) {
+    Wave::number_of_pnjs = number_of_pnjs;
+}
