@@ -44,7 +44,7 @@ public:
     bool isGameFinished();
     std::string * serializeGameState();
 
-
+    GameState &getGameState();
 };
 
 

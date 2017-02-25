@@ -116,3 +116,7 @@ bool GameEngine::isGameFinished() {
 std::string * GameEngine::serializeGameState() {
     return gameState.serialize();
 }
+
+GameState &GameEngine::getGameState(){
+    return gameState;
+}
