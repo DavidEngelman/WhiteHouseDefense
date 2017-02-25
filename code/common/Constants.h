@@ -10,4 +10,8 @@ static const int DIRECTIONS[] = {NORTH, EAST, SOUTH, WEST};
 static const int PNJ_STARTING_HEALTHPOINTS= 100;
 static const int PNJ_STARTING_MOVESPEED = 100;
 
+static const int PNJ_VALUE = 10;
+static const int PNJ_DAMAGE= 10;
+
+
 #endif //PROJET_CONSTANTS_H

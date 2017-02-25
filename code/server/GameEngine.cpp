@@ -43,14 +43,23 @@ void GameEngine::dealDamageToBase(std::vector<PlayerState> &playerStates) {
                 // C'est fait dans updateWaves au round suivant, mais c'est pas evident tout de suite
             }
         }
+        //wave.removeDeadPNJs();
     }
 }
 
 void GameEngine::dealDamage(std::vector<Wave> &waves) {
     for (AbstractTower &tower: gameState.getTowers()) {
         Wave &wave = getWaveInSameQuadrant(tower, waves);
-        tower.shoot(wave);
+        if(tower.shoot(wave)){
+            //tower.shoot() renvoi true si la tour a tué un pnj en lui tirant dessus
+            PlayerState player_state = gameState.getPlayerStates()[wave.getQuadrant()];
+            giveGold(player_state);
+        }
     }
+}
+
+void GameEngine::giveGold(PlayerState& playerState){
+    playerState.earnMoney(PNJ_VALUE);
 }
 
 void GameEngine::movePNJsInWaves(std::vector<Wave> &waves) {
