@@ -63,6 +63,7 @@ void GameServer::runWave() {
     Timer timer;
     timer.start();
 
+    gameEngine.createWaves();
     bool isWaveFinished = false;
     while (!isWaveFinished) {
         while (!isWaveFinished && !timer.elapsedTimeInMiliseconds() < INTERVAL_BETWEEN_SENDS_IN_MS) {
