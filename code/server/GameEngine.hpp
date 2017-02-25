@@ -45,7 +45,7 @@ public:
     bool isGameFinished();
     std::string * serializeGameState();
 
-    void addTower(AbstractTower &tower);
+    void addTower(AbstractTower &tower, int quadrant);
 };
 
 
