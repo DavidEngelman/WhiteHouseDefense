@@ -37,7 +37,6 @@ void GameManager::run() {
     gameUI.display();
 
     //2) receive phase message
-    char phase[BUFFER_SIZE];
     receive_message(server_socket, phase);
 
     //3) run the phase
