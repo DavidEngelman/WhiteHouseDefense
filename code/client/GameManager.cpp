@@ -28,16 +28,23 @@ void GameManager::come_back_to_menu(){
 }
 
 void GameManager::run() {
+
+    //1) receive seed and adapt the map
     char seed[5];
     receive_message(server_socket, seed);
-
     gameUI.setSeed(atoi(seed));
     gameUI.display();
+
+    //2) receive phase message
     //TODO : rajouter un receive pour savoir quelle phase c est
+
+    //3) run the phase
 
     if (phase == PLACING_TOWER) {
         placeTower();
     } else {
         //TODO faire les vagues d'ennemis et afficher à l'écran
     }
+
+    //4) on recommence au point 2)
 }
