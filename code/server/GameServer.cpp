@@ -144,7 +144,7 @@ void GameServer::handleEndOfGame() {
 */
 void GameServer::sendMapSeedToClients() {
     unsigned int mapSeed = gameEngine.getGameState().getMapSeed();
-    std::string message = "seed";
+    std::string message = SETUP_GAME;
     for (PlayerConnection& playerConnection : playerConnections) {
         int socketFd = playerConnection.getSocket_fd();
         send_message(socketFd, message.c_str());

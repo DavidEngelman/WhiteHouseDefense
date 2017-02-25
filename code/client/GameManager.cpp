@@ -70,8 +70,8 @@ unsigned int GameManager::getMapSeedFromServer() const {
     receive_message(server_socket, buffer);
 
     std::string action(buffer);
-    if (action != "seed") {
-        std::cout << "Expected action was seed; it was instead " << action << std::endl;
+    if (action != SETUP_GAME) {
+        std::cout << "Expected action was setup; it was instead " << action << std::endl;
         perror("Incorrect message for seed");
     }
 
