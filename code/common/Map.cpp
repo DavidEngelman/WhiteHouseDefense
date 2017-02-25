@@ -188,3 +188,36 @@ void Map::update(GameState &gameState) {
         }
     }
 }
+
+
+/*
+
+void Map::add_tower(Position pos) {
+    dynamicMatrix[pos.getX()][pos.getY()] = ' '; // tower char
+}
+void Map::add_pnj(Position pos) {
+    dynamicMatrix[pos.getX()][pos.getY()] = ' '; // pnj char
+}
+void Map ::add_playerBase(Position pos) {
+    dynamicMatrix[pos.getX()][pos.getY()] = ' '; // base char
+}
+
+void Map::update(GameState &gameState) {
+    dynamicmatrix = matrix;
+    for (auto &tower : gameState.getTowers()) {
+        addTower(tower.getPosition());
+    }
+
+    for (auto &wave : gameState.getWaves()) {
+        for (auto &pnj : wave.getPnjs()) {
+            addNPC(pnj.getPosition());
+        }
+    }
+    for (auto &playerstate: gameState.getPlayerStates()){
+        if(playerstate.getHp() > 0){
+            add_playerBase(//position de la base)
+        }
+    }
+}
+
+*/

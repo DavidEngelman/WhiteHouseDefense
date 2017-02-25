@@ -24,6 +24,7 @@
 class Map {
 private:
     int matrix[SIZE][SIZE];
+    int dynamicMatrix[SIZE][SIZE];
 public:
 
 
