@@ -1,5 +1,6 @@
 #include "GameServer.hpp"
 #include "../client/GameManager.hpp"
+#include "../common/AttackTower.hpp"
 
 GameServer::GameServer(int port, std::vector<PlayerConnection> &playerConnections) :
 Server(port), playerConnections(playerConnections) {}
@@ -43,7 +44,15 @@ void GameServer::get_and_process_command(int client_socket_fd, char *buffer) {
 }
 
 void GameServer::addTowerInGameState(PlaceTowerCommand &command) {
-//    gameState.add_tower(command.getPosition());
+    AbstractTower * tower;
+    if (command.getTowerType() == ATTACK_TOWER_STR){
+        *tower = AttackTower(command.getPosition());
+    }
+    // TODO: completer si plus tard on utilise la SlowTower
+    //else if (command.getTowerType() == SLOW_TOWER){
+      //  *tower = SlowTower
+    //}
+    gameEngine.addTower(*tower);
 }
 
 void GameServer::runWave() {

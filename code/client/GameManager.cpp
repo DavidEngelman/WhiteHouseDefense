@@ -15,6 +15,7 @@ void GameManager::placeTower() {
     if (gameUI.isBuyingTower()) {
         gameUI.display();
         Position pos = gameUI.getPosBuyingTower();
+        // TODO: send tower placement command to server
     } else {
         gameUI.display();
     }

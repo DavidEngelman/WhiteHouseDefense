@@ -120,3 +120,7 @@ std::string * GameEngine::serializeGameState() {
 GameState &GameEngine::getGameState() {
     return gameState;
 }
+
+void GameEngine::addTower(AbstractTower& tower) {
+    gameState.addTower(tower);
+}
