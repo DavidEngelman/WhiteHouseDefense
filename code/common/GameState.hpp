@@ -18,8 +18,6 @@ private:
     std::vector<Wave> waves;
     bool isGameOver;
 
-    Map map;
-
 private:
 
     std::string mode;
@@ -30,8 +28,6 @@ public:
     GameState() = default;
 
     bool getIsGameOver() const;
-
-    Map &getMap();
 
     std::vector<Wave> &getWaves();
 

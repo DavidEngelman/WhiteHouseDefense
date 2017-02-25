@@ -90,7 +90,3 @@ bool GameState::getIsGameOver() const {
     return isGameOver;
 }
 
-Map &GameState::getMap(){
-    return map;
-}
-
