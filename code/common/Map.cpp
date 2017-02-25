@@ -179,4 +179,12 @@ void Map::update(GameState &gameState) {
     for (auto &tower : towers) {
         addTower(tower.getPosition());
     }
+
+    std::vector<Wave> &waves = gameState.getWaves();
+    for (auto &wave : waves) {
+        std::vector<PNJ> &pnjs = wave.getPnjs();
+        for (auto &pnj : pnjs) {
+            addNPC(pnj.getPosition());
+        }
+    }
 }
