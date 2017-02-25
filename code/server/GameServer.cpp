@@ -52,9 +52,11 @@ void GameServer::runWave() {
 
     bool isWaveFinished = false;
     while (!isWaveFinished) {
-        // TODO: choisir une meilleure valeur et la mettre comme constant
-        while (!timer.elapsedTimeInMiliseconds() < INTERVAL_BETWEEN_SENDS_IN_MS) {
+        while (!isWaveFinished && !timer.elapsedTimeInMiliseconds() < INTERVAL_BETWEEN_SENDS_IN_MS) {
             isWaveFinished = gameEngine.update();
+            // TODO: mettre peut etre un sleep ici? on ne va pas faire des tonnes de updates de toute facon
+            // car si gameEngine voit que pas assez de temps s'est ecoulé depuis le tick precedent,
+            // il ne fait rien
         }
 
         sendGameStateToPlayers();

@@ -32,8 +32,7 @@ void GameEngine::updatePlayerStates() {
 
 void GameEngine::dealDamageToBase(std::vector<PlayerState> &playerStates) {
     for (Wave &wave : gameState.getWaves()) {
-        int quadrant = wave.getQuadrant();
-        PlayerState &player_state = playerStates[quadrant];
+        PlayerState &player_state = getPlayerStateForWave(wave);
 
         for (PNJ &pnj : wave.getPnjs()) {
             if (pnj.isInPlayerBase()) {
@@ -43,14 +42,28 @@ void GameEngine::dealDamageToBase(std::vector<PlayerState> &playerStates) {
                 // C'est fait dans updateWaves au round suivant, mais c'est pas evident tout de suite
             }
         }
+        //wave.removeDeadPNJs();
     }
 }
 
 void GameEngine::dealDamage(std::vector<Wave> &waves) {
     for (AbstractTower &tower: gameState.getTowers()) {
         Wave &wave = getWaveInSameQuadrant(tower, waves);
-        tower.shoot(wave);
+        bool killedPNJ = tower.shoot(wave);
+        if (killedPNJ){
+            PlayerState player_state = getPlayerStateForWave(wave);
+            giveGold(player_state);
+        }
     }
+}
+
+PlayerState &GameEngine::getPlayerStateForWave(Wave &wave) {
+    int quadrant = wave.getQuadrant();
+    return gameState.getPlayerStates()[quadrant];
+}
+
+void GameEngine::giveGold(PlayerState& playerState){
+    playerState.earnMoney(PNJ_VALUE);
 }
 
 void GameEngine::movePNJsInWaves(std::vector<Wave> &waves) {
