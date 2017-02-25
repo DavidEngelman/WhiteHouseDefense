@@ -1,11 +1,9 @@
-//
-// Created by jepsiko on 21/02/17.
-//
-
 #include "GameUI.hpp"
 #include <iostream>
 
-GameUI::GameUI(){}
+
+GameUI::GameUI(Map &map) : map(map) {
+}
 
 Position GameUI::getPosBuyingTower() {
     int x;
@@ -17,17 +15,17 @@ Position GameUI::getPosBuyingTower() {
         std::cin >> x;
         std::cout << "Entrez un Y: ";
         std::cin >> y;
-    } while (!checkCoord(x,y));
+    } while (!checkCoord(x, y));
 
     return Position(x, y);
 }
 
-bool GameUI::checkCoord(int x, int y){
-    if (0 <= x and x < SIZE and 0 <= y and y < SIZE){
+bool GameUI::checkCoord(int x, int y) {
+    if (0 <= x and x < SIZE and 0 <= y and y < SIZE) {
         return true;
     }
     display();
-    std::cout<< "Entrez un x et un y entre 0 et "<<SIZE-1<< std::endl;
+    std::cout << "Entrez un x et un y entre 0 et " << SIZE - 1 << std::endl;
     return false;
 }
 

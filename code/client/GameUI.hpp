@@ -7,12 +7,10 @@
 
 class GameUI {
 private:
-    Map map;
-	int seed;
+    Map& map;
 
 public:
-
-    GameUI();
+    GameUI(Map& map); // ou peut etre GameUI(GameState& gameState)?
 
 	Position getPosBuyingTower();
 	bool isBuyingTower();

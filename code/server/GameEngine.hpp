@@ -26,7 +26,7 @@ public:
 
     bool update();
 
-    GameState &getGameState() const;
+    GameState &getGameState();
     void createWaves();
     void updateWaves();
     void dealDamage(std::vector<Wave> &waves);
