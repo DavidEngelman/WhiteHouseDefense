@@ -40,9 +40,9 @@ public:
     Map();
     Map(unsigned seed);
     void display();
-    void update(GameState& gameState);
+    void update(GameState& gameState); //REGARDER ICI ;)
     bool isPath(Position pos);
-    bool addTower(Position pos, int typeOfTower);
+    bool addTower(Position pos);
     bool removeTower(Position pos);
     bool addNPC(Position pos);
     bool removeNPC(Position pos);
