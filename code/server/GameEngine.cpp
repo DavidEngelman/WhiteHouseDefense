@@ -1,6 +1,6 @@
- #include "GameEngine.hpp"
+#include "GameEngine.hpp"
 
-GameEngine::GameEngine() {
+GameEngine::GameEngine(): numOfPNJsPerWave(10) {
     timer.start();
 }
 
@@ -26,12 +26,12 @@ void GameEngine::updatePlayerStates() {
 }
 
 void GameEngine::dealDamageToBase(std::vector<PlayerState> &playerStates) {
-    for (Wave& wave : gameState.getWaves()){
+    for (Wave &wave : gameState.getWaves()) {
         int quadrant = wave.getQuadrant();
         PlayerState &player_state = playerStates[quadrant];
 
-        for (PNJ& pnj : wave.getPnjs()){
-            if (pnj.isInPlayerBase()){
+        for (PNJ &pnj : wave.getPnjs()) {
+            if (pnj.isInPlayerBase()) {
                 player_state.decrease_hp(PNJ_DAMAGE);
                 pnj.setHealthPoints(0);  // TODO: Faudrait enlever ces PNJ de la vague...
             }
@@ -40,35 +40,46 @@ void GameEngine::dealDamageToBase(std::vector<PlayerState> &playerStates) {
 }
 
 void GameEngine::dealDamage(std::vector<Wave> &waves) {
-    for (AbstractTower& tower: gameState.getTowers()){
-        Wave& wave = getWaveInSameQuadrant(tower, waves);
+    for (AbstractTower &tower: gameState.getTowers()) {
+        Wave &wave = getWaveInSameQuadrant(tower, waves);
         tower.shoot(wave);
     }
 }
 
 void GameEngine::movePNJsInWaves(std::vector<Wave> &waves) {
-    for (Wave& wave: waves){
+    for (Wave &wave: waves) {
         movePNJsInWave(wave);
     }
 }
 
 void GameEngine::movePNJsInWave(Wave &wave) {
-    for (PNJ& pnj: wave.getPnjs()){
+    for (PNJ &pnj: wave.getPnjs()) {
         pnj.advance(gameState.getMap());
     }
 }
 
-Wave& GameEngine::getWaveInSameQuadrant(AbstractTower &tower, std::vector<Wave> &waves) {
+Wave &GameEngine::getWaveInSameQuadrant(AbstractTower &tower, std::vector<Wave> &waves) {
     int quadrant = tower.getQuadrant();
-    for (Wave& wave: waves) {
+    for (Wave &wave: waves) {
         if (quadrant == wave.getQuadrant()) {
             return wave;
         }
     }
 }
 
- void GameEngine::removeDeadPNJs(){
-     for (Wave& wave : gameState.getWaves()){
-         wave.removeDeadPNJs();
-     }
- }
+void GameEngine::removeDeadPNJs() {
+    for (Wave &wave : gameState.getWaves()) {
+        wave.removeDeadPNJs();
+    }
+}
+
+void GameEngine::createWaves() {
+    gameState.clearWaves();
+    for (const int direction: DIRECTIONS)
+        // TODO: increase the number of pnjs per wave to make them harder over time
+        // Genre: numOfPNJsPerWave += 5;
+        Wave wave(numOfPNJsPerWave, direction);
+        gameState.addWave
+
+    }
+}
