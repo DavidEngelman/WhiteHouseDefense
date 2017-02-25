@@ -5,11 +5,8 @@
 #include "PlayerState.hpp"
 #include "AbstractTower.hpp"
 #include "PNJ.hpp"
-#include "Map.hpp"
 #include "Wave.h"
 #include "../common/Strings.hpp"
-
-
 
 const static std::vector<std::string> validModes = {CLASSIC_MODE, TEAM_MODE, TIMED_MODE};
 
@@ -21,22 +18,14 @@ private:
     std::vector<Wave> waves;
     bool isGameOver;
 
-
-private:
-
     std::string mode;
-
-    Map map;
 
 public:
 
 
     GameState() = default;
-    GameState(unsigned int mapSeed);
 
-    Map &getMap();
     bool getIsGameOver() const;
-    unsigned int getMapSeed();
 
     std::vector<Wave> &getWaves();
 
