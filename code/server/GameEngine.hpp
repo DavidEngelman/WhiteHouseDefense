@@ -12,6 +12,7 @@ class GameEngine {
 
 private:
     GameState gameState;
+
     int numStepsDone;
     int numOfPNJsPerWave;
 
@@ -25,7 +26,7 @@ public:
 
     bool update();
 
-
+    GameState &getGameState() const;
     void createWaves();
     void updateWaves();
     void dealDamage(std::vector<Wave> &waves);

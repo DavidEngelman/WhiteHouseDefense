@@ -78,9 +78,15 @@ void GameServer::sendEndToPlayer(PlayerConnection &connection) {
     send_message(connection.getSocket_fd(), END_OF_GAME); //send "end" to client
 }
 
+void GameServer::sendWinnerToPlayer(PlayerConnection &connection) {
+    int winner_id = gameEngine.getGameState().getWinnerClassic();
+    send_message(connection.getSocket_fd(), std::to_string(winner_id).c_str());
+}
+
 
 void GameServer::handleEndOfGame() {
     for (int i = 0; i < NUM_PLAYERS; i++) {
         sendEndToPlayer(playerConnections[i]);
+        sendWinnerToPlayer(playerConnections[i]);
     }
 }
