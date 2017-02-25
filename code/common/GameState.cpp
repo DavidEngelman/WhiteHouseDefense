@@ -1,10 +1,10 @@
 #include "GameState.hpp"
 
-void GameState::decrease_player_hp(PlayerState &player, int amount) {
+void GameState::DecreasePlayerHp(PlayerState &player, int amount) {
     player.decrease_hp(amount);
 }
 
-void GameState::increase_player_hp(PlayerState &player, int amount) {
+void GameState::IncreasePlayerHp(PlayerState &player, int amount) {
     player.decrease_hp(amount);
 }
 
@@ -34,7 +34,7 @@ void GameState::add_tower(Position position) {
     // towers.push_back(Tower tower);
 }
 
-bool GameState::is_only_one_alive() {
+bool GameState::IsOnlyOneAlive() {
     int nmbr_of_alive;
     for (PlayerState &ps: player_states) {
         if (ps.getHp() > 0) {
@@ -54,7 +54,7 @@ bool GameState::isRoundFinished() {
 }
 
 bool GameState::isFinished() {
-    return is_only_one_alive();
+    return IsOnlyOneAlive();
 }
 
 
@@ -73,5 +73,9 @@ Map &GameState::getMap() {
 
 std::vector<PlayerState> &GameState::getPlayerStates() {
     return player_states;
+}
+
+void GameState::clearWaves() {
+    waves.clear();
 }
 

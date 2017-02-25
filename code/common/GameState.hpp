@@ -28,6 +28,9 @@ public:
     Map &getMap();
 
     std::vector<Wave> &getWaves();
+    
+    // Removes the current waves (which should be empty)
+    void clearWaves();
 
     std::vector<AbstractTower> &getTowers();
 
@@ -35,13 +38,13 @@ public:
 
     std::string serialize();
 
-    bool is_only_one_alive();
+    bool IsOnlyOneAlive();
 
     bool isFinished();
 
-    void decrease_player_hp(PlayerState &player, int amount);
+    void DecreasePlayerHp(PlayerState &player, int amount);
 
-    void increase_player_hp(PlayerState &player, int amount);
+    void IncreasePlayerHp(PlayerState &player, int amount);
 
 
 
