@@ -19,6 +19,7 @@ private:
     std::vector<PlayerState> player_states;
     std::vector<AbstractTower> towers;
     std::vector<Wave> waves;
+    bool isGameOver;
 
     std::string mode;
 
