@@ -18,7 +18,7 @@ private:
     GameUI gameUI;
     std::string player_username;
     int player_id; // Je sais plus si les deux sont utiles je les met au cas ou
-    char phase; // Phase de jeu (vague d'ennemis ou placement de tours)
+    char phase[1]; // Phase de jeu (vague d'ennemis ou placement de tours)
 
     unsigned int getMapSeedFromServer() const;
 public:
