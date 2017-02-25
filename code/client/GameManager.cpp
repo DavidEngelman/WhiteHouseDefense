@@ -33,25 +33,32 @@ void GameManager::come_back_to_menu() {
 }
 
 void GameManager::run() {
-    // Le constructeur va chercher la seed et initialize la map.
-    // Ça évite de genererer une map au debut (inutilement), puis la regenerer ici avec la seed du server
-
     gameUI.display();
+        char server_msg_buff [BUFFER_SIZE];
+    while(1){
 
-    placeTower();
+        receive_message(server_socket, server_msg_buff);
+        if (strcmp(server_msg_buff, PLACING_TOWER) == 0){
+            //TODO InputThread
+        }
+        else if (strcmp(server_msg_buff, WAVE) == 0){
+            //TODO kill InputThread
+        }
+        else{
+            //TODO parse GamesState sent from server
+            //TODO update gamesState
 
-    // TODO: est-ce qu'il faut vraiment savoir ça? On commence toujours par placer des tours, non?
-    //2) receive phase message
-    receive_message(server_socket, phase);
-
-    //3) run the phase
-    if (strcmp(phase, PLACING_TOWER) == 0) {
-        placeTower();
-    } else {
-        //TODO faire les vagues d'ennemis et afficher à l'écran
+            if (gameState.getIsGameOver()){
+                break;
+            }
+        }
     }
 
-    //4) on recommence au point 2)
+}
+
+void GameManager::unSerializeGameState(char* seriarlized_gamestate){
+    //TODO
+
 }
 
 unsigned int GameManager::getMapSeedFromServer() const {
@@ -65,6 +72,7 @@ unsigned int GameManager::getMapSeedFromServer() const {
         std::cout << "Expected action was seed; it was instead " << action << std::endl;
         perror("Incorrect message for seed");
     }
+
 
     unsigned int seed;
     receive_data(server_socket, &seed, sizeof(unsigned int));

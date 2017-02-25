@@ -18,7 +18,11 @@ private:
     char phase[1]; // Phase de jeu (vague d'ennemis ou placement de tours)
 
     unsigned int getMapSeedFromServer() const;
+
+    void unSerializeGameState(char* serialized_gamestate);
+
 public:
+
     GameManager(char* ip_addr, int port, int id, std::string username, App* app);
 
     void placeTower();

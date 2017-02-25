@@ -98,3 +98,7 @@ unsigned int GameState::getMapSeed() {
     return map.getSeed();
 }
 
+bool GameState::getIsGameOver() const {
+    return isGameOver;
+}
+
