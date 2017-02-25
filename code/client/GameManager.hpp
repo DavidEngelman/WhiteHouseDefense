@@ -15,6 +15,7 @@ private:
     GameUI gameUI;
     std::string player_username;
     int player_id; // Je sais plus si les deux sont utiles je les met au cas ou
+    int quadrant;
     char phase[1]; // Phase de jeu (vague d'ennemis ou placement de tours)
 
     unsigned int getMapSeedFromServer() const;
@@ -25,6 +26,8 @@ public:
 
     GameManager(char* ip_addr, int port, int id, std::string username, App* app);
 
+    int getQuadrant() const;
+
     void placeTower();
 
     void displayWave();
@@ -33,6 +36,7 @@ public:
 
     void run();
 
+    int getQuadrantFromServer();
 };
 
 #endif

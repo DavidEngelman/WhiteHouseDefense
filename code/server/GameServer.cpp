@@ -5,7 +5,11 @@
 const bool DEBUG = true;
 
 GameServer::GameServer(int port, std::vector<PlayerConnection> &playerConnections) :
-Server(port), playerConnections(playerConnections) {}
+Server(port), playerConnections(playerConnections) {
+    for (int i = 0; i < 4; i++) {
+        client_sockets[i] = playerConnections[i].getSocket_fd();
+    }
+}
 
 void GameServer::sendGameStateToPlayers() {
     for (int i = 0; i < NUM_PLAYERS; i++) {
@@ -27,8 +31,7 @@ void GameServer::processClientCommands() {
     Timer timer;
     timer.start();
     while (timer.elapsedTimeInSeconds() < NUM_SECONDS_TO_PLACE_TOWER) {
-        // TODO: faire un select sur les sockets des joueurs dans PlayerConnection.
-        int client_socket_fd = accept_connection();
+        int client_socket_fd = get_readable_socket(client_sockets, 4);
         get_and_process_command(client_socket_fd, message_buffer);
     }
 }
@@ -75,6 +78,7 @@ void GameServer::runWave() {
         }
 
         if (DEBUG){
+            // TODO: updateMap()
             gameEngine.getGameState().getMap().display();
         } else {
             sendGameStateToPlayers();
@@ -86,7 +90,9 @@ void GameServer::runWave() {
 
 void GameServer::run() {
     if (!DEBUG){
-        sendMapSeedToClient();
+        sendMapSeedToClients();
+        SendQuadrantToClients();
+
     }
 
     while (!gameEngine.isGameFinished()) {
@@ -136,12 +142,21 @@ void GameServer::handleEndOfGame() {
     }
 }
 */
-void GameServer::sendMapSeedToClient() {
+void GameServer::sendMapSeedToClients() {
     unsigned int mapSeed = gameEngine.getGameState().getMapSeed();
-    std::string message = "seed";
+    std::string message = SETUP_GAME;
     for (PlayerConnection& playerConnection : playerConnections) {
         int socketFd = playerConnection.getSocket_fd();
         send_message(socketFd, message.c_str());
         send_data(socketFd, (char *) &mapSeed, sizeof(unsigned int));
+    }
+}
+
+void GameServer::SendQuadrantToClients() {
+    unsigned int quadrant = 0;
+    for (PlayerConnection& playerConnection : playerConnections) {
+        int socketFd = playerConnection.getSocket_fd();
+        send_data(socketFd, (char *) &quadrant, sizeof(unsigned int));
+        quadrant ++;
     }
 }

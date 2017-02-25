@@ -5,7 +5,6 @@
 #include "../common/Networking.h"
 #include "NetworkedManager.hpp"
 #include "../server/MatchMaker.hpp"
-// TODO: faudra probablement faire un fichier qui reprend tous les strings
 
 class GameLauncher : public NetworkedManager {
 

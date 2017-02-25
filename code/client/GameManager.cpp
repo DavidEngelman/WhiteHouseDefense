@@ -7,8 +7,10 @@
 GameManager::GameManager(char *ip_addr, int port, int id, std::string username, App *app) :
         NetworkedManager(port, ip_addr, app), player_id(id), player_username(username),
         phase(PLACING_TOWER),
-        gameState(getMapSeedFromServer()),
-        gameUI(gameState.getMap()) {} //Le gamestate n'est pas censé avoir la map
+        gameState(getMapSeedFromServer()),  // L'ordre est important parce qu'on fait des
+        quadrant(getQuadrantFromServer()),  // recv. Ne pas changer l'ordre!
+        gameUI(gameState.getMap())
+        {} //Le gamestate n'est pas censé avoir la map
 
 
 void GameManager::placeTower() {
@@ -68,8 +70,8 @@ unsigned int GameManager::getMapSeedFromServer() const {
     receive_message(server_socket, buffer);
 
     std::string action(buffer);
-    if (action != "seed") {
-        std::cout << "Expected action was seed; it was instead " << action << std::endl;
+    if (action != SETUP_GAME) {
+        std::cout << "Expected action was setup; it was instead " << action << std::endl;
         perror("Incorrect message for seed");
     }
 
@@ -77,4 +79,14 @@ unsigned int GameManager::getMapSeedFromServer() const {
     unsigned int seed;
     receive_data(server_socket, &seed, sizeof(unsigned int));
     return seed;
+}
+
+int GameManager::getQuadrantFromServer() {
+    int quadrant;
+    receive_data(server_socket, &quadrant, sizeof(int));
+    return quadrant;
+}
+
+int GameManager::getQuadrant() const {
+    return quadrant;
 }

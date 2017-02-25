@@ -5,7 +5,7 @@
 #include "Timer.h"
 #include "../common/Direction.h"
 
-#define STEP_DURATION 1000
+#define STEP_DURATION_IN_MS 1000
 
 
 class GameEngine {
