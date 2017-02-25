@@ -9,7 +9,7 @@
 #include "MainManager.hpp"
 
 #define WAVE 'w'
-#define PLACING_TOWER 't'
+#define PLACING_TOWER "t"
 
 class GameManager : public NetworkedManager{ //Tmp : public (à supprimer après tests)
 

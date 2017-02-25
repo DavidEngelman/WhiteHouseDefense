@@ -32,12 +32,25 @@ void GameManager::come_back_to_menu() {
 }
 
 void GameManager::run() {
+
+    //1) receive seed and adapt the map
+    char seed[BUFFER_SIZE];
+    receive_message(server_socket, seed);
+    gameUI.setSeed(atoi(seed));
     gameUI.display();
-    if (phase == PLACING_TOWER) {
+
+    //2) receive phase message
+    char phase[BUFFER_SIZE];
+    receive_message(server_socket, phase);
+
+    //3) run the phase
+    if (strcmp(phase, PLACING_TOWER) == 0) {
         placeTower();
     } else {
         //TODO faire les vagues d'ennemis et afficher à l'écran
     }
+
+    //4) on recommence au point 2)
 }
 
 unsigned int GameManager::getMapSeedFromServer() const {
