@@ -10,7 +10,7 @@ GameEngine::GameEngine(): numOfPNJsPerWave(10) {
  */
 bool GameEngine::update() {
     int numMilisecondsSinceStart = timer.elapsedTimeInMiliseconds();
-    int numStepsToDo = (numMilisecondsSinceStart / STEP_DURATION) - numStepsDone;
+    int numStepsToDo = (numMilisecondsSinceStart / STEP_DURATION_IN_MS) - numStepsDone;
     for (int i = 0; i < numStepsToDo; ++i) {
         updateWaves();
         updatePlayerStates();
