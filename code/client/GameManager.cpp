@@ -37,6 +37,8 @@ void GameManager::run() {
 
     gameUI.display();
 
+    placeTower();
+
     // TODO: est-ce qu'il faut vraiment savoir ça? On commence toujours par placer des tours, non?
     //2) receive phase message
     receive_message(server_socket, phase);
