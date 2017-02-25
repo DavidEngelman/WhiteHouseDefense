@@ -2,7 +2,7 @@
 
 void MatchmakingCommand::parse(char* data)  {
     /*
-    * Disons qu'une commande se présente s'envoie dans un string de type : mode,player_id;
+    * Disons qu'une commande se présente s'envoie dans un string de type : mode,player_quadrant;
     *
     * Ex: si bob veut jouer en classic et que le playerID de bob est 18 -> data = classic,18;
     *
@@ -17,7 +17,7 @@ void MatchmakingCommand::parse(char* data)  {
     }
     i++; // passe la virgule
 
-    // Extracts the player_id (ex: 18)
+    // Extracts the player_quadrant (ex: 18)
     while (data[i] != ';') {
         string_player_id += data[i];
         i++;
