@@ -21,6 +21,7 @@ class GameServer : public Server {
 private:
     GameEngine gameEngine;
     std::vector<PlayerConnection> playerConnections;
+    int client_sockets[4];
 
     void sendGameStateToPlayer(PlayerConnection &connection);
 
@@ -52,7 +53,7 @@ public:
     void sendEndToPlayer(PlayerConnection &connection);
 
     void sendWinnerToPlayer(PlayerConnection &connection);
-    void sendMapSeedToClient();
+    void sendMapSeedToClients();
 
     void sendTowerPhase();
     void sendWavePhase();
