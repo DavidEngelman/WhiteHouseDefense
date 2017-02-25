@@ -28,24 +28,10 @@ void GameEngine::updatePlayerStates() {
 void GameEngine::dealDamageToBase(std::vector<PlayerState> &playerStates) {
     for (Wave& wave : gameState.getWaves()){
         for (PNJ& pnj : wave.getPnjs()){
-            if (pnj.isInPlayerBase() && wave.getQuadrant() == NORTH){
-                gameState.getPlayerStates()[0].decrease_hp(PNJ_DAMAGE);
-                pnj.setHealthPoints(0);
-
-            }
-            else if (pnj.isInPlayerBase() && wave.getQuadrant() == EAST){
-                gameState.getPlayerStates()[1].decrease_hp(PNJ_DAMAGE);
-                pnj.setHealthPoints(0);
-
-            }
-
-            else if(pnj.isInPlayerBase() && wave.getQuadrant() == SOUTH){
-                gameState.getPlayerStates()[2].decrease_hp(PNJ_DAMAGE);
-                pnj.setHealthPoints(0);
-
-            }
-            else if(pnj.isInPlayerBase() && wave.getQuadrant() == WEST){
-                gameState.getPlayerStates()[3].decrease_hp(PNJ_DAMAGE);
+            if (pnj.isInPlayerBase()){
+                int quadrant = wave.getQuadrant();
+                PlayerState &player_state = gameState.getPlayerStates()[quadrant];
+                player_state.decrease_hp(PNJ_DAMAGE);
                 pnj.setHealthPoints(0);
             }
         }
