@@ -24,7 +24,7 @@ private:
     int matrix[SIZE][SIZE];
     const unsigned int _seed;
 public:
-    unsigned int get_seed() const;
+    unsigned int GetSeed() const;
 
 private:
 

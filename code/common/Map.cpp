@@ -173,6 +173,6 @@ bool Map::moveNPC(Position origin, Position nextPos) {
     return false;
 }
 
-unsigned int Map::get_seed() const {
+unsigned int Map::GetSeed() const {
     return _seed;
 }
