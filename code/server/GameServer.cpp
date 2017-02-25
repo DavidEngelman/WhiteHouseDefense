@@ -5,7 +5,11 @@
 const bool DEBUG = true;
 
 GameServer::GameServer(int port, std::vector<PlayerConnection> &playerConnections) :
-Server(port), playerConnections(playerConnections) {}
+Server(port), playerConnections(playerConnections) {
+    for (int i = 0; i < 4; i++) {
+        client_sockets[i] = playerConnections[i].getSocket_fd();
+    }
+}
 
 void GameServer::sendGameStateToPlayers() {
     for (int i = 0; i < NUM_PLAYERS; i++) {
@@ -27,8 +31,7 @@ void GameServer::processClientCommands() {
     Timer timer;
     timer.start();
     while (timer.elapsedTimeInSeconds() < NUM_SECONDS_TO_PLACE_TOWER) {
-        // TODO: faire un select sur les sockets des joueurs dans PlayerConnection.
-        int client_socket_fd = accept_connection();
+        int client_socket_fd = get_readable_socket(client_sockets, 4);
         get_and_process_command(client_socket_fd, message_buffer);
     }
 }

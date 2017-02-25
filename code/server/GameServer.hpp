@@ -21,6 +21,7 @@ class GameServer : public Server {
 private:
     GameEngine gameEngine;
     std::vector<PlayerConnection> playerConnections;
+    int client_sockets[4];
 
     void sendGameStateToPlayer(PlayerConnection &connection);
 
