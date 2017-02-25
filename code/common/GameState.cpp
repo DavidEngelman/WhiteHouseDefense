@@ -44,6 +44,16 @@ bool GameState::IsOnlyOneAlive() {
     return (number_of_players_alive == 1);
 }
 
+int GameState::getWinnerClassic() {
+    for (PlayerState &ps: player_states) {
+        if (ps.getIsWinner()) {
+            return ps.getPlayer_id(); //TODO peut etre changer avec le username
+        }
+    }
+
+    return -1;
+}
+
 bool GameState::isRoundFinished() {
     for (Wave &wave: waves) {
         if ( !wave.isEmpty()) {

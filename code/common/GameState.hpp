@@ -64,6 +64,8 @@ public:
     // les mexicains ont avancé (entre autres)
 
     bool isRoundFinished();
+
+    int getWinnerClassic();
 };
 
 #endif
