@@ -75,6 +75,7 @@ void GameServer::runWave() {
         }
 
         if (DEBUG){
+            // TODO: updateMap()
             gameEngine.getGameState().getMap().display();
         } else {
             sendGameStateToPlayers();
