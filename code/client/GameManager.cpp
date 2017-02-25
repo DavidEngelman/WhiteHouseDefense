@@ -6,9 +6,9 @@
 
 GameManager::GameManager(char *ip_addr, int port, int id, std::string username, App *app) :
         NetworkedManager(port, ip_addr, app), player_id(id), player_username(username),
-        phase(PLACING_TOWER[0]),
+        phase(PLACING_TOWER),
         gameState(getMapSeedFromServer()),
-        gameUI(gameState.getMap()) {}
+        gameUI(gameState.getMap()) {} //Le gamestate n'est pas censé avoir la map
 
 
 void GameManager::placeTower() {
