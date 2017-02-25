@@ -6,7 +6,7 @@
 #include "../common/Direction.h"
 
 #define STEP_DURATION 1000
-#define PNJ_DAMAGE 10
+
 
 class GameEngine {
 
@@ -32,7 +32,7 @@ public:
 
     void updatePlayerStates();
     void dealDamageToBase(std::vector<PlayerState> &playerStates);
-
+    void giveGold(PlayerState& playerState);
 
     Wave& getWaveInSameQuadrant(AbstractTower &tower, std::vector<Wave> &waves);
 

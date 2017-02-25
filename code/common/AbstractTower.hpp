@@ -26,7 +26,7 @@ public:
 
     virtual ~AbstractTower() = default;
 
-    virtual void shoot(Wave& wave) = 0; // HAS TO BE DEFINED BY INHERITORS
+    virtual bool shoot(Wave& wave) = 0; // HAS TO BE DEFINED BY INHERITORS
 
     PNJ* get_closest_pnj(Wave& wave);
 
