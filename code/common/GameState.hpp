@@ -21,16 +21,21 @@ private:
     std::vector<Wave> waves;
     bool isGameOver;
 
+
+private:
+
     std::string mode;
 
     Map map;
 
 public:
+
+
     GameState() = default;
     GameState(unsigned int mapSeed);
 
     Map &getMap();
-
+    bool getIsGameOver() const;
     unsigned int getMapSeed();
 
     std::vector<Wave> &getWaves();
@@ -68,7 +73,7 @@ public:
 
     int getWinnerClassic();
 
-    void addTower(AbstractTower tower);
+//    void addTower(AbstractTower tower);
 };
 
 #endif

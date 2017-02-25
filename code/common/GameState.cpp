@@ -27,9 +27,9 @@ std::string* GameState::serialize() {
     return serialized_me;
 }
 
-void GameState::addTower(AbstractTower tower) {
-    towers.push_back(tower);
-}
+//void GameState::addTower(AbstractTower tower) {
+//    towers.push_back(tower);
+//}
 
 bool GameState::IsOnlyOneAlive() {
     int number_of_players_alive = 0;
@@ -92,5 +92,13 @@ void GameState::addWave(Wave wave) {
 
 GameState::GameState(unsigned int mapSeed): map(Map(mapSeed)) {
 
+}
+
+unsigned int GameState::getMapSeed() {
+    return map.getSeed();
+}
+
+bool GameState::getIsGameOver() const {
+    return isGameOver;
 }
 

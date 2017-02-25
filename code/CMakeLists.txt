@@ -24,12 +24,24 @@ set(SERVER_FILES "server/ServerLauncher.cpp" "common/Networking.cpp" "server/Ser
         common/GameState.cpp "server/GameServer.cpp" "server/PlaceTowerCommand.cpp" "server/Timer.cpp"
         "server/FriendListCommand.cpp" common/AbstractTower.cpp server/PlayerConnection.cpp common/PlayerState.cpp common/Wave.cpp
         "common/PNJ.cpp" "common/Position.cpp" common/Map.cpp server/GameEngine.cpp server/GameEngine.hpp common/Constants.h common/Direction.h
-        common/AttackTower.cpp common/SlowTower.cpp )
+        common/AttackTower.cpp server/ServerDebug.cpp) #common/SlowTower.cpp )
 
 add_executable(server ${SERVER_FILES})
+
+set(SERVER_DEBUG_FILES "server/ServerDebug.cpp" "common/Networking.cpp" "server/Server.cpp" "server/AccountServer.cpp" "server/Database.cpp"
+        "common/Credentials.cpp" "common/Account.cpp" "server/Command.cpp" "server/LoginRegisterCommand.cpp"
+        "server/MatchmakingCommand.cpp" "server/MatchMaker.cpp" "server/MatchMaker.cpp" "server/PendingMatch.cpp"
+        common/GameState.cpp "server/GameServer.cpp" "server/PlaceTowerCommand.cpp" "server/Timer.cpp"
+        "server/FriendListCommand.cpp" common/AbstractTower.cpp server/PlayerConnection.cpp common/PlayerState.cpp common/Wave.cpp
+        "common/PNJ.cpp" "common/Position.cpp" common/Map.cpp server/GameEngine.cpp server/GameEngine.hpp common/Constants.h common/Direction.h
+        common/AttackTower.cpp server/ServerDebug.cpp) #common/SlowTower.cpp )
+
+add_executable(server_debug ${SERVER_DEBUG_FILES})
 
 include_directories(/usr/include)
 link_directories(/usr/lib)
 target_link_libraries( server sqlite3)
+target_link_libraries( server_debug sqlite3)
 target_link_libraries( client crypt)
 target_link_libraries(server Threads::Threads)
+target_link_libraries(server_debug Threads::Threads)
