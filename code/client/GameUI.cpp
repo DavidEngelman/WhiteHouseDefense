@@ -52,7 +52,8 @@ bool GameUI::isBuyingTower() {
     return response == 1;
 }
 
-void GameUI::setSeed(int seed) {
-    GameUI::seed = seed;
-    map = Map(seed);
-}
+
+//void GameUI::setSeed(int seed) {
+//    GameUI::seed = seed;
+//    map = Map(seed);
+//}
