@@ -43,7 +43,7 @@ void GameServer::get_and_process_command(int client_socket_fd, char *buffer) {
 }
 
 void GameServer::addTowerInGameState(PlaceTowerCommand &command) {
-//    gameState.add_tower(command.getPosition());
+    gameEngine.getGameState().add_tower(command.getTowerType(), command.getPosition());
 }
 
 void GameServer::runWave() {

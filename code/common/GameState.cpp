@@ -1,4 +1,5 @@
 #include "GameState.hpp"
+#include "AttackTower.hpp"
 
 void GameState::DecreasePlayerHp(PlayerState &player, int amount) {
     player.decrease_hp(amount);
@@ -27,11 +28,11 @@ std::string* GameState::serialize() {
     return serialized_me;
 }
 
-void GameState::add_tower(Position position) {
-    // TODO: il faut modifier cette fonction, car on ne sait pas de quel type de tour on parle
-    // il faut soit prendre un parametre de plus (le type), soit modifier la signature pour
-    // qu'elle prenne une AbstractTower
-    // towers.push_back(Tower tower);
+void GameState::add_tower(std::string& tower_type, Position position) {
+    if (tower_type == "basic_tower"){
+        //towers.push_back(AttackTower());
+    }
+    //TODO ajouter d'autre type
 }
 
 bool GameState::IsOnlyOneAlive() {

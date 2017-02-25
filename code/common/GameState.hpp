@@ -56,7 +56,7 @@ public:
 
 
 
-    void add_tower(Position position);
+    void add_tower(std::string& tower_type, Position position);
 
     // Cette fonction aussi
     void updateGameState(int commands);
