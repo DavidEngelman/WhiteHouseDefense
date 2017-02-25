@@ -8,7 +8,7 @@ GameManager::GameManager(char *ip_addr, int port, int id, std::string username, 
         NetworkedManager(port, ip_addr, app), player_id(id), player_username(username),
         phase(PLACING_TOWER),
         gameState(getMapSeedFromServer()),
-        gameUI(GameUI(gameState.getMap())) {}
+        gameUI(gameState.getMap()) {} //Le gamestate n'est pas censé avoir la map
 
 
 void GameManager::placeTower() {
@@ -32,13 +32,14 @@ void GameManager::come_back_to_menu() {
 }
 
 void GameManager::run() {
+    // Le constructeur va chercher la seed et initialize la map.
+    // Ça évite de genererer une map au debut (inutilement), puis la regenerer ici avec la seed du server
 
-    //1) receive seed and adapt the map
-    char seed[BUFFER_SIZE];
-    receive_message(server_socket, seed);
-    gameUI.setSeed(atoi(seed));
     gameUI.display();
 
+    placeTower();
+
+    // TODO: est-ce qu'il faut vraiment savoir ça? On commence toujours par placer des tours, non?
     //2) receive phase message
     receive_message(server_socket, phase);
 
