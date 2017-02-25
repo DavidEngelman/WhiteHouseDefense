@@ -16,4 +16,7 @@ static const int PNJ_DAMAGE= 10;
 static const char PLACING_TOWER[1] = {'t'};
 static const char WAVE[1] = {'w'};
 
+static const int GOLD_EARNED_BY_SECOND= 1;
+
+
 #endif //PROJET_CONSTANTS_H

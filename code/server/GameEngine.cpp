@@ -28,13 +28,19 @@ void GameEngine::updateWaves() {
 
 void GameEngine::updatePlayerStates() {
     std::vector<PlayerState> &playerStates = gameState.getPlayerStates();
-    dealDamageToBase(playerStates);
+    addMoney();
+    dealDamageToBase();
 }
 
-void GameEngine::dealDamageToBase(std::vector<PlayerState> &playerStates) {
+void GameEngine::addMoney(){
+    for (PlayerState& player_state : gameState.getPlayerStates()){
+        player_state.earnMoney(GOLD_EARNED_BY_SECOND);
+    }
+}
+
+void GameEngine::dealDamageToBase() {
     for (Wave &wave : gameState.getWaves()) {
         PlayerState &player_state = getPlayerStateForWave(wave);
-
         for (PNJ &pnj : wave.getPnjs()) {
             if (pnj.isInPlayerBase()) {
                 player_state.decrease_hp(PNJ_DAMAGE);

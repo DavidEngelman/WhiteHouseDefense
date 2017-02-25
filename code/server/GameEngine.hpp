@@ -35,7 +35,8 @@ public:
     void removeDeadPNJs();
 
     void updatePlayerStates();
-    void dealDamageToBase(std::vector<PlayerState> &playerStates);
+    void addMoney();
+    void dealDamageToBase();
     void giveGold(PlayerState& playerState);
 
     Wave& getWaveInSameQuadrant(AbstractTower &tower, std::vector<Wave> &waves);
