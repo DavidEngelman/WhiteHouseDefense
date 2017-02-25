@@ -23,6 +23,7 @@
 class Map {
 private:
     int matrix[SIZE][SIZE];
+    unsigned int _seed;
 public:
 
 
@@ -45,6 +46,8 @@ public:
     bool addNPC(Position pos);
     bool removeNPC(Position pos);
     bool moveNPC(Position origin, Position nextPos);
+
+    unsigned int getSeed();
 };
 
 #endif

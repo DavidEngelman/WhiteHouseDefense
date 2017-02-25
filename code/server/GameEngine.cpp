@@ -121,7 +121,7 @@ GameState &GameEngine::getGameState() {
     return gameState;
 }
 
-void GameEngine::addTower(AbstractTower& tower, int quadrant) {
-    gameState.addTower(tower);
-    gameState.getPlayerStates()[quadrant].spendMoney(tower.getPrice());
-}
+//void GameEngine::addTower(AbstractTower& tower, int quadrant) {
+//    gameState.addTower(tower);
+//    gameState.getPlayerStates()[quadrant].spendMoney(tower.getPrice());
+//}

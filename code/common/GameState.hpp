@@ -68,7 +68,7 @@ public:
 
     int getWinnerClassic();
 
-    void addTower(AbstractTower tower);
+//    void addTower(AbstractTower tower);
 };
 
 #endif

@@ -22,7 +22,7 @@ public:
 
     virtual void setSpeedReduction(int newSpeedReduction);
 
-    virtual void shoot(Wave& wave) override;
+    virtual bool shoot(Wave& wave) override;
 
     virtual void reduceMovementSpeedOf(PNJ& target);
 
