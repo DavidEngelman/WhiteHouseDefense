@@ -1,6 +1,7 @@
 
 
 #include "GameManager.hpp"
+#include "../server/Server.hpp"
 
 
 GameManager::GameManager(char* ip_addr, int port, int id, std::string username, App* app) :
@@ -30,17 +31,17 @@ void GameManager::come_back_to_menu(){
 void GameManager::run() {
 
     //1) receive seed and adapt the map
-    char seed[5];
+    char seed[BUFFER_SIZE];
     receive_message(server_socket, seed);
     gameUI.setSeed(atoi(seed));
     gameUI.display();
 
     //2) receive phase message
-    //TODO : rajouter un receive pour savoir quelle phase c est
+    char phase[BUFFER_SIZE];
+    receive_message(server_socket, phase);
 
     //3) run the phase
-
-    if (phase == PLACING_TOWER) {
+    if (strcmp(phase, PLACING_TOWER) == 0) {
         placeTower();
     } else {
         //TODO faire les vagues d'ennemis et afficher à l'écran
