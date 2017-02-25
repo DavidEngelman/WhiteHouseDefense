@@ -3,19 +3,16 @@
 #include <iostream>
 #include <ctime>
 
-Map::Map(): _seed((unsigned int) time(0)) {
-    generateMap();
-}
-
-void Map::generateMap() {
-    srand(_seed);
+Map::Map() {
+    srand((unsigned) time(0));
     generateRandomMatrix();
 }
 
-Map::Map(unsigned int seed): _seed(seed) {
+Map::Map(unsigned seed) {
     if (seed == 0) basicMap();
     else {
-        generateMap();
+        srand(seed);
+        generateRandomMatrix();
     }
 }
 
@@ -176,8 +173,3 @@ bool Map::removeNPC(Position pos) {
 bool Map::moveNPC(Position origin, Position nextPos) {
     return false;
 }
-
-unsigned int Map::GetSeed() const {
-    return _seed;
-}
-
