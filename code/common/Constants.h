@@ -13,7 +13,7 @@ static const int PNJ_STARTING_MOVESPEED = 100;
 static const int PNJ_VALUE = 10;
 static const int PNJ_DAMAGE= 10;
 
-static const char PLACING_TOWER[2] =  "t";
-static const char WAVE[2] =  "w";
+static const char PLACING_TOWER[1] = {'t'};
+static const char WAVE[1] = {'w'};
 
 #endif //PROJET_CONSTANTS_H
