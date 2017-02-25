@@ -17,7 +17,7 @@ Map::Map(unsigned seed): _seed(seed) {
 }
 
 void Map::display() {
-    std::cout << std::string(50, '\n');
+    system("clear");
 
     std::cout << "\t";
     for (int x = 0; x < SIZE; x++) {
