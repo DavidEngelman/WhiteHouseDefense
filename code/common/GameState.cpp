@@ -93,3 +93,7 @@ void GameState::addWave(Wave wave) {
     waves.push_back(wave);
 }
 
+unsigned int GameState::getMapSeed() {
+    return map.GetSeed();
+}
+

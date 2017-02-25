@@ -27,6 +27,8 @@ private:
 public:
     Map &getMap();
 
+    unsigned int getMapSeed();
+
     std::vector<Wave> &getWaves();
 
     void addWave(Wave wave);

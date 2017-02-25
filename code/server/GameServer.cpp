@@ -1,5 +1,4 @@
 #include "GameServer.hpp"
-#include "Timer.h"
 
 GameServer::GameServer(int port, std::vector<PlayerConnection> &playerConnections) :
 Server(port), playerConnections(playerConnections) {}
@@ -66,6 +65,8 @@ void GameServer::runWave() {
 
 
 void GameServer::run() {
+    setupGame();
+
     while (!gameEngine.isGameFinished()) {
         processClientCommands();
         runWave();
@@ -88,5 +89,13 @@ void GameServer::handleEndOfGame() {
     for (int i = 0; i < NUM_PLAYERS; i++) {
         sendEndToPlayer(playerConnections[i]);
         sendWinnerToPlayer(playerConnections[i]);
+    }
+}
+
+void GameServer::setupGame() {
+    unsigned int mapSeed = gameEngine.getGameState().getMapSeed();
+    std::string message = "seed," + std::to_string(mapSeed) + ";";
+    for (PlayerConnection& playerConnection : playerConnections) {
+        send_message(playerConnection.getSocket_fd(), message.c_str());
     }
 }

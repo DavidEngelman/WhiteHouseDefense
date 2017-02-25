@@ -22,6 +22,11 @@
 class Map {
 private:
     int matrix[SIZE][SIZE];
+    const unsigned int _seed;
+public:
+    unsigned int GetSeed() const;
+
+private:
 
     void generateRandomMatrix();
     void initMap();
