@@ -1,4 +1,5 @@
 #include "GameServer.hpp"
+#include "../client/GameManager.hpp"
 
 GameServer::GameServer(int port, std::vector<PlayerConnection> &playerConnections) :
 Server(port), playerConnections(playerConnections) {}
@@ -68,12 +69,32 @@ void GameServer::run() {
     setupGame();
 
     while (!gameEngine.isGameFinished()) {
+        sendTowerPhase();
         processClientCommands();
+        sendWavePhase();
         runWave();
     }
 
     //handleEndOfGame();
 }
+
+void GameServer::sendTowerPhase() {
+    for (PlayerConnection &playerConnection : playerConnections) {
+        int socketFd = playerConnection.getSocket_fd();
+        send_message(socketFd, PLACING_TOWER);
+
+    }
+}
+
+void GameServer::sendWavePhase() {
+    for (PlayerConnection &playerConnection : playerConnections) {
+        int socketFd = playerConnection.getSocket_fd();
+        send_message(socketFd, WAVE);
+    }
+}
+
+
+
 
 /*void GameServer::sendEndToPlayer(PlayerConnection &connection) {
     send_message(connection.getSocket_fd(), END_OF_GAME); //send "end" to client

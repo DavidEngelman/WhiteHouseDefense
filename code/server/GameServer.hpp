@@ -1,4 +1,7 @@
 
+#ifndef GAMESERVER_HPP
+#define GAMESERVER_HPP
+
 #include "Server.hpp"
 #include "../common/GameState.hpp"
 #include "PendingMatch.h"
@@ -7,7 +10,7 @@
 #include "PlaceTowerCommand.h"
 #include "GameEngine.hpp"
 #include <time.h>
-
+#include "../common/Constants.h"
 
 static const int NUM_PLAYERS = 4;
 
@@ -50,4 +53,9 @@ public:
 
     void sendWinnerToPlayer(PlayerConnection &connection);
     void setupGame();
+
+    void sendTowerPhase();
+    void sendWavePhase();
 };
+
+#endif
