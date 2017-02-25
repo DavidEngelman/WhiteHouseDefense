@@ -1,6 +1,7 @@
 #include "Wave.h"
 
-Wave::Wave(int number_of_pnjs)  : number_of_pnjs(number_of_pnjs), number_of_added_pnjs(0) {}
+Wave::Wave(int number_of_pnjs, int quadrant) :
+        number_of_pnjs(number_of_pnjs), quadrant(quadrant), number_of_added_pnjs(0) {}
 
 
 
@@ -26,7 +27,7 @@ std::vector<PNJ> &Wave::getPnjs(){
 }
 
 int Wave::getQuadrant() const {
-    return quandrant;
+    return quadrant;
 }
 
 bool Wave::isEmpty() { return pnjs.empty(); }
