@@ -9,19 +9,20 @@ class Wave {
 
 private:
     std::vector<PNJ> pnjs;
-    int quandrant;
+
+    const int quadrant;
     int number_of_pnjs;
     int number_of_added_pnjs;
 public:
-    int getQuadrant() const;
+    Wave(int number_of_pnjs, int quadrant);
 
     bool isEmpty();
 
-    std::string serialize();
-
-    Wave(int nb_of_pnj);
+    int getQuadrant() const;
 
     std::vector<PNJ> &getPnjs();
+
+    std::string serialize();
 
     void removeDeadPNJs();
 };

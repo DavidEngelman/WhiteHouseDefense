@@ -6,35 +6,45 @@
 #include "../common/Direction.h"
 
 #define STEP_DURATION 1000
-#define PNJ_DAMAGE 10
+
 
 class GameEngine {
 
 private:
     GameState gameState;
+
     int numStepsDone;
+    int numOfPNJsPerWave;
 
     Timer timer;
+
+
+    PlayerState &getPlayerStateForWave(Wave &wave);
 public:
 
     GameEngine();
 
-    void update();
+    bool update();
 
-    void move_pnj_forward(PNJ& pnj);
+    GameState &getGameState();
+    void createWaves();
     void updateWaves();
-    void updateWave(Wave &wave);
     void dealDamage(std::vector<Wave> &waves);
     void movePNJsInWaves(std::vector<Wave> &waves);
     void movePNJsInWave(Wave &wave);
     void removeDeadPNJs();
 
     void updatePlayerStates();
-    void updatePlayerState();
     void dealDamageToBase(std::vector<PlayerState> &playerStates);
-
+    void giveGold(PlayerState& playerState);
 
     Wave& getWaveInSameQuadrant(AbstractTower &tower, std::vector<Wave> &waves);
+
+    void increaseWaveDifficulty();
+
+    bool isGameFinished();
+    std::string * serializeGameState();
+
 };
 
 

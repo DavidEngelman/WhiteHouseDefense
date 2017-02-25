@@ -7,12 +7,17 @@ int AttackTower::getDamageAmount() const { return damageAmount; }
 
 void AttackTower::setDamageAmount(int newDamageAmount) { damageAmount = newDamageAmount; }
 
-void AttackTower::shoot(Wave& wave) {
+bool AttackTower::shoot(Wave& wave) {
     PNJ* my_target;
+    bool killed = false;
     my_target = get_closest_pnj(wave);
     if (my_target != nullptr){
         dealDamageTo(*my_target);
+        if (my_target->getHealthPoints() <= 0){
+            killed = true;
+        }
     }
+    return killed;
 }
 
 void AttackTower::dealDamageTo(PNJ& target) { target.receiveDamage(this->getDamageAmount()); }

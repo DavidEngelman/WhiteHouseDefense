@@ -21,7 +21,7 @@ public:
 
     virtual void setDamageAmount(int newDamageAmount);
 
-    virtual void shoot(Wave& wave) override;
+    virtual bool shoot(Wave& wave) override;
 
 
 

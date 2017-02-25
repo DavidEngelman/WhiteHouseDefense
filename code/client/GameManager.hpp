@@ -9,7 +9,7 @@
 #include "MainManager.hpp"
 
 #define WAVE 'w'
-#define PLACING_TOWER 't'
+#define PLACING_TOWER "t"
 
 class GameManager : public NetworkedManager{ //Tmp : public (à supprimer après tests)
 
@@ -20,6 +20,7 @@ private:
     int player_id; // Je sais plus si les deux sont utiles je les met au cas ou
     char phase; // Phase de jeu (vague d'ennemis ou placement de tours)
 
+    unsigned int getMapSeedFromServer() const;
 public:
     GameManager(char* ip_addr, int port, int id, std::string username, App* app);
 
@@ -30,6 +31,7 @@ public:
     void come_back_to_menu();
 
     void run();
+
 };
 
 #endif

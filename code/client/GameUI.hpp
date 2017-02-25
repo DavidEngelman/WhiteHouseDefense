@@ -7,10 +7,10 @@
 
 class GameUI {
 private:
-    Map map;
+    Map& map;
 
 public:
-    GameUI();
+    GameUI(Map& map); // ou peut etre GameUI(GameState& gameState)?
 
 	Position getPosBuyingTower();
 	bool isBuyingTower();
@@ -18,6 +18,7 @@ public:
     bool checkCoord(int x, int y);
 
 	void display();
+	void setSeed(int seed);
 };
 
 #endif

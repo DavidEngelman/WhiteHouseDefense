@@ -19,29 +19,40 @@ private:
     std::vector<PlayerState> player_states;
     std::vector<AbstractTower> towers;
     std::vector<Wave> waves;
+    bool isGameOver;
 
     std::string mode;
 
     Map map;
 
 public:
+    GameState() = default;
+    GameState(unsigned int mapSeed);
+
     Map &getMap();
 
+    unsigned int getMapSeed();
+
     std::vector<Wave> &getWaves();
+
+    void addWave(Wave wave);
+    
+    // Removes the current waves (which should be empty)
+    void clearWaves();
 
     std::vector<AbstractTower> &getTowers();
 
     std::vector<PlayerState> &getPlayerStates();
 
-    std::string serialize();
+    std::string * serialize();
 
-    bool is_only_one_alive();
+    bool IsOnlyOneAlive();
 
     bool isFinished();
 
-    void decrease_player_hp(PlayerState &player, int amount);
+    void DecreasePlayerHp(PlayerState &player, int amount);
 
-    void increase_player_hp(PlayerState &player, int amount);
+    void IncreasePlayerHp(PlayerState &player, int amount);
 
 
 
@@ -57,6 +68,8 @@ public:
     // les mexicains ont avancé (entre autres)
 
     bool isRoundFinished();
+
+    int getWinnerClassic();
 };
 
 #endif

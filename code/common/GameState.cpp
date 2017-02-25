@@ -1,27 +1,27 @@
 #include "GameState.hpp"
 
-void GameState::decrease_player_hp(PlayerState &player, int amount) {
+void GameState::DecreasePlayerHp(PlayerState &player, int amount) {
     player.decrease_hp(amount);
 }
 
-void GameState::increase_player_hp(PlayerState &player, int amount) {
+void GameState::IncreasePlayerHp(PlayerState &player, int amount) {
     player.decrease_hp(amount);
 }
 
-std::string GameState::serialize() {
-    std::string serialized_me;
+std::string* GameState::serialize() {
+    std::string * serialized_me = new std::string();
 
     for (PlayerState &pstate: player_states) {
         // C'est un peu bizarre comme fonction. Intuitivement, on dirait qu'il va
         // mettre le resultat dans serialized_me, au lieu de faire un append.
         // C'est ce que j'ai pensé quand j'ai vu ça
-        serialized_me += pstate.serialize();
+        *serialized_me += pstate.serialize();
     }
     for (AbstractTower &tower: towers) {
-        serialized_me += tower.serialize();
+        *serialized_me += tower.serialize();
     }
     for (Wave &wave: waves) {
-        serialized_me += wave.serialize();
+        *serialized_me += wave.serialize();
     }
 
     return serialized_me;
@@ -34,14 +34,24 @@ void GameState::add_tower(Position position) {
     // towers.push_back(Tower tower);
 }
 
-bool GameState::is_only_one_alive() {
-    int nmbr_of_alive;
+bool GameState::IsOnlyOneAlive() {
+    int number_of_players_alive = 0;
     for (PlayerState &ps: player_states) {
         if (ps.getHp() > 0) {
-            nmbr_of_alive++;
+            number_of_players_alive++;
         }
     }
-    return (nmbr_of_alive == 1);
+    return (number_of_players_alive == 1);
+}
+
+int GameState::getWinnerClassic() {
+    for (PlayerState &ps: player_states) {
+        if (ps.getIsWinner()) {
+            return ps.getPlayer_id(); //TODO peut etre changer avec le username
+        }
+    }
+
+    return -1;
 }
 
 bool GameState::isRoundFinished() {
@@ -54,7 +64,7 @@ bool GameState::isRoundFinished() {
 }
 
 bool GameState::isFinished() {
-    return is_only_one_alive();
+    return IsOnlyOneAlive();
 }
 
 
@@ -73,5 +83,21 @@ Map &GameState::getMap() {
 
 std::vector<PlayerState> &GameState::getPlayerStates() {
     return player_states;
+}
+
+void GameState::clearWaves() {
+    waves.clear();
+}
+
+void GameState::addWave(Wave wave) {
+    waves.push_back(wave);
+}
+
+unsigned int GameState::getMapSeed() {
+    return map.GetSeed();
+}
+
+GameState::GameState(unsigned int mapSeed): map(Map(mapSeed)) {
+
 }
 
