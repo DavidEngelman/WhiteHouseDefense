@@ -1,6 +1,8 @@
-
 #include "GameServer.hpp"
 #include "Timer.h"
+
+GameServer::GameServer(int port, std::vector<PlayerConnection> &playerConnections) :
+Server(port), playerConnections(playerConnections) {}
 
 void GameServer::sendGameStateToPlayers() {
     for (int i = 0; i < NUM_PLAYERS; i++) {
@@ -9,8 +11,11 @@ void GameServer::sendGameStateToPlayers() {
 }
 
 void GameServer::sendGameStateToPlayer(PlayerConnection &connection) {
-    const std::string &serialized_game_state = gameState.serialize();
-    send_message(connection.getSocket_fd(), serialized_game_state.c_str());
+    // TODO: une autre approche serait de passer une reference de string vers
+    // serializeGameState, dans lequel on ferait append. À considerer
+    const std::string * serialized_game_state = gameEngine.serializeGameState();
+    send_message(connection.getSocket_fd(), (*serialized_game_state).c_str());
+    delete serialized_game_state;
 }
 
 void GameServer::processClientCommands() {
@@ -18,8 +23,7 @@ void GameServer::processClientCommands() {
 
     Timer timer;
     timer.start();
-    // TODO: choisir le temps d'attente et le mettre comme une constante
-    while (timer.elapsedTimeInSeconds() < 60) {
+    while (timer.elapsedTimeInSeconds() < NUM_SECONDS_TO_PLACE_TOWER) {
         // TODO: faire un select sur les sockets des joueurs dans PlayerConnection.
         int client_socket_fd = accept_connection();
         get_and_process_command(client_socket_fd, message_buffer);
@@ -42,16 +46,17 @@ void GameServer::addTowerInGameState(PlaceTowerCommand &command) {
 //    gameState.add_tower(command.getPosition());
 }
 
-GameServer::GameServer(int port, std::vector<PlayerConnection> &playerConnections) :
-        Server(port), playerConnections(playerConnections) {}
-
-void GameServer::launchWave() {
+void GameServer::runWave() {
     Timer timer;
     timer.start();
-    while (!gameState.isRoundFinished() && !gameState.isFinished()) {
-        // TODO: choisir une meilleure valeur et la mettre comme constant
-        while (!timer.elapsedTimeInMiliseconds() < 1000) {
-            // gameState.update(); // ou peut etre gameState.update(timeEllapsed)?
+
+    bool isWaveFinished = false;
+    while (!isWaveFinished) {
+        while (!timer.elapsedTimeInMiliseconds() < INTERVAL_BETWEEN_SENDS_IN_MS) {
+            isWaveFinished = gameEngine.update();
+            // TODO: mettre peut etre un sleep ici? on ne va pas faire des tonnes de updates de toute facon
+            // car si gameEngine voit que pas assez de temps s'est ecoulé depuis le tick precedent,
+            // il ne fait rien
         }
 
         sendGameStateToPlayers();
@@ -61,9 +66,9 @@ void GameServer::launchWave() {
 
 
 void GameServer::run() {
-    while (!gameState.isFinished()) {
+    while (!gameEngine.isGameFinished()) {
         processClientCommands();
-        launchWave();
+        runWave();
     }
 
     handleEndOfGame();

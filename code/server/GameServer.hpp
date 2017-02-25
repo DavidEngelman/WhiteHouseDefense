@@ -5,14 +5,18 @@
 #include "PlayerConnection.hpp"
 #include "../common/Strings.hpp"
 #include "PlaceTowerCommand.h"
+#include "GameEngine.hpp"
 #include <time.h>
 
 
 static const int NUM_PLAYERS = 4;
 
+static const int NUM_SECONDS_TO_PLACE_TOWER = 60;
+static const int INTERVAL_BETWEEN_SENDS_IN_MS = 1000;
+
 class GameServer : public Server {
 private:
-    GameState gameState;
+    GameEngine gameEngine;
     std::vector<PlayerConnection> playerConnections;
 
     void sendGameStateToPlayer(PlayerConnection &connection);
@@ -36,7 +40,7 @@ public:
 
     void sendGameStateToPlayers();
 
-    void launchWave();
+    void runWave();
 
     void run();
 

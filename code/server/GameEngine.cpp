@@ -6,7 +6,7 @@ GameEngine::GameEngine(): numOfPNJsPerWave(10) {
 
 /*
  * Updates the game state by one tick.
- * Returns true if the round (or game) is finished, false otherwise.
+ * Returns true if the wave (or game) is finished, false otherwise.
  */
 bool GameEngine::update() {
     int numMilisecondsSinceStart = timer.elapsedTimeInMiliseconds();
@@ -38,7 +38,9 @@ void GameEngine::dealDamageToBase(std::vector<PlayerState> &playerStates) {
         for (PNJ &pnj : wave.getPnjs()) {
             if (pnj.isInPlayerBase()) {
                 player_state.decrease_hp(PNJ_DAMAGE);
-                pnj.setHealthPoints(0);  // TODO: Faudrait enlever ces PNJ de la vague...
+                pnj.setHealthPoints(0);
+                // TODO: Faudrait enlever ces PNJ de la vague...
+                // C'est fait dans updateWaves au round suivant, mais c'est pas evident tout de suite
             }
         }
         //wave.removeDeadPNJs();
@@ -101,4 +103,12 @@ void GameEngine::createWaves() {
 
 void GameEngine::increaseWaveDifficulty() {
     numOfPNJsPerWave += 5;
+}
+
+bool GameEngine::isGameFinished() {
+    return gameState.isFinished();
+}
+
+std::string * GameEngine::serializeGameState() {
+    return gameState.serialize();
 }

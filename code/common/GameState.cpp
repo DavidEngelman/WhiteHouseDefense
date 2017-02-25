@@ -8,20 +8,20 @@ void GameState::IncreasePlayerHp(PlayerState &player, int amount) {
     player.decrease_hp(amount);
 }
 
-std::string GameState::serialize() {
-    std::string serialized_me;
+std::string* GameState::serialize() {
+    std::string * serialized_me = new std::string();
 
     for (PlayerState &pstate: player_states) {
         // C'est un peu bizarre comme fonction. Intuitivement, on dirait qu'il va
         // mettre le resultat dans serialized_me, au lieu de faire un append.
         // C'est ce que j'ai pensé quand j'ai vu ça
-        serialized_me += pstate.serialize();
+        *serialized_me += pstate.serialize();
     }
     for (AbstractTower &tower: towers) {
-        serialized_me += tower.serialize();
+        *serialized_me += tower.serialize();
     }
     for (Wave &wave: waves) {
-        serialized_me += wave.serialize();
+        *serialized_me += wave.serialize();
     }
 
     return serialized_me;
