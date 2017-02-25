@@ -35,13 +35,13 @@ void GameState::add_tower(Position position) {
 }
 
 bool GameState::IsOnlyOneAlive() {
-    int nmbr_of_alive;
+    int number_of_players_alive = 0;
     for (PlayerState &ps: player_states) {
         if (ps.getHp() > 0) {
-            nmbr_of_alive++;
+            number_of_players_alive++;
         }
     }
-    return (nmbr_of_alive == 1);
+    return (number_of_players_alive == 1);
 }
 
 bool GameState::isRoundFinished() {
