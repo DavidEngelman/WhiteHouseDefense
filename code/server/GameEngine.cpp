@@ -27,10 +27,11 @@ void GameEngine::updatePlayerStates() {
 
 void GameEngine::dealDamageToBase(std::vector<PlayerState> &playerStates) {
     for (Wave& wave : gameState.getWaves()){
+        int quadrant = wave.getQuadrant();
+        PlayerState &player_state = playerStates[quadrant];
+
         for (PNJ& pnj : wave.getPnjs()){
             if (pnj.isInPlayerBase()){
-                int quadrant = wave.getQuadrant();
-                PlayerState &player_state = playerStates[quadrant];
                 player_state.decrease_hp(PNJ_DAMAGE);
                 pnj.setHealthPoints(0);  // TODO: Faudrait enlever ces PNJ de la vague...
             }
