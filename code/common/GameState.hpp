@@ -26,6 +26,9 @@ private:
     Map map;
 
 public:
+    GameState() = default;
+    GameState(unsigned int mapSeed);
+
     Map &getMap();
 
     unsigned int getMapSeed();

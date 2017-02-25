@@ -97,3 +97,7 @@ unsigned int GameState::getMapSeed() {
     return map.GetSeed();
 }
 
+GameState::GameState(unsigned int mapSeed): map(Map(mapSeed)) {
+
+}
+

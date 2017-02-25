@@ -117,6 +117,6 @@ std::string * GameEngine::serializeGameState() {
     return gameState.serialize();
 }
 
-GameState &GameEngine::getGameState() const {
+GameState &GameEngine::getGameState() {
     return gameState;
 }

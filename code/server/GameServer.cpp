@@ -94,8 +94,10 @@ void GameServer::handleEndOfGame() {
 
 void GameServer::setupGame() {
     unsigned int mapSeed = gameEngine.getGameState().getMapSeed();
-    std::string message = "seed," + std::to_string(mapSeed) + ";";
+    std::string message = "seed";
     for (PlayerConnection& playerConnection : playerConnections) {
-        send_message(playerConnection.getSocket_fd(), message.c_str());
+        int socketFd = playerConnection.getSocket_fd();
+        send_message(socketFd, message.c_str());
+        send_data(socketFd, (char *) &mapSeed, sizeof(unsigned int));
     }
 }

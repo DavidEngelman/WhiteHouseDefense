@@ -4,6 +4,10 @@
 #include <ctime>
 
 Map::Map(): _seed((unsigned int) time(0)) {
+    generateMap();
+}
+
+void Map::generateMap() {
     srand(_seed);
     generateRandomMatrix();
 }
@@ -11,8 +15,7 @@ Map::Map(): _seed((unsigned int) time(0)) {
 Map::Map(unsigned int seed): _seed(seed) {
     if (seed == 0) basicMap();
     else {
-        srand(_seed);
-        generateRandomMatrix();
+        generateMap();
     }
 }
 
@@ -176,3 +179,4 @@ bool Map::moveNPC(Position origin, Position nextPos) {
 unsigned int Map::GetSeed() const {
     return _seed;
 }
+
