@@ -34,6 +34,13 @@ void GameManager::come_back_to_menu() {
 
 }
 
+void GameManager::input_thread() {
+    while(!stopflag) {
+        std::string input = // ask tower position gameUI.getPosBuyingTower();
+    }
+    // send the position of the tower to the server
+}
+
 void GameManager::run() {
     gameUI.display();
     char server_msg_buff [BUFFER_SIZE];
@@ -42,7 +49,10 @@ void GameManager::run() {
 
         receive_message(server_socket, server_msg_buff);
         if (strcmp(server_msg_buff, PLACING_TOWER) == 0 && is_alive()){
-            //TODO InputThread
+            stopflag = false;
+            // la il faudrait demander a l'user ce qu'il veut faire , poser une tour / upgrade / revendre
+            // et lancer le thread adapte
+            std::thread inp(input_thread);
         }
         else if (strcmp(server_msg_buff, WAVE) == 0){
             //TODO kill InputThread

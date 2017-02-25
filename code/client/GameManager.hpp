@@ -7,10 +7,12 @@
 #include "GameManager.hpp"
 #include "../common/Networking.h"
 #include "MainManager.hpp"
+#include <thread>
 
 class GameManager : public NetworkedManager{ //Tmp : public (à supprimer après tests)
 
 private:
+    bool stopflag;
     GameState gameState;
     GameUI gameUI;
     std::string player_username;
@@ -37,6 +39,8 @@ public:
     bool is_alive();
 
     void run();
+
+    void input_thread();
 
     int getQuadrantFromServer();
 };
