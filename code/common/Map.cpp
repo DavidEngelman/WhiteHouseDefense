@@ -37,7 +37,8 @@ void Map::display() {
                     std::cout << GRASS;
                     break;
                 case PATH_INT:
-                    std::cout << PATH;
+                    if (x == 0 or y == 0 or x == SIZE-1 or y == SIZE-1) std::cout << BASE;
+                    else std::cout << PATH;
                     break;
                 case LIMIT_INT:
                     std::cout << LIMIT;
