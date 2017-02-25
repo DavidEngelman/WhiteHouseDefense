@@ -19,11 +19,11 @@
 #include <string>
 #include <vector>
 #include "Position.hpp"
+#include "GameState.hpp"
 
 class Map {
 private:
     int matrix[SIZE][SIZE];
-    unsigned int _seed;
 public:
 
 
@@ -40,14 +40,13 @@ public:
     Map();
     Map(unsigned seed);
     void display();
+    void update(GameState& gameState);
     bool isPath(Position pos);
     bool addTower(Position pos, int typeOfTower);
     bool removeTower(Position pos);
     bool addNPC(Position pos);
     bool removeNPC(Position pos);
     bool moveNPC(Position origin, Position nextPos);
-
-    unsigned int getSeed();
 };
 
 #endif
