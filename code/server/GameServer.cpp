@@ -1,4 +1,3 @@
-
 #include "GameServer.hpp"
 #include "Timer.h"
 
@@ -21,8 +20,7 @@ void GameServer::processClientCommands() {
 
     Timer timer;
     timer.start();
-    // TODO: choisir le temps d'attente et le mettre comme une constante
-    while (timer.elapsedTimeInSeconds() < 60) {
+    while (timer.elapsedTimeInSeconds() < NUM_SECONDS_TO_PLACE_TOWER) {
         // TODO: faire un select sur les sockets des joueurs dans PlayerConnection.
         int client_socket_fd = accept_connection();
         get_and_process_command(client_socket_fd, message_buffer);
@@ -50,7 +48,7 @@ void GameServer::runWave() {
     timer.start();
     while (!gameState.isRoundFinished() && !gameState.isFinished()) {
         // TODO: choisir une meilleure valeur et la mettre comme constant
-        while (!timer.elapsedTimeInMiliseconds() < 1000) {
+        while (!timer.elapsedTimeInMiliseconds() < INTERVAL_BETWEEN_SENDS_IN_MS) {
             // gameState.update(); // ou peut etre gameState.update(timeEllapsed)?
         }
 

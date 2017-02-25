@@ -10,6 +10,9 @@
 
 static const int NUM_PLAYERS = 4;
 
+static const int NUM_SECONDS_TO_PLACE_TOWER = 60;
+static const int INTERVAL_BETWEEN_SENDS_IN_MS = 1000;
+
 class GameServer : public Server {
 private:
     GameState gameState;
