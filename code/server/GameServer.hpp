@@ -56,6 +56,8 @@ public:
 
     void sendTowerPhase();
     void sendWavePhase();
+
+    void SendQuadrantToClients();
 };
 
 #endif

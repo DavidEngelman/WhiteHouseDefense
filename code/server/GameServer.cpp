@@ -87,6 +87,7 @@ void GameServer::runWave() {
 void GameServer::run() {
     if (!DEBUG){
         sendMapSeedToClient();
+        SendQuadrantToClients();
     }
 
     while (!gameEngine.isGameFinished()) {
@@ -143,5 +144,14 @@ void GameServer::sendMapSeedToClient() {
         int socketFd = playerConnection.getSocket_fd();
         send_message(socketFd, message.c_str());
         send_data(socketFd, (char *) &mapSeed, sizeof(unsigned int));
+    }
+}
+
+void GameServer::SendQuadrantToClients() {
+    unsigned int quadrant = 0;
+    for (PlayerConnection& playerConnection : playerConnections) {
+        int socketFd = playerConnection.getSocket_fd();
+        send_data(socketFd, (char *) &quadrant, sizeof(unsigned int));
+        quadrant ++;
     }
 }
