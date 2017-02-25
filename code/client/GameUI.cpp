@@ -24,12 +24,11 @@ bool GameUI::checkCoord(int x, int y) {
     if (0 <= x and x < SIZE and 0 <= y and y < SIZE) {
         return true;
     }
-    display();
     std::cout << "Entrez un x et un y entre 0 et " << SIZE - 1 << std::endl;
     return false;
 }
 
-void GameUI::display() {
+void GameUI::display(GameState& gameState) {
     map.display();
 }
 
@@ -43,7 +42,6 @@ bool GameUI::isBuyingTower() {
         if (!std::cin.fail() and (response == 1 or response == 2)) {
             ok = true;
         } else {
-            display();
             std::cout << "Veuillez entrer '1' ou '2'" << std::endl;
         }
 

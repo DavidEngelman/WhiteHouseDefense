@@ -74,10 +74,6 @@ std::vector<AbstractTower> &GameState::getTowers() {
     return towers;
 }
 
-Map &GameState::getMap() {
-    return map;
-}
-
 std::vector<PlayerState> &GameState::getPlayerStates() {
     return player_states;
 }
@@ -88,14 +84,6 @@ void GameState::clearWaves() {
 
 void GameState::addWave(Wave wave) {
     waves.push_back(wave);
-}
-
-GameState::GameState(unsigned int mapSeed): map(Map(mapSeed)) {
-
-}
-
-unsigned int GameState::getMapSeed() {
-    return map.getSeed();
 }
 
 bool GameState::getIsGameOver() const {

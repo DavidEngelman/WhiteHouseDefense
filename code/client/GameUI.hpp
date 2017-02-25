@@ -10,14 +10,14 @@ private:
     Map& map;
 
 public:
-    GameUI(Map& map); // ou peut etre GameUI(GameState& gameState)?
+    GameUI(Map& map);
 
 	Position getPosBuyingTower();
 	bool isBuyingTower();
 
     bool checkCoord(int x, int y);
 
-	void display();
+	void display(GameState& gameState);
 };
 
 #endif
