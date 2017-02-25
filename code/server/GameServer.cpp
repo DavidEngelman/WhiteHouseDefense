@@ -45,7 +45,7 @@ void GameServer::addTowerInGameState(PlaceTowerCommand &command) {
 //    gameState.add_tower(command.getPosition());
 }
 
-void GameServer::launchWave() {
+void GameServer::runWave() {
     Timer timer;
     timer.start();
     while (!gameState.isRoundFinished() && !gameState.isFinished()) {
@@ -63,7 +63,7 @@ void GameServer::launchWave() {
 void GameServer::run() {
     while (!gameState.isFinished()) {
         processClientCommands();
-        launchWave();
+        runWave();
     }
 
     handleEndOfGame();

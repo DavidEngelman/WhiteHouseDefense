@@ -36,7 +36,7 @@ public:
 
     void sendGameStateToPlayers();
 
-    void launchWave();
+    void runWave();
 
     void run();
 
