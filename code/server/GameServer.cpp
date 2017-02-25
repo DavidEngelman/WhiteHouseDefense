@@ -72,10 +72,10 @@ void GameServer::run() {
         runWave();
     }
 
-    handleEndOfGame();
+    //handleEndOfGame();
 }
 
-void GameServer::sendEndToPlayer(PlayerConnection &connection) {
+/*void GameServer::sendEndToPlayer(PlayerConnection &connection) {
     send_message(connection.getSocket_fd(), END_OF_GAME); //send "end" to client
 }
 
@@ -91,7 +91,7 @@ void GameServer::handleEndOfGame() {
         sendWinnerToPlayer(playerConnections[i]);
     }
 }
-
+*/
 void GameServer::setupGame() {
     unsigned int mapSeed = gameEngine.getGameState().getMapSeed();
     std::string message = "seed," + std::to_string(mapSeed) + ";";
