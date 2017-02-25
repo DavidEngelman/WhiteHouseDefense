@@ -2,6 +2,8 @@
 #include "../client/GameManager.hpp"
 #include "../common/AttackTower.hpp"
 
+const bool DEBUG = true;
+
 GameServer::GameServer(int port, std::vector<PlayerConnection> &playerConnections) :
 Server(port), playerConnections(playerConnections) {}
 
@@ -68,19 +70,27 @@ void GameServer::runWave() {
             // il ne fait rien
         }
 
-        sendGameStateToPlayers();
+        if (DEBUG){
+            gameEngine.getGameState().getMap().display();
+        } else {
+            sendGameStateToPlayers();
+        }
         timer.reset();
     }
 }
 
 
 void GameServer::run() {
-    sendMapSeedToClient();
+    if (!DEBUG){
+        sendMapSeedToClient();
+    }
 
     while (!gameEngine.isGameFinished()) {
-        sendTowerPhase();
-        processClientCommands();
-        sendWavePhase();
+        if (!DEBUG){
+            sendTowerPhase();
+            processClientCommands();
+            sendWavePhase();
+        }
         runWave();
     }
 
