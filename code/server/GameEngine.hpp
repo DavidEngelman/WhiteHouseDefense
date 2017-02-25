@@ -46,6 +46,8 @@ public:
     std::string * serializeGameState();
 
     void addTower(AbstractTower &tower, int quadrant);
+
+    void addPNJS(std::vector<Wave> &waves);
 };
 
 

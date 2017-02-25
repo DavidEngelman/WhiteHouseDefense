@@ -14,15 +14,20 @@ private:
     int number_of_pnjs;
     int number_of_added_pnjs;
 public:
+
     Wave(int number_of_pnjs, int quadrant);
-
     bool isEmpty();
-
     int getQuadrant() const;
+
+    int getNumber_of_pnjs() const;
+
+    int getNumber_of_added_pnjs() const;
 
     std::vector<PNJ> &getPnjs();
 
     std::string serialize();
+
+    void addPNJ();
 
     void removeDeadPNJs();
 };

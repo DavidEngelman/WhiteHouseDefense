@@ -42,3 +42,16 @@ void Wave::removeDeadPNJs() {
         }
     }
 }
+
+int Wave::getNumber_of_pnjs() const {
+    return number_of_pnjs;
+}
+
+int Wave::getNumber_of_added_pnjs() const {
+    return number_of_added_pnjs;
+}
+
+void Wave::addPNJ() {
+    PNJ pnj(quadrant);
+    pnjs.push_back(pnj);
+}
