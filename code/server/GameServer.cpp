@@ -11,8 +11,9 @@ void GameServer::sendGameStateToPlayers() {
 }
 
 void GameServer::sendGameStateToPlayer(PlayerConnection &connection) {
-    const std::string &serialized_game_state = gameState.serialize();
-    send_message(connection.getSocket_fd(), serialized_game_state.c_str());
+    const std::string * serialized_game_state = gameEngine.serializeGameState();
+    send_message(connection.getSocket_fd(), (*serialized_game_state).c_str());
+    delete serialized_game_state;
 }
 
 void GameServer::processClientCommands() {
@@ -46,10 +47,12 @@ void GameServer::addTowerInGameState(PlaceTowerCommand &command) {
 void GameServer::runWave() {
     Timer timer;
     timer.start();
-    while (!gameState.isRoundFinished() && !gameState.isFinished()) {
+
+    bool isWaveFinished = false;
+    while (!isWaveFinished) {
         // TODO: choisir une meilleure valeur et la mettre comme constant
         while (!timer.elapsedTimeInMiliseconds() < INTERVAL_BETWEEN_SENDS_IN_MS) {
-            // gameState.update(); // ou peut etre gameState.update(timeEllapsed)?
+            isWaveFinished = gameEngine.update();
         }
 
         sendGameStateToPlayers();
@@ -59,7 +62,7 @@ void GameServer::runWave() {
 
 
 void GameServer::run() {
-    while (!gameState.isFinished()) {
+    while (!gameEngine.isGameFinished()) {
         processClientCommands();
         runWave();
     }

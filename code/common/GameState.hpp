@@ -38,7 +38,7 @@ public:
 
     std::vector<PlayerState> &getPlayerStates();
 
-    std::string serialize();
+    std::string * serialize();
 
     bool IsOnlyOneAlive();
 

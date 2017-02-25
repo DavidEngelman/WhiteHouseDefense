@@ -5,6 +5,7 @@
 #include "PlayerConnection.hpp"
 #include "../common/Strings.hpp"
 #include "PlaceTowerCommand.h"
+#include "GameEngine.hpp"
 #include <time.h>
 
 
@@ -15,7 +16,7 @@ static const int INTERVAL_BETWEEN_SENDS_IN_MS = 1000;
 
 class GameServer : public Server {
 private:
-    GameState gameState;
+    GameEngine gameEngine;
     std::vector<PlayerConnection> playerConnections;
 
     void sendGameStateToPlayer(PlayerConnection &connection);

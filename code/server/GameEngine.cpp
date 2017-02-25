@@ -6,7 +6,7 @@ GameEngine::GameEngine(): numOfPNJsPerWave(10) {
 
 /*
  * Updates the game state by one tick.
- * Returns true if the round (or game) is finished, false otherwise.
+ * Returns true if the wave (or game) is finished, false otherwise.
  */
 bool GameEngine::update() {
     int numMilisecondsSinceStart = timer.elapsedTimeInMiliseconds();
@@ -94,4 +94,12 @@ void GameEngine::createWaves() {
 
 void GameEngine::increaseWaveDifficulty() {
     numOfPNJsPerWave += 5;
+}
+
+bool GameEngine::isGameFinished() {
+    return gameState.isFinished();
+}
+
+std::string * GameEngine::serializeGameState() {
+    return gameState.serialize();
 }
