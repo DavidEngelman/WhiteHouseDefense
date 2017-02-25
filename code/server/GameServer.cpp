@@ -1,5 +1,8 @@
 #include "GameServer.hpp"
 #include "../client/GameManager.hpp"
+#include "../common/AttackTower.hpp"
+
+const bool DEBUG = true;
 
 GameServer::GameServer(int port, std::vector<PlayerConnection> &playerConnections) :
 Server(port), playerConnections(playerConnections) {}
@@ -43,7 +46,16 @@ void GameServer::get_and_process_command(int client_socket_fd, char *buffer) {
 }
 
 void GameServer::addTowerInGameState(PlaceTowerCommand &command) {
-//    gameState.add_tower(command.getPosition());
+    AbstractTower * tower;
+    int quadrant = command.getPlayerQuadrant();
+    if (command.getTowerType() == ATTACK_TOWER_STR){
+        *tower = AttackTower(command.getPosition());
+    }
+    // TODO: completer si plus tard on utilise la SlowTower
+    //else if (command.getTowerType() == SLOW_TOWER){
+      //  *tower = SlowTower
+    //}
+    gameEngine.addTower(*tower, quadrant);
 }
 
 void GameServer::runWave() {
@@ -59,19 +71,27 @@ void GameServer::runWave() {
             // il ne fait rien
         }
 
-        sendGameStateToPlayers();
+        if (DEBUG){
+            gameEngine.getGameState().getMap().display();
+        } else {
+            sendGameStateToPlayers();
+        }
         timer.reset();
     }
 }
 
 
 void GameServer::run() {
-    setupGame();
+    if (!DEBUG){
+        sendMapSeedToClient();
+    }
 
     while (!gameEngine.isGameFinished()) {
-        sendTowerPhase();
-        processClientCommands();
-        sendWavePhase();
+        if (!DEBUG){
+            sendTowerPhase();
+            processClientCommands();
+            sendWavePhase();
+        }
         runWave();
     }
 
@@ -113,7 +133,7 @@ void GameServer::handleEndOfGame() {
     }
 }
 */
-void GameServer::setupGame() {
+void GameServer::sendMapSeedToClient() {
     unsigned int mapSeed = gameEngine.getGameState().getMapSeed();
     std::string message = "seed";
     for (PlayerConnection& playerConnection : playerConnections) {

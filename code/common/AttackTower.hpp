@@ -5,6 +5,11 @@
 #include "AbstractTower.hpp"
 #include "PNJ.hpp"
 
+// TODO: mettre des vraies valeurs
+const int ATTACK_TOWER_PRICE = 10;
+const int ATTACK_TOWER_RANGE = 10;
+const int ATTACK_TOWER_DAMAGE = 10;
+
 class AttackTower : public AbstractTower {
 
 private:
@@ -13,7 +18,7 @@ private:
 
 public:
 
-    AttackTower(Position position, int price, int radius, int damageAmount);
+    AttackTower(Position position);
 
     virtual ~AttackTower() = default;
 

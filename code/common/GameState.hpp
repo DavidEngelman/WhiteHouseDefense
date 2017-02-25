@@ -60,9 +60,6 @@ public:
     void IncreasePlayerHp(PlayerState &player, int amount);
 
 
-
-    void add_tower(Position position);
-
     // Cette fonction aussi
     void updateGameState(int commands);
 
@@ -75,6 +72,8 @@ public:
     bool isRoundFinished();
 
     int getWinnerClassic();
+
+    void addTower(AbstractTower tower);
 };
 
 #endif

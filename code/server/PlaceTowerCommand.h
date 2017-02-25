@@ -8,7 +8,7 @@
 
 class PlaceTowerCommand : public Command {
 private:
-    int player_id;
+    int player_quadrant;
     Position position;
     std::string tower_type;
 public:
@@ -16,7 +16,7 @@ public:
 
     Position &getPosition();
 
-    int getPlayerID();
+    int getPlayerQuadrant();
 
     std::string& getTowerType();
 

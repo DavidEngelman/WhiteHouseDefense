@@ -27,11 +27,8 @@ std::string* GameState::serialize() {
     return serialized_me;
 }
 
-void GameState::add_tower(Position position) {
-    // TODO: il faut modifier cette fonction, car on ne sait pas de quel type de tour on parle
-    // il faut soit prendre un parametre de plus (le type), soit modifier la signature pour
-    // qu'elle prenne une AbstractTower
-    // towers.push_back(Tower tower);
+void GameState::addTower(AbstractTower tower) {
+    towers.push_back(tower);
 }
 
 bool GameState::IsOnlyOneAlive() {
