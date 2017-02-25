@@ -40,7 +40,7 @@ void GameManager::run() {
     while(1){
 
         receive_message(server_socket, server_msg_buff);
-        if (strcmp(server_msg_buff, PLACING_TOWER) == 0){
+        if (strcmp(server_msg_buff, PLACING_TOWER) == 0 && is_alive()){
             //TODO InputThread
         }
         else if (strcmp(server_msg_buff, WAVE) == 0){
@@ -61,6 +61,20 @@ void GameManager::run() {
 void GameManager::unSerializeGameState(char* seriarlized_gamestate){
 
 
+}
+
+bool GameManager::is_alive() {
+    bool alive = false;
+    for( PlayerState& playerState : gameState.getPlayerStates()){
+        if (playerState.getPlayer_id() == player_id){
+            if (playerState.getHp() > 0){
+                alive = true;
+                break;
+            }
+        }
+    }
+
+    return alive;
 }
 
 unsigned int GameManager::getMapSeedFromServer() const {
