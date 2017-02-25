@@ -20,6 +20,7 @@ bool GameEngine::update() {
 
 void GameEngine::updateWaves() {
     std::vector<Wave> &waves = gameState.getWaves();
+    addPNJS(waves);
     dealDamage(waves);
     removeDeadPNJs(); //avant de faire faire avancer les pnj on enlève les morts
     movePNJsInWaves(waves);
@@ -119,6 +120,21 @@ std::string * GameEngine::serializeGameState() {
 
 GameState &GameEngine::getGameState() {
     return gameState;
+}
+
+void GameEngine::addPNJS(std::vector<Wave> &waves) {
+    for (Wave& wave: waves){
+        int currentNumOfPnjs = wave.getNumber_of_pnjs();
+        int numPnjsShouldHaveAdded = timer.elapsedTimeInMiliseconds() / 1000;
+        int numPNJsToAdd = numPnjsShouldHaveAdded - currentNumOfPnjs;
+
+
+        if (currentNumOfPnjs < wave.getNumber_of_pnjs() && numPNJsToAdd > 0){
+            for (int i = 0; i < numPNJsToAdd; ++i) {
+                wave.addPNJ();
+            }
+        }
+    }
 }
 
 //void GameEngine::addTower(AbstractTower& tower, int quadrant) {
