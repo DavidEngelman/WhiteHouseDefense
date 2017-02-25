@@ -20,7 +20,7 @@ public:
 
     GameEngine();
 
-    void update();
+    bool update();
 
 
     void createWaves();

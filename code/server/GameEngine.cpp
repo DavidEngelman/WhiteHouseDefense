@@ -4,13 +4,18 @@ GameEngine::GameEngine(): numOfPNJsPerWave(10) {
     timer.start();
 }
 
-void GameEngine::update() {
+/*
+ * Updates the game state by one tick.
+ * Returns true if the round (or game) is finished, false otherwise.
+ */
+bool GameEngine::update() {
     int numMilisecondsSinceStart = timer.elapsedTimeInMiliseconds();
     int numStepsToDo = (numMilisecondsSinceStart / STEP_DURATION) - numStepsDone;
     for (int i = 0; i < numStepsToDo; ++i) {
         updateWaves();
         updatePlayerStates();
     }
+    return gameState.isFinished() || gameState.isRoundFinished();
 }
 
 void GameEngine::updateWaves() {
