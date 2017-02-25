@@ -24,7 +24,7 @@ set(SERVER_FILES "server/ServerLauncher.cpp" "common/Networking.cpp" "server/Ser
         common/GameState.cpp "server/GameServer.cpp" "server/PlaceTowerCommand.cpp" "server/Timer.cpp"
         "server/FriendListCommand.cpp" common/AbstractTower.cpp server/PlayerConnection.cpp common/PlayerState.cpp common/Wave.cpp
         "common/PNJ.cpp" "common/Position.cpp" common/Map.cpp server/GameEngine.cpp server/GameEngine.hpp common/Constants.h common/Direction.h
-        common/AttackTower.cpp server/ServerDebug.cpp) #common/SlowTower.cpp )
+        common/AttackTower.cpp) #common/SlowTower.cpp )
 
 add_executable(server ${SERVER_FILES})
 
