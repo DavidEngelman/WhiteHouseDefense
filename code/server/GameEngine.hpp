@@ -35,6 +35,8 @@ public:
 
 
     Wave& getWaveInSameQuadrant(AbstractTower &tower, std::vector<Wave> &waves);
+
+    void increaseWaveDifficulty();
 };
 
 

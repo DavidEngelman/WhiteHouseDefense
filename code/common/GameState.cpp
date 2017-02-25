@@ -79,3 +79,7 @@ void GameState::clearWaves() {
     waves.clear();
 }
 
+void GameState::addWave(Wave wave) {
+    waves.push_back(wave);
+}
+

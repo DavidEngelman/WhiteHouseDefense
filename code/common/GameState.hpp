@@ -28,6 +28,8 @@ public:
     Map &getMap();
 
     std::vector<Wave> &getWaves();
+
+    void addWave(Wave wave);
     
     // Removes the current waves (which should be empty)
     void clearWaves();

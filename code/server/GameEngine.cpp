@@ -75,11 +75,16 @@ void GameEngine::removeDeadPNJs() {
 
 void GameEngine::createWaves() {
     gameState.clearWaves();
-    for (const int direction: DIRECTIONS)
-        // TODO: increase the number of pnjs per wave to make them harder over time
-        // Genre: numOfPNJsPerWave += 5;
+    increaseWaveDifficulty();
+    for (const int direction: DIRECTIONS) {
         Wave wave(numOfPNJsPerWave, direction);
-        gameState.addWave
-
+        // Ici je passe par valeur... si je passe par reference, je ne sais pas si ça va continuer
+        // à exister à la sortie du bloc.
+        // TODO: verifier
+        gameState.addWave(wave);
     }
+}
+
+void GameEngine::increaseWaveDifficulty() {
+    numOfPNJsPerWave += 5;
 }
