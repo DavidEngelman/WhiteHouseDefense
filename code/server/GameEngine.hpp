@@ -16,6 +16,9 @@ private:
     int numOfPNJsPerWave;
 
     Timer timer;
+
+
+    PlayerState &getPlayerStateForWave(Wave &wave);
 public:
 
     GameEngine();
@@ -40,6 +43,8 @@ public:
 
     bool isGameFinished();
     std::string * serializeGameState();
+
+
 };
 
 
