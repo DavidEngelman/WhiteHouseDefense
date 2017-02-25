@@ -45,6 +45,7 @@ void GameServer::get_and_process_command(int client_socket_fd, char *buffer) {
 
 void GameServer::addTowerInGameState(PlaceTowerCommand &command) {
     AbstractTower * tower;
+    int quadrant = command.getPlayerQuadrant();
     if (command.getTowerType() == ATTACK_TOWER_STR){
         *tower = AttackTower(command.getPosition());
     }
@@ -52,7 +53,7 @@ void GameServer::addTowerInGameState(PlaceTowerCommand &command) {
     //else if (command.getTowerType() == SLOW_TOWER){
       //  *tower = SlowTower
     //}
-    gameEngine.addTower(*tower);
+    gameEngine.addTower(*tower, quadrant);
 }
 
 void GameServer::runWave() {
