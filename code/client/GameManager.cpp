@@ -28,7 +28,13 @@ void GameManager::come_back_to_menu(){
 }
 
 void GameManager::run() {
+    char seed[5];
+    receive_message(server_socket, seed);
+
+    gameUI.setSeed(atoi(seed));
     gameUI.display();
+    //TODO : rajouter un receive pour savoir quelle phase c est
+
     if (phase == PLACING_TOWER) {
         placeTower();
     } else {

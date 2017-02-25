@@ -5,9 +5,7 @@
 #include "GameUI.hpp"
 #include <iostream>
 
-GameUI::GameUI(){
-    map = Map (); //rajouter seed
-}
+GameUI::GameUI(){}
 
 Position GameUI::getPosBuyingTower() {
     int x;
@@ -54,4 +52,9 @@ bool GameUI::isBuyingTower() {
     } while (!ok);
 
     return response == 1;
+}
+
+void GameUI::setSeed(int seed) {
+    GameUI::seed = seed;
+    map = Map(seed);
 }

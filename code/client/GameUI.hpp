@@ -8,8 +8,10 @@
 class GameUI {
 private:
     Map map;
+	int seed;
 
 public:
+
     GameUI();
 
 	Position getPosBuyingTower();
@@ -18,6 +20,7 @@ public:
     bool checkCoord(int x, int y);
 
 	void display();
+	void setSeed(int seed);
 };
 
 #endif
