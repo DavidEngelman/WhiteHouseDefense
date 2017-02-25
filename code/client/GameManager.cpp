@@ -7,26 +7,25 @@
 GameManager::GameManager(char *ip_addr, int port, int id, std::string username, App *app) :
         NetworkedManager(port, ip_addr, app), player_id(id), player_username(username),
         phase(PLACING_TOWER),
-        gameUI(getMapSeedFromServer()),
-        quadrant(getQuadrantFromServer())
+        gameState(getMapSeedFromServer()),  // L'ordre est important parce qu'on fait des
+        quadrant(getQuadrantFromServer()),  // recv. Ne pas changer l'ordre!
+        gameUI(gameState.getMap())
         {} //Le gamestate n'est pas censé avoir la map
 
 
 void GameManager::placeTower() {
     if (gameUI.isBuyingTower()) {
-        gameUI.display(gameState);
+        gameUI.display();
         Position pos = gameUI.getPosBuyingTower();
-        // TODO: send tower placement command to server and buying
+        // TODO: send tower placement command to server
     } else {
-        gameUI.display(gameState);
-        Position pos = gameUI.getPosSellingTower();
-        // TODO: send tower placement command to server and selling
+        gameUI.display();
     }
     //send_message(server_socket, coord.c_str());
 }
 
 void GameManager::displayWave() {
-    gameUI.display(gameState);
+    gameUI.display();
 }
 
 void GameManager::come_back_to_menu() {
@@ -36,8 +35,9 @@ void GameManager::come_back_to_menu() {
 }
 
 void GameManager::run() {
-    gameUI.display(gameState);
+    gameUI.display();
     char server_msg_buff [BUFFER_SIZE];
+
     while(1){
 
         receive_message(server_socket, server_msg_buff);
