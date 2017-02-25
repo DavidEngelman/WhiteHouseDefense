@@ -97,3 +97,7 @@ GameState::GameState(unsigned int mapSeed): map(Map(mapSeed)) {
 
 }
 
+bool GameState::getIsGameOver() const {
+    return isGameOver;
+}
+
