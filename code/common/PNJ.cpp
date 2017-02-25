@@ -218,13 +218,13 @@ bool PNJ::operator!=(const PNJ &rhs) const {
 }
 
 bool PNJ::isInPlayerBase() {
-    return (direction == NORTH && getPosition().getY() == -1)
+    return (direction == NORTH && getPosition().getY() == 0)
            ||
-           (direction == EAST && getPosition().getX() == 31)
+           (direction == EAST && getPosition().getX() == 30)
            ||
-           (direction == SOUTH && getPosition().getY() == 31)
+           (direction == SOUTH && getPosition().getY() == 30)
            ||
-           (direction == WEST && getPosition().getX() == -1);
+           (direction == WEST && getPosition().getX() == 0);
 }
 
 void PNJ::setHealthPoints(int newHp) {
