@@ -19,4 +19,7 @@
 #define DECLINE_FRIEND_REQUEST "declineFriendRequest;"
 #define GET_PROFILE "getProfileByUsername;"
 
+
+#define ATTACK_TOWER_STR "AttackTower"
+
 #endif //PROJET_STRINGS_HPP

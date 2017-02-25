@@ -1,26 +1,27 @@
 #include "AttackTower.hpp"
 
-AttackTower::AttackTower(Position position, int price, int radius, int damageAmount):
-        AbstractTower::AbstractTower(position, price, radius), damageAmount(damageAmount) {}
+AttackTower::AttackTower(Position position) :
+        AbstractTower::AbstractTower(position, ATTACK_TOWER_PRICE, ATTACK_TOWER_RANGE),
+        damageAmount(ATTACK_TOWER_DAMAGE) {}
 
 int AttackTower::getDamageAmount() const { return damageAmount; }
 
 void AttackTower::setDamageAmount(int newDamageAmount) { damageAmount = newDamageAmount; }
 
-bool AttackTower::shoot(Wave& wave) {
-    PNJ* my_target;
+bool AttackTower::shoot(Wave &wave) {
+    PNJ *my_target;
     bool killed = false;
     my_target = get_closest_pnj(wave);
-    if (my_target != nullptr){
+    if (my_target != nullptr) {
         dealDamageTo(*my_target);
-        if (my_target->getHealthPoints() <= 0){
+        if (my_target->getHealthPoints() <= 0) {
             killed = true;
         }
     }
     return killed;
 }
 
-void AttackTower::dealDamageTo(PNJ& target) { target.receiveDamage(this->getDamageAmount()); }
+void AttackTower::dealDamageTo(PNJ &target) { target.receiveDamage(this->getDamageAmount()); }
 
 std::string AttackTower::serialize() {
     /*

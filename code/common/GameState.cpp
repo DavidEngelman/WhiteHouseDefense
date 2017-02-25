@@ -1,5 +1,4 @@
 #include "GameState.hpp"
-#include "AttackTower.hpp"
 
 void GameState::DecreasePlayerHp(PlayerState &player, int amount) {
     player.decrease_hp(amount);
@@ -28,11 +27,8 @@ std::string* GameState::serialize() {
     return serialized_me;
 }
 
-void GameState::add_tower(std::string& tower_type, Position position) {
-    if (tower_type == "basic_tower"){
-        //towers.push_back(AttackTower());
-    }
-    //TODO ajouter d'autre type
+void GameState::addTower(AbstractTower tower) {
+    towers.push_back(tower);
 }
 
 bool GameState::IsOnlyOneAlive() {
