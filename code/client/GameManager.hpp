@@ -34,6 +34,8 @@ public:
 
     void come_back_to_menu();
 
+    bool is_alive();
+
     void run();
 
     int getQuadrantFromServer();
