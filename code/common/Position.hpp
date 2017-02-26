@@ -1,7 +1,6 @@
 #ifndef POSITION_HPP
 #define POSITION_HPP
 
-#include <iosfwd>
 #include <string>
 
 class Position {

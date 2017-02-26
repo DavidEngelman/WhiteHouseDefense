@@ -28,7 +28,7 @@ bool GameUI::checkCoord(int x, int y) {
 }
 
 void GameUI::display(GameState& gameState) {
-    map->display();
+    map->display(gameState);
 }
 
 bool GameUI::isBuyingTower() {

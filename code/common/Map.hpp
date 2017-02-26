@@ -32,18 +32,11 @@ class GameState;
  *
  * When we want to show the map (with towers and NPCs) to the user, we generate it dynamically from the
  * map matrix (the terrain, the background) and the gameState (which contains the changing parts of the game:
- * the towers and NPCs). This is done in dynamicMatrix.
+ * the towers and NPCs).
  */
 class Map {
 private:
     int matrix[SIZE][SIZE];
-
-    // Ça ne devrait pas être ici, parce que sinon le server a cette matrice aussi
-    // ce qui ne sert à rien
-    int dynamicMatrix[SIZE][SIZE];
-
-public:
-
 
 private:
 
@@ -57,14 +50,8 @@ private:
 public:
     Map();
     Map(unsigned seed);
-    void display();
-    void update(GameState& gameState); //REGARDER ICI ;)
+    void display(GameState& gameState);
     bool isPath(Position pos);
-    bool addTower(Position pos);
-    bool removeTower(Position pos);
-    bool addNPC(Position pos);
-    bool removeNPC(Position pos);
-    bool moveNPC(Position origin, Position nextPos);
 };
 
 #endif

@@ -16,7 +16,9 @@ Map::Map(unsigned seed) {
     }
 }
 
-void Map::display() {
+void Map::display(GameState& gameState) {
+    std::vector<AbstractTower> &towers = gameState.getTowers();
+    std::vector<Wave> &waves = gameState.getWaves();
     system("clear");
 
     std::cout << "\t";
@@ -31,11 +33,24 @@ void Map::display() {
         for (int x = 0; x < SIZE; x++) {
             switch (matrix[y][x]) {
                 case GRASS_INT:
-                    std::cout << GRASS;
+                    for (auto &tower : towers) {
+                        Position pos = tower.getPosition();
+                        if (x == pos.getX() && y == pos.getY()) std::cout << TOWER;
+                        else std::cout << GRASS;
+                    }
                     break;
                 case PATH_INT:
                     if (x == 0 or y == 0 or x == SIZE-1 or y == SIZE-1) std::cout << BASE;
-                    else std::cout << PATH;
+                    else {
+                        for (auto &wave : waves) {
+                            std::vector<PNJ> &pnjs = wave.getPnjs();
+                            for (auto &pnj : pnjs) {
+                                Position pos = pnj.getPosition();
+                                if (x == pos.getX() && y == pos.getY()) std::cout << NPC;
+                                else std::cout << PATH;
+                            }
+                        }
+                    }
                     break;
                 case LIMIT_INT:
                     std::cout << LIMIT;
@@ -145,79 +160,3 @@ void Map::basicMap() {
 bool Map::isPath(Position pos) {
     return matrix[pos.getY()][pos.getX()] == PATH_INT;
 }
-
-bool Map::addTower(Position pos) {
-    if (matrix[pos.getY()][pos.getX()] == GRASS_INT) {
-        matrix[pos.getY()][pos.getX()] = TOWER_INT; // 10 = number of upgrades per tower possible
-        return true;
-    }
-    return false;
-}
-
-bool Map::removeTower(Position pos) {
-    if (matrix[pos.getY()][pos.getX()] >= TOWER_INT) {
-        matrix[pos.getY()][pos.getX()] = GRASS_INT;
-        return true;
-    }
-    return false;
-}
-
-bool Map::addNPC(Position pos) {
-    return false;
-}
-
-bool Map::removeNPC(Position pos) {
-    return false;
-}
-
-bool Map::moveNPC(Position origin, Position nextPos) {
-    return false;
-}
-
-void Map::update(GameState &gameState) {
-    std::vector<AbstractTower> &towers = gameState.getTowers();
-    for (auto &tower : towers) {
-        addTower(tower.getPosition());
-    }
-
-    std::vector<Wave> &waves = gameState.getWaves();
-    for (auto &wave : waves) {
-        std::vector<PNJ> &pnjs = wave.getPnjs();
-        for (auto &pnj : pnjs) {
-            addNPC(pnj.getPosition());
-        }
-    }
-}
-
-
-/*
-
-void Map::add_tower(Position pos) {
-    dynamicMatrix[pos.getX()][pos.getY()] = ' '; // tower char
-}
-void Map::add_pnj(Position pos) {
-    dynamicMatrix[pos.getX()][pos.getY()] = ' '; // pnj char
-}
-void Map ::add_playerBase(Position pos) {
-    dynamicMatrix[pos.getX()][pos.getY()] = ' '; // base char
-}
-
-void Map::update(GameState &gameState) {
-    dynamicmatrix = matrix;
-    for (auto &tower : gameState.getTowers()) {
-        addTower(tower.getPosition());
-    }
-
-    for (auto &wave : gameState.getWaves()) {
-        for (auto &pnj : wave.getPnjs()) {
-            addNPC(pnj.getPosition());
-        }
-    }
-    for (auto &playerstate: gameState.getPlayerStates()){
-        if(playerstate.getHp() > 0){
-            add_playerBase(//position de la base)
-        }
-    }
-}
-
-*/
