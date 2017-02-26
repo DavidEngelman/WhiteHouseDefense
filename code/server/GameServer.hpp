@@ -17,7 +17,7 @@ static const int NUM_PLAYERS = 4;
 static const int NUM_SECONDS_TO_PLACE_TOWER = 60;
 static const int INTERVAL_BETWEEN_SENDS_IN_MS = 200;
 
-class GameServer : public Server {
+class   GameServer : public Server {
 private:
     // Je l'ai mis comme pointeur, car je veux seulement l'initialiser dans la methode run.
     // Si je l'initialise dans le constructeur, je suis obligé de garder la seed dans un field
