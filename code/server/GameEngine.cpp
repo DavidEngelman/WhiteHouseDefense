@@ -16,7 +16,7 @@ bool GameEngine::update() {
     int numStepsToDo = (numMilisecondsSinceStart / STEP_DURATION_IN_MS) - numStepsDone;
     for (int i = 0; i < numStepsToDo; ++i) {
         updateWaves();
-        if (!DEBUG) updatePlayerStates();
+        updatePlayerStates();
     }
     return gameState.isFinished() || gameState.isRoundFinished();
 }
@@ -46,7 +46,7 @@ void GameEngine::dealDamageToBase() {
         PlayerState &player_state = getPlayerStateForWave(wave);
         for (PNJ &pnj : wave.getPnjs()) {
             if (pnj.isInPlayerBase()) {
-                player_state.decrease_hp(PNJ_DAMAGE);
+                if (!DEBUG) player_state.decrease_hp(PNJ_DAMAGE);
                 pnj.setHealthPoints(0);
                 // TODO: Faudrait enlever ces PNJ de la vague...
                 // C'est fait dans updateWaves au round suivant, mais c'est pas evident tout de suite

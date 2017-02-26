@@ -26,7 +26,11 @@ void PNJ::advance(Map& map) {
         move = get_right_direction();
     }
 
+    if (move.x > 1 || move.x < -1 || move.y > 1 || move.y < -1) return;
+
     // TODO: gerer le cas ou il est à la frontiere (ne rien faire)
+    
+    // Les PNJS bougent à chaque tick (ce qui n'est pas forcement une bonne idée si le tick est trop rapide)
 
     Position new_position = Position(getPosition().getX() + move.x, getPosition().getY() + move.y);
     setPosition(new_position);
