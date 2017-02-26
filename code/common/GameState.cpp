@@ -90,3 +90,7 @@ bool GameState::getIsGameOver() const {
     return isGameOver;
 }
 
+bool GameState::isPlayerAlive(const int quadrant) {
+    return player_states[quadrant].getHp() > 0;
+}
+

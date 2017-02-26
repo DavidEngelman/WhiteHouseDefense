@@ -65,6 +65,7 @@ public:
     int getWinnerClassic();
 
 //    void addTower(AbstractTower tower);
+    bool isPlayerAlive(const int quadrant);
 };
 
 #endif
