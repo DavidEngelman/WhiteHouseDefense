@@ -16,7 +16,7 @@ Map::Map(unsigned seed) {
     }
 }
 
-void Map::display(GameState& gameState) {
+const void Map::display(GameState& gameState) {
     std::vector<AbstractTower*> &towers = gameState.getTowers();
     std::vector<Wave> &waves = gameState.getWaves();
     system("clear");
@@ -114,7 +114,7 @@ bool Map::generateQuarterMap(Position end) {
     return false;
 }
 
-bool Map::isNextToPath(Position pos) {
+const bool Map::isNextToPath(Position pos) {
     int count = 0;
     if (matrix[pos.getY()+1][pos.getX()] == PATH_INT) count++;
     if (pos.getY() > 0 && matrix[pos.getY()-1][pos.getX()] == PATH_INT) count++;
@@ -151,6 +151,6 @@ void Map::basicMap() {
     }
 }
 
-bool Map::isPath(Position pos) {
+const bool Map::isPath(Position pos) {
     return matrix[pos.getY()][pos.getX()] == PATH_INT;
 }

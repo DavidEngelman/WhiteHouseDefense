@@ -41,15 +41,15 @@ private:
     void generateRandomMatrix();
     void initMap();
     bool generateQuarterMap(Position position);
-    bool isNextToPath(Position position);
+    const bool isNextToPath(Position position);
     void copyQuarter();
     void basicMap();
 
 public:
     Map();
     Map(unsigned seed);
-    void display(GameState& gameState);
-    bool isPath(Position pos);
+    const void display(GameState& gameState);
+    const bool isPath(Position pos);
 };
 
 #endif
