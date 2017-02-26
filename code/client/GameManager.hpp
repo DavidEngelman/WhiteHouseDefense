@@ -7,7 +7,10 @@
 #include "GameManager.hpp"
 #include "../common/Networking.h"
 #include "MainManager.hpp"
+#include "../common/AttackTower.hpp"
+#include "../common/SlowTower.hpp"
 #include <thread>
+#include <cstdlib>
 
 class GameManager : public NetworkedManager{ //Tmp : public (à supprimer après tests)
 
@@ -44,6 +47,10 @@ public:
     void run();
 
     void input_thread();
+
+    bool checkValidity(Position towerPos);
+
+    bool sendRequest(Position towerPos, std::string towerType);
 
     int getQuadrantFromServer();
 };
