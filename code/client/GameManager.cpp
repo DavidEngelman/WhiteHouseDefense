@@ -6,26 +6,27 @@
 
 GameManager::GameManager(char *ip_addr, int port, int id, std::string username, App *app) :
         NetworkedManager(port, ip_addr, app), player_id(id), player_username(username),
-        phase(PLACING_TOWER),
-        gameState(getMapSeedFromServer()),  // L'ordre est important parce qu'on fait des
-        quadrant(getQuadrantFromServer()),  // recv. Ne pas changer l'ordre!
-        gameUI(gameState.getMap())
-        {} //Le gamestate n'est pas censé avoir la map
+//        phase(PLACING_TOWER), Cette ligne ne compile pas, fix temporaire
+        gameUI(getMapSeedFromServer()), // L'ordre est important parce qu'on fait des
+        quadrant(getQuadrantFromServer()) // recv. Ne pas changer l'ordre!
+        {
+            phase[0] = PLACING_TOWER[0];
+        } //Le gamestate n'est pas censé avoir la map
 
 
 void GameManager::placeTower() {
     if (gameUI.isBuyingTower()) {
-        gameUI.display();
+        gameUI.display(gameState);
         Position pos = gameUI.getPosBuyingTower();
         // TODO: send tower placement command to server
     } else {
-        gameUI.display();
+        gameUI.display(gameState);
     }
     //send_message(server_socket, coord.c_str());
 }
 
 void GameManager::displayWave() {
-    gameUI.display();
+    gameUI.display(gameState);
 }
 
 void GameManager::come_back_to_menu() {
@@ -36,13 +37,13 @@ void GameManager::come_back_to_menu() {
 
 void GameManager::input_thread() {
     while(!stopflag) {
-        std::string input = // ask tower position gameUI.getPosBuyingTower();
+        //std::string input = // ask tower position gameUI.getPosBuyingTower();
     }
     // send the position of the tower to the server
 }
 
 void GameManager::run() {
-    gameUI.display();
+    gameUI.display(gameState);
     char server_msg_buff [BUFFER_SIZE];
 
     while(1){
@@ -52,7 +53,9 @@ void GameManager::run() {
             stopflag = false;
             // la il faudrait demander a l'user ce qu'il veut faire , poser une tour / upgrade / revendre
             // et lancer le thread adapte
-            std::thread inp(input_thread);
+
+            // Ça ne compile pas
+//            std::thread inp(input_thread);
         }
         else if (strcmp(server_msg_buff, WAVE) == 0){
             //TODO kill InputThread
