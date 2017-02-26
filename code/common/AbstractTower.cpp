@@ -1,7 +1,5 @@
 #include <cmath>
 #include "AbstractTower.hpp"
-#include "Map.hpp"
-#include "Constants.h"
 
 AbstractTower::AbstractTower(Position position, int price, int radius):
         position(position), price(price), quadrant(computeQuadrant()), radius(radius) {
@@ -29,8 +27,8 @@ const int AbstractTower::computeQuadrant() {
 
 PNJ* AbstractTower::get_closest_pnj(Wave &wave) {
     int dist;
-    int best_dist;
-    PNJ* closest_pnj;
+    int best_dist = 1 << 30;
+    PNJ* closest_pnj = nullptr;
     for (PNJ& pnj: wave.getPnjs()){
         int distance_x = this->getPosition().getX() - pnj.getPosition().getX();
         int distance_y = this->getPosition().getY() - pnj.getPosition().getY();
@@ -41,7 +39,7 @@ PNJ* AbstractTower::get_closest_pnj(Wave &wave) {
             closest_pnj = &pnj;
         }
     }
-    if (radius < sqrt(best_dist)){
+    if (sqrt(best_dist) > radius){
         closest_pnj = nullptr;
 
     }
