@@ -98,11 +98,13 @@ void GameServer::run() {
         sendMapSeedToClients(mapSeed);
         SendQuadrantToClients();
     }
-    //ici_la_tour
-    AbstractTower * tower;
+    //ici__je met des tours n importe ou pour test a la bourrain
     AttackTower * attackTower = new AttackTower(Position(14,8));
-    tower = attackTower;
-    gameEngine->addTower(tower, 0);
+    gameEngine->addTower(attackTower, 0);
+    AttackTower * attackTower2 = new AttackTower(Position(17,2));
+    gameEngine->addTower(attackTower2, 0);
+    AttackTower * attackTower3 = new AttackTower(Position(20,1));
+    gameEngine->addTower(attackTower3, 0);
 
     while (!gameEngine->isGameFinished()) {
         if (!DEBUG){
