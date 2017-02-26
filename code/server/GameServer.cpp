@@ -20,7 +20,7 @@ void GameServer::sendGameStateToPlayers() {
 void GameServer::sendGameStateToPlayer(PlayerConnection &connection) {
     // TODO: une autre approche serait de passer une reference de string vers
     // serializeGameState, dans lequel on ferait append. À considerer
-    const std::string * serialized_game_state = gameEngine.serializeGameState();
+    const std::string * serialized_game_state = gameEngine->serializeGameState();
     send_message(connection.getSocket_fd(), (*serialized_game_state).c_str());
     delete serialized_game_state;
 }
@@ -66,11 +66,11 @@ void GameServer::runWave() {
     Timer timer;
     timer.start();
 
-    gameEngine.createWaves();
+    gameEngine->createWaves();
     bool isWaveFinished = false;
     while (!isWaveFinished) {
         while (!isWaveFinished && !timer.elapsedTimeInMiliseconds() < INTERVAL_BETWEEN_SENDS_IN_MS) {
-            isWaveFinished = gameEngine.update();
+            isWaveFinished = gameEngine->update();
             // TODO: mettre peut etre un sleep ici? on ne va pas faire des tonnes de updates de toute facon
 
             // car si gameEngine voit que pas assez de temps s'est ecoulé depuis le tick precedent,
@@ -79,7 +79,6 @@ void GameServer::runWave() {
 
         if (DEBUG){
             // TODO: updateMap()
-            gameEngine.getGameState().getMap().display();
         } else {
             sendGameStateToPlayers();
         }
@@ -89,13 +88,15 @@ void GameServer::runWave() {
 
 
 void GameServer::run() {
-    if (!DEBUG){
-        sendMapSeedToClients();
-        SendQuadrantToClients();
+    unsigned int mapSeed = (unsigned int) time(0);
+    gameEngine = new GameEngine(mapSeed);
 
+    if (!DEBUG){
+        sendMapSeedToClients(mapSeed);
+        SendQuadrantToClients();
     }
 
-    while (!gameEngine.isGameFinished()) {
+    while (!gameEngine->isGameFinished()) {
         if (!DEBUG){
             sendTowerPhase();
             processClientCommands();
@@ -103,6 +104,8 @@ void GameServer::run() {
         }
         runWave();
     }
+
+    delete gameEngine;
 
     //handleEndOfGame();
 }
@@ -142,8 +145,7 @@ void GameServer::handleEndOfGame() {
     }
 }
 */
-void GameServer::sendMapSeedToClients() {
-    unsigned int mapSeed = gameEngine.getGameState().getMapSeed();
+void GameServer::sendMapSeedToClients(unsigned int mapSeed) {
     std::string message = SETUP_GAME;
     for (PlayerConnection& playerConnection : playerConnections) {
         int socketFd = playerConnection.getSocket_fd();
@@ -157,6 +159,6 @@ void GameServer::SendQuadrantToClients() {
     for (PlayerConnection& playerConnection : playerConnections) {
         int socketFd = playerConnection.getSocket_fd();
         send_data(socketFd, (char *) &quadrant, sizeof(unsigned int));
-        quadrant ++;
+        quadrant++;
     }
 }
