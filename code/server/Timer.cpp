@@ -13,6 +13,7 @@ int Timer::elapsedTimeInMiliseconds() {
     gettimeofday(&current_timeval, 0);
 
     double elapsedTimeInMilliseconds = (current_timeval.tv_sec - start_timeval.tv_sec) * 1000;
+    elapsedTimeInMilliseconds += (current_timeval.tv_usec - start_timeval.tv_usec) / 1000;
     return (int) elapsedTimeInMilliseconds;
 }
 
