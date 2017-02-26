@@ -157,10 +157,16 @@ void GameEngine::addPNJS(std::vector<Wave> &waves) {
 
 
 void GameEngine::addTower(AbstractTower* tower, int quadrant) {
-    //if (gameState.getPlayerStates()[quadrant].getMoney() >= tower->getPrice()) { //Je dois mettre ca en commentaire pour que ca marche pour DEBUG
+    if (!DEBUG) {
+        if (gameState.getPlayerStates()[quadrant].getMoney() >=
+            tower->getPrice()) { //Je dois mettre ca en commentaire pour que ca marche pour DEBUG
+            gameState.addTower(tower);
+            gameState.getPlayerStates()[quadrant].spendMoney(tower->getPrice());
+        }
+    }
+    else{
         gameState.addTower(tower);
-        //gameState.getPlayerStates()[quadrant].spendMoney(tower->getPrice());
-    //}
+    }
 }
 
 void GameEngine::showMap() {
