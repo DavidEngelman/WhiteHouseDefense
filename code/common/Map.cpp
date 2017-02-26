@@ -175,9 +175,9 @@ bool Map::moveNPC(Position origin, Position nextPos) {
 }
 
 void Map::update(GameState &gameState) {
-    std::vector<AbstractTower> &towers = gameState.getTowers();
+    std::vector<AbstractTower *> &towers = gameState.getTowers();
     for (auto &tower : towers) {
-        addTower(tower.getPosition());
+        addTower(tower->getPosition());
     }
 
     std::vector<Wave> &waves = gameState.getWaves();

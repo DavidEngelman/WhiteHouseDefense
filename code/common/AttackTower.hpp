@@ -26,15 +26,10 @@ public:
 
     virtual void setDamageAmount(int newDamageAmount);
 
-    virtual bool shoot(Wave& wave) override;
+    virtual bool shoot(Wave &wave) override;
 
 
-
-
-
-
-
-    virtual void dealDamageTo(PNJ& pnj);
+    virtual void dealDamageTo(PNJ &pnj);
 
     virtual std::string serialize() override;
 
