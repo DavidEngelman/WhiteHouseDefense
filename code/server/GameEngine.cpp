@@ -112,13 +112,14 @@ void GameEngine::createWaves() {
         // Ça ne sert à rien de créer une vague vide
         if (DEBUG || gameState.isPlayerAlive(direction)) {
             Wave wave(numOfPNJsPerWave, direction);
+            wave.addPNJ(); // Ne pas enlever cette ligne!
             gameState.addWave(wave);
         }
     }
 }
 
 void GameEngine::increaseWaveDifficulty() {
-    numOfPNJsPerWave += 5;
+    numOfPNJsPerWave += 1;
 }
 
 bool GameEngine::isGameFinished() {

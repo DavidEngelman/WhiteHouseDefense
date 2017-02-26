@@ -6,7 +6,7 @@
 #include "../common/Direction.h"
 
 static const int STEP_DURATION_IN_MS = 1000;
-static const int INITIAL_NUMBER_OF_PNJS_PER_WAVE = 10;
+static const int INITIAL_NUMBER_OF_PNJS_PER_WAVE = 5;
 
 class GameEngine {
 
