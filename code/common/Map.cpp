@@ -17,7 +17,7 @@ Map::Map(unsigned seed) {
 }
 
 void Map::display(GameState& gameState) {
-    std::vector<AbstractTower> &towers = gameState.getTowers();
+    std::vector<AbstractTower*> &towers = gameState.getTowers();
     std::vector<Wave> &waves = gameState.getWaves();
     system("clear");
 
@@ -34,7 +34,7 @@ void Map::display(GameState& gameState) {
             switch (matrix[y][x]) {
                 case GRASS_INT:
                     for (auto &tower : towers) {
-                        Position pos = tower.getPosition();
+                        Position pos = tower->getPosition();
                         if (x == pos.getX() && y == pos.getY()) std::cout << TOWER;
                         else std::cout << GRASS;
                     }
