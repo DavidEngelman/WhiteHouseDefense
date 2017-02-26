@@ -20,7 +20,7 @@ std::string PlayerState::serialize() {
     std::string serialized_me;
     serialized_me += "PlayerState," + std::to_string(player_id) + "," + std::to_string(money) + "," +
             std::to_string(hp) + "," + bool_to_string(isSupported)+
-            bool_to_string(isWinner) + ";";
+            "," + bool_to_string(isWinner) + ";";
 
     return serialized_me;
 }
