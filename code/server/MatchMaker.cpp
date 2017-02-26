@@ -3,7 +3,8 @@
 MatchMaker::MatchMaker(int port) : Server(port),
                                    classicPendingMatch(PendingMatch(CLASSIC_MODE)),
                                    timedPendingMatch(PendingMatch(TIMED_MODE)),
-                                   teamPendingMatch(PendingMatch(TEAM_MODE)) {
+                                   teamPendingMatch(PendingMatch(TEAM_MODE)),
+                                   current_server_port(5556){
     std::cout << "Constructor" << std::endl;
 };
 
@@ -69,6 +70,7 @@ void MatchMaker::launchMatch(PendingMatch match) {
 
 void MatchMaker::launchGameServer(PendingMatch& match) {
     // TODO: completer une fois qu'il y a la classe GameServer
+    ++current_server_port;
 }
 
 void MatchMaker::announceMatchStart(PlayerConnection playerConnection) {
@@ -76,4 +78,5 @@ void MatchMaker::announceMatchStart(PlayerConnection playerConnection) {
     // lui signaler vers lequel il doit parler
 
     send_message(playerConnection.getSocket_fd(), GAME_STARTING_STRING);
+    send_data(playerConnection.getSocket_fd(), (char*)current_server_port, sizeof(int));
 }

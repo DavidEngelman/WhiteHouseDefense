@@ -30,8 +30,8 @@ void GameManager::displayWave() {
 }
 
 void GameManager::come_back_to_menu() {
-    MainManager *menu_manager = new MainManager(server_ip_address, player_id, player_username, my_master_app);
-    my_master_app->transition(menu_manager);
+    MainManager *menu_manager = new MainManager(server_ip_address, player_id, player_username, master_app);
+    master_app->transition(menu_manager);
 
 }
 
