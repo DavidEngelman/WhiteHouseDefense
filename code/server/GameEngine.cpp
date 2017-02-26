@@ -18,6 +18,7 @@ bool GameEngine::update() {
         updateWaves();
         updatePlayerStates();
     }
+    numStepsDone += numStepsToDo;
     return gameState.isFinished() || gameState.isRoundFinished();
 }
 
