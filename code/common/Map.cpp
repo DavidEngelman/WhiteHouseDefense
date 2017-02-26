@@ -52,14 +52,8 @@ void Map::display(GameState& gameState) {
                         }
                     }
                     break;
-                case LIMIT_INT:
-                    std::cout << LIMIT;
-                    break;
-                case NPC_INT:
-                    std::cout << NPC;
-                    break;
                 default:
-                    std::cout << TOWER;
+                    std::cout << LIMIT;
                     break;
             }
         }

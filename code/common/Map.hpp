@@ -10,11 +10,9 @@
 #define NPC "\033[33m◼\033[0m  "
 #define BASE "\033[31m♜\033[0m  "
 
-#define GRASS_INT -1
 #define PATH_INT 0
+#define GRASS_INT -1
 #define LIMIT_INT -2
-#define NPC_INT -3
-#define TOWER_INT 1
 
 #include <string>
 #include <vector>
