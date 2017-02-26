@@ -1,5 +1,7 @@
 #include "GameEngine.hpp"
 
+const bool DEBUG = true;
+
 GameEngine::GameEngine(unsigned int mapSeed) : map(mapSeed),
                                                numOfPNJsPerWave(INITIAL_NUMBER_OF_PNJS_PER_WAVE) {
     timer.start();
@@ -107,7 +109,7 @@ void GameEngine::createWaves() {
     for (const int direction: DIRECTIONS) {
         // Je crée une vague uniquement si le joueur est vivant
         // Ça ne sert à rien de créer une vague vide
-        if (gameState.isPlayerAlive(direction)) {
+        if (DEBUG || gameState.isPlayerAlive(direction)) {
             Wave wave(numOfPNJsPerWave, direction);
             gameState.addWave(wave);
         }
@@ -150,4 +152,8 @@ void GameEngine::addTower(AbstractTower* tower, int quadrant) {
     // TODO: check qu'il a assez d'argent
     gameState.addTower(tower);
     gameState.getPlayerStates()[quadrant].spendMoney(tower->getPrice());
+}
+
+void GameEngine::showMap() {
+    map.display(gameState);
 }

@@ -6,8 +6,10 @@ const bool DEBUG = true;
 
 GameServer::GameServer(int port, std::vector<PlayerConnection> &playerConnections) :
 Server(port), playerConnections(playerConnections) {
-    for (int i = 0; i < 4; i++) {
-        client_sockets[i] = playerConnections[i].getSocket_fd();
+    if (!DEBUG){
+        for (int i = 0; i < 4; i++) {
+            client_sockets[i] = playerConnections[i].getSocket_fd();
+        }
     }
 }
 
@@ -78,6 +80,7 @@ void GameServer::runWave() {
         }
 
         if (DEBUG){
+            gameEngine->showMap();
             // TODO: updateMap()
         } else {
             sendGameStateToPlayers();

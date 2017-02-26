@@ -61,6 +61,8 @@ public:
     void addTower(AbstractTower * tower, int quadrant);
 
     void addPNJS(std::vector<Wave> &waves);
+
+    void showMap();
 };
 
 
