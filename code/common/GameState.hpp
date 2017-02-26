@@ -10,6 +10,10 @@
 
 const static std::vector<std::string> validModes = {CLASSIC_MODE, TEAM_MODE, TIMED_MODE};
 
+/*
+ * Represents the changing parts of the game: the towers, the waves and NPCs, the player
+ * states (money, life, ...).
+ */
 class GameState {
 private:
 

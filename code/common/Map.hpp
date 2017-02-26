@@ -21,6 +21,17 @@
 #include "Position.hpp"
 #include "GameState.hpp"
 
+/*
+ * This class's matrix represents the terrain, the background of the map.
+ * It keeps track of which parts of the terrain are path, which are grass and which
+ * are the delimiters between the quadrants.
+ *
+ * Important: the matrix is constant. It is the background/terrain, independently of towers or NPCs.
+ *
+ * When we want to show the map (with towers and NPCs) to the user, we generate it dynamically from the
+ * map matrix (the terrain, the background) and the gameState (which contains the changing parts of the game:
+ * the towers and NPCs). This is done in dynamicMatrix.
+ */
 class Map {
 private:
     int matrix[SIZE][SIZE];
