@@ -78,6 +78,7 @@ public:
     bool isPlayerAlive(const int quadrant);
 
 
+    std::string bool_to_string(bool my_bool);
 };
 
 #endif

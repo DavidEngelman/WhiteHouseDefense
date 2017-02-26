@@ -8,8 +8,14 @@ void GameState::IncreasePlayerHp(PlayerState &player, int amount) {
     player.decrease_hp(amount);
 }
 
+std::string GameState::bool_to_string(bool my_bool){ //TODO la meme fonction se trouve dans playerState
+    return my_bool ? "true" : "false";
+}
+
 std::string* GameState::serialize() {
     std::string * serialized_me = new std::string();
+
+    *serialized_me += bool_to_string(isGameOver);
 
     for (PlayerState & pstate: player_states) {
         // C'est un peu bizarre comme fonction. Intuitivement, on dirait qu'il va
