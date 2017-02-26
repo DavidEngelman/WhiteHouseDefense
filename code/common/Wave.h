@@ -4,6 +4,7 @@
 #include <vector>
 #include "PNJ.hpp"
 
+class PNJ;
 
 class Wave {
 

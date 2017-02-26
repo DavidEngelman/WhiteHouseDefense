@@ -8,6 +8,8 @@
 #include "Map.hpp"
 #include "Constants.h"
 
+class Map;
+
 class PNJ{
 
 private:

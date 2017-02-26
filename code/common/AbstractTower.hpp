@@ -6,6 +6,9 @@
 #include "Wave.h"
 #include <string>
 
+class Wave;
+class PNJ;
+
 class AbstractTower {
 
 protected:

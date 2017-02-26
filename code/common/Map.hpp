@@ -21,6 +21,8 @@
 #include "Position.hpp"
 #include "GameState.hpp"
 
+class GameState;
+
 /*
  * This class's matrix represents the terrain, the background of the map.
  * It keeps track of which parts of the terrain are path, which are grass and which
