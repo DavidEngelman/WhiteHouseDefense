@@ -107,6 +107,7 @@ void GameEngine::removeDeadPNJsFromWaves() {
 void GameEngine::createWaves() {
     gameState.clearWaves();
     numStepsDone = 0;
+    timer.reset();
     increaseWaveDifficulty();
     for (const int direction: DIRECTIONS) {
         // Je crée une vague uniquement si le joueur est vivant
