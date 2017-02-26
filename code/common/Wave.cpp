@@ -1,7 +1,9 @@
 #include "Wave.h"
 
 Wave::Wave(int number_of_pnjs, int quadrant) :
-        number_of_pnjs(number_of_pnjs), quadrant(quadrant), number_of_added_pnjs(0) {}
+        number_of_pnjs(number_of_pnjs),
+        quadrant(quadrant),
+        number_of_added_pnjs(0) {}
 
 
 
@@ -54,6 +56,7 @@ int Wave::getNumber_of_added_pnjs() const {
 void Wave::addPNJ() {
     PNJ pnj(quadrant);
     pnjs.push_back(pnj);
+    number_of_added_pnjs += 1;
 }
 
 void Wave::setNumber_of_pnjs(int number_of_pnjs) {

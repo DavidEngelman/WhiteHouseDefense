@@ -16,7 +16,7 @@ bool GameEngine::update() {
     int numStepsToDo = (numMilisecondsSinceStart / STEP_DURATION_IN_MS) - numStepsDone;
     for (int i = 0; i < numStepsToDo; ++i) {
         updateWaves();
-        updatePlayerStates();
+        if (!DEBUG) updatePlayerStates();
     }
     return gameState.isFinished() || gameState.isRoundFinished();
 }
@@ -132,14 +132,19 @@ GameState &GameEngine::getGameState() {
     return gameState;
 }
 
+int min(int a, int b){
+    return (a < b) ? a : b;
+}
+
 void GameEngine::addPNJS(std::vector<Wave> &waves) {
     for (Wave &wave: waves) {
-        int currentNumOfPnjs = wave.getNumber_of_pnjs();
-        int numPnjsShouldHaveAdded = timer.elapsedTimeInMiliseconds() / 1000;
+        int currentNumOfPnjs = wave.getNumber_of_added_pnjs();
+        int numOfPNJsInWave = wave.getNumber_of_pnjs();
+
+        int numPnjsShouldHaveAdded = min(timer.elapsedTimeInMiliseconds() / 1000, numOfPNJsInWave);
         int numPNJsToAdd = numPnjsShouldHaveAdded - currentNumOfPnjs;
 
-
-        if (currentNumOfPnjs < wave.getNumber_of_pnjs() && numPNJsToAdd > 0) {
+        if (numPNJsToAdd > 0) {
             for (int i = 0; i < numPNJsToAdd; ++i) {
                 wave.addPNJ();
             }
