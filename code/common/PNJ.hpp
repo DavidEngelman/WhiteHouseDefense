@@ -50,7 +50,6 @@ public:
 
 	void setPosition(Position position);
 
-
 	bool can_go_forward(Map &map);
 
 	bool can_go_left(Map &map);
