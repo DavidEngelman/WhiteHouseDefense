@@ -26,6 +26,8 @@ void PNJ::advance(Map& map) {
         move = get_right_direction();
     }
 
+    // TODO: gerer le cas ou il est à la frontiere (ne rien faire)
+
     Position new_position = Position(getPosition().getX() + move.x, getPosition().getY() + move.y);
     setPosition(new_position);
 
