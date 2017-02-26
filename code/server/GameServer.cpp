@@ -52,14 +52,14 @@ void GameServer::addTowerInGameState(PlaceTowerCommand &command) {
     AbstractTower * tower;
     int quadrant = command.getPlayerQuadrant();
     if (command.getTowerType() == ATTACK_TOWER_STR){
-        AttackTower attackTower = AttackTower(command.getPosition());
-        tower = &attackTower;
+        AttackTower * attackTower = new AttackTower(command.getPosition());
+        tower = attackTower;
     }
     // TODO: completer si plus tard on utilise la SlowTower
     //else if (command.getTowerType() == SLOW_TOWER){
       //  *tower = SlowTower
     //}
-//    gameEngine.addTower(*tower, quadrant);
+    gameEngine->addTower(tower, quadrant);
 }
 
 void GameServer::runWave() {

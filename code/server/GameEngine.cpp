@@ -55,9 +55,9 @@ void GameEngine::dealDamageToBase() {
 }
 
 void GameEngine::dealDamage(std::vector<Wave> &waves) {
-    for (AbstractTower &tower: gameState.getTowers()) {
-        Wave &wave = getWaveInSameQuadrant(tower, waves);
-        bool killedPNJ = tower.shoot(wave);
+    for (AbstractTower * tower: gameState.getTowers()) {
+        Wave &wave = getWaveInSameQuadrant(*tower, waves);
+        bool killedPNJ = tower->shoot(wave);
         if (killedPNJ) {
             PlayerState player_state = getPlayerStateForWave(wave);
             giveGold(player_state);
@@ -146,8 +146,8 @@ void GameEngine::addPNJS(std::vector<Wave> &waves) {
 }
 
 
-
-//void GameEngine::addTower(AbstractTower& tower, int quadrant) {
-//    gameState.addTower(tower);
-//    gameState.getPlayerStates()[quadrant].spendMoney(tower.getPrice());
-//}
+void GameEngine::addTower(AbstractTower* tower, int quadrant) {
+    // TODO: check qu'il a assez d'argent
+    gameState.addTower(tower);
+    gameState.getPlayerStates()[quadrant].spendMoney(tower->getPrice());
+}

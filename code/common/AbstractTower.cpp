@@ -68,7 +68,7 @@ std::string AbstractTower::serialize() {
 
     std::string serialized_me;
 
-    serialized_me +=  /* + TODO:position.serialize()*/ + ";";
+    serialized_me +=  position.serialize();
 
     return serialized_me;
 }

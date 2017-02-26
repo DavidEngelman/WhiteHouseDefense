@@ -11,14 +11,14 @@ void GameState::IncreasePlayerHp(PlayerState &player, int amount) {
 std::string* GameState::serialize() {
     std::string * serialized_me = new std::string();
 
-    for (PlayerState &pstate: player_states) {
+    for (PlayerState & pstate: player_states) {
         // C'est un peu bizarre comme fonction. Intuitivement, on dirait qu'il va
         // mettre le resultat dans serialized_me, au lieu de faire un append.
         // C'est ce que j'ai pensé quand j'ai vu ça
         *serialized_me += pstate.serialize();
     }
-    for (AbstractTower &tower: towers) {
-        *serialized_me += tower.serialize();
+    for (AbstractTower * tower: towers) {
+        *serialized_me += (*tower).serialize();
     }
     for (Wave &wave: waves) {
         *serialized_me += wave.serialize();
@@ -70,7 +70,7 @@ std::vector<Wave> &GameState::getWaves() {
     return waves;
 }
 
-std::vector<AbstractTower> &GameState::getTowers() {
+std::vector<AbstractTower*> &GameState::getTowers() {
     return towers;
 }
 
@@ -92,5 +92,15 @@ bool GameState::getIsGameOver() const {
 
 bool GameState::isPlayerAlive(const int quadrant) {
     return player_states[quadrant].getHp() > 0;
+}
+
+void GameState::addTower(AbstractTower * tower) {
+    towers.push_back(tower);
+}
+
+GameState::~GameState() {
+    for (AbstractTower* tower: towers){
+        delete tower;
+    }
 }
 

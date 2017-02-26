@@ -20,7 +20,7 @@ class GameState {
 private:
 
     std::vector<PlayerState> player_states;
-    std::vector<AbstractTower> towers;
+    std::vector<AbstractTower *> towers;
     std::vector<Wave> waves;
     bool isGameOver;
 
@@ -33,6 +33,8 @@ public:
 
     GameState() = default;
 
+    ~GameState();
+
     bool getIsGameOver() const;
 
     std::vector<Wave> &getWaves();
@@ -42,7 +44,9 @@ public:
     // Removes the current waves (which should be empty)
     void clearWaves();
 
-    std::vector<AbstractTower> &getTowers();
+    std::vector<AbstractTower *> &getTowers();
+
+    void addTower(AbstractTower *tower);
 
     std::vector<PlayerState> &getPlayerStates();
 
@@ -72,6 +76,8 @@ public:
 
 //    void addTower(AbstractTower tower);
     bool isPlayerAlive(const int quadrant);
+
+
 };
 
 #endif

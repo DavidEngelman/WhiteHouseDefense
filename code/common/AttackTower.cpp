@@ -30,7 +30,7 @@ std::string AttackTower::serialize() {
     std::string serialized_me = AbstractTower::serialize();
     serialized_me.insert(0, ",");
     //serialized_me.insert(0, std::to_string(damageAmount));
-    serialized_me.insert(0, "AttackTower,");
+    serialized_me.insert(0, "AttackTower");
 
     return serialized_me;
 
