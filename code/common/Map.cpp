@@ -28,29 +28,47 @@ const void Map::display(GameState& gameState) {
     }
     std::cout << std::endl;
 
+    bool has_tower;
+    bool has_npc;
     for (int y = 0; y < SIZE; y++) {
         std::cout << y << "\t";
         for (int x = 0; x < SIZE; x++) {
             switch (matrix[y][x]) {
                 case GRASS_INT:
+                    has_tower = false;
                     for (auto &tower : towers) {
                         Position pos = tower->getPosition();
-                        if (x == pos.getX() && y == pos.getY()) std::cout << TOWER;
-                        else std::cout << GRASS;
+                        if (x == pos.getX() && y == pos.getY()) {
+                            has_tower = true;
+                            break;
+                        }
                     }
+                    if (has_tower){
+                        std::cout << TOWER;
+                    } else {
+                        std::cout << GRASS;
+                    }
+
                     break;
                 case PATH_INT:
                     if (x == 0 or y == 0 or x == SIZE-1 or y == SIZE-1) std::cout << BASE;
                     else {
+                        has_npc = false;
                         for (auto &wave : waves) {
                             std::vector<PNJ> &pnjs = wave.getPnjs();
                             for (auto &pnj : pnjs) {
                                 Position pos = pnj.getPosition();
-                                if (x == pos.getX() && y == pos.getY()) std::cout << NPC;
-                                else std::cout << PATH;
+                                if (x == pos.getX() && y == pos.getY()) {
+                                    has_npc = true;
+                                    break;
+                                }
                             }
+                            if (has_npc) break;
                         }
+                        if (has_npc) std::cout << NPC;
+                        else std::cout << PATH;
                     }
+
                     break;
                 default:
                     std::cout << LIMIT;
