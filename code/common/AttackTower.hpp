@@ -8,7 +8,7 @@
 // TODO: mettre des vraies valeurs
 const int ATTACK_TOWER_PRICE = 10;
 const int ATTACK_TOWER_RANGE = 3;
-const int ATTACK_TOWER_DAMAGE = 10;
+const int ATTACK_TOWER_DAMAGE = 20;
 
 class AttackTower : public AbstractTower {
 
