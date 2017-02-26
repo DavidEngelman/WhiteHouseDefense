@@ -35,7 +35,11 @@
 class Map {
 private:
     int matrix[SIZE][SIZE];
+
+    // Ça ne devrait pas être ici, parce que sinon le server a cette matrice aussi
+    // ce qui ne sert à rien
     int dynamicMatrix[SIZE][SIZE];
+
 public:
 
 

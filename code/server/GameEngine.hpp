@@ -11,7 +11,8 @@
 class GameEngine {
 
 private:
-    GameState gameState;
+    GameState gameState; // the changing parts of the game
+    Map map;  // The background
 
     int numStepsDone;
     int numOfPNJsPerWave;
