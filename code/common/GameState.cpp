@@ -59,7 +59,7 @@ int GameState::getWinnerClassic() {
 
 bool GameState::isRoundFinished() {
     for (Wave &wave: waves) {
-        if ( !wave.isEmpty()) {
+        if ( !wave.isComplete()) {
             return false;
         }
     }

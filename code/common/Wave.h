@@ -17,7 +17,7 @@ private:
 public:
 
     Wave(int number_of_pnjs, int quadrant);
-    bool isEmpty();
+    bool isComplete();
     int getQuadrant() const;
 
     void setNumber_of_pnjs(int number_of_pnjs);

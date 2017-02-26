@@ -32,7 +32,7 @@ int Wave::getQuadrant() const {
     return quadrant;
 }
 
-bool Wave::isEmpty() { return pnjs.empty(); }
+bool Wave::isComplete() { return number_of_added_pnjs == number_of_pnjs && pnjs.empty(); }
 
 void Wave::removeDeadPNJs() {
     std::vector<PNJ>::iterator it;

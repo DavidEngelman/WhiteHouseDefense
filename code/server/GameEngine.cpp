@@ -24,10 +24,10 @@ bool GameEngine::update() {
 
 void GameEngine::updateWaves() {
     std::vector<Wave> &waves = gameState.getWaves();
-    addPNJS(waves);
     dealDamage(waves);
     removeDeadPNJsFromWaves();
     movePNJsInWaves(waves);
+    addPNJS(waves);
 }
 
 void GameEngine::updatePlayerStates() {
@@ -114,7 +114,6 @@ void GameEngine::createWaves() {
         // Ça ne sert à rien de créer une vague vide
         if (DEBUG || gameState.isPlayerAlive(direction)) {
             Wave wave(numOfPNJsPerWave, direction);
-            wave.addPNJ(); // Ne pas enlever cette ligne!
             gameState.addWave(wave);
         }
     }
