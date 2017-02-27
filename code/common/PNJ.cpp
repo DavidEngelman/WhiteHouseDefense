@@ -216,7 +216,7 @@ Direction PNJ::get_left_direction() {
 
 std::string PNJ::serialize() {std::string serialized_me;
 
-    serialized_me += "|" + std::to_string(getPosition().getX()) + "," + std::to_string(getPosition().getY()) +
+    serialized_me += std::to_string(getPosition().getX()) + "," + std::to_string(getPosition().getY()) +
             "," + std::to_string(getHealthPoints()) + "|";
 
     return serialized_me;
