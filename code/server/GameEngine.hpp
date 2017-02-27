@@ -72,6 +72,10 @@ public:
 
     bool isGameFinished();
     void addKillToStat(PlayerState &playerState);
+
+    void addPlayerState(int player_id);
+
+    void addPlayerState(int player_id, int team);
 };
 
 

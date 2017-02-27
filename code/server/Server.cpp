@@ -82,7 +82,7 @@ void Server::start_socket_listen() {
 * Takes in a list of sockets, waits until one is readable, then returns the
 * index of the readable socket in the array.
 */
-int Server::get_readable_socket(int * sockets, int num_sockets) {
+int Server::get_readable_socket_index(int *sockets, int num_sockets) {
     fd_set read_socket_fds;
     FD_ZERO(&read_socket_fds);
 

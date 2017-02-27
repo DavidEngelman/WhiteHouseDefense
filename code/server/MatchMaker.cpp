@@ -65,6 +65,7 @@ PendingMatch &MatchMaker::getMatch(std::string mode) {
 
 
 void MatchMaker::launchMatch(PendingMatch match) {
+    ++current_server_port;
     launchGameServerThread(match);
     const std::vector<PlayerConnection> &players = match.getPlayerConnections();
     for (auto iterator = players.begin(); iterator != players.end(); iterator++) {
@@ -73,8 +74,8 @@ void MatchMaker::launchMatch(PendingMatch match) {
 }
 
 void MatchMaker::launchGameServer(PendingMatch match) {
-    ++current_server_port;
-    GameServer* game_server = new GameServer(current_server_port, match.getPlayerConnections());
+    GameServer* game_server = new GameServer(current_server_port,  match.getPlayerConnections());
+    game_server->run();
 }
 
 void MatchMaker::launchGameServerThread(PendingMatch& match){
@@ -89,5 +90,5 @@ void MatchMaker::announceMatchStart(PlayerConnection playerConnection) {
     // lui signaler vers lequel il doit parler
 
     send_message(playerConnection.getSocket_fd(), GAME_STARTING_STRING);
-    send_data(playerConnection.getSocket_fd(), (char*) (intptr_t)current_server_port, sizeof(int));
+    send_data(playerConnection.getSocket_fd(), (char *) &current_server_port, sizeof(int));
 }

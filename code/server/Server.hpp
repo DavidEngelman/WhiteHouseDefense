@@ -39,7 +39,7 @@ protected:
 
     int accept_connection();
 
-    int get_readable_socket(int * sockets, int num_sockets);
+    int get_readable_socket_index(int *sockets, int num_sockets);
 
     std::string get_command_type(char* data);
 

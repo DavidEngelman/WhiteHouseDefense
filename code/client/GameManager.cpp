@@ -3,9 +3,11 @@
 #include "GameManager.hpp"
 #include "../server/Server.hpp"
 
-
-GameManager::GameManager(char *ip_addr, int port, int id, std::string username, App *app) :
-        NetworkedManager(port, ip_addr, app), player_id(id), player_username(username),
+//NetworkedManager(port, ip_addr, app)
+GameManager::GameManager(char *ip_addr, int port, int socket, int id, std::string username, App *app) :
+        AbstractManager(ip_addr, app),
+        server_socket(socket),
+        player_id(id), player_username(username),
         gameUI(getMapSeedFromServer()), // L'ordre est important parce qu'on fait des
         quadrant(getQuadrantFromServer()) // recv. Ne pas changer l'ordre!
         {}
@@ -52,6 +54,7 @@ bool GameManager::sendRequest(Position towerPos, std::string towerType) {
 
 
 void GameManager::run() {
+    std::cout << "GameManager Running" << std::endl;
     gameUI.display(gameState);
     char server_msg_buff [BUFFER_SIZE];
 
@@ -99,9 +102,11 @@ bool GameManager::is_alive() {
 
 unsigned int GameManager::getMapSeedFromServer() const {
     // Pas génial, mais ça fera l'affaire pour l'instant
+    std::cout << "Getting seed" << std::endl;
 
     char buffer[BUFFER_SIZE];
     receive_message(server_socket, buffer);
+    std::cout << "Received string: " << buffer << std::endl;
 
     std::string action(buffer);
     if (action != SETUP_GAME) {
@@ -110,12 +115,16 @@ unsigned int GameManager::getMapSeedFromServer() const {
     }
 
 
+
     unsigned int seed;
     receive_data(server_socket, &seed, sizeof(unsigned int));
+    std::cout << "Received seed: " << seed << std::endl;
     return seed;
 }
 
 int GameManager::getQuadrantFromServer() {
+    std::cout << "Getting quadrant" << std::endl;
+
     int quadrant;
     receive_data(server_socket, &quadrant, sizeof(int));
     return quadrant;

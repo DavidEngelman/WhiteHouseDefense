@@ -2,7 +2,7 @@
 #include "../client/GameManager.hpp"
 #include "../common/AttackTower.hpp"
 
-const bool DEBUG = true;
+const bool DEBUG = false;
 
 GameServer::GameServer(int port, std::vector<PlayerConnection> &playerConnections) :
 Server(port), playerConnections(playerConnections) {
@@ -34,7 +34,8 @@ void GameServer::processClientCommands() {
     Timer timer;
     timer.start();
     while (timer.elapsedTimeInSeconds() < NUM_SECONDS_TO_PLACE_TOWER) {
-        int client_socket_fd = get_readable_socket(client_sockets, 4);
+        int client_socket_fd = client_sockets[get_readable_socket_index(client_sockets, 4)];
+        std::cout << "Client socket in server: " << client_socket_fd << std::endl;
         get_and_process_command(client_socket_fd, message_buffer);
     }
 }
@@ -97,8 +98,15 @@ void GameServer::runWave() {
 
 
 void GameServer::run() {
+    start_socket_listen();
+    sleep(3); // TODO: find better way to avoid network race conditions...
     unsigned int mapSeed = (unsigned int) time(0);
     gameEngine = new GameEngine(mapSeed);
+
+    std::cout << "Le port du server est: " << port << std::endl;
+
+    // Creer les playerState
+    createPlayerStates();
 
     if (!DEBUG){
         sendMapSeedToClients(mapSeed);
@@ -113,6 +121,7 @@ void GameServer::run() {
     AttackTower * attackTower3 = new AttackTower(Position(20,1));
     gameEngine->addTower(attackTower3, 0);
 
+    std::cout << "gameEngine->isGameFinished() = " << gameEngine->isGameFinished() << std::endl;
     while (!gameEngine->isGameFinished()) {
         if (!DEBUG){
             sendTowerPhase();
@@ -127,11 +136,24 @@ void GameServer::run() {
     //handleEndOfGame();
 }
 
+void GameServer::createPlayerStates() const {
+    if (gameEngine->getGameState().getMode() == TEAM_MODE) {
+        gameEngine->addPlayerState(playerConnections[0].getPlayer_id(), 1);
+        gameEngine->addPlayerState(playerConnections[1].getPlayer_id(), 1);
+        gameEngine->addPlayerState(playerConnections[2].getPlayer_id(), 2);
+        gameEngine->addPlayerState(playerConnections[3].getPlayer_id(), 2);
+    } else {
+        for (int i = 0; i < 4; ++i) {
+            gameEngine->addPlayerState(playerConnections[i].getPlayer_id());
+        }
+    }
+
+}
+
 void GameServer::sendTowerPhase() {
     for (PlayerConnection &playerConnection : playerConnections) {
         int socketFd = playerConnection.getSocket_fd();
         send_message(socketFd, PLACING_TOWER);
-
     }
 }
 

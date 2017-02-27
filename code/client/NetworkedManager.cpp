@@ -45,7 +45,7 @@ int NetworkedManager::connect_to_server(int socket, struct hostent *addr) {
 }
 
 NetworkedManager::~NetworkedManager() {
-    close(server_socket);
+//    close(server_socket);
 }
 
 

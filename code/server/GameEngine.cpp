@@ -1,6 +1,6 @@
 #include "GameEngine.hpp"
 
-const bool DEBUG = true;
+const bool DEBUG = false;
 
 
 
@@ -206,4 +206,13 @@ void GameEngine::checkIfGameIsOver() {
 
 bool GameEngine::isGameFinished() {
     return gameState.getIsGameOver();
+}
+
+void GameEngine::addPlayerState(int player_id) {
+    addPlayerState(player_id, 0);
+}
+
+void GameEngine::addPlayerState(int player_id, int team) {
+    PlayerState playerState(player_id, team);
+    gameState.addPlayerState(playerState);
 }

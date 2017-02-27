@@ -80,6 +80,9 @@ public:
 
 
     std::string bool_to_string(bool my_bool);
+
+
+    void addPlayerState(PlayerState &state);
 };
 
 #endif

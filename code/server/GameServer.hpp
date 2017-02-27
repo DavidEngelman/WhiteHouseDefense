@@ -62,6 +62,8 @@ public:
     void sendWavePhase();
 
     void SendQuadrantToClients();
+
+    void createPlayerStates() const;
 };
 
 #endif

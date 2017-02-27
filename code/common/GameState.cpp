@@ -120,3 +120,7 @@ std::string &GameState::getMode() {
     return mode;
 }
 
+void GameState::addPlayerState(PlayerState& state) {
+    player_states.push_back(state);
+}
+
