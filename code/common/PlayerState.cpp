@@ -1,5 +1,6 @@
 #include "PlayerState.hpp"
 
+PlayerState::PlayerState() : money(STARTING_MONEY), hp(STARTING_HP), isSupported(false), pnjKilled(0) {}
 
 PlayerState::PlayerState(int id) : PlayerState(id, -1) {}
 
