@@ -74,8 +74,6 @@ void GameManager::run() {
         }
         else{
             unSerializeGameState(server_msg_buff);
-            //TODO parse GamesState sent from server
-            //TODO update gamesState
             std::cout << "Received game state" << std::endl;
 
             if (gameState.getIsGameOver()){
