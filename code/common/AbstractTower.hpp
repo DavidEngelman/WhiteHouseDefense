@@ -31,7 +31,7 @@ public:
 
     int getLevel() const;
 
-    bool update();
+    bool upgrade();
 
     virtual ~AbstractTower() = default;
 
