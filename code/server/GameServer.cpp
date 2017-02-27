@@ -34,7 +34,7 @@ void GameServer::processClientCommands() {
     Timer timer;
     timer.start();
     while (timer.elapsedTimeInSeconds() < NUM_SECONDS_TO_PLACE_TOWER) {
-        int client_index = get_readable_socket_index_with_timeout(client_sockets, 4, 4);
+        int client_index = get_readable_socket_index_with_timeout(client_sockets, 4, 20);
         if (client_index < 0 || client_index > 4) return;
 
         int client_socket_fd = client_sockets[client_index];
@@ -50,14 +50,20 @@ void GameServer::get_and_process_command(int client_socket_fd, char *buffer) {
     std::string command_type = get_command_type(buffer);
 
     if (command_type == PLACE_TOWER_COMMAND_STRING) {
-        PlaceTowerCommand command;
+        TowerCommand command;
         command.parse(buffer);
         addTowerInGameState(command);
     }
 
+    else if (command_type == DELETE_TOWER_COMMAND_STRING) {
+        TowerCommand command;
+        command.parse(buffer);
+        deleteTowerInGameState(command);
+    }
+
 }
 
-void GameServer::addTowerInGameState(PlaceTowerCommand &command) {
+void GameServer::addTowerInGameState(TowerCommand &command) {
     AbstractTower * tower;
     int quadrant = command.getPlayerQuadrant();
     if (command.getTowerType() == ATTACK_TOWER_STR){
@@ -76,10 +82,16 @@ void GameServer::addTowerInGameState(PlaceTowerCommand &command) {
     gameEngine->addTower(tower, quadrant);
 }
 
+void GameServer::deleteTowerInGameState(TowerCommand command) {
+    Position position = command.getPosition();
+    int quadrant = command.getPlayerQuadrant();
+    gameEngine->deleteTower(position, quadrant);
+}
+
+
 void GameServer::runWave() {
     Timer timer;
     timer.start();
-
     gameEngine->createWaves();
     bool isWaveFinished = false;
     while (!isWaveFinished) {
@@ -208,4 +220,32 @@ void GameServer::SendQuadrantToClients() {
         send_data(socketFd, (char *) &quadrant, sizeof(unsigned int));
         quadrant++;
     }
+}
+
+int GameServer::connectToAccountServer() {
+    return init_connection_to_server("127.0.0.1", 5555); //Faudrait mettre des constantes :)
+
+}
+
+void GameServer::updatePlayerStatsOnAccountServer(int socket_fd) {
+    int account_server_socket = connectToAccountServer();
+    int p_id, pnj_killed;
+    bool is_winner;
+
+    send_message(account_server_socket, "update");
+
+    for (PlayerState& ps : gameEngine->getGameState().getPlayerStates()){
+        p_id = ps.getPlayer_id();
+        pnj_killed = ps.getPnjKilled();
+        is_winner = ps.getIsWinner();
+
+        std::string message = std::to_string(p_id)+ "," + std::to_string(pnj_killed) + "," +
+                bool_to_string(is_winner) + ";";
+
+        send_message(account_server_socket, message.c_str());
+    }
+
+
+
+
 }

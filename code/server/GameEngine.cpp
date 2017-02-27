@@ -174,6 +174,15 @@ void GameEngine::addTower(AbstractTower* tower, int quadrant) {
     }
 }
 
+void GameEngine::deleteTower(Position position, int quadrant) {
+    for (AbstractTower *tower : gameState.getTowers()){
+        if (tower->getPosition() == position){
+            gameState.getPlayerStates()[quadrant].earnMoney(tower->getPrice() * PERCENTAGE_RECOVERED_MONEY);
+        }
+    }
+}
+
+
 void GameEngine::showMap() {
     map.display(gameState);
 }
@@ -212,3 +221,5 @@ void GameEngine::addPlayerState(int player_id, int team) {
     PlayerState playerState(player_id, team);
     gameState.addPlayerState(playerState);
 }
+
+

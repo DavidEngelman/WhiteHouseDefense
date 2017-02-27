@@ -8,6 +8,9 @@
 #include <arpa/inet.h>
 #include <cstdlib>
 
+int init_connection_to_server(char* server_ip_address, int port);
+int create_socket();
+int connect_to_server(int socket, int port, struct hostent *addr);
 
 ssize_t receive_data(int socket_fd, void *message, int length);
 char *get_data_from_socket(int socket_fd, char *buffer, int size);
