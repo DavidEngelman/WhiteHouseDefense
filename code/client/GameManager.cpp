@@ -65,8 +65,7 @@ void GameManager::run() {
 
         if (strcmp(server_msg_buff, PLACING_TOWER) == 0 && is_alive()) {
             //////////
-            /* if thread not running {   j'ai un peu de mal avec ces thread en c++ */
-            //std::thread input(input_thread);
+            //std::thread input(&GameManager::input_thread, this);
             /////////
         }else if (strcmp(server_msg_buff, WAVE) == 0){
             //TODO kill InputThread

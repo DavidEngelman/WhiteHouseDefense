@@ -24,7 +24,6 @@ private:
 
 
     PlayerState &getPlayerStateForWave(Wave &wave);
-    void assignPlayerToTeam();
 
 public:
 
