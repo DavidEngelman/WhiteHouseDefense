@@ -25,7 +25,6 @@ private:
     std::string player_username;
     int player_id; // Je sais plus si les deux sont utiles je les met au cas ou
     int quadrant;
-
     unsigned int getMapSeedFromServer() const;
 
     void unSerializeGameState(char* serialized_gamestate);
