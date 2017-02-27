@@ -84,6 +84,6 @@ int PlayerState::getPnjKilled() const {
     return pnjKilled;
 }
 
-void PlayerState::setPnjKilled(int pnjKilled) {
-    PlayerState::pnjKilled = pnjKilled;
+void PlayerState::addOneKill() {
+    pnjKilled += 1;
 }

@@ -52,6 +52,6 @@ public:
 	void decrease_hp(int amount);
     void increase_hp(int amount);
 
-	void setPnjKilled(int pnjKilled);
+	void addOneKill();
 
 };
