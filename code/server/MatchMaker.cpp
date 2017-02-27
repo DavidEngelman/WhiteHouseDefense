@@ -72,7 +72,7 @@ void MatchMaker::launchMatch(PendingMatch match) {
     }
 }
 
-void MatchMaker::launchGameServer(PendingMatch& match) {
+void MatchMaker::launchGameServer(PendingMatch match) {
     ++current_server_port;
     GameServer* game_server = new GameServer(current_server_port, match.getPlayerConnections());
 }
