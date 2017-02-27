@@ -16,7 +16,7 @@ class AttackTower : public AbstractTower {
 
 private:
 
-    int damageAmount;
+    int level;
 
 public:
 
@@ -25,8 +25,6 @@ public:
     virtual ~AttackTower() = default;
 
     virtual int getDamageAmount() const;
-
-    virtual void setDamageAmount(int newDamageAmount);
 
     virtual bool shoot(Wave &wave) override;
 

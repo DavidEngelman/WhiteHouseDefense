@@ -2,11 +2,9 @@
 
 AttackTower::AttackTower(Position position) :
         AbstractTower::AbstractTower(position, ATTACK_TOWER_PRICE, ATTACK_TOWER_RANGE),
-        damageAmount(ATTACK_TOWER_DAMAGE) {}
+        level(0) {}
 
-int AttackTower::getDamageAmount() const { return damageAmount; }
-
-void AttackTower::setDamageAmount(int newDamageAmount) { damageAmount = newDamageAmount; }
+int AttackTower::getDamageAmount() const { return level*5 + ATTACK_TOWER_DAMAGE; }
 
 bool AttackTower::shoot(Wave &wave) {
     PNJ *my_target;
