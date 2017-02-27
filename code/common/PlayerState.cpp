@@ -3,7 +3,8 @@
 
 PlayerState::PlayerState(int id) : PlayerState(id, -1) {}
 
-PlayerState::PlayerState(int id, int team) : player_id(id), team(team), hp(STARTING_HP), money(STARTING_MONEY) {}
+PlayerState::PlayerState(int id, int team) : player_id(id), team(team), hp(STARTING_HP), money(STARTING_MONEY),
+                                             pnjKilled(0) {}
 
 std::string PlayerState::bool_to_string(bool my_bool){
     return my_bool ? "true" : "false";
