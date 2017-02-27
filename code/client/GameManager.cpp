@@ -13,21 +13,6 @@ GameManager::GameManager(char *ip_addr, int port, int socket, int id, std::strin
         quadrant(getQuadrantFromServer()) // recv. Ne pas changer l'ordre!
 {}
 
-
-void GameManager::placeTower() {
-    if (gameUI.isBuyingTower()) {
-        gameUI.display(gameState);
-        Position pos = gameUI.getPosBuyingTower();
-        sendRequest(pos, " " /*demander le type de tour plus haut*/ );
-    } else {
-        gameUI.display(gameState);
-    }
-}
-
-void GameManager::displayWave() {
-    gameUI.display(gameState);
-}
-
 void GameManager::come_back_to_menu() {
     MainManager *menu_manager = new MainManager(server_ip_address, player_id, player_username, master_app);
     master_app->transition(menu_manager);
@@ -87,7 +72,7 @@ void GameManager::run() {
 
     while(1) {
         receive_message(server_socket, server_msg_buff);
-        std::cout << "Message: " << server_msg_buff << std::endl;
+        //std::cout << "Message: " << server_msg_buff << std::endl;
         if (strcmp(server_msg_buff, PLACING_TOWER) == 0 && is_alive()) {
             if (!runningThread){
                 inputThread = pthread_create(&thr,NULL,&GameManager::staticInputThread,this);
@@ -98,6 +83,7 @@ void GameManager::run() {
         }
         else{
             unSerializeGameState(server_msg_buff);
+            gameUI.display(gameState);
 
             if (gameState.getIsGameOver()){
                 break;
@@ -112,7 +98,7 @@ void GameManager::unSerializeGameState(char* seriarlized_gamestate){
 
     std::string part = "";
     unsigned count = 0; // count at which part we are
-    for (char* c = seriarlized_gamestate; *seriarlized_gamestate; seriarlized_gamestate++) {
+    for (char* c = seriarlized_gamestate; *c; ++c) {
         if (*c == '-') {
             switch (count) {
                 case 0: // isGameOver
@@ -125,7 +111,7 @@ void GameManager::unSerializeGameState(char* seriarlized_gamestate){
                     unSerializeTowers(part);
                     break;
                 default: // Waves
-                    unSerializeWave(part);
+                    unSerializeWaves(part);
                     break;
             }
             part = "";
@@ -192,8 +178,8 @@ void GameManager::unSerializePlayerState(std::string serialized_playerstate) {
             elem += c;
         }
     }
-    PlayerState playerState = PlayerState(player_id, money, hp, isSupported, isWinner, pnjKilled, team);
-    gameState.addPlayerState(playerState);
+    PlayerState* playerState = new PlayerState(player_id, money, hp, isSupported, isWinner, pnjKilled, team);
+    gameState.addPlayerState(*playerState);
 }
 
 void GameManager::unSerializeTowers(std::string serialized_towers) {
@@ -302,8 +288,8 @@ void GameManager::unSerializePNJ(std::string serialized_pnj, Wave *wave) {
             elem += c;
         }
     }
-    PNJ pnj = PNJ(Position(x, y), health, wave->getQuadrant());
-    wave->addPNJ(pnj);
+    PNJ *pnj = new PNJ(Position(x, y), health, wave->getQuadrant());
+    wave->addPNJ(*pnj);
 }
 
 bool GameManager::is_alive() {
