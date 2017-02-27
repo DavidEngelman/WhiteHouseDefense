@@ -13,21 +13,6 @@ GameManager::GameManager(char *ip_addr, int port, int socket, int id, std::strin
         quadrant(getQuadrantFromServer()) // recv. Ne pas changer l'ordre!
 {}
 
-
-void GameManager::placeTower() {
-    if (gameUI.isBuyingTower()) {
-        gameUI.display(gameState);
-        Position pos = gameUI.getPosBuyingTower();
-        sendRequest(pos, " " /*demander le type de tour plus haut*/ );
-    } else {
-        gameUI.display(gameState);
-    }
-}
-
-void GameManager::displayWave() {
-    gameUI.display(gameState);
-}
-
 void GameManager::come_back_to_menu() {
     MainManager *menu_manager = new MainManager(server_ip_address, player_id, player_username, master_app);
     master_app->transition(menu_manager);

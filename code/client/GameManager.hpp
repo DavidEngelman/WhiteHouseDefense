@@ -44,10 +44,6 @@ public:
 
     int getQuadrant() const;
 
-    void placeTower();
-
-    void displayWave();
-
     void come_back_to_menu();
 
     bool is_alive();
