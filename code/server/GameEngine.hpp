@@ -19,7 +19,8 @@ private:
     int numStepsDone;
     int numOfPNJsPerWave;
 
-    Timer timer;
+    Timer timerSinceWaveStart;
+    Timer timerSinceGameStart;
 
 
     PlayerState &getPlayerStateForWave(Wave &wave);
