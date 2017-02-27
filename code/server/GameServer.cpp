@@ -57,6 +57,11 @@ void GameServer::addTowerInGameState(PlaceTowerCommand &command) {
         AttackTower * attackTower = new AttackTower(command.getPosition());
         tower = attackTower;
     }
+    else {
+        // TODO: par défaut je mets une attacktower mais il faudra autre chose
+        AttackTower * attackTower = new AttackTower(command.getPosition());
+        tower = attackTower;
+    }
     // TODO: completer si plus tard on utilise la SlowTower
     //else if (command.getTowerType() == SLOW_TOWER){
       //  *tower = SlowTower
@@ -74,7 +79,7 @@ void GameServer::runWave() {
         while (!isWaveFinished && timer.elapsedTimeInMiliseconds() < INTERVAL_BETWEEN_SENDS_IN_MS) {
             isWaveFinished = gameEngine->update();
             // TODO: mettre peut etre un sleep ici? on ne va pas faire des tonnes de updates de toute facon
-            sleep(0.9);
+            sleep(10); // C'est en millisecondes
             // car si gameEngine voit que pas assez de temps s'est ecoulé depuis le tick precedent,
             // il ne fait rien
         }

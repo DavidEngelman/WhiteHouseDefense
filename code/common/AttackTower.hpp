@@ -18,9 +18,9 @@ public:
 
     AttackTower(Position position);
 
-    virtual ~AttackTower() = default;
+    ~AttackTower() = default;
 
-    virtual int getDamageAmount() const;
+    int getDamageAmount() const;
 
     virtual bool shoot(Wave &wave) override;
 

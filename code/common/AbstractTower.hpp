@@ -39,15 +39,13 @@ public:
 
     PNJ* get_closest_pnj(Wave& wave);
 
-    virtual int getOwner() const;
+    int getOwner() const;
+    void setOwner(int newOwner);
 
-    virtual void setOwner(int newOwner);
+    int getPrice() const;
+    float getRange() const;
 
-    virtual const int getPrice() const;
-
-    virtual float getRange() const;
-
-    virtual Position getPosition() const;
+    Position getPosition() const;
 
     virtual std::string serialize();
 };
