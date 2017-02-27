@@ -9,16 +9,17 @@
 #include "MainManager.hpp"
 #include "../common/AttackTower.hpp"
 #include "../common/SlowTower.hpp"
-#include <thread>
 #include <cstdlib>
+#include <cctype>
+#include <pthread.h>
+#include <unistd.h>
 
-class GameManager : public AbstractManager{ //Tmp : public (à supprimer après tests)
+class GameManager : public NetworkedManager{ //Tmp : public (à supprimer après tests)
 
 private:
-
-
-    bool stopflag;
-    int server_socket;
+    bool runningThread = false;
+    pthread_t thr;
+    int inputThread;
     GameState gameState;
     GameUI gameUI;
     std::string player_username;
@@ -31,7 +32,7 @@ private:
 
 public:
 
-    GameManager(char *ip_addr, int port, int socket, int id, std::string username, App *app);
+    GameManager(char* ip_addr, int port, int id, std::string username, App* app);
 
     int getQuadrant() const;
 
@@ -45,14 +46,15 @@ public:
 
     void run();
 
-    void input_thread();
+    void *input_thread();
+
+    static void* staticInputThread(void *self);
 
     bool checkValidity(Position towerPos);
 
     bool sendRequest(Position towerPos, std::string towerType);
 
     int getQuadrantFromServer();
-
 };
 
 #endif

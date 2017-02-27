@@ -174,6 +174,7 @@ void GameEngine::addTower(AbstractTower* tower, int quadrant) {
     }
 }
 
+
 void GameEngine::showMap() {
     map.display(gameState);
 }

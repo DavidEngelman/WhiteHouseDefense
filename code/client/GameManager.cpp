@@ -3,11 +3,9 @@
 #include "GameManager.hpp"
 #include "../server/Server.hpp"
 
-//NetworkedManager(port, ip_addr, app)
-GameManager::GameManager(char *ip_addr, int port, int socket, int id, std::string username, App *app) :
-        AbstractManager(ip_addr, app),
-        server_socket(socket),
-        player_id(id), player_username(username),
+
+GameManager::GameManager(char *ip_addr, int port, int id, std::string username, App *app) :
+        NetworkedManager(port, ip_addr, app), player_id(id), player_username(username),
         gameUI(getMapSeedFromServer()), // L'ordre est important parce qu'on fait des
         quadrant(getQuadrantFromServer()) // recv. Ne pas changer l'ordre!
         {}
@@ -33,12 +31,37 @@ void GameManager::come_back_to_menu() {
 
 }
 
-void GameManager::input_thread() {
-    while(!stopflag) {
-        placeTower();
-        stopflag = true;
+void *GameManager::input_thread() {
+    runningThread = true;
+    std::cout << "1. Buy tower " << std::endl;
+    std::cout << "2. Sell tower " << std::endl;
+    std::cout << "3. Upgrade tower " << std::endl;
+    std::cout << std::endl;
+
+    std::cout << "Your choice :   ";
+    std::string choice;
+    std::cin >> choice;
+    if (choice == "1") {
+        gameUI.display(gameState);
+        std::cout << "1. Attacktower " << std::endl;
+        std::cout << "Your choice :   ";
+        std::string towerChoice;
+        std::cin >> towerChoice;
+        if (choice == "1") {
+            Position towerPos = gameUI.getPosBuyingTower();
+            if (checkValidity(towerPos)) {
+                gameState.addTower(new AttackTower(Position(towerPos.getX(), towerPos.getY())));
+            }
+        }
+        gameUI.display(gameState);
     }
+    runningThread = false;
 }
+
+void *GameManager::staticInputThread(void *self){
+    return static_cast<GameManager*>(self)->input_thread();
+}
+
 
 bool GameManager::checkValidity(Position towerPos) {
 
@@ -54,43 +77,37 @@ bool GameManager::sendRequest(Position towerPos, std::string towerType) {
 
 
 void GameManager::run() {
-    std::cout << "GameManager Running" << std::endl;
     gameUI.display(gameState);
     char server_msg_buff [BUFFER_SIZE];
-    std::cout << "Je suis apres le clear" << std::endl;
 
     while(1) {
         receive_message(server_socket, server_msg_buff);
-        std::cout << "Message: " << server_msg_buff << std::endl;
-
         if (strcmp(server_msg_buff, PLACING_TOWER) == 0 && is_alive()) {
-            //////////
-            //std::thread input(&GameManager::input_thread, this);
-            /////////
+            if (!runningThread){
+                inputThread = pthread_create(&thr,NULL,&GameManager::staticInputThread,this);
+            }
+
         }else if (strcmp(server_msg_buff, WAVE) == 0){
-            //TODO kill InputThread
-            std::cout << "Receive start wave signal" << std::endl;
+            inputThread = pthread_cancel(thr);
         }
         else{
-            unSerializeGameState(server_msg_buff);
-            std::cout << "Received game state" << std::endl;
+            //TODO parse GamesState sent from server
+            //TODO update gamesState
 
-            if ( gameState.getIsGameOver()){
+            if (gameState.getIsGameOver()){
                 break;
             }
         }
     }
 
-
 }
 
 void GameManager::unSerializeGameState(char* seriarlized_gamestate){
-    gameState = GameState();
+
+
 }
 
 bool GameManager::is_alive() {
-    if (gameState.getPlayerStates().size() == 0) return true; // Pas encore recu gameState du server
-
     bool alive = false;
     for( PlayerState& playerState : gameState.getPlayerStates()){
         if (playerState.getPlayer_id() == player_id){
@@ -106,11 +123,9 @@ bool GameManager::is_alive() {
 
 unsigned int GameManager::getMapSeedFromServer() const {
     // Pas génial, mais ça fera l'affaire pour l'instant
-    std::cout << "Getting seed" << std::endl;
 
     char buffer[BUFFER_SIZE];
     receive_message(server_socket, buffer);
-    std::cout << "Received string: " << buffer << std::endl;
 
     std::string action(buffer);
     if (action != SETUP_GAME) {
@@ -119,16 +134,12 @@ unsigned int GameManager::getMapSeedFromServer() const {
     }
 
 
-
     unsigned int seed;
     receive_data(server_socket, &seed, sizeof(unsigned int));
-    std::cout << "Received seed: " << seed << std::endl;
     return seed;
 }
 
 int GameManager::getQuadrantFromServer() {
-    std::cout << "Getting quadrant" << std::endl;
-
     int quadrant;
     receive_data(server_socket, &quadrant, sizeof(int));
     return quadrant;

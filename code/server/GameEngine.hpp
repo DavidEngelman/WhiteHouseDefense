@@ -4,6 +4,9 @@
 #include "../common/GameState.hpp"
 #include "Timer.h"
 #include "../common/Direction.h"
+#include <iostream>
+#include "../common/AttackTower.hpp"
+#include <thread>
 
 static const int STEP_DURATION_IN_MS = 1000;
 static const int INITIAL_NUMBER_OF_PNJS_PER_WAVE = 5;
@@ -72,9 +75,6 @@ public:
     bool isGameFinished();
     void addKillToStat(PlayerState &playerState);
 
-    void addPlayerState(int player_id);
-
-    void addPlayerState(int player_id, int team);
 };
 
 

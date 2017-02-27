@@ -79,7 +79,6 @@ void GameServer::addTowerInGameState(PlaceTowerCommand &command) {
 void GameServer::runWave() {
     Timer timer;
     timer.start();
-
     gameEngine->createWaves();
     bool isWaveFinished = false;
     while (!isWaveFinished) {
