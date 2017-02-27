@@ -24,9 +24,8 @@ private:
     std::vector<Wave> waves;
     bool isGameOver;
 
-private:
-
     std::string mode;
+
 
 public:
 
@@ -36,6 +35,10 @@ public:
     ~GameState();
 
     bool getIsGameOver() const;
+
+    void setIsGameOver(bool isGameOver);
+
+    std::string &getMode();
 
     std::vector<Wave> &getWaves();
 
@@ -52,9 +55,7 @@ public:
 
     std::string * serialize();
 
-    bool IsOnlyOneAlive();
-
-    bool isFinished();
+    bool IsOnlyOnePlayerAlive();
 
     void DecreasePlayerHp(PlayerState &player, int amount);
 

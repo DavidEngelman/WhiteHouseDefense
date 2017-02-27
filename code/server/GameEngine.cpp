@@ -2,9 +2,11 @@
 
 const bool DEBUG = true;
 
+
+
 GameEngine::GameEngine(unsigned int mapSeed) : map(mapSeed),
                                                numOfPNJsPerWave(INITIAL_NUMBER_OF_PNJS_PER_WAVE) {
-    timer.start();
+    timerSinceGameStart.start();
 }
 
 /*
@@ -12,14 +14,14 @@ GameEngine::GameEngine(unsigned int mapSeed) : map(mapSeed),
  * Returns true if the wave (or game) is finished, false otherwise.
  */
 bool GameEngine::update() {
-    int numMilisecondsSinceStart = timer.elapsedTimeInMiliseconds();
+    int numMilisecondsSinceStart = timerSinceWaveStart.elapsedTimeInMiliseconds();
     int numStepsToDo = (numMilisecondsSinceStart / STEP_DURATION_IN_MS) - numStepsDone;
     for (int i = 0; i < numStepsToDo; ++i) {
         updateWaves();
         updatePlayerStates();
     }
     numStepsDone += numStepsToDo;
-    return gameState.isFinished() || gameState.isRoundFinished();
+    return gameState.getIsGameOver() || gameState.isRoundFinished();
 }
 
 void GameEngine::updateWaves() {
@@ -28,6 +30,7 @@ void GameEngine::updateWaves() {
     removeDeadPNJsFromWaves();
     movePNJsInWaves(waves);
     addPNJS(waves);
+    checkIfGameIsOver();
 }
 
 void GameEngine::updatePlayerStates() {
@@ -63,6 +66,7 @@ void GameEngine::dealDamage(std::vector<Wave> &waves) {
         bool killedPNJ = tower->shoot(wave);
         if (killedPNJ && !DEBUG) {
             PlayerState player_state = getPlayerStateForWave(wave);
+            addKillToStat(player_state);
             giveGold(player_state);
         }
     }
@@ -75,6 +79,10 @@ PlayerState &GameEngine::getPlayerStateForWave(Wave &wave) {
 
 void GameEngine::giveGold(PlayerState &playerState) {
     playerState.earnMoney(PNJ_VALUE);
+}
+
+void GameEngine::addKillToStat(PlayerState &playerState) {
+    playerState.addOneKill();
 }
 
 void GameEngine::movePNJsInWaves(std::vector<Wave> &waves) {
@@ -107,7 +115,7 @@ void GameEngine::removeDeadPNJsFromWaves() {
 void GameEngine::createWaves() {
     gameState.clearWaves();
     numStepsDone = 0;
-    timer.reset();
+    timerSinceWaveStart.reset();
     increaseWaveDifficulty();
     for (const int direction: DIRECTIONS) {
         // Je crée une vague uniquement si le joueur est vivant
@@ -121,10 +129,6 @@ void GameEngine::createWaves() {
 
 void GameEngine::increaseWaveDifficulty() {
     numOfPNJsPerWave += 1;
-}
-
-bool GameEngine::isGameFinished() {
-    return gameState.isFinished();
 }
 
 std::string *GameEngine::serializeGameState() {
@@ -144,7 +148,7 @@ void GameEngine::addPNJS(std::vector<Wave> &waves) {
         int currentNumOfPnjs = wave.getNumber_of_added_pnjs();
         int numOfPNJsInWave = wave.getNumber_of_pnjs();
 
-        int numPnjsShouldHaveAdded = min(timer.elapsedTimeInMiliseconds() / 1000, numOfPNJsInWave);
+        int numPnjsShouldHaveAdded = min(timerSinceWaveStart.elapsedTimeInMiliseconds() / 1000, numOfPNJsInWave);
         int numPNJsToAdd = numPnjsShouldHaveAdded - currentNumOfPnjs;
 
         if (numPNJsToAdd > 0) {
@@ -171,4 +175,30 @@ void GameEngine::addTower(AbstractTower* tower, int quadrant) {
 
 void GameEngine::showMap() {
     map.display(gameState);
+}
+
+void GameEngine::checkIfGameIsOver() {
+    bool isOver = false;
+    std::string &mode = gameState.getMode();
+    if (mode == CLASSIC_MODE) {
+        isOver = gameState.IsOnlyOnePlayerAlive();
+    } else if (mode == TIMED_MODE) {
+        // TODO: check que le timer commence depuis le debut de la premiere vague
+        // au lieu de depuis la derniere vague
+        isOver = timerSinceGameStart.elapsedTimeInSeconds() > TIMED_GAME_INTERVAL;
+    } else if (mode == TEAM_MODE) {
+        int numAlivePlayersInTeam1 = 0;
+        int numAlivePlayersInTeam2 = 0;
+        for (PlayerState& playerState: getGameState().getPlayerStates()) {
+            if (playerState.getTeam() == 1) numAlivePlayersInTeam1++;
+            else if (playerState.getTeam() == 2) numAlivePlayersInTeam2++;
+        }
+
+        isOver = ((numAlivePlayersInTeam1 == 0) || (numAlivePlayersInTeam2 == 0));
+    }
+    gameState.setIsGameOver(isOver);
+}
+
+bool GameEngine::isGameFinished() {
+    return gameState.getIsGameOver();
 }
