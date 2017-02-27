@@ -2,7 +2,7 @@
 #include "../client/GameManager.hpp"
 #include "../common/AttackTower.hpp"
 
-const bool DEBUG = true;
+const bool DEBUG = false;
 
 GameServer::GameServer(int port, std::vector<PlayerConnection> &playerConnections) :
 Server(port), playerConnections(playerConnections) {
@@ -34,12 +34,18 @@ void GameServer::processClientCommands() {
     Timer timer;
     timer.start();
     while (timer.elapsedTimeInSeconds() < NUM_SECONDS_TO_PLACE_TOWER) {
-        int client_socket_fd = get_readable_socket(client_sockets, 4);
+        int client_index = get_readable_socket_index_with_timeout(client_sockets, 4, 4);
+        if (client_index < 0 || client_index > 4) return;
+
+        int client_socket_fd = client_sockets[client_index];
+        std::cout << "Client socket in server: " << client_socket_fd << std::endl;
         get_and_process_command(client_socket_fd, message_buffer);
     }
 }
 
 void GameServer::get_and_process_command(int client_socket_fd, char *buffer) {
+//    int timeout = NUM_SECONDS_TO_PLACE_TOWER - timer.elapsedTimeInSeconds();
+//    receive_message_with_timeout(client_socket_fd, buffer, 5);
     receive_message(client_socket_fd, buffer);
     std::string command_type = get_command_type(buffer);
 
@@ -89,6 +95,7 @@ void GameServer::runWave() {
             gameEngine->showMap();
             // TODO: updateMap()
         } else {
+            
             sendGameStateToPlayers();
         }
         timer.reset();
@@ -97,8 +104,15 @@ void GameServer::runWave() {
 
 
 void GameServer::run() {
+    start_socket_listen();
+    sleep(3); // TODO: find better way to avoid network race conditions...
     unsigned int mapSeed = (unsigned int) time(0);
     gameEngine = new GameEngine(mapSeed);
+
+    std::cout << "Le port du server est: " << port << std::endl;
+
+    // Creer les playerState
+    createPlayerStates();
 
     if (!DEBUG){
         sendMapSeedToClients(mapSeed);
@@ -113,6 +127,7 @@ void GameServer::run() {
     AttackTower * attackTower3 = new AttackTower(Position(20,1));
     gameEngine->addTower(attackTower3, 0);
 
+    std::cout << "gameEngine->isGameFinished() = " << gameEngine->isGameFinished() << std::endl;
     while (!gameEngine->isGameFinished()) {
         if (!DEBUG){
             sendTowerPhase();
@@ -127,18 +142,33 @@ void GameServer::run() {
     //handleEndOfGame();
 }
 
+void GameServer::createPlayerStates() const {
+    if (gameEngine->getGameState().getMode() == TEAM_MODE) {
+        gameEngine->addPlayerState(playerConnections[0].getPlayer_id(), 1);
+        gameEngine->addPlayerState(playerConnections[1].getPlayer_id(), 1);
+        gameEngine->addPlayerState(playerConnections[2].getPlayer_id(), 2);
+        gameEngine->addPlayerState(playerConnections[3].getPlayer_id(), 2);
+    } else {
+        for (int i = 0; i < 4; ++i) {
+            gameEngine->addPlayerState(playerConnections[i].getPlayer_id());
+        }
+    }
+
+}
+
 void GameServer::sendTowerPhase() {
     for (PlayerConnection &playerConnection : playerConnections) {
         int socketFd = playerConnection.getSocket_fd();
-        send_message(socketFd, PLACING_TOWER);
-
+//        send_message(socketFd, PLACING_TOWER);
+        send_message(socketFd, "t");
     }
 }
 
 void GameServer::sendWavePhase() {
     for (PlayerConnection &playerConnection : playerConnections) {
         int socketFd = playerConnection.getSocket_fd();
-        send_message(socketFd, WAVE);
+//        send_message(socketFd, WAVE);
+        send_message(socketFd, "w");
     }
 }
 

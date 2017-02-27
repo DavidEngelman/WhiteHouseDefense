@@ -82,7 +82,7 @@ void Server::start_socket_listen() {
 * Takes in a list of sockets, waits until one is readable, then returns the
 * index of the readable socket in the array.
 */
-int Server::get_readable_socket(int * sockets, int num_sockets) {
+int Server::get_readable_socket_index(int *sockets, int num_sockets) {
     fd_set read_socket_fds;
     FD_ZERO(&read_socket_fds);
 
@@ -93,7 +93,8 @@ int Server::get_readable_socket(int * sockets, int num_sockets) {
         max = (max < socket_fd ? socket_fd : max);
     }
 
-    select(max + 1, &read_socket_fds, NULL, NULL, NULL);
+    int error_code = select(max + 1, &read_socket_fds, NULL, NULL, NULL);
+    std::cout << "The error code from select is : " << error_code << std::endl;
 
     int socket_num = 0;
     while (!FD_ISSET(sockets[socket_num], &read_socket_fds)) {
@@ -101,6 +102,32 @@ int Server::get_readable_socket(int * sockets, int num_sockets) {
     }
     return socket_num;
 }
+
+int Server::get_readable_socket_index_with_timeout(int *sockets, int num_sockets, int timeout_val){
+    struct timeval timeout;
+    timeout.tv_sec = timeout_val;
+    timeout.tv_usec = 0;
+
+    fd_set read_socket_fds;
+    FD_ZERO(&read_socket_fds);
+
+    int max = sockets[0];
+    for (int i = 0; i < num_sockets; ++i) {
+        int socket_fd = sockets[i];
+        FD_SET(socket_fd, &read_socket_fds);
+        max = (max < socket_fd ? socket_fd : max);
+    }
+
+    int num_readable_sockets = select(max + 1, &read_socket_fds, NULL, NULL, &timeout);
+    if (num_readable_sockets == 0) return -1;
+
+    int socket_num = 0;
+    while (!FD_ISSET(sockets[socket_num], &read_socket_fds)) {
+        socket_num++;
+    }
+    return socket_num;
+}
+
 
 std::string Server::get_command_type(char* data){
 
