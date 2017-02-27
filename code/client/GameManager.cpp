@@ -108,9 +108,11 @@ void GameManager::run() {
 }
 
 void GameManager::unSerializeGameState(char* seriarlized_gamestate){
-
+    std::cout<<"serveur state: "<< seriarlized_gamestate<<std::endl;
+    bool tmpGameOver;
     GameState tmp = GameState();
-    gameState = tmp;
+
+    GameState::setIsGameOver(tmpGameOver;
 
 
 }
