@@ -15,7 +15,7 @@
 
 #define BACKLOG 5
 
-static const int BUFFER_SIZE = 500;
+static const int BUFFER_SIZE = 5000;
 
 class Server {
 
