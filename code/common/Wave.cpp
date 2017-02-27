@@ -15,7 +15,7 @@ std::string Wave::serialize() {
      */
 
     std::string serialized_me;
-    serialized_me += "Wave," + std::to_string(quadrant);
+    serialized_me += "Wave," + std::to_string(quadrant) + ",";
     for (PNJ& pnj: pnjs){
 
         std::string serialized_pnj = pnj.serialize();
