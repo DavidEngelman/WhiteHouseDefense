@@ -14,10 +14,6 @@ const int ATTACK_TOWER_DAMAGE = 20;
 
 class AttackTower : public AbstractTower {
 
-private:
-
-    int level;
-
 public:
 
     AttackTower(Position position);

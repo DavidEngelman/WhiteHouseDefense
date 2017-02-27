@@ -6,6 +6,8 @@
 #include "Wave.h"
 #include <string>
 
+#define LEVEL_MAX 5
+
 class Wave;
 class PNJ;
 
@@ -15,8 +17,9 @@ protected:
 
     int quadrant;
     const int price;
-    int radius;
+    float range;
     Position position;
+    int level;
 
     const int computeQuadrant();
 
@@ -26,6 +29,9 @@ public:
 
     int getQuadrant() const;
 
+    int getLevel() const;
+
+    bool update();
 
     virtual ~AbstractTower() = default;
 
@@ -39,14 +45,9 @@ public:
 
     virtual const int getPrice() const;
 
-    virtual int getRadius() const;
-
-    virtual void setRadius(int newRadius);
+    virtual float getRange() const;
 
     virtual Position getPosition() const;
-
-    //The position is defined in the map class
-    virtual void setPosition(Position newPosition);
 
     virtual std::string serialize();
 };

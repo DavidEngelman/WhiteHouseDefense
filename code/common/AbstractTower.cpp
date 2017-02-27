@@ -1,8 +1,9 @@
 #include <cmath>
+#include <iostream>
 #include "AbstractTower.hpp"
 
-AbstractTower::AbstractTower(Position position, int price, int radius):
-        position(position), price(price), quadrant(computeQuadrant()), radius(radius) {
+AbstractTower::AbstractTower(Position position, int price, int range):
+        position(position), price(price), quadrant(computeQuadrant()), range(range), level(0) {
 }
 
 const int AbstractTower::computeQuadrant() {
@@ -30,8 +31,8 @@ PNJ* AbstractTower::get_closest_pnj(Wave &wave) {
     int best_dist = 1 << 30;
     PNJ* closest_pnj = nullptr;
     for (PNJ& pnj: wave.getPnjs()){
-        int distance_x = this->getPosition().getX() - pnj.getPosition().getX();
-        int distance_y = this->getPosition().getY() - pnj.getPosition().getY();
+        int distance_x = getPosition().getX() - pnj.getPosition().getX();
+        int distance_y = getPosition().getY() - pnj.getPosition().getY();
 
         dist = ((distance_x) * (distance_x)) + (distance_y * distance_y);
         if (dist < best_dist){
@@ -39,7 +40,7 @@ PNJ* AbstractTower::get_closest_pnj(Wave &wave) {
             closest_pnj = &pnj;
         }
     }
-    if (sqrt(best_dist) > radius){
+    if (sqrt(best_dist) > getRange()){
         closest_pnj = nullptr;
 
     }
@@ -47,6 +48,7 @@ PNJ* AbstractTower::get_closest_pnj(Wave &wave) {
     return closest_pnj;
 }
 
+int AbstractTower::getLevel() const { return level; }
 
 int AbstractTower::getOwner() const { return quadrant; }
 
@@ -54,13 +56,9 @@ void AbstractTower::setOwner(int newOwner) { quadrant = newOwner; }
 
 const int AbstractTower::getPrice() const { return price; }
 
-int AbstractTower::getRadius() const { return radius; }
-
-void AbstractTower::setRadius(int newRadius) { radius = newRadius; }
+float AbstractTower::getRange() const { return level*range/10 + range; } // +10% de radius par update
 
 Position AbstractTower::getPosition() const { return position; }
-
-void AbstractTower::setPosition(Position newPosition) { position = newPosition; }
 
 std::string AbstractTower::serialize() {
 
@@ -73,4 +71,13 @@ std::string AbstractTower::serialize() {
 
 int AbstractTower::getQuadrant() const {
     return quadrant;
+}
+
+bool AbstractTower::update() {
+    if (level < LEVEL_MAX) {
+        level++;
+        // TODO : dépenser de l'argent du joueur
+        return true;
+    }
+    return false;
 }

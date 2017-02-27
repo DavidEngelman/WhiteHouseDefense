@@ -1,10 +1,9 @@
 #include "AttackTower.hpp"
 
 AttackTower::AttackTower(Position position) :
-        AbstractTower::AbstractTower(position, ATTACK_TOWER_PRICE, ATTACK_TOWER_RANGE),
-        level(0) {}
+        AbstractTower::AbstractTower(position, ATTACK_TOWER_PRICE, ATTACK_TOWER_RANGE) {}
 
-int AttackTower::getDamageAmount() const { return level*5 + ATTACK_TOWER_DAMAGE; }
+int AttackTower::getDamageAmount() const { return level*ATTACK_TOWER_DAMAGE/10 + ATTACK_TOWER_DAMAGE; } // +10% d'attaque par update
 
 bool AttackTower::shoot(Wave &wave) {
     PNJ *my_target;
