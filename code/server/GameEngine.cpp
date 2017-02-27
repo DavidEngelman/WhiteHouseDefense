@@ -66,7 +66,7 @@ void GameEngine::dealDamage(std::vector<Wave> &waves) {
         bool killedPNJ = tower->shoot(wave);
         if (killedPNJ && !DEBUG) {
             PlayerState player_state = getPlayerStateForWave(wave);
-            giveKill(player_state);
+            addKillToStat(player_state);
             giveGold(player_state);
         }
     }
@@ -81,7 +81,7 @@ void GameEngine::giveGold(PlayerState &playerState) {
     playerState.earnMoney(PNJ_VALUE);
 }
 
-void GameEngine::giveKill(PlayerState &playerState) {
+void GameEngine::addKillToStat(PlayerState &playerState) {
     playerState.addOneKill();
 }
 

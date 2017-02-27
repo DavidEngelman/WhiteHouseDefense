@@ -70,6 +70,7 @@ public:
     void checkIfGameIsOver();
 
     bool isGameFinished();
+    void addKillToStat(PlayerState &playerState);
 };
 
 
