@@ -1,18 +1,18 @@
-#ifndef PROJET_PLACETOWERCOMMAND_H
-#define PROJET_PLACETOWERCOMMAND_H
+#ifndef PROJET_TOWERCOMMAND_H
+#define PROJET_TOWERCOMMAND_H
 
 #include "../common/Position.hpp"
 #include "Command.hpp"
 #include <string>
 
 
-class PlaceTowerCommand : public Command {
+class TowerCommand : public Command {
 private:
     int player_quadrant;
     Position position;
     std::string tower_type;
 public:
-    PlaceTowerCommand();
+    TowerCommand();
 
     Position &getPosition();
 
@@ -22,8 +22,8 @@ public:
 
     void parse(char *data) override;
 
-    ~PlaceTowerCommand() = default;
+    ~TowerCommand() = default;
 };
 
 
-#endif //PROJET_PLACETOWERCOMMAND_H
+#endif //PROJET_TOWERCOMMAND_H

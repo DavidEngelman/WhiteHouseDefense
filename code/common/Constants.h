@@ -18,5 +18,6 @@ static const char WAVE[2] = "w";
 
 static const int GOLD_EARNED_BY_SECOND= 1;
 
+static const float PERCENTAGE_RECOVERED_MONEY= 50/100;
 
 #endif //PROJET_CONSTANTS_H

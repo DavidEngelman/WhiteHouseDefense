@@ -7,7 +7,7 @@
 #include "PendingMatch.h"
 #include "PlayerConnection.hpp"
 #include "../common/Strings.hpp"
-#include "PlaceTowerCommand.h"
+#include "TowerCommand.h"
 #include "GameEngine.hpp"
 #include <time.h>
 #include "../common/Constants.h"
@@ -31,7 +31,7 @@ private:
 
     void get_and_process_command(int client_socket_fd, char buffer[]);
 
-    void addTowerInGameState(PlaceTowerCommand &command);
+    void addTowerInGameState(TowerCommand &command);
 
     bool isFinishedClassic();    //pour le mode classic
     bool isFinishedCoop();       //pour le mode par équipe
@@ -68,6 +68,8 @@ public:
 
     int connectToAccountServer();
     void updatePlayerStatsOnAccountServer(int socket_fd);
+
+    void deleteTowerInGameState(TowerCommand command);
 };
 
 #endif
