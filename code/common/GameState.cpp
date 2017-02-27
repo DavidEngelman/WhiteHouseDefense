@@ -1,5 +1,7 @@
 #include "GameState.hpp"
 
+GameState::GameState() : isGameOver(false){}
+
 void GameState::DecreasePlayerHp(PlayerState &player, int amount) {
     player.decrease_hp(amount);
 }

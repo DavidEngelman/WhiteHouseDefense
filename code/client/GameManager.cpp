@@ -76,7 +76,7 @@ void GameManager::run() {
             unSerializeGameState(server_msg_buff);
             std::cout << "Received game state" << std::endl;
 
-            if ( false && gameState.getIsGameOver()){
+            if ( gameState.getIsGameOver()){
                 break;
             }
         }
