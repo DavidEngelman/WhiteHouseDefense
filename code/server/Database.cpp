@@ -23,6 +23,16 @@ int Database::open() {
 
 }
 
+void Database::exec(const char *query, int (*callback)(void*,int,char**,char**), void * data, char * ErrMsg ) {
+
+    rc = sqlite3_exec(db, query, callback, data, &ErrMsg);
+    if( rc != SQLITE_OK ){
+        fprintf(stderr, "SQL error: %s\n", ErrMsg);
+        sqlite3_free(ErrMsg);
+    }
+
+}
+
 int Database::callback_ranking(void *ptr, int argc, char **argv, char **azColName){
     std::vector<RankingInfos> *list = reinterpret_cast<std::vector<RankingInfos> *>(ptr);
     RankingInfos res;
@@ -68,30 +78,14 @@ int Database::insert_account(Credentials credentials) {
     char *zErrMsg = 0;
     int id = get_nb_entries() + 1;
 
-    std::stringstream strm;
-
-    //Je sais pas pq CLion souligne ça en rouge...Ca marche :|
-
-    strm << "insert into Accounts(id,username,password) values(" << id
-         << ",'" << credentials.getUsername() << "','" << credentials.getPassword() << "')";
+    std::string command = "";
+    command += "insert into Accounts(id,username,password) values(" + std::to_string(id) + ",'" + credentials.getUsername() + "','"
+            + credentials.getPassword() + "')";
 
 
-    std::string s = strm.str();
-    char *str = &s[0];
-    char *query = str;
+    char* query = (char *) command.c_str();
 
-    rc = sqlite3_exec(db, query, NULL, 0, &zErrMsg);
-    if( rc != SQLITE_OK ){
-        fprintf(stderr, "SQL error: %s\n", zErrMsg);
-        sqlite3_free(zErrMsg);
-        return -1;
-    }
-
-    else{
-        fprintf(stdout, "Records created successfully\n");
-    }
-
-
+    exec(query, NULL, 0, zErrMsg);
 
     return 0;
 }
@@ -104,12 +98,8 @@ int Database::get_nb_entries() {
     char *query = (char *)"select Count(*) from Accounts";
     int count = 1;
 
-    rc = sqlite3_exec(db, query, callback_counter, &count, &zErrMsg);
-    if( rc != SQLITE_OK ){
-        fprintf(stderr, "SQL error: %s\n", zErrMsg);
-        sqlite3_free(zErrMsg);
-        return -1;
-    }
+    exec(query, callback_counter, &count, zErrMsg);
+
 
     return count;
 
@@ -120,20 +110,14 @@ bool Database::is_identifiers_valid(Credentials credentials) {
     char *zErrMsg = 0;
     int count = 0;
     bool valid = false;
-    std::stringstream strm;
+    std::string command = "";
+    command += "select COUNT(username) FROM Accounts WHERE username='" + credentials.getUsername() + "' AND password='" +
+            credentials.getPassword() + "'";
 
-    strm << "select COUNT(username) FROM Accounts WHERE username='" << credentials.getUsername() << "' AND password='" << credentials.getPassword() << "'";
+    char* query = (char *) command.c_str();
 
-    std::string s = strm.str();
-    char *str = &s[0];
-    char *query = str;
+    exec(query, callback_counter, &count, zErrMsg);
 
-    rc = sqlite3_exec(db, query, callback_counter, &count, &zErrMsg);
-    if( rc != SQLITE_OK ){
-        fprintf(stderr, "SQL error: %s\n", zErrMsg);
-        sqlite3_free(zErrMsg);
-        return false;
-    }
 
     if (count == 1)
         valid = true;
@@ -154,12 +138,7 @@ std::vector<RankingInfos> Database::getRanking() {
     char *zErrMsg = 0;
     char *query = (char *)"select username, victories from Accounts order by victories DESC";
 
-    rc = sqlite3_exec(db, query, callback_ranking, &list, &zErrMsg);
-    if( rc != SQLITE_OK ){
-        fprintf(stderr, "SQL error: %s\n", zErrMsg);
-        sqlite3_free(zErrMsg);
-    }
-
+    exec(query, callback_ranking, &list, zErrMsg);
 
     return list;
 
@@ -168,18 +147,12 @@ std::vector<RankingInfos> Database::getRanking() {
 PublicAccountInfos Database::getUsrInfosByUsrname(std::string username) {
     PublicAccountInfos infos;
     char *zErrMsg = 0;
-    std::stringstream strm;
-    strm << "select username, victories, pnjKilled, id from Accounts WHERE username='" << username << "'";
+    std::string command = "";
+    command += "select username, victories, pnjKilled, id from Accounts WHERE username='" + username + "'";
 
-    std::string s = strm.str();
-    char *str = &s[0];
-    char *query = str;
+    char* query = (char *) command.c_str();
 
-    rc = sqlite3_exec(db, query, callback_account_usrname, &infos, &zErrMsg);
-    if( rc != SQLITE_OK ){
-        fprintf(stderr, "SQL error: %s\n", zErrMsg);
-        sqlite3_free(zErrMsg);
-    }
+    exec(query, callback_account_usrname, &infos, zErrMsg);
 
     return infos;
 }
@@ -191,25 +164,14 @@ int Database::sendFriendRequest(std::string username, std::string toAdd) {
     // Request for friendship is sent, friendrequests and pendingInvitations are updated accordingly
 
     char *zErrMsg = 0;
-    std::stringstream strm;
+    std::string command = "";
+    command += "insert into FriendRequests(ReceiverID, SenderID) values('" + toAdd + "','" + username + "') ;"
+            + "insert into PendingInvitations(RequesterID, ReceiverID) values('" + username + "','" + toAdd + "') ;";
 
-    strm << "insert into FriendRequests(ReceiverID, SenderID) values('" << toAdd << "','" << username << "') ;"
-         << "insert into PendingInvitations(RequesterID, ReceiverID) values('" << username << "','" << toAdd << "') ;";
+    char* query = (char *) command.c_str();
 
+    exec(query, NULL, 0, zErrMsg);
 
-    std::string s = strm.str();
-    char *str = &s[0];
-    char *query = str;
-
-    rc = sqlite3_exec(db, query, NULL, 0, &zErrMsg);
-    if( rc != SQLITE_OK ){
-        fprintf(stderr, "SQL error: %s\n", zErrMsg);
-        sqlite3_free(zErrMsg);
-        return -1;
-    }
-    else{
-        fprintf(stdout, "Invitation Sent\n");
-    }
     return 0;
 }
 
@@ -219,49 +181,30 @@ int Database::acceptFriendRequest(std::string username, std::string toAccept) {
     // The user who got the request accepts it and he is added to the requester friend's list and vice versa
     // Friendrequests && pendingInvitations are accordingly updated too
     char *zErrMsg = 0;
-    std::stringstream strm;
+    std::string command = "";
+    command += "insert into FriendList(ID1, ID2) values('" + username + "','" + toAccept + "') ;" +
+            "DELETE FROM `FriendRequests` WHERE `RequesterID`='" + username + "' AND `SenderID`='" + toAccept +
+            "' ;" +  "DELETE FROM `PendingInvitations` WHERE `RequesterID`='" + toAccept + "' AND `ReceiverID`='" +
+            username + "' ;";
 
-    strm << "insert into FriendList(ID1, ID2) values('" << username << "','" << toAccept << "') ;"
-         << "DELETE FROM `FriendRequests` WHERE `ReceiverID`='"<<username<<"' AND `SenderID`='"<<toAccept<<"' ;"
-         << "DELETE FROM `PendingInvitations` WHERE `RequesterID`='"<<toAccept<<"' AND `ReceiverID`='"<<username<<"' ;";
 
+    char* query = (char *) command.c_str();
 
-    std::string s = strm.str();
+    exec(query, NULL, 0, zErrMsg);
 
-    char *str = &s[0];
-    char *query = str;
-
-    rc = sqlite3_exec(db, query, NULL, 0, &zErrMsg);
-    if( rc != SQLITE_OK ){
-        fprintf(stderr, "SQL error: %s\n", zErrMsg);
-        sqlite3_free(zErrMsg);
-        return -1;
-    }else{
-        fprintf(stdout, "Friend request accepted\n");
-    }
     return 0;
 }
 
 int Database::removeFriend(std::string username, std::string toRemove){
 
     char *zErrMsg = 0;
-    std::stringstream strm;
-    strm<< "DELETE FROM `FriendList` WHERE `ID1`='"<<username<<"' AND `ID2`='"<<toRemove<<"' ;"
-        << "DELETE FROM `FriendList` WHERE `ID1`='"<<toRemove<<"' AND `ID2`='"<<username<<"' ;";
+    std::string command = "";
+    command += "DELETE FROM `FriendList` WHERE `ID1`='" + username + "' AND `ID2`='" + toRemove + "' ;" +
+            "DELETE FROM `FriendList` WHERE `ID1`='" + toRemove + "' AND `ID2`='" + username + "' ;";
 
-    std::string s = strm.str();
+    char* query = (char *) command.c_str();
 
-    char *str = &s[0];
-    char *query = str;
-
-    rc = sqlite3_exec(db, query, NULL, 0, &zErrMsg);
-    if( rc != SQLITE_OK ){
-        fprintf(stderr, "SQL error: %s\n", zErrMsg);
-        sqlite3_free(zErrMsg);
-        return -1;
-    }else{
-        fprintf(stdout, "Friend successfully removed, i'm sorry it had to end this way : ( . \n");
-    }
+    exec(query, NULL, 0, zErrMsg);
     return 0;
 }
 
@@ -272,91 +215,56 @@ int Database::declineFriendRequest(std::string username, std::string toDecline) 
     int id2 = getUsrInfosByUsrname(toDecline).ID;
 
     char *zErrMsg = 0;
-    std::stringstream strm;
+    std::string command = "";
+    command += "DELETE FROM `FriendRequests` WHERE `ReceiverID`='" + username + "' AND `SenderID`='" + toDecline +
+            "' ;" + "DELETE FROM `PendingInvitations` WHERE `RequesterID`='" + toDecline + "' AND `ReceiverID`='" +
+            username + "' ;";
 
-    strm << "DELETE FROM `FriendRequests` WHERE `ReceiverID`='"<<username<<"' AND `SenderID`='"<<toDecline<<"' ;"
-         << "DELETE FROM `PendingInvitations` WHERE `RequesterID`='"<<toDecline<<"' AND `ReceiverID`='"<<username<<"' ;";
 
+    char* query = (char *) command.c_str();
 
-
-    std::string s = strm.str();
-
-    char *str = &s[0];
-    char *query = str;
-
-    rc = sqlite3_exec(db, query, NULL, 0, &zErrMsg);
-    if( rc != SQLITE_OK ){
-        fprintf(stderr, "SQL error: %s\n", zErrMsg);
-        sqlite3_free(zErrMsg);
-        return -1;
-    }else{
-        fprintf(stdout, "Friend request declined\n");
-    }
+    exec(query, NULL, 0, zErrMsg);
     return 0;
 }
 
 std::vector<std::string> Database::getFriendList(std::string username){
     std::vector<std::string> friendList;
     char *zErrMsg = 0;
-    std::stringstream strm;
+    std::string command = "";
+    command += "select ID2 from FriendList WHERE ID1 ='" + username + "';" + "select ID1 from FriendList WHERE ID2 ='" +
+            username + "';";
 
-    strm << "select ID2 from FriendList WHERE ID1 ='"<<username<<"';"
-         << "select ID1 from FriendList WHERE ID2 ='"<<username<<"';";
-    std::string s = strm.str();
+    char* query = (char *) command.c_str();
 
-    char *str = &s[0];
-    char *query = str;
-
-    rc = sqlite3_exec(db, query, callback_FriendList, &friendList, &zErrMsg);
-
-    if( rc != SQLITE_OK ){
-        fprintf(stderr, "SQL error: %s\n", zErrMsg);
-        sqlite3_free(zErrMsg);
-    }
-
+    exec(query, callback_FriendList, &friendList, zErrMsg);
     return friendList;
 }
 
 std::vector<std::string> Database::getFriendRequests(std::string username){
     std::vector<std::string> friendRequests;
     char *zErrMsg = 0;
-    std::stringstream strm;
+    std::string command = "";
+    command += "select SenderID from FriendRequests WHERE ReceiverID ='" + username + "'";
 
-    strm << "select SenderID from FriendRequests WHERE ReceiverID ='"<<username<<"'";
-    std::string s = strm.str();
+    char* query = (char *) command.c_str();
 
-    char *str = &s[0];
-    char *query = str;
-
-    rc = sqlite3_exec(db, query, callback_FriendList, &friendRequests, &zErrMsg);
-
-    if( rc != SQLITE_OK ){
-        fprintf(stderr, "SQL error: %s\n", zErrMsg);
-        sqlite3_free(zErrMsg);
-    }
+    exec(query, callback_FriendList, &friendRequests, zErrMsg);
 
     return friendRequests;
 }
 std::vector<std::string> Database::getPendingInvitations(std::string username){
     std::vector<std::string> friendRequests;
     char *zErrMsg = 0;
-    std::stringstream strm;
+    std::string command = "";
+    command += "select ReceiverID from PendingInvitations WHERE RequesterID ='" + username + "'";
 
-    strm << "select ReceiverID from PendingInvitations WHERE RequesterID ='"<<username<<"'";
-    std::string s = strm.str();
+    char* query = (char *) command.c_str();
 
-    char *str = &s[0];
-    char *query = str;
-
-    rc = sqlite3_exec(db, query, callback_FriendList, &friendRequests, &zErrMsg);
-
-    if( rc != SQLITE_OK ){
-        fprintf(stderr, "SQL error: %s\n", zErrMsg);
-        sqlite3_free(zErrMsg);
-    }
+    exec(query, callback_FriendList, &friendRequests, zErrMsg);
 
     return friendRequests;
 }
+
 
 
 Database::~Database() {
