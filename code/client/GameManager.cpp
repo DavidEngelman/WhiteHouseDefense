@@ -98,7 +98,7 @@ void GameManager::unSerializeGameState(char* seriarlized_gamestate){
 
     std::string part = "";
     unsigned count = 0; // count at which part we are
-    for (char* c = seriarlized_gamestate; *seriarlized_gamestate; seriarlized_gamestate++) {
+    for (char* c = seriarlized_gamestate; *c; ++c) {
         if (*c == '-') {
             switch (count) {
                 case 0: // isGameOver
@@ -178,8 +178,8 @@ void GameManager::unSerializePlayerState(std::string serialized_playerstate) {
             elem += c;
         }
     }
-    PlayerState playerState = PlayerState(player_id, money, hp, isSupported, isWinner, pnjKilled, team);
-    gameState.addPlayerState(playerState);
+    PlayerState* playerState = new PlayerState(player_id, money, hp, isSupported, isWinner, pnjKilled, team);
+    gameState.addPlayerState(*playerState);
 }
 
 void GameManager::unSerializeTowers(std::string serialized_towers) {
@@ -288,8 +288,8 @@ void GameManager::unSerializePNJ(std::string serialized_pnj, Wave *wave) {
             elem += c;
         }
     }
-    PNJ pnj = PNJ(Position(x, y), health, wave->getQuadrant());
-    wave->addPNJ(pnj);
+    PNJ *pnj = new PNJ(Position(x, y), health, wave->getQuadrant());
+    wave->addPNJ(*pnj);
 }
 
 bool GameManager::is_alive() {
