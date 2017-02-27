@@ -1,20 +1,20 @@
-#include "PlaceTowerCommand.h"
+#include "TowerCommand.h"
 
-int PlaceTowerCommand::getPlayerQuadrant() {
+int TowerCommand::getPlayerQuadrant() {
     return player_quadrant;
 }
 
-Position &PlaceTowerCommand::getPosition() {
+Position &TowerCommand::getPosition() {
     return position;
 }
 
-std::string &PlaceTowerCommand::getTowerType() {
+std::string &TowerCommand::getTowerType() {
     return tower_type;
 }
 
 // TODO: ça serait mieux que toutes les methodes parse renvoient un booleen qui indiquent si le
 // parse a été successful.
-void PlaceTowerCommand::parse(char *data) {
+void TowerCommand::parse(char *data) {
     // parse une une chaine de caractere de la forme "PlaceTower,player_quadrant,tower_type,10,14;"
     std::string coord_x, coord_y, type, quadrant;
 
@@ -55,7 +55,7 @@ void PlaceTowerCommand::parse(char *data) {
     position.setY(std::stoi(coord_y));
 }
 
-PlaceTowerCommand::PlaceTowerCommand() : position(Position(-1, -1)) // Position bidon
+TowerCommand::TowerCommand() : position(Position(-1, -1)) // Position bidon
 {
 
 }
