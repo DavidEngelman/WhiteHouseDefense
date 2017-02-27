@@ -73,6 +73,7 @@ void GameManager::run() {
             std::cout << "Receive start wave signal" << std::endl;
         }
         else{
+            unSerializeGameState(server_msg_buff);
             //TODO parse GamesState sent from server
             //TODO update gamesState
             std::cout << "Received game state" << std::endl;
@@ -83,9 +84,15 @@ void GameManager::run() {
         }
     }
 
+
 }
 
 void GameManager::unSerializeGameState(char* seriarlized_gamestate){
+    std::cout<<"serveur gamestate: "<<seriarlized_gamestate<<std::endl;
+
+    GameState gamestate=new GameState;
+
+
 
 
 }
