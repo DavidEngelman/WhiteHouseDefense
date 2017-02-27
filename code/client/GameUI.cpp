@@ -31,6 +31,10 @@ void GameUI::display(GameState& gameState) {
     map->display(gameState);
 }
 
+void GameUI::display(int quadrant) {
+    std::cout << "Votre quadrant est le : " << quadrant << std::endl;
+}
+
 bool GameUI::isBuyingTower() {
     int response;
     bool ok = false;

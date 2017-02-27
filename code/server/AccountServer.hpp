@@ -86,5 +86,7 @@ public:
     bool handle_acceptFriendRequest(int client_sock_fd, std::string requester,std::string toAccept );
     bool handle_declineFriendRequest(int client_sock_fd, std::string requester, std::string toDecline);
 
+    bool handle_accoutUpdate(int client_sock_fd);
+
 
 };

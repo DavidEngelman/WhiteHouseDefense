@@ -320,6 +320,12 @@ void AccountServer::get_and_process_command(int client, char* message_buffer) {
 
                 handle_declineFriendRequest(client, friendListCommand.getRequester(), friendListCommand.getReceiver());
             }
+
+        } else if (command_type == "update"){
+            //TODO
+            //UpdateAccountCommand updateCommand;
+            //updateCommand.parse(message_buffer)
+
         }
     }
 }
