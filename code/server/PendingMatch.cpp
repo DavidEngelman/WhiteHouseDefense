@@ -9,7 +9,7 @@ const std::string &PendingMatch::getMode() const {
     return mode;
 }
 
-std::vector<PlayerConnection> &PendingMatch::getPlayerConnections() const {
+std::vector<PlayerConnection> &PendingMatch::getPlayerConnections() {
     return playerConnections;
 }
 

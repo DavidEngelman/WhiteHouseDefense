@@ -18,7 +18,7 @@ public:
     PendingMatch(std::string modeName);
 
     const std::string &getMode() const;
-    std::vector<PlayerConnection> &getPlayerConnections() const;
+    std::vector<PlayerConnection> &getPlayerConnections();
 
 
     void add_player_to_queue     (PlayerConnection& playerConnection); //suis pas sur id ou username
