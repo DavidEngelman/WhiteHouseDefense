@@ -17,7 +17,7 @@ private:
 	std::string bool_to_string(bool my_bool);
 
 public:
-
+	PlayerState();
     PlayerState(int id);
     PlayerState(int id, int team);
 

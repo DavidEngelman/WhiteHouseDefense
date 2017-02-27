@@ -11,13 +11,14 @@ class Wave {
 private:
     std::vector<PNJ> pnjs;
 
-    const int quadrant;
+    int quadrant;
     int number_of_pnjs;
     int number_of_added_pnjs;
 public:
 
     Wave(int quadrant); // Version client
     Wave(int number_of_pnjs, int quadrant);
+
     bool isComplete();
     int getQuadrant() const;
 

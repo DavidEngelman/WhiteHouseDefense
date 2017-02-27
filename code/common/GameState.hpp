@@ -30,7 +30,7 @@ private:
 public:
 
 
-    GameState() = default;
+    GameState();
 
     ~GameState();
 
