@@ -37,7 +37,7 @@ std::string* GameState::serialize() {
 //    towers.push_back(tower);
 //}
 
-bool GameState::IsOnlyOneAlive() {
+bool GameState::IsOnlyOnePlayerAlive() {
     int number_of_players_alive = 0;
     for (PlayerState &ps: player_states) {
         if (ps.getHp() > 0) {
@@ -64,10 +64,6 @@ bool GameState::isRoundFinished() {
         }
     }
     return true;
-}
-
-bool GameState::isFinished() {
-    return IsOnlyOneAlive();
 }
 
 
@@ -108,5 +104,13 @@ GameState::~GameState() {
     for (AbstractTower* tower: towers){
         delete tower;
     }
+}
+
+void GameState::setIsGameOver(bool isGameOver) {
+    GameState::isGameOver = isGameOver;
+}
+
+std::string &GameState::getMode() {
+    return mode;
 }
 
