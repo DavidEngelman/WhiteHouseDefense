@@ -77,7 +77,7 @@ void GameManager::run() {
             //TODO update gamesState
             std::cout << "Received game state" << std::endl;
 
-            if (gameState.getIsGameOver()){
+            if ( false && gameState.getIsGameOver()){
                 break;
             }
         }
