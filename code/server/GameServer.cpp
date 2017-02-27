@@ -224,8 +224,9 @@ void GameServer::updatePlayerStatsOnAccountServer(int socket_fd) {
         pnj_killed = ps.getPnjKilled();
         is_winner = ps.getIsWinner();
 
-
     }
+    //std::string message = std::to_string(p_id) + std::to_string(pnj_killed) +
+
 
 
 }
