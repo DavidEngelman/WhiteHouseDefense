@@ -25,7 +25,7 @@ public:
 
 	PNJ(int direction);
 
-    PNJ(Position position, int healthPoints);
+    PNJ(Position position, int healthPoints, int direction);
 
     PNJ(Position position, int healthPoints, int movementSpeed, Position last_pos, int direction);
 

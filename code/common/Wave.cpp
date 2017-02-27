@@ -61,6 +61,11 @@ void Wave::addPNJ() {
     number_of_added_pnjs += 1;
 }
 
+void Wave::addPNJ(PNJ &pnj) {
+    pnjs.push_back(pnj);
+    number_of_added_pnjs += 1;
+}
+
 void Wave::setNumber_of_pnjs(int number_of_pnjs) {
     Wave::number_of_pnjs = number_of_pnjs;
 }

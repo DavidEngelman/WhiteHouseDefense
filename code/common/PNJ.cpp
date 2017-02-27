@@ -1,7 +1,7 @@
 #include "PNJ.hpp"
 
 
-PNJ::PNJ(Position position, int healthPoints):
+PNJ::PNJ(Position position, int healthPoints, int direction):
         position(position), healthPoints(healthPoints),
         movementSpeed(PNJ_STARTING_MOVESPEED), direction(direction),
         last_position(Position(-1000,-1000)) {

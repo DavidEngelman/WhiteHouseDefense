@@ -32,6 +32,11 @@ private:
     void unSerializeGameState(char* serialized_gamestate);
     void unSerializePlayerStates(std::string serialized_playerstates);
     void unSerializePlayerState(std::string serialized_playerstate);
+    void unSerializeTowers(std::string serialized_towers);
+    void unSerializeTower(std::string serialized_tower);
+    void unSerializeWaves(std::string serialized_waves);
+    void unSerializeWave(std::string serialized_wave);
+    void unSerializePNJ(std::string serialized_pnj, Wave* wave);
 
 public:
 
