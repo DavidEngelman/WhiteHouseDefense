@@ -74,9 +74,7 @@ void GameManager::run() {
         receive_message(server_socket, server_msg_buff);
         //std::cout << "Message: " << server_msg_buff << std::endl;
         if (strcmp(server_msg_buff, PLACING_TOWER) == 0 && is_alive()) {
-            if (!runningThread){
-                inputThread = pthread_create(&thr,NULL,&GameManager::staticInputThread,this);
-            }
+            inputThread = pthread_create(&thr,NULL,&GameManager::staticInputThread,this);
 
         }else if (strcmp(server_msg_buff, WAVE) == 0){
             inputThread = pthread_cancel(thr);
@@ -151,12 +149,15 @@ void GameManager::unSerializePlayerState(std::string serialized_playerstate) {
                 case 0: // Nothing to do
                     break;
                 case 1: // player_id
+                    std::cout << elem << std::endl;
                     player_id = std::stoi(elem);
                     break;
                 case 2: // money
+                    std::cout << elem << std::endl;
                     money = std::stoi(elem);
                     break;
                 case 3: // hp
+                    std::cout << elem << std::endl;
                     hp = std::stoi(elem);
                     break;
                 case 4: // isSupported
@@ -166,9 +167,11 @@ void GameManager::unSerializePlayerState(std::string serialized_playerstate) {
                     isWinner = elem == "true";
                     break;
                 case 6: // pnjKilled
+                    std::cout << elem << std::endl;
                     pnjKilled = std::stoi(elem);
                     break;
                 default: // team
+                    std::cout << elem << std::endl;
                     team = std::stoi(elem);
                     break;
             }
@@ -208,9 +211,11 @@ void GameManager::unSerializeTower(std::string serialized_tower) {
                     typeOfTower = elem;
                     break;
                 case 1: // X
+                    std::cout << elem << std::endl;
                     x = std::stoi(elem);
                     break;
                 default: // Y
+                    std::cout << elem << std::endl;
                     y = std::stoi(elem);
                     break;
             }
@@ -273,12 +278,15 @@ void GameManager::unSerializePNJ(std::string serialized_pnj, Wave *wave) {
         if (c == ',') {
             switch (count) {
                 case 0: // X
+                    std::cout << elem << std::endl;
                     x = std::stoi(elem);
                     break;
                 case 1:
+                    std::cout << elem << std::endl;
                     y = std::stoi(elem);
                     break;
                 default:
+                    std::cout << elem << std::endl;
                     health = std::stoi(elem);
                     break;
             }
