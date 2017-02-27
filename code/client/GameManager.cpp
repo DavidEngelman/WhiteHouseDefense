@@ -6,12 +6,9 @@
 
 GameManager::GameManager(char *ip_addr, int port, int id, std::string username, App *app) :
         NetworkedManager(port, ip_addr, app), player_id(id), player_username(username),
-//        phase(PLACING_TOWER), Cette ligne ne compile pas, fix temporaire
         gameUI(getMapSeedFromServer()), // L'ordre est important parce qu'on fait des
         quadrant(getQuadrantFromServer()) // recv. Ne pas changer l'ordre!
-        {
-            phase[0] = PLACING_TOWER[0];
-        } //Le gamestate n'est pas censé avoir la map
+        {}
 
 
 void GameManager::placeTower() {

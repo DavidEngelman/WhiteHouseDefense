@@ -19,10 +19,6 @@ private:
     int player_id; // Je sais plus si les deux sont utiles je les met au cas ou
     int quadrant;
 
-    // Pourquoi est-ce que ce n'est pas un booleen, tout simplement? genre isInPlacingTowersPhase?
-    char phase[1]; // Phase de jeu (vague d'ennemis ou placement de tours)
-
-
     unsigned int getMapSeedFromServer() const;
 
     void unSerializeGameState(char* serialized_gamestate);
