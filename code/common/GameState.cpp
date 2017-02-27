@@ -38,6 +38,8 @@ std::string* GameState::serialize() {
         *serialized_me += wave.serialize();
     }
 
+    *serialized_me += "-";
+
     return serialized_me;
 }
 
