@@ -64,7 +64,7 @@ public:
 
     void showMap();
 
-    void giveKill(PlayerState &playerState);
+    void addKillToStat(PlayerState &playerState);
 };
 
 
