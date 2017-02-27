@@ -76,6 +76,7 @@ bool GameManager::sendRequest(Position towerPos, std::string towerType) {
 }
 
 
+
 void GameManager::run() {
     gameUI.display(gameState);
     char server_msg_buff [BUFFER_SIZE];
