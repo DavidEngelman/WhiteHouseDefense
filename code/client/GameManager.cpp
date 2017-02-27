@@ -108,13 +108,92 @@ void GameManager::run() {
 }
 
 void GameManager::unSerializeGameState(char* seriarlized_gamestate){
-    std::cout<<"serveur state: "<< seriarlized_gamestate<<std::endl;
-    bool tmpGameOver;
-    GameState tmp = GameState();
+    gameState = GameState();
 
-    GameState::setIsGameOver(tmpGameOver;
+    std::string part = "";
+    unsigned count = 0; // count at which part we are
+    for (char* c = seriarlized_gamestate; *seriarlized_gamestate; seriarlized_gamestate++) {
+        if (*c == '-') {
+            //TODO : mettre la partie dans le gameState
+            switch (count) {
+                case 0: // isGameOver
+                    gameState.setIsGameOver(part == "true");
+                    break;
+                case 1: // PlayerStates
+                    unSerializePlayerStates(part);
+                    break;
+                case 2: // Towers
+                    break;
+                default: // Waves
+                    break;
+            }
+            part = "";
+            count++;
+        } else {
+            part += *c;
+        }
+    }
+}
 
+void GameManager::unSerializePlayerStates(std::string serialized_playerstates) {
+    std::string serialized_playerstate = "";
+    for (char& c : serialized_playerstates) {
+        if (c == ';') {
+            unSerializePlayerState(serialized_playerstate);
+            serialized_playerstate = "";
+        } else {
+            serialized_playerstate += c;
+        }
+    }
+}
 
+void GameManager::unSerializePlayerState(std::string serialized_playerstate) {
+    //gameState.addPlayerState()
+    std::string elem = "";
+    unsigned count = 0;
+    int player_id=0;
+    int money=0;
+    int hp=0;
+    bool isSupported=true;
+    bool isWinner=true;
+    int pnjKilled=0;
+    int team=0;
+
+    for (char& c : serialized_playerstate) {
+        if (c == ',') {
+            switch (count) {
+                case 0: // Nothing to do
+                    break;
+                case 1: // player_id
+                    player_id = std::stoi(elem);
+                    break;
+                case 2: // money
+                    money = std::stoi(elem);
+                    break;
+                case 3: // hp
+                    hp = std::stoi(elem);
+                    break;
+                case 4: // isSupported
+                    isSupported = elem == "true";
+                    break;
+                case 5: // isWinner
+                    isWinner = elem == "true";
+                    break;
+                case 6: // pnjKilled
+                    pnjKilled = std::stoi(elem);
+                    break;
+                default: // team
+                    team = std::stoi(elem);
+                    break;
+            }
+            elem = "";
+            count++;
+        } else {
+            elem += c;
+        }
+    }
+    PlayerState playerState = PlayerState(player_id, money, hp, isSupported, isWinner, pnjKilled, team);
+    gameState.addPlayerState(playerState);
 }
 
 bool GameManager::is_alive() {

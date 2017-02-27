@@ -232,7 +232,7 @@ void GameServer::updatePlayerStatsOnAccountServer(int socket_fd) {
     int p_id, pnj_killed;
     bool is_winner;
 
-    send_message(account_server_socket, "update");
+    send_message(account_server_socket, "update;");
 
     for (PlayerState& ps : gameEngine->getGameState().getPlayerStates()){
         p_id = ps.getPlayer_id();

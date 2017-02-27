@@ -38,6 +38,8 @@ std::string* GameState::serialize() {
         *serialized_me += wave.serialize();
     }
 
+    *serialized_me += "-";
+
     return serialized_me;
 }
 
@@ -106,6 +108,14 @@ bool GameState::isPlayerAlive(const int quadrant) {
 
 void GameState::addTower(AbstractTower * tower) {
     towers.push_back(tower);
+}
+
+void GameState::deleteTower(Position& position, int& quadrant){
+    for (AbstractTower *tower : getTowers()){
+        if (tower->getPosition() == position){
+            getPlayerStates()[quadrant].earnMoney(tower->getPrice() * PERCENTAGE_RECOVERED_MONEY);
+        }
+    }
 }
 
 GameState::~GameState() {
