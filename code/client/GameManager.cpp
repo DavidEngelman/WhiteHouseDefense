@@ -4,11 +4,14 @@
 #include "../server/Server.hpp"
 
 
-GameManager::GameManager(char *ip_addr, int port, int id, std::string username, App *app) :
-        NetworkedManager(port, ip_addr, app), player_id(id), player_username(username),
+//NetworkedManager(port, ip_addr, app)
+GameManager::GameManager(char *ip_addr, int port, int socket, int id, std::string username, App *app) :
+        AbstractManager(ip_addr, app),
+        server_socket(socket),
+        player_id(id), player_username(username),
         gameUI(getMapSeedFromServer()), // L'ordre est important parce qu'on fait des
         quadrant(getQuadrantFromServer()) // recv. Ne pas changer l'ordre!
-        {}
+{}
 
 
 void GameManager::placeTower() {
