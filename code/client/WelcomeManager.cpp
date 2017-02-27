@@ -12,11 +12,11 @@ void WelcomeManager::run() {
     int choice = welcomeUI.select();
 
     if (choice == 1) {
-        LoginManager * loginManager = new LoginManager(5555, server_ip_address, my_master_app);
-        my_master_app->transition(loginManager);
+        LoginManager * loginManager = new LoginManager(5555, server_ip_address, master_app);
+        master_app->transition(loginManager);
     } else if (choice == 2) {
-        RegisterManager * registerManager = new RegisterManager(5555, server_ip_address, my_master_app);
-        my_master_app->transition(registerManager);
+        RegisterManager * registerManager = new RegisterManager(5555, server_ip_address, master_app);
+        master_app->transition(registerManager);
     } else if (choice == 3) {
         //
     }

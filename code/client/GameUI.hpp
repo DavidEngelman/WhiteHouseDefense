@@ -14,10 +14,9 @@ public:
 
 	Position getPosBuyingTower();
 	Position getPosSellingTower();
+	int getChoice();
 	bool isBuyingTower();
-
     bool checkCoord(int x, int y);
-
 	void display(GameState& gameState);
 };
 

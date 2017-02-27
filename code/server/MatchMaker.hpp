@@ -15,6 +15,8 @@ private:
     PendingMatch timedPendingMatch;
     PendingMatch teamPendingMatch;
 
+    int current_server_port;
+
     void announceMatchStart(PlayerConnection playerConnection);
     void launchGameServer(PendingMatch& match);
     void launchMatch(PendingMatch match);

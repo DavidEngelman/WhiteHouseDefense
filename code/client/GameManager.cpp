@@ -15,11 +15,10 @@ void GameManager::placeTower() {
     if (gameUI.isBuyingTower()) {
         gameUI.display(gameState);
         Position pos = gameUI.getPosBuyingTower();
-        // TODO: send tower placement command to server
+        sendRequest(pos, " " /*demander le type de tour plus haut*/ );
     } else {
         gameUI.display(gameState);
     }
-    //send_message(server_socket, coord.c_str());
 }
 
 void GameManager::displayWave() {
@@ -27,34 +26,44 @@ void GameManager::displayWave() {
 }
 
 void GameManager::come_back_to_menu() {
-    MainManager *menu_manager = new MainManager(server_ip_address, player_id, player_username, my_master_app);
-    my_master_app->transition(menu_manager);
+    MainManager *menu_manager = new MainManager(server_ip_address, player_id, player_username, master_app);
+    master_app->transition(menu_manager);
 
 }
 
 void GameManager::input_thread() {
     while(!stopflag) {
-        //std::string input = // ask tower position gameUI.getPosBuyingTower();
+        placeTower();
+        stopflag = true;
     }
-    // send the position of the tower to the server
 }
+
+bool GameManager::checkValidity(Position towerPos) {
+
+}
+
+bool GameManager::sendRequest(Position towerPos, std::string towerType) {
+    char server_response[10];
+    std::string message = towerType + "," + std::to_string(towerPos.getX()) + std::to_string(towerPos.getY())+";";
+    send_message(server_socket, message.c_str());
+    receive_message(server_socket,server_response);
+    return server_response[0] == '1';
+}
+
 
 void GameManager::run() {
     gameUI.display(gameState);
     char server_msg_buff [BUFFER_SIZE];
 
-    while(1){
-
+    while(1) {
         receive_message(server_socket, server_msg_buff);
-        if (strcmp(server_msg_buff, PLACING_TOWER) == 0 && is_alive()){
-            stopflag = false;
-            // la il faudrait demander a l'user ce qu'il veut faire , poser une tour / upgrade / revendre
-            // et lancer le thread adapte
 
-            // Ça ne compile pas
-//            std::thread inp(input_thread);
-        }
-        else if (strcmp(server_msg_buff, WAVE) == 0){
+        if (strcmp(server_msg_buff, PLACING_TOWER) == 0 && is_alive()) {
+            //////////
+            /* if thread not running {   j'ai un peu de mal avec ces thread en c++ */
+            //std::thread input(input_thread);
+            /////////
+        }else if (strcmp(server_msg_buff, WAVE) == 0){
             //TODO kill InputThread
         }
         else{

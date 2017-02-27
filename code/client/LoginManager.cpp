@@ -35,9 +35,9 @@ void LoginManager::run() {
     //std::cout << "Connection succeeded" << std::endl;
     //std::cout << "your id is" << success <<  std::endl;
 
-    //MainManager mainManager(server_ip_address, stoi(success), my_master_app);
-    MainManager* mainManager = new MainManager(server_ip_address, stoi(success), loginCredentials.getUsername(), my_master_app);
-    my_master_app->transition(mainManager);//On lance le jeu
+    //MainManager mainManager(server_ip_address, stoi(success), master_app);
+    MainManager* mainManager = new MainManager(server_ip_address, stoi(success), loginCredentials.getUsername(), master_app);
+    master_app->transition(mainManager);//On lance le jeu
 }
 
 bool LoginManager::checkCredentialsValidity(Credentials credentials) {

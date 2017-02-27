@@ -20,8 +20,12 @@ void GameLauncher::sendJoinRequest(std::string mode) {
     receive_message(server_socket, server_response);
     assert(strcmp(server_response, GAME_STARTING_STRING) == 0);
 
+    /*Recevoir port du GamesServer auquel se connecter */
+    receive_message(server_socket, server_response);
+    int game_port = atoi(server_response);
+
     std::cout << "Game start" << std::endl;
-    GameManager* manager = new GameManager(server_ip_address, port, player_id, player_name, my_master_app);
+    GameManager* manager = new GameManager(server_ip_address, game_port, player_id, player_name, master_app);
 }
 
 void GameLauncher::run() {

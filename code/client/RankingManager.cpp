@@ -67,8 +67,8 @@ void RankingManager::run() {
     std::string ranking = createRanking(getRanking());
     rankingUI.display(ranking);
 
-    MainManager * mainManager = new MainManager(server_ip_address, player_id, username, my_master_app);
-    my_master_app->transition(mainManager);
+    MainManager * mainManager = new MainManager(server_ip_address, player_id, username, master_app);
+    master_app->transition(mainManager);
 }
 
 
