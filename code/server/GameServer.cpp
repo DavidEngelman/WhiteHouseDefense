@@ -34,7 +34,7 @@ void GameServer::processClientCommands() {
     Timer timer;
     timer.start();
     while (timer.elapsedTimeInSeconds() < NUM_SECONDS_TO_PLACE_TOWER) {
-        int client_index = get_readable_socket_index_with_timeout(client_sockets, 4, 20);
+        int client_index = get_readable_socket_index_with_timeout(client_sockets, 4, 5);
         if (client_index < 0 || client_index > 4) return;
 
         int client_socket_fd = client_sockets[client_index];

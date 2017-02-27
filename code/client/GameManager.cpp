@@ -72,7 +72,7 @@ void GameManager::run() {
 
     while(1) {
         receive_message(server_socket, server_msg_buff);
-        std::cout << "Message: " << server_msg_buff << std::endl;
+        //std::cout << "Message: " << server_msg_buff << std::endl;
         if (strcmp(server_msg_buff, PLACING_TOWER) == 0 && is_alive()) {
             if (!runningThread){
                 inputThread = pthread_create(&thr,NULL,&GameManager::staticInputThread,this);
@@ -83,6 +83,7 @@ void GameManager::run() {
         }
         else{
             unSerializeGameState(server_msg_buff);
+            gameUI.display(gameState);
 
             if (gameState.getIsGameOver()){
                 break;
