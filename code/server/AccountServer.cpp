@@ -270,11 +270,6 @@ void AccountServer::get_and_process_command(int client, char* message_buffer) {
                 // Show "unknown command" error
             }
         } else if (command_type == "ranking") {
-
-            //Si on est dans le cas ou un user veut voir le ranking
-
-            Command command;
-            command.parse(message_buffer);
             ok = handle_ranking(client);
 
         } else if (command_type == "getProfileByUsername") {
@@ -322,9 +317,7 @@ void AccountServer::get_and_process_command(int client, char* message_buffer) {
             }
 
         } else if (command_type == "update"){
-            //TODO
-            //UpdateAccountCommand updateCommand;
-            //updateCommand.parse(message_buffer)
+            ok = handle_accoutUpdate(client);
 
         }
     }
@@ -343,6 +336,17 @@ bool AccountServer::is_player_already_connected(PlayerConnection& player){
     return (std::find(connectedPlayers.begin(), connectedPlayers.end(), player) != connectedPlayers.end());
 }
 
+
+bool AccountServer::handle_accoutUpdate(int client_sock_fd) {
+    char message[BUFFER_SIZE];
+    for (int i = 0; i < 4; ++i) {
+        //Recevoir les infos des 4 joueurs de la game
+        receive_message(client_sock_fd, message);
+        //TODO faire la methode updateAfterGameStats dans la database
+        //mydatabase.updateAfterGameStats(message);
+
+    }
+}
 
 
 
