@@ -6,7 +6,7 @@ const bool DEBUG = true;
 
 GameEngine::GameEngine(unsigned int mapSeed) : map(mapSeed),
                                                numOfPNJsPerWave(INITIAL_NUMBER_OF_PNJS_PER_WAVE) {
-    timer.start();
+    timerSinceGameStart.start();
 }
 
 /*
@@ -14,7 +14,7 @@ GameEngine::GameEngine(unsigned int mapSeed) : map(mapSeed),
  * Returns true if the wave (or game) is finished, false otherwise.
  */
 bool GameEngine::update() {
-    int numMilisecondsSinceStart = timer.elapsedTimeInMiliseconds();
+    int numMilisecondsSinceStart = timerSinceWaveStart.elapsedTimeInMiliseconds();
     int numStepsToDo = (numMilisecondsSinceStart / STEP_DURATION_IN_MS) - numStepsDone;
     for (int i = 0; i < numStepsToDo; ++i) {
         updateWaves();
@@ -115,7 +115,7 @@ void GameEngine::removeDeadPNJsFromWaves() {
 void GameEngine::createWaves() {
     gameState.clearWaves();
     numStepsDone = 0;
-    timer.reset();
+    timerSinceWaveStart.reset();
     increaseWaveDifficulty();
     for (const int direction: DIRECTIONS) {
         // Je crée une vague uniquement si le joueur est vivant
@@ -148,7 +148,7 @@ void GameEngine::addPNJS(std::vector<Wave> &waves) {
         int currentNumOfPnjs = wave.getNumber_of_added_pnjs();
         int numOfPNJsInWave = wave.getNumber_of_pnjs();
 
-        int numPnjsShouldHaveAdded = min(timer.elapsedTimeInMiliseconds() / 1000, numOfPNJsInWave);
+        int numPnjsShouldHaveAdded = min(timerSinceWaveStart.elapsedTimeInMiliseconds() / 1000, numOfPNJsInWave);
         int numPNJsToAdd = numPnjsShouldHaveAdded - currentNumOfPnjs;
 
         if (numPNJsToAdd > 0) {
@@ -185,7 +185,7 @@ void GameEngine::checkIfGameIsOver() {
     } else if (mode == TIMED_MODE) {
         // TODO: check que le timer commence depuis le debut de la premiere vague
         // au lieu de depuis la derniere vague
-        isOver = timer.elapsedTimeInSeconds() > TIMED_GAME_INTERVAL;
+        isOver = timerSinceGameStart.elapsedTimeInSeconds() > TIMED_GAME_INTERVAL;
     } else if (mode == TEAM_MODE) {
         int numAlivePlayersInTeam1 = 0;
         int numAlivePlayersInTeam2 = 0;
