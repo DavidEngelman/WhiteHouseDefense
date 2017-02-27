@@ -17,13 +17,13 @@ int PlayerState::getHp(){
 
 std::string PlayerState::serialize() {
     /*
-     * fill a string like this : PlayerState,player_quadrant,money,hp,isSupported,isWinner;
+     * fill a string like this : PlayerState,player_quadrant,money,hp,isSupported,isWinner,pnjKilled,team;
      */
 
     std::string serialized_me;
     serialized_me += "PlayerState," + std::to_string(player_id) + "," + std::to_string(money) + "," +
             std::to_string(hp) + "," + bool_to_string(isSupported)+
-            "," + bool_to_string(isWinner) + ";";
+            "," + bool_to_string(isWinner) + "," + std::to_string(pnjKilled) + "," + std::to_string(team) + ";";
 
     return serialized_me;
 }
