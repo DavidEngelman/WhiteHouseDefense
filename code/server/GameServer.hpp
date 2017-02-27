@@ -64,6 +64,9 @@ public:
     void SendQuadrantToClients();
 
     void createPlayerStates() const;
+
+    void connectToAccountServer();
+    void updatePlayerStatsOnAccountServer();
 };
 
 #endif

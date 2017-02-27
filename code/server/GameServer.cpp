@@ -209,3 +209,11 @@ void GameServer::SendQuadrantToClients() {
         quadrant++;
     }
 }
+
+void GameServer::connectToAccountServer() {
+    //TODO
+}
+
+void GameServer::updatePlayerStatsOnAccountServer() {
+    //TODO
+}
