@@ -5,6 +5,9 @@ PlayerState::PlayerState(int id) : PlayerState(id, -1) {}
 
 PlayerState::PlayerState(int id, int team) : player_id(id), team(team), hp(STARTING_HP), money(STARTING_MONEY),
                                              pnjKilled(0) {}
+PlayerState::PlayerState(int _player_id, int _money, int _hp, bool _isSupported, bool _isWinner, int _pnjKilled,
+                         int _team) : player_id(_player_id), money(_money), hp(_hp), isSupported(_isSupported),
+                                      isWinner(_isWinner), pnjKilled(_pnjKilled), team(_team){}
 
 std::string PlayerState::bool_to_string(bool my_bool){
     return my_bool ? "true" : "false";

@@ -24,7 +24,7 @@ private:
     void addPlayerToPendingMatch(PlayerConnection player_connection, std::string mode);
     void get_and_process_command(int socket_fd);
 
-
+    void launchGameServerThread(PendingMatch& match);
 public:
 
     MatchMaker(int port);
