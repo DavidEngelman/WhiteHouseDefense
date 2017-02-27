@@ -1,4 +1,6 @@
+#include <thread>
 #include "MatchMaker.hpp"
+#include "GameServer.hpp"
 
 MatchMaker::MatchMaker(int port) : Server(port),
                                    classicPendingMatch(PendingMatch(CLASSIC_MODE)),
@@ -61,7 +63,7 @@ PendingMatch &MatchMaker::getMatch(std::string mode) {
 
 
 void MatchMaker::launchMatch(PendingMatch match) {
-    launchGameServer(match);
+    launchGameServerThread(match);
     const std::vector<PlayerConnection> &players = match.getPlayerConnections();
     for (auto iterator = players.begin(); iterator != players.end(); iterator++) {
         announceMatchStart(*iterator);
@@ -69,8 +71,15 @@ void MatchMaker::launchMatch(PendingMatch match) {
 }
 
 void MatchMaker::launchGameServer(PendingMatch& match) {
-    // TODO: completer une fois qu'il y a la classe GameServer
     ++current_server_port;
+    GameServer* game_server = new GameServer(current_server_port, match.getPlayerConnections());
+}
+
+void MatchMaker::launchGameServerThread(PendingMatch& match){
+
+    std::thread t1 (&MatchMaker::launchGameServer, this, match);
+    t1.detach(); // TODO: bien comprendre et verifier si c'est bien ce qu'on veut
+
 }
 
 void MatchMaker::announceMatchStart(PlayerConnection playerConnection) {
