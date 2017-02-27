@@ -95,8 +95,7 @@ void GameManager::run() {
             inputThread = pthread_cancel(thr);
         }
         else{
-            //TODO parse GamesState sent from server
-            //TODO update gamesState
+            unSerializeGameState(server_msg_buff);
 
             if (gameState.getIsGameOver()){
                 break;
@@ -108,10 +107,15 @@ void GameManager::run() {
 
 void GameManager::unSerializeGameState(char* seriarlized_gamestate){
 
+    GameState tmp = GameState();
+    gameState = tmp;
+
 
 }
 
 bool GameManager::is_alive() {
+    if (gameState.getPlayerStates().size() == 0) return true;
+
     bool alive = false;
     for( PlayerState& playerState : gameState.getPlayerStates()){
         if (playerState.getPlayer_id() == player_id){

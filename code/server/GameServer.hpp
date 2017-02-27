@@ -65,8 +65,8 @@ public:
 
     void createPlayerStates() const;
 
-    void connectToAccountServer();
-    void updatePlayerStatsOnAccountServer();
+    int connectToAccountServer();
+    void updatePlayerStatsOnAccountServer(int socket_fd);
 };
 
 #endif

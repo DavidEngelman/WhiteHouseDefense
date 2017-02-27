@@ -209,10 +209,23 @@ void GameServer::SendQuadrantToClients() {
     }
 }
 
-void GameServer::connectToAccountServer() {
-    //TODO
+int GameServer::connectToAccountServer() {
+    return init_connection_to_server("127.0.0.1", 5555); //Faudrait mettre des constantes :)
+
 }
 
-void GameServer::updatePlayerStatsOnAccountServer() {
-    //TODO
+void GameServer::updatePlayerStatsOnAccountServer(int socket_fd) {
+    int Account_server_socket = connectToAccountServer();
+    int p_id, pnj_killed;
+    bool is_winner;
+
+    for (PlayerState& ps : gameEngine->getGameState().getPlayerStates()){
+        p_id = ps.getPlayer_id();
+        pnj_killed = ps.getPnjKilled();
+        is_winner = ps.getIsWinner();
+
+
+    }
+
+
 }

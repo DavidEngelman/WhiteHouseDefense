@@ -14,9 +14,11 @@
 #include <pthread.h>
 #include <unistd.h>
 
-class GameManager : public NetworkedManager{ //Tmp : public (à supprimer après tests)
+class GameManager : public AbstractManager{ //Tmp : public (à supprimer après tests)
 
 private:
+
+    int server_socket;
     bool runningThread = false;
     pthread_t thr;
     int inputThread;
@@ -31,7 +33,7 @@ private:
 
 public:
 
-    GameManager(char* ip_addr, int port, int id, std::string username, App* app);
+    GameManager(char* ip_addr, int port, int socket, int id, std::string username, App* app);
 
     int getQuadrant() const;
 
