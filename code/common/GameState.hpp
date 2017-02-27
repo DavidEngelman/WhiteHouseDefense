@@ -83,6 +83,8 @@ public:
 
 
     void addPlayerState(PlayerState &state);
+
+    void deleteTower(Position &position, int &quadrant);
 };
 
 #endif

@@ -78,7 +78,7 @@ public:
     void addPlayerState(int player_id);
     void addPlayerState(int player_id, int team);
 
-    void deleteTower(Position position, int quadrant);
+    void deleteTower(Position& position, int& quadrant);
 };
 
 

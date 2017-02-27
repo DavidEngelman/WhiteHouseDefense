@@ -108,6 +108,14 @@ void GameState::addTower(AbstractTower * tower) {
     towers.push_back(tower);
 }
 
+void GameState::deleteTower(Position& position, int& quadrant){
+    for (AbstractTower *tower : getTowers()){
+        if (tower->getPosition() == position){
+            getPlayerStates()[quadrant].earnMoney(tower->getPrice() * PERCENTAGE_RECOVERED_MONEY);
+        }
+    }
+}
+
 GameState::~GameState() {
     for (AbstractTower* tower: towers){
         delete tower;
