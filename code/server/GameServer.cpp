@@ -34,13 +34,18 @@ void GameServer::processClientCommands() {
     Timer timer;
     timer.start();
     while (timer.elapsedTimeInSeconds() < NUM_SECONDS_TO_PLACE_TOWER) {
-        int client_socket_fd = client_sockets[get_readable_socket_index(client_sockets, 4)];
+        int client_index = get_readable_socket_index_with_timeout(client_sockets, 4, 4);
+        if (client_index < 0 || client_index > 4) return;
+
+        int client_socket_fd = client_sockets[client_index];
         std::cout << "Client socket in server: " << client_socket_fd << std::endl;
         get_and_process_command(client_socket_fd, message_buffer);
     }
 }
 
 void GameServer::get_and_process_command(int client_socket_fd, char *buffer) {
+//    int timeout = NUM_SECONDS_TO_PLACE_TOWER - timer.elapsedTimeInSeconds();
+//    receive_message_with_timeout(client_socket_fd, buffer, 5);
     receive_message(client_socket_fd, buffer);
     std::string command_type = get_command_type(buffer);
 
@@ -90,6 +95,7 @@ void GameServer::runWave() {
             gameEngine->showMap();
             // TODO: updateMap()
         } else {
+            
             sendGameStateToPlayers();
         }
         timer.reset();
@@ -153,14 +159,16 @@ void GameServer::createPlayerStates() const {
 void GameServer::sendTowerPhase() {
     for (PlayerConnection &playerConnection : playerConnections) {
         int socketFd = playerConnection.getSocket_fd();
-        send_message(socketFd, PLACING_TOWER);
+//        send_message(socketFd, PLACING_TOWER);
+        send_message(socketFd, "t");
     }
 }
 
 void GameServer::sendWavePhase() {
     for (PlayerConnection &playerConnection : playerConnections) {
         int socketFd = playerConnection.getSocket_fd();
-        send_message(socketFd, WAVE);
+//        send_message(socketFd, WAVE);
+        send_message(socketFd, "w");
     }
 }
 

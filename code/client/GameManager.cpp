@@ -57,9 +57,11 @@ void GameManager::run() {
     std::cout << "GameManager Running" << std::endl;
     gameUI.display(gameState);
     char server_msg_buff [BUFFER_SIZE];
+    std::cout << "Je suis apres le clear" << std::endl;
 
     while(1) {
         receive_message(server_socket, server_msg_buff);
+        std::cout << "Message: " << server_msg_buff << std::endl;
 
         if (strcmp(server_msg_buff, PLACING_TOWER) == 0 && is_alive()) {
             //////////
@@ -68,10 +70,12 @@ void GameManager::run() {
             /////////
         }else if (strcmp(server_msg_buff, WAVE) == 0){
             //TODO kill InputThread
+            std::cout << "Receive start wave signal" << std::endl;
         }
         else{
             //TODO parse GamesState sent from server
             //TODO update gamesState
+            std::cout << "Received game state" << std::endl;
 
             if (gameState.getIsGameOver()){
                 break;
@@ -87,6 +91,8 @@ void GameManager::unSerializeGameState(char* seriarlized_gamestate){
 }
 
 bool GameManager::is_alive() {
+    if (gameState.getPlayerStates().size() == 0) return true; // Pas encore recu gameState du server
+
     bool alive = false;
     for( PlayerState& playerState : gameState.getPlayerStates()){
         if (playerState.getPlayer_id() == player_id){

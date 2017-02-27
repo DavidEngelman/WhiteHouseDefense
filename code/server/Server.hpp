@@ -41,6 +41,8 @@ protected:
 
     int get_readable_socket_index(int *sockets, int num_sockets);
 
+    int get_readable_socket_index_with_timeout(int *sockets, int num_sockets, int timeout_val);
+
     std::string get_command_type(char* data);
 
 public:
