@@ -85,13 +85,7 @@ void GameManager::run() {
 }
 
 void GameManager::unSerializeGameState(char* seriarlized_gamestate){
-    std::cout<<"serveur gamestate: "<<seriarlized_gamestate<<std::endl;
-
-    GameState tmp = GameState();
-    gameState = tmp;
-
-
-
+    gameState = GameState();
 }
 
 bool GameManager::is_alive() {
