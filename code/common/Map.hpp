@@ -6,9 +6,9 @@
 #define GRASS "◼  "
 #define PATH "   "
 #define LIMIT "\033[34m◼\033[0m  "
-#define TOWER "\033[31m◼\033[0m  "
-#define NPC "\033[33m◼\033[0m  "
-#define BASE "\033[31m♜\033[0m  "
+#define TOWER "\033[31m♜\033[0m  "
+#define NPC "\033[33m✡\033[0m  "
+#define BASE "\033[31m♨\033[0m  "
 
 #define PATH_INT 0
 #define GRASS_INT -1
@@ -32,6 +32,7 @@ class GameState;
  * map matrix (the terrain, the background) and the gameState (which contains the changing parts of the game:
  * the towers and NPCs).
  */
+
 class Map {
 private:
     int matrix[SIZE][SIZE];
@@ -44,6 +45,7 @@ private:
     const bool isNextToPath(Position position);
     void copyQuarter();
     void basicMap();
+    void trumpMap();
 
 public:
     Map();

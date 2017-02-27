@@ -78,5 +78,5 @@ void MatchMaker::announceMatchStart(PlayerConnection playerConnection) {
     // lui signaler vers lequel il doit parler
 
     send_message(playerConnection.getSocket_fd(), GAME_STARTING_STRING);
-    send_data(playerConnection.getSocket_fd(), (char*)current_server_port, sizeof(int));
+    send_data(playerConnection.getSocket_fd(), (char*) (intptr_t)current_server_port, sizeof(int));
 }

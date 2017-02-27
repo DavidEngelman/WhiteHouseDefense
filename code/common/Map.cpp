@@ -10,6 +10,7 @@ Map::Map() {
 
 Map::Map(unsigned seed) {
     if (seed == 0) basicMap();
+    else if (seed == 1) trumpMap();
     else {
         srand(seed);
         generateRandomMatrix();
@@ -171,4 +172,36 @@ void Map::basicMap() {
 
 const bool Map::isPath(Position pos) {
     return matrix[pos.getY()][pos.getX()] == PATH_INT;
+}
+
+void Map::trumpMap() {
+    for (int y = 0; y < SIZE; y++) {
+        for (int x = 0; x < SIZE; x++) {
+            if (x == SIZE/2 and 1 <= y and y < SIZE-1) {
+                matrix[y][x] = PATH_INT;
+            } else if (y == SIZE/2 and 1 <= x and x < SIZE-1) {
+                matrix[y][x] = PATH_INT;
+            } else if (y == 1 and x >= SIZE/2 and x < SIZE-2) {
+                matrix[y][x] = PATH_INT;
+            } else if (y == 0 and x == SIZE-3) {
+                matrix[y][x] = PATH_INT;
+            } else if (y == SIZE-2 and x >= 2 and x < SIZE/2) {
+                matrix[y][x] = PATH_INT;
+            } else if (y == SIZE-1 and x == 2) {
+                matrix[y][x] = PATH_INT;
+            } else if (x == SIZE-2 and y >= SIZE/2 and y < SIZE-2) {
+                matrix[y][x] = PATH_INT;
+            } else if (x == SIZE-1 and y == SIZE-3) {
+                matrix[y][x] = PATH_INT;
+            } else if (x == 1 and y >= 2 and y < SIZE/2) {
+                matrix[y][x] = PATH_INT;
+            } else if (x == 0 and y == 2) {
+                matrix[y][x] = PATH_INT;
+            } else if (x == y or x + y == SIZE-1) {
+                matrix[y][x] = LIMIT_INT;
+            } else {
+                matrix[y][x] = GRASS_INT;
+            }
+        }
+    }
 }

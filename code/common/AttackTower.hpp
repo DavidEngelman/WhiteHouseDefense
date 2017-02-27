@@ -9,7 +9,7 @@
 // Je pense que ces différentes valeurs devraient être des attributs qui ne sont pas constants
 // vu qu'on devra pouvoir faire des updates des tours et donc augmenter ou diminuer ces valeurs
 const int ATTACK_TOWER_PRICE = 10;
-const int ATTACK_TOWER_RANGE = 3;
+const int ATTACK_TOWER_RANGE = 4;
 const int ATTACK_TOWER_DAMAGE = 20;
 
 class AttackTower : public AbstractTower {
