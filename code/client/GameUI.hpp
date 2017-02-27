@@ -18,6 +18,10 @@ public:
 	bool isBuyingTower();
     bool checkCoord(int x, int y);
 	void display(GameState& gameState);
+
+    std::string bool_to_string(bool my_bool);
+
+	void displayPlayerInfos(GameState &gameState, int &quadrant);
 };
 
 #endif

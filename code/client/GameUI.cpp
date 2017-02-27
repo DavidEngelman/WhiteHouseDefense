@@ -64,3 +64,18 @@ Position GameUI::getPosSellingTower() {
     return Position(x, y);
 }
 
+std::string GameUI::bool_to_string(bool my_bool){
+    return my_bool ? "true" : "false";
+}
+
+void GameUI::displayPlayerInfos(GameState& gameState, int& quadrant) {
+    int gold = gameState.getPlayerStates()[quadrant].getMoney();
+    int pnj_killed = gameState.getPlayerStates()[quadrant].getPnjKilled();
+    int hp = gameState.getPlayerStates()[quadrant].getHp();
+    bool isSupported = gameState.getPlayerStates()[quadrant].getIsSupported();
+
+    std::string infos = "Money: " + std::to_string(gold) + "\tNPC killed: " + std::to_string(pnj_killed)
+    +"\nHP: " + std::to_string(hp) + "\tSupported: " + bool_to_string(isSupported);
+
+    std::cout << infos << std::endl;
+}
