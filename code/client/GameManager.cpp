@@ -97,7 +97,7 @@ void GameManager::unSerializeGameState(char* seriarlized_gamestate){
     std::string part = "";
     unsigned count = 0; // count at which part we are
     for (char* c = seriarlized_gamestate; *c; ++c) {
-        if (*c == '-') {
+        if (*c == '!') {
             switch (count) {
                 case 0: // isGameOver
                     gameState.setIsGameOver(part == "true");
@@ -149,15 +149,12 @@ void GameManager::unSerializePlayerState(std::string serialized_playerstate) {
                 case 0: // Nothing to do
                     break;
                 case 1: // player_id
-                    std::cout << elem << std::endl;
                     player_id = std::stoi(elem);
                     break;
                 case 2: // money
-                    std::cout << elem << std::endl;
                     money = std::stoi(elem);
                     break;
                 case 3: // hp
-                    std::cout << elem << std::endl;
                     hp = std::stoi(elem);
                     break;
                 case 4: // isSupported
@@ -167,11 +164,9 @@ void GameManager::unSerializePlayerState(std::string serialized_playerstate) {
                     isWinner = elem == "true";
                     break;
                 case 6: // pnjKilled
-                    std::cout << elem << std::endl;
                     pnjKilled = std::stoi(elem);
                     break;
                 default: // team
-                    std::cout << elem << std::endl;
                     team = std::stoi(elem);
                     break;
             }
@@ -211,11 +206,9 @@ void GameManager::unSerializeTower(std::string serialized_tower) {
                     typeOfTower = elem;
                     break;
                 case 1: // X
-                    std::cout << elem << std::endl;
                     x = std::stoi(elem);
                     break;
                 default: // Y
-                    std::cout << elem << std::endl;
                     y = std::stoi(elem);
                     break;
             }
