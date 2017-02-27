@@ -4,8 +4,9 @@
 
 const bool DEBUG = true;
 
-GameServer::GameServer(int port, const std::vector<PlayerConnection> &playerConnections) :
+GameServer::GameServer(int port, std::vector<PlayerConnection> &playerConnections) :
 Server(port), playerConnections(playerConnections) {
+
     if (!DEBUG){
         for (int i = 0; i < 4; i++) {
             client_sockets[i] = playerConnections[i].getSocket_fd();

@@ -13,6 +13,11 @@ GameEngine::GameEngine(unsigned int mapSeed) : map(mapSeed),
  * Updates the game state by one tick.
  * Returns true if the wave (or game) is finished, false otherwise.
  */
+
+void GameEngine::assignPlayerToTeam(){
+    //TODO
+}
+
 bool GameEngine::update() {
     int numMilisecondsSinceStart = timerSinceWaveStart.elapsedTimeInMiliseconds();
     int numStepsToDo = (numMilisecondsSinceStart / STEP_DURATION_IN_MS) - numStepsDone;
