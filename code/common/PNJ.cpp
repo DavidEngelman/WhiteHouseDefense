@@ -1,14 +1,21 @@
 #include "PNJ.hpp"
 
 
+PNJ::PNJ(Position position, int healthPoints):
+        position(position), healthPoints(healthPoints),
+        movementSpeed(PNJ_STARTING_MOVESPEED), direction(direction),
+        last_position(Position(-1000,-1000)) {
+
+}
+
 PNJ::PNJ(int direction): position(Position(15, 15)), healthPoints(PNJ_STARTING_HEALTHPOINTS),
                          movementSpeed(PNJ_STARTING_MOVESPEED), direction(direction),
                          last_position(Position(-1000,-1000)) {}
 
+
 PNJ::PNJ(Position position, int healthPoints, int movementSpeed, Position last_pos, int direction) :
         position(position), healthPoints(healthPoints), movementSpeed(movementSpeed), last_position(last_pos),
         direction(direction) {}
-
 
 void PNJ::advance(Map& map) {
     Direction move;
@@ -29,7 +36,7 @@ void PNJ::advance(Map& map) {
     if (move.x > 1 || move.x < -1 || move.y > 1 || move.y < -1) return;
 
     // TODO: gerer le cas ou il est à la frontiere (ne rien faire)
-    
+
     // Les PNJS bougent à chaque tick (ce qui n'est pas forcement une bonne idée si le tick est trop rapide)
 
     Position new_position = Position(getPosition().getX() + move.x, getPosition().getY() + move.y);
@@ -80,10 +87,10 @@ Position PNJ::getPosition() const {
     return this->position;
 }
 
+
 void PNJ::setPosition(Position position){
     this->position = position;
 }
-
 
 bool PNJ::can_go_forward(Map& map) {
     Direction dir = get_forward_direction();
@@ -176,6 +183,7 @@ Direction PNJ::get_right_direction() {
     }
 }
 
+
 Direction PNJ::get_left_direction() {
     Direction move;
 
@@ -205,7 +213,6 @@ Direction PNJ::get_left_direction() {
 
     }
 }
-
 
 std::string PNJ::serialize() {std::string serialized_me;
 

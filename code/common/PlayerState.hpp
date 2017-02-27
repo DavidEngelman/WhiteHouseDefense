@@ -21,6 +21,8 @@ public:
     PlayerState(int id);
     PlayerState(int id, int team);
 
+	PlayerState(int _player_id, int _money, int _hp, bool _isSupported, bool _isWinner, int _pnjKilled, int _team );
+
 	std::string serialize();
 
 	int getHp();

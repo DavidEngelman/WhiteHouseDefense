@@ -23,7 +23,7 @@ private:
     // Si je l'initialise dans le constructeur, je suis obligé de garder la seed dans un field
     // pour l'envoyer au client (pendant la methode run), ce que je veux éviter
     GameEngine * gameEngine;
-    std::vector<PlayerConnection> playerConnections;
+    const std::vector<PlayerConnection> playerConnections;
     int client_sockets[4];
 
     void sendGameStateToPlayer(PlayerConnection &connection);
@@ -38,7 +38,7 @@ private:
 
 public:
 
-    GameServer(int port, std::vector<PlayerConnection> &playerConnections);
+    GameServer(int port, const std::vector<PlayerConnection> &playerConnections);
 
     void getReceivedChanges();
 
