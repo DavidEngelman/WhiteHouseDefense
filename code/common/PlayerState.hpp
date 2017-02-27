@@ -8,7 +8,8 @@ private:
 
 	int hp;
 	int money;
-	bool isSupported;
+	int team;
+    bool isSupported;
 	bool isWinner;
 
 	int player_id;
@@ -18,12 +19,15 @@ private:
 public:
 
     PlayerState(int id);
+    PlayerState(int id, int team);
 
 	std::string serialize();
 
 	int getHp();
 
 	void setHp(int hp);
+
+    int getTeam();
 
 	int getMoney();
 
