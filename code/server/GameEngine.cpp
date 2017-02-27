@@ -2,6 +2,8 @@
 
 const bool DEBUG = true;
 
+
+
 GameEngine::GameEngine(unsigned int mapSeed) : map(mapSeed),
                                                numOfPNJsPerWave(INITIAL_NUMBER_OF_PNJS_PER_WAVE) {
     timer.start();
@@ -19,7 +21,7 @@ bool GameEngine::update() {
         updatePlayerStates();
     }
     numStepsDone += numStepsToDo;
-    return gameState.isFinished() || gameState.isRoundFinished();
+    return gameState.getIsGameOver() || gameState.isRoundFinished();
 }
 
 void GameEngine::updateWaves() {
@@ -28,6 +30,7 @@ void GameEngine::updateWaves() {
     removeDeadPNJsFromWaves();
     movePNJsInWaves(waves);
     addPNJS(waves);
+    checkIfGameIsOver();
 }
 
 void GameEngine::updatePlayerStates() {
@@ -128,10 +131,6 @@ void GameEngine::increaseWaveDifficulty() {
     numOfPNJsPerWave += 1;
 }
 
-bool GameEngine::isGameFinished() {
-    return gameState.isFinished();
-}
-
 std::string *GameEngine::serializeGameState() {
     return gameState.serialize();
 }
@@ -176,4 +175,30 @@ void GameEngine::addTower(AbstractTower* tower, int quadrant) {
 
 void GameEngine::showMap() {
     map.display(gameState);
+}
+
+void GameEngine::checkIfGameIsOver() {
+    bool isOver = false;
+    std::string &mode = gameState.getMode();
+    if (mode == CLASSIC_MODE) {
+        isOver = gameState.IsOnlyOnePlayerAlive();
+    } else if (mode == TIMED_MODE) {
+        // TODO: check que le timer commence depuis le debut de la premiere vague
+        // au lieu de depuis la derniere vague
+        isOver = timer.elapsedTimeInSeconds() > TIMED_GAME_INTERVAL;
+    } else if (mode == TEAM_MODE) {
+        int numAlivePlayersInTeam1 = 0;
+        int numAlivePlayersInTeam2 = 0;
+        for (PlayerState& playerState: getGameState().getPlayerStates()) {
+            if (playerState.getTeam() == 1) numAlivePlayersInTeam1++;
+            else if (playerState.getTeam() == 2) numAlivePlayersInTeam2++;
+        }
+
+        isOver = ((numAlivePlayersInTeam1 == 0) || (numAlivePlayersInTeam2 == 0));
+    }
+    gameState.setIsGameOver(isOver);
+}
+
+bool GameEngine::isGameFinished() {
+    return gameState.getIsGameOver();
 }

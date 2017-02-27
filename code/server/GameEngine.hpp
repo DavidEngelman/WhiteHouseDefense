@@ -8,6 +8,8 @@
 static const int STEP_DURATION_IN_MS = 1000;
 static const int INITIAL_NUMBER_OF_PNJS_PER_WAVE = 5;
 
+const int TIMED_GAME_INTERVAL = 2 * 60; // 2 minutes
+
 class GameEngine {
 
 private:
@@ -54,8 +56,6 @@ public:
 
     void increaseWaveDifficulty();
 
-    bool isGameFinished();
-
     std::string *serializeGameState();
 
     void addTower(AbstractTower * tower, int quadrant);
@@ -64,6 +64,11 @@ public:
 
     void showMap();
 
+    void giveKill(PlayerState &playerState);
+
+    void checkIfGameIsOver();
+
+    bool isGameFinished();
     void addKillToStat(PlayerState &playerState);
 };
 
