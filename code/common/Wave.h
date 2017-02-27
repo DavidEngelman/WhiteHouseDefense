@@ -33,6 +33,7 @@ public:
     std::string serialize();
 
     void addPNJ();
+    void addPNJ(PNJ &pnj);
 
     void removeDeadPNJs();
 };

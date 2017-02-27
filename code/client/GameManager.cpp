@@ -114,7 +114,6 @@ void GameManager::unSerializeGameState(char* seriarlized_gamestate){
     unsigned count = 0; // count at which part we are
     for (char* c = seriarlized_gamestate; *seriarlized_gamestate; seriarlized_gamestate++) {
         if (*c == '-') {
-            //TODO : mettre la partie dans le gameState
             switch (count) {
                 case 0: // isGameOver
                     gameState.setIsGameOver(part == "true");
@@ -123,8 +122,10 @@ void GameManager::unSerializeGameState(char* seriarlized_gamestate){
                     unSerializePlayerStates(part);
                     break;
                 case 2: // Towers
+                    unSerializeTowers(part);
                     break;
                 default: // Waves
+
                     break;
             }
             part = "";
@@ -148,7 +149,6 @@ void GameManager::unSerializePlayerStates(std::string serialized_playerstates) {
 }
 
 void GameManager::unSerializePlayerState(std::string serialized_playerstate) {
-    //gameState.addPlayerState()
     std::string elem = "";
     unsigned count = 0;
     int player_id=0;
@@ -196,6 +196,116 @@ void GameManager::unSerializePlayerState(std::string serialized_playerstate) {
     gameState.addPlayerState(playerState);
 }
 
+void GameManager::unSerializeTowers(std::string serialized_towers) {
+    std::string serialized_tower = "";
+    for (char& c : serialized_towers) {
+        if (c == ';') {
+            unSerializeTower(serialized_tower);
+            serialized_tower = "";
+        } else {
+            serialized_tower += c;
+        }
+    }
+}
+
+void GameManager::unSerializeTower(std::string serialized_tower) {
+    std::string elem = "";
+    unsigned count = 0;
+
+    std::string typeOfTower="";
+    int x=0;
+    int y=0;
+    for (char& c : serialized_tower) {
+        if (c == ',') {
+            switch (count) {
+                case 0: // Type of Tower
+                    typeOfTower = elem;
+                    break;
+                case 1: // X
+                    x = std::stoi(elem);
+                    break;
+                default: // Y
+                    y = std::stoi(elem);
+                    break;
+            }
+            elem = "";
+            count++;
+        } else {
+            elem += c;
+        }
+    }
+
+    AbstractTower *tower;
+    tower = new AttackTower(Position(x,y)); // Faire avec un if, else if, else sur typeOfTower quand + de tours
+
+    gameState.addTower(tower);
+}
+
+void GameManager::unSerializeWaves(std::string serialized_waves) {
+    std::string serialized_wave = "";
+    for (char& c : serialized_waves) {
+        if (c == ';') {
+            unSerializeWave(serialized_wave);
+            serialized_wave = "";
+        } else {
+            serialized_wave += c;
+        }
+    }
+}
+
+void GameManager::unSerializeWave(std::string serialized_wave) {
+    std::string elem = "";
+    bool firstElem = true;
+
+    int quadrant=0;
+    Wave *wave = new Wave(quadrant);
+    for (char& c : serialized_wave) {
+        if (c == '|') {
+            if (firstElem) {
+                quadrant = elem.back() - '0';
+                wave = new Wave(quadrant);
+                firstElem = false;
+            } else {
+                unSerializePNJ(elem, wave);
+            }
+            elem = "";
+        } else {
+            elem += c;
+        }
+    }
+    gameState.addWave(*wave);
+}
+
+void GameManager::unSerializePNJ(std::string serialized_pnj, Wave *wave) {
+    std::string elem = "";
+    unsigned count = 0;
+
+    int x=0;
+    int y=0;
+    int health=0;
+    for (char& c : serialized_pnj) {
+        if (c == ',') {
+            switch (count) {
+                case 0: // X
+                    x = std::stoi(elem);
+                    break;
+                case 1:
+                    y = std::stoi(elem);
+                    break;
+                default:
+                    health = std::stoi(elem);
+                    break;
+            }
+            elem = "";
+            count++;
+        } else {
+            elem += c;
+        }
+    }
+    PNJ pnj = PNJ(Position(x, y), health, wave->getQuadrant());
+    wave->addPNJ(pnj);
+}
+
 bool GameManager::is_alive() {
     if (gameState.getPlayerStates().size() == 0) return true;
 
@@ -239,3 +349,4 @@ int GameManager::getQuadrantFromServer() {
 int GameManager::getQuadrant() const {
     return quadrant;
 }
+
