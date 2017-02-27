@@ -30,6 +30,8 @@ private:
     unsigned int getMapSeedFromServer() const;
 
     void unSerializeGameState(char* serialized_gamestate);
+    void unSerializePlayerStates(std::string serialized_playerstates);
+    void unSerializePlayerState(std::string serialized_playerstate);
 
 public:
 
