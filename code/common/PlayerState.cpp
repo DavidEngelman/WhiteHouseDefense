@@ -90,3 +90,7 @@ int PlayerState::getPnjKilled() const {
 void PlayerState::addOneKill() {
     pnjKilled += 1;
 }
+
+void PlayerState::setTeam(int teamNumber) {
+    team = teamNumber;
+}

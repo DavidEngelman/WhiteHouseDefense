@@ -56,4 +56,6 @@ public:
 
 	void addOneKill();
 
+	void setTeam(int teamNumber);
+
 };

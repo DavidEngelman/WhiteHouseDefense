@@ -15,7 +15,14 @@ GameEngine::GameEngine(unsigned int mapSeed) : map(mapSeed),
  */
 
 void GameEngine::assignPlayerToTeam(){
-    //TODO
+
+    int count = 0;
+    int team_number = 1;
+    for (PlayerState& ps : gameState.getPlayerStates()){
+        ps.setTeam(team_number);
+        count++;
+        if (count == 2) team_number++;
+    }
 }
 
 bool GameEngine::update() {
