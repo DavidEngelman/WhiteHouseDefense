@@ -125,7 +125,7 @@ void GameManager::unSerializeGameState(char* seriarlized_gamestate){
                     unSerializeTowers(part);
                     break;
                 default: // Waves
-
+                    unSerializeWave(part);
                     break;
             }
             part = "";
