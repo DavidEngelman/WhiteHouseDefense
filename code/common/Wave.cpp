@@ -7,6 +7,8 @@ Wave::Wave(int number_of_pnjs, int quadrant) :
 
 
 
+Wave::Wave(int quadrant): Wave(0, quadrant) {}
+
 std::string Wave::serialize() {
     /*
      * fill a string like this : Wave,quadrant,serialized(PNJ1),serialized(PNJ2),...;

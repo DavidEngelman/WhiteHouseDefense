@@ -16,6 +16,7 @@ private:
     int number_of_added_pnjs;
 public:
 
+    Wave(int quadrant); // Version client
     Wave(int number_of_pnjs, int quadrant);
     bool isComplete();
     int getQuadrant() const;
