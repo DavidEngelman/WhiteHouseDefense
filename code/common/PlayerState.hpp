@@ -11,7 +11,7 @@ private:
 	int team;
     bool isSupported;
 	bool isWinner;
-
+	int pnjKilled;
 	int player_id;
 
 	std::string bool_to_string(bool my_bool);
@@ -24,6 +24,8 @@ public:
 	std::string serialize();
 
 	int getHp();
+
+	int getPnjKilled() const;
 
 	void setHp(int hp);
 
@@ -49,5 +51,7 @@ public:
 
 	void decrease_hp(int amount);
     void increase_hp(int amount);
+
+	void setPnjKilled(int pnjKilled);
 
 };

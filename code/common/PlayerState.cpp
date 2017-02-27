@@ -78,3 +78,11 @@ void PlayerState::increase_hp(int amount) {
 int PlayerState::getTeam() {
     return team;
 }
+
+int PlayerState::getPnjKilled() const {
+    return pnjKilled;
+}
+
+void PlayerState::setPnjKilled(int pnjKilled) {
+    PlayerState::pnjKilled = pnjKilled;
+}
