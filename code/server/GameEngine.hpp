@@ -64,6 +64,8 @@ public:
 
     void showMap();
 
+    void giveKill(PlayerState &playerState);
+
     void checkIfGameIsOver();
 
     bool isGameFinished();
