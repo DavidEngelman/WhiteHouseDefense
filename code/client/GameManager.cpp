@@ -27,9 +27,11 @@ void *GameManager::input_thread() {
         int choice = gameUI.getChoice();
         if (choice == 1) {
             gameUI.display(gameState);
+            gameUI.displayPlayerInfos(gameState, quadrant);
             gameUI.displayTowerShop();
             int towerchoice = gameUI.getChoice();
             if (towerchoice == 1) {
+                gameUI.displayPlayerInfos(gameState, quadrant);
                 Position towerPos = gameUI.getPosBuyingTower();
                 if (checkValidity(towerPos, gameState)) {
                     std::cout << "ok" << std::endl;
@@ -38,10 +40,11 @@ void *GameManager::input_thread() {
                 }
             }
             gameUI.display(gameState);
-        } else if (choice == 2) {
+        }else if (choice == 2){
             gameUI.display(gameState);
+            gameUI.displayPlayerInfos(gameState, quadrant);
             Position toSell = gameUI.getPosSellingTower();
-            if (isSpaceAvailableForTower(gameState, toSell)) {
+            if (isSpaceAvailableForTower(gameState, toSell)){
                 gameState.deleteTower(toSell, quadrant);
                 sendSellRequest(toSell);
             }
@@ -75,7 +78,7 @@ bool GameManager::checkValidity(Position towerPos, GameState& gamestate) {
     bool validity = true;
     if (gameState.getPlayerStates()[quadrant].getMoney()  < ATTACK_TOWER_PRICE) { // if player has enough money
         validity = false;
-    }else if (!isSpaceAvailableForTower(gamestate, towerPos)) { // if a tower isn't already there
+    } else if (!isSpaceAvailableForTower(gamestate, towerPos)) { // if a tower isn't already there
         validity = false;
     } else if (Map::computeQuadrant(towerPos) != quadrant) { // if the position is in the right quadrant
         validity = false;
@@ -99,7 +102,6 @@ void GameManager::sendSellRequest(Position towerPos) {
 
 void GameManager::run() {
     gameUI.display(gameState);
-    gameUI.display(quadrant);
     gameUI.displayPlayerInfos(gameState, quadrant);
     char server_msg_buff [BUFFER_SIZE];
 
