@@ -46,7 +46,7 @@ void *GameManager::input_thread() {
             gameUI.display(gameState);
             gameUI.displayPlayerInfos(gameState, quadrant);
             Position toSell = gameUI.getPosSellingTower();
-            if (isSpaceAvailableForTower(gameState, toSell)){
+            if (isTowerInPosition(gameState, toSell)){
                 gameState.deleteTower(toSell, quadrant);
                 sendSellRequest(toSell);
             }
@@ -57,11 +57,11 @@ void *GameManager::input_thread() {
     }
 }
 
-bool GameManager::isSpaceAvailableForTower(GameState &gameState, Position towerPos){
-    bool validity = true;
+bool GameManager::isTowerInPosition(GameState &gameState, Position towerPos){
+    bool validity = false;
     for (auto tower : gameState.getTowers()){
         if (tower->getQuadrant() == quadrant && tower->getPosition() == towerPos){
-            validity = false;
+            validity = true;
             break;
         }
     }
@@ -81,7 +81,7 @@ bool GameManager::checkValidity(Position towerPos, GameState& gamestate) {
     bool validity = true;
     if (gameState.getPlayerStates()[quadrant].getMoney()  < ATTACK_TOWER_PRICE) { // if player has enough money
         validity = false;
-    } else if (!isSpaceAvailableForTower(gamestate, towerPos)) { // if a tower isn't already there
+    } else if (isTowerInPosition(gamestate, towerPos)) { // if a tower isn't already there
         validity = false;
     } else if (Map::computeQuadrant(towerPos) != quadrant) { // if the position is in the right quadrant
         validity = false;
