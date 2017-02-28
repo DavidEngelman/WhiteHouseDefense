@@ -36,7 +36,7 @@ void UpdateStatsCommand::parse(char *data) {
     i++;
 
     // Extracts isWinner
-    while (data[i] != ',') {
+    while (data[i] != ';') {
 
         isWinner += data[i];
         i++;
