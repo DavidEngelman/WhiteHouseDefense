@@ -16,7 +16,7 @@ Map::Map(unsigned seed) {
     }
 }
 
-const void Map::display(GameState& gameState) {
+const void Map::display(GameState& gameState) const {
     /*
      * Display the map on the screen using the gameState for drawing the towers and the pnjs
      */
@@ -191,7 +191,7 @@ void Map::basicMap() {
     }
 }
 
-const bool Map::isPath(Position pos) {
+const bool Map::isPath(Position pos) const {
     return matrix[pos.getY()][pos.getX()] == PATH_INT;
 }
 
@@ -230,7 +230,7 @@ void Map::trumpMap() {
     }
 }
 
-const int Map::computeQuadrant(Position pos) {
+const int Map::computeQuadrant(Position pos) const {
     int realY = SIZE - pos.getY();
     int realX = pos.getX();
 
