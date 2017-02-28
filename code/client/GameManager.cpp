@@ -97,6 +97,7 @@ void GameManager::sendSellRequest(Position towerPos) {
 void GameManager::run() {
     gameUI.display(gameState);
     gameUI.display(quadrant);
+    gameUI.displayPlayerInfos(gameState, quadrant);
     char server_msg_buff [BUFFER_SIZE];
 
     while(1) {
@@ -111,6 +112,8 @@ void GameManager::run() {
         else{
             unSerializeGameState(server_msg_buff);
             gameUI.display(gameState);
+            gameUI.displayPlayerInfos(gameState, quadrant);
+
 
             if (gameState.getIsGameOver()){
                 break;
