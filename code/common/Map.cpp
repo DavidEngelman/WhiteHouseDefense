@@ -121,12 +121,12 @@ void Map::initMap() {
     }
 }
 
-bool Map::generateQuarterMap(Position end) {
+void Map::generateQuarterMap(Position end) {
     /*
      * Generate a random path on the up quarter
      */
     if (end.getY() == 0) {
-        return true;
+        return;
     }
 
     std::vector<Position> possibleWays;
@@ -140,12 +140,9 @@ bool Map::generateQuarterMap(Position end) {
 
     unsigned int way = (unsigned int) (rand() % possibleWays.size());
 
-    // TODO : voir s'il n'y a pas des trucs inutiles dans cette fonction
     int save = matrix[possibleWays[way].getY()][possibleWays[way].getX()];
     matrix[possibleWays[way].getY()][possibleWays[way].getX()] = PATH_INT;
-    if (generateQuarterMap(possibleWays[way])) return true;
-    matrix[possibleWays[way].getY()][possibleWays[way].getX()] = save;
-    return false;
+    generateQuarterMap(possibleWays[way]);
 }
 
 const bool Map::isNextToPath(Position pos) {

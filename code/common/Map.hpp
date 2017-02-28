@@ -41,7 +41,7 @@ private:
 
     void generateRandomMatrix();
     void initMap();
-    bool generateQuarterMap(Position position);
+    void generateQuarterMap(Position position);
     const bool isNextToPath(Position position);
     void copyQuarter();
     void basicMap();
