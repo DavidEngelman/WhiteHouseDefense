@@ -13,9 +13,27 @@ void MainManager::run() {
     mainUI.display();
     switch (mainUI.select()) {
         case 1: {
-            GameLauncher * game = new  GameLauncher(5556, server_ip_address, player_id, username, master_app);
-            master_app->transition(game);
-            break;
+            mainUI.displayGameModes();
+            switch(mainUI.selectGameMode()){
+                case 1:{
+                    GameLauncher * game = new  GameLauncher(5556, server_ip_address, player_id, username, master_app, CLASSIC_MODE);
+                    master_app->transition(game);
+                    break;
+                }
+                case 2:{
+                    GameLauncher * game = new  GameLauncher(5556, server_ip_address, player_id, username, master_app, TIMED_MODE);
+                    master_app->transition(game);
+                    break;
+
+                }
+                case 3:{
+                    GameLauncher * game = new  GameLauncher(5556, server_ip_address, player_id, username, master_app, TEAM_MODE);
+                    master_app->transition(game);
+                    break;
+                }
+
+            }
+
         }
         case 2: {
             ProfileManager * profile = new ProfileManager(5555, server_ip_address, player_id, username, master_app);
