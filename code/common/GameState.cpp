@@ -43,10 +43,6 @@ std::string* GameState::serialize() {
     return serialized_me;
 }
 
-//void GameState::addTower(AbstractTower tower) {
-//    towers.push_back(tower);
-//}
-
 bool GameState::IsOnlyOnePlayerAlive() {
     int number_of_players_alive = 0;
     for (PlayerState &ps: player_states) {

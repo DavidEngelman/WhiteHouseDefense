@@ -43,8 +43,7 @@ public:
     std::vector<Wave> &getWaves();
 
     void addWave(Wave wave);
-    
-    // Removes the current waves (which should be empty)
+
     void clearWaves();
 
     std::vector<AbstractTower *> &getTowers();
@@ -75,7 +74,6 @@ public:
 
     int getWinnerClassic();
 
-//    void addTower(AbstractTower tower);
     bool isPlayerAlive(const int quadrant);
 
 
