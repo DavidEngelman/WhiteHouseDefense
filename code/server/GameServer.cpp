@@ -232,14 +232,13 @@ void GameServer::updatePlayerStatsOnAccountServer(int socket_fd) {
     int p_id, pnj_killed;
     bool is_winner;
 
-    send_message(account_server_socket, "update;");
 
     for (PlayerState& ps : gameEngine->getGameState().getPlayerStates()){
         p_id = ps.getPlayer_id();
         pnj_killed = ps.getPnjKilled();
         is_winner = ps.getIsWinner();
 
-        std::string message = std::to_string(p_id)+ "," + std::to_string(pnj_killed) + "," +
+        std::string message = "Update," + std::to_string(p_id)+ "," + std::to_string(pnj_killed) + "," +
                 bool_to_string(is_winner) + ";";
 
         send_message(account_server_socket, message.c_str());
