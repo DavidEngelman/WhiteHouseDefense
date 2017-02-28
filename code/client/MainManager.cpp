@@ -22,6 +22,7 @@ void MainManager::run() {
             std::string gameMode = gameModes[mainUI.selectGameMode() - 1];
             GameLauncher * game = new GameLauncher(5556, server_ip_address, player_id, username, master_app, gameMode);
             master_app->transition(game);
+            break;
         }
         case 2: {
             ProfileManager * profile = new ProfileManager(5555, server_ip_address, player_id, username, master_app);
