@@ -5,6 +5,7 @@
 #define PROJET_UPDATESTATSCOMMAND_H
 
 #include "Command.hpp"
+#include "../common/tools.hpp"
 
 
 class UpdateStatsCommand: public Command {
@@ -13,8 +14,6 @@ private:
     int playerId;
     int pnjKilled;
     bool isWinner;
-
-    bool stringToBool(std::string str);
 
 public:
     void parse(char *data) override;
