@@ -51,6 +51,7 @@ public:
     Map(unsigned seed);
     const void display(GameState& gameState);
     const bool isPath(Position pos);
+    static const int computeQuadrant(Position pos);
 };
 
 #endif

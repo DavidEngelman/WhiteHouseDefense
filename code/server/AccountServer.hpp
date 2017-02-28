@@ -3,6 +3,7 @@
 #include "Database.hpp"
 #include "../common/Credentials.h"
 #include "LoginRegisterCommand.hpp"
+#include "UpdateStatsCommand.h"
 #include "Command.hpp"
 #include "PlayerConnection.hpp"
 #include <algorithm>
@@ -86,7 +87,7 @@ public:
     bool handle_acceptFriendRequest(int client_sock_fd, std::string requester,std::string toAccept );
     bool handle_declineFriendRequest(int client_sock_fd, std::string requester, std::string toDecline);
 
-    bool handle_accoutUpdate(int client_sock_fd);
+    bool handle_accountUpdate(int client_sock_fd);
 
 
 };

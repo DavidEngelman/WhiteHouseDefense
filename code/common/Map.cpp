@@ -229,3 +229,23 @@ void Map::trumpMap() {
         }
     }
 }
+
+const int Map::computeQuadrant(Position pos) {
+    int realY = SIZE - pos.getY();
+    int realX = pos.getX();
+
+    // La diagonale croissante est celle qui respecte y = x,
+    // et la diagonale decroissante est celle qui respecte y = -x
+    bool aboveGrowingDiagonal = realY > realX;
+    bool aboveDecreasingDiagonal = realY > -realX;
+
+    if (aboveGrowingDiagonal && aboveDecreasingDiagonal){
+        return NORTH;
+    } else if (!aboveGrowingDiagonal && !aboveDecreasingDiagonal){
+        return SOUTH;
+    } else if (aboveGrowingDiagonal && !aboveDecreasingDiagonal){
+        return WEST;
+    } else {
+        return EAST;
+    }
+}

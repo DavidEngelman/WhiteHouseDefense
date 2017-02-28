@@ -317,7 +317,7 @@ void AccountServer::get_and_process_command(int client, char* message_buffer) {
             }
 
         } else if (command_type == "update"){
-            ok = handle_accoutUpdate(client);
+            ok = handle_accountUpdate(client);
 
         }
     }
@@ -337,13 +337,14 @@ bool AccountServer::is_player_already_connected(PlayerConnection& player){
 }
 
 
-bool AccountServer::handle_accoutUpdate(int client_sock_fd) {
+bool AccountServer::handle_accountUpdate(int client_sock_fd) {
     char message[BUFFER_SIZE];
     for (int i = 0; i < 4; ++i) {
         //Recevoir les infos des 4 joueurs de la game
         receive_message(client_sock_fd, message);
-        //TODO faire la methode updateAfterGameStats dans la database
-        //mydatabase.updateAfterGameStats(message);
+        UpdateStatsCommand command;
+        command.parse(message);
+        myDatabase.updateAfterGameStats(command.getPlayerId(), command.getPnjKilled(), command.getIsWinner());
 
     }
 }
