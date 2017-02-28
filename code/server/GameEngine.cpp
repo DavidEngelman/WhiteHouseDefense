@@ -66,7 +66,7 @@ void GameEngine::dealDamage(std::vector<Wave> &waves) {
         Wave &wave = getWaveInSameQuadrant(*tower, waves);
         bool killedPNJ = tower->shoot(wave);
         if (killedPNJ && !DEBUG) {
-            PlayerState player_state = getPlayerStateForWave(wave);
+            PlayerState& player_state = getPlayerStateForWave(wave);
             addKillToStat(player_state);
             giveGold(player_state);
         }
