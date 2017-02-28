@@ -28,6 +28,7 @@ public:
     std::string bool_to_string(bool my_bool);
 
 	void displayPlayerInfos(GameState &gameState, int quadrant);
+    void sortRanking(PlayerState players[]);
 };
 
 #endif

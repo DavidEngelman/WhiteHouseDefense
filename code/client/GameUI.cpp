@@ -118,3 +118,20 @@ int GameUI::getChoice() {
     }
     return x;
 }
+
+void GameUI::displayGameOver(GameState &gamestate) {
+    std::vector<PlayerState> players;
+    PlayerState bestPlayer;
+    int previousMax = 999999999;
+    for (int i = 0; i < 3; i++) {
+        int maxScore = -1;
+        for (auto &player : gamestate.getPlayerStates()) {
+            if (player.getPnjKilled() > maxScore && player.getPnjKilled() < previousMax) {
+                maxScore = player.getPnjKilled();
+                bestPlayer = player;
+            }
+        }
+        previousMax = maxScore;
+        std::cout<< i+1 << ". ID : " + bestPlayer.getPlayer_id()<<" , NPC killed : "<<bestPlayer.getPnjKilled()<<std::endl;
+    }
+}
