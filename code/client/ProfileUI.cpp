@@ -60,5 +60,6 @@ void ProfileUI::displayProfile(std::string profile) {
         pnjKilled += profile[counter];
         counter++;
     }
-    std::cout<< "Pnj Killed : "<<victories<<std::endl;
+    std::cout<< "Pnj Killed : "<<pnjKilled<<std::endl;
+
 }

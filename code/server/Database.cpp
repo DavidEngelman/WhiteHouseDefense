@@ -275,7 +275,7 @@ void Database::updateAfterGameStats(int id, int pnjKilled, bool isWinner) {
     command += "UPDATE Accounts SET pnjKilled = pnjKilled + " + std::to_string(pnjKilled) + ", victories = victories + "
                + std::to_string(victoryIncrement) + " WHERE id = " + std::to_string(id) + ";";
 
-
+    std::cout << "Commande : " << command << std::endl;
     char* query = (char *) command.c_str();
 
     exec(query, NULL, 0, zErrMsg);

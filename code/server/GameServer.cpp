@@ -171,7 +171,9 @@ void GameServer::run() {
         runWave();
     }
 
+    updatePlayerStatsOnAccountServer();
     delete gameEngine;
+
 
     //handleEndOfGame();
 }
@@ -253,7 +255,7 @@ int GameServer::connectToAccountServer() {
 
 }
 
-void GameServer::updatePlayerStatsOnAccountServer(int socket_fd) {
+void GameServer::updatePlayerStatsOnAccountServer() {
     int account_server_socket = connectToAccountServer();
     int p_id, pnj_killed;
     bool is_winner;

@@ -15,7 +15,7 @@
 
 static const int NUM_PLAYERS = 4;
 
-static const int NUM_SECONDS_TO_PLACE_TOWER = 30;
+static const int NUM_SECONDS_TO_PLACE_TOWER = 10;
 static const int INTERVAL_BETWEEN_SENDS_IN_MS = 200;
 
 class   GameServer : public Server {
@@ -68,7 +68,7 @@ public:
     void createPlayerStates() const;
 
     int connectToAccountServer();
-    void updatePlayerStatsOnAccountServer(int socket_fd);
+    void updatePlayerStatsOnAccountServer();
 
     void deleteTowerInGameState(TowerCommand command);
 
