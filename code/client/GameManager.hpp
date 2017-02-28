@@ -59,6 +59,8 @@ public:
     bool sendRequest(Position towerPos, std::string towerType);
 
     int getQuadrantFromServer();
+
+    void getInitialGameStateFromServer();
 };
 
 #endif

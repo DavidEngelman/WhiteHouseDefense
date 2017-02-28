@@ -128,7 +128,8 @@ void GameServer::run() {
 
     if (!DEBUG){
         sendMapSeedToClients(mapSeed);
-        SendQuadrantToClients();
+        sendQuadrantToClients();
+        sendInitialGameStae();
     }
     //ici__je met des tours n importe ou pour test a la bourrain
 /*    AttackTower * attackTower = new AttackTower(Position(14,8));
@@ -213,13 +214,17 @@ void GameServer::sendMapSeedToClients(unsigned int mapSeed) {
     }
 }
 
-void GameServer::SendQuadrantToClients() {
+void GameServer::sendQuadrantToClients() {
     unsigned int quadrant = 0;
     for (PlayerConnection& playerConnection : playerConnections) {
         int socketFd = playerConnection.getSocket_fd();
         send_data(socketFd, (char *) &quadrant, sizeof(unsigned int));
         quadrant++;
     }
+}
+
+void GameServer::sendInitialGameStae() {
+    sendGameStateToPlayers();
 }
 
 int GameServer::connectToAccountServer() {

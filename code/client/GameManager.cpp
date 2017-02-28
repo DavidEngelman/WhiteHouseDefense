@@ -11,7 +11,9 @@ GameManager::GameManager(char *ip_addr, int port, int socket, int id, std::strin
         player_id(id), player_username(username),
         gameUI(getMapSeedFromServer()), // L'ordre est important parce qu'on fait des
         quadrant(getQuadrantFromServer()) // recv. Ne pas changer l'ordre!
-{}
+{
+    getInitialGameStateFromServer();
+}
 
 void GameManager::come_back_to_menu() { // À appeler quand la partie est terminée
     MainManager *menu_manager = new MainManager(server_ip_address, player_id, player_username, master_app);
@@ -339,5 +341,12 @@ int GameManager::getQuadrantFromServer() {
 
 int GameManager::getQuadrant() const {
     return quadrant;
+}
+
+void GameManager::getInitialGameStateFromServer() {
+    char buffer[BUFFER_SIZE];
+    receive_message(server_socket, buffer);
+    unSerializeGameState(buffer);
+
 }
 

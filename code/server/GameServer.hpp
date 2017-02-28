@@ -62,7 +62,7 @@ public:
     void sendTowerPhase();
     void sendWavePhase();
 
-    void SendQuadrantToClients();
+    void sendQuadrantToClients();
 
     void createPlayerStates() const;
 
@@ -70,6 +70,8 @@ public:
     void updatePlayerStatsOnAccountServer(int socket_fd);
 
     void deleteTowerInGameState(TowerCommand command);
+
+    void sendInitialGameStae();
 };
 
 #endif
