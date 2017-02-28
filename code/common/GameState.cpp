@@ -2,11 +2,11 @@
 
 GameState::GameState() : isGameOver(false){}
 
-void GameState::DecreasePlayerHp(PlayerState &player, int amount) {
+void GameState::DecreasePlayerHp(PlayerState &player, int amount) { //TODO ça sert à rien cette fonction, non ?
     player.decrease_hp(amount);
 }
 
-void GameState::IncreasePlayerHp(PlayerState &player, int amount) {
+void GameState::IncreasePlayerHp(PlayerState &player, int amount) { //TODO idem qu'au dessus
     player.decrease_hp(amount);
 }
 
@@ -107,10 +107,11 @@ void GameState::addTower(AbstractTower * tower) {
 }
 
 void GameState::deleteTower(Position& position, int& quadrant){
-    for (AbstractTower *tower : getTowers()){
-        if (tower->getPosition() == position){
-            getPlayerStates()[quadrant].earnMoney(tower->getPrice() * PERCENTAGE_RECOVERED_MONEY);
-            // TODO fix that: towers.erase(std::remove(getTowers().begin(), getTowers().end(), tower));
+    std::vector<AbstractTower*>::iterator iter;
+    for (iter = getTowers().begin(); iter != getTowers().end(); iter++){
+        if ((*iter)->getPosition() == position) {
+            getPlayerStates()[quadrant].earnMoney((*iter)->getPrice() * PERCENTAGE_RECOVERED_MONEY);
+            towers.erase(iter);
         }
     }
 }
