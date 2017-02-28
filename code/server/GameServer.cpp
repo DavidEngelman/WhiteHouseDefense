@@ -47,6 +47,7 @@ void GameServer::get_and_process_command(int client_socket_fd, char *buffer) {
 //    int timeout = NUM_SECONDS_TO_PLACE_TOWER - timer.elapsedTimeInSeconds();
 //    receive_message_with_timeout(client_socket_fd, buffer, 5);
     receive_message(client_socket_fd, buffer);
+    std::cout << "Received command: " << buffer;
     std::string command_type = get_command_type(buffer);
 
     if (command_type == PLACE_TOWER_COMMAND_STRING) {
