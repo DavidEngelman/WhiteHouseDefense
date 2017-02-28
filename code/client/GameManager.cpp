@@ -110,7 +110,7 @@ void GameManager::run() {
     gameUI.displayPlayerInfos(gameState, quadrant);
     char server_msg_buff [BUFFER_SIZE];
 
-    while(1) {
+    while(!gameState.getIsGameOver()) {
         receive_message(server_socket, server_msg_buff);
         //std::cout << "Message: " << server_msg_buff << std::endl;
         if (strcmp(server_msg_buff, PLACING_TOWER) == 0 && is_alive()) {
@@ -129,8 +129,8 @@ void GameManager::run() {
                 break;
             }
         }
-
     }
+
     come_back_to_menu();
 
 }

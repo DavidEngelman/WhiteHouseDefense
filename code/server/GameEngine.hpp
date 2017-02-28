@@ -72,7 +72,12 @@ public:
 
     void checkIfGameIsOver();
 
+    void declareWinner(GameState& gamestate);
+
+    void declareWinnerTeam(GameState& gameState);
+
     bool isGameFinished();
+
     void addKillToStat(PlayerState &playerState);
 
     void addPlayerState(int player_id);
@@ -81,6 +86,7 @@ public:
     void deleteTower(Position& position, int& quadrant);
 
     void upgradeTower(Position &position, int &quadrant);
+
 };
 
 

@@ -23,6 +23,8 @@ public:
 	void displayTowerShop();
 	void displaySellingMenu();
 
+	void displayGameOver(GameState& gamestate);
+
     std::string bool_to_string(bool my_bool);
 
 	void displayPlayerInfos(GameState &gameState, int quadrant);

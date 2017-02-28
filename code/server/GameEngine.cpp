@@ -194,9 +194,11 @@ void GameEngine::checkIfGameIsOver() {
     std::cout << mode << std::endl;
     if (mode == CLASSIC_MODE) {
         isOver = (gameState.numPlayersAlive() <= 1);
+        declareWinner(gameState);
         std::cout << "IS_OVER" << isOver;
     } else if (mode == TIMED_MODE) {
         isOver = timerSinceGameStart.elapsedTimeInSeconds() > TIMED_GAME_INTERVAL;
+        declareWinner(gameState);
     } else if (mode == TEAM_MODE) {
         int numAlivePlayersInTeam1 = 0;
         int numAlivePlayersInTeam2 = 0;
@@ -206,9 +208,49 @@ void GameEngine::checkIfGameIsOver() {
         }
 
         isOver = ((numAlivePlayersInTeam1 == 0) || (numAlivePlayersInTeam2 == 0));
+        declareWinnerTeam(gameState);
     }
+
     gameState.setIsGameOver(isOver);
 }
+
+void GameEngine::declareWinner(GameState& gamestate){
+    int maxScore = -1;
+    for(auto player : gamestate.getPlayerStates()){
+        if (player.getPnjKilled() > maxScore){
+            maxScore = player.getPnjKilled();
+        }
+    }
+    for(auto player : gamestate.getPlayerStates()){
+        if (player.getPnjKilled() == maxScore){
+            player.setIsWinner(true);
+        }
+    }
+}
+
+void GameEngine::declareWinnerTeam(GameState& gameState){
+    int team1Score = 0;
+    int team2Score = 0;
+    for (auto player : gameState.getPlayerStates() ){
+        if (player.getTeam() == 1){
+            team1Score += player.getPnjKilled();
+        }else{
+            team2Score += player.getPnjKilled();
+        }
+    }
+    for(auto player : gameState.getPlayerStates()){
+        if (team1Score > team2Score){
+            if (player.getTeam() == 1){
+                player.setIsWinner(true);
+            }
+        }else if (team2Score > team1Score){
+            if (player.getTeam() == 2){
+                player.setIsWinner(true);
+            }
+        }
+    }
+}
+
 
 bool GameEngine::isGameFinished() {
     return gameState.getIsGameOver();
