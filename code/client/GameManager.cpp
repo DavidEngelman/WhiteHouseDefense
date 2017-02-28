@@ -339,7 +339,8 @@ void GameManager::unSerializePNJ(std::string serialized_pnj, Wave *wave) {
 }
 
 bool GameManager::is_alive() {
-    if (gameState.getPlayerStates().size() == 0) return true;
+    bool gameNotInitialized = gameState.getPlayerStates().size() == 0;
+    if (gameNotInitialized) return true;
 
     bool alive = false;
     for( PlayerState& playerState : gameState.getPlayerStates()){
