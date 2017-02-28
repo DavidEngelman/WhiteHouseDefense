@@ -2,11 +2,11 @@
 
 GameState::GameState() : isGameOver(false){}
 
-void GameState::DecreasePlayerHp(PlayerState &player, int amount) {
+void GameState::DecreasePlayerHp(PlayerState &player, int amount) { //TODO ça sert à rien cette fonction, non ?
     player.decrease_hp(amount);
 }
 
-void GameState::IncreasePlayerHp(PlayerState &player, int amount) {
+void GameState::IncreasePlayerHp(PlayerState &player, int amount) { //TODO idem qu'au dessus
     player.decrease_hp(amount);
 }
 
