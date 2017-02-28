@@ -8,7 +8,7 @@
 #define LIMIT "\033[34m◼\033[0m  "
 #define TOWER "\033[31m♜\033[0m  "
 #define NPC "\033[33m☪\033[0m  "
-#define BASE "\033[31m⌂\033[0m  "
+#define BASE "\033[31m✈\033[0m  "
 
 #define PATH_INT 0
 #define GRASS_INT -1
