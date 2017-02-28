@@ -21,38 +21,34 @@ void GameManager::come_back_to_menu() { // À appeler quand la partie est termin
 }
 
 void *GameManager::input_thread() {
-    //runningThread = true;
-    pthread_cond_t dummy;
-    pthread_mutex_t mutex;
-    gameUI.displayPosingPhase();
-    int choice = gameUI.getChoice();
-    if (choice == 1) {
-        gameUI.display(gameState);
-        gameUI.displayTowerShop();
-        int towerchoice = gameUI.getChoice();
-        if (towerchoice == 1) {
-            Position towerPos = gameUI.getPosBuyingTower();
-            if (checkValidity(towerPos, gameState)) {
-                std::cout << "ok" << std::endl;
-                gameState.addTower(new AttackTower(Position(towerPos.getX(), towerPos.getY())));
-                sendBuyRequest(towerPos, "AttackTower");
+
+    while (1) {
+        gameUI.displayPosingPhase();
+        int choice = gameUI.getChoice();
+        if (choice == 1) {
+            gameUI.display(gameState);
+            gameUI.displayTowerShop();
+            int towerchoice = gameUI.getChoice();
+            if (towerchoice == 1) {
+                Position towerPos = gameUI.getPosBuyingTower();
+                if (checkValidity(towerPos, gameState)) {
+                    std::cout << "ok" << std::endl;
+                    gameState.addTower(new AttackTower(Position(towerPos.getX(), towerPos.getY())));
+                    sendBuyRequest(towerPos, "AttackTower");
+                }
             }
-        }
-        gameUI.display(gameState);
-    }else if (choice == 2){
-        gameUI.display(gameState);
-        Position toSell = gameUI.getPosSellingTower();
-        if (isSpaceAvailableForTower(gameState, toSell)){
-            gameState.deleteTower(toSell, quadrant);
-            sendSellRequest(toSell);
-        }
-        gameUI.display(gameState);
+            gameUI.display(gameState);
+        } else if (choice == 2) {
+            gameUI.display(gameState);
+            Position toSell = gameUI.getPosSellingTower();
+            if (isSpaceAvailableForTower(gameState, toSell)) {
+                gameState.deleteTower(toSell, quadrant);
+                sendSellRequest(toSell);
+            }
+            gameUI.display(gameState);
 
-    }// else if upgrade tower
-
-    //runningThread = false;
-    pthread_cond_wait(&dummy, &mutex);
-
+        }// else if upgrade tower
+    }
 }
 
 bool GameManager::isSpaceAvailableForTower(GameState &gameState, Position towerPos){
@@ -77,9 +73,9 @@ void *GameManager::staticInputThread(void *self){
  */
 bool GameManager::checkValidity(Position towerPos, GameState& gamestate) {
     bool validity = true;
-    if (gameState.getPlayerStates()[quadrant].getMoney() == 0 /* <  towerprice  */) { // if player has enough money
+    if (gameState.getPlayerStates()[quadrant].getMoney()  > 5) { // if player has enough money
         validity = false;
-    } else if (!isSpaceAvailableForTower(gamestate, towerPos)) { // if a tower isn't already there
+    }else if (!isSpaceAvailableForTower(gamestate, towerPos)) { // if a tower isn't already there
         validity = false;
     } else if (Map::computeQuadrant(towerPos) != quadrant) { // if the position is in the right quadrant
         validity = false;
