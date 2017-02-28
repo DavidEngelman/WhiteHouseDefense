@@ -31,6 +31,7 @@ void *GameManager::input_thread() {
             gameUI.displayTowerShop();
             int towerchoice = gameUI.getChoice();
             if (towerchoice == 1) {
+                gameUI.display(gameState);
                 gameUI.displayPlayerInfos(gameState, quadrant);
                 Position towerPos = gameUI.getPosBuyingTower();
                 if (checkValidity(towerPos, gameState)) {
@@ -40,6 +41,7 @@ void *GameManager::input_thread() {
                 }
             }
             gameUI.display(gameState);
+            gameUI.displayPlayerInfos(gameState, quadrant);
         }else if (choice == 2){
             gameUI.display(gameState);
             gameUI.displayPlayerInfos(gameState, quadrant);
@@ -49,6 +51,7 @@ void *GameManager::input_thread() {
                 sendSellRequest(toSell);
             }
             gameUI.display(gameState);
+            gameUI.displayPlayerInfos(gameState, quadrant);
 
         }// else if upgrade tower
     }

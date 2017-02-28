@@ -82,7 +82,8 @@ void GameUI::displayPlayerInfos(GameState &gameState, int quadrant) {
     +"\nHP: " + std::to_string(hp) + "\tSupported: " + bool_to_string(isSupported) +
     "\t Quadrant: " + QUADRANT_NAMES[quadrant];
 
-    std::cout << infos << std::endl;
+    std::cout << std::endl << infos << std::endl;
+    std::cout << std::endl;
 }
 void GameUI::displayPosingPhase() {
 
@@ -94,6 +95,7 @@ void GameUI::displayPosingPhase() {
 
 }
 void GameUI::displayTowerShop() {
+    std::cout << "You can choose among the following towers: " << std::endl;
     std::cout << "1. Attacktower " << std::endl;
     // put other tower types here
     std::cout << std::endl;
