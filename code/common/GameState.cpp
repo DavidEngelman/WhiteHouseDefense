@@ -37,14 +37,15 @@ std::string* GameState::serialize() {
     return serialized_me;
 }
 
-bool GameState::IsOnlyOnePlayerAlive() {
+
+int GameState::numPlayersAlive() {
     int number_of_players_alive = 0;
     for (PlayerState &ps: player_states) {
         if (ps.getHp() > 0) {
             number_of_players_alive++;
         }
     }
-    return (number_of_players_alive == 1);
+    return number_of_players_alive;
 }
 
 int GameState::getWinnerClassic() {
@@ -57,6 +58,8 @@ int GameState::getWinnerClassic() {
     return -1;
 }
 
+
+
 bool GameState::isRoundFinished() {
     for (Wave &wave: waves) {
         if ( !wave.isComplete()) {
@@ -65,8 +68,6 @@ bool GameState::isRoundFinished() {
     }
     return true;
 }
-
-
 
 std::vector<Wave> &GameState::getWaves() {
     return waves;
@@ -113,6 +114,8 @@ void GameState::deleteTower(Position& position, int& quadrant){
     }
 }
 
+
+
 void GameState::upgradeTower(Position &position, int &quadrant) {
     for (AbstractTower *tower : getTowers()){
         if (tower->getPosition() == position){
@@ -120,8 +123,6 @@ void GameState::upgradeTower(Position &position, int &quadrant) {
         }
     }
 }
-
-
 
 GameState::~GameState() {
     for (AbstractTower* tower: towers){
