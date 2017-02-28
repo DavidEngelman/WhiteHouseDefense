@@ -30,7 +30,7 @@ private:
 
 public:
 
-    GameEngine(unsigned int mapSeed);
+    GameEngine(unsigned int mapSeed, std::string mode);
 
     bool update();
 

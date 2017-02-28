@@ -31,6 +31,7 @@ public:
 
 
     GameState();
+    GameState(std::string mode);
 
     ~GameState();
 
@@ -54,7 +55,8 @@ public:
 
     std::string * serialize();
 
-    bool IsOnlyOnePlayerAlive();
+    int numPlayersAlive();
+
 
     void DecreasePlayerHp(PlayerState &player, int amount);
 

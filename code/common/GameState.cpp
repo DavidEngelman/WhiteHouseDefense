@@ -1,7 +1,9 @@
+#include <iostream>
 #include "GameState.hpp"
 #include "tools.hpp"
 
 GameState::GameState() : isGameOver(false){}
+GameState::GameState(std::string mode) : mode(mode), isGameOver(false) {}
 
 void GameState::DecreasePlayerHp(PlayerState &player, int amount) { //TODO ça sert à rien cette fonction, non ?
     player.decrease_hp(amount);
@@ -37,14 +39,16 @@ std::string* GameState::serialize() {
     return serialized_me;
 }
 
-bool GameState::IsOnlyOnePlayerAlive() {
+
+int GameState::numPlayersAlive() {
     int number_of_players_alive = 0;
     for (PlayerState &ps: player_states) {
         if (ps.getHp() > 0) {
             number_of_players_alive++;
         }
     }
-    return (number_of_players_alive == 1);
+    std::cout << "NUM_PLAYER_ALIVE" << number_of_players_alive << std::endl;
+    return number_of_players_alive;
 }
 
 int GameState::getWinnerClassic() {
@@ -57,6 +61,8 @@ int GameState::getWinnerClassic() {
     return -1;
 }
 
+
+
 bool GameState::isRoundFinished() {
     for (Wave &wave: waves) {
         if ( !wave.isComplete()) {
@@ -65,8 +71,6 @@ bool GameState::isRoundFinished() {
     }
     return true;
 }
-
-
 
 std::vector<Wave> &GameState::getWaves() {
     return waves;
@@ -108,9 +112,12 @@ void GameState::deleteTower(Position& position, int& quadrant){
             float amountPaidBack = (*iter)->getPrice() * PERCENTAGE_RECOVERED_MONEY;
             getPlayerStates()[quadrant].earnMoney((int) amountPaidBack);
             towers.erase(iter);
+            break;
         }
     }
 }
+
+
 
 void GameState::upgradeTower(Position &position, int &quadrant) {
     for (AbstractTower *tower : getTowers()){
@@ -119,8 +126,6 @@ void GameState::upgradeTower(Position &position, int &quadrant) {
         }
     }
 }
-
-
 
 GameState::~GameState() {
     for (AbstractTower* tower: towers){

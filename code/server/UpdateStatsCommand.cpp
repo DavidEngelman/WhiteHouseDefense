@@ -16,7 +16,7 @@ bool UpdateStatsCommand::getIsWinner() {
 }
 
 void UpdateStatsCommand::parse(char *data) {
-    std::string id, pnjKilled, isWinner;
+    std::string id, pnj_killed, is_winner;
 
     int i = extract_action(data);
 
@@ -30,7 +30,7 @@ void UpdateStatsCommand::parse(char *data) {
     // Extracts pnjKilled
     while (data[i] != ',') {
 
-        pnjKilled += data[i];
+        pnj_killed += data[i];
         i++;
     }
     i++;
@@ -38,14 +38,14 @@ void UpdateStatsCommand::parse(char *data) {
     // Extracts isWinner
     while (data[i] != ';') {
 
-        isWinner += data[i];
+        is_winner += data[i];
         i++;
     }
     i++; // passe la virgule
 
     playerId = stoi(id);
-    pnjKilled = stoi(pnjKilled);
-    isWinner = stringToBool(isWinner);
+    pnjKilled = stoi(pnj_killed);
+    isWinner = stringToBool(is_winner);
 
 }
 
