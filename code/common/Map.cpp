@@ -16,7 +16,7 @@ Map::Map(unsigned seed) {
     }
 }
 
-const void Map::display(GameState& gameState) {
+const void Map::display(GameState& gameState) const {
     /*
      * Display the map on the screen using the gameState for drawing the towers and the pnjs
      */
@@ -121,12 +121,12 @@ void Map::initMap() {
     }
 }
 
-bool Map::generateQuarterMap(Position end) {
+void Map::generateQuarterMap(Position end) {
     /*
      * Generate a random path on the up quarter
      */
     if (end.getY() == 0) {
-        return true;
+        return;
     }
 
     std::vector<Position> possibleWays;
@@ -140,12 +140,9 @@ bool Map::generateQuarterMap(Position end) {
 
     unsigned int way = (unsigned int) (rand() % possibleWays.size());
 
-    // TODO : voir s'il n'y a pas des trucs inutiles dans cette fonction
     int save = matrix[possibleWays[way].getY()][possibleWays[way].getX()];
     matrix[possibleWays[way].getY()][possibleWays[way].getX()] = PATH_INT;
-    if (generateQuarterMap(possibleWays[way])) return true;
-    matrix[possibleWays[way].getY()][possibleWays[way].getX()] = save;
-    return false;
+    generateQuarterMap(possibleWays[way]);
 }
 
 const bool Map::isNextToPath(Position pos) {
@@ -194,7 +191,7 @@ void Map::basicMap() {
     }
 }
 
-const bool Map::isPath(Position pos) {
+const bool Map::isPath(Position pos) const {
     return matrix[pos.getY()][pos.getX()] == PATH_INT;
 }
 
@@ -230,5 +227,25 @@ void Map::trumpMap() {
                 matrix[y][x] = GRASS_INT;
             }
         }
+    }
+}
+
+const int Map::computeQuadrant(Position pos) const {
+    int realY = SIZE - pos.getY();
+    int realX = pos.getX();
+
+    // La diagonale croissante est celle qui respecte y = x,
+    // et la diagonale decroissante est celle qui respecte y = -x
+    bool aboveGrowingDiagonal = realY > realX;
+    bool aboveDecreasingDiagonal = realY > -realX;
+
+    if (aboveGrowingDiagonal && aboveDecreasingDiagonal){
+        return NORTH;
+    } else if (!aboveGrowingDiagonal && !aboveDecreasingDiagonal){
+        return SOUTH;
+    } else if (aboveGrowingDiagonal && !aboveDecreasingDiagonal){
+        return WEST;
+    } else {
+        return EAST;
     }
 }

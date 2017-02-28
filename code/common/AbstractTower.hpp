@@ -21,8 +21,6 @@ protected:
     Position position;
     int level;
 
-    const int computeQuadrant();
-
 public:
 
     AbstractTower(Position position, int price, int radius);
