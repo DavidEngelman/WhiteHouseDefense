@@ -44,8 +44,6 @@ private:
     void generateQuarterMap(Position position);
     const bool isNextToPath(Position position);
     void copyQuarter();
-    void basicMap();
-    void trumpMap();
 
 public:
     Map(unsigned seed);
