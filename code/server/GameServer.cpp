@@ -143,7 +143,7 @@ void GameServer::run() {
     // Creer les playerState
     createPlayerStates();
 
-    if (!DEBUG)
+    if (!DEBUG){
         sendMapSeedToClients(mapSeed);
         sendQuadrantToClients();
         sendInitialGameStae();
