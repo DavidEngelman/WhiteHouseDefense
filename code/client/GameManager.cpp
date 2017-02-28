@@ -135,7 +135,9 @@ void GameManager::run() {
                 break;
             }
         }
+
     }
+    come_back_to_menu();
 
 }
 
@@ -319,15 +321,12 @@ void GameManager::unSerializePNJ(std::string serialized_pnj, Wave *wave) {
         if (c == ',') {
             switch (count) {
                 case 0: // X
-                    std::cout << elem << std::endl;
                     x = std::stoi(elem);
                     break;
                 case 1:
-                    std::cout << elem << std::endl;
                     y = std::stoi(elem);
                     break;
                 default:
-                    std::cout << elem << std::endl;
                     health = std::stoi(elem);
                     break;
             }
