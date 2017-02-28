@@ -19,7 +19,10 @@ void GameManager::come_back_to_menu() { // À appeler quand la partie est termin
 }
 
 void *GameManager::input_thread() {
-    runningThread = true;
+    //runningThread = true;
+    pthread_cond_t dummy;
+    pthread_mutex_t mutex;
+
     std::cout << "1. Buy tower " << std::endl;
     std::cout << "2. Sell tower " << std::endl;
     std::cout << "3. Upgrade tower " << std::endl;
@@ -42,7 +45,9 @@ void *GameManager::input_thread() {
         }
         gameUI.display(gameState);
     }
-    runningThread = false;
+    //runningThread = false;
+    pthread_cond_wait(&dummy, &mutex);
+
 }
 
 void *GameManager::staticInputThread(void *self){
