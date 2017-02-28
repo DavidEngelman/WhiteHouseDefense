@@ -27,25 +27,31 @@ void *GameManager::input_thread() {
         int choice = gameUI.getChoice();
         if (choice == 1) {
             gameUI.display(gameState);
+            gameUI.displayPlayerInfos(gameState, quadrant);
             gameUI.displayTowerShop();
             int towerchoice = gameUI.getChoice();
             if (towerchoice == 1) {
+                gameUI.display(gameState);
+                gameUI.displayPlayerInfos(gameState, quadrant);
                 Position towerPos = gameUI.getPosBuyingTower();
                 if (checkValidity(towerPos, gameState)) {
                     std::cout << "ok" << std::endl;
-                    gameState.addTower(new AttackTower(Position(towerPos.getX(), towerPos.getY())));
+                    gameState.addTower(new AttackTower(Position(towerPos.getX(), towerPos.getY())), quadrant);
                     sendBuyRequest(towerPos, "AttackTower");
                 }
             }
             gameUI.display(gameState);
-        } else if (choice == 2) {
+            gameUI.displayPlayerInfos(gameState, quadrant);
+        }else if (choice == 2){
             gameUI.display(gameState);
+            gameUI.displayPlayerInfos(gameState, quadrant);
             Position toSell = gameUI.getPosSellingTower();
-            if (isSpaceAvailableForTower(gameState, toSell)) {
+            if (isSpaceAvailableForTower(gameState, toSell)){
                 gameState.deleteTower(toSell, quadrant);
                 sendSellRequest(toSell);
             }
             gameUI.display(gameState);
+            gameUI.displayPlayerInfos(gameState, quadrant);
 
         }// else if upgrade tower
     }
@@ -73,9 +79,9 @@ void *GameManager::staticInputThread(void *self){
  */
 bool GameManager::checkValidity(Position towerPos, GameState& gamestate) {
     bool validity = true;
-    if (gameState.getPlayerStates()[quadrant].getMoney()  < 5) { // if player has enough money
+    if (gameState.getPlayerStates()[quadrant].getMoney()  < ATTACK_TOWER_PRICE) { // if player has enough money
         validity = false;
-    }else if (!isSpaceAvailableForTower(gamestate, towerPos)) { // if a tower isn't already there
+    } else if (!isSpaceAvailableForTower(gamestate, towerPos)) { // if a tower isn't already there
         validity = false;
     } else if (Map::computeQuadrant(towerPos) != quadrant) { // if the position is in the right quadrant
         validity = false;
@@ -85,13 +91,21 @@ bool GameManager::checkValidity(Position towerPos, GameState& gamestate) {
 
 
 void GameManager::sendBuyRequest(Position towerPos, std::string towerType) {
-    std::string message = PLACE_TOWER_COMMAND_STRING + "," + towerType + "," + std::to_string(towerPos.getX()) + std::to_string(towerPos.getY())+";";
+    std::string message = PLACE_TOWER_COMMAND_STRING
+                          + "," + std::to_string(quadrant)
+                          + "," + towerType
+                          + "," + std::to_string(towerPos.getX())
+                          + "," + std::to_string(towerPos.getY())+";";
     send_message(server_socket, message.c_str());
 }
 
 void GameManager::sendSellRequest(Position towerPos) {
     std::string type = "NULL";
-    std::string message = DELETE_TOWER_COMMAND_STRING + "," + type + std::to_string(towerPos.getX()) + std::to_string(towerPos.getY())+";";
+    std::string message = DELETE_TOWER_COMMAND_STRING
+                          + "," + std::to_string(quadrant)
+                          + "," + type
+                          + "," + std::to_string(towerPos.getX())
+                          + "," + std::to_string(towerPos.getY())+";";
     send_message(server_socket, message.c_str());
 }
 
@@ -99,7 +113,6 @@ void GameManager::sendSellRequest(Position towerPos) {
 
 void GameManager::run() {
     gameUI.display(gameState);
-    gameUI.display(quadrant);
     gameUI.displayPlayerInfos(gameState, quadrant);
     char server_msg_buff [BUFFER_SIZE];
 
@@ -219,7 +232,7 @@ void GameManager::unSerializeTowers(std::string serialized_towers) {
     std::string serialized_tower = "";
     for (char& c : serialized_towers) {
         if (c == ';') {
-            unSerializeTower(serialized_tower);
+            unSerializeTower(serialized_tower + c);
             serialized_tower = "";
         } else {
             serialized_tower += c;
@@ -243,12 +256,14 @@ void GameManager::unSerializeTower(std::string serialized_tower) {
                 case 1: // X
                     x = std::stoi(elem);
                     break;
-                default: // Y
-                    y = std::stoi(elem);
-                    break;
             }
+
             elem = "";
             count++;
+
+        }else if(c == ';'){
+            y = std::stoi(elem);
+
         } else {
             elem += c;
         }
@@ -257,7 +272,7 @@ void GameManager::unSerializeTower(std::string serialized_tower) {
     AbstractTower *tower;
     tower = new AttackTower(Position(x,y)); // Faire avec un if, else if, else sur typeOfTower quand + de tours
 
-    gameState.addTower(tower);
+    gameState.addTower(tower, quadrant);
 }
 
 void GameManager::unSerializeWaves(std::string serialized_waves) {
@@ -329,7 +344,8 @@ void GameManager::unSerializePNJ(std::string serialized_pnj, Wave *wave) {
 }
 
 bool GameManager::is_alive() {
-    if (gameState.getPlayerStates().size() == 0) return true;
+    bool gameNotInitialized = gameState.getPlayerStates().size() == 0;
+    if (gameNotInitialized) return true;
 
     bool alive = false;
     for( PlayerState& playerState : gameState.getPlayerStates()){

@@ -72,7 +72,7 @@ std::string GameUI::bool_to_string(bool my_bool){
     return my_bool ? "true" : "false";
 }
 
-void GameUI::displayPlayerInfos(GameState& gameState, int& quadrant) {
+void GameUI::displayPlayerInfos(GameState &gameState, int quadrant) {
     int gold = gameState.getPlayerStates()[quadrant].getMoney();
     int pnj_killed = gameState.getPlayerStates()[quadrant].getPnjKilled();
     int hp = gameState.getPlayerStates()[quadrant].getHp();
@@ -80,24 +80,25 @@ void GameUI::displayPlayerInfos(GameState& gameState, int& quadrant) {
 
     std::string infos = "Money: " + std::to_string(gold) + "\tNPC killed: " + std::to_string(pnj_killed)
     +"\nHP: " + std::to_string(hp) + "\tSupported: " + bool_to_string(isSupported) +
-    "\t Quadrant: " + std::to_string(quadrant);
+    "\t Quadrant: " + QUADRANT_NAMES[quadrant];
 
-    std::cout << infos << std::endl;
+    std::cout << std::endl << infos << std::endl;
+    std::cout << std::endl;
 }
 void GameUI::displayPosingPhase() {
 
+    std::cout << "You can: " << std::endl;
     std::cout << "1. Buy tower " << std::endl;
     std::cout << "2. Sell tower " << std::endl;
     std::cout << "3. Upgrade tower " << std::endl;
     std::cout << std::endl;
 
-    std::cout << "Your choice :   ";
 }
 void GameUI::displayTowerShop() {
+    std::cout << "You can choose among the following towers: " << std::endl;
     std::cout << "1. Attacktower " << std::endl;
-    std::cout << std::endl;
     // put other tower types here
-    std::cout << "Your choice :   ";
+    std::cout << std::endl;
 }
 
 int GameUI::getChoice() {

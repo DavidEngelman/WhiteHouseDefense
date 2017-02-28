@@ -1,4 +1,5 @@
 #include "GameState.hpp"
+#include "tools.hpp"
 
 GameState::GameState() : isGameOver(false){}
 
@@ -10,19 +11,12 @@ void GameState::IncreasePlayerHp(PlayerState &player, int amount) { //TODO idem 
     player.decrease_hp(amount);
 }
 
-std::string GameState::bool_to_string(bool my_bool){ //TODO la meme fonction se trouve dans playerState
-    return my_bool ? "true" : "false";
-}
-
 std::string* GameState::serialize() {
     std::string * serialized_me = new std::string();
 
     *serialized_me += bool_to_string(isGameOver) + "!";
 
     for (PlayerState & pstate: player_states) {
-        // C'est un peu bizarre comme fonction. Intuitivement, on dirait qu'il va
-        // mettre le resultat dans serialized_me, au lieu de faire un append.
-        // C'est ce que j'ai pensé quand j'ai vu ça
         *serialized_me += pstate.serialize();
     }
 
@@ -102,7 +96,8 @@ bool GameState::isPlayerAlive(const int quadrant) {
     return player_states[quadrant].getHp() > 0;
 }
 
-void GameState::addTower(AbstractTower * tower) {
+void GameState::addTower(AbstractTower *tower, int &quadrant) {
+    getPlayerStates()[quadrant].spendMoney(tower->getPrice());
     towers.push_back(tower);
 }
 
@@ -110,7 +105,8 @@ void GameState::deleteTower(Position& position, int& quadrant){
     std::vector<AbstractTower*>::iterator iter;
     for (iter = getTowers().begin(); iter != getTowers().end(); iter++){
         if ((*iter)->getPosition() == position) {
-            getPlayerStates()[quadrant].earnMoney((*iter)->getPrice() * PERCENTAGE_RECOVERED_MONEY);
+            float amountPaidBack = (*iter)->getPrice() * PERCENTAGE_RECOVERED_MONEY;
+            getPlayerStates()[quadrant].earnMoney((int) amountPaidBack);
             towers.erase(iter);
         }
     }

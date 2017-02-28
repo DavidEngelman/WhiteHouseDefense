@@ -48,7 +48,7 @@ public:
 
     std::vector<AbstractTower *> &getTowers();
 
-    void addTower(AbstractTower *tower);
+    void addTower(AbstractTower *tower, int& quadrant);
 
     std::vector<PlayerState> &getPlayerStates();
 
@@ -75,9 +75,6 @@ public:
     int getWinnerClassic();
 
     bool isPlayerAlive(const int quadrant);
-
-
-    std::string bool_to_string(bool my_bool);
 
 
     void addPlayerState(PlayerState &state);
