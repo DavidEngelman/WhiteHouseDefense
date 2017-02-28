@@ -8,15 +8,11 @@ Map::Map(unsigned seed) {
      * Constructor used to build the same map for the server and all the clients
      * because the server send the seed to all the players instead of sending the entire map
      */
-    if (seed == 0) basicMap();
-    else if (seed == 1) trumpMap();
-    else {
-        srand(seed);
-        generateRandomMatrix();
-    }
+    srand(seed);
+    generateRandomMatrix();
 }
 
-const void Map::display(GameState& gameState) {
+const void Map::display(GameState& gameState) const {
     /*
      * Display the map on the screen using the gameState for drawing the towers and the pnjs
      */
@@ -121,31 +117,30 @@ void Map::initMap() {
     }
 }
 
-bool Map::generateQuarterMap(Position end) {
+void Map::generateQuarterMap(Position end) {
     /*
      * Generate a random path on the up quarter
      */
     if (end.getY() == 0) {
-        return true;
+        return;
     }
 
     std::vector<Position> possibleWays;
     Position nextToEnd(end.getX(), end.getY()-1);
-    if (matrix[nextToEnd.getY()][nextToEnd.getX()] != LIMIT_INT && !isNextToPath(nextToEnd)) possibleWays.push_back(nextToEnd);
+    if (matrix[nextToEnd.getY()][nextToEnd.getX()] != LIMIT_INT && !isNextToPath(nextToEnd))
+        possibleWays.push_back(nextToEnd);
     nextToEnd.setY(end.getY());
     nextToEnd.setX(end.getX()-1);
-    if (matrix[nextToEnd.getY()][nextToEnd.getX()] != LIMIT_INT && !isNextToPath(nextToEnd)) possibleWays.push_back(nextToEnd);
+    if (matrix[nextToEnd.getY()][nextToEnd.getX()] != LIMIT_INT && !isNextToPath(nextToEnd))
+        possibleWays.push_back(nextToEnd);
     nextToEnd.setX(end.getX()+1);
-    if (matrix[nextToEnd.getY()][nextToEnd.getX()] != LIMIT_INT && !isNextToPath(nextToEnd)) possibleWays.push_back(nextToEnd);
+    if (matrix[nextToEnd.getY()][nextToEnd.getX()] != LIMIT_INT && !isNextToPath(nextToEnd))
+        possibleWays.push_back(nextToEnd);
 
     unsigned int way = (unsigned int) (rand() % possibleWays.size());
 
-    // TODO : voir s'il n'y a pas des trucs inutiles dans cette fonction
-    int save = matrix[possibleWays[way].getY()][possibleWays[way].getX()];
     matrix[possibleWays[way].getY()][possibleWays[way].getX()] = PATH_INT;
-    if (generateQuarterMap(possibleWays[way])) return true;
-    matrix[possibleWays[way].getY()][possibleWays[way].getX()] = save;
-    return false;
+    generateQuarterMap(possibleWays[way]);
 }
 
 const bool Map::isNextToPath(Position pos) {
@@ -175,62 +170,8 @@ void Map::copyQuarter() {
     }
 }
 
-void Map::basicMap() {
-    /*
-     * Draw the map in the shape of a simple cross
-     */
-    for (int y = 0; y < SIZE; y++) {
-        for (int x = 0; x < SIZE; x++) {
-            if (x == SIZE/2 and 0 <= y and y < SIZE) {
-                matrix[y][x] = PATH_INT;
-            } else if (y == SIZE/2 and 0 <= x and x < SIZE) {
-                matrix[y][x] = PATH_INT;
-            } else if (x == y or x + y == SIZE-1) {
-                matrix[y][x] = LIMIT_INT;
-            } else {
-                matrix[y][x] = GRASS_INT;
-            }
-        }
-    }
-}
-
-const bool Map::isPath(Position pos) {
+const bool Map::isPath(Position pos) const {
     return matrix[pos.getY()][pos.getX()] == PATH_INT;
-}
-
-void Map::trumpMap() {
-    /*
-     * Draw the map in the shape of the Swastika
-     */
-    for (int y = 0; y < SIZE; y++) {
-        for (int x = 0; x < SIZE; x++) {
-            if (x == SIZE/2 and 1 <= y and y < SIZE-1) {
-                matrix[y][x] = PATH_INT;
-            } else if (y == SIZE/2 and 1 <= x and x < SIZE-1) {
-                matrix[y][x] = PATH_INT;
-            } else if (y == 1 and x >= SIZE/2 and x < SIZE-2) {
-                matrix[y][x] = PATH_INT;
-            } else if (y == 0 and x == SIZE-3) {
-                matrix[y][x] = PATH_INT;
-            } else if (y == SIZE-2 and x >= 2 and x < SIZE/2) {
-                matrix[y][x] = PATH_INT;
-            } else if (y == SIZE-1 and x == 2) {
-                matrix[y][x] = PATH_INT;
-            } else if (x == SIZE-2 and y >= SIZE/2 and y < SIZE-2) {
-                matrix[y][x] = PATH_INT;
-            } else if (x == SIZE-1 and y == SIZE-3) {
-                matrix[y][x] = PATH_INT;
-            } else if (x == 1 and y >= 2 and y < SIZE/2) {
-                matrix[y][x] = PATH_INT;
-            } else if (x == 0 and y == 2) {
-                matrix[y][x] = PATH_INT;
-            } else if (x == y or x + y == SIZE-1) {
-                matrix[y][x] = LIMIT_INT;
-            } else {
-                matrix[y][x] = GRASS_INT;
-            }
-        }
-    }
 }
 
 const int Map::computeQuadrant(Position pos) {

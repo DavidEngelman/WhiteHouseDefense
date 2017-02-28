@@ -8,7 +8,7 @@
 #define LIMIT "\033[34m◼\033[0m  "
 #define TOWER "\033[31m♜\033[0m  "
 #define NPC "\033[33m☪\033[0m  "
-#define BASE "\033[31m⌂\033[0m  "
+#define BASE "\033[31m✈\033[0m  "
 
 #define PATH_INT 0
 #define GRASS_INT -1
@@ -41,16 +41,14 @@ private:
 
     void generateRandomMatrix();
     void initMap();
-    bool generateQuarterMap(Position position);
+    void generateQuarterMap(Position position);
     const bool isNextToPath(Position position);
     void copyQuarter();
-    void basicMap();
-    void trumpMap();
 
 public:
     Map(unsigned seed);
-    const void display(GameState& gameState);
-    const bool isPath(Position pos);
+    const void display(GameState& gameState) const;
+    const bool isPath(Position pos) const;
     static const int computeQuadrant(Position pos);
 };
 

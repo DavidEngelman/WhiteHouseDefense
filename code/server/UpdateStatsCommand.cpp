@@ -49,9 +49,3 @@ void UpdateStatsCommand::parse(char *data) {
 
 }
 
-bool UpdateStatsCommand::stringToBool(std::string str) {
-    if (str == "true")
-        return true;
-    else
-        return false;
-}
