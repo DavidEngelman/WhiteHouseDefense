@@ -230,7 +230,7 @@ void Map::trumpMap() {
     }
 }
 
-const int Map::computeQuadrant(Position pos) const {
+const int Map::computeQuadrant(Position pos) {
     int realY = SIZE - pos.getY();
     int realX = pos.getX();
 
