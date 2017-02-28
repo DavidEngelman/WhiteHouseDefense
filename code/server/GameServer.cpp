@@ -65,6 +65,12 @@ void GameServer::get_and_process_command(int client_socket_fd, char *buffer) {
         deleteTowerInGameState(command);
     }
 
+    else if (command_type == UPGRADE_TOWER_COMMAND_STRING) {
+        TowerCommand command;
+        command.parse(buffer);
+        upgradeTowerInGameState(command);
+    }
+
 }
 
 void GameServer::addTowerInGameState(TowerCommand &command) {
@@ -90,6 +96,13 @@ void GameServer::deleteTowerInGameState(TowerCommand command) {
     Position position = command.getPosition();
     int quadrant = command.getPlayerQuadrant();
     gameEngine->deleteTower(position, quadrant);
+}
+
+void GameServer::upgradeTowerInGameState(TowerCommand command) {
+    Position position = command.getPosition();
+    int quadrant = command.getPlayerQuadrant();
+    gameEngine->upgradeTower(position, quadrant);
+
 }
 
 
@@ -257,3 +270,5 @@ void GameServer::updatePlayerStatsOnAccountServer(int socket_fd) {
 
 
 }
+
+

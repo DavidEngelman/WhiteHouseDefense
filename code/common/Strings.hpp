@@ -11,6 +11,8 @@
 
 static const std::string PLACE_TOWER_COMMAND_STRING =  "PlaceTower";
 static const std::string DELETE_TOWER_COMMAND_STRING  = "DeleteTower";
+static const std::string UPGRADE_TOWER_COMMAND_STRING = "UpgradeTower";
+
 #define SETUP_GAME "SetupGame"
 #define END_OF_GAME "end"
 
