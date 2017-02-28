@@ -34,7 +34,7 @@ void GameServer::processClientCommands() {
     Timer timer;
     timer.start();
     while (timer.elapsedTimeInSeconds() < NUM_SECONDS_TO_PLACE_TOWER) {
-        int client_index = get_readable_socket_index_with_timeout(client_sockets, 4, 5);
+        int client_index = get_readable_socket_index_with_timeout(client_sockets, 4, 30);
         if (client_index < 0 || client_index > 4) return;
 
         int client_socket_fd = client_sockets[client_index];
@@ -131,13 +131,13 @@ void GameServer::run() {
         SendQuadrantToClients();
     }
     //ici__je met des tours n importe ou pour test a la bourrain
-    AttackTower * attackTower = new AttackTower(Position(14,8));
+/*    AttackTower * attackTower = new AttackTower(Position(14,8));
     attackTower->upgrade(); // Exemple d'upgrade d'une tour
     gameEngine->addTower(attackTower, 0);
     AttackTower * attackTower2 = new AttackTower(Position(17,2));
     gameEngine->addTower(attackTower2, 0);
     AttackTower * attackTower3 = new AttackTower(Position(20,1));
-    gameEngine->addTower(attackTower3, 0);
+    gameEngine->addTower(attackTower3, 0);*/
 
     std::cout << "gameEngine->isGameFinished() = " << gameEngine->isGameFinished() << std::endl;
     while (!gameEngine->isGameFinished()) {
