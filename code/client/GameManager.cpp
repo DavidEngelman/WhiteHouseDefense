@@ -33,6 +33,7 @@ void *GameManager::input_thread() {
         if (towerchoice == 1) {
             Position towerPos = gameUI.getPosBuyingTower();
             if (checkValidity(towerPos, gameState)) {
+                std::cout << "ok" << std::endl;
                 gameState.addTower(new AttackTower(Position(towerPos.getX(), towerPos.getY())));
                 sendBuyRequest(towerPos, "AttackTower");
             }
