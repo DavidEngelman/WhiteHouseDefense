@@ -3,12 +3,11 @@
 #include <iostream>
 #include <ctime>
 
-Map::Map() {
-    srand((unsigned) time(0));
-    generateRandomMatrix();
-}
-
 Map::Map(unsigned seed) {
+    /*
+     * Constructor used to build the same map for the server and all the clients
+     * because the server send the seed to all the players instead of sending the entire map
+     */
     if (seed == 0) basicMap();
     else if (seed == 1) trumpMap();
     else {
@@ -18,6 +17,9 @@ Map::Map(unsigned seed) {
 }
 
 const void Map::display(GameState& gameState) {
+    /*
+     * Display the map on the screen using the gameState for drawing the towers and the pnjs
+     */
     std::vector<AbstractTower*> &towers = gameState.getTowers();
     std::vector<Wave> &waves = gameState.getWaves();
     system("clear");
@@ -88,6 +90,9 @@ const void Map::display(GameState& gameState) {
 }
 
 void Map::generateRandomMatrix() {
+    /*
+     * Generate a random map
+     */
     initMap();
     Position begin(SIZE/2, SIZE/2-2);
     generateQuarterMap(begin);
@@ -95,6 +100,12 @@ void Map::generateRandomMatrix() {
 }
 
 void Map::initMap() {
+    /*
+     * Generate the most basic map that is common to all maps :
+     * - The two diagonals of the square are the LIMITS of the quarters
+     * - A small cross of PATH at the middle of the square
+     * - The rest is GRASS
+     */
     for (int y = 0; y < SIZE; y++) {
         for (int x = 0; x < SIZE; x++) {
             if (x == SIZE/2 and SIZE/2-2 <= y and y <= SIZE/2+2) {
@@ -111,6 +122,9 @@ void Map::initMap() {
 }
 
 bool Map::generateQuarterMap(Position end) {
+    /*
+     * Generate a random path on the up quarter
+     */
     if (end.getY() == 0) {
         return true;
     }
@@ -126,6 +140,7 @@ bool Map::generateQuarterMap(Position end) {
 
     unsigned int way = (unsigned int) (rand() % possibleWays.size());
 
+    // TODO : voir s'il n'y a pas des trucs inutiles dans cette fonction
     int save = matrix[possibleWays[way].getY()][possibleWays[way].getX()];
     matrix[possibleWays[way].getY()][possibleWays[way].getX()] = PATH_INT;
     if (generateQuarterMap(possibleWays[way])) return true;
@@ -134,15 +149,21 @@ bool Map::generateQuarterMap(Position end) {
 }
 
 const bool Map::isNextToPath(Position pos) {
+    /*
+     * Return true if the cell of the matrix is next to more than 1 path cell
+     */
     int count = 0;
     if (matrix[pos.getY()+1][pos.getX()] == PATH_INT) count++;
     if (pos.getY() > 0 && matrix[pos.getY()-1][pos.getX()] == PATH_INT) count++;
     if (matrix[pos.getY()][pos.getX()+1] == PATH_INT) count++;
     if (matrix[pos.getY()][pos.getX()-1] == PATH_INT) count++;
-    return count >= 2;
+    return count > 1;
 }
 
 void Map::copyQuarter() {
+    /*
+     * Copy the path of the up quarter to the three other quarters
+     */
     for (int y = 0; y < SIZE; y++) {
         for (int x = 0; x < SIZE; x++) {
             if (y < x and x+y < SIZE) {
@@ -155,6 +176,9 @@ void Map::copyQuarter() {
 }
 
 void Map::basicMap() {
+    /*
+     * Draw the map in the shape of a simple cross
+     */
     for (int y = 0; y < SIZE; y++) {
         for (int x = 0; x < SIZE; x++) {
             if (x == SIZE/2 and 0 <= y and y < SIZE) {
@@ -175,6 +199,9 @@ const bool Map::isPath(Position pos) {
 }
 
 void Map::trumpMap() {
+    /*
+     * Draw the map in the shape of the Swastika
+     */
     for (int y = 0; y < SIZE; y++) {
         for (int x = 0; x < SIZE; x++) {
             if (x == SIZE/2 and 1 <= y and y < SIZE-1) {

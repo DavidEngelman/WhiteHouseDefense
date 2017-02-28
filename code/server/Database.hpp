@@ -60,6 +60,7 @@ public:
     int removeFriend(std::string username, std::string toRemove);
     int declineFriendRequest(std::string username, std::string toDecline);
 
+    void updateAfterGameStats(int id, int pnjKilled, bool isWinner);
 
 
 
