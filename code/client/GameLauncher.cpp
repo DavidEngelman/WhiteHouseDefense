@@ -3,10 +3,10 @@
 #include "../common/Strings.hpp"
 #include "GameManager.hpp"
 
-GameLauncher::GameLauncher(int port, char *address, int id, std::string name, App* app) :
-        NetworkedManager(port, address, app), player_id(id), player_name(name) {}
+GameLauncher::GameLauncher(int port, char *address, int id, std::string name, App* app, std::string _mode) :
+        NetworkedManager(port, address, app), player_id(id), player_name(name), mode(_mode) {}
 
-void GameLauncher::sendJoinRequest(std::string mode) {
+void GameLauncher::sendJoinRequest() {
 
     /* Partie 1: envoyer demanded pour rejoindre le jeu */
     char server_response[20] = "HOHOHOHOHOHOHOHOHOH";
@@ -30,5 +30,5 @@ void GameLauncher::sendJoinRequest(std::string mode) {
 }
 
 void GameLauncher::run() {
-    sendJoinRequest(CLASSIC_MODE);
+    sendJoinRequest();
 }

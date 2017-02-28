@@ -10,6 +10,9 @@ class MainUI {
 public:
 	void display();
 	int select();
+
+	void displayGameModes();
+    int selectGameMode();
 };
 
 #endif
