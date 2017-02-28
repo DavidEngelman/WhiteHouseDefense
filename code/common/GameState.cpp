@@ -107,10 +107,11 @@ void GameState::addTower(AbstractTower * tower) {
 }
 
 void GameState::deleteTower(Position& position, int& quadrant){
-    for (AbstractTower *tower : getTowers()){
-        if (tower->getPosition() == position){
-            getPlayerStates()[quadrant].earnMoney((int) (tower->getPrice() * PERCENTAGE_RECOVERED_MONEY));
-            towers.erase(std::remove(getTowers().begin(), getTowers().end(), tower));
+    std::vector<AbstractTower*>::iterator iter;
+    for (iter = getTowers().begin(); iter != getTowers().end(); iter++){
+        if ((*iter)->getPosition() == position) {
+            getPlayerStates()[quadrant].earnMoney((*iter)->getPrice() * PERCENTAGE_RECOVERED_MONEY);
+            towers.erase(iter);
         }
     }
 }
