@@ -18,6 +18,7 @@ static const char WAVE[2] = "w";
 
 static const int GOLD_EARNED_BY_SECOND= 1;
 
-static const float PERCENTAGE_RECOVERED_MONEY= 50/100;
+// Ça doit être 100.0, sinon c'est une division entiere et le resultat est 0
+static const float PERCENTAGE_RECOVERED_MONEY= (const float) (50 / 100.0);
 
 #endif //PROJET_CONSTANTS_H

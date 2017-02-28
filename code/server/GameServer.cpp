@@ -146,7 +146,7 @@ void GameServer::run() {
     if (!DEBUG){
         sendMapSeedToClients(mapSeed);
         sendQuadrantToClients();
-        sendInitialGameStae();
+        sendInitialGameState();
     }
     //ici__je met des tours n importe ou pour test a la bourrain
 /*    AttackTower * attackTower = new AttackTower(Position(14,8));
@@ -240,7 +240,7 @@ void GameServer::sendQuadrantToClients() {
     }
 }
 
-void GameServer::sendInitialGameStae() {
+void GameServer::sendInitialGameState() {
     sendGameStateToPlayers();
 }
 

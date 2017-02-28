@@ -53,7 +53,7 @@ int MainUI::selectGameMode() {
     std::cin >> x;
     while(std::cin.fail() or 0>x or x>=4){
         displayGameModes();
-        std::cout << "   Error, enter a integer between 1 and 4 " << std::endl;
+        std::cout << "   Error, enter a integer between 1 and 3 " << std::endl;
         std::cout << "   Enter your choice: ";
 
         std::cin.clear();
