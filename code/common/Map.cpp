@@ -175,13 +175,15 @@ const bool Map::isPath(Position pos) const {
 }
 
 const int Map::computeQuadrant(Position pos) {
-    int realY = SIZE - pos.getY();
-    int realX = pos.getX();
+    /*
+     * This function return in which quadrant is the Position pos
+     */
 
-    // La diagonale croissante est celle qui respecte y = x,
-    // et la diagonale decroissante est celle qui respecte y = -x
-    bool aboveGrowingDiagonal = realY > realX;
-    bool aboveDecreasingDiagonal = realY > -realX;
+    // The origin of the map is in the upper-left corner
+    // The growing diagonal is : y = -x + size-1,
+    // The decreasing diagonal is : y = x
+    bool aboveGrowingDiagonal = pos.getX()+pos.getY() < SIZE-1;
+    bool aboveDecreasingDiagonal = pos.getX() > pos.getY();
 
     if (aboveGrowingDiagonal && aboveDecreasingDiagonal){
         return NORTH;
