@@ -13,10 +13,9 @@ GameManager::GameManager(char *ip_addr, int port, int socket, int id, std::strin
         quadrant(getQuadrantFromServer()) // recv. Ne pas changer l'ordre!
 {}
 
-void GameManager::come_back_to_menu() {
+void GameManager::come_back_to_menu() { // À appeler quand la partie est terminée
     MainManager *menu_manager = new MainManager(server_ip_address, player_id, player_username, master_app);
     master_app->transition(menu_manager);
-
 }
 
 void *GameManager::input_thread() {
