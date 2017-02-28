@@ -28,7 +28,7 @@ class GameState;
  *
  * Important: the matrix is constant. It is the background/terrain, independently of towers or NPCs.
  *
- * When we want to show the map (with towers and NPCs) to the user, we generate it dynamically from the
+ * When we want to show the map (with towers and NPCs) to the user, we draw it dynamically from the
  * map matrix (the terrain, the background) and the gameState (which contains the changing parts of the game:
  * the towers and NPCs).
  */
@@ -48,7 +48,6 @@ private:
     void trumpMap();
 
 public:
-    Map();
     Map(unsigned seed);
     const void display(GameState& gameState);
     const bool isPath(Position pos);
