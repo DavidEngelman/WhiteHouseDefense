@@ -1,4 +1,5 @@
 #include "GameState.hpp"
+#include "tools.hpp"
 
 GameState::GameState() : isGameOver(false){}
 
@@ -8,10 +9,6 @@ void GameState::DecreasePlayerHp(PlayerState &player, int amount) { //TODO ça s
 
 void GameState::IncreasePlayerHp(PlayerState &player, int amount) { //TODO idem qu'au dessus
     player.decrease_hp(amount);
-}
-
-std::string GameState::bool_to_string(bool my_bool){ //TODO la meme fonction se trouve dans playerState
-    return my_bool ? "true" : "false";
 }
 
 std::string* GameState::serialize() {
