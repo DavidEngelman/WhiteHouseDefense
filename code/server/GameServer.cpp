@@ -33,16 +33,20 @@ void GameServer::processClientCommands() {
 
     Timer timer;
     timer.start();
-    while (timer.elapsedTimeInSeconds() < NUM_SECONDS_TO_PLACE_TOWER) {
+    int numSecondsElapsed = timer.elapsedTimeInSeconds();
+    while (numSecondsElapsed < NUM_SECONDS_TO_PLACE_TOWER) {
         std::cout << "just before select" << std::endl;
 
-        int client_index = get_readable_socket_index_with_timeout(client_sockets, 4, NUM_SECONDS_TO_PLACE_TOWER);
+        int timeLeft = NUM_SECONDS_TO_PLACE_TOWER - numSecondsElapsed;
+        int client_index = get_readable_socket_index_with_timeout(client_sockets, 4, timeLeft);
         std::cout << "client selected: "<< client_index << std::endl;
         if (client_index < 0 || client_index > 4) return;
 
         int client_socket_fd = client_sockets[client_index];
         std::cout << "Client socket in server: " << client_socket_fd << std::endl;
         get_and_process_command(client_socket_fd, message_buffer);
+
+        numSecondsElapsed = timer.elapsedTimeInSeconds()
     }
 }
 
