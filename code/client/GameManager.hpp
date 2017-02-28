@@ -17,7 +17,7 @@
 class GameManager : public AbstractManager{ //Tmp : public (à supprimer après tests)
 
 private:
-
+    int counter = 0;
     int server_socket;
     bool runningThread = false;
     pthread_t thr;
