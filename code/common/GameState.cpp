@@ -3,6 +3,7 @@
 #include "tools.hpp"
 
 GameState::GameState() : isGameOver(false){}
+GameState::GameState(std::string mode) : mode(mode), isGameOver(false) {}
 
 void GameState::DecreasePlayerHp(PlayerState &player, int amount) { //TODO ça sert à rien cette fonction, non ?
     player.decrease_hp(amount);
@@ -46,6 +47,7 @@ int GameState::numPlayersAlive() {
             number_of_players_alive++;
         }
     }
+    std::cout << "NUM_PLAYER_ALIVE" << number_of_players_alive << std::endl;
     return number_of_players_alive;
 }
 

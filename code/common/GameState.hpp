@@ -31,6 +31,7 @@ public:
 
 
     GameState();
+    GameState(std::string mode);
 
     ~GameState();
 

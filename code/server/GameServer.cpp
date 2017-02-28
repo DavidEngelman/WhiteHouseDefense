@@ -4,8 +4,8 @@
 
 const bool DEBUG = false;
 
-GameServer::GameServer(int port, std::vector<PlayerConnection> &playerConnections) :
-Server(port), playerConnections(playerConnections) {
+GameServer::GameServer(int port, std::vector<PlayerConnection> &playerConnections, std::string _mode) :
+Server(port), playerConnections(playerConnections), mode(_mode) {
 
     if (!DEBUG){
         for (int i = 0; i < 4; i++) {
@@ -140,7 +140,7 @@ void GameServer::run() {
     start_socket_listen();
     sleep(3); // TODO: find better way to avoid network race conditions...
     unsigned int mapSeed = (unsigned int) time(0);
-    gameEngine = new GameEngine(mapSeed);
+    gameEngine = new GameEngine(mapSeed, mode);
 
     std::cout << "Le port du server est: " << port << std::endl;
 

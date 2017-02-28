@@ -4,8 +4,10 @@ const bool DEBUG = false;
 
 
 
-GameEngine::GameEngine(unsigned int mapSeed) : map(mapSeed),
-                                               numOfPNJsPerWave(INITIAL_NUMBER_OF_PNJS_PER_WAVE) {
+GameEngine::GameEngine(unsigned int mapSeed ,std::string mode) : map(mapSeed),
+                                               numOfPNJsPerWave(INITIAL_NUMBER_OF_PNJS_PER_WAVE), gameState(mode)
+
+{
     timerSinceGameStart.start();
 }
 
@@ -189,8 +191,10 @@ void GameEngine::showMap() {
 void GameEngine::checkIfGameIsOver() {
     bool isOver = false;
     std::string &mode = gameState.getMode();
+    std::cout << mode << std::endl;
     if (mode == CLASSIC_MODE) {
         isOver = (gameState.numPlayersAlive() <= 1);
+        std::cout << "IS_OVER" << isOver;
     } else if (mode == TIMED_MODE) {
         isOver = timerSinceGameStart.elapsedTimeInSeconds() > TIMED_GAME_INTERVAL;
     } else if (mode == TEAM_MODE) {
