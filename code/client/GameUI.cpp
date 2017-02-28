@@ -79,7 +79,8 @@ void GameUI::displayPlayerInfos(GameState& gameState, int& quadrant) {
     bool isSupported = gameState.getPlayerStates()[quadrant].getIsSupported();
 
     std::string infos = "Money: " + std::to_string(gold) + "\tNPC killed: " + std::to_string(pnj_killed)
-    +"\nHP: " + std::to_string(hp) + "\tSupported: " + bool_to_string(isSupported);
+    +"\nHP: " + std::to_string(hp) + "\tSupported: " + bool_to_string(isSupported) +
+    "\t Quadrant: " + std::to_string(quadrant);
 
     std::cout << infos << std::endl;
 }
