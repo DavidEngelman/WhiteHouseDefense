@@ -46,7 +46,7 @@ void *GameManager::input_thread() {
             gameUI.display(gameState);
             gameUI.displayPlayerInfos(gameState, quadrant);
             Position toSell = gameUI.getPosSellingTower();
-            if (isSpaceAvailableForTower(gameState, toSell)){
+            if (isTowerInPosition(gameState, toSell)){
                 gameState.deleteTower(toSell, quadrant);
                 sendSellRequest(toSell);
             }
@@ -57,11 +57,11 @@ void *GameManager::input_thread() {
     }
 }
 
-bool GameManager::isSpaceAvailableForTower(GameState &gameState, Position towerPos){
-    bool validity = true;
+bool GameManager::isTowerInPosition(GameState &gameState, Position towerPos){
+    bool validity = false;
     for (auto tower : gameState.getTowers()){
         if (tower->getQuadrant() == quadrant && tower->getPosition() == towerPos){
-            validity = false;
+            validity = true;
             break;
         }
     }
@@ -81,7 +81,7 @@ bool GameManager::checkValidity(Position towerPos, GameState& gamestate) {
     bool validity = true;
     if (gameState.getPlayerStates()[quadrant].getMoney()  < ATTACK_TOWER_PRICE) { // if player has enough money
         validity = false;
-    } else if (!isSpaceAvailableForTower(gamestate, towerPos)) { // if a tower isn't already there
+    } else if (isTowerInPosition(gamestate, towerPos)) { // if a tower isn't already there
         validity = false;
     } else if (Map::computeQuadrant(towerPos) != quadrant) { // if the position is in the right quadrant
         validity = false;
@@ -172,7 +172,7 @@ void GameManager::unSerializePlayerStates(std::string serialized_playerstates) {
     std::string serialized_playerstate = "";
     for (char& c : serialized_playerstates) {
         if (c == ';') {
-            unSerializePlayerState(serialized_playerstate);
+            unSerializePlayerState(serialized_playerstate + ",");
             serialized_playerstate = "";
         } else {
             serialized_playerstate += c;
@@ -232,7 +232,7 @@ void GameManager::unSerializeTowers(std::string serialized_towers) {
     std::string serialized_tower = "";
     for (char& c : serialized_towers) {
         if (c == ';') {
-            unSerializeTower(serialized_tower + c);
+            unSerializeTower(serialized_tower + ",");
             serialized_tower = "";
         } else {
             serialized_tower += c;
@@ -256,14 +256,12 @@ void GameManager::unSerializeTower(std::string serialized_tower) {
                 case 1: // X
                     x = std::stoi(elem);
                     break;
+                default:
+                    y = std::stoi(elem);
+                    break;
             }
-
             elem = "";
             count++;
-
-        }else if(c == ';'){
-            y = std::stoi(elem);
-
         } else {
             elem += c;
         }
@@ -300,7 +298,7 @@ void GameManager::unSerializeWave(std::string serialized_wave) {
                 wave = new Wave(quadrant);
                 firstElem = false;
             } else {
-                unSerializePNJ(elem, wave);
+                unSerializePNJ(elem + ",", wave);
             }
             elem = "";
         } else {
