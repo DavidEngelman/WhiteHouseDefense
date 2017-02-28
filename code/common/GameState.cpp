@@ -102,7 +102,8 @@ bool GameState::isPlayerAlive(const int quadrant) {
     return player_states[quadrant].getHp() > 0;
 }
 
-void GameState::addTower(AbstractTower * tower) {
+void GameState::addTower(AbstractTower *tower, int &quadrant) {
+    getPlayerStates()[quadrant].spendMoney(tower->getPrice());
     towers.push_back(tower);
 }
 

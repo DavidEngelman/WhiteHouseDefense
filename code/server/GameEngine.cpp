@@ -165,12 +165,11 @@ void GameEngine::addTower(AbstractTower* tower, int quadrant) {
     if (!DEBUG) {
         if (gameState.getPlayerStates()[quadrant].getMoney() >=
             tower->getPrice()) {
-            gameState.addTower(tower);
-            gameState.getPlayerStates()[quadrant].spendMoney(tower->getPrice());
+            gameState.addTower(tower, quadrant);
         }
     }
     else{
-        gameState.addTower(tower);
+        gameState.addTower(tower,quadrant);
     }
 }
 
