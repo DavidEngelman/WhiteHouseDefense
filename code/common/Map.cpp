@@ -3,19 +3,19 @@
 #include <iostream>
 #include <ctime>
 
+/*
+ * Constructor used to build the same map for the server and all the clients
+ * because the server send the seed to all the players instead of sending the entire map
+ */
 Map::Map(unsigned seed) {
-    /*
-     * Constructor used to build the same map for the server and all the clients
-     * because the server send the seed to all the players instead of sending the entire map
-     */
     srand(seed);
     generateRandomMatrix();
 }
 
+/*
+ * Display the map on the screen using the gameState for drawing the towers and the pnjs
+ */
 const void Map::display(GameState& gameState) const {
-    /*
-     * Display the map on the screen using the gameState for drawing the towers and the pnjs
-     */
     std::vector<AbstractTower*> &towers = gameState.getTowers();
     std::vector<Wave> &waves = gameState.getWaves();
     system("clear");
@@ -85,23 +85,23 @@ const void Map::display(GameState& gameState) const {
     std::cout << std::endl;
 }
 
+/*
+ * Generate a random map
+ */
 void Map::generateRandomMatrix() {
-    /*
-     * Generate a random map
-     */
     initMap();
     Position begin(SIZE/2, SIZE/2-2);
     generateQuarterMap(begin);
     copyQuarter();
 }
 
+/*
+ * Generate the most basic map that is common to all maps :
+ * - The two diagonals of the square are the LIMITS of the quarters
+ * - A small cross of PATH at the middle of the square
+ * - The rest is GRASS
+ */
 void Map::initMap() {
-    /*
-     * Generate the most basic map that is common to all maps :
-     * - The two diagonals of the square are the LIMITS of the quarters
-     * - A small cross of PATH at the middle of the square
-     * - The rest is GRASS
-     */
     for (int y = 0; y < SIZE; y++) {
         for (int x = 0; x < SIZE; x++) {
             if (x == SIZE/2 and SIZE/2-2 <= y and y <= SIZE/2+2) {
@@ -117,10 +117,10 @@ void Map::initMap() {
     }
 }
 
+/*
+ * Generate a random path on the up quarter
+ */
 void Map::generateQuarterMap(Position end) {
-    /*
-     * Generate a random path on the up quarter
-     */
     if (end.getY() == 0) {
         return;
     }
@@ -143,10 +143,10 @@ void Map::generateQuarterMap(Position end) {
     generateQuarterMap(possibleWays[way]);
 }
 
+/*
+ * Return true if the cell of the matrix is next to more than 1 path cell
+ */
 const bool Map::isNextToPath(Position pos) {
-    /*
-     * Return true if the cell of the matrix is next to more than 1 path cell
-     */
     int count = 0;
     if (matrix[pos.getY()+1][pos.getX()] == PATH_INT) count++;
     if (pos.getY() > 0 && matrix[pos.getY()-1][pos.getX()] == PATH_INT) count++;
@@ -155,10 +155,10 @@ const bool Map::isNextToPath(Position pos) {
     return count > 1;
 }
 
+/*
+ * Copy the path of the up quarter to the three other quarters
+ */
 void Map::copyQuarter() {
-    /*
-     * Copy the path of the up quarter to the three other quarters
-     */
     for (int y = 0; y < SIZE; y++) {
         for (int x = 0; x < SIZE; x++) {
             if (y < x and x+y < SIZE) {
@@ -174,11 +174,10 @@ const bool Map::isPath(Position pos) const {
     return matrix[pos.getY()][pos.getX()] == PATH_INT;
 }
 
+/*
+ * This function return in which quadrant is the Position pos
+ */
 const int Map::computeQuadrant(Position pos) {
-    /*
-     * This function return in which quadrant is the Position pos
-     */
-
     // The origin of the map is in the upper-left corner
     // The growing diagonal is : y = -x + size-1,
     // The decreasing diagonal is : y = x
