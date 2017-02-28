@@ -95,9 +95,8 @@ void GameUI::displayPosingPhase() {
 }
 void GameUI::displayTowerShop() {
     std::cout << "1. Attacktower " << std::endl;
-    std::cout << std::endl;
     // put other tower types here
-    std::cout << "Your choice :   ";
+    std::cout << std::endl;
 }
 
 int GameUI::getChoice() {

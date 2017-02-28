@@ -23,7 +23,7 @@ void GameManager::come_back_to_menu() { // À appeler quand la partie est termin
 void *GameManager::input_thread() {
 
     while (1) {
-        ggameUI.displayPosingPhase();
+        gameUI.displayPosingPhase();
         int choice = gameUI.getChoice();
         if (choice == 1) {
             gameUI.display(gameState);
