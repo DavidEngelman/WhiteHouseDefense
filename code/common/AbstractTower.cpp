@@ -61,3 +61,11 @@ bool AbstractTower::upgrade() {
     }
     return false;
 }
+
+bool AbstractTower::operator==(const AbstractTower &rhs) const {
+    return position == rhs.position;
+}
+
+bool AbstractTower::operator!=(const AbstractTower &rhs) const {
+    return !(rhs == *this);
+}
