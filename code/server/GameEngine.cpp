@@ -190,10 +190,8 @@ void GameEngine::checkIfGameIsOver() {
     bool isOver = false;
     std::string &mode = gameState.getMode();
     if (mode == CLASSIC_MODE) {
-        isOver = gameState.IsOnlyOnePlayerAlive();
+        isOver = (gameState.numPlayersAlive() <= 1);
     } else if (mode == TIMED_MODE) {
-        // TODO: check que le timer commence depuis le debut de la premiere vague
-        // au lieu de depuis la derniere vague
         isOver = timerSinceGameStart.elapsedTimeInSeconds() > TIMED_GAME_INTERVAL;
     } else if (mode == TEAM_MODE) {
         int numAlivePlayersInTeam1 = 0;

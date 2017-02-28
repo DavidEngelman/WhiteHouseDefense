@@ -54,7 +54,8 @@ public:
 
     std::string * serialize();
 
-    bool IsOnlyOnePlayerAlive();
+    int numPlayersAlive();
+
 
     void DecreasePlayerHp(PlayerState &player, int amount);
 
