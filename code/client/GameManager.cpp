@@ -229,7 +229,7 @@ void GameManager::unSerializeTowers(std::string serialized_towers) {
     std::string serialized_tower = "";
     for (char& c : serialized_towers) {
         if (c == ';') {
-            unSerializeTower(serialized_tower);
+            unSerializeTower(serialized_tower + c);
             serialized_tower = "";
         } else {
             serialized_tower += c;
@@ -253,12 +253,14 @@ void GameManager::unSerializeTower(std::string serialized_tower) {
                 case 1: // X
                     x = std::stoi(elem);
                     break;
-                default: // Y
-                    y = std::stoi(elem);
-                    break;
             }
+
             elem = "";
             count++;
+
+        }else if(c == ';'){
+            y = std::stoi(elem);
+
         } else {
             elem += c;
         }
