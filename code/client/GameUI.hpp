@@ -19,6 +19,9 @@ public:
     bool checkCoord(int x, int y);
 	void display(GameState& gameState);
 	void display(int quadrant);
+	void displayPosingPhase();
+	void displayTowerShop();
+	void displaySellingMenu();
 
     std::string bool_to_string(bool my_bool);
 

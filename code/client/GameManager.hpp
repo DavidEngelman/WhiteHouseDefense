@@ -52,11 +52,14 @@ public:
 
     void *input_thread();
 
+    bool checkTowerValidity(GameState& gamestate, Position towerPos);
+
     static void* staticInputThread(void *self);
 
-    bool checkValidity(Position towerPos);
+    bool checkValidity(Position towerPos, GameState& gamestate);
 
-    bool sendRequest(Position towerPos, std::string towerType);
+    void sendBuyRequest(Position towerPos, std::string towerType);
+    void sendSellRequest(Position towerPos);
 
     int getQuadrantFromServer();
 };
