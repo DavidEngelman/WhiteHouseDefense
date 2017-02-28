@@ -108,6 +108,7 @@ void GameState::deleteTower(Position& position, int& quadrant){
             float amountPaidBack = (*iter)->getPrice() * PERCENTAGE_RECOVERED_MONEY;
             getPlayerStates()[quadrant].earnMoney((int) amountPaidBack);
             towers.erase(iter);
+            break;
         }
     }
 }
