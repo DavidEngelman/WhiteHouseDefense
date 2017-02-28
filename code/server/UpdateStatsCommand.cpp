@@ -35,7 +35,7 @@ void UpdateStatsCommand::parse(char *data) {
     }
     i++;
 
-    // Extracts the coord_x
+    // Extracts isWinner
     while (data[i] != ',') {
 
         isWinner += data[i];
