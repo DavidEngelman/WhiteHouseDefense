@@ -9,6 +9,8 @@ Position GameUI::getPosBuyingTower() {
     int y;
 
     do {
+        std::cin.clear();
+        std::cin.ignore();
         std::cout << "Entrez les coordonnées de l'endroit où vous voulez placer une tour" << std::endl;
         std::cout << "Entrez un X: ";
         std::cin >> x;
