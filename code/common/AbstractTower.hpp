@@ -46,6 +46,10 @@ public:
     Position getPosition() const;
 
     virtual std::string serialize();
+
+    bool operator==(const AbstractTower &rhs) const;
+
+    bool operator!=(const AbstractTower &rhs) const;
 };
 
 #endif // PROJET_ABSTRACTTOWER_H

@@ -71,7 +71,9 @@ public:
 
     void deleteTowerInGameState(TowerCommand command);
 
-    void sendInitialGameState();
+    void sendInitialGameStae();
+
+    void upgradeTowerInGameState(TowerCommand command);
 };
 
 #endif

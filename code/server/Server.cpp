@@ -119,6 +119,8 @@ int Server::get_readable_socket_index_with_timeout(int *sockets, int num_sockets
     }
 
     int num_readable_sockets = select(max + 1, &read_socket_fds, NULL, NULL, &timeout);
+    std::cout << "num_readable_socket: "<<num_readable_sockets << std::endl;
+
     if (num_readable_sockets == 0) return -1;
 
     int socket_num = 0;

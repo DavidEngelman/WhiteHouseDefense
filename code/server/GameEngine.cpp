@@ -178,6 +178,10 @@ void GameEngine::deleteTower(Position& position, int& quadrant) {
     gameState.deleteTower(position, quadrant);
 }
 
+void GameEngine::upgradeTower(Position &position, int &quadrant) {
+    gameState.upgradeTower(position, quadrant);
+}
+
 
 void GameEngine::showMap() {
     map.display(gameState);
@@ -217,5 +221,7 @@ void GameEngine::addPlayerState(int player_id, int team) {
     PlayerState playerState(player_id, team);
     gameState.addPlayerState(playerState);
 }
+
+
 
 

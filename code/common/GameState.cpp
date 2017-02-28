@@ -110,9 +110,20 @@ void GameState::deleteTower(Position& position, int& quadrant){
     for (AbstractTower *tower : getTowers()){
         if (tower->getPosition() == position){
             getPlayerStates()[quadrant].earnMoney(tower->getPrice() * PERCENTAGE_RECOVERED_MONEY);
+            // TODO fix that: towers.erase(std::remove(getTowers().begin(), getTowers().end(), tower));
         }
     }
 }
+
+void GameState::upgradeTower(Position &position, int &quadrant) {
+    for (AbstractTower *tower : getTowers()){
+        if (tower->getPosition() == position){
+            tower->upgrade();
+        }
+    }
+}
+
+
 
 GameState::~GameState() {
     for (AbstractTower* tower: towers){
@@ -131,4 +142,6 @@ std::string &GameState::getMode() {
 void GameState::addPlayerState(PlayerState& state) {
     player_states.push_back(state);
 }
+
+
 

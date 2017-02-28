@@ -33,6 +33,7 @@ void *GameManager::input_thread() {
         if (towerchoice == 1) {
             Position towerPos = gameUI.getPosBuyingTower();
             if (checkValidity(towerPos, gameState)) {
+                std::cout << "ok" << std::endl;
                 gameState.addTower(new AttackTower(Position(towerPos.getX(), towerPos.getY())));
                 sendBuyRequest(towerPos, "AttackTower");
             }
@@ -69,7 +70,11 @@ void *GameManager::staticInputThread(void *self){
     return static_cast<GameManager*>(self)->input_thread();
 }
 
-
+/*
+ * checkValidity(Position towerPos, GameState& gamestate):
+ * Check if the player has the money to buy a tower and if he placed it in a correct
+ * position
+ */
 bool GameManager::checkValidity(Position towerPos, GameState& gamestate) {
     bool validity = true;
     if (gameState.getPlayerStates()[quadrant].getMoney() == 0 /* <  towerprice  */) { // if player has enough money
@@ -81,6 +86,7 @@ bool GameManager::checkValidity(Position towerPos, GameState& gamestate) {
     }
     return validity;
 }
+
 
 void GameManager::sendBuyRequest(Position towerPos, std::string towerType) {
     std::string message = PLACE_TOWER_COMMAND_STRING + "," + towerType + "," + std::to_string(towerPos.getX()) + std::to_string(towerPos.getY())+";";
