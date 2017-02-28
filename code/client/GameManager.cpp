@@ -28,9 +28,11 @@ void *GameManager::input_thread() {
     int choice = gameUI.getChoice();
     if (choice == 1) {
         gameUI.display(gameState);
+        gameUI.displayPlayerInfos(gameState, quadrant);
         gameUI.displayTowerShop();
         int towerchoice = gameUI.getChoice();
         if (towerchoice == 1) {
+            gameUI.displayPlayerInfos(gameState, quadrant);
             Position towerPos = gameUI.getPosBuyingTower();
             if (checkValidity(towerPos, gameState)) {
                 std::cout << "ok" << std::endl;
@@ -41,6 +43,7 @@ void *GameManager::input_thread() {
         gameUI.display(gameState);
     }else if (choice == 2){
         gameUI.display(gameState);
+        gameUI.displayPlayerInfos(gameState, quadrant);
         Position toSell = gameUI.getPosSellingTower();
         if (isSpaceAvailableForTower(gameState, toSell)){
             gameState.deleteTower(toSell, quadrant);
@@ -103,7 +106,6 @@ void GameManager::sendSellRequest(Position towerPos) {
 
 void GameManager::run() {
     gameUI.display(gameState);
-    gameUI.display(quadrant);
     gameUI.displayPlayerInfos(gameState, quadrant);
     char server_msg_buff [BUFFER_SIZE];
 
