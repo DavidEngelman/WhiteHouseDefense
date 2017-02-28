@@ -35,7 +35,7 @@ void *GameManager::input_thread() {
                 Position towerPos = gameUI.getPosBuyingTower();
                 if (checkValidity(towerPos, gameState)) {
                     std::cout << "ok" << std::endl;
-                    gameState.addTower(new AttackTower(Position(towerPos.getX(), towerPos.getY())));
+                    gameState.addTower(new AttackTower(Position(towerPos.getX(), towerPos.getY())), quadrant);
                     sendBuyRequest(towerPos, "AttackTower");
                 }
             }
@@ -267,7 +267,7 @@ void GameManager::unSerializeTower(std::string serialized_tower) {
     AbstractTower *tower;
     tower = new AttackTower(Position(x,y)); // Faire avec un if, else if, else sur typeOfTower quand + de tours
 
-    gameState.addTower(tower);
+    gameState.addTower(tower, quadrant);
 }
 
 void GameManager::unSerializeWaves(std::string serialized_waves) {

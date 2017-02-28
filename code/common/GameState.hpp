@@ -48,7 +48,7 @@ public:
 
     std::vector<AbstractTower *> &getTowers();
 
-    void addTower(AbstractTower *tower);
+    void addTower(AbstractTower *tower, int& quadrant);
 
     std::vector<PlayerState> &getPlayerStates();
 
