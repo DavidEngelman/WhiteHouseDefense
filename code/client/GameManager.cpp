@@ -124,11 +124,7 @@ void GameManager::run() {
             gameUI.display(gameState);
             gameUI.displayPlayerInfos(gameState, quadrant);
 
-
-            if (gameState.getIsGameOver()){
-                break;
             }
-        }
     }
 
     come_back_to_menu();

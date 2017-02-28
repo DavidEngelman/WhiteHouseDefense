@@ -216,12 +216,12 @@ void GameEngine::checkIfGameIsOver() {
 
 void GameEngine::declareWinner(GameState& gamestate){
     int maxScore = -1;
-    for(auto player : gamestate.getPlayerStates()){
+    for(auto &player : gamestate.getPlayerStates()){
         if (player.getPnjKilled() > maxScore){
             maxScore = player.getPnjKilled();
         }
     }
-    for(auto player : gamestate.getPlayerStates()){
+    for(auto &player : gamestate.getPlayerStates()){
         if (player.getPnjKilled() == maxScore){
             player.setIsWinner(true);
         }
@@ -231,14 +231,14 @@ void GameEngine::declareWinner(GameState& gamestate){
 void GameEngine::declareWinnerTeam(GameState& gameState){
     int team1Score = 0;
     int team2Score = 0;
-    for (auto player : gameState.getPlayerStates() ){
+    for (auto &player : gameState.getPlayerStates() ){
         if (player.getTeam() == 1){
             team1Score += player.getPnjKilled();
         }else{
             team2Score += player.getPnjKilled();
         }
     }
-    for(auto player : gameState.getPlayerStates()){
+    for(auto &player : gameState.getPlayerStates()){
         if (team1Score > team2Score){
             if (player.getTeam() == 1){
                 player.setIsWinner(true);
