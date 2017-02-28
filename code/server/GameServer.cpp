@@ -46,7 +46,7 @@ void GameServer::processClientCommands() {
         std::cout << "Client socket in server: " << client_socket_fd << std::endl;
         get_and_process_command(client_socket_fd, message_buffer);
 
-        numSecondsElapsed = timer.elapsedTimeInSeconds()
+        numSecondsElapsed = timer.elapsedTimeInSeconds();
     }
 }
 

@@ -1,3 +1,4 @@
+#include <iostream>
 #include "GameState.hpp"
 #include "tools.hpp"
 
@@ -42,6 +43,7 @@ int GameState::numPlayersAlive() {
     int number_of_players_alive = 0;
     for (PlayerState &ps: player_states) {
         if (ps.getHp() > 0) {
+            std::cout << ps.getHp() << std::endl;
             number_of_players_alive++;
         }
     }
