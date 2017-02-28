@@ -100,7 +100,7 @@ void GameManager::sendSellRequest(Position towerPos) {
     std::string type = "NULL";
     std::string message = DELETE_TOWER_COMMAND_STRING
                           + "," + std::to_string(quadrant)
-                          + "," + type +
+                          + "," + type
                           + "," + std::to_string(towerPos.getX())
                           + "," + std::to_string(towerPos.getY())+";";
     send_message(server_socket, message.c_str());
