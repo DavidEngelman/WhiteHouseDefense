@@ -85,13 +85,13 @@ bool GameManager::checkValidity(Position towerPos, GameState& gamestate) {
 
 
 void GameManager::sendBuyRequest(Position towerPos, std::string towerType) {
-    std::string message = PLACE_TOWER_COMMAND_STRING + "," + towerType + "," + std::to_string(towerPos.getX()) + std::to_string(towerPos.getY())+";";
+    std::string message = PLACE_TOWER_COMMAND_STRING + "," + std::to_string(quadrant) + towerType + "," + std::to_string(towerPos.getX()) + std::to_string(towerPos.getY())+";";
     send_message(server_socket, message.c_str());
 }
 
 void GameManager::sendSellRequest(Position towerPos) {
     std::string type = "NULL";
-    std::string message = DELETE_TOWER_COMMAND_STRING + "," + type + std::to_string(towerPos.getX()) + std::to_string(towerPos.getY())+";";
+    std::string message = DELETE_TOWER_COMMAND_STRING + "," + std::to_string(quadrant) + type + std::to_string(towerPos.getX()) + std::to_string(towerPos.getY())+";";
     send_message(server_socket, message.c_str());
 }
 
