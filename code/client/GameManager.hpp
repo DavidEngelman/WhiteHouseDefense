@@ -52,7 +52,7 @@ public:
 
     void *input_thread();
 
-    bool checkTowerValidity(GameState& gamestate, Position towerPos);
+    bool isSpaceAvailableForTower(GameState &gamestate, Position towerPos);
 
     static void* staticInputThread(void *self);
 
