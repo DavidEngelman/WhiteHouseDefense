@@ -73,9 +73,9 @@ void *GameManager::staticInputThread(void *self){
  */
 bool GameManager::checkValidity(Position towerPos, GameState& gamestate) {
     bool validity = true;
-    if (gameState.getPlayerStates()[quadrant].getMoney() == 0 /* <  towerprice  */) { // if player has enough money
+    if (gameState.getPlayerStates()[quadrant].getMoney()  > 5) { // if player has enough money
         validity = false;
-    } else if (!isSpaceAvailableForTower(gamestate, towerPos)) { // if a tower isn't already there
+    }else if (!isSpaceAvailableForTower(gamestate, towerPos)) { // if a tower isn't already there
         validity = false;
     } else if (Map::computeQuadrant(towerPos) != quadrant) { // if the position is in the right quadrant
         validity = false;
