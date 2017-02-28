@@ -25,35 +25,29 @@ void *GameManager::input_thread() {
     while (1) {
         gameUI.displayPosingPhase();
         int choice = gameUI.getChoice();
+        gameUI.display(gameState);
+        gameUI.displayPlayerInfos(gameState, quadrant);
         if (choice == 1) {
-            gameUI.display(gameState);
-            gameUI.displayPlayerInfos(gameState, quadrant);
             gameUI.displayTowerShop();
             int towerchoice = gameUI.getChoice();
-            if (towerchoice == 1) {
-                gameUI.display(gameState);
-                gameUI.displayPlayerInfos(gameState, quadrant);
-                Position towerPos = gameUI.getPosBuyingTower();
-                if (checkValidity(towerPos, gameState)) {
-                    std::cout << "ok" << std::endl;
+            gameUI.display(gameState);
+            gameUI.displayPlayerInfos(gameState, quadrant);
+            Position towerPos = gameUI.getPosBuyingTower();
+            if (checkValidity(towerPos, gameState)) {
+                if (towerchoice == 1) {
                     gameState.addTower(new AttackTower(Position(towerPos.getX(), towerPos.getY())), quadrant);
                     sendBuyRequest(towerPos, "AttackTower");
-                }
+                } // else if another type of tower
             }
-            gameUI.display(gameState);
-            gameUI.displayPlayerInfos(gameState, quadrant);
         }else if (choice == 2){
-            gameUI.display(gameState);
-            gameUI.displayPlayerInfos(gameState, quadrant);
             Position toSell = gameUI.getPosSellingTower();
             if (isTowerInPosition(gameState, toSell)){
                 gameState.deleteTower(toSell, quadrant);
                 sendSellRequest(toSell);
             }
-            gameUI.display(gameState);
-            gameUI.displayPlayerInfos(gameState, quadrant);
-
-        }// else if upgrade tower
+        }// else upgrade tower
+        gameUI.display(gameState);
+        gameUI.displayPlayerInfos(gameState, quadrant);
     }
 }
 
