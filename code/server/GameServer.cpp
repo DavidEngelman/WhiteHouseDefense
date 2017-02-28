@@ -245,7 +245,7 @@ void GameServer::sendInitialGameStae() {
 }
 
 int GameServer::connectToAccountServer() {
-    return init_connection_to_server("127.0.0.1", 5555); //Faudrait mettre des constantes :)
+    return init_connection_to_server((char*) "127.0.0.1", 5555); //Faudrait mettre des constantes :)
 
 }
 
