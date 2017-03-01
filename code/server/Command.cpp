@@ -1,29 +1,43 @@
 #include "Command.hpp"
 
+Command::Command(): _hasReachedEnd(false), currentPosInBuffer(0), buffer(nullptr) {
+
+}
+
 std::string Command::getAction() const {
     return action;
 }
 
-void Command::parse(char *data) {
-    int i = extract_action(data);
 
+void Command::parse(char *data) {
+    buffer = data;
+    currentPosInBuffer = 0;
+
+    extract_action(data);
 }
 
-int Command::extract_action(char* data){
-
-    /*
-     * Return l'index de début du premier argument de la commande
-     */
-
-    int i = 0;
-    std::string temp_action;
-
-    while ((data[i] != ',') && (data[i] != ';')) { // comme ça une commande peut etre juste par ex: "ranking;"
-        temp_action += data[i];                        // au lieu de "ranking," c'est un peu plus clean
-        i++;
+/*
+ * Method that can be called after parse. Parse extract the action, and this method
+ * allows you to extract any additional strings in the command.
+ */
+std::string Command::getNextToken() {
+    std::string token;
+    while (buffer[currentPosInBuffer] != ',' && buffer[currentPosInBuffer] != ';') {
+        token += buffer[currentPosInBuffer];
+        currentPosInBuffer++;
     }
-    i++;
 
-    action = temp_action;
-    return i;
+    // We reached the delimiter
+    _hasReachedEnd = (buffer[currentPosInBuffer] == ';');
+
+    currentPosInBuffer++;
+}
+
+bool Command::hasReachedEnd() {
+    return _hasReachedEnd;
+}
+
+int Command::extract_action(char *data) {
+    action = getNextToken();
+    return currentPosInBuffer;
 }
