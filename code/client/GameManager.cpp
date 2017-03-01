@@ -373,9 +373,6 @@ int GameManager::getQuadrantFromServer() {
     return quadrant;
 }
 
-int GameManager::getQuadrant() const {
-    return quadrant;
-}
 
 void GameManager::getInitialGameStateFromServer() {
     char buffer[BUFFER_SIZE];
