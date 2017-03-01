@@ -27,7 +27,6 @@ void MainManager::run() {
             SpectatorManager * spectator = new SpectatorManager(5555, server_ip_address, player_id, username, master_app);
             master_app->transition(spectator);
             break;
-
         }
         case 3: {
             ProfileManager * profile = new ProfileManager(5555, server_ip_address, player_id, username, master_app);
