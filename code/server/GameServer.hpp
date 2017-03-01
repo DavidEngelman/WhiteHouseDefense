@@ -23,6 +23,7 @@ private:
 
 
     std::string mode;
+    unsigned int mapSeed;
 
     // Je l'ai mis comme pointeur, car je veux seulement l'initialiser dans la methode run.
     // Si je l'initialise dans le constructeur, je suis obligé de garder la seed dans un field
@@ -31,24 +32,21 @@ private:
     GameEngine * gameEngine;
     std::vector<PlayerConnection> playerConnections;
     int client_sockets[4];
+    std::vector<int> supportersSockets;
 
     pthread_t spectatorJoinThread;
 
 
+
     void sendGameStateToPlayer(PlayerConnection &connection);
+    void sendGameStateToPlayer(int socket_fd);
     void get_and_process_command(int client_socket_fd, char buffer[]);
     void addTowerInGameState(TowerCommand &command);
 
-    bool isFinishedClassic();    //pour le mode classic
-    bool isFinishedCoop();       //pour le mode par équipe
-    bool isFinishedVsTime();     //pour le mode contre la montre
 
 public:
 
     GameServer(int port, std::vector<PlayerConnection> &playerConnections, std::string _mode);
-
-    void getReceivedChanges();
-
 
     void processClientCommands();
 
@@ -58,17 +56,8 @@ public:
 
     void run();
 
-    void handleEndOfGame();
-
-    void sendEndToPlayer(PlayerConnection &connection);
-
-    void sendWinnerToPlayer(PlayerConnection &connection);
-    void sendMapSeedToClients(unsigned int mapSeed);
-
     void sendTowerPhase();
     void sendWavePhase();
-
-    void sendQuadrantToClients();
 
     void createPlayerStates() const;
 
@@ -96,6 +85,19 @@ public:
     std::string getMode();
 
     PlayerState &getPlayerStateWithUsername(std::string username);
+
+
+    void setupGameForPlayers();
+
+    void sendSetupGameStringToClient(int fd);
+
+    void sendMapSeedToClient(int socket_fd);
+
+    int getQuadrantForPlayer(std::string username);
+
+    void sendQuadrantToClient(int socket_fd, int quadrant);
+
+    void setupGameForPlayer(int player_socket_fd, int quadrant);
 };
 
 #endif
