@@ -38,7 +38,8 @@ void MatchMaker::get_and_process_command(int socket_fd) {
     if (command.getAction() == SPECTATE_GAME){
         int index = std::stoi(command.getNextToken());
         addSpectatorToGame(gameIndex, socket_fd);
-    } else if (command.getAction() == TON_STRING) {
+    } else if (command.getAction() == GAME_IN_PROGRESS_REQUEST) {
+        handleRequestFromSpectator();
 
     } else {
         MatchmakingCommand matchmakingCommand(socket_fd);
@@ -46,6 +47,17 @@ void MatchMaker::get_and_process_command(int socket_fd) {
 
         addPlayerToPendingMatch(matchmakingCommand.getPlayerConnection(), matchmakingCommand.getMode());
     }
+}
+
+void MatchMaker::handleRequestFromSpectator() {
+    std::string stringToSend;
+    for( GameServer* gameServer : activeGames) {
+        stringToSend += gameServer.getPort() + ",";
+        stringToSend += gameServer.getMode() + ",";
+        stringToSend += gameServer.getAllPlayer() + ";";
+    }
+
+    send_message()
 }
 
 void MatchMaker::addPlayerToPendingMatch(PlayerConnection player_connection, std::string mode) {
