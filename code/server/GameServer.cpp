@@ -137,6 +137,16 @@ void GameServer::runWave() {
 
 
 void GameServer::run() {
+    startSpectatorThread();
+    runGame();
+    stopSpectatorThread();
+}
+
+void GameServer::startSpectatorThread() const {
+    pthread_create(&spectatorJoinThread, NULL, &GameServer::staticJoinSpectatorThread, this);
+}
+
+void GameServer::runGame() {
     start_socket_listen();
     sleep(3); // TODO: find better way to avoid network race conditions...
     unsigned int mapSeed = (unsigned int) time(0);
@@ -157,8 +167,10 @@ void GameServer::run() {
     while (!gameEngine->isGameFinished()) {
         if (!DEBUG){
 
+            gameEngine->getTimerSinceGameStart().pause(); // peut etre faire ca juste en mode contre la montre
             sendTowerPhase();
             processClientCommands();
+            gameEngine->getTimerSinceGameStart().resume(); // peut etre faire ca juste en mode contre la montre
             sendWavePhase();
         }
         runWave();
@@ -269,6 +281,19 @@ void GameServer::updatePlayerStatsOnAccountServer() {
 
 
 }
+
+void GameServer::stopSpectatorThread() {
+    pthread_cancel(spectatorJoinThread);
+}
+
+static void *GameServer::staticJoinSpectatorThread(void * self) {
+    return static_cast<GameServer*>(self)->getAndProcessSpectatorJoinCommand();
+}
+
+void *GameServer::getAndProcessSpectatorJoinCommand() {
+    return nullptr;
+}
+
 
 std::string GameServer::getMode() {
     return mode;

@@ -6,7 +6,7 @@
 #include "FriendListManager.hpp"
 #include "SpectatorManager.hpp"
 
-const static std::string gameModes[3] = {CLASSIC_MODE, TEAM_MODE, TIMED_MODE};
+const static std::string gameModes[3] = {CLASSIC_MODE, TIMED_MODE, TEAM_MODE};
 
 MainManager::MainManager(char* ip_addr, int id, std::string username, App* my_app) :
     AbstractManager(ip_addr, my_app), player_id(id), username(username){}

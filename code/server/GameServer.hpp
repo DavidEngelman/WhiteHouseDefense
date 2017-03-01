@@ -15,7 +15,7 @@
 
 static const int NUM_PLAYERS = 4;
 
-static const int NUM_SECONDS_TO_PLACE_TOWER = 30;
+static const int NUM_SECONDS_TO_PLACE_TOWER = 5;
 static const int INTERVAL_BETWEEN_SENDS_IN_MS = 200;
 
 class   GameServer : public Server {
@@ -30,6 +30,10 @@ private:
     GameEngine * gameEngine;
     std::vector<PlayerConnection> playerConnections;
     int client_sockets[4];
+
+    pthread_t spectatorJoinThread;
+
+
     void sendGameStateToPlayer(PlayerConnection &connection);
     void get_and_process_command(int client_socket_fd, char buffer[]);
     void addTowerInGameState(TowerCommand &command);
@@ -75,6 +79,16 @@ public:
     void sendInitialGameState();
 
     void upgradeTowerInGameState(TowerCommand command);
+
+    void runGame();
+
+    void startSpectatorThread() const;
+
+    void stopSpectatorThread();
+
+    static void *staticJoinSpectatorThread(void *);
+
+    void *getAndProcessSpectatorJoinCommand();
 
     std::string getMode();
 };
