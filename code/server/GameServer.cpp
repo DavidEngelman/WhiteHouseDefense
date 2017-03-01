@@ -171,6 +171,7 @@ void GameServer::run() {
         runWave();
     }
 
+    gameEngine->declareWinner();
     updatePlayerStatsOnAccountServer();
     delete gameEngine;
 

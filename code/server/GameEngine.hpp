@@ -72,9 +72,9 @@ public:
 
     void checkIfGameIsOver();
 
-    void declareWinner(GameState& gamestate);
+    void declareWinner();
 
-    void declareWinnerTeam(GameState& gameState);
+    void declareWinnerTeam();
 
     bool isGameFinished();
 
