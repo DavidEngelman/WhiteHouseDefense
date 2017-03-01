@@ -3,11 +3,9 @@
 const bool DEBUG = false;
 
 
-
-GameEngine::GameEngine(unsigned int mapSeed ,std::string mode) : map(mapSeed),
-                                               numOfPNJsPerWave(INITIAL_NUMBER_OF_PNJS_PER_WAVE), gameState(mode)
-
-{
+GameEngine::GameEngine(unsigned int mapSeed, std::string mode) : map(mapSeed),
+                                                                 numOfPNJsPerWave(INITIAL_NUMBER_OF_PNJS_PER_WAVE),
+                                                                 gameState(mode) {
     timerSinceGameStart.start();
 }
 
@@ -64,11 +62,11 @@ void GameEngine::dealDamageToBase() {
 }
 
 void GameEngine::dealDamage(std::vector<Wave> &waves) {
-    for (AbstractTower * tower: gameState.getTowers()) {
+    for (AbstractTower *tower: gameState.getTowers()) {
         Wave &wave = getWaveInSameQuadrant(*tower, waves);
         bool killedPNJ = tower->shoot(wave);
         if (killedPNJ && !DEBUG) {
-            PlayerState& player_state = getPlayerStateForWave(wave);
+            PlayerState &player_state = getPlayerStateForWave(wave);
             addKillToStat(player_state);
             giveGold(player_state);
         }
@@ -142,7 +140,7 @@ GameState &GameEngine::getGameState() {
     return gameState;
 }
 
-int min(int a, int b){
+int min(int a, int b) {
     return (a < b) ? a : b;
 }
 
@@ -163,19 +161,18 @@ void GameEngine::addPNJS(std::vector<Wave> &waves) {
 }
 
 
-void GameEngine::addTower(AbstractTower* tower, int quadrant) {
+void GameEngine::addTower(AbstractTower *tower, int quadrant) {
     if (!DEBUG) {
         if (gameState.getPlayerStates()[quadrant].getMoney() >=
             tower->getPrice()) {
             gameState.addTower(tower, quadrant);
         }
-    }
-    else{
-        gameState.addTower(tower,quadrant);
+    } else {
+        gameState.addTower(tower, quadrant);
     }
 }
 
-void GameEngine::deleteTower(Position& position, int& quadrant) {
+void GameEngine::deleteTower(Position &position, int &quadrant) {
     gameState.deleteTower(position, quadrant);
 }
 
@@ -197,11 +194,10 @@ void GameEngine::checkIfGameIsOver() {
         std::cout << "IS_OVER" << isOver;
     } else if (mode == TIMED_MODE) {
         isOver = timerSinceGameStart.elapsedTimeInSeconds() > TIMED_GAME_INTERVAL;
-        declareWinner();
     } else if (mode == TEAM_MODE) {
         int numAlivePlayersInTeam1 = 0;
         int numAlivePlayersInTeam2 = 0;
-        for (PlayerState& playerState: getGameState().getPlayerStates()) {
+        for (PlayerState &playerState: getGameState().getPlayerStates()) {
             if (playerState.getTeam() == 1) numAlivePlayersInTeam1++;
             else if (playerState.getTeam() == 2) numAlivePlayersInTeam2++;
         }
@@ -212,47 +208,55 @@ void GameEngine::checkIfGameIsOver() {
     gameState.setIsGameOver(isOver);
 }
 
-//void GameEngine::declareWinner(GameState& gamestate){
-//    int maxScore = -1;
-//    for(auto &player : gamestate.getPlayerStates()){
-//        if (player.getPnjKilled() > maxScore){
-//            maxScore = player.getPnjKilled();
-//        }
-//    }
-//    for(auto &player : gamestate.getPlayerStates()){
-//        if (player.getPnjKilled() == maxScore){
-//            player.setIsWinner(true);
-//        }
-//    }
-//}
 
-void GameEngine::declareWinner(){
-    for (auto& player : gameState.getPlayerStates()){
-        if (player.getHp() > 0){
+void GameEngine::declareWinner() {
+    if (gameState.getMode() == CLASSIC_MODE) {
+        declareWinnerInClassicMode();
+    } else if (gameState.getMode() == TEAM_MODE) {
+        declareWinnerTeam();
+    } else if (gameState.getMode() == TIMED_MODE) {
+        declareWinnerInTimedMode();
+    }
+}
+
+void GameEngine::declareWinnerInTimedMode() {
+    int maxScore = -1;
+    for (auto &player : gameState.getPlayerStates()) {
+        if (player.getPnjKilled() > maxScore) {
+            maxScore = player.getPnjKilled();
+        }
+    }
+    for (auto &player : gameState.getPlayerStates()) {
+        if (player.getPnjKilled() == maxScore) {
             player.setIsWinner(true);
         }
     }
 }
 
-void GameEngine::declareWinnerTeam(){
-    int team1Score = 0;
-    int team2Score = 0;
-    for (auto &player : gameState.getPlayerStates() ){
-        if (player.getTeam() == 1){
-            team1Score += player.getPnjKilled();
-        }else{
-            team2Score += player.getPnjKilled();
+void GameEngine::declareWinnerInClassicMode() {
+    for (auto &player : gameState.getPlayerStates()) {
+        if (player.getHp() > 0) {
+            player.setIsWinner(true);
         }
     }
-    for(auto &player : gameState.getPlayerStates()){
-        if (team1Score > team2Score){
-            if (player.getTeam() == 1){
-                player.setIsWinner(true);
-            }
-        }else if (team2Score > team1Score){
-            if (player.getTeam() == 2){
-                player.setIsWinner(true);
-            }
+}
+
+void GameEngine::declareWinnerTeam() {
+    int numPlayersAliveInTeam1 = 0;
+    int numPlayersAliveInTeam2 = 0;
+    for (auto &player : gameState.getPlayerStates()) {
+        if (player.isAlive() && player.getTeam() == 1) {
+            numPlayersAliveInTeam1 += 1;
+        } else if (player.isAlive() && player.getTeam() == 2) {
+            numPlayersAliveInTeam2 += 2;
+        }
+    }
+
+    int winnerTeam = (numPlayersAliveInTeam1 > 0) ? 1 : 2;
+
+    for (auto &player : gameState.getPlayerStates()) {
+        if (player.getTeam() == winnerTeam) {
+            player.setIsWinner(true);
         }
     }
 }

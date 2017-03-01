@@ -87,6 +87,9 @@ public:
 
     void upgradeTower(Position &position, int &quadrant);
 
+    void declareWinnerInClassicMode();
+
+    void declareWinnerInTimedMode();
 };
 
 

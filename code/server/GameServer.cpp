@@ -150,16 +150,8 @@ void GameServer::run() {
     if (!DEBUG){
         sendMapSeedToClients(mapSeed);
         sendQuadrantToClients();
-        sendInitialGameStae();
+        sendInitialGameState();
     }
-    //ici__je met des tours n importe ou pour test a la bourrain
-/*    AttackTower * attackTower = new AttackTower(Position(14,8));
-    attackTower->upgrade(); // Exemple d'upgrade d'une tour
-    gameEngine->addTower(attackTower, 0);
-    AttackTower * attackTower2 = new AttackTower(Position(17,2));
-    gameEngine->addTower(attackTower2, 0);
-    AttackTower * attackTower3 = new AttackTower(Position(20,1));
-    gameEngine->addTower(attackTower3, 0);*/
 
     std::cout << "gameEngine->isGameFinished() = " << gameEngine->isGameFinished() << std::endl;
     while (!gameEngine->isGameFinished()) {
@@ -247,7 +239,7 @@ void GameServer::sendQuadrantToClients() {
     }
 }
 
-void GameServer::sendInitialGameStae() {
+void GameServer::sendInitialGameState() {
     sendGameStateToPlayers();
 }
 
