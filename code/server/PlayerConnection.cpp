@@ -1,6 +1,7 @@
 //
 //
 
+#include <bits/basic_string.h>
 #include "PlayerConnection.hpp"
 #include "../common/Networking.h" //for close
 
@@ -33,4 +34,9 @@ bool PlayerConnection::operator!=(const PlayerConnection &rhs) const {
 
 PlayerConnection::~PlayerConnection() {
 //    close(socket_fd);
+}
+
+
+const std::string & PlayerConnection::getUsername() const {
+    return username;
 }

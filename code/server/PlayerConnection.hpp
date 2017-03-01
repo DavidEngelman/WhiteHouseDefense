@@ -1,15 +1,19 @@
 #ifndef PROJET_PLAYERCONNECTION_HPP
 #define PROJET_PLAYERCONNECTION_HPP
 
+#include <string>
 class PlayerConnection{
 
 private:
     int player_id;
     int socket_fd;
+    std::string username;
 
 public:
 
     PlayerConnection() = default;
+
+    const std::string &getUsername() const;
 
     PlayerConnection(int id, int socket);
 
