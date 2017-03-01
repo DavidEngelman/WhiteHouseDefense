@@ -5,13 +5,22 @@
 
 class Timer {
 private:
-    struct timeval start_timeval;
+    struct timeval last_pause_timeval;
+    int numOfElapsedMilisecondsInPreviousIntervals;
+    bool isPaused;
+
+    int getMilisecondsSinceLastCurrentIntervalStart();
 
 public:
+    Timer();
+
     void start();
-    int elapsedTimeInMiliseconds();
-    int elapsedTimeInSeconds();
+    void pause();
+    void resume();
     void reset();
+
+    int elapsedTimeInSeconds();
+    int elapsedTimeInMiliseconds();
 };
 
 
