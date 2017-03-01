@@ -24,7 +24,7 @@ void MainManager::run() {
             break;
         }
         case 2: {
-            SpectatorManager * spectator = new SpectatorManager(5555, server_ip_address, player_id, username, master_app);
+            SpectatorManager * spectator = new SpectatorManager(5556, server_ip_address, player_id, username, master_app);
             master_app->transition(spectator);
             break;
         }
