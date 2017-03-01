@@ -14,7 +14,7 @@
 #include <pthread.h>
 #include <unistd.h>
 
-class GameManager : public AbstractManager{ //Tmp : public (à supprimer après tests)
+class GameManager : public AbstractManager{
 
 private:
     int counter = 0;
@@ -27,8 +27,8 @@ private:
     std::string player_username;
     int player_id; // Je sais plus si les deux sont utiles je les met au cas ou
     int quadrant;
-    unsigned int getMapSeedFromServer() const;
 
+    unsigned int getMapSeedFromServer() const;
     void unSerializeGameState(char* serialized_gamestate);
     void unSerializePlayerStates(std::string serialized_playerstates);
     void unSerializePlayerState(std::string serialized_playerstate);
@@ -38,28 +38,26 @@ private:
     void unSerializeWave(std::string serialized_wave);
     void unSerializePNJ(std::string serialized_pnj, Wave* wave);
 
-public:
-
-    GameManager(char* ip_addr, int port, int socket, int id, std::string username, App* app);
-
-    int getQuadrant() const;
-
-    void come_back_to_menu();
-
-    bool is_alive();
-
-    void run();
-
+    static void* staticInputThread(void *self);
     void *input_thread();
 
+    void come_back_to_menu();
+    bool is_alive();
     bool isTowerInPosition(GameState &gamestate, Position towerPos);
-
-    static void* staticInputThread(void *self);
-
     bool checkValidity(Position towerPos, GameState& gamestate);
 
     void sendBuyRequest(Position towerPos, std::string towerType);
     void sendSellRequest(Position towerPos);
+
+public:
+
+    GameManager(char* ip_addr, int port, int socket, int id, std::string username, App* app);
+
+    void run();
+
+
+
+
 
     int getQuadrantFromServer();
 

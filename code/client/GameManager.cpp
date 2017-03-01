@@ -127,6 +127,8 @@ void GameManager::run() {
             }
     }
     // gameUI.displayGameOver(gamestate);
+
+    // Menu to come back to main menu (or make another game of the same type ?)
     come_back_to_menu();
 
 }
@@ -368,10 +370,6 @@ unsigned int GameManager::getMapSeedFromServer() const {
 int GameManager::getQuadrantFromServer() {
     int quadrant;
     receive_data(server_socket, &quadrant, sizeof(int));
-    return quadrant;
-}
-
-int GameManager::getQuadrant() const {
     return quadrant;
 }
 

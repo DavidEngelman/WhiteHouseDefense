@@ -11,10 +11,10 @@ Position GameUI::getPosBuyingTower() {
     do {
         std::cin.clear();
         std::cin.ignore();
-        std::cout << "Entrez les coordonnées de l'endroit où vous voulez placer une tour" << std::endl;
-        std::cout << "Entrez un X: ";
+        std::cout << "Enter the coordinates of the place where you want to put the tower" << std::endl;
+        std::cout << "X: ";
         std::cin >> x;
-        std::cout << "Entrez un Y: ";
+        std::cout << "Y: ";
         std::cin >> y;
     } while (!checkCoord(x, y));
 
@@ -25,7 +25,7 @@ bool GameUI::checkCoord(int x, int y) {
     if (0 <= x and x < SIZE and 0 <= y and y < SIZE) {
         return true;
     }
-    std::cout << "Entrez un x et un y entre 0 et " << SIZE - 1 << std::endl;
+    std::cout << "Enter an X and a Y between 0 and " << SIZE - 1 << std::endl;
     return false;
 }
 
@@ -34,25 +34,6 @@ void GameUI::display(GameState& gameState) {
 }
 
 void GameUI::display(int quadrant) {
-    std::cout << "Votre quadrant est le : " << quadrant << std::endl;
-}
-
-bool GameUI::isBuyingTower() {
-    int response;
-    bool ok = false;
-
-    do {
-        std::cout << "Voulez-vous :\n1) Acheter une tour ?\n2) Vendre une tour ?" << std::endl;
-        std::cin >> response;
-        if (!std::cin.fail() and (response == 1 or response == 2)) {
-            ok = true;
-        } else {
-            std::cout << "Veuillez entrer '1' ou '2'" << std::endl;
-        }
-
-    } while (!ok);
-
-    return response == 1;
 }
 
 Position GameUI::getPosSellingTower() {
@@ -60,10 +41,12 @@ Position GameUI::getPosSellingTower() {
     int y;
 
     do {
-        std::cout << "Entrez les coordonnées de la tour que vous voulez vendre" << std::endl;
-        std::cout << "Entrez un X: ";
+        std::cin.clear();
+        std::cin.ignore();
+        std::cout << "Enter the coordinates of the tower that you want to sell" << std::endl;
+        std::cout << "X: ";
         std::cin >> x;
-        std::cout << "Entrez un Y: ";
+        std::cout << "Y: ";
         std::cin >> y;
     } while (!checkCoord(x, y));
 
@@ -122,7 +105,7 @@ int GameUI::getChoice() {
 void GameUI::displayGameOver(GameState &gamestate) {
     std::vector<PlayerState> players;
     PlayerState bestPlayer;
-    int previousMax = 999999999;
+    int previousMax = 999999999; // Infinity
     for (int i = 0; i < 3; i++) {
         int maxScore = -1;
         for (auto &player : gamestate.getPlayerStates()) {

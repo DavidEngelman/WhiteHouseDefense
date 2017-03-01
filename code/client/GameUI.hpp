@@ -9,19 +9,18 @@ class GameUI {
 private:
     Map* map;
 
+	bool checkCoord(int x, int y);
+
 public:
     GameUI(unsigned seed);
 
 	Position getPosBuyingTower();
 	Position getPosSellingTower();
 	int getChoice();
-	bool isBuyingTower();
-    bool checkCoord(int x, int y);
 	void display(GameState& gameState);
 	void display(int quadrant);
 	void displayPosingPhase();
 	void displayTowerShop();
-	void displaySellingMenu();
 
 	void displayGameOver(GameState& gamestate);
 
