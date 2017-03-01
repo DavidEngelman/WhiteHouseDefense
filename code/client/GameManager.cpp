@@ -118,6 +118,9 @@ void GameManager::run() {
 
         }else if (strcmp(server_msg_buff, WAVE) == 0){
             inputThread = pthread_cancel(thr);
+
+            std::cin.clear(); //pas enlever ces 2 lignes
+            std::cin.ignore();
         }
         else{
             unSerializeGameState(server_msg_buff);
