@@ -6,7 +6,9 @@
 
 
 class SpectatorUI {
-    void display();
+    void displaySpectatorUI();
+    int inputSpectatorUI();
+
 
 };
 
