@@ -6,7 +6,10 @@
 
 
 class SpectatorUI {
-    void displaySpectatorUI();
+
+public:
+
+    void displaySpectatorUI(std::string infos);
     int inputSpectatorUI();
     void drawTitleGameType(std::string gameType);
 

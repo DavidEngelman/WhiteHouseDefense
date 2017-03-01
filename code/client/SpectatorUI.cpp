@@ -5,15 +5,11 @@
 #include "SpectatorUI.hpp"
 #include "Drawing.hpp"
 
-void SpectatorUI::displaySpectatorUI() {
-    int i=1;
+void SpectatorUI::displaySpectatorUI(std::string infos) {
     Drawing::drawWhiteHouse("SPECTATOR SCREEN");
-    //for type de partie;
-        //drawTitleGameType(gameType);
-    //std::cout<<type de partie<<std//endl;
-    //for()//pour chaque partie
-    //std::cout<<i<<") "<<partie<<"("<<nom_joueur<<")"<<std::endl;
-    //i++;
+
+
+
 
 }
 
