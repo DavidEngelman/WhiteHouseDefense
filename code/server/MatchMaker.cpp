@@ -32,14 +32,18 @@ void MatchMaker::get_and_process_command(int socket_fd) {
     char command_buffer[BUFFER_SIZE];
     receive_message(socket_fd, command_buffer);
 
-    if (command_buffer == "games") { //request from SpectatorManager
-        handleRequestFromSpectator();
+    Command command;
+    command.parse(command_buffer);
+
+    if (command.getAction() == SPECTATE_GAME){
+        int index = std::stoi(command.getNextToken());
+        addSpectatorToGame(gameIndex, socket_fd);
+    } else {
+        MatchmakingCommand matchmakingCommand(socket_fd);
+        matchmakingCommand.parse(command_buffer);
+
+        addPlayerToPendingMatch(matchmakingCommand.getPlayerConnection(), matchmakingCommand.getMode());
     }
-
-    MatchmakingCommand matchmakingCommand(socket_fd);
-    matchmakingCommand.parse(command_buffer);
-
-    addPlayerToPendingMatch(matchmakingCommand.getPlayerConnection(), matchmakingCommand.getMode());
 }
 
 void MatchMaker::addPlayerToPendingMatch(PlayerConnection player_connection, std::string mode) {
@@ -95,8 +99,4 @@ void MatchMaker::announceMatchStart(PlayerConnection playerConnection) {
 
     send_message(playerConnection.getSocket_fd(), GAME_STARTING_STRING);
     send_data(playerConnection.getSocket_fd(), (char *) &current_server_port, sizeof(int));
-}
-
-void MatchMaker::handleRequestFromSpectator() {
- //TODO
 }

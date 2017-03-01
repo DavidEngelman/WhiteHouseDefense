@@ -6,6 +6,7 @@
 #include "MatchmakingCommand.hpp"
 #include "../common/Strings.hpp"
 #include "PlayerConnection.hpp"
+#include "GameServer.hpp"
 
 class MatchMaker : public Server {
 
@@ -14,6 +15,8 @@ private:
     PendingMatch classicPendingMatch;
     PendingMatch timedPendingMatch;
     PendingMatch teamPendingMatch;
+
+    std::vector<GameServer *> activeGames;
 
     int current_server_port;
 
