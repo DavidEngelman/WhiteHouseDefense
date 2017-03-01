@@ -16,7 +16,7 @@ private:
     void getGamesFromMatchMaker();
 
 public:
-    SpectatorManager(int port, char* adress, App* my_app);
+    SpectatorManager(int port, char* address, int id, std::string username, App* master_app);
 
 };
 

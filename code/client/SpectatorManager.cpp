@@ -1,7 +1,8 @@
 #include "SpectatorManager.hpp"
 
 
-SpectatorManager::SpectatorManager(int port, char *adress, App *my_app) : NetworkedManager(port, adress, my_app) {}
+SpectatorManager::SpectatorManager(int port, char* address, int id, std::string username, App* master_app) :
+        NetworkedManager(port, address, master_app) {}
 
 void SpectatorManager::getGamesFromMatchMaker() {
     char buffer[5000];
