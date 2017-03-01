@@ -1,17 +1,16 @@
 //
 //
 
-#include <bits/basic_string.h>
 #include "PlayerConnection.hpp"
 #include "../common/Networking.h" //for close
 
 PlayerConnection::PlayerConnection(int id, int socket) : player_id(id), socket_fd(socket){}
 
-int PlayerConnection::getPlayer_id() const {
+int PlayerConnection::getPlayer_id() {
     return player_id;
 }
 
-int PlayerConnection::getSocket_fd() const {
+int PlayerConnection::getSocket_fd()  {
     return socket_fd;
 }
 
