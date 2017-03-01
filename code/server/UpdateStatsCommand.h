@@ -5,7 +5,7 @@
 #define PROJET_UPDATESTATSCOMMAND_H
 
 #include "Command.hpp"
-#include "../common/tools.hpp"
+#include "../common/Tools.hpp"
 
 
 class UpdateStatsCommand: public Command {

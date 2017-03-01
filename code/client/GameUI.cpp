@@ -1,6 +1,6 @@
 #include "GameUI.hpp"
 #include <iostream>
-#include "../common/tools.hpp"
+#include "../common/Tools.hpp"
 
 
 GameUI::GameUI(unsigned seed) : map(new Map(seed)) {}

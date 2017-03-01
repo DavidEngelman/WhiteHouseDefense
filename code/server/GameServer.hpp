@@ -11,7 +11,7 @@
 #include "GameEngine.hpp"
 #include <time.h>
 #include "../common/Constants.h"
-#include "../common/tools.hpp"
+#include "../common/Tools.hpp"
 
 static const int NUM_PLAYERS = 4;
 

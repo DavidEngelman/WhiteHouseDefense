@@ -1,6 +1,6 @@
 #include <iostream>
 #include "GameState.hpp"
-#include "tools.hpp"
+#include "Tools.hpp"
 
 GameState::GameState() : isGameOver(false){}
 GameState::GameState(std::string mode) : mode(mode), isGameOver(false) {}
