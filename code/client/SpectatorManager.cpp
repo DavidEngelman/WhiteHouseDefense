@@ -1,5 +1,4 @@
 #include "SpectatorManager.hpp"
-#include "MainManager.hpp"
 
 //"5557,classic,bibi,baba,bobo,bubu;5558,classic,lala,lili,lolo,lele;"
 
@@ -26,6 +25,10 @@ void SpectatorManager::run() {
     else{
         spectatorUI.displaySpectatorUI(allGames);
         int gameSelected = spectatorUI.inputSpectatorUI(allGames.size());
+        int gamePort = allGames[gameSelected].port;
+        GameManager *gameManager = new GameManager(server_ip_address,gamePort,server_socket,
+                                                   player_id, player_usr_name, master_app);
+        master_app->transition(gameManager);
     }
 }
 

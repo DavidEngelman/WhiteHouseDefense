@@ -10,6 +10,8 @@
 #include "SpectatorUI.hpp"
 #include "../common/Strings.hpp"
 #include "GameInfo.h"
+#include "MainManager.hpp"
+#include "GameManager.hpp"
 
 
 class SpectatorManager : public NetworkedManager{
