@@ -37,7 +37,7 @@ PlayerConnection::~PlayerConnection() {
 }
 
 
-const std::string & PlayerConnection::getUsername() const {
+std::string & PlayerConnection::getUsername() {
     return username;
 }
 

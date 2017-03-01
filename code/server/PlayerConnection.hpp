@@ -16,7 +16,7 @@ public:
 
     PlayerConnection() = default;
 
-    const std::string &getUsername() const;
+    std::string &getUsername();
 
     PlayerConnection(int id, int socket);
 

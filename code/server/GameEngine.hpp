@@ -82,8 +82,8 @@ public:
 
     void addKillToStat(PlayerState &playerState);
 
-    void addPlayerState(int player_id);
-    void addPlayerState(int player_id, int team);
+    void addPlayerState(int player_id, std::string username);
+    void addPlayerState(int player_id, std::string username, int team);
 
     void deleteTower(Position& position, int& quadrant);
 

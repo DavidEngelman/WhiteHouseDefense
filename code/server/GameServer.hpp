@@ -83,17 +83,19 @@ public:
 
     void runGame();
 
-    void startSpectatorThread() const;
+    void startSpectatorThread();
 
     void stopSpectatorThread();
 
     static void *staticJoinSpectatorThread(void *);
 
-    void *getAndProcessSpectatorJoinCommand();
+    void getAndProcessSpectatorJoinCommand();
 
     std::string getAllPlayers();
 
     std::string getMode();
+
+    PlayerState &getPlayerStateWithUsername(std::string username);
 };
 
 #endif
