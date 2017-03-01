@@ -8,7 +8,7 @@ SpectatorManager::SpectatorManager(int port, char* address, int id, std::string 
 void SpectatorManager::getGamesFromMatchMaker() {
     char buffer[5000];
     send_message(server_socket, "games;");
-    //receive_message(server_socket, buffer); //receive all the games in progress
+    receive_message(server_socket, buffer); //receive all the games in progress
     parse_message_from_server(std::string(buffer));
 
 }
