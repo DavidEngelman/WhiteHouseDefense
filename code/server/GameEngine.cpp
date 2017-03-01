@@ -197,7 +197,6 @@ void GameEngine::checkIfGameIsOver() {
         std::cout << "IS_OVER" << isOver;
     } else if (mode == TIMED_MODE) {
         isOver = timerSinceGameStart.elapsedTimeInSeconds() > TIMED_GAME_INTERVAL;
-        declareWinner();
     } else if (mode == TEAM_MODE) {
         int numAlivePlayersInTeam1 = 0;
         int numAlivePlayersInTeam2 = 0;
@@ -207,7 +206,6 @@ void GameEngine::checkIfGameIsOver() {
         }
 
         isOver = ((numAlivePlayersInTeam1 == 0) || (numAlivePlayersInTeam2 == 0));
-        declareWinnerTeam(gameState);
     }
 
     gameState.setIsGameOver(isOver);
