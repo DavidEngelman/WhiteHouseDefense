@@ -8,7 +8,7 @@ void SpectatorManager::getGamesFromMatchMaker() {
     char buffer[5000];
     send_message(server_socket, "games;");
     receive_message(server_socket, buffer); //receive all the games in progress
-    parse_message_from_server("5557,classic,bibi,baba,bobo,bubu;5558,classic,lala,lili,lolo,lele;");
+    parse_message_from_server(buffer);
 
 }
 
@@ -16,17 +16,20 @@ void SpectatorManager::run() {
     getGamesFromMatchMaker();
 
     if (allGames.size() == 0){
+        //Si y a pas de game a spectate -> on pleure
         spectatorUI.displaySorryMessage();
         MainManager * mng = new MainManager(server_ip_address, player_id, player_usr_name, master_app);
         master_app->transition(mng);
 
     }
     else{
+        //Selection de la partie et du jouer a support
         spectatorUI.displaySpectatorUI(allGames);
         int gameSelected = spectatorUI.gameSelection(allGames.size());
         int gamePort = allGames[gameSelected].getPort();
         std::string playerToSupport = spectatorUI.playerSelection(allGames[gameSelected]);
 
+        //Lancement du bordel
         //TODO j'ai pas trop compris ce qu'il faut faire à ce moment précis :(
 
         /*GameManager *gameManager = new GameManager(server_ip_address,gamePort,server_socket,
