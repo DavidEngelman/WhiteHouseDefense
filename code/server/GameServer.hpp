@@ -30,6 +30,10 @@ private:
     GameEngine * gameEngine;
     std::vector<PlayerConnection> playerConnections;
     int client_sockets[4];
+
+    pthread_t spectatorJoinThread;
+
+
     void sendGameStateToPlayer(PlayerConnection &connection);
     void get_and_process_command(int client_socket_fd, char buffer[]);
     void addTowerInGameState(TowerCommand &command);
@@ -75,6 +79,16 @@ public:
     void sendInitialGameState();
 
     void upgradeTowerInGameState(TowerCommand command);
+
+    void runGame();
+
+    void startSpectatorThread() const;
+
+    void stopSpectatorThread();
+
+    static void *staticJoinSpectatorThread(void *);
+
+    void *getAndProcessSpectatorJoinCommand();
 };
 
 #endif
