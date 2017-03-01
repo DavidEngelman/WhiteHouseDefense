@@ -30,6 +30,8 @@ public:
     MatchMaker(int port);
 
     void run() override;
+
+    void handleRequestFromSpectator();
 };
 
 #endif

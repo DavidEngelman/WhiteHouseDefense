@@ -6,10 +6,17 @@
 
 
 #include "NetworkedManager.hpp"
+#include "SpectatorUI.hpp"
+#include "../common/Strings.hpp"
 
 class SpectatorManager : public NetworkedManager{
-    
-    SpectatorManager(int port, char* adress, )
+private:
+
+    SpectatorUI spectatorManagerUI;
+    void getGamesFromMatchMaker();
+
+public:
+    SpectatorManager(int port, char* adress, App* my_app);
 
 };
 
