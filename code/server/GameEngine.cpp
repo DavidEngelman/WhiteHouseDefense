@@ -207,7 +207,6 @@ void GameEngine::checkIfGameIsOver() {
         }
 
         isOver = ((numAlivePlayersInTeam1 == 0) || (numAlivePlayersInTeam2 == 0));
-        declareWinnerTeam(gameState);
     }
 
     gameState.setIsGameOver(isOver);
