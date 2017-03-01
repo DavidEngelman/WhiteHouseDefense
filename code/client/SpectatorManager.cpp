@@ -37,6 +37,7 @@ int SpectatorManager::createGameInfo(const std::string& message, int& i) {
         str_mode += message[i];
         i++;
     }
+    i++;
     while (message[i] != ';') {
         str_players += message[i];
         i++;

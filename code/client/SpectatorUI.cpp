@@ -6,6 +6,7 @@
 #include "Drawing.hpp"
 
 void SpectatorUI::displaySpectatorUI(std::vector<GameInfo>& gamesInfos) {
+    std::cout << "Games in progress : " << std::endl;
     int i = 0;
     for( GameInfo game : gamesInfos) {
         std::cout << "Game " << i << " " << game.gameMode << " " << game.players << std::endl;
