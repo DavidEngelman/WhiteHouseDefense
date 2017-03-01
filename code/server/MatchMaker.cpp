@@ -35,7 +35,7 @@ void MatchMaker::get_and_process_command(int socket_fd) {
     Command command;
     command.parse(command_buffer);
 
-    if (command.getAction() == SPECTATE_GAME){
+    if (command.getAction() == JOIN_GAME_AS_SPECTATOR){
         int index = std::stoi(command.getNextToken());
         addSpectatorToGame(gameIndex, socket_fd);
     } else if (command.getAction() == TON_STRING) {
