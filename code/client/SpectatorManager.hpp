@@ -5,7 +5,11 @@
 #define PROJET_SPECTATORMANAGER_HPP
 
 
-class SpectatorManager {
+#include "NetworkedManager.hpp"
+
+class SpectatorManager : public NetworkedManager{
+    
+    SpectatorManager(int port, char* adress, )
 
 };
 

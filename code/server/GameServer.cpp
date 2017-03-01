@@ -156,6 +156,7 @@ void GameServer::run() {
     std::cout << "gameEngine->isGameFinished() = " << gameEngine->isGameFinished() << std::endl;
     while (!gameEngine->isGameFinished()) {
         if (!DEBUG){
+
             sendTowerPhase();
             processClientCommands();
             sendWavePhase();
