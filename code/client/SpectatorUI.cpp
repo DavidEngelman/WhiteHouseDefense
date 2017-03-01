@@ -5,10 +5,12 @@
 #include "SpectatorUI.hpp"
 #include "Drawing.hpp"
 
-void SpectatorUI::displaySpectatorUI(std::string infos) {
-    Drawing::drawWhiteHouse("SPECTATOR SCREEN");
-
-
+void SpectatorUI::displaySpectatorUI(std::vector<GameInfo>& gamesInfos) {
+    int i = 0;
+    for( GameInfo game : gamesInfos) {
+        std::cout << "Game " << i << " " << game.gameMode << " " << game.players << std::endl;
+        i++;
+    }
 
 
 }

@@ -11,10 +11,12 @@ void SpectatorManager::getGamesFromMatchMaker() {
 
     parse_message_from_server(std::string(buffer));
 
-    spectatorUI.displaySpectatorUI();
+    spectatorUI.displaySpectatorUI(allGames);
 }
 
-void SpectatorManager::run() {}
+void SpectatorManager::run() {
+    getGamesFromMatchMaker();
+}
 
 void SpectatorManager::parse_message_from_server(const std::string &message) {
     int i = 0;

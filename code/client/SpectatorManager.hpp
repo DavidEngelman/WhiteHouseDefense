@@ -9,13 +9,8 @@
 #include "NetworkedManager.hpp"
 #include "SpectatorUI.hpp"
 #include "../common/Strings.hpp"
+#include "GameInfo.h"
 
-typedef struct GameInfo{
-    int port;
-    std::string gameMode;
-    std::string players;
-
-}GameInfo;
 
 class SpectatorManager : public NetworkedManager{
 private:

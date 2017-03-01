@@ -59,7 +59,7 @@ public:
     void sendTowerPhase();
     void sendWavePhase();
 
-    void createPlayerStates() const;
+    void createPlayerStates();
 
     int connectToAccountServer();
     void updatePlayerStatsOnAccountServer();
