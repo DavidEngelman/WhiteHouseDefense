@@ -39,6 +39,8 @@ bool Command::hasReachedEnd() {
 }
 
 int Command::extract_action(char *data) {
+    buffer = data; // For compatibility with subclasses
+    // TODO: adapt subclasses to use new capacities.
     action = getNextToken();
     return currentPosInBuffer;
 }
