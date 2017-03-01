@@ -1,5 +1,6 @@
 #include "GameUI.hpp"
 #include <iostream>
+#include "../common/tools.hpp"
 
 
 GameUI::GameUI(unsigned seed) : map(new Map(seed)) {}
@@ -33,9 +34,6 @@ void GameUI::display(GameState& gameState) {
     map->display(gameState);
 }
 
-void GameUI::display(int quadrant) {
-}
-
 Position GameUI::getPosSellingTower() {
     int x;
     int y;
@@ -51,10 +49,6 @@ Position GameUI::getPosSellingTower() {
     } while (!checkCoord(x, y));
 
     return Position(x, y);
-}
-
-std::string GameUI::bool_to_string(bool my_bool){
-    return my_bool ? "true" : "false";
 }
 
 void GameUI::displayPlayerInfos(GameState &gameState, int quadrant) {
