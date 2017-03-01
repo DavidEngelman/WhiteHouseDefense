@@ -6,6 +6,7 @@
 
 
 class SpectatorUI {
+    void display();
 
 };
 
