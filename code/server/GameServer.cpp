@@ -4,8 +4,8 @@
 
 const bool DEBUG = false;
 
-GameServer::GameServer(int port, std::vector<PlayerConnection> &playerConnections) :
-Server(port), playerConnections(playerConnections) {
+GameServer::GameServer(int port, std::vector<PlayerConnection> &playerConnections, std::string _mode) :
+Server(port), playerConnections(playerConnections), mode(_mode) {
 
     if (!DEBUG){
         for (int i = 0; i < 4; i++) {
@@ -33,13 +33,20 @@ void GameServer::processClientCommands() {
 
     Timer timer;
     timer.start();
-    while (timer.elapsedTimeInSeconds() < NUM_SECONDS_TO_PLACE_TOWER) {
-        int client_index = get_readable_socket_index_with_timeout(client_sockets, 4, 5);
+    int numSecondsElapsed = timer.elapsedTimeInSeconds();
+    while (numSecondsElapsed < NUM_SECONDS_TO_PLACE_TOWER) {
+        std::cout << "just before select" << std::endl;
+
+        int timeLeft = NUM_SECONDS_TO_PLACE_TOWER - numSecondsElapsed;
+        int client_index = get_readable_socket_index_with_timeout(client_sockets, 4, timeLeft);
+        std::cout << "client selected: "<< client_index << std::endl;
         if (client_index < 0 || client_index > 4) return;
 
         int client_socket_fd = client_sockets[client_index];
         std::cout << "Client socket in server: " << client_socket_fd << std::endl;
         get_and_process_command(client_socket_fd, message_buffer);
+
+        numSecondsElapsed = timer.elapsedTimeInSeconds();
     }
 }
 
@@ -47,6 +54,7 @@ void GameServer::get_and_process_command(int client_socket_fd, char *buffer) {
 //    int timeout = NUM_SECONDS_TO_PLACE_TOWER - timer.elapsedTimeInSeconds();
 //    receive_message_with_timeout(client_socket_fd, buffer, 5);
     receive_message(client_socket_fd, buffer);
+    std::cout << "Received command: " << buffer;
     std::string command_type = get_command_type(buffer);
 
     if (command_type == PLACE_TOWER_COMMAND_STRING) {
@@ -59,6 +67,12 @@ void GameServer::get_and_process_command(int client_socket_fd, char *buffer) {
         TowerCommand command;
         command.parse(buffer);
         deleteTowerInGameState(command);
+    }
+
+    else if (command_type == UPGRADE_TOWER_COMMAND_STRING) {
+        TowerCommand command;
+        command.parse(buffer);
+        upgradeTowerInGameState(command);
     }
 
 }
@@ -88,6 +102,13 @@ void GameServer::deleteTowerInGameState(TowerCommand command) {
     gameEngine->deleteTower(position, quadrant);
 }
 
+void GameServer::upgradeTowerInGameState(TowerCommand command) {
+    Position position = command.getPosition();
+    int quadrant = command.getPlayerQuadrant();
+    gameEngine->upgradeTower(position, quadrant);
+
+}
+
 
 void GameServer::runWave() {
     Timer timer;
@@ -98,7 +119,7 @@ void GameServer::runWave() {
         while (!isWaveFinished && timer.elapsedTimeInMiliseconds() < INTERVAL_BETWEEN_SENDS_IN_MS) {
             isWaveFinished = gameEngine->update();
             // TODO: mettre peut etre un sleep ici? on ne va pas faire des tonnes de updates de toute facon
-            usleep(100); // C'est en millisecondes
+            usleep(100); // C'est en microsecondes
             // car si gameEngine voit que pas assez de temps s'est ecoulé depuis le tick precedent,
             // il ne fait rien
         }
@@ -119,7 +140,7 @@ void GameServer::run() {
     start_socket_listen();
     sleep(3); // TODO: find better way to avoid network race conditions...
     unsigned int mapSeed = (unsigned int) time(0);
-    gameEngine = new GameEngine(mapSeed);
+    gameEngine = new GameEngine(mapSeed, mode);
 
     std::cout << "Le port du server est: " << port << std::endl;
 
@@ -128,16 +149,17 @@ void GameServer::run() {
 
     if (!DEBUG){
         sendMapSeedToClients(mapSeed);
-        SendQuadrantToClients();
+        sendQuadrantToClients();
+        sendInitialGameStae();
     }
     //ici__je met des tours n importe ou pour test a la bourrain
-    AttackTower * attackTower = new AttackTower(Position(14,8));
+/*    AttackTower * attackTower = new AttackTower(Position(14,8));
     attackTower->upgrade(); // Exemple d'upgrade d'une tour
     gameEngine->addTower(attackTower, 0);
     AttackTower * attackTower2 = new AttackTower(Position(17,2));
     gameEngine->addTower(attackTower2, 0);
     AttackTower * attackTower3 = new AttackTower(Position(20,1));
-    gameEngine->addTower(attackTower3, 0);
+    gameEngine->addTower(attackTower3, 0);*/
 
     std::cout << "gameEngine->isGameFinished() = " << gameEngine->isGameFinished() << std::endl;
     while (!gameEngine->isGameFinished()) {
@@ -149,7 +171,9 @@ void GameServer::run() {
         runWave();
     }
 
+    updatePlayerStatsOnAccountServer();
     delete gameEngine;
+
 
     //handleEndOfGame();
 }
@@ -213,7 +237,7 @@ void GameServer::sendMapSeedToClients(unsigned int mapSeed) {
     }
 }
 
-void GameServer::SendQuadrantToClients() {
+void GameServer::sendQuadrantToClients() {
     unsigned int quadrant = 0;
     for (PlayerConnection& playerConnection : playerConnections) {
         int socketFd = playerConnection.getSocket_fd();
@@ -222,24 +246,27 @@ void GameServer::SendQuadrantToClients() {
     }
 }
 
+void GameServer::sendInitialGameStae() {
+    sendGameStateToPlayers();
+}
+
 int GameServer::connectToAccountServer() {
-    return init_connection_to_server("127.0.0.1", 5555); //Faudrait mettre des constantes :)
+    return init_connection_to_server((char*) "127.0.0.1", 5555); //Faudrait mettre des constantes :)
 
 }
 
-void GameServer::updatePlayerStatsOnAccountServer(int socket_fd) {
+void GameServer::updatePlayerStatsOnAccountServer() {
     int account_server_socket = connectToAccountServer();
     int p_id, pnj_killed;
     bool is_winner;
 
-    send_message(account_server_socket, "update;");
 
     for (PlayerState& ps : gameEngine->getGameState().getPlayerStates()){
         p_id = ps.getPlayer_id();
         pnj_killed = ps.getPnjKilled();
         is_winner = ps.getIsWinner();
 
-        std::string message = std::to_string(p_id)+ "," + std::to_string(pnj_killed) + "," +
+        std::string message = "Update," + std::to_string(p_id)+ "," + std::to_string(pnj_killed) + "," +
                 bool_to_string(is_winner) + ";";
 
         send_message(account_server_socket, message.c_str());
@@ -249,3 +276,5 @@ void GameServer::updatePlayerStatsOnAccountServer(int socket_fd) {
 
 
 }
+
+

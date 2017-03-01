@@ -31,6 +31,7 @@ public:
 
 
     GameState();
+    GameState(std::string mode);
 
     ~GameState();
 
@@ -43,19 +44,19 @@ public:
     std::vector<Wave> &getWaves();
 
     void addWave(Wave wave);
-    
-    // Removes the current waves (which should be empty)
+
     void clearWaves();
 
     std::vector<AbstractTower *> &getTowers();
 
-    void addTower(AbstractTower *tower);
+    void addTower(AbstractTower *tower, int& quadrant);
 
     std::vector<PlayerState> &getPlayerStates();
 
     std::string * serialize();
 
-    bool IsOnlyOnePlayerAlive();
+    int numPlayersAlive();
+
 
     void DecreasePlayerHp(PlayerState &player, int amount);
 
@@ -75,16 +76,14 @@ public:
 
     int getWinnerClassic();
 
-//    void addTower(AbstractTower tower);
     bool isPlayerAlive(const int quadrant);
-
-
-    std::string bool_to_string(bool my_bool);
 
 
     void addPlayerState(PlayerState &state);
 
     void deleteTower(Position &position, int &quadrant);
+
+    void upgradeTower(Position &position, int &quadrant);
 };
 
 #endif

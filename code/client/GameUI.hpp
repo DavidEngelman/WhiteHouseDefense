@@ -9,20 +9,23 @@ class GameUI {
 private:
     Map* map;
 
+	bool checkCoord(int x, int y);
+
 public:
     GameUI(unsigned seed);
 
 	Position getPosBuyingTower();
 	Position getPosSellingTower();
 	int getChoice();
-	bool isBuyingTower();
-    bool checkCoord(int x, int y);
+
 	void display(GameState& gameState);
-	void display(int quadrant);
+	void displayPosingPhase();
+	void displayTowerShop();
 
-    std::string bool_to_string(bool my_bool);
+	void displayGameOver(GameState& gamestate);
 
-	void displayPlayerInfos(GameState &gameState, int &quadrant);
+	void displayPlayerInfos(GameState &gameState, int quadrant);
+    void sortRanking(PlayerState players[]);
 };
 
 #endif

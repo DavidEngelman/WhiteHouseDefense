@@ -7,8 +7,8 @@
 #define PATH "   "
 #define LIMIT "\033[34m◼\033[0m  "
 #define TOWER "\033[31m♜\033[0m  "
-#define NPC "\033[33m✡\033[0m  "
-#define BASE "\033[31m♨\033[0m  "
+#define NPC "\033[33m☪\033[0m  "
+#define BASE "\033[31m✈\033[0m  "
 
 #define PATH_INT 0
 #define GRASS_INT -1
@@ -28,7 +28,7 @@ class GameState;
  *
  * Important: the matrix is constant. It is the background/terrain, independently of towers or NPCs.
  *
- * When we want to show the map (with towers and NPCs) to the user, we generate it dynamically from the
+ * When we want to show the map (with towers and NPCs) to the user, we draw it dynamically from the
  * map matrix (the terrain, the background) and the gameState (which contains the changing parts of the game:
  * the towers and NPCs).
  */
@@ -41,17 +41,15 @@ private:
 
     void generateRandomMatrix();
     void initMap();
-    bool generateQuarterMap(Position position);
+    void generateQuarterMap(Position position);
     const bool isNextToPath(Position position);
     void copyQuarter();
-    void basicMap();
-    void trumpMap();
 
 public:
-    Map();
     Map(unsigned seed);
-    const void display(GameState& gameState);
-    const bool isPath(Position pos);
+    const void display(GameState& gameState) const;
+    const bool isPath(Position pos) const;
+    static const int computeQuadrant(Position pos);
 };
 
 #endif

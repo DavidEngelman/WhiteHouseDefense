@@ -30,7 +30,7 @@ private:
 
 public:
 
-    GameEngine(unsigned int mapSeed);
+    GameEngine(unsigned int mapSeed, std::string mode);
 
     bool update();
 
@@ -72,13 +72,21 @@ public:
 
     void checkIfGameIsOver();
 
+    void declareWinner(GameState& gamestate);
+
+    void declareWinnerTeam(GameState& gameState);
+
     bool isGameFinished();
+
     void addKillToStat(PlayerState &playerState);
 
     void addPlayerState(int player_id);
     void addPlayerState(int player_id, int team);
 
     void deleteTower(Position& position, int& quadrant);
+
+    void upgradeTower(Position &position, int &quadrant);
+
 };
 
 

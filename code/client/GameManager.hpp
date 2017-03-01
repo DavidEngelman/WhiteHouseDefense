@@ -14,10 +14,10 @@
 #include <pthread.h>
 #include <unistd.h>
 
-class GameManager : public AbstractManager{ //Tmp : public (à supprimer après tests)
+class GameManager : public AbstractManager{
 
 private:
-
+    int counter = 0;
     int server_socket;
     bool runningThread = false;
     pthread_t thr;
@@ -27,8 +27,8 @@ private:
     std::string player_username;
     int player_id; // Je sais plus si les deux sont utiles je les met au cas ou
     int quadrant;
-    unsigned int getMapSeedFromServer() const;
 
+    unsigned int getMapSeedFromServer() const;
     void unSerializeGameState(char* serialized_gamestate);
     void unSerializePlayerStates(std::string serialized_playerstates);
     void unSerializePlayerState(std::string serialized_playerstate);
@@ -38,27 +38,25 @@ private:
     void unSerializeWave(std::string serialized_wave);
     void unSerializePNJ(std::string serialized_pnj, Wave* wave);
 
+    static void* staticInputThread(void *self);
+    void *input_thread();
+
+    void come_back_to_menu();
+    bool is_alive();
+    bool isTowerInPosition(GameState &gamestate, Position towerPos);
+    bool checkValidity(Position towerPos, GameState& gamestate);
+
+    void sendBuyRequest(Position towerPos, std::string towerType);
+    void sendSellRequest(Position towerPos);
+
+    int getQuadrantFromServer();
+    void getInitialGameStateFromServer();
+
 public:
 
     GameManager(char* ip_addr, int port, int socket, int id, std::string username, App* app);
 
-    int getQuadrant() const;
-
-    void come_back_to_menu();
-
-    bool is_alive();
-
     void run();
-
-    void *input_thread();
-
-    static void* staticInputThread(void *self);
-
-    bool checkValidity(Position towerPos);
-
-    bool sendRequest(Position towerPos, std::string towerType);
-
-    int getQuadrantFromServer();
 };
 
 #endif

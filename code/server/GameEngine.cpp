@@ -4,8 +4,10 @@ const bool DEBUG = false;
 
 
 
-GameEngine::GameEngine(unsigned int mapSeed) : map(mapSeed),
-                                               numOfPNJsPerWave(INITIAL_NUMBER_OF_PNJS_PER_WAVE) {
+GameEngine::GameEngine(unsigned int mapSeed ,std::string mode) : map(mapSeed),
+                                               numOfPNJsPerWave(INITIAL_NUMBER_OF_PNJS_PER_WAVE), gameState(mode)
+
+{
     timerSinceGameStart.start();
 }
 
@@ -66,7 +68,7 @@ void GameEngine::dealDamage(std::vector<Wave> &waves) {
         Wave &wave = getWaveInSameQuadrant(*tower, waves);
         bool killedPNJ = tower->shoot(wave);
         if (killedPNJ && !DEBUG) {
-            PlayerState player_state = getPlayerStateForWave(wave);
+            PlayerState& player_state = getPlayerStateForWave(wave);
             addKillToStat(player_state);
             giveGold(player_state);
         }
@@ -165,17 +167,20 @@ void GameEngine::addTower(AbstractTower* tower, int quadrant) {
     if (!DEBUG) {
         if (gameState.getPlayerStates()[quadrant].getMoney() >=
             tower->getPrice()) {
-            gameState.addTower(tower);
-            gameState.getPlayerStates()[quadrant].spendMoney(tower->getPrice());
+            gameState.addTower(tower, quadrant);
         }
     }
     else{
-        gameState.addTower(tower);
+        gameState.addTower(tower,quadrant);
     }
 }
 
 void GameEngine::deleteTower(Position& position, int& quadrant) {
     gameState.deleteTower(position, quadrant);
+}
+
+void GameEngine::upgradeTower(Position &position, int &quadrant) {
+    gameState.upgradeTower(position, quadrant);
 }
 
 
@@ -186,12 +191,14 @@ void GameEngine::showMap() {
 void GameEngine::checkIfGameIsOver() {
     bool isOver = false;
     std::string &mode = gameState.getMode();
+    std::cout << mode << std::endl;
     if (mode == CLASSIC_MODE) {
-        isOver = gameState.IsOnlyOnePlayerAlive();
+        isOver = (gameState.numPlayersAlive() <= 1);
+        declareWinner(gameState);
+        std::cout << "IS_OVER" << isOver;
     } else if (mode == TIMED_MODE) {
-        // TODO: check que le timer commence depuis le debut de la premiere vague
-        // au lieu de depuis la derniere vague
         isOver = timerSinceGameStart.elapsedTimeInSeconds() > TIMED_GAME_INTERVAL;
+        declareWinner(gameState);
     } else if (mode == TEAM_MODE) {
         int numAlivePlayersInTeam1 = 0;
         int numAlivePlayersInTeam2 = 0;
@@ -201,9 +208,49 @@ void GameEngine::checkIfGameIsOver() {
         }
 
         isOver = ((numAlivePlayersInTeam1 == 0) || (numAlivePlayersInTeam2 == 0));
+        declareWinnerTeam(gameState);
     }
+
     gameState.setIsGameOver(isOver);
 }
+
+void GameEngine::declareWinner(GameState& gamestate){
+    int maxScore = -1;
+    for(auto &player : gamestate.getPlayerStates()){
+        if (player.getPnjKilled() > maxScore){
+            maxScore = player.getPnjKilled();
+        }
+    }
+    for(auto &player : gamestate.getPlayerStates()){
+        if (player.getPnjKilled() == maxScore){
+            player.setIsWinner(true);
+        }
+    }
+}
+
+void GameEngine::declareWinnerTeam(GameState& gameState){
+    int team1Score = 0;
+    int team2Score = 0;
+    for (auto &player : gameState.getPlayerStates() ){
+        if (player.getTeam() == 1){
+            team1Score += player.getPnjKilled();
+        }else{
+            team2Score += player.getPnjKilled();
+        }
+    }
+    for(auto &player : gameState.getPlayerStates()){
+        if (team1Score > team2Score){
+            if (player.getTeam() == 1){
+                player.setIsWinner(true);
+            }
+        }else if (team2Score > team1Score){
+            if (player.getTeam() == 2){
+                player.setIsWinner(true);
+            }
+        }
+    }
+}
+
 
 bool GameEngine::isGameFinished() {
     return gameState.getIsGameOver();
@@ -217,5 +264,7 @@ void GameEngine::addPlayerState(int player_id, int team) {
     PlayerState playerState(player_id, team);
     gameState.addPlayerState(playerState);
 }
+
+
 
 

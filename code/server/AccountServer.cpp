@@ -4,7 +4,7 @@
 AccountServer::AccountServer(int port, const char *databaseName) : Server(port), myDatabase(Database(databaseName)) {}
 
 void* AccountServer::client_handler(int client_sock) {
-
+    std::cout << "Handling new client" << std::endl;
     char message_buffer[BUFFER_SIZE];
     get_and_process_command(client_sock, message_buffer);
 
@@ -18,7 +18,7 @@ void AccountServer::run() {
     while (1) {
 
         newClient = accept_connection();
-        std::cout << "New client connected wouhouuu" << std::endl;
+        //std::cout << "New client connected wouhouuu" << std::endl;
         //add_new_client(newClient); Je laisse ca la au cas ou
 
         std::thread t1(&AccountServer::client_handler, this, newClient);
@@ -316,8 +316,9 @@ void AccountServer::get_and_process_command(int client, char* message_buffer) {
                 handle_declineFriendRequest(client, friendListCommand.getRequester(), friendListCommand.getReceiver());
             }
 
-        } else if (command_type == "update"){
-            ok = handle_accoutUpdate(client);
+        } else if (command_type == "Update"){
+            std::cout << "ok Update" << std::endl;
+            ok = handle_accountUpdate(client);
 
         }
     }
@@ -337,13 +338,16 @@ bool AccountServer::is_player_already_connected(PlayerConnection& player){
 }
 
 
-bool AccountServer::handle_accoutUpdate(int client_sock_fd) {
+bool AccountServer::handle_accountUpdate(int client_sock_fd) {
     char message[BUFFER_SIZE];
     for (int i = 0; i < 4; ++i) {
+        std::cout << "update : " << i << std::endl;
         //Recevoir les infos des 4 joueurs de la game
         receive_message(client_sock_fd, message);
-        //TODO faire la methode updateAfterGameStats dans la database
-        //mydatabase.updateAfterGameStats(message);
+        std::cout << "Message: " <<message << std::endl;
+        UpdateStatsCommand command;
+        command.parse(message);
+        myDatabase.updateAfterGameStats(command.getPlayerId(), command.getPnjKilled(), command.getIsWinner());
 
     }
 }

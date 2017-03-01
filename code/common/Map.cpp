@@ -3,21 +3,19 @@
 #include <iostream>
 #include <ctime>
 
-Map::Map() {
-    srand((unsigned) time(0));
+/*
+ * Constructor used to build the same map for the server and all the clients
+ * because the server send the seed to all the players instead of sending the entire map
+ */
+Map::Map(unsigned seed) {
+    srand(seed);
     generateRandomMatrix();
 }
 
-Map::Map(unsigned seed) {
-    if (seed == 0) basicMap();
-    else if (seed == 1) trumpMap();
-    else {
-        srand(seed);
-        generateRandomMatrix();
-    }
-}
-
-const void Map::display(GameState& gameState) {
+/*
+ * Display the map on the screen using the gameState for drawing the towers and the pnjs
+ */
+const void Map::display(GameState& gameState) const {
     std::vector<AbstractTower*> &towers = gameState.getTowers();
     std::vector<Wave> &waves = gameState.getWaves();
     system("clear");
@@ -87,6 +85,9 @@ const void Map::display(GameState& gameState) {
     std::cout << std::endl;
 }
 
+/*
+ * Generate a random map
+ */
 void Map::generateRandomMatrix() {
     initMap();
     Position begin(SIZE/2, SIZE/2-2);
@@ -94,6 +95,12 @@ void Map::generateRandomMatrix() {
     copyQuarter();
 }
 
+/*
+ * Generate the most basic map that is common to all maps :
+ * - The two diagonals of the square are the LIMITS of the quarters
+ * - A small cross of PATH at the middle of the square
+ * - The rest is GRASS
+ */
 void Map::initMap() {
     for (int y = 0; y < SIZE; y++) {
         for (int x = 0; x < SIZE; x++) {
@@ -110,38 +117,47 @@ void Map::initMap() {
     }
 }
 
-bool Map::generateQuarterMap(Position end) {
+/*
+ * Generate a random path on the up quarter
+ */
+void Map::generateQuarterMap(Position end) {
     if (end.getY() == 0) {
-        return true;
+        return;
     }
 
     std::vector<Position> possibleWays;
     Position nextToEnd(end.getX(), end.getY()-1);
-    if (matrix[nextToEnd.getY()][nextToEnd.getX()] != LIMIT_INT && !isNextToPath(nextToEnd)) possibleWays.push_back(nextToEnd);
+    if (matrix[nextToEnd.getY()][nextToEnd.getX()] != LIMIT_INT && !isNextToPath(nextToEnd))
+        possibleWays.push_back(nextToEnd);
     nextToEnd.setY(end.getY());
     nextToEnd.setX(end.getX()-1);
-    if (matrix[nextToEnd.getY()][nextToEnd.getX()] != LIMIT_INT && !isNextToPath(nextToEnd)) possibleWays.push_back(nextToEnd);
+    if (matrix[nextToEnd.getY()][nextToEnd.getX()] != LIMIT_INT && !isNextToPath(nextToEnd))
+        possibleWays.push_back(nextToEnd);
     nextToEnd.setX(end.getX()+1);
-    if (matrix[nextToEnd.getY()][nextToEnd.getX()] != LIMIT_INT && !isNextToPath(nextToEnd)) possibleWays.push_back(nextToEnd);
+    if (matrix[nextToEnd.getY()][nextToEnd.getX()] != LIMIT_INT && !isNextToPath(nextToEnd))
+        possibleWays.push_back(nextToEnd);
 
     unsigned int way = (unsigned int) (rand() % possibleWays.size());
 
-    int save = matrix[possibleWays[way].getY()][possibleWays[way].getX()];
     matrix[possibleWays[way].getY()][possibleWays[way].getX()] = PATH_INT;
-    if (generateQuarterMap(possibleWays[way])) return true;
-    matrix[possibleWays[way].getY()][possibleWays[way].getX()] = save;
-    return false;
+    generateQuarterMap(possibleWays[way]);
 }
 
+/*
+ * Return true if the cell of the matrix is next to more than 1 path cell
+ */
 const bool Map::isNextToPath(Position pos) {
     int count = 0;
     if (matrix[pos.getY()+1][pos.getX()] == PATH_INT) count++;
     if (pos.getY() > 0 && matrix[pos.getY()-1][pos.getX()] == PATH_INT) count++;
     if (matrix[pos.getY()][pos.getX()+1] == PATH_INT) count++;
     if (matrix[pos.getY()][pos.getX()-1] == PATH_INT) count++;
-    return count >= 2;
+    return count > 1;
 }
 
+/*
+ * Copy the path of the up quarter to the three other quarters
+ */
 void Map::copyQuarter() {
     for (int y = 0; y < SIZE; y++) {
         for (int x = 0; x < SIZE; x++) {
@@ -154,54 +170,27 @@ void Map::copyQuarter() {
     }
 }
 
-void Map::basicMap() {
-    for (int y = 0; y < SIZE; y++) {
-        for (int x = 0; x < SIZE; x++) {
-            if (x == SIZE/2 and 0 <= y and y < SIZE) {
-                matrix[y][x] = PATH_INT;
-            } else if (y == SIZE/2 and 0 <= x and x < SIZE) {
-                matrix[y][x] = PATH_INT;
-            } else if (x == y or x + y == SIZE-1) {
-                matrix[y][x] = LIMIT_INT;
-            } else {
-                matrix[y][x] = GRASS_INT;
-            }
-        }
-    }
-}
-
-const bool Map::isPath(Position pos) {
+const bool Map::isPath(Position pos) const {
     return matrix[pos.getY()][pos.getX()] == PATH_INT;
 }
 
-void Map::trumpMap() {
-    for (int y = 0; y < SIZE; y++) {
-        for (int x = 0; x < SIZE; x++) {
-            if (x == SIZE/2 and 1 <= y and y < SIZE-1) {
-                matrix[y][x] = PATH_INT;
-            } else if (y == SIZE/2 and 1 <= x and x < SIZE-1) {
-                matrix[y][x] = PATH_INT;
-            } else if (y == 1 and x >= SIZE/2 and x < SIZE-2) {
-                matrix[y][x] = PATH_INT;
-            } else if (y == 0 and x == SIZE-3) {
-                matrix[y][x] = PATH_INT;
-            } else if (y == SIZE-2 and x >= 2 and x < SIZE/2) {
-                matrix[y][x] = PATH_INT;
-            } else if (y == SIZE-1 and x == 2) {
-                matrix[y][x] = PATH_INT;
-            } else if (x == SIZE-2 and y >= SIZE/2 and y < SIZE-2) {
-                matrix[y][x] = PATH_INT;
-            } else if (x == SIZE-1 and y == SIZE-3) {
-                matrix[y][x] = PATH_INT;
-            } else if (x == 1 and y >= 2 and y < SIZE/2) {
-                matrix[y][x] = PATH_INT;
-            } else if (x == 0 and y == 2) {
-                matrix[y][x] = PATH_INT;
-            } else if (x == y or x + y == SIZE-1) {
-                matrix[y][x] = LIMIT_INT;
-            } else {
-                matrix[y][x] = GRASS_INT;
-            }
-        }
+/*
+ * This function return in which quadrant is the Position pos
+ */
+const int Map::computeQuadrant(Position pos) {
+    // The origin of the map is in the upper-left corner
+    // The growing diagonal is : y = -x + size-1,
+    // The decreasing diagonal is : y = x
+    bool aboveGrowingDiagonal = pos.getX()+pos.getY() < SIZE-1;
+    bool aboveDecreasingDiagonal = pos.getX() > pos.getY();
+
+    if (aboveGrowingDiagonal && aboveDecreasingDiagonal){
+        return NORTH;
+    } else if (!aboveGrowingDiagonal && !aboveDecreasingDiagonal){
+        return SOUTH;
+    } else if (aboveGrowingDiagonal && !aboveDecreasingDiagonal){
+        return WEST;
+    } else {
+        return EAST;
     }
 }

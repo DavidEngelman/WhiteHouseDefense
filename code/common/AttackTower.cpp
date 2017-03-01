@@ -9,7 +9,7 @@ bool AttackTower::shoot(Wave &wave) {
     PNJ *my_target;
     bool killed = false;
     my_target = get_closest_pnj(wave);
-    if (my_target != nullptr) {
+    if ( (my_target != nullptr) && (!my_target->isInPlayerBase()) && (my_target->getHealthPoints() > 0) ) {
         dealDamageTo(*my_target);
         if (my_target->getHealthPoints() <= 0) {
             killed = true;

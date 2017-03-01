@@ -265,6 +265,22 @@ std::vector<std::string> Database::getPendingInvitations(std::string username){
     return friendRequests;
 }
 
+void Database::updateAfterGameStats(int id, int pnjKilled, bool isWinner) {
+    char *zErrMsg = 0;
+    std::string command = "";
+    int victoryIncrement = 0;
+    if (isWinner){
+        victoryIncrement = 1;
+    }
+    command += "UPDATE Accounts SET pnjKilled = pnjKilled + " + std::to_string(pnjKilled) + ", victories = victories + "
+               + std::to_string(victoryIncrement) + " WHERE id = " + std::to_string(id) + ";";
+
+    std::cout << "Commande : " << command << std::endl;
+    char* query = (char *) command.c_str();
+
+    exec(query, NULL, 0, zErrMsg);
+}
+
 
 
 Database::~Database() {

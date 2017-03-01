@@ -3,27 +3,7 @@
 #include "AbstractTower.hpp"
 
 AbstractTower::AbstractTower(Position position, int price, int range):
-        position(position), price(price), quadrant(computeQuadrant()), range(range), level(0) {
-}
-
-const int AbstractTower::computeQuadrant() {
-    int realY = SIZE - position.getY();
-    int realX = position.getX();
-
-    // La diagonale croissante est celle qui respecte y = x,
-    // et la diagonale decroissante est celle qui respecte y = -x
-    bool aboveGrowingDiagonal = realY > realX;
-    bool aboveDecreasingDiagonal = realY > -realX;
-
-    if (aboveGrowingDiagonal && aboveDecreasingDiagonal){
-        return NORTH;
-    } else if (!aboveGrowingDiagonal && !aboveDecreasingDiagonal){
-        return SOUTH;
-    } else if (aboveGrowingDiagonal && !aboveDecreasingDiagonal){
-        return WEST;
-    } else {
-        return EAST;
-    }
+        position(position), price(price), quadrant(Map::computeQuadrant(position)), range(range), level(0) {
 }
 
 PNJ* AbstractTower::get_closest_pnj(Wave &wave) {
@@ -80,4 +60,12 @@ bool AbstractTower::upgrade() {
         return true;
     }
     return false;
+}
+
+bool AbstractTower::operator==(const AbstractTower &rhs) const {
+    return position == rhs.position;
+}
+
+bool AbstractTower::operator!=(const AbstractTower &rhs) const {
+    return !(rhs == *this);
 }

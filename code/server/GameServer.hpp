@@ -11,26 +11,27 @@
 #include "GameEngine.hpp"
 #include <time.h>
 #include "../common/Constants.h"
-#include "../common/tools.hpp"
+#include "../common/Tools.hpp"
 
 static const int NUM_PLAYERS = 4;
 
-static const int NUM_SECONDS_TO_PLACE_TOWER = 60;
+static const int NUM_SECONDS_TO_PLACE_TOWER = 10;
 static const int INTERVAL_BETWEEN_SENDS_IN_MS = 200;
 
 class   GameServer : public Server {
 private:
+
+
+    std::string mode;
+
     // Je l'ai mis comme pointeur, car je veux seulement l'initialiser dans la methode run.
     // Si je l'initialise dans le constructeur, je suis obligé de garder la seed dans un field
     // pour l'envoyer au client (pendant la methode run), ce que je veux éviter
     GameEngine * gameEngine;
     std::vector<PlayerConnection> playerConnections;
     int client_sockets[4];
-
     void sendGameStateToPlayer(PlayerConnection &connection);
-
     void get_and_process_command(int client_socket_fd, char buffer[]);
-
     void addTowerInGameState(TowerCommand &command);
 
     bool isFinishedClassic();    //pour le mode classic
@@ -39,7 +40,7 @@ private:
 
 public:
 
-    GameServer(int port, std::vector<PlayerConnection> &playerConnections);
+    GameServer(int port, std::vector<PlayerConnection> &playerConnections, std::string _mode);
 
     void getReceivedChanges();
 
@@ -62,14 +63,18 @@ public:
     void sendTowerPhase();
     void sendWavePhase();
 
-    void SendQuadrantToClients();
+    void sendQuadrantToClients();
 
     void createPlayerStates() const;
 
     int connectToAccountServer();
-    void updatePlayerStatsOnAccountServer(int socket_fd);
+    void updatePlayerStatsOnAccountServer();
 
     void deleteTowerInGameState(TowerCommand command);
+
+    void sendInitialGameStae();
+
+    void upgradeTowerInGameState(TowerCommand command);
 };
 
 #endif

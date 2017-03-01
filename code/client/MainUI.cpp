@@ -20,6 +20,7 @@ void MainUI::display() {
 int MainUI::select(){
     /* Ask at the user his choice */
     int x = -1;
+    std::cin.clear();
     std::cout << "   Enter your choice: ";
     std::cin >> x;
     while(std::cin.fail() or 0>x or x>=6){
@@ -33,3 +34,33 @@ int MainUI::select(){
     }
     return x;
 }
+
+void MainUI::displayGameModes() {
+    Drawing::drawWhiteHouse("GAME MODE SELECTION");
+
+    std::cout << "   |                                    |   " << std::endl;
+    std::cout << "   |        1. Classic mode             |   " << std::endl;
+    std::cout << "   |        2. Timed mode               |   " << std::endl;
+    std::cout << "   |        3. Team mode                |   " << std::endl;
+    std::cout << "   |                                    |   " << std::endl;
+    std::cout << "   ======================================   " << std::endl;
+
+}
+
+int MainUI::selectGameModeInt() {
+    int x = -1;
+    std::cout << "   Select the game mode: ";
+    std::cin >> x;
+    while(std::cin.fail() or 0>x or x>=4){
+        displayGameModes();
+        std::cout << "   Error, enter a integer between 1 and 3 " << std::endl;
+        std::cout << "   Enter your choice: ";
+
+        std::cin.clear();
+        std::cin.ignore();
+        std::cin >> x;
+    }
+    return x-1;
+
+}
+

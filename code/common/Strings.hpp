@@ -1,14 +1,18 @@
 #ifndef PROJET_STRINGS_HPP
 #define PROJET_STRINGS_HPP
 
+#include <string>
+
 #define GAME_STARTING_STRING "GameStarting"
 #define CLASSIC_MODE "ClassicMode"
 #define TIMED_MODE "TimedMode"
 #define TEAM_MODE "TeamMode"
 
 
-#define PLACE_TOWER_COMMAND_STRING "PlaceTower"
-#define DELETE_TOWER_COMMAND_STRING "DeleteTower"
+static const std::string PLACE_TOWER_COMMAND_STRING =  "PlaceTower";
+static const std::string DELETE_TOWER_COMMAND_STRING  = "DeleteTower";
+static const std::string UPGRADE_TOWER_COMMAND_STRING = "UpgradeTower";
+
 #define SETUP_GAME "SetupGame"
 #define END_OF_GAME "end"
 

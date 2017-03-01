@@ -5,6 +5,7 @@
 #include "RankingManager.hpp"
 #include "FriendListManager.hpp"
 
+const static std::string gameModes[3] = {CLASSIC_MODE, TEAM_MODE, TIMED_MODE};
 
 MainManager::MainManager(char* ip_addr, int id, std::string username, App* my_app) :
     AbstractManager(ip_addr, my_app), player_id(id), username(username){}
@@ -13,7 +14,11 @@ void MainManager::run() {
     mainUI.display();
     switch (mainUI.select()) {
         case 1: {
-            GameLauncher * game = new  GameLauncher(5556, server_ip_address, player_id, username, master_app);
+            mainUI.displayGameModes();
+
+            // Ce code suppose que les modes le resultat de mainUI.selectGameMode() est entre 0 et 2
+            std::string gameMode = gameModes[mainUI.selectGameModeInt()];
+            GameLauncher * game = new GameLauncher(5556, server_ip_address, player_id, username, master_app, gameMode);
             master_app->transition(game);
             break;
         }
