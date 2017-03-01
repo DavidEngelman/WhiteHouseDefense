@@ -115,9 +115,14 @@ void GameManager::run() {
     while(!gameState.getIsGameOver()) {
         receive_message(server_socket, server_msg_buff);
         //std::cout << "Message: " << server_msg_buff << std::endl;
-        if (strcmp(server_msg_buff, PLACING_TOWER) == 0 && is_alive()) {
-            inputThread = pthread_create(&thr,NULL,&GameManager::staticInputThread,this);
+        if (strcmp(server_msg_buff, PLACING_TOWER) == 0) {
 
+            if (is_alive())
+                inputThread = pthread_create(&thr,NULL,&GameManager::staticInputThread,this);
+            else{
+                gameUI.display(gameState, quadrant);
+                gameUI.display_dead_message();
+            }
         }else if (strcmp(server_msg_buff, WAVE) == 0){
             inputThread = pthread_cancel(thr);
 
@@ -128,7 +133,10 @@ void GameManager::run() {
         else{
             unSerializeGameState(server_msg_buff);
             gameUI.display(gameState, quadrant);
-            gameUI.displayPlayerInfos(gameState, quadrant);
+            if (is_alive())
+                gameUI.displayPlayerInfos(gameState, quadrant);
+            else
+                gameUI.display_dead_message();
 
             }
     }
