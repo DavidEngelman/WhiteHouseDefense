@@ -30,6 +30,7 @@ public:
 public:
     void print();
 
+    bool isInPlayers(std::string player);
 };
 
 #endif //PROJET_GAMEINFO_H

@@ -23,11 +23,15 @@ void SpectatorManager::run() {
     }
     else{
         spectatorUI.displaySpectatorUI(allGames);
-        int gameSelected = spectatorUI.inputSpectatorUI(allGames.size());
+        int gameSelected = spectatorUI.gameSelection(allGames.size());
         int gamePort = allGames[gameSelected].getPort();
-        GameManager *gameManager = new GameManager(server_ip_address,gamePort,server_socket,
-                                                   player_id, player_usr_name, master_app);
-        master_app->transition(gameManager);
+        std::string playerToSupport = spectatorUI.playerSelection(allGames[gameSelected]);
+
+        //TODO j'ai pas trop compris ce qu'il faut faire à ce moment précis :(
+
+        /*GameManager *gameManager = new GameManager(server_ip_address,gamePort,server_socket,
+                                                   player_id, player_usr_name, master_app);*/
+        //master_app->transition(gameManager);
     }
 }
 

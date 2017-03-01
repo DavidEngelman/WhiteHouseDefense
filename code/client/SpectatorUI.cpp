@@ -26,19 +26,34 @@ void SpectatorUI::displaySorryMessage() {
     std::cin.ignore();
 }
 
-int SpectatorUI::inputSpectatorUI(int number_of_games_available) {
+int SpectatorUI::gameSelection(int number_of_games_available) {
     int choice = -1;
-    std::cout << "   Enter your choice: ";
+    std::cout << "Enter the number of the game you want to spectate: ";
     std::cin >> choice;
     while(std::cin.fail() || (choice < 1 || choice > number_of_games_available) ){
-        std::cout << "   Error, enter a integer between 1 and "<< number_of_games_available << std::endl;
-        std::cout << "   Enter your choice: ";
+        std::cout << "Error, enter a integer between 1 and "<< number_of_games_available << std::endl;
+        std::cout <<"Enter the number of the game you want to spectate: ";
 
         std::cin.clear();
         std::cin.ignore();
         std::cin >> choice;
     }
     return choice -1;
+}
+
+std::string SpectatorUI::playerSelection(GameInfo& game_info) {
+    std::string choice = "";
+    std::cout << "Enter the username of the player you want to support: ";
+    std::cin >> choice;
+    while(std::cin.fail() || !(game_info.isInPlayers(choice))) {
+        std::cout << "Error, username incorrect " << std::endl;
+        std::cout << "Enter the username of the player you want to support: ";
+
+        std::cin.clear();
+        std::cin.ignore();
+        std::cin >> choice;
+    }
+    return choice;
 }
 
 void SpectatorUI::drawTitleGameType(std::string gameType) {

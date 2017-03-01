@@ -12,6 +12,15 @@ void GameInfo::print() {
 
 }
 
+bool GameInfo::isInPlayers(std::string player) {
+    for (std::string& pl : players){
+        if (pl == player)
+            return true;
+    }
+
+    return false;
+}
+
 int GameInfo::getPort() {
     return port;
 }
