@@ -202,7 +202,7 @@ void GameManager::unSerializePlayerState(std::string serialized_playerstate) {
                     break;
                 case 2:
                     username = elem;
-                    break
+                    break;
                 case 3: // money
                     money = std::stoi(elem);
                     break;

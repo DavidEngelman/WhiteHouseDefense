@@ -18,6 +18,10 @@ void GameServer::sendGameStateToPlayers() {
     for (int i = 0; i < NUM_PLAYERS; i++) {
         sendGameStateToPlayer(playerConnections[i]);
     }
+
+    for (int socketFd: supportersSockets) {
+        sendGameStateToPlayer(socketFd);
+    }
 }
 
 
@@ -122,7 +126,6 @@ void GameServer::runWave() {
             gameEngine->showMap();
             // TODO: updateMap()
         } else {
-            
             sendGameStateToPlayers();
         }
         timer.reset();
@@ -193,7 +196,10 @@ void GameServer::createPlayerStates() const {
 void GameServer::sendTowerPhase() {
     for (PlayerConnection &playerConnection : playerConnections) {
         int socketFd = playerConnection.getSocket_fd();
-//        send_message(socketFd, PLACING_TOWER);
+        send_message(socketFd, "t");
+    }
+
+    for (int socketFd: supportersSockets) {
         send_message(socketFd, "t");
     }
 }
@@ -201,7 +207,10 @@ void GameServer::sendTowerPhase() {
 void GameServer::sendWavePhase() {
     for (PlayerConnection &playerConnection : playerConnections) {
         int socketFd = playerConnection.getSocket_fd();
-//        send_message(socketFd, WAVE);
+        send_message(socketFd, "w");
+    }
+
+    for (int socketFd: supportersSockets) {
         send_message(socketFd, "w");
     }
 }
