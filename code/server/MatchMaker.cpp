@@ -50,7 +50,7 @@ void MatchMaker::handleRequestFromSpectator(int socket_fd) {
     for( GameServer* gameServer : activeGames) {
         stringToSend += std::to_string(gameServer->getPort()) + ",";
         stringToSend += gameServer->getMode() + ",";
-        stringToSend += gameServer->getAllPlayers() + ";";
+        stringToSend += gameServer->getAllPlayers();
     }
 
     send_message(socket_fd, stringToSend.c_str());

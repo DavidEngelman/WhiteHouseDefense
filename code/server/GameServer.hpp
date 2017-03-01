@@ -27,6 +27,7 @@ private:
     // Je l'ai mis comme pointeur, car je veux seulement l'initialiser dans la methode run.
     // Si je l'initialise dans le constructeur, je suis obligé de garder la seed dans un field
     // pour l'envoyer au client (pendant la methode run), ce que je veux éviter
+
     GameEngine * gameEngine;
     std::vector<PlayerConnection> playerConnections;
     int client_sockets[4];
@@ -89,6 +90,8 @@ public:
     static void *staticJoinSpectatorThread(void *);
 
     void *getAndProcessSpectatorJoinCommand();
+
+    std::string getAllPlayers();
 
     std::string getMode();
 };

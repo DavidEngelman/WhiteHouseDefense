@@ -298,3 +298,16 @@ void *GameServer::getAndProcessSpectatorJoinCommand() {
 std::string GameServer::getMode() {
     return mode;
 }
+
+std::string GameServer::getAllPlayers() {
+    std::string res ="";
+    int count = 1;
+
+    for (auto& pc : playerConnections){
+
+        res += pc.getUsername();
+        res += count == playerConnections.size() ? ";" : ",";
+        count++;
+    }
+    return res;
+}
