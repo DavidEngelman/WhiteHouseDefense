@@ -266,12 +266,12 @@ bool GameEngine::isGameFinished() {
     return gameState.getIsGameOver();
 }
 
-void GameEngine::addPlayerState(int player_id) {
-    addPlayerState(player_id, 0);
+void GameEngine::addPlayerState(int player_id, std::string username) {
+    addPlayerState(player_id, username, 0);
 }
 
-void GameEngine::addPlayerState(int player_id, int team) {
-    PlayerState playerState(player_id, team);
+void GameEngine::addPlayerState(int player_id, std::string username, int team) {
+    PlayerState playerState(player_id, username, team);
     gameState.addPlayerState(playerState);
 }
 

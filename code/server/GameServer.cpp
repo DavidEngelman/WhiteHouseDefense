@@ -142,7 +142,7 @@ void GameServer::run() {
     stopSpectatorThread();
 }
 
-void GameServer::startSpectatorThread() const {
+void GameServer::startSpectatorThread() {
     pthread_create(&spectatorJoinThread, NULL, &GameServer::staticJoinSpectatorThread, this);
 }
 
@@ -184,13 +184,13 @@ void GameServer::runGame() {
 
 void GameServer::createPlayerStates() const {
     if (gameEngine->getGameState().getMode() == TEAM_MODE) {
-        gameEngine->addPlayerState(playerConnections[0].getPlayer_id(), 1);
-        gameEngine->addPlayerState(playerConnections[1].getPlayer_id(), 1);
-        gameEngine->addPlayerState(playerConnections[2].getPlayer_id(), 2);
-        gameEngine->addPlayerState(playerConnections[3].getPlayer_id(), 2);
+        gameEngine->addPlayerState(playerConnections[0].getPlayer_id(), playerConnections[0].getUsername(), 1);
+        gameEngine->addPlayerState(playerConnections[1].getPlayer_id(), playerConnections[0].getUsername(), 1);
+        gameEngine->addPlayerState(playerConnections[2].getPlayer_id(), playerConnections[0].getUsername(), 2);
+        gameEngine->addPlayerState(playerConnections[3].getPlayer_id(), playerConnections[0].getUsername(), 2);
     } else {
         for (int i = 0; i < 4; ++i) {
-            gameEngine->addPlayerState(playerConnections[i].getPlayer_id());
+            gameEngine->addPlayerState(playerConnections[i].getPlayer_id(), playerConnections[0].getUsername());
         }
     }
 
@@ -285,14 +285,38 @@ void GameServer::stopSpectatorThread() {
 }
 
 static void *GameServer::staticJoinSpectatorThread(void * self) {
-    return static_cast<GameServer*>(self)->getAndProcessSpectatorJoinCommand();
+    static_cast<GameServer*>(self)->getAndProcessSpectatorJoinCommand();
+    return nullptr;
 }
 
-void *GameServer::getAndProcessSpectatorJoinCommand() {
-    return nullptr;
+void GameServer::getAndProcessSpectatorJoinCommand() {
+    while (1) {
+        int client_socket_fd = accept_connection();
+
+        char command_buffer[BUFFER_SIZE];
+        receive_message(socket_fd, command_buffer);
+
+        /* Structure of command: "SUPPORT_PLAYER,bob;" */
+        Command command;
+        command.parse(command_buffer);
+
+        if (command.getAction() == SUPPORT_PLAYER_STRING) {
+            std::string username = command.getNextToken();
+            PlayerState& playerState = getPlayerStateWithUsername(username);
+            playerState.setIsSupported(true);
+
+            supportersSockets.push_back(client_socket_fd);
+        }
+    }
 }
 
 
 std::string GameServer::getMode() {
     return mode;
+}
+
+PlayerState &GameServer::getPlayerStateWithUsername(std::string username) {
+    for(PlayerState& playerState: playerConnections){
+
+    }
 }

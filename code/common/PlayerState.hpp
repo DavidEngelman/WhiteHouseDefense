@@ -14,18 +14,24 @@ private:
 	int pnjKilled;
 	int player_id;
 
-	std::string bool_to_string(bool my_bool);
+    std::string username;
+
+
+    std::string bool_to_string(bool my_bool);
 
 public:
 	PlayerState();
-    PlayerState(int id);
-    PlayerState(int id, int team);
+    PlayerState(int id, std::string username);
+    PlayerState(int id, std::string username, int team);
 
-	PlayerState(int _player_id, int _money, int _hp, bool _isSupported, bool _isWinner, int _pnjKilled, int _team );
+	PlayerState(int _player_id, std::string _username, int _money, int _hp, bool _isSupported,
+                    bool _isWinner, int _pnjKilled, int _team);
 
 	std::string serialize();
 
 	int getHp();
+
+    std::string & getUsername();
 
 	int getPnjKilled() const;
 

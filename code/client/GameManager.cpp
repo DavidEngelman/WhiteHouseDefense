@@ -182,6 +182,7 @@ void GameManager::unSerializePlayerStates(std::string serialized_playerstates) {
 void GameManager::unSerializePlayerState(std::string serialized_playerstate) {
     std::string elem = "";
     unsigned count = 0;
+    std::string username;
     int player_id=0;
     int money=0;
     int hp=0;
@@ -198,19 +199,22 @@ void GameManager::unSerializePlayerState(std::string serialized_playerstate) {
                 case 1: // player_id
                     player_id = std::stoi(elem);
                     break;
-                case 2: // money
+                case 2:
+                    username = elem;
+                    break
+                case 3: // money
                     money = std::stoi(elem);
                     break;
-                case 3: // hp
+                case 4: // hp
                     hp = std::stoi(elem);
                     break;
-                case 4: // isSupported
+                case 5: // isSupported
                     isSupported = elem == "true";
                     break;
-                case 5: // isWinner
+                case 6: // isWinner
                     isWinner = elem == "true";
                     break;
-                case 6: // pnjKilled
+                case 7: // pnjKilled
                     pnjKilled = std::stoi(elem);
                     break;
                 default: // team
@@ -223,7 +227,8 @@ void GameManager::unSerializePlayerState(std::string serialized_playerstate) {
             elem += c;
         }
     }
-    PlayerState* playerState = new PlayerState(player_id, money, hp, isSupported, isWinner, pnjKilled, team);
+    PlayerState* playerState = new PlayerState(player_id, username, money, hp, isSupported, isWinner,
+                                               pnjKilled, team);
     gameState.addPlayerState(*playerState);
 }
 
