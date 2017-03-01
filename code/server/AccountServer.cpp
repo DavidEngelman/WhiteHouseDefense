@@ -248,6 +248,7 @@ void AccountServer::get_and_process_command(int client, char* message_buffer) {
 
     while (!ok) {
         bool success = receive_message_with_timeout(client, message_buffer, 300);
+        std::cout <<  "1 message: " << message_buffer << std::endl;
         if (!success) {
             return;
         }
@@ -341,14 +342,13 @@ bool AccountServer::is_player_already_connected(PlayerConnection& player){
 bool AccountServer::handle_accountUpdate(int client_sock_fd) {
     char message[BUFFER_SIZE];
     for (int i = 0; i < 4; ++i) {
-        std::cout << "update : " << i << std::endl;
         //Recevoir les infos des 4 joueurs de la game
         receive_message(client_sock_fd, message);
-        //std::cout << "Message: " <<message << std::endl;
         UpdateStatsCommand command;
         command.parse(message);
         myDatabase.updateAfterGameStats(command.getPlayerId(), command.getPnjKilled(), command.getIsWinner());
     }
+    return true;
 }
 
 
