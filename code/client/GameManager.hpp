@@ -49,19 +49,14 @@ private:
     void sendBuyRequest(Position towerPos, std::string towerType);
     void sendSellRequest(Position towerPos);
 
+    int getQuadrantFromServer();
+    void getInitialGameStateFromServer();
+
 public:
 
     GameManager(char* ip_addr, int port, int socket, int id, std::string username, App* app);
 
     void run();
-
-
-
-
-
-    int getQuadrantFromServer();
-
-    void getInitialGameStateFromServer();
 };
 
 #endif
