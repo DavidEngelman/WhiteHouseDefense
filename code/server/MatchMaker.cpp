@@ -93,6 +93,7 @@ void MatchMaker::launchMatch(PendingMatch match) {
 
 void MatchMaker::launchGameServer(PendingMatch match) {
     GameServer* game_server = new GameServer(current_server_port,  match.getPlayerConnections(), match.getMode());
+    activeGames.push_back(game_server); //TODO Faudra le retirer quand la game est finie
     game_server->run();
 }
 
