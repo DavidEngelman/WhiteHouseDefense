@@ -32,6 +32,10 @@ void MatchMaker::get_and_process_command(int socket_fd) {
     char command_buffer[BUFFER_SIZE];
     receive_message(socket_fd, command_buffer);
 
+    if (command_buffer == "games") { //request from SpectatorManager
+        handleRequestFromSpectator();
+    }
+
     MatchmakingCommand matchmakingCommand(socket_fd);
     matchmakingCommand.parse(command_buffer);
 
@@ -91,4 +95,8 @@ void MatchMaker::announceMatchStart(PlayerConnection playerConnection) {
 
     send_message(playerConnection.getSocket_fd(), GAME_STARTING_STRING);
     send_data(playerConnection.getSocket_fd(), (char *) &current_server_port, sizeof(int));
+}
+
+void MatchMaker::handleRequestFromSpectator() {
+ //TODO
 }
