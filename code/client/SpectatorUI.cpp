@@ -6,25 +6,27 @@
 #include "Drawing.hpp"
 
 void SpectatorUI::displaySpectatorUI(std::vector<GameInfo>& gamesInfos) {
-
-    std::cout << "Here are the games being played at the moment: \n" << std::endl;
-    int i = 0;
+    system("clear");
+    std::cout << "Here are the games being played at the moment: " << std::endl;
+    int i = 1;
     for( GameInfo game : gamesInfos) {
         std::cout << "Game " << i << " - Mode: " << game.gameMode << " - Players: " << game.players << std::endl;
         i++;
     }
-
-    if (i == 0){
-        std::cout << "Sorry, no games in progress... :(" << std::endl;
-    }
-
-
 }
 
-int SpectatorUI::inputSpectatorUI() {
-    int choice;
-    std::cout<<"Enter the number of the game that you would like to see: ";
+void SpectatorUI::displaySorryMessage() {
+    int i;
+    std::cout << "Sorry, no games in progress... :(" << std::endl;
+    std::cout << "Enter something to come back to menu..." << std::endl;
+    std::cin >> i;
+}
+
+int SpectatorUI::inputSpectatorUI(int number_of_games_available) {
+    int choice = -1;
+    std::cout << "Enter the number of the game you want to spectate: " << std::endl;
     std::cin >> choice;
+
 
     return choice;
 }

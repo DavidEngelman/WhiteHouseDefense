@@ -12,8 +12,9 @@ class SpectatorUI {
 public:
 
     void displaySpectatorUI(std::vector<GameInfo>& gamesInfos);
-    int inputSpectatorUI();
+    int inputSpectatorUI(int number_of_games_available);
     void drawTitleGameType(std::string gameType);
+    void displaySorryMessage();
 
 };
 
