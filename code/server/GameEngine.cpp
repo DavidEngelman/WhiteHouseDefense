@@ -214,15 +214,23 @@ void GameEngine::checkIfGameIsOver() {
     gameState.setIsGameOver(isOver);
 }
 
+//void GameEngine::declareWinner(GameState& gamestate){
+//    int maxScore = -1;
+//    for(auto &player : gamestate.getPlayerStates()){
+//        if (player.getPnjKilled() > maxScore){
+//            maxScore = player.getPnjKilled();
+//        }
+//    }
+//    for(auto &player : gamestate.getPlayerStates()){
+//        if (player.getPnjKilled() == maxScore){
+//            player.setIsWinner(true);
+//        }
+//    }
+//}
+
 void GameEngine::declareWinner(GameState& gamestate){
-    int maxScore = -1;
-    for(auto &player : gamestate.getPlayerStates()){
-        if (player.getPnjKilled() > maxScore){
-            maxScore = player.getPnjKilled();
-        }
-    }
-    for(auto &player : gamestate.getPlayerStates()){
-        if (player.getPnjKilled() == maxScore){
+    for (auto& player : gamestate.getPlayerStates()){
+        if (player.getHp() > 0){
             player.setIsWinner(true);
         }
     }
