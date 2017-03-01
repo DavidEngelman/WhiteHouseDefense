@@ -1,3 +1,4 @@
+
 #include "Wave.h"
 
 Wave::Wave(int number_of_pnjs, int quadrant) :

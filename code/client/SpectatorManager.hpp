@@ -1,0 +1,13 @@
+//
+//
+
+#ifndef PROJET_SPECTATORMANAGER_HPP
+#define PROJET_SPECTATORMANAGER_HPP
+
+
+class SpectatorManager {
+
+};
+
+
+#endif //PROJET_SPECTATORMANAGER_HPP
