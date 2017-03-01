@@ -22,7 +22,7 @@ void Command::parse(char *data) {
  */
 std::string Command::getNextToken() {
     std::string token;
-    while (buffer[currentPosInBuffer] != ',' && buffer[currentPosInBuffer] != ';') {
+    while ((buffer[currentPosInBuffer] != ',') && (buffer[currentPosInBuffer] != ';')) {
         token += buffer[currentPosInBuffer];
         currentPosInBuffer++;
     }
@@ -31,6 +31,7 @@ std::string Command::getNextToken() {
     _hasReachedEnd = (buffer[currentPosInBuffer] == ';');
 
     currentPosInBuffer++;
+    return token;
 }
 
 bool Command::hasReachedEnd() {
