@@ -47,7 +47,7 @@ void MainUI::displayGameModes() {
 
 }
 
-int MainUI::selectGameMode() {
+int MainUI::selectGameModeInt() {
     int x = -1;
     std::cout << "   Select the game mode: ";
     std::cin >> x;
@@ -60,7 +60,7 @@ int MainUI::selectGameMode() {
         std::cin.ignore();
         std::cin >> x;
     }
-    return x;
+    return x-1;
 
 }
 

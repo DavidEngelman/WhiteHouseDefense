@@ -12,7 +12,7 @@ public:
 	int select();
 
 	void displayGameModes();
-    int selectGameMode();
+    int selectGameModeInt();
 };
 
 #endif

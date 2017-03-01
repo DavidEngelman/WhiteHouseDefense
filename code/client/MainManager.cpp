@@ -16,10 +16,8 @@ void MainManager::run() {
         case 1: {
             mainUI.displayGameModes();
 
-            // TODO: mainUI.selectGameMode() renvoie un entier, alors qu'à cause du nom il semble
-            // qu'il envoie un mode de jeu. Faut corriger soit le nom, soit le return de la fonction
-            // Ce code suppose que les modes le resultat de mainUI.selectGameMode() est entre 1 et 3
-            std::string gameMode = gameModes[mainUI.selectGameMode() - 1];
+            // Ce code suppose que les modes le resultat de mainUI.selectGameMode() est entre 0 et 2
+            std::string gameMode = gameModes[mainUI.selectGameModeInt()];
             GameLauncher * game = new GameLauncher(5556, server_ip_address, player_id, username, master_app, gameMode);
             master_app->transition(game);
             break;
