@@ -112,3 +112,7 @@ void GameUI::displayGameOver(GameState &gamestate) {
         std::cout<< i+1 << ". ID : " + bestPlayer.getPlayer_id()<<" , NPC killed : "<<bestPlayer.getPnjKilled()<<std::endl;
     }
 }
+
+Map *GameUI::getMap() const {
+    return map;
+}

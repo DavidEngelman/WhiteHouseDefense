@@ -79,6 +79,8 @@ bool GameManager::checkValidity(Position towerPos, GameState& gamestate) {
         validity = false;
     } else if (Map::computeQuadrant(towerPos) != quadrant) { // if the position is in the right quadrant
         validity = false;
+    } else if (gameUI.getMap()->isPath(towerPos)){
+        validity = false;
     }
     return validity;
 }

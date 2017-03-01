@@ -15,6 +15,9 @@ public:
     GameUI(unsigned seed);
 
 	Position getPosBuyingTower();
+
+	Map *getMap() const;
+
 	Position getPosSellingTower();
 	int getChoice();
 
