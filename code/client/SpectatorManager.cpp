@@ -10,3 +10,4 @@ void SpectatorManager::getGamesFromMatchMaker() {
     receive_message(server_socket, buffer); //receive all the games in progress
 }
 
+void SpectatorManager::run() {}
