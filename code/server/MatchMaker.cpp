@@ -40,7 +40,7 @@ void MatchMaker::get_and_process_command(int socket_fd) {
         addSpectatorToGame(gameIndex, socket_fd);
     } else if (command.getAction() == TON_STRING) {
 
-    }
+    } else {
         MatchmakingCommand matchmakingCommand(socket_fd);
         matchmakingCommand.parse(command_buffer);
 
