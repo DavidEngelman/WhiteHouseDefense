@@ -349,9 +349,6 @@ void GameServer::sendQuadrantToClient(int socket_fd, int quadrant) {
     send_data(socket_fd, (char *) &quadrant, sizeof(int));
 }
 
-void GameServer::sendInitialGameState() {
-    sendGameStateToPlayers();
-}
 
 void GameServer::sendGameStateToPlayer(PlayerConnection &connection) {
     sendGameStateToPlayer(connection.getSocket_fd());
