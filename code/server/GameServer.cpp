@@ -167,8 +167,10 @@ void GameServer::runGame() {
     while (!gameEngine->isGameFinished()) {
         if (!DEBUG){
 
+            gameEngine->getTimerSinceGameStart().pause(); // peut etre faire ca juste en mode contre la montre
             sendTowerPhase();
             processClientCommands();
+            gameEngine->getTimerSinceGameStart().resume(); // peut etre faire ca juste en mode contre la montre
             sendWavePhase();
         }
         runWave();
@@ -319,4 +321,17 @@ PlayerState &GameServer::getPlayerStateWithUsername(std::string username) {
     for(PlayerState& playerState: playerConnections){
 
     }
+}
+
+std::string GameServer::getAllPlayers() {
+    std::string res ="";
+    int count = 1;
+
+    for (auto& pc : playerConnections){
+
+        res += pc.getUsername();
+        res += count == playerConnections.size() ? ";" : ",";
+        count++;
+    }
+    return res;
 }

@@ -193,6 +193,7 @@ void GameEngine::checkIfGameIsOver() {
         isOver = (gameState.numPlayersAlive() <= 1);
         std::cout << "IS_OVER" << isOver;
     } else if (mode == TIMED_MODE) {
+        std::cout << timerSinceGameStart.elapsedTimeInSeconds() << std::endl;
         isOver = timerSinceGameStart.elapsedTimeInSeconds() > TIMED_GAME_INTERVAL;
     } else if (mode == TEAM_MODE) {
         int numAlivePlayersInTeam1 = 0;
@@ -273,6 +274,10 @@ void GameEngine::addPlayerState(int player_id, std::string username) {
 void GameEngine::addPlayerState(int player_id, std::string username, int team) {
     PlayerState playerState(player_id, username, team);
     gameState.addPlayerState(playerState);
+}
+
+Timer &GameEngine::getTimerSinceGameStart() {
+    return timerSinceGameStart;
 }
 
 

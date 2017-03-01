@@ -2,6 +2,9 @@
 #define PROJET_PLAYERCONNECTION_HPP
 
 #include <string>
+
+
+
 class PlayerConnection{
 
 private:
@@ -30,6 +33,8 @@ public:
     bool operator==(const PlayerConnection &rhs) const;
 
     bool operator!=(const PlayerConnection &rhs) const;
+
+    void setUsername(const std::string &username);
 };
 
 #endif

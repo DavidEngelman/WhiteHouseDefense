@@ -11,7 +11,7 @@ void GameLauncher::sendJoinRequest() {
     /* Partie 1: envoyer demanded pour rejoindre le jeu */
     char server_response[20] = "HOHOHOHOHOHOHOHOHOH";
 
-    std::string message = mode + "," + std::to_string(player_id) + ";";
+    std::string message = mode + "," + std::to_string(player_id) + "," + player_name + ";";
     send_message(server_socket, message.c_str());
     std::cout << "In Queue... avec le socket " << server_socket << std::endl;
 

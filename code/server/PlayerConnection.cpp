@@ -40,3 +40,7 @@ PlayerConnection::~PlayerConnection() {
 std::string & PlayerConnection::getUsername() {
     return username;
 }
+
+void PlayerConnection::setUsername(const std::string &username) {
+    PlayerConnection::username = username;
+}
