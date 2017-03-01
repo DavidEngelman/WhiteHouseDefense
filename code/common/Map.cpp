@@ -15,7 +15,7 @@ Map::Map(unsigned seed) {
 /*
  * Display the map on the screen using the gameState for drawing the towers and the pnjs
  */
-const void Map::display(GameState& gameState) const {
+const void Map::display(GameState& gameState, int quadrant) const {
     std::vector<AbstractTower*> &towers = gameState.getTowers();
     std::vector<Wave> &waves = gameState.getWaves();
     system("clear");
@@ -45,7 +45,11 @@ const void Map::display(GameState& gameState) const {
                     if (has_tower){
                         std::cout << TOWER;
                     } else {
-                        std::cout << GRASS;
+                        if (computeQuadrant(Position(x,y)) == quadrant){
+                            std::cout << GREEN_GRASS;
+                        }
+                        else{std::cout << GRASS;}
+
                     }
 
                     break;

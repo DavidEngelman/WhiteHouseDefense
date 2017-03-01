@@ -185,7 +185,7 @@ void GameEngine::upgradeTower(Position &position, int &quadrant) {
 
 
 void GameEngine::showMap() {
-    map.display(gameState);
+//    map.display(gameState);
 }
 
 void GameEngine::checkIfGameIsOver() {

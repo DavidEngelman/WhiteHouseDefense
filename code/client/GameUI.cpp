@@ -30,8 +30,8 @@ bool GameUI::checkCoord(int x, int y) {
     return false;
 }
 
-void GameUI::display(GameState& gameState) {
-    map->display(gameState);
+void GameUI::display(GameState& gameState, int quadrant) {
+    map->display(gameState, quadrant);
 }
 
 Position GameUI::getPosSellingTower() {
