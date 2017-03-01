@@ -89,6 +89,8 @@ public:
     static void *staticJoinSpectatorThread(void *);
 
     void *getAndProcessSpectatorJoinCommand();
+
+    std::string getMode();
 };
 
 #endif

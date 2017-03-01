@@ -278,8 +278,6 @@ void GameServer::updatePlayerStatsOnAccountServer() {
     }
 
 
-
-
 }
 
 void GameServer::stopSpectatorThread() {
@@ -295,3 +293,6 @@ void *GameServer::getAndProcessSpectatorJoinCommand() {
 }
 
 
+std::string GameServer::getMode() {
+    return mode;
+}

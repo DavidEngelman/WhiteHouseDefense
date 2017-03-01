@@ -46,6 +46,7 @@ protected:
     std::string get_command_type(char* data);
 
 public:
+    int getPort() const;
 
     Server(int port);
 

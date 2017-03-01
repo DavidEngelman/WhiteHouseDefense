@@ -153,3 +153,7 @@ std::string Server::get_command_type(char* data){
 Server::~Server() {
     close(socket_fd);
 }
+
+int Server::getPort() const {
+    return port;
+}
