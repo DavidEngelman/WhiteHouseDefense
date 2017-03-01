@@ -20,6 +20,8 @@ void SpectatorUI::displaySorryMessage() {
     std::cout << "Sorry, no games in progress... :(" << std::endl;
     std::cout << "Enter something to come back to menu..." << std::endl;
     std::cin >> i;
+    std::cin.clear();
+    std::cin.ignore();
 }
 
 int SpectatorUI::inputSpectatorUI(int number_of_games_available) {

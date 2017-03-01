@@ -14,8 +14,12 @@
 
 class SpectatorManager : public NetworkedManager{
 private:
+
     std::vector<GameInfo> allGames;
     SpectatorUI spectatorUI;
+    int player_id;
+    std::string player_usr_name;
+
     void getGamesFromMatchMaker();
     void parse_message_from_server(const std::string& message);
 
