@@ -31,6 +31,8 @@ public:
 
 	void setHp(int hp);
 
+	bool isAlive();
+
     int getTeam();
 
 	int getMoney();

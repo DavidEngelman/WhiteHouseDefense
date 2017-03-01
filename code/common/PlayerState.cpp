@@ -95,3 +95,7 @@ void PlayerState::addOneKill() {
 void PlayerState::setTeam(int teamNumber) {
     team = teamNumber;
 }
+
+bool PlayerState::isAlive() {
+    return hp > 0;
+}
