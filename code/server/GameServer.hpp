@@ -31,11 +31,14 @@ private:
     GameEngine * gameEngine;
     std::vector<PlayerConnection> playerConnections;
     int client_sockets[4];
+    std::vector<int> supportersSockets;
 
     pthread_t spectatorJoinThread;
 
 
+
     void sendGameStateToPlayer(PlayerConnection &connection);
+    void sendGameStateToPlayer(int socket_fd);
     void get_and_process_command(int client_socket_fd, char buffer[]);
     void addTowerInGameState(TowerCommand &command);
 
@@ -68,7 +71,7 @@ public:
     void sendTowerPhase();
     void sendWavePhase();
 
-    void sendQuadrantToClients();
+    void sendQuadrantToClient();
 
     void createPlayerStates() const;
 
@@ -96,6 +99,19 @@ public:
     std::string getMode();
 
     PlayerState &getPlayerStateWithUsername(std::string username);
+
+
+    void setupGameForPlayers();
+
+    void sendSetupGameStringToClient(int fd);
+
+    void sendMapSeedToClient(int socket_fd);
+
+    int getQuadrantForPlayer(std::string username);
+
+    void sendQuadrantToClient(int socket_fd, int quadrant);
+
+    void setupGameForPlayer(int player_socket_fd, int quadrant);
 };
 
 #endif
