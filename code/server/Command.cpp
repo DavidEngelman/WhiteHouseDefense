@@ -22,7 +22,7 @@ void Command::parse(char *data) {
  */
 std::string Command::getNextToken() {
     std::string token;
-    while (buffer[currentPosInBuffer] != ',' && buffer[currentPosInBuffer] != ';') {
+    while ((buffer[currentPosInBuffer] != ',') && (buffer[currentPosInBuffer] != ';')) {
         token += buffer[currentPosInBuffer];
         currentPosInBuffer++;
     }
@@ -31,6 +31,7 @@ std::string Command::getNextToken() {
     _hasReachedEnd = (buffer[currentPosInBuffer] == ';');
 
     currentPosInBuffer++;
+    return token;
 }
 
 bool Command::hasReachedEnd() {
@@ -38,6 +39,8 @@ bool Command::hasReachedEnd() {
 }
 
 int Command::extract_action(char *data) {
+    buffer = data; // For compatibility with subclasses
+    // TODO: adapt subclasses to use new capacities.
     action = getNextToken();
     return currentPosInBuffer;
 }
