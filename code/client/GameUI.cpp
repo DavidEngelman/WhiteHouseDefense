@@ -116,3 +116,9 @@ void GameUI::displayGameOver(GameState &gamestate) {
 Map *GameUI::getMap() const {
     return map;
 }
+
+void GameUI::display_dead_message() {
+
+    std::cout << "You are dead. You can now watch the game peacefully" << std::endl;
+
+}

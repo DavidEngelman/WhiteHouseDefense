@@ -29,6 +29,8 @@ public:
 
 	void displayPlayerInfos(GameState &gameState, int quadrant);
     void sortRanking(PlayerState players[]);
+
+	void display_dead_message();
 };
 
 #endif
