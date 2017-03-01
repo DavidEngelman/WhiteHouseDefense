@@ -5,7 +5,7 @@ PlayerState::PlayerState() : money(STARTING_MONEY), hp(STARTING_HP), isSupported
 PlayerState::PlayerState(int id, std::string username) : PlayerState(id, username, -1) {}
 
 PlayerState::PlayerState(int id, std::string username, int team)
-        : player_id(id), username(username), team(team),
+        : player_id(id), username(username), team(team), isSupported(false),
           hp(STARTING_HP), money(STARTING_MONEY), pnjKilled(0) {}
 
 PlayerState::PlayerState(int _player_id, std::string _username, int _money, int _hp, bool _isSupported,

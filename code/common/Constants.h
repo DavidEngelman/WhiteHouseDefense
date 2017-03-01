@@ -17,7 +17,7 @@ static const int PNJ_DAMAGE= 10;
 static const char PLACING_TOWER[2] = "t";
 static const char WAVE[2] = "w";
 
-static const int GOLD_EARNED_BY_SECOND= 1;
+static const int GOLD_EARNED_BY_TICK= 1;
 
 // Ça doit être 100.0, sinon c'est une division entiere et le resultat est 0
 static const float PERCENTAGE_RECOVERED_MONEY= (const float) (50 / 100.0);

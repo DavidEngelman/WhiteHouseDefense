@@ -42,7 +42,10 @@ void GameEngine::updatePlayerStates() {
 
 void GameEngine::addMoney() {
     for (PlayerState &player_state : gameState.getPlayerStates()) {
-        player_state.earnMoney(GOLD_EARNED_BY_SECOND);
+        player_state.earnMoney(GOLD_EARNED_BY_TICK);
+        if (player_state.getIsSupported()) {
+            player_state.earnMoney(GOLD_EARNED_BY_TICK);
+        }
     }
 }
 
