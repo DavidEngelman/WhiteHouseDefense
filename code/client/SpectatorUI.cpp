@@ -10,7 +10,8 @@ void SpectatorUI::displaySpectatorUI(std::vector<GameInfo>& gamesInfos) {
     std::cout << "Here are the games being played at the moment: " << std::endl;
     int i = 1;
     for( GameInfo game : gamesInfos) {
-        std::cout << "Game " << i << " - Mode: " << game.gameMode << " - Players: " << game.players << std::endl;
+        std::cout << "Game " << i << ": ";
+        game.print();
         i++;
     }
 }
