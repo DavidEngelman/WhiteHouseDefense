@@ -10,7 +10,7 @@ set(CLIENT_FILES  "client/NetworkedManager.cpp" "client/ClientLauncher.cpp" "cli
         client/WelcomeManager.cpp client/WelcomeUI.cpp
           client/FriendList.cpp client/GameManager.cpp
         "client/ProfileManager.cpp" "common/PNJ.cpp" client/GameUI.cpp common/PlayerState.cpp
-        common/GameState.cpp common/Wave.cpp common/Constants.h common/AttackTower.cpp common/Tools.hpp common/Tools.cpp)
+        common/GameState.cpp common/Wave.cpp common/Constants.h common/AttackTower.cpp common/Tools.hpp common/Tools.cpp client/SpectatorManager.cpp client/SpectatorManager.hpp client/SpectatorUI.cpp client/SpectatorUI.hpp)
 
 
 add_executable(client ${CLIENT_FILES})
