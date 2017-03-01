@@ -344,11 +344,10 @@ bool AccountServer::handle_accountUpdate(int client_sock_fd) {
         std::cout << "update : " << i << std::endl;
         //Recevoir les infos des 4 joueurs de la game
         receive_message(client_sock_fd, message);
-        std::cout << "Message: " <<message << std::endl;
+        //std::cout << "Message: " <<message << std::endl;
         UpdateStatsCommand command;
         command.parse(message);
         myDatabase.updateAfterGameStats(command.getPlayerId(), command.getPnjKilled(), command.getIsWinner());
-
     }
 }
 
