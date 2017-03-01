@@ -18,6 +18,7 @@ private:
 public:
     SpectatorManager(int port, char* address, int id, std::string username, App* master_app);
 
+    void run() override ;
 };
 
 
