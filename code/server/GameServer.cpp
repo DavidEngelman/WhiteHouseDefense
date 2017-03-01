@@ -18,6 +18,10 @@ void GameServer::sendGameStateToPlayers() {
     for (int i = 0; i < NUM_PLAYERS; i++) {
         sendGameStateToPlayer(playerConnections[i]);
     }
+
+    for (int socketFd: supportersSockets) {
+        sendGameStateToPlayer(socketFd);
+    }
 }
 
 
@@ -122,7 +126,6 @@ void GameServer::runWave() {
             gameEngine->showMap();
             // TODO: updateMap()
         } else {
-            
             sendGameStateToPlayers();
         }
         timer.reset();
@@ -175,7 +178,7 @@ void GameServer::runGame() {
     //handleEndOfGame();
 }
 
-void GameServer::createPlayerStates() const {
+void GameServer::createPlayerStates() {
     if (gameEngine->getGameState().getMode() == TEAM_MODE) {
         gameEngine->addPlayerState(playerConnections[0].getPlayer_id(), playerConnections[0].getUsername(), 1);
         gameEngine->addPlayerState(playerConnections[1].getPlayer_id(), playerConnections[0].getUsername(), 1);
@@ -192,7 +195,10 @@ void GameServer::createPlayerStates() const {
 void GameServer::sendTowerPhase() {
     for (PlayerConnection &playerConnection : playerConnections) {
         int socketFd = playerConnection.getSocket_fd();
-//        send_message(socketFd, PLACING_TOWER);
+        send_message(socketFd, "t");
+    }
+
+    for (int socketFd: supportersSockets) {
         send_message(socketFd, "t");
     }
 }
@@ -200,7 +206,10 @@ void GameServer::sendTowerPhase() {
 void GameServer::sendWavePhase() {
     for (PlayerConnection &playerConnection : playerConnections) {
         int socketFd = playerConnection.getSocket_fd();
-//        send_message(socketFd, WAVE);
+        send_message(socketFd, "w");
+    }
+
+    for (int socketFd: supportersSockets) {
         send_message(socketFd, "w");
     }
 }
@@ -258,7 +267,7 @@ void GameServer::stopSpectatorThread() {
     pthread_cancel(spectatorJoinThread);
 }
 
-static void *GameServer::staticJoinSpectatorThread(void * self) {
+void *GameServer::staticJoinSpectatorThread(void * self) {
     static_cast<GameServer*>(self)->getAndProcessSpectatorJoinCommand();
     return nullptr;
 }
@@ -349,9 +358,6 @@ void GameServer::sendQuadrantToClient(int socket_fd, int quadrant) {
     send_data(socket_fd, (char *) &quadrant, sizeof(int));
 }
 
-void GameServer::sendInitialGameState() {
-    sendGameStateToPlayers();
-}
 
 void GameServer::sendGameStateToPlayer(PlayerConnection &connection) {
     sendGameStateToPlayer(connection.getSocket_fd());

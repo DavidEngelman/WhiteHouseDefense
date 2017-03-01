@@ -20,9 +20,9 @@ public:
 
     PlayerConnection(int id, int socket);
 
-    int getPlayer_id() const;
+    int getPlayer_id() ;
 
-    int getSocket_fd() const;
+    int getSocket_fd() ;
 
     void setPlayer_id(int player_id);
 

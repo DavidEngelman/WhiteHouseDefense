@@ -59,14 +59,12 @@ public:
     void sendTowerPhase();
     void sendWavePhase();
 
-    void createPlayerStates() const;
+    void createPlayerStates();
 
     int connectToAccountServer();
     void updatePlayerStatsOnAccountServer();
 
     void deleteTowerInGameState(TowerCommand command);
-
-    void sendInitialGameState();
 
     void upgradeTowerInGameState(TowerCommand command);
 

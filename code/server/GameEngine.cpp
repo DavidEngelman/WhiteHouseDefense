@@ -207,6 +207,7 @@ void GameEngine::checkIfGameIsOver() {
     }
 
     gameState.setIsGameOver(isOver);
+    if (isOver) declareWinner();
 }
 
 
