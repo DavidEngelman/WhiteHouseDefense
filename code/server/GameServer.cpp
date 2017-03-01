@@ -157,8 +157,10 @@ void GameServer::run() {
     while (!gameEngine->isGameFinished()) {
         if (!DEBUG){
 
+            gameEngine->getTimerSinceGameStart().pause(); // peut etre faire ca juste en mode contre la montre
             sendTowerPhase();
             processClientCommands();
+            gameEngine->getTimerSinceGameStart().resume(); // peut etre faire ca juste en mode contre la montre
             sendWavePhase();
         }
         runWave();
