@@ -4,6 +4,7 @@
 #include "ProfileManager.hpp"
 #include "RankingManager.hpp"
 #include "FriendListManager.hpp"
+#include "SpectatorManager.hpp"
 
 const static std::string gameModes[3] = {CLASSIC_MODE, TEAM_MODE, TIMED_MODE};
 
@@ -23,16 +24,21 @@ void MainManager::run() {
             break;
         }
         case 2: {
+            SpectatorManager * spectator = new SpectatorManager(5555, server_ip_address, player_id, username, master_app);
+            master_app->transition(spectator);
+            break;
+        }
+        case 3: {
             ProfileManager * profile = new ProfileManager(5555, server_ip_address, player_id, username, master_app);
             master_app->transition(profile);
             break;
         }
-        case 3: {
+        case 4: {
             FriendListManager * friendListManager = new FriendListManager(5555, server_ip_address, player_id, username, master_app);
             master_app->transition(friendListManager);
             break;
         }
-        case 4: {
+        case 5: {
             RankingManager * rankingManager = new RankingManager(5555, server_ip_address, player_id, username, master_app);
             master_app->transition(rankingManager);
             break;
