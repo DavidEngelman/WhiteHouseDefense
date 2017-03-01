@@ -34,7 +34,7 @@ public:
 
     void run() override;
 
-    void handleRequestFromSpectator();
+    void handleRequestFromSpectator(int socket);
 };
 
 #endif

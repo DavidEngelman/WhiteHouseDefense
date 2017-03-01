@@ -36,7 +36,7 @@ void MatchMaker::get_and_process_command(int socket_fd) {
     command.parse(command_buffer);
 
     if (command.getAction() == GAME_IN_PROGRESS_REQUEST) {
-        handleRequestFromSpectator();
+        handleRequestFromSpectator(socket_fd);
     } else {
         MatchmakingCommand matchmakingCommand(socket_fd);
         matchmakingCommand.parse(command_buffer);
@@ -45,15 +45,15 @@ void MatchMaker::get_and_process_command(int socket_fd) {
     }
 }
 
-void MatchMaker::handleRequestFromSpectator() {
+void MatchMaker::handleRequestFromSpectator(int socket_fd) {
     std::string stringToSend;
     for( GameServer* gameServer : activeGames) {
-        stringToSend += gameServer.getPort() + ",";
-        stringToSend += gameServer.getMode() + ",";
-        stringToSend += gameServer.getAllPlayer() + ";";
+        stringToSend += std::to_string(gameServer->getPort()) + ",";
+        stringToSend += gameServer->getMode() + ",";
+        stringToSend += gameServer->getAllPlayers() + ";";
     }
 
-    send_message()
+    send_message(socket_fd, stringToSend.c_str());
 }
 
 void MatchMaker::addPlayerToPendingMatch(PlayerConnection player_connection, std::string mode) {

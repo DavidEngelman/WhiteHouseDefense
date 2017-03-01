@@ -75,6 +75,8 @@ public:
     void sendInitialGameState();
 
     void upgradeTowerInGameState(TowerCommand command);
+
+    std::string getMode();
 };
 
 #endif

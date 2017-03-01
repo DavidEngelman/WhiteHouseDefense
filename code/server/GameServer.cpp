@@ -268,8 +268,8 @@ void GameServer::updatePlayerStatsOnAccountServer() {
     }
 
 
-
-
 }
 
-
+std::string GameServer::getMode() {
+    return mode;
+}
