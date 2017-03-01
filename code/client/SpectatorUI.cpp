@@ -17,6 +17,7 @@ void SpectatorUI::displaySpectatorUI(std::vector<GameInfo>& gamesInfos) {
 
 void SpectatorUI::displaySorryMessage() {
     int i;
+    system("clear");
     std::cout << "Sorry, no games in progress... :(" << std::endl;
     std::cout << "Enter something to come back to menu..." << std::endl;
     std::cin >> i;
@@ -26,11 +27,17 @@ void SpectatorUI::displaySorryMessage() {
 
 int SpectatorUI::inputSpectatorUI(int number_of_games_available) {
     int choice = -1;
-    std::cout << "Enter the number of the game you want to spectate: " << std::endl;
+    std::cout << "   Enter your choice: ";
     std::cin >> choice;
+    while(std::cin.fail() || (choice < 1 || choice > number_of_games_available) ){
+        std::cout << "   Error, enter a integer between 1 and "<< number_of_games_available << std::endl;
+        std::cout << "   Enter your choice: ";
 
-
-    return choice;
+        std::cin.clear();
+        std::cin.ignore();
+        std::cin >> choice;
+    }
+    return choice -1;
 }
 
 void SpectatorUI::drawTitleGameType(std::string gameType) {
