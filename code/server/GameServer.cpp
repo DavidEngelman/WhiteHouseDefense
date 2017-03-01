@@ -178,7 +178,7 @@ void GameServer::runGame() {
     //handleEndOfGame();
 }
 
-void GameServer::createPlayerStates() const {
+void GameServer::createPlayerStates() {
     if (gameEngine->getGameState().getMode() == TEAM_MODE) {
         gameEngine->addPlayerState(playerConnections[0].getPlayer_id(), playerConnections[0].getUsername(), 1);
         gameEngine->addPlayerState(playerConnections[1].getPlayer_id(), playerConnections[0].getUsername(), 1);
@@ -267,7 +267,7 @@ void GameServer::stopSpectatorThread() {
     pthread_cancel(spectatorJoinThread);
 }
 
-static void *GameServer::staticJoinSpectatorThread(void * self) {
+void *GameServer::staticJoinSpectatorThread(void * self) {
     static_cast<GameServer*>(self)->getAndProcessSpectatorJoinCommand();
     return nullptr;
 }

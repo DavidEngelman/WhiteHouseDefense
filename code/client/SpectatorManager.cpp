@@ -11,7 +11,7 @@ void SpectatorManager::getGamesFromMatchMaker() {
 
     parse_message_from_server(std::string(buffer));
 
-    spectatorUI.displaySpectatorUI();
+    //spectatorUI.displaySpectatorUI();
 }
 
 void SpectatorManager::run() {}
