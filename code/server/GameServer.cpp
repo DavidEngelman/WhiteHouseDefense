@@ -171,6 +171,7 @@ void GameServer::run() {
         runWave();
     }
 
+    gameEngine->declareWinner();
     updatePlayerStatsOnAccountServer();
     delete gameEngine;
 
@@ -260,6 +261,7 @@ void GameServer::updatePlayerStatsOnAccountServer() {
     int p_id, pnj_killed;
     bool is_winner;
 
+    send_message(account_server_socket, "Update;");
 
     for (PlayerState& ps : gameEngine->getGameState().getPlayerStates()){
         p_id = ps.getPlayer_id();
