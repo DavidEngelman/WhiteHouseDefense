@@ -34,12 +34,12 @@ void *GameManager::input_thread() {
     while (1) {
         gameUI.displayPosingPhase();
         int choice = gameUI.getChoice();
-        gameUI.display(gameState, quadrant, gameState.getMode());
+        gameUI.display(gameState, quadrant);
         gameUI.displayPlayerInfos(gameState, quadrant);
         if (choice == 1) {
             gameUI.displayTowerShop();
             int towerchoice = gameUI.getChoice();
-            gameUI.display(gameState, quadrant, gameState.getMode());
+            gameUI.display(gameState, quadrant);
             gameUI.displayPlayerInfos(gameState, quadrant);
             Position towerPos = gameUI.getPosBuyingTower();
             if (checkValidity(towerPos, gameState)) {
@@ -55,7 +55,7 @@ void *GameManager::input_thread() {
                 sendSellRequest(toSell);
             }
         }// else upgrade tower
-        gameUI.display(gameState, quadrant, gameState.getMode());
+        gameUI.display(gameState, quadrant);
         gameUI.displayPlayerInfos(gameState, quadrant);
     }
 }
@@ -118,7 +118,7 @@ void GameManager::sendSellRequest(Position towerPos) {
 
 
 void GameManager::run() {
-    gameUI.display(gameState, quadrant, gameState.getMode());
+    gameUI.display(gameState, quadrant);
     gameUI.displayPlayerInfos(gameState, quadrant);
     char server_msg_buff [BUFFER_SIZE];
 
@@ -130,7 +130,7 @@ void GameManager::run() {
             if (is_alive() && !isSupporter ) {
                 inputThread = pthread_create(&thr, NULL, &GameManager::staticInputThread, this);
             } else {
-                gameUI.display(gameState, quadrant, gameState.getMode());
+                gameUI.display(gameState, quadrant);
 
                 if (isSupporter) {
                     gameUI.displayPlayersPlacingTowersMessage();
@@ -149,7 +149,7 @@ void GameManager::run() {
         }
         else {
             unSerializeGameState(server_msg_buff);
-            gameUI.display(gameState, quadrant, gameState.getMode());
+            gameUI.display(gameState, quadrant);
 
             if (!isSupporter) {
                 if (is_alive()) {

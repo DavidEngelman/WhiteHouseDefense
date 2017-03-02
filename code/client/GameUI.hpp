@@ -22,7 +22,7 @@ public:
 	Position getPosSellingTower();
 	int getChoice();
 
-	void display(GameState& gameState, int quadrant, std::string mode);
+	void display(GameState& gameState, int quadrant);
 	void displayPosingPhase();
 	void displayTowerShop();
 

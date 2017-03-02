@@ -50,7 +50,7 @@ private:
 
 public:
     Map(unsigned seed);
-    const void display(GameState& gameState, int quadrant, std::string mode) const;
+    const void display(GameState& gameState, int quadrant) const;
     const bool isPath(Position pos) const;
     static const int computeQuadrant(Position pos);
 };
