@@ -15,7 +15,7 @@ Map::Map(unsigned seed) {
 /*
  * Display the map on the screen using the gameState for drawing the towers and the pnjs
  */
-const void Map::display(GameState& gameState, int quadrant) const {
+void Map::display(GameState& gameState, int quadrant) const {
     std::vector<AbstractTower*> &towers = gameState.getTowers();
     std::vector<Wave> &waves = gameState.getWaves();
     system("clear");
@@ -150,7 +150,7 @@ void Map::generateQuarterMap(Position end) {
 /*
  * Return true if the cell of the matrix is next to more than 1 path cell
  */
-const bool Map::isNextToPath(Position pos) {
+bool Map::isNextToPath(Position pos) {
     int count = 0;
     if (matrix[pos.getY()+1][pos.getX()] == PATH_INT) count++;
     if (pos.getY() > 0 && matrix[pos.getY()-1][pos.getX()] == PATH_INT) count++;
@@ -174,14 +174,14 @@ void Map::copyQuarter() {
     }
 }
 
-const bool Map::isPath(Position pos) const {
+bool Map::isPath(Position pos) const {
     return matrix[pos.getY()][pos.getX()] == PATH_INT;
 }
 
 /*
  * This function return in which quadrant is the Position pos
  */
-const int Map::computeQuadrant(Position pos) {
+int Map::computeQuadrant(Position pos) {
     // The origin of the map is in the upper-left corner
     // The growing diagonal is : y = -x + size-1,
     // The decreasing diagonal is : y = x

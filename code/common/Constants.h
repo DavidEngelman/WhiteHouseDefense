@@ -1,6 +1,8 @@
 #ifndef PROJET_CONSTANTS_H
 #define PROJET_CONSTANTS_H
 
+#include <string>
+
 static const int NORTH = 0;
 static const int EAST = 1;
 static const int SOUTH = 2;

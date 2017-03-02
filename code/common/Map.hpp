@@ -43,14 +43,14 @@ private:
     void generateRandomMatrix();
     void initMap();
     void generateQuarterMap(Position position);
-    const bool isNextToPath(Position position);
+    bool isNextToPath(Position position);
     void copyQuarter();
 
 public:
     Map(unsigned seed);
-    const void display(GameState& gameState, int quadrant) const;
-    const bool isPath(Position pos) const;
-    static const int computeQuadrant(Position pos);
+    void display(GameState& gameState, int quadrant) const;
+    bool isPath(Position pos) const;
+    static int computeQuadrant(Position pos);
 };
 
 #endif

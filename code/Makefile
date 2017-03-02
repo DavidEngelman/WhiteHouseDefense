@@ -1,44 +1,31 @@
-## -*- Makefile -*-
-##
-## User: greg
-## Time: Feb 10, 2017 2:46:52 PM
-## Makefile created by Oracle Developer Studio.
-##
-## This file is generated automatically.
-##
+all: server
 
 
-all: $(TARGETDIR_server)/server
+SERVERFILES = server/ServerLauncher.cpp common/Networking.cpp server/Server.cpp server/AccountServer.cpp server/Database.cpp \
+                       common/Credentials.cpp common/Account.cpp server/Command.cpp server/LoginRegisterCommand.cpp \
+                       server/MatchmakingCommand.cpp server/MatchMaker.cpp server/MatchMaker.cpp server/PendingMatch.cpp \
+                       common/GameState.cpp server/GameServer.cpp server/TowerCommand.cpp server/Timer.cpp \
+                       server/FriendListCommand.cpp common/AbstractTower.cpp server/PlayerConnection.cpp common/PlayerState.cpp common/Wave.cpp \
+                       common/PNJ.cpp common/Position.cpp common/Map.cpp server/GameEngine.cpp server/GameEngine.hpp common/Constants.h common/Direction.h \
+                       common/AttackTower.cpp common/Tools.hpp common/Tools.cpp server/UpdateStatsCommand.cpp
 
-## Target: server
-OBJS_server = 
-SYSLIBS_server = -lpthread -lcurses 
-USERLIBS_server = $(SYSLIBS_server) 
-DEPLIBS_server =  
-LDLIBS_server = $(USERLIBS_server)
+CLIENTFILES = client/NetworkedManager.cpp client/ClientLauncher.cpp client/LoginManager.cpp client/LoginUI.cpp \
+                      client/RegisterManager.cpp client/RegisterUI.cpp common/Networking.cpp common/Credentials.cpp \
+                      client/MainManager.cpp client/MainUI.cpp common/Map.cpp client/Drawing.cpp client/Drawing.hpp client/RankingManager.cpp client/RankingUI.cpp client/GameLauncher.cpp\
+                      client/FriendListManager.cpp client/FriendListUI.cpp common/AbstractTower.cpp \
+                      client/ProfileUI.cpp common/Position.cpp client/App.cpp client/App.hpp client/AbstractManager.cpp \
+                      client/WelcomeManager.cpp client/WelcomeUI.cpp \
+                        client/FriendList.cpp client/GameManager.cpp \
+                      client/ProfileManager.cpp common/PNJ.cpp client/GameUI.cpp common/PlayerState.cpp \
+                      common/GameState.cpp common/Wave.cpp common/Constants.h common/AttackTower.cpp common/Tools.hpp common/Tools.cpp client/SpectatorManager.cpp client/SpectatorManager.hpp client/SpectatorUI.cpp client/SpectatorUI.hpp client/GameInfo.cpp
 
+WARNINGS =
 
-# Link or archive
-$(TARGETDIR_server)/server: $(TARGETDIR_server) $(OBJS_server) $(DEPLIBS_server)
-	$(LINK.c) $(CFLAGS_server) $(CPPFLAGS_server) -o $@ $(OBJS_server) $(LDLIBS_server)
+server: $(SERVERFILES)
+	g++ $(WARNINGS) -std=c++11 $(SERVERFILES) -o Server -pthread \
+	-I/usr/include -lsqlite3 -lcrypt
+#	-Icode/server -Icode/common
 
-
-# Compile source files into .o files
-
-
-#### Clean target deletes all generated files ####
-clean:
-	rm -f \
-		$(TARGETDIR_server)/server
-	rm -f -r $(TARGETDIR_server)
-
-
-# Create the target directory (if needed)
-$(TARGETDIR_server):
-	mkdir -p $(TARGETDIR_server)
-
-
-# Enable dependency checking
-.KEEP_STATE:
-.KEEP_STATE_FILE:.make.state.GNU-amd64-Linux
-
+client: $(CLIENTFILES)
+	g++ $(WARNINGS) -std=c++11 $(CLIENTFILES) -o Client -pthread \
+	-I/usr/include -lsqlite3 -lcrypt
