@@ -53,7 +53,7 @@ const void Map::display(GameState& gameState, int quadrant, std::string mode) co
                         } else{
 
                             if ((mode == TEAM_MODE) && (PARTNERS[computeQuadrant(Position(x,y))] == quadrant)){
-                                std::cout << GRAY_GRASS;
+                                std::cout << PURPLE_GRASS;
                             } else{
                                 std::cout << GRASS;
                             }

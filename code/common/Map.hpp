@@ -5,7 +5,7 @@
 
 #define GRASS "◼  "
 #define GREEN_GRASS "\033[32m◼\033[0m  "
-#define GRAY_GRASS "\033[35m◼\033[0m  "
+#define PURPLE_GRASS "\033[35m◼\033[0m  "
 
 #define PATH "   "
 #define LIMIT "\033[34m◼\033[0m  "
