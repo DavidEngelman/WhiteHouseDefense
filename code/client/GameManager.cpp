@@ -133,7 +133,7 @@ void GameManager::run() {
                 gameUI.display(gameState, quadrant);
 
                 if (isSupporter) {
-                    // Show "Please wait; players are placing towers"
+                    gameUI.displayerPlayersPlacingTowersMessage();
                 } else {
                     gameUI.display_dead_message();
                 }

@@ -124,9 +124,11 @@ Map *GameUI::getMap() const {
 }
 
 void GameUI::display_dead_message() {
-
     std::cout << "You are dead. You can now watch the game peacefully" << std::endl;
+}
 
+void GameUI::displayerPlayersPlacingTowersMessage() {
+    std::cout << "Please wait. The remaining players are placing towers" << std::endl;
 }
 
 /* TODO: En mode par équipe, les équipes sont: NORTH & EAST, SOUTH & WEST. Adapter l'UI en mode par équipe pour
