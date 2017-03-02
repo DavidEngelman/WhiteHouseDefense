@@ -117,28 +117,38 @@ void GameManager::run() {
         //std::cout << "Message: " << server_msg_buff << std::endl;
         if (strcmp(server_msg_buff, PLACING_TOWER) == 0) {
 
-            if (is_alive())
-                inputThread = pthread_create(&thr,NULL,&GameManager::staticInputThread,this);
-            else{
+            if (is_alive() /* && !isSupporter */ ) {
+                inputThread = pthread_create(&thr, NULL, &GameManager::staticInputThread, this);
+            } else {
                 gameUI.display(gameState, quadrant);
+
+                // if (isSupporter) {
+                // Show "Please wait; players are placing towers"
+                //} else {
                 gameUI.display_dead_message();
+                // }
             }
         }else if (strcmp(server_msg_buff, WAVE) == 0){
+            // if (!isSupporter) {
             inputThread = pthread_cancel(thr);
+            // }
 
             //TODO: comprendre pourquoi ca fait tout buguer
             //std::cin.clear(); //pas enlever ces 2 lignes
             //std::cin.ignore();
         }
-        else{
+        else {
             unSerializeGameState(server_msg_buff);
             gameUI.display(gameState, quadrant);
-            if (is_alive())
-                gameUI.displayPlayerInfos(gameState, quadrant);
-            else
-                gameUI.display_dead_message();
 
-            }
+            // if (!isSupporter) {
+                if (is_alive()) {
+                    gameUI.displayPlayerInfos(gameState, quadrant);
+                } else {
+                    gameUI.display_dead_message();
+                }
+            // }
+        }
     }
     gameUI.displayGameOver(gameState);
 
