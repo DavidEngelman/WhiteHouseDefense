@@ -84,6 +84,8 @@ int GameUI::getChoice() {
     /* Ask at the user his choice */
     int x = -1;
     std::cout << "   Enter your choice: ";
+    std::cin.clear();
+    std::cin.ignore();
     std::cin >> x;
     while(std::cin.fail() or 0>x or x>3){
         std::cout << "   Error, enter a integer between 1 and 3 " << std::endl;
@@ -97,20 +99,24 @@ int GameUI::getChoice() {
 }
 
 void GameUI::displayGameOver(GameState &gamestate) {
-    std::vector<PlayerState> players;
-    PlayerState bestPlayer;
-    int previousMax = 999999999; // Infinity
-    for (int i = 0; i < 3; i++) {
-        int maxScore = -1;
-        for (auto &player : gamestate.getPlayerStates()) {
-            if (player.getPnjKilled() > maxScore && player.getPnjKilled() < previousMax) {
-                maxScore = player.getPnjKilled();
-                bestPlayer = player;
-            }
-        }
-        previousMax = maxScore;
-        std::cout<< i+1 << ". ID : " + bestPlayer.getPlayer_id()<<" , NPC killed : "<<bestPlayer.getPnjKilled()<<std::endl;
+
+    Drawing::drawWhiteHouse("END GAME STATS");
+
+    for (auto& player : gamestate.getPlayerStates()) {
+
+        std::cout << "   " << "Username : " + player.getUsername() <<" | NPC killed : "
+                  << player.getPnjKilled()<<" ";
+
+        std:: string winner_or_looser = player.getIsWinner() ? "| WINNER" : "| LOOSER";
+        std::cout << winner_or_looser << std::endl;
     }
+
+    int dummy;
+    std::cin.clear();
+    std::cin.ignore();
+    std::cout << "\nEnter something and press Enter to come back in the main menu..." << std::endl;
+    std::cin>>dummy;
+
 }
 
 Map *GameUI::getMap() const {

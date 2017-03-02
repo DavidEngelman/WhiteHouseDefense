@@ -140,7 +140,7 @@ void GameManager::run() {
 
             }
     }
-    // gameUI.displayGameOver(gamestate);
+    gameUI.displayGameOver(gameState);
 
     // Menu to come back to main menu (or make another game of the same type ?)
     come_back_to_menu();

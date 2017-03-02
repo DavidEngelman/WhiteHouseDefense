@@ -3,6 +3,7 @@
 
 #include "../common/GameState.hpp"
 #include "../common/Map.hpp"
+#include "Drawing.hpp"
 
 
 class GameUI {
