@@ -107,8 +107,8 @@ void GameUI::displayGameOver(GameState &gamestate) {
         std::cout << "   " << "Username : " + player.getUsername() <<" | NPC killed : "
                   << player.getPnjKilled()<<" ";
 
-        std:: string winner_or_looser = player.getIsWinner() ? "| WINNER" : "| LOOSER";
-        std::cout << winner_or_looser << std::endl;
+        std::string winner_or_loser = player.getIsWinner() ? "| WINNER" : "| LOSER";
+        std::cout << winner_or_loser << std::endl;
     }
 
     int dummy;
@@ -124,7 +124,12 @@ Map *GameUI::getMap() const {
 }
 
 void GameUI::display_dead_message() {
-
     std::cout << "You are dead. You can now watch the game peacefully" << std::endl;
-
 }
+
+void GameUI::displayerPlayersPlacingTowersMessage() {
+    std::cout << "Please wait. The remaining players are placing towers" << std::endl;
+}
+
+/* TODO: En mode par équipe, les équipes sont: NORTH & EAST, SOUTH & WEST. Adapter l'UI en mode par équipe pour
+ * afficher cette information (et peut etre afficher la map du coequipier de facon differente) */

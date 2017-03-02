@@ -38,7 +38,11 @@ void MatchMaker::get_and_process_command(int socket_fd) {
 
     if (command.getAction() == GAME_IN_PROGRESS_REQUEST) {
         handleRequestFromSpectator(socket_fd);
-    } else {
+    }
+    else if(command.getAction() == "PopGame"){
+        removeGameFromGamesInProgress(stoi(command.getNextToken()));
+    }
+    else {
         MatchmakingCommand matchmakingCommand(socket_fd);
         matchmakingCommand.parse(command_buffer);
 
@@ -112,3 +116,14 @@ void MatchMaker::announceMatchStart(PlayerConnection playerConnection) {
     send_message(playerConnection.getSocket_fd(), GAME_STARTING_STRING);
     send_data(playerConnection.getSocket_fd(), (char *) &current_server_port, sizeof(int));
 }
+
+void MatchMaker::removeGameFromGamesInProgress(int port) {
+    std::vector<GameServer*>::iterator gameserverIter;
+    for (gameserverIter = activeGames.begin(); gameserverIter != activeGames.end(); gameserverIter++){
+        if ((*gameserverIter)->getPort() == port) {
+            activeGames.erase(gameserverIter);
+            break;
+        }
+    }
+}
+

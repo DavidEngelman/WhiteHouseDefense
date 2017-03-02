@@ -13,7 +13,6 @@ public:
 
     void displaySpectatorUI(std::vector<GameInfo>& gamesInfos);
     int gameSelection(int number_of_games_available);
-    void drawTitleGameType(std::string gameType);
     void displaySorryMessage();
 
     std::string playerSelection(GameInfo &game_info);

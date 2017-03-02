@@ -32,6 +32,8 @@ public:
     void sortRanking(PlayerState players[]);
 
 	void display_dead_message();
+
+    void displayerPlayersPlacingTowersMessage();
 };
 
 #endif

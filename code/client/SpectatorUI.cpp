@@ -1,9 +1,6 @@
-//
-//
 
 #include <iostream>
 #include "SpectatorUI.hpp"
-#include "Drawing.hpp"
 
 void SpectatorUI::displaySpectatorUI(std::vector<GameInfo>& gamesInfos) {
     system("clear");
@@ -54,14 +51,4 @@ std::string SpectatorUI::playerSelection(GameInfo& game_info) {
         std::cin >> choice;
     }
     return choice;
-}
-
-void SpectatorUI::drawTitleGameType(std::string gameType) {
-    unsigned long nbSpace = (36 - gameType.length()) / 2;
-    std::cout << "   ======================================   " << std::endl;
-    std::cout << "   |" << std::string(nbSpace, ' ') << gameType << std::string(nbSpace, ' ');
-    if (gameType.length() % 2 == 1) std::cout << " ";
-    std::cout << "|" << std::endl;
-    std::cout << "   ======================================   " << std::endl;
-
 }

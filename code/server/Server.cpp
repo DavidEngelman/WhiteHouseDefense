@@ -45,7 +45,11 @@ int Server::accept_connection() {
     struct sockaddr_in client_addr;
     socklen_t sin_size = sizeof(struct sockaddr_in);
 
-    return accept(socket_fd, (struct sockaddr *) &client_addr, &sin_size);
+    int new_socket = accept(socket_fd, (struct sockaddr *) &client_addr, &sin_size);
+    if (new_socket == -1) {
+        perror("Accept: ");
+    }
+    return new_socket;
 }
 
 //void Server::add_new_client(int his_socket) {
