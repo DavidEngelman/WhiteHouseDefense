@@ -35,6 +35,8 @@ public:
     void run() override;
 
     void handleRequestFromSpectator(int socket);
+
+    void removeGameFromGamesInProgress(int port);
 };
 
 #endif

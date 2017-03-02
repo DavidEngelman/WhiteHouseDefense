@@ -61,7 +61,7 @@ public:
 
     void createPlayerStates();
 
-    int connectToAccountServer();
+    int connectToServer(int port);
     void updatePlayerStatsOnAccountServer();
 
     void deleteTowerInGameState(TowerCommand command);
@@ -96,6 +96,8 @@ public:
     void sendQuadrantToClient(int socket_fd, int quadrant);
 
     void setupGameForPlayer(int player_socket_fd, int quadrant);
+
+    void sendFinishedToMatchmaker();
 };
 
 #endif
