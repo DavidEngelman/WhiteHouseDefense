@@ -37,7 +37,7 @@ void SpectatorManager::run() {
         send_message(game_server_socket_fd, message.c_str());
 
         // Puis on lance le GameManager
-        GameManager *gameManager = new GameManager(server_ip_address, gamePort, server_socket,
+        GameManager *gameManager = new GameManager(server_ip_address, gamePort, game_server_socket_fd,
                                                    player_id, player_usr_name, true, master_app);
         master_app->transition(gameManager);
     }

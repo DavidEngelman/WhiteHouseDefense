@@ -275,9 +275,10 @@ void *GameServer::staticJoinSpectatorThread(void * self) {
 void GameServer::getAndProcessSpectatorJoinCommand() {
     while (1) {
         int client_socket_fd = accept_connection();
+        std::cout << "Accepted new supporter connection with socket" << client_socket_fd << std::endl;
 
         char command_buffer[BUFFER_SIZE];
-        receive_message(socket_fd, command_buffer);
+        receive_message(client_socket_fd, command_buffer);
 
         /* Structure of command: "SUPPORT_PLAYER_STRING,bob;" */
         Command command;
