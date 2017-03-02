@@ -170,7 +170,7 @@ void GameServer::runGame() {
         runWave();
     }
 
-    gameEngine->declareWinner();
+    //gameEngine->declareWinner();
     updatePlayerStatsOnAccountServer();
     delete gameEngine;
 
@@ -181,12 +181,12 @@ void GameServer::runGame() {
 void GameServer::createPlayerStates() {
     if (gameEngine->getGameState().getMode() == TEAM_MODE) {
         gameEngine->addPlayerState(playerConnections[0].getPlayer_id(), playerConnections[0].getUsername(), 1);
-        gameEngine->addPlayerState(playerConnections[1].getPlayer_id(), playerConnections[0].getUsername(), 1);
-        gameEngine->addPlayerState(playerConnections[2].getPlayer_id(), playerConnections[0].getUsername(), 2);
-        gameEngine->addPlayerState(playerConnections[3].getPlayer_id(), playerConnections[0].getUsername(), 2);
+        gameEngine->addPlayerState(playerConnections[1].getPlayer_id(), playerConnections[1].getUsername(), 1);
+        gameEngine->addPlayerState(playerConnections[2].getPlayer_id(), playerConnections[2].getUsername(), 2);
+        gameEngine->addPlayerState(playerConnections[3].getPlayer_id(), playerConnections[3].getUsername(), 2);
     } else {
         for (int i = 0; i < 4; ++i) {
-            gameEngine->addPlayerState(playerConnections[i].getPlayer_id(), playerConnections[0].getUsername());
+            gameEngine->addPlayerState(playerConnections[i].getPlayer_id(), playerConnections[i].getUsername());
         }
     }
 
