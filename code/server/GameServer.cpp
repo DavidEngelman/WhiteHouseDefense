@@ -137,6 +137,8 @@ void GameServer::run() {
     startSpectatorThread();
     runGame();
     stopSpectatorThread();
+    // TODO:
+    // tellMatchMakerThatTheGameIsOver();
 }
 
 void GameServer::startSpectatorThread() {
