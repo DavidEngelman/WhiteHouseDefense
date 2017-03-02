@@ -64,6 +64,23 @@ void GameUI::displayPlayerInfos(GameState &gameState, int quadrant) {
     std::cout << std::endl << infos << std::endl;
     std::cout << std::endl;
 }
+
+
+void GameUI::displayInfoForSupporter(GameState &gameState) {
+    std::string infos;
+    int i = 0;
+    for(PlayerState& ps : gameState.getPlayerStates()) {
+        infos += ps.getUsername() + " - Money : " + std::to_string(ps.getMoney()) +
+         "\tNPC killed: " + std::to_string(ps.getPnjKilled()) + "\tHP: " + std::to_string(ps.getHp())
+         + "\t Quadrant: " + QUADRANT_NAMES[i] + "\n";
+
+        i++;
+    }
+
+    std::cout << std::endl << infos << std::endl;
+    std::cout << std::endl;
+}
+
 void GameUI::displayPosingPhase() {
 
     std::cout << "You can: " << std::endl;

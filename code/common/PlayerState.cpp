@@ -53,8 +53,8 @@ bool PlayerState::getIsSupported() {
     return isSupported;
 }
 
-void PlayerState::setIsSupported(bool isSupported) {
-    isSupported = isSupported;
+void PlayerState::setIsSupported(bool _isSupported) {
+    isSupported = _isSupported;
 }
 
 bool PlayerState::getIsWinner() {
