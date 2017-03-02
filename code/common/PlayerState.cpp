@@ -1,12 +1,12 @@
 #include "PlayerState.hpp"
 
-PlayerState::PlayerState() : money(Player_STARTING_MONEY), hp(PLAYER_STARTING_HP), isSupported(false), pnjKilled(0) {}
+PlayerState::PlayerState() : money(PLAYER_STARTING_MONEY), hp(PLAYER_STARTING_HP), isSupported(false), pnjKilled(0) {}
 
 PlayerState::PlayerState(int id, std::string username) : PlayerState(id, username, -1) {}
 
 PlayerState::PlayerState(int id, std::string username, int team)
         : player_id(id), username(username), team(team), isSupported(false),
-          isWinner(false), hp(PLAYER_STARTING_HP), money(Player_STARTING_MONEY), pnjKilled(0) {}
+          isWinner(false), hp(PLAYER_STARTING_HP), money(PLAYER_STARTING_MONEY), pnjKilled(0) {}
 
 PlayerState::PlayerState(int _player_id, std::string _username, int _money, int _hp, bool _isSupported,
                          bool _isWinner, int _pnjKilled, int _team)

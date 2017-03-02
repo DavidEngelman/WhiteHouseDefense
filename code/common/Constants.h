@@ -12,7 +12,7 @@ static const int PNJ_STARTING_HEALTHPOINTS= 100;
 static const int PNJ_STARTING_MOVESPEED = 100;
 
 static const int  PLAYER_STARTING_HP =  100;
-static const int  Player_STARTING_MONEY = 500;
+static const int  PLAYER_STARTING_MONEY = 500;
 
 static const int PNJ_VALUE = 10;
 static const int PNJ_DAMAGE= 10;
