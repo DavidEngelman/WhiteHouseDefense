@@ -26,7 +26,7 @@ void ProfileManager::ProfileManagerProcess() {
         profileUI.display();
         choice = profileUI.select();
     }
-    MainManager * mainManager = new MainManager(server_ip_address, player_id, username, master_app);
+    MainManager * mainManager = new MainManager(5555,server_ip_address, player_id, username, master_app);
     master_app->transition(mainManager);
 }
 

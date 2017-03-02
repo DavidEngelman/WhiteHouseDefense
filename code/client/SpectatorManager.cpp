@@ -18,7 +18,7 @@ void SpectatorManager::run() {
     if (allGames.size() == 0){
         //Si y a pas de game a spectate -> on pleure
         spectatorUI.displaySorryMessage();
-        MainManager * mng = new MainManager(server_ip_address, player_id, player_usr_name, master_app);
+        MainManager * mng = new MainManager(5555,server_ip_address, player_id, player_usr_name, master_app);
         master_app->transition(mng);
 
     }

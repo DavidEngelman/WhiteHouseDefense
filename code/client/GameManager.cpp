@@ -16,7 +16,7 @@ GameManager::GameManager(char *ip_addr, int port, int socket, int id, std::strin
 }
 
 void GameManager::come_back_to_menu() { // À appeler quand la partie est terminée
-    MainManager *menu_manager = new MainManager(server_ip_address, player_id, player_username, master_app);
+    MainManager *menu_manager = new MainManager(5555,server_ip_address, player_id, player_username, master_app);
     master_app->transition(menu_manager);
 }
 

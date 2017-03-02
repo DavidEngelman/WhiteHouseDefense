@@ -36,7 +36,7 @@ void LoginManager::run() {
     //std::cout << "your id is" << success <<  std::endl;
 
     //MainManager mainManager(server_ip_address, stoi(success), master_app);
-    MainManager* mainManager = new MainManager(server_ip_address, stoi(success), loginCredentials.getUsername(), master_app);
+    MainManager* mainManager = new MainManager(5555, server_ip_address, stoi(success), loginCredentials.getUsername(), master_app);
     master_app->transition(mainManager);//On lance le jeu
 }
 

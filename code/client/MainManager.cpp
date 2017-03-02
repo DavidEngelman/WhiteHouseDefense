@@ -8,8 +8,8 @@
 
 const static std::string gameModes[3] = {CLASSIC_MODE, TIMED_MODE, TEAM_MODE};
 
-MainManager::MainManager(char* ip_addr, int id, std::string username, App* my_app) :
-    AbstractManager(ip_addr, my_app), player_id(id), username(username){}
+MainManager::MainManager(int port, char* ip_addr, int id, std::string username, App* my_app) :
+    NetworkedManager(port, ip_addr, my_app), player_id(id), username(username){}
 
 void MainManager::run() {
     mainUI.display();
@@ -45,6 +45,10 @@ void MainManager::run() {
         }
         default: {
             std::cout << "Exit !" << std::endl;
+            
+            //Tell the accountServer to revove this account from the connected accounts;
+            std::string message = "Exit," + std::to_string(player_id) + ";";
+            send_message(server_socket, message.c_str());
             break;
         }
     }
