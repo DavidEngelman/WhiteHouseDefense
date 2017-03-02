@@ -57,6 +57,8 @@ public:
 
     int numPlayersAlive();
 
+    void setGameMode(std::string _mode);
+
 
     void DecreasePlayerHp(PlayerState &player, int amount);
 

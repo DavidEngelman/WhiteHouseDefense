@@ -7,6 +7,8 @@
  * Constructor used to build the same map for the server and all the clients
  * because the server send the seed to all the players instead of sending the entire map
  */
+const static int PARTNERS[4] = {1, 0, 3, 2};
+
 Map::Map(unsigned seed) {
     srand(seed);
     generateRandomMatrix();
@@ -15,11 +17,11 @@ Map::Map(unsigned seed) {
 /*
  * Display the map on the screen using the gameState for drawing the towers and the pnjs
  */
-void Map::display(GameState& gameState, int quadrant) const {
+const void Map::display(GameState& gameState, int quadrant, std::string mode) const {
+
     std::vector<AbstractTower*> &towers = gameState.getTowers();
     std::vector<Wave> &waves = gameState.getWaves();
     system("clear");
-
     std::cout << "\t";
     for (int x = 0; x < SIZE; x++) {
         std::cout << x << " ";
@@ -45,11 +47,17 @@ void Map::display(GameState& gameState, int quadrant) const {
                     if (has_tower){
                         std::cout << TOWER;
                     } else {
-                        if (computeQuadrant(Position(x,y)) == quadrant){
-                            std::cout << GREEN_GRASS;
-                        }
-                        else{std::cout << GRASS;}
 
+                        if (computeQuadrant(Position(x,y)) == quadrant) {
+                            std::cout << GREEN_GRASS;
+                        } else{
+
+                            if ((mode == TEAM_MODE) && (PARTNERS[computeQuadrant(Position(x,y))] == quadrant)){
+                                std::cout << GRAY_GRASS;
+                            } else{
+                                std::cout << GRASS;
+                            }
+                        }
                     }
 
                     break;
@@ -150,7 +158,7 @@ void Map::generateQuarterMap(Position end) {
 /*
  * Return true if the cell of the matrix is next to more than 1 path cell
  */
-bool Map::isNextToPath(Position pos) {
+const bool Map::isNextToPath(Position pos) {
     int count = 0;
     if (matrix[pos.getY()+1][pos.getX()] == PATH_INT) count++;
     if (pos.getY() > 0 && matrix[pos.getY()-1][pos.getX()] == PATH_INT) count++;
@@ -174,14 +182,14 @@ void Map::copyQuarter() {
     }
 }
 
-bool Map::isPath(Position pos) const {
+const bool Map::isPath(Position pos) const {
     return matrix[pos.getY()][pos.getX()] == PATH_INT;
 }
 
 /*
  * This function return in which quadrant is the Position pos
  */
-int Map::computeQuadrant(Position pos) {
+const int Map::computeQuadrant(Position pos) {
     // The origin of the map is in the upper-left corner
     // The growing diagonal is : y = -x + size-1,
     // The decreasing diagonal is : y = x
