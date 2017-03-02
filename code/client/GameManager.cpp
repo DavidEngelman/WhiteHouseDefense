@@ -157,7 +157,8 @@ void GameManager::run() {
                 } else {
                     gameUI.display_dead_message();
                 }
-            }
+            } else
+                gameUI.displayInfoForSupporter(gameState);
         }
     }
     gameUI.displayGameOver(gameState);
