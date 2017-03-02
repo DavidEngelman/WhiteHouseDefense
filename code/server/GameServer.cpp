@@ -78,19 +78,16 @@ void GameServer::get_and_process_command(int client_socket_fd, char *buffer) {
 void GameServer::addTowerInGameState(TowerCommand &command) {
     AbstractTower * tower;
     int quadrant = command.getPlayerQuadrant();
-    if (command.getTowerType() == ATTACK_TOWER_STR){
-        AttackTower * attackTower = new AttackTower(command.getPosition());
+    if (command.getTowerType() == GUN_TOWER_STR){
+        AttackTower * attackTower = new GunTower(command.getPosition());
         tower = attackTower;
     }
     else {
-        // TODO: par défaut je mets une attacktower mais il faudra autre chose
-        AttackTower * attackTower = new AttackTower(command.getPosition());
+        // TODO: par défaut je mets une gunTower mais il faudra autre chose
+        AttackTower * attackTower = new GunTower(command.getPosition());
         tower = attackTower;
     }
-    // TODO: completer si plus tard on utilise la SlowTower
-    //else if (command.getTowerType() == SLOW_TOWER){
-      //  *tower = SlowTower
-    //}
+
     gameEngine->addTower(tower, quadrant);
 }
 
