@@ -15,9 +15,6 @@ private:
 
     std::string username;
 
-
-    std::string bool_to_string(bool my_bool);
-
 public:
 	PlayerState();
     PlayerState(int id, std::string username);

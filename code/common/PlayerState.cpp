@@ -1,4 +1,5 @@
 #include "PlayerState.hpp"
+#include "Tools.hpp"
 
 PlayerState::PlayerState() : money(PLAYER_STARTING_MONEY), hp(PLAYER_STARTING_HP), isSupported(false), pnjKilled(0) {}
 
@@ -12,11 +13,6 @@ PlayerState::PlayerState(int _player_id, std::string _username, int _money, int 
                          bool _isWinner, int _pnjKilled, int _team)
         : player_id(_player_id), username(_username), money(_money), hp(_hp), isSupported(_isSupported),
           isWinner(_isWinner), pnjKilled(_pnjKilled), team(_team) {}
-
-std::string PlayerState::bool_to_string(bool my_bool) {
-    return my_bool ? "true" : "false";
-}
-
 
 int PlayerState::getHp() {
     return hp;
