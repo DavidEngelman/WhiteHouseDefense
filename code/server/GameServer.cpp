@@ -288,8 +288,12 @@ void GameServer::getAndProcessSpectatorJoinCommand() {
             PlayerState& playerState = getPlayerStateWithUsername(username);
             playerState.setIsSupported(true);
 
-            supportersSockets.push_back(client_socket_fd);
             setupGameForPlayer(client_socket_fd, getQuadrantForPlayer(username));
+
+            // It's after the setup, because the supporter must first receive the game info before getting
+            // treated in the main loop
+            // TODO: peut etre utiliser ici un mutex pour éviter des problemes de coherence
+            supportersSockets.push_back(client_socket_fd);
         }
     }
 }
