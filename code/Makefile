@@ -21,7 +21,7 @@ CLIENTFILES = client/NetworkedManager.cpp client/ClientLauncher.cpp client/Login
                       common/Tools.cpp client/SpectatorManager.cpp client/SpectatorManager.hpp client/SpectatorUI.cpp\
                       client/SpectatorUI.hpp client/GameInfo.cpp common/GunTower.cpp
 
-WARNINGS =
+WARNINGS = -Wall -Wextra
 
 server: $(SERVERFILES)
 	g++ $(WARNINGS) -std=c++11 $(SERVERFILES) -o output/Server -pthread \
