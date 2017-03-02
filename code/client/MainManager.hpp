@@ -6,13 +6,13 @@
 #include "AbstractManager.h"
 #include "App.hpp"
 
-class MainManager : public AbstractManager {
+class MainManager : public NetworkedManager {
 
 private:
 	MainUI mainUI;
 
 public:
-	MainManager(int id, std::string username, App* my_app);
+	MainManager(int port, int id, std::string username, App* my_app);
 	MainManager(App* my_app);
 	void run() override;
 };
