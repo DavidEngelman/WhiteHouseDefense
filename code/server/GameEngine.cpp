@@ -197,7 +197,7 @@ void GameEngine::checkIfGameIsOver() {
         std::cout << "IS_OVER" << isOver;
     } else if (mode == TIMED_MODE) {
         std::cout << timerSinceGameStart.elapsedTimeInSeconds() << std::endl;
-        isOver = timerSinceGameStart.elapsedTimeInSeconds() > TIMED_GAME_INTERVAL;
+        isOver = timerSinceGameStart.elapsedTimeInSeconds() > TIMED_GAME_DURATION;
     } else if (mode == TEAM_MODE) {
         int numAlivePlayersInTeam1 = 0;
         int numAlivePlayersInTeam2 = 0;

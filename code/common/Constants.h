@@ -22,10 +22,9 @@ static const char WAVE[2] = "w";
 
 static const int GOLD_EARNED_BY_TICK= 1;
 
-// Ça doit être 100.0, sinon c'est une division entiere et le resultat est 0
 static const float PERCENTAGE_RECOVERED_MONEY= (const float) (50 / 100.0);
 
-const int ATTACK_TOWER_PRICE = 10;
+const int ATTACK_TOWER_PRICE = 50;
 const int ATTACK_TOWER_RANGE = 4;
 const int ATTACK_TOWER_DAMAGE = 20;
 

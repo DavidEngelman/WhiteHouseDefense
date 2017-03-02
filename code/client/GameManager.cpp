@@ -25,7 +25,7 @@ GameManager::GameManager(int socket, bool _isSupporter, App *app) :
 }
 
 void GameManager::come_back_to_menu() { // À appeler quand la partie est terminée
-    MainManager *menu_manager = new MainManager(master_app);
+    MainManager *menu_manager = new MainManager(5555, master_app);
     master_app->transition(menu_manager);
 }
 

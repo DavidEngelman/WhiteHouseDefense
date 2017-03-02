@@ -64,7 +64,7 @@ void FriendListManager::run() {
         choice = friendListUI.select();
 
     }
-    MainManager * mainManager = new MainManager(master_app);
+    MainManager * mainManager = new MainManager(5555, master_app);
     master_app->transition(mainManager);
 }
 
