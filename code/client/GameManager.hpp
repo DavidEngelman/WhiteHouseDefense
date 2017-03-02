@@ -7,8 +7,7 @@
 #include "GameManager.hpp"
 #include "../common/Networking.h"
 #include "MainManager.hpp"
-#include "../common/AttackTower.hpp"
-#include "../common/SlowTower.hpp"
+#include "../common/GunTower.hpp"
 #include <cstdlib>
 #include <cctype>
 #include <pthread.h>

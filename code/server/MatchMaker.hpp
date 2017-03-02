@@ -7,6 +7,8 @@
 #include "../common/Strings.hpp"
 #include "PlayerConnection.hpp"
 #include "GameServer.hpp"
+#include <thread>
+#include "GameServer.hpp"
 
 class MatchMaker : public Server {
 

@@ -30,6 +30,6 @@ static const std::string SUPPORT_PLAYER_STRING = "SupportPlayer";
 #define GET_PROFILE "getProfileByUsername;"
 
 
-#define ATTACK_TOWER_STR "AttackTower"
+#define GUN_TOWER_STR "GunTower"
 
 #endif //PROJET_STRINGS_HPP

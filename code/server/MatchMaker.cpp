@@ -1,6 +1,5 @@
-#include <thread>
 #include "MatchMaker.hpp"
-#include "GameServer.hpp"
+
 
 MatchMaker::MatchMaker(int port) : Server(port),
                                    classicPendingMatch(PendingMatch(CLASSIC_MODE)),

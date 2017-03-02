@@ -1,6 +1,5 @@
 #include <string>
-#define STARTING_HP 100
-#define STARTING_MONEY 500
+#include "../common/Constants.h"
 
 class PlayerState {
 
@@ -15,9 +14,6 @@ private:
 	int player_id;
 
     std::string username;
-
-
-    std::string bool_to_string(bool my_bool);
 
 public:
 	PlayerState();

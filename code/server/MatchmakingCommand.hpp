@@ -4,6 +4,7 @@
 
 #include "Command.hpp"
 #include "PendingMatch.h"
+#include <cstdlib>
 
 class MatchmakingCommand : Command {
 private:
