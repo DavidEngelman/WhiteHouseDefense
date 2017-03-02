@@ -69,19 +69,17 @@ int SpectatorManager::createGameInfo(const std::string &message, int &i) {
     i++;
 
     //extract players
-    while (message[i] != ';') {
-
-        if (message[i] != ',') {
+    for (int j = 0; j < 4; ++j) {
+        while ((message[i] != ';') && (message[i] != ',')) {
             str_player += message[i];
             i++;
-        } else {
-            gameInfo.getPlayers().push_back(str_player);
-            i++;
-            str_player = "";
         }
-
-
+        gameInfo.getPlayers().push_back(str_player);
+        i++;
+        str_player = "";
     }
+
+
     i++;
 //"5557,classic,bibi,baba,bobo,bubu;5558,classic,lala,lili,lolo,lele;"
 
