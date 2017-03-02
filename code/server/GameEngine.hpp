@@ -11,7 +11,7 @@
 static const int STEP_DURATION_IN_MS = 1000;
 static const int INITIAL_NUMBER_OF_PNJS_PER_WAVE = 5;
 
-const int TIMED_GAME_INTERVAL = 2; // 2 minutes
+const int TIMED_GAME_DURATION = 120; // 2 minutes
 
 class GameEngine {
 
