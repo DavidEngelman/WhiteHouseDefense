@@ -1,17 +1,17 @@
 #include <assert.h>
 #include "GameLauncher.hpp"
-#include "../common/Strings.hpp"
 #include "GameManager.hpp"
 
-GameLauncher::GameLauncher(int port, char *address, int id, std::string name, App* app, std::string _mode) :
-        NetworkedManager(port, address, app), player_id(id), player_name(name), mode(_mode) {}
+GameLauncher::GameLauncher(int port, App* app, std::string _mode) :
+        NetworkedManager(port, app), mode(_mode) {}
 
 void GameLauncher::sendJoinRequest() {
 
     /* Partie 1: envoyer demanded pour rejoindre le jeu */
     char server_response[20] = "HOHOHOHOHOHOHOHOHOH";
 
-    std::string message = mode + "," + std::to_string(player_id) + "," + player_name + ";";
+    std::string message = mode + "," + std::to_string(master_app->get_id()) +
+            "," + master_app->get_username() + ";";
     send_message(server_socket, message.c_str());
     std::cout << "In Queue... avec le socket " << server_socket << std::endl;
 
@@ -25,7 +25,7 @@ void GameLauncher::sendJoinRequest() {
     receive_data(server_socket, &game_port, sizeof(int));
 
     std::cout << "Game start" << std::endl;
-    GameManager* manager = new GameManager(server_ip_address, game_port, server_socket, player_id, player_name, master_app);
+    GameManager* manager = new GameManager(server_socket, master_app);
     master_app->transition(manager);
 }
 

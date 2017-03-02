@@ -14,12 +14,10 @@
 class ProfileManager : public NetworkedManager {
 
 private:
-    int player_id;
 	ProfileUI profileUI;
-	std::string username;
 
 public:
-	ProfileManager(int port, char* address, int id, std::string username, App* my_app);
+	ProfileManager(int port, App* my_app);
 	void ProfileManagerProcess();
 	std::string getProfile(std::string username);
 	void run() override;

@@ -1,7 +1,7 @@
 
 #include "LoginManager.hpp"
 
-LoginManager::LoginManager(int port, char* address, App* my_app): NetworkedManager(port, address, my_app) {}
+LoginManager::LoginManager(int port, App* my_app): NetworkedManager(port, my_app) {}
 
 void LoginManager::run() {
     std::string success = "-1"; // En fait success contiendra soit -1 si la co a échouée soit l'id du joueur si ca a réussi
@@ -36,7 +36,7 @@ void LoginManager::run() {
     //std::cout << "your id is" << success <<  std::endl;
 
     //MainManager mainManager(server_ip_address, stoi(success), master_app);
-    MainManager* mainManager = new MainManager(server_ip_address, stoi(success), loginCredentials.getUsername(), master_app);
+    MainManager* mainManager = new MainManager(5555, stoi(success), loginCredentials.getUsername(), master_app);
     master_app->transition(mainManager);//On lance le jeu
 }
 

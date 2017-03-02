@@ -248,12 +248,13 @@ void AccountServer::get_and_process_command(int client, char* message_buffer) {
 
     while (!ok) {
         bool success = receive_message_with_timeout(client, message_buffer, 300);
-        std::cout <<  "1 message: " << message_buffer << std::endl;
         if (!success) {
             return;
         }
-
-        std::string command_type = get_command_type(message_buffer);
+        
+        Command command;
+        command.parse(message_buffer);
+        std::string command_type = command.getAction();
 
         if ((command_type == "login") || (command_type == "register")) {
 
@@ -318,9 +319,11 @@ void AccountServer::get_and_process_command(int client, char* message_buffer) {
             }
 
         } else if (command_type == "Update"){
-            std::cout << "ok Update" << std::endl;
             ok = handle_accountUpdate(client);
 
+        } else if(command_type == "Exit"){
+            int id = stoi(command.getNextToken());
+            ok = handle_exit(id);
         }
     }
 }
@@ -336,6 +339,20 @@ void AccountServer::add_connected_player(PlayerConnection& player) {
 
 bool AccountServer::is_player_already_connected(PlayerConnection& player){
     return (std::find(connectedPlayers.begin(), connectedPlayers.end(), player) != connectedPlayers.end());
+}
+
+/*
+ *Remove a player from the connected players (using his ID as identifier)
+*/
+bool AccountServer::handle_exit(int player_id){
+    
+    std::vector<PlayerConnection>::iterator iter;
+    for (iter = connectedPlayers.begin(); iter != connectedPlayers.end(); iter++){
+        if ((*iter).getPlayer_id() == player_id) {
+            connectedPlayers.erase(iter);
+            break;
+        }
+    }
 }
 
 

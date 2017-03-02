@@ -17,7 +17,7 @@ private:
 
 public:
 
-	RegisterManager(int port, char* address, App* my_app);
+	RegisterManager(int port, App* my_app);
 
 	bool attemptRegister(Credentials credentials);
 	bool checkCredentialsValidity(Credentials credentials);

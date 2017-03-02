@@ -33,10 +33,9 @@ public:
     void *client_handler(int client_sock);
 
     const std::vector<PlayerConnection> &getConnectedPlayers() const;
-
     bool is_player_already_connected(PlayerConnection& player);
-
     void add_connected_player(PlayerConnection& player);
+    bool handle_exit(int player_id);
 
     AccountServer(int port, const char *databaseName);
 

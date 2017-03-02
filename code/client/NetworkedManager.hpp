@@ -24,7 +24,7 @@ protected:
 
 public:
 
-    NetworkedManager(int port, char* adress, App* my_app);
+    NetworkedManager(int port, App* my_app);
 
     ~NetworkedManager();
 

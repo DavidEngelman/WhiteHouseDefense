@@ -1,32 +1,7 @@
 #include "RegisterManager.hpp"
 
-RegisterManager::RegisterManager(int port, char* address, App* my_app):
-        NetworkedManager(port, address, my_app) {};
-
-/*void RegisterManager::registerUser() {
-    bool correctCredentials = false;
-    while( !correctCredentials ){
-        registerUI.display();
-        toRegister.setUsername(registerUI.get_username_entry());
-        toRegister.setPassword(registerUI.get_password_entry());
-
-        if (checkCredentialsValidity(toRegister)) {
-            correctCredentials = true;
-        }
-        else{
-            registerUI.displayError();
-        }
-    }
-
-    if (attemptRegister(toRegister)){
-        std::cout<< "Your account was successfully registered, you can now login normally.\n";
-        LoginManager loginManager(port, server_ip_address); // On crée un loginManager pour qu'il puisse se connecter
-
-    }else{
-        registerUI.displayError();
-    }
-
-}*/
+RegisterManager::RegisterManager(int port, App* my_app):
+        NetworkedManager(port, my_app) {};
 
 void RegisterManager::run() {
     bool success = false;
@@ -52,7 +27,7 @@ void RegisterManager::run() {
     }
 
     std::cout<< "Your account was successfully registered, you can now login normally.\n";
-    LoginManager * loginManager = new LoginManager(port, server_ip_address, master_app);
+    LoginManager * loginManager = new LoginManager(port, master_app);
     master_app->transition(loginManager);
 }
 
@@ -62,10 +37,7 @@ bool RegisterManager::attemptRegister(Credentials credentials){
     send_message(server_socket, message.c_str());
     receive_message(server_socket,server_response);
 
-    if (server_response[0] == '1') {
-        return true;
-    }
-    return false;
+    return server_response[0] == '1';
 }
 
 
