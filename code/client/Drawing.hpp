@@ -6,6 +6,7 @@
 class Drawing {
 public:
     static void drawWhiteHouse(std::string title);
+    static void drawTitleGameType(std::string gameType);
 };
 
 
