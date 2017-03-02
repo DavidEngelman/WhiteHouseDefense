@@ -107,8 +107,8 @@ void GameUI::displayGameOver(GameState &gamestate) {
         std::cout << "   " << "Username : " + player.getUsername() <<" | NPC killed : "
                   << player.getPnjKilled()<<" ";
 
-        std:: string winner_or_looser = player.getIsWinner() ? "| WINNER" : "| LOSER";
-        std::cout << winner_or_looser << std::endl;
+        std::string winner_or_loser = player.getIsWinner() ? "| WINNER" : "| LOSER";
+        std::cout << winner_or_loser << std::endl;
     }
 
     int dummy;
