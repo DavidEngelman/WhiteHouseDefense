@@ -6,27 +6,18 @@
 #include "PNJ.hpp"
 #include "../common/Constants.h"
 
-// TODO: mettre des vraies valeurs
-// Je pense que ces différentes valeurs devraient être des attributs qui ne sont pas constants
-// vu qu'on devra pouvoir faire des updates des tours et donc augmenter ou diminuer ces valeurs
-
-
 class AttackTower : public AbstractTower {
+    int damage;
 
 public:
 
-    AttackTower(Position position);
+    AttackTower(Position position, int damage, int price, float range);
 
     ~AttackTower() = default;
 
     int getDamageAmount() const;
 
-    virtual bool shoot(Wave &wave) override;
-
     virtual void dealDamageTo(PNJ &pnj);
-
-    virtual std::string serialize() override;
-
 };
 
 #endif //PROJET_ATTACKTOWER_H
