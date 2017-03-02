@@ -7,6 +7,7 @@ MatchMaker::MatchMaker(int port) : Server(port),
                                    timedPendingMatch(PendingMatch(TIMED_MODE)),
                                    teamPendingMatch(PendingMatch(TEAM_MODE)),
                                    current_server_port(5556){
+
     std::cout << "Constructor" << std::endl;
 };
 
