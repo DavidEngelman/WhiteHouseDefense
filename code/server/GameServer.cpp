@@ -279,7 +279,7 @@ void GameServer::getAndProcessSpectatorJoinCommand() {
         char command_buffer[BUFFER_SIZE];
         receive_message(socket_fd, command_buffer);
 
-        /* Structure of command: "SUPPORT_PLAYER,bob;" */
+        /* Structure of command: "SUPPORT_PLAYER_STRING,bob;" */
         Command command;
         command.parse(command_buffer);
 

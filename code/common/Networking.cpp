@@ -148,6 +148,9 @@ int create_socket() {
 
 }
 
+/*
+ * Returns the socket_fd created by the connect call.
+ */
 int connect_to_server(int socket, int port, struct hostent *addr) {
     struct sockaddr_in their_addr;
 
