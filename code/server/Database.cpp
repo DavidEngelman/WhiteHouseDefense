@@ -23,14 +23,15 @@ int Database::open() {
 
 }
 
-void Database::exec(const char *query, int (*callback)(void*,int,char**,char**), void * data, char * ErrMsg ) {
+int Database::exec(const char *query, int (*callback)(void*,int,char**,char**), void * data, char * ErrMsg ) {
 
     rc = sqlite3_exec(db, query, callback, data, &ErrMsg);
     if( rc != SQLITE_OK ){
         fprintf(stderr, "SQL error: %s\n", ErrMsg);
         sqlite3_free(ErrMsg);
+        return -1;
     }
-
+    return 0;
 }
 
 int Database::callback_ranking(void *ptr, int argc, char **argv, char **azColName){
@@ -85,9 +86,8 @@ int Database::insert_account(Credentials credentials) {
 
     char* query = (char *) command.c_str();
 
-    exec(query, NULL, 0, zErrMsg);
+    return exec(query, NULL, 0, zErrMsg);
 
-    return 0;
 }
 
 int Database::get_nb_entries() {
@@ -170,9 +170,8 @@ int Database::sendFriendRequest(std::string username, std::string toAdd) {
 
     char* query = (char *) command.c_str();
 
-    exec(query, NULL, 0, zErrMsg);
+    return exec(query, NULL, 0, zErrMsg);
 
-    return 0;
 }
 
 
@@ -190,9 +189,7 @@ int Database::acceptFriendRequest(std::string username, std::string toAccept) {
 
     char* query = (char *) command.c_str();
 
-    exec(query, NULL, 0, zErrMsg);
-
-    return 0;
+    return exec(query, NULL, 0, zErrMsg);
 }
 
 int Database::removeFriend(std::string username, std::string toRemove){
@@ -204,8 +201,7 @@ int Database::removeFriend(std::string username, std::string toRemove){
 
     char* query = (char *) command.c_str();
 
-    exec(query, NULL, 0, zErrMsg);
-    return 0;
+    return exec(query, NULL, 0, zErrMsg);
 }
 
 int Database::declineFriendRequest(std::string username, std::string toDecline) {
@@ -223,8 +219,7 @@ int Database::declineFriendRequest(std::string username, std::string toDecline) 
 
     char* query = (char *) command.c_str();
 
-    exec(query, NULL, 0, zErrMsg);
-    return 0;
+    return exec(query, NULL, 0, zErrMsg);
 }
 
 std::vector<std::string> Database::getFriendList(std::string username){

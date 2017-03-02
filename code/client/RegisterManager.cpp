@@ -36,7 +36,6 @@ bool RegisterManager::attemptRegister(Credentials credentials){
     std::string message = "register," + credentials.getUsername() + "," + credentials.getPassword() + ";";
     send_message(server_socket, message.c_str());
     receive_message(server_socket,server_response);
-
     return server_response[0] == '1';
 }
 
