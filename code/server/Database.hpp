@@ -43,7 +43,7 @@ public:
     static int callback_FriendList(void *ptr, int argc, char **argv, char **azColName);
 
     int open();
-    void exec(const char *query, int (*callback)(void*,int,char**,char**), void * data, char * ErrMsg );
+    int exec(const char *query, int (*callback)(void*,int,char**,char**), void * data, char * ErrMsg );
     int insert_account(Credentials credentials);
     int get_nb_entries();
     bool is_identifiers_valid(Credentials credentials);

@@ -127,7 +127,7 @@ void GameUI::display_dead_message() {
     std::cout << "You are dead. You can now watch the game peacefully" << std::endl;
 }
 
-void GameUI::displayerPlayersPlacingTowersMessage() {
+void GameUI::displayPlayersPlacingTowersMessage() {
     std::cout << "Please wait. The remaining players are placing towers" << std::endl;
 }
 

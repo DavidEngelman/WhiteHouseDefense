@@ -23,7 +23,7 @@ protected:
 
 public:
 
-    AbstractTower(Position position, int price, int radius);
+    AbstractTower(Position position, int price, float range);
 
     int getQuadrant() const;
 
@@ -34,8 +34,6 @@ public:
     virtual ~AbstractTower() = default;
 
     virtual bool shoot(Wave& wave) = 0; // HAS TO BE DEFINED BY INHERITORS
-
-    PNJ* get_closest_pnj(Wave& wave);
 
     int getOwner() const;
     void setOwner(int newOwner);

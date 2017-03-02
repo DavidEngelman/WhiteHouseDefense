@@ -4,21 +4,20 @@
 #include "../server/Server.hpp"
 
 
-//NetworkedManager(port, ip_addr, app)
-GameManager::GameManager(char *ip_addr, int port, int socket, int id, std::string username, App *app) :
-        AbstractManager(ip_addr, app),
+GameManager::GameManager(int socket, App *app) :
+        AbstractManager(app),
         server_socket(socket),
-        player_id(id), player_username(username), isSupporter(false),
+        isSupporter(false),
         gameUI(getMapSeedFromServer()), // L'ordre est important parce qu'on fait des
         quadrant(getQuadrantFromServer()) // recv. Ne pas changer l'ordre!
 {
     getInitialGameStateFromServer();
 }
 
-GameManager::GameManager(char *ip_addr, int port, int socket, int id, std::string username, bool _isSupporter, App *app) :
-        AbstractManager(ip_addr, app),
+GameManager::GameManager(int socket, bool _isSupporter, App *app) :
+        AbstractManager(app),
         server_socket(socket),
-        player_id(id), player_username(username), isSupporter(_isSupporter),
+        isSupporter(_isSupporter),
         gameUI(getMapSeedFromServer()), // L'ordre est important parce qu'on fait des
         quadrant(getQuadrantFromServer()) // recv. Ne pas changer l'ordre!
 {
@@ -26,7 +25,7 @@ GameManager::GameManager(char *ip_addr, int port, int socket, int id, std::strin
 }
 
 void GameManager::come_back_to_menu() { // À appeler quand la partie est terminée
-    MainManager *menu_manager = new MainManager(server_ip_address, player_id, player_username, master_app);
+    MainManager *menu_manager = new MainManager(5555, master_app);
     master_app->transition(menu_manager);
 }
 
@@ -45,8 +44,8 @@ void *GameManager::input_thread() {
             Position towerPos = gameUI.getPosBuyingTower();
             if (checkValidity(towerPos, gameState)) {
                 if (towerchoice == 1) {
-                    gameState.addTower(new AttackTower(Position(towerPos.getX(), towerPos.getY())), quadrant);
-                    sendBuyRequest(towerPos, "AttackTower");
+                    gameState.addTower(new GunTower(Position(towerPos.getX(), towerPos.getY())), quadrant);
+                    sendBuyRequest(towerPos, "GunTower");
                 } // else if another type of tower
             }
         }else if (choice == 2){
@@ -83,7 +82,8 @@ void *GameManager::staticInputThread(void *self){
  */
 bool GameManager::checkValidity(Position towerPos, GameState& gamestate) {
     bool validity = true;
-    if (gameState.getPlayerStates()[quadrant].getMoney()  < ATTACK_TOWER_PRICE) { // if player has enough money
+    //TODO: changer le GUN_TOWER_PRICE par un paramètre tower et un getPrice() car plusieurs type de tours
+    if (gameState.getPlayerStates()[quadrant].getMoney()  < GUN_TOWER_PRICE) { // if player has enough money
         validity = false;
     } else if (isTowerInPosition(gamestate, towerPos)) { // if a tower isn't already there
         validity = false;
@@ -133,7 +133,7 @@ void GameManager::run() {
                 gameUI.display(gameState, quadrant);
 
                 if (isSupporter) {
-                    gameUI.displayerPlayersPlacingTowersMessage();
+                    gameUI.displayPlayersPlacingTowersMessage();
                 } else {
                     gameUI.display_dead_message();
                 }
@@ -301,7 +301,8 @@ void GameManager::unSerializeTower(std::string serialized_tower) {
     }
 
     AbstractTower *tower;
-    tower = new AttackTower(Position(x,y)); // Faire avec un if, else if, else sur typeOfTower quand + de tours
+    if (typeOfTower == "GunTower") tower = new GunTower(Position(x, y));
+    else tower = new GunTower(Position(x, y)); //TODO:à remplacer par un autre type de tour
 
     gameState.addTower(tower, quadrant);
 }
@@ -377,7 +378,7 @@ bool GameManager::is_alive() {
 
     bool alive = false;
     for( PlayerState& playerState : gameState.getPlayerStates()){
-        if (playerState.getPlayer_id() == player_id){
+        if (playerState.getPlayer_id() == master_app->get_id()){
             if (playerState.getHp() > 0){
                 alive = true;
                 break;

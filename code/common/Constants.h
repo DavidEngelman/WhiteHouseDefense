@@ -13,6 +13,9 @@ static const std::string QUADRANT_NAMES[4] = {"NORTH", "EAST", "SOUTH", "WEST"};
 static const int PNJ_STARTING_HEALTHPOINTS= 100;
 static const int PNJ_STARTING_MOVESPEED = 100;
 
+static const int  PLAYER_STARTING_HP =  100;
+static const int  PLAYER_STARTING_MONEY = 200;
+
 static const int PNJ_VALUE = 10;
 static const int PNJ_DAMAGE= 10;
 
@@ -21,11 +24,10 @@ static const char WAVE[2] = "w";
 
 static const int GOLD_EARNED_BY_TICK= 1;
 
-// Ça doit être 100.0, sinon c'est une division entiere et le resultat est 0
 static const float PERCENTAGE_RECOVERED_MONEY= (const float) (50 / 100.0);
 
-const int ATTACK_TOWER_PRICE = 10;
-const int ATTACK_TOWER_RANGE = 4;
-const int ATTACK_TOWER_DAMAGE = 20;
+const int GUN_TOWER_PRICE = 50;
+const int GUN_TOWER_RANGE = 4;
+const int GUN_TOWER_DAMAGE = 20;
 
 #endif //PROJET_CONSTANTS_H

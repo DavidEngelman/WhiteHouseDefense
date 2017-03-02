@@ -78,19 +78,16 @@ void GameServer::get_and_process_command(int client_socket_fd, char *buffer) {
 void GameServer::addTowerInGameState(TowerCommand &command) {
     AbstractTower * tower;
     int quadrant = command.getPlayerQuadrant();
-    if (command.getTowerType() == ATTACK_TOWER_STR){
-        AttackTower * attackTower = new AttackTower(command.getPosition());
+    if (command.getTowerType() == GUN_TOWER_STR){
+        AttackTower * attackTower = new GunTower(command.getPosition());
         tower = attackTower;
     }
     else {
-        // TODO: par défaut je mets une attacktower mais il faudra autre chose
-        AttackTower * attackTower = new AttackTower(command.getPosition());
+        // TODO: par défaut je mets une gunTower mais il faudra autre chose
+        AttackTower * attackTower = new GunTower(command.getPosition());
         tower = attackTower;
     }
-    // TODO: completer si plus tard on utilise la SlowTower
-    //else if (command.getTowerType() == SLOW_TOWER){
-      //  *tower = SlowTower
-    //}
+
     gameEngine->addTower(tower, quadrant);
 }
 
@@ -138,7 +135,7 @@ void GameServer::run() {
     runGame();
     stopSpectatorThread();
     // TODO:
-    // tellMatchMakerThatTheGameIsOver();
+    sendFinishedToMatchmaker(); // tell to the matchmaker that the game is finished
 }
 
 void GameServer::startSpectatorThread() {
@@ -239,13 +236,19 @@ void GameServer::handleEndOfGame() {
 
 
 
-int GameServer::connectToAccountServer() {
-    return init_connection_to_server((char*) "127.0.0.1", 5555); //Faudrait mettre des constantes :)
+int GameServer::connectToServer(int port) {
+    return init_connection_to_server((char*) "127.0.0.1", port); //Faudrait mettre des constantes :)
 
 }
 
+void GameServer::sendFinishedToMatchmaker() {
+    int account_server_socket = connectToServer(5556);
+    std::string message = "PopGame," + std::to_string(port) + ";" ;
+    send_message(account_server_socket, message.c_str());
+}
+
 void GameServer::updatePlayerStatsOnAccountServer() {
-    int account_server_socket = connectToAccountServer();
+    int account_server_socket = connectToServer(5555);
     int p_id, pnj_killed;
     bool is_winner;
 
