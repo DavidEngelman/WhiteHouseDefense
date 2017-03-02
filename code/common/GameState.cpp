@@ -103,10 +103,8 @@ bool GameState::isPlayerAlive(const int quadrant) {
 }
 
 void GameState::addTower(AbstractTower *tower, int &quadrant) {
-    std::cout << "adding tower " << quadrant << std::endl;
     player_states[quadrant].spendMoney(tower->getPrice());
     towers.push_back(tower);
-    std::cout << "added tower" <<std::endl;
 }
 
 void GameState::deleteTower(Position& position, int& quadrant){

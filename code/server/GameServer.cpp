@@ -76,7 +76,6 @@ void GameServer::addTowerInGameState(TowerCommand &command) {
     AbstractTower * tower;
     int quadrant = command.getPlayerQuadrant();
     if (command.getTowerType() == GUN_TOWER_STR){
-        std::cout << "building tower" << std::endl;
         AttackTower * attackTower = new GunTower(command.getPosition());
         tower = attackTower;
     }

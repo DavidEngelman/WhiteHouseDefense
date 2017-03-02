@@ -30,6 +30,7 @@ void GameManager::come_back_to_menu() { // À appeler quand la partie est termin
 }
 
 void *GameManager::input_thread() {
+    //TODO: diviser cette méthode en plusieurs plus petites pcq la c'est pas très lisible
 
     while (1) {
         gameUI.displayPosingPhase();
@@ -45,7 +46,6 @@ void *GameManager::input_thread() {
             if (checkValidity(towerPos, gameState)) {
                 if (towerchoice == 1) {
                     gameState.addTower(new GunTower(Position(towerPos.getX(), towerPos.getY())), quadrant);
-                    std::cout << "Moneyyy: "<< gameState.getPlayerStates()[quadrant].getMoney() << std::endl;
                     sendBuyRequest(towerPos, "GunTower");
                 } // else if another type of tower
             }

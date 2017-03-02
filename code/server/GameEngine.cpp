@@ -169,7 +169,6 @@ void GameEngine::addTower(AbstractTower *tower, int quadrant) {
         if (gameState.getPlayerStates()[quadrant].getMoney() >=
             tower->getPrice()) {
             gameState.addTower(tower, quadrant);
-            std::cout <<"serialized: " <<*gameState.serialize() << std::endl;
         }
     } else {
         gameState.addTower(tower, quadrant);
