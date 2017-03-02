@@ -16,6 +16,8 @@ void GameState::IncreasePlayerHp(PlayerState &player, int amount) { //TODO idem 
 std::string* GameState::serialize() {
     std::string * serialized_me = new std::string();
 
+    *serialized_me += mode + "!";
+
     *serialized_me += bool_to_string(isGameOver) + "!";
 
     for (PlayerState & pstate: player_states) {
@@ -143,6 +145,10 @@ std::string &GameState::getMode() {
 
 void GameState::addPlayerState(PlayerState& state) {
     player_states.push_back(state);
+}
+
+void GameState::setGameMode(std::string _mode) {
+    mode = _mode;
 }
 
 

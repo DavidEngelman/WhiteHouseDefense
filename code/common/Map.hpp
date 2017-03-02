@@ -5,6 +5,8 @@
 
 #define GRASS "◼  "
 #define GREEN_GRASS "\033[32m◼\033[0m  "
+#define GRAY_GRASS "\033[35m◼\033[0m  "
+
 #define PATH "   "
 #define LIMIT "\033[34m◼\033[0m  "
 #define TOWER "\033[31m♜\033[0m  "
@@ -48,7 +50,7 @@ private:
 
 public:
     Map(unsigned seed);
-    const void display(GameState& gameState, int quadrant) const;
+    const void display(GameState& gameState, int quadrant, std::string mode) const;
     const bool isPath(Position pos) const;
     static const int computeQuadrant(Position pos);
 };
