@@ -257,8 +257,10 @@ void GameEngine::declareWinnerTeam() {
         }
     }
 
-    int winnerTeam = (numPlayersAliveInTeam1 > 0) ? 1 : 2;
+    // If both team lose at the same time, no one wins
+    if (numPlayersAliveInTeam1 == 0 && numPlayersAliveInTeam2 == 0) return;
 
+    int winnerTeam = (numPlayersAliveInTeam1 > 0) ? 1 : 2;
     for (auto &player : gameState.getPlayerStates()) {
         if (player.getTeam() == winnerTeam) {
             player.setIsWinner(true);
