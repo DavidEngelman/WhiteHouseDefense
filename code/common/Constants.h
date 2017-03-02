@@ -11,6 +11,9 @@ static const std::string QUADRANT_NAMES[4] = {"NORTH", "EAST", "SOUTH", "WEST"};
 static const int PNJ_STARTING_HEALTHPOINTS= 100;
 static const int PNJ_STARTING_MOVESPEED = 100;
 
+static const int  STARTING_HP =  100;
+static const int  STARTING_MONEY = 500;
+
 static const int PNJ_VALUE = 10;
 static const int PNJ_DAMAGE= 10;
 

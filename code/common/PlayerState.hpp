@@ -1,6 +1,5 @@
 #include <string>
-#define STARTING_HP 100
-#define STARTING_MONEY 500
+#include "../common/Constants.h"
 
 class PlayerState {
 
