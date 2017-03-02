@@ -18,7 +18,7 @@ void SpectatorManager::run() {
     if (allGames.size() == 0) {
         //Si y a pas de game a spectate -> on pleure
         spectatorUI.displaySorryMessage();
-        MainManager *mng = new MainManager(master_app);
+        MainManager *mng = new MainManager(5555, master_app);
         master_app->transition(mng);
     } else {
         //Selection de la partie et du jouer a support

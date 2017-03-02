@@ -12,8 +12,7 @@ private:
 	MainUI mainUI;
 
 public:
-	MainManager(int port, int id, std::string username, App* my_app);
-	MainManager(App* my_app);
+	MainManager(int port, App* my_app);
 	void run() override;
 };
 

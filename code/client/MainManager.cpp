@@ -8,12 +8,7 @@
 
 const static std::string gameModes[3] = {CLASSIC_MODE, TIMED_MODE, TEAM_MODE};
 
-MainManager::MainManager(int port, int id, std::string username, App* my_app) : NetworkedManager(port, my_app) {
-    my_app->set_id(id);
-    my_app->set_username(username);
-}
-
-MainManager::MainManager(App *my_app) : NetworkedManager(port, my_app) {}
+MainManager::MainManager(int port, App* my_app) : NetworkedManager(port, my_app) {}
 
 void MainManager::run() {
     mainUI.display();
