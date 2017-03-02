@@ -137,6 +137,8 @@ void GameServer::run() {
     startSpectatorThread();
     runGame();
     stopSpectatorThread();
+    // TODO:
+    // tellMatchMakerThatTheGameIsOver();
 }
 
 void GameServer::startSpectatorThread() {
@@ -275,21 +277,27 @@ void *GameServer::staticJoinSpectatorThread(void * self) {
 void GameServer::getAndProcessSpectatorJoinCommand() {
     while (1) {
         int client_socket_fd = accept_connection();
+        std::cout << "Accepted new supporter connection with socket" << client_socket_fd << std::endl;
 
         char command_buffer[BUFFER_SIZE];
-        receive_message(socket_fd, command_buffer);
+        receive_message(client_socket_fd, command_buffer);
 
-        /* Structure of command: "SUPPORT_PLAYER,bob;" */
+        /* Structure of command: "SUPPORT_PLAYER_STRING,bob;" */
         Command command;
         command.parse(command_buffer);
 
         if (command.getAction() == SUPPORT_PLAYER_STRING) {
             std::string username = command.getNextToken();
+            std::cout << "New spectator for " << username << std::endl;
             PlayerState& playerState = getPlayerStateWithUsername(username);
             playerState.setIsSupported(true);
 
-            supportersSockets.push_back(client_socket_fd);
             setupGameForPlayer(client_socket_fd, getQuadrantForPlayer(username));
+
+            // It's after the setup, because the supporter must first receive the game info before getting
+            // treated in the main loop
+            // TODO: peut etre utiliser ici un mutex pour éviter des problemes de coherence
+            supportersSockets.push_back(client_socket_fd);
         }
     }
 }

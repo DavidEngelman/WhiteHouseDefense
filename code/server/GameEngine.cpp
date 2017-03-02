@@ -202,8 +202,8 @@ void GameEngine::checkIfGameIsOver() {
         int numAlivePlayersInTeam1 = 0;
         int numAlivePlayersInTeam2 = 0;
         for (PlayerState &playerState: getGameState().getPlayerStates()) {
-            if (playerState.getTeam() == 1) numAlivePlayersInTeam1++;
-            else if (playerState.getTeam() == 2) numAlivePlayersInTeam2++;
+            if (playerState.getTeam() == 1 && playerState.isAlive()) numAlivePlayersInTeam1++;
+            else if (playerState.getTeam() == 2 && playerState.isAlive()) numAlivePlayersInTeam2++;
         }
 
         isOver = ((numAlivePlayersInTeam1 == 0) || (numAlivePlayersInTeam2 == 0));

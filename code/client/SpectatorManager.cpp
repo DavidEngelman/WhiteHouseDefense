@@ -1,7 +1,7 @@
 #include "SpectatorManager.hpp"
 
 
-SpectatorManager::SpectatorManager(int port, char* address, int id, std::string username, App* master_app) :
+SpectatorManager::SpectatorManager(int port, char *address, int id, std::string username, App *master_app) :
         NetworkedManager(port, address, master_app), player_id(id), player_usr_name(username) {}
 
 void SpectatorManager::getGamesFromMatchMaker() {
@@ -15,26 +15,31 @@ void SpectatorManager::getGamesFromMatchMaker() {
 void SpectatorManager::run() {
     getGamesFromMatchMaker();
 
-    if (allGames.size() == 0){
+    if (allGames.size() == 0) {
         //Si y a pas de game a spectate -> on pleure
         spectatorUI.displaySorryMessage();
-        MainManager * mng = new MainManager(server_ip_address, player_id, player_usr_name, master_app);
+        MainManager *mng = new MainManager(server_ip_address, player_id, player_usr_name, master_app);
         master_app->transition(mng);
-
-    }
-    else{
+    } else {
         //Selection de la partie et du jouer a support
         spectatorUI.displaySpectatorUI(allGames);
-        int gameSelected = spectatorUI.gameSelection(allGames.size());
+        int gameSelected = spectatorUI.gameSelection((int) allGames.size());
         int gamePort = allGames[gameSelected].getPort();
         std::string playerToSupport = spectatorUI.playerSelection(allGames[gameSelected]);
 
-        //Lancement du bordel
-        //TODO j'ai pas trop compris ce qu'il faut faire à ce moment précis :(
 
-        /*GameManager *gameManager = new GameManager(server_ip_address,gamePort,server_socket,
-                                                   player_id, player_usr_name, master_app);*/
-        //master_app->transition(gameManager);
+        /* On dit au gameServer qu'on veut etre spectateur */
+        int game_server_socket_fd = init_connection_to_server(server_ip_address, gamePort);
+
+        // Structure of command: "SUPPORT_PLAYER_STRING,bob;"
+        std::string message = SUPPORT_PLAYER_STRING + ","
+                              + playerToSupport + ";";
+        send_message(game_server_socket_fd, message.c_str());
+
+        // Puis on lance le GameManager
+        GameManager *gameManager = new GameManager(server_ip_address, gamePort, game_server_socket_fd,
+                                                   player_id, player_usr_name, true, master_app);
+        master_app->transition(gameManager);
     }
 }
 
@@ -45,7 +50,7 @@ void SpectatorManager::parse_message_from_server(const std::string &message) {
     }
 }
 
-int SpectatorManager::createGameInfo(const std::string& message, int& i) {
+int SpectatorManager::createGameInfo(const std::string &message, int &i) {
     std::string str_port, str_mode, str_player;
     GameInfo gameInfo;
 
@@ -64,20 +69,17 @@ int SpectatorManager::createGameInfo(const std::string& message, int& i) {
     i++;
 
     //extract players
-    while (message[i] != ';') {
-
-        if (message[i] != ','){
+    for (int j = 0; j < 4; ++j) {
+        while ((message[i] != ';') && (message[i] != ',')) {
             str_player += message[i];
             i++;
         }
-        else{
-            gameInfo.getPlayers().push_back(str_player);
-            i++;
-            str_player = "";
-        }
-
-
+        gameInfo.getPlayers().push_back(str_player);
+        i++;
+        str_player = "";
     }
+
+
     i++;
 //"5557,classic,bibi,baba,bobo,bubu;5558,classic,lala,lili,lolo,lele;"
 
