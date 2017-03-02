@@ -285,6 +285,7 @@ void GameServer::getAndProcessSpectatorJoinCommand() {
 
         if (command.getAction() == SUPPORT_PLAYER_STRING) {
             std::string username = command.getNextToken();
+            std::cout << "New spectator for " << username << std::endl;
             PlayerState& playerState = getPlayerStateWithUsername(username);
             playerState.setIsSupported(true);
 
