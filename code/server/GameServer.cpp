@@ -33,15 +33,11 @@ void GameServer::processClientCommands() {
     timer.start();
     int numSecondsElapsed = timer.elapsedTimeInSeconds();
     while (numSecondsElapsed < NUM_SECONDS_TO_PLACE_TOWER) {
-        std::cout << "just before select" << std::endl;
-
         int timeLeft = NUM_SECONDS_TO_PLACE_TOWER - numSecondsElapsed;
         int client_index = get_readable_socket_index_with_timeout(client_sockets, 4, timeLeft);
-        std::cout << "client selected: "<< client_index << std::endl;
         if (client_index < 0 || client_index > 4) return;
 
         int client_socket_fd = client_sockets[client_index];
-        std::cout << "Client socket in server: " << client_socket_fd << std::endl;
         get_and_process_command(client_socket_fd, message_buffer);
 
         numSecondsElapsed = timer.elapsedTimeInSeconds();
@@ -56,6 +52,7 @@ void GameServer::get_and_process_command(int client_socket_fd, char *buffer) {
     std::string command_type = get_command_type(buffer);
 
     if (command_type == PLACE_TOWER_COMMAND_STRING) {
+        std::cout << "placeTower"<< std::endl;
         TowerCommand command;
         command.parse(buffer);
         addTowerInGameState(command);
@@ -79,6 +76,7 @@ void GameServer::addTowerInGameState(TowerCommand &command) {
     AbstractTower * tower;
     int quadrant = command.getPlayerQuadrant();
     if (command.getTowerType() == GUN_TOWER_STR){
+        std::cout << "building tower" << std::endl;
         AttackTower * attackTower = new GunTower(command.getPosition());
         tower = attackTower;
     }

@@ -21,6 +21,7 @@
 #include <vector>
 #include "Position.hpp"
 #include "GameState.hpp"
+#include "Constants.h"
 
 class GameState;
 

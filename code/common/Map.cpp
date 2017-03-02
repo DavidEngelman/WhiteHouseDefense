@@ -7,7 +7,6 @@
  * Constructor used to build the same map for the server and all the clients
  * because the server send the seed to all the players instead of sending the entire map
  */
-const static int PARTNERS[4] = {1, 0, 3, 2};
 
 Map::Map(unsigned seed) {
     srand(seed);

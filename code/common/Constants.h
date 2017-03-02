@@ -10,6 +10,9 @@ static const int WEST = 3;
 static const int DIRECTIONS[] = {NORTH, EAST, SOUTH, WEST};
 static const std::string QUADRANT_NAMES[4] = {"NORTH", "EAST", "SOUTH", "WEST"};
 
+const static int PARTNERS[4] = {EAST, NORTH, WEST, SOUTH};
+
+
 static const int PNJ_STARTING_HEALTHPOINTS= 100;
 static const int PNJ_STARTING_MOVESPEED = 100;
 

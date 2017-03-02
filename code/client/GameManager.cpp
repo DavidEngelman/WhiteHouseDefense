@@ -45,6 +45,7 @@ void *GameManager::input_thread() {
             if (checkValidity(towerPos, gameState)) {
                 if (towerchoice == 1) {
                     gameState.addTower(new GunTower(Position(towerPos.getX(), towerPos.getY())), quadrant);
+                    std::cout << "Moneyyy: "<< gameState.getPlayerStates()[quadrant].getMoney() << std::endl;
                     sendBuyRequest(towerPos, "GunTower");
                 } // else if another type of tower
             }
@@ -142,10 +143,6 @@ void GameManager::run() {
             if (!isSupporter) {
                 inputThread = pthread_cancel(thr);
             }
-
-            //TODO: comprendre pourquoi ca fait tout buguer
-            //std::cin.clear(); //pas enlever ces 2 lignes
-            //std::cin.ignore();
         }
         else {
             unSerializeGameState(server_msg_buff);
@@ -306,8 +303,7 @@ void GameManager::unSerializeTower(std::string serialized_tower) {
     AbstractTower *tower;
     if (typeOfTower == "GunTower") tower = new GunTower(Position(x, y));
     else tower = new GunTower(Position(x, y)); //TODO:à remplacer par un autre type de tour
-
-    gameState.addTower(tower, quadrant);
+    gameState.getTowers().push_back(tower);
 }
 
 void GameManager::unSerializeWaves(std::string serialized_waves) {
