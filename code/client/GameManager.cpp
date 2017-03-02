@@ -4,21 +4,20 @@
 #include "../server/Server.hpp"
 
 
-//NetworkedManager(port, ip_addr, app)
-GameManager::GameManager(char *ip_addr, int port, int socket, int id, std::string username, App *app) :
-        AbstractManager(ip_addr, app),
+GameManager::GameManager(int socket, App *app) :
+        AbstractManager(app),
         server_socket(socket),
-        player_id(id), player_username(username), isSupporter(false),
+        isSupporter(false),
         gameUI(getMapSeedFromServer()), // L'ordre est important parce qu'on fait des
         quadrant(getQuadrantFromServer()) // recv. Ne pas changer l'ordre!
 {
     getInitialGameStateFromServer();
 }
 
-GameManager::GameManager(char *ip_addr, int port, int socket, int id, std::string username, bool _isSupporter, App *app) :
-        AbstractManager(ip_addr, app),
+GameManager::GameManager(int socket, bool _isSupporter, App *app) :
+        AbstractManager(app),
         server_socket(socket),
-        player_id(id), player_username(username), isSupporter(_isSupporter),
+        isSupporter(_isSupporter),
         gameUI(getMapSeedFromServer()), // L'ordre est important parce qu'on fait des
         quadrant(getQuadrantFromServer()) // recv. Ne pas changer l'ordre!
 {
@@ -26,7 +25,7 @@ GameManager::GameManager(char *ip_addr, int port, int socket, int id, std::strin
 }
 
 void GameManager::come_back_to_menu() { // À appeler quand la partie est terminée
-    MainManager *menu_manager = new MainManager(server_ip_address, player_id, player_username, master_app);
+    MainManager *menu_manager = new MainManager(master_app);
     master_app->transition(menu_manager);
 }
 
@@ -133,7 +132,7 @@ void GameManager::run() {
                 gameUI.display(gameState, quadrant);
 
                 if (isSupporter) {
-                    gameUI.displayerPlayersPlacingTowersMessage();
+                    gameUI.displayPlayersPlacingTowersMessage();
                 } else {
                     gameUI.display_dead_message();
                 }
@@ -377,7 +376,7 @@ bool GameManager::is_alive() {
 
     bool alive = false;
     for( PlayerState& playerState : gameState.getPlayerStates()){
-        if (playerState.getPlayer_id() == player_id){
+        if (playerState.getPlayer_id() == master_app->get_id()){
             if (playerState.getHp() > 0){
                 alive = true;
                 break;

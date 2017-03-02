@@ -4,15 +4,15 @@
 
 #include "ProfileManager.hpp"
 
-ProfileManager::ProfileManager(int port, char *address, int id, std::string username, App* my_app) :
-        NetworkedManager(port, address, my_app), player_id(id), username(username) {}
+ProfileManager::ProfileManager(int port, App* my_app) :
+        NetworkedManager(port, my_app) {}
 
 void ProfileManager::ProfileManagerProcess() {
     profileUI.display();
     int choice = profileUI.select();
     while (choice != 3){
         if (choice == 1){
-            profileUI.displayProfile(getProfile(username));
+            profileUI.displayProfile(getProfile(master_app->get_username()));
         }else if (choice == 2){
             
             std::string profile = profileUI.askUsername();
@@ -26,7 +26,7 @@ void ProfileManager::ProfileManagerProcess() {
         profileUI.display();
         choice = profileUI.select();
     }
-    MainManager * mainManager = new MainManager(server_ip_address, player_id, username, master_app);
+    MainManager * mainManager = new MainManager(master_app);
     master_app->transition(mainManager);
 }
 

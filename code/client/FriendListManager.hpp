@@ -17,15 +17,9 @@ private:
     FriendList friendRequests;
     FriendList pendingInvitations;
 	FriendListUI friendListUI;
-	int player_id;
-	std::string username;
 
 public:
-    FriendListManager(int port, char* address, int id, std::string username, App* my_master_app);
-	bool sendFriendRequest(std::string toAdd);
-	bool removeFriend(std::string toRemove);
-    bool acceptFriendRequest(std::string toAccept);
-    bool declineFriendRequest(std::string toDecline);
+    FriendListManager(int port, App* my_master_app);
 
 	std::string getRequestServer(std::string action, std::string username);
 	bool sendRequestServer(std::string action, std::string requester);

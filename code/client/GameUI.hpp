@@ -33,7 +33,7 @@ public:
 
 	void display_dead_message();
 
-    void displayerPlayersPlacingTowersMessage();
+    void displayPlayersPlacingTowersMessage();
 };
 
 #endif

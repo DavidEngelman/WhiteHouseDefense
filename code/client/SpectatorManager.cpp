@@ -1,8 +1,8 @@
 #include "SpectatorManager.hpp"
 
 
-SpectatorManager::SpectatorManager(int port, char *address, int id, std::string username, App *master_app) :
-        NetworkedManager(port, address, master_app), player_id(id), player_usr_name(username) {}
+SpectatorManager::SpectatorManager(int port, App *master_app) :
+        NetworkedManager(port, master_app) {}
 
 void SpectatorManager::getGamesFromMatchMaker() {
     char buffer[5000];
@@ -18,7 +18,7 @@ void SpectatorManager::run() {
     if (allGames.size() == 0) {
         //Si y a pas de game a spectate -> on pleure
         spectatorUI.displaySorryMessage();
-        MainManager *mng = new MainManager(server_ip_address, player_id, player_usr_name, master_app);
+        MainManager *mng = new MainManager(master_app);
         master_app->transition(mng);
     } else {
         //Selection de la partie et du jouer a support
@@ -29,7 +29,7 @@ void SpectatorManager::run() {
 
 
         /* On dit au gameServer qu'on veut etre spectateur */
-        int game_server_socket_fd = init_connection_to_server(server_ip_address, gamePort);
+        int game_server_socket_fd = init_connection_to_server(master_app->get_ip(), gamePort);
 
         // Structure of command: "SUPPORT_PLAYER_STRING,bob;"
         std::string message = SUPPORT_PLAYER_STRING + ","
@@ -37,8 +37,7 @@ void SpectatorManager::run() {
         send_message(game_server_socket_fd, message.c_str());
 
         // Puis on lance le GameManager
-        GameManager *gameManager = new GameManager(server_ip_address, gamePort, game_server_socket_fd,
-                                                   player_id, player_usr_name, true, master_app);
+        GameManager *gameManager = new GameManager(game_server_socket_fd, true, master_app);
         master_app->transition(gameManager);
     }
 }

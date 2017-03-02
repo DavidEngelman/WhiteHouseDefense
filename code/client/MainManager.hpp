@@ -10,11 +10,10 @@ class MainManager : public AbstractManager {
 
 private:
 	MainUI mainUI;
-	int player_id;
-	std::string username;
 
 public:
-	MainManager(char* ip_addr, int id, std::string username, App* my_app);
+	MainManager(int id, std::string username, App* my_app);
+	MainManager(App* my_app);
 	void run() override;
 };
 

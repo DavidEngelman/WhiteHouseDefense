@@ -24,8 +24,6 @@ private:
     int inputThread;
     GameState gameState;
     GameUI gameUI;
-    std::string player_username;
-    int player_id; // Je sais plus si les deux sont utiles je les met au cas ou
     int quadrant;
     bool isSupporter;
 
@@ -55,8 +53,8 @@ private:
 
 public:
 
-    GameManager(char* ip_addr, int port, int socket, int id, std::string username, App* app);
-    GameManager(char *ip_addr, int port, int socket, int id, std::string username, bool _isSupporter, App *app);
+    GameManager(int socket, App* app);
+    GameManager(int socket, bool _isSupporter, App *app);
 
     void run();
 };

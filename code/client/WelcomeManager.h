@@ -13,7 +13,7 @@ private:
 
 
 public:
-    WelcomeManager(char* ip_addr, App* my_app);
+    WelcomeManager(App* my_app);
     void run() override;
 
 };
