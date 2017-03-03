@@ -20,11 +20,9 @@ void GameServer::sendGameStateToPlayers() {
         sendGameStateToPlayer(playerConnections[i]);
     }
 
-    mtx.lock();
     for (int socketFd: supportersSockets) {
         sendGameStateToPlayer(socketFd);
     }
-    mtx.unlock();
 }
 
 
@@ -265,7 +263,6 @@ void GameServer::getAndProcessSpectatorJoinCommand() {
         command.parse(command_buffer);
 
         if (command.getAction() == SUPPORT_PLAYER_STRING) {
-            mtx.lock();
 
             std::string username = command.getNextToken();
             std::cout << "New spectator for " << username << std::endl;
@@ -277,7 +274,6 @@ void GameServer::getAndProcessSpectatorJoinCommand() {
             // treated in the main loop
             // TODO: peut etre utiliser ici un mutex pour éviter des problemes de coherence
             supportersSockets.push_back(client_socket_fd);
-            mtx.unlock();
         }
     }
 }
