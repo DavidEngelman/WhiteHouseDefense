@@ -1,14 +1,14 @@
 //
-// Created by jepsiko on 02/03/17.
+// Created by jepsiko on 03/03/17.
 //
 
-#include "GunTower.hpp"
+#include "SniperTower.hpp"
 #include <cmath>
 
-GunTower::GunTower(const Position &position) :
-        AttackTower::AttackTower(position, GUN_TOWER_DAMAGE, GUN_TOWER_PRICE, GUN_TOWER_RANGE) {}
+SniperTower::SniperTower(const Position &position) :
+        AttackTower(position, SNIPER_TOWER_DAMAGE, SNIPER_TOWER_PRICE, SNIPER_TOWER_RANGE) {}
 
-bool GunTower::shoot(Wave &wave) {
+bool SniperTower::shoot(Wave &wave) {
     PNJ *my_target;
     bool killed = false;
     my_target = get_closest_pnj(wave);
@@ -21,19 +21,19 @@ bool GunTower::shoot(Wave &wave) {
     return killed;
 }
 
-std::string GunTower::serialize() {
+std::string SniperTower::serialize() {
     /*
-     * Une GunTower sérialisée est comme ceci : "GunTower,x,y;"
+     * Une SniperTower sérialisée est comme ceci : "SniperTower,x,y;"
      */
     std::string serialized_me = AbstractTower::serialize();
     serialized_me.insert(0, ",");
     //serialized_me.insert(0, std::to_string(damageAmount));
-    serialized_me.insert(0, GUN_TOWER_STR);
+    serialized_me.insert(0, SNIPER_TOWER_STR);
 
     return serialized_me;
 }
 
-PNJ *GunTower::get_closest_pnj(Wave &wave) {
+PNJ *SniperTower::get_closest_pnj(Wave &wave) {
     int dist;
     int best_dist = 1 << 30;
     PNJ *closest_pnj = nullptr;
@@ -54,3 +54,4 @@ PNJ *GunTower::get_closest_pnj(Wave &wave) {
 
     return closest_pnj;
 }
+

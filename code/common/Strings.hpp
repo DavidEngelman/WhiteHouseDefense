@@ -31,5 +31,6 @@ static const std::string SUPPORT_PLAYER_STRING = "SupportPlayer";
 
 
 #define GUN_TOWER_STR "GunTower"
+#define SNIPER_TOWER_STR "SniperTower"
 
 #endif //PROJET_STRINGS_HPP

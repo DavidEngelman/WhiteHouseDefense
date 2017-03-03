@@ -8,6 +8,7 @@
 #include "../common/Networking.h"
 #include "MainManager.hpp"
 #include "../common/GunTower.hpp"
+#include "../common/SniperTower.hpp"
 #include <cstdlib>
 #include <cctype>
 #include <pthread.h>
@@ -42,7 +43,7 @@ private:
     void come_back_to_menu();
     bool is_alive();
     bool isTowerInPosition(GameState &gamestate, Position towerPos);
-    bool checkValidity(Position towerPos, GameState& gamestate);
+    bool checkValidity(Position towerPos, GameState& gamestate, std::string typeOfTower);
 
     void sendBuyRequest(Position towerPos, std::string towerType);
     void sendSellRequest(Position towerPos);

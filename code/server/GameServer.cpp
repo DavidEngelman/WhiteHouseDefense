@@ -1,6 +1,7 @@
 #include "GameServer.hpp"
 #include "../client/GameManager.hpp"
-#include "../common/AttackTower.hpp"
+#include "../common/GunTower.hpp"
+#include "../common/SniperTower.hpp"
 
 const bool DEBUG = false;
 
@@ -74,17 +75,14 @@ void GameServer::get_and_process_command(int client_socket_fd, char *buffer) {
 
 void GameServer::addTowerInGameState(TowerCommand &command) {
     AbstractTower * tower;
-    int quadrant = command.getPlayerQuadrant();
     if (command.getTowerType() == GUN_TOWER_STR){
-        AttackTower * attackTower = new GunTower(command.getPosition());
-        tower = attackTower;
+        tower = new GunTower(command.getPosition());
     }
     else {
-        // TODO: par défaut je mets une gunTower mais il faudra autre chose
-        AttackTower * attackTower = new GunTower(command.getPosition());
-        tower = attackTower;
+        tower = new SniperTower(command.getPosition());
     }
 
+    int quadrant = command.getPlayerQuadrant();
     gameEngine->addTower(tower, quadrant);
 }
 

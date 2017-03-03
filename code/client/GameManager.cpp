@@ -43,11 +43,14 @@ void *GameManager::input_thread() {
             gameUI.display(gameState, quadrant);
             gameUI.displayPlayerInfos(gameState, quadrant);
             Position towerPos = gameUI.getPosBuyingTower();
-            if (checkValidity(towerPos, gameState)) {
-                if (towerchoice == 1) {
+            if (towerchoice == 1) {
+                if (checkValidity(towerPos, gameState, GUN_TOWER_STR)) {
                     gameState.addTower(new GunTower(Position(towerPos.getX(), towerPos.getY())), quadrant);
-                    sendBuyRequest(towerPos, "GunTower");
-                } // else if another type of tower
+                    sendBuyRequest(towerPos, GUN_TOWER_STR);
+                }
+            } else {
+                gameState.addTower(new SniperTower(Position(towerPos.getX(), towerPos.getY())), quadrant);
+                sendBuyRequest(towerPos, SNIPER_TOWER_STR);
             }
         }else if (choice == 2){
             Position toSell = gameUI.getPosSellingTower();
@@ -81,10 +84,17 @@ void *GameManager::staticInputThread(void *self){
  * Check if the player has the money to buy a tower and if he placed it in a correct
  * position
  */
-bool GameManager::checkValidity(Position towerPos, GameState& gamestate) {
+bool GameManager::checkValidity(Position towerPos, GameState& gamestate, std::string typeOfTower) {
     bool validity = true;
-    //TODO: changer le GUN_TOWER_PRICE par un paramètre tower et un getPrice() car plusieurs type de tours
-    if (gameState.getPlayerStates()[quadrant].getMoney()  < GUN_TOWER_PRICE) { // if player has enough money
+    int price;
+
+    if (typeOfTower == GUN_TOWER_STR) {
+        price = GUN_TOWER_PRICE;
+    } else {
+        price = SNIPER_TOWER_PRICE;
+    }
+
+    if (gameState.getPlayerStates()[quadrant].getMoney()  < price) { // if player has enough money
         validity = false;
     } else if (isTowerInPosition(gamestate, towerPos)) { // if a tower isn't already there
         validity = false;
@@ -303,7 +313,9 @@ void GameManager::unSerializeTower(std::string serialized_tower) {
 
     AbstractTower *tower;
     if (typeOfTower == "GunTower") tower = new GunTower(Position(x, y));
-    else tower = new GunTower(Position(x, y)); //TODO:à remplacer par un autre type de tour
+    else tower = new SniperTower(Position(x, y));
+    //TODO: remplacer par gameState.addTower(tower)
+    //Pour ne pas utiliser un getter pour modifier la classe, ça n'a aucun sens
     gameState.getTowers().push_back(tower);
 }
 

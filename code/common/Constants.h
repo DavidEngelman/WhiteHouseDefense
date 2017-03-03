@@ -33,4 +33,8 @@ const int GUN_TOWER_PRICE = 50;
 const int GUN_TOWER_RANGE = 4;
 const int GUN_TOWER_DAMAGE = 20;
 
+const int SNIPER_TOWER_PRICE = 100;
+const int SNIPER_TOWER_RANGE = 10;
+const int SNIPER_TOWER_DAMAGE = 10;
+
 #endif //PROJET_CONSTANTS_H

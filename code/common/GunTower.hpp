@@ -13,7 +13,7 @@ class GunTower : public AttackTower {
 
 public:
 
-    GunTower(Position position);
+    GunTower(const Position &position);
 
     ~GunTower() = default;
 

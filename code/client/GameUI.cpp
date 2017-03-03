@@ -1,6 +1,7 @@
 #include "GameUI.hpp"
 #include <iostream>
 #include "../common/Tools.hpp"
+#include "../common/Constants.h"
 
 
 GameUI::GameUI(unsigned seed) : map(new Map(seed)) {}
@@ -70,7 +71,7 @@ void GameUI::displayInfoForSupporter(GameState &gameState) {
     std::string infos;
     int i = 0;
     for(PlayerState& ps : gameState.getPlayerStates()) {
-        infos += ps.getUsername() + " - Money : " + std::to_string(ps.getMoney()) +
+        infos += ps.getUsername() + " - Money : " + std::to_string(ps.getMoney()) + " $ " +
          "\tNPC killed: " + std::to_string(ps.getPnjKilled()) + "\tHP: " + std::to_string(ps.getHp())
          + "\t Quadrant: " + QUADRANT_NAMES[i] + "\n";
 
@@ -92,8 +93,8 @@ void GameUI::displayPosingPhase() {
 }
 void GameUI::displayTowerShop() {
     std::cout << "You can choose among the following towers: " << std::endl;
-    std::cout << "1. Attacktower " << std::endl;
-    // put other tower types here
+    std::cout << "1. GunTower : " << std::to_string(GUN_TOWER_PRICE) << " $ " << std::endl;
+    std::cout << "2. SniperTower : " << std::to_string(SNIPER_TOWER_PRICE) << " $ " << std::endl;
     std::cout << std::endl;
 }
 
