@@ -20,11 +20,11 @@ void GameServer::sendGameStateToPlayers() {
         sendGameStateToPlayer(playerConnections[i]);
     }
 
-    //mtx.lock();
+    mtx.lock();
     for (int socketFd: supportersSockets) {
         sendGameStateToPlayer(socketFd);
     }
-    //mtx.unlock();
+    mtx.unlock();
 }
 
 
@@ -272,7 +272,7 @@ void GameServer::getAndProcessSpectatorJoinCommand() {
         command.parse(command_buffer);
 
         if (command.getAction() == SUPPORT_PLAYER_STRING) {
-            //mtx.lock();
+            mtx.lock();
 
             std::string username = command.getNextToken();
             std::cout << "New spectator for " << username << std::endl;
@@ -286,7 +286,7 @@ void GameServer::getAndProcessSpectatorJoinCommand() {
             // treated in the main loop
             // TODO: peut etre utiliser ici un mutex pour éviter des problemes de coherence
             supportersSockets.push_back(client_socket_fd);
-            //mtx.unlock();
+            mtx.unlock();
         }
     }
 }
@@ -343,7 +343,7 @@ void GameServer::setupGameForPlayer(int player_socket_fd, int quadrant){
 }
 
 void GameServer::sendSetupGameStringToClient(int socket_fd) {
-    attempt_send_message(socket_fd, SETUP_GAME);
+    send_message(socket_fd, SETUP_GAME); // Ici j'ai du remettre Send_message pcq sinon quand on envoyait le setupGame a un Spectater, ca ne fonctionnait pas car a ce moment la il n est pas encore dans sockets actifs
 }
 
 void GameServer::sendMapSeedToClient(int socket_fd) {
