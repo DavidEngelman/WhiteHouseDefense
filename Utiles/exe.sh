@@ -21,6 +21,7 @@ xdotool type "1"
 xdotool key "Return"
 xdotool key alt+o
 
+
 for i in `seq 1 4`;
 do
 	xdotool type $i
