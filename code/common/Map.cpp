@@ -208,3 +208,13 @@ const int Map::computeQuadrant(Position pos) {
         return EAST;
     }
 }
+
+bool Map::isDelimiter(Position pos) {
+    int x = pos.getX();
+    int y = pos.getY();
+
+    // Le centre n'est pas un delimiter
+    if ((x == SIZE / 2) && (y == SIZE / 2)) return false;
+
+    return (x == y) || (x == ((SIZE - 1) - y));
+}
