@@ -11,7 +11,10 @@ xdotool type "cd CLionProjects/Group4/cmake-build-debug/code/"
 xdotool key "Return"
 xdotool type "./client 127.0.0.1"
 xdotool key "Return"
-
+for i in `seq 1 10000`;
+    do
+    xdotool key ctrl+alt+t
+    done
 xdotool key ctrl+shift+t
 xdotool type "./server"
 xdotool key "Return"
