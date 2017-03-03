@@ -60,11 +60,9 @@ void GameServer::get_and_process_command(int client_socket_fd, char *buffer) {
 //    int timeout = NUM_SECONDS_TO_PLACE_TOWER - timer.elapsedTimeInSeconds();
 //    receive_message_with_timeout(client_socket_fd, buffer, 5);
     if (receive_message(client_socket_fd, buffer) != -1) {
-        std::cout << "Received command: " << buffer;
         std::string command_type = get_command_type(buffer);
 
         if (command_type == PLACE_TOWER_COMMAND_STRING) {
-            std::cout << "placeTower" << std::endl;
             TowerCommand command;
             command.parse(buffer);
             addTowerInGameState(command);
@@ -152,8 +150,6 @@ void GameServer::runGame() {
     sleep(3); // TODO: find better way to avoid network race conditions...
     gameEngine = new GameEngine(mapSeed, mode);
 
-    std::cout << "Le port du server est: " << port << std::endl;
-
     // Creer les playerState
     createPlayerStates();
 
@@ -161,7 +157,6 @@ void GameServer::runGame() {
         setupGameForPlayers();
     }
 
-    std::cout << "gameEngine->isGameFinished() = " << gameEngine->isGameFinished() << std::endl;
     while (!gameEngine->isGameFinished()) {
         if (!DEBUG){
 
@@ -214,7 +209,6 @@ void GameServer::sendWavePhase() {
     }
 
     for (int socketFd: supportersSockets) {
-        std::cout << "Sending wave to supporter" << std::endl;
         attempt_send_message(socketFd, "w");
     }
 }
@@ -263,7 +257,6 @@ void *GameServer::staticJoinSpectatorThread(void * self) {
 void GameServer::getAndProcessSpectatorJoinCommand() {
     while (1) {
         int client_socket_fd = accept_connection();
-        std::cout << "Accepted new supporter connection with socket" << client_socket_fd << std::endl;
         char command_buffer[BUFFER_SIZE];
         receive_message(client_socket_fd, command_buffer);
 
@@ -278,9 +271,7 @@ void GameServer::getAndProcessSpectatorJoinCommand() {
             std::cout << "New spectator for " << username << std::endl;
             PlayerState& playerState = getPlayerStateWithUsername(username);
             playerState.setIsSupported(true);
-            std::cout << "setup spec" << std::endl;
             setupGameForPlayer(client_socket_fd, getQuadrantForPlayer(username));
-            std::cout << "setup spec done" << std::endl;
 
             // It's after the setup, because the supporter must first receive the game info before getting
             // treated in the main loop
@@ -347,7 +338,6 @@ void GameServer::sendSetupGameStringToClient(int socket_fd) {
 }
 
 void GameServer::sendMapSeedToClient(int socket_fd) {
-    std::cout <<"seed: "<< mapSeed << std::endl;
     send_data(socket_fd, (char *) &mapSeed, sizeof(unsigned int));
 }
 
@@ -364,7 +354,7 @@ void GameServer::sendGameStateToPlayer(int socket_fd) {
     // TODO: une autre approche serait de passer une reference de string vers
     // serializeGameState, dans lequel on ferait append. À considerer
     const std::string * serialized_game_state = gameEngine->serializeGameState();
-    attempt_send_message(socket_fd, (*serialized_game_state).c_str());
+    send_message(socket_fd, (*serialized_game_state).c_str());
     delete serialized_game_state;
 }
 
@@ -372,7 +362,6 @@ void GameServer::endConnection(int fd) {
     std::vector<PlayerConnection>::iterator iter;
     for (iter = playerConnections.begin(); iter != playerConnections.end(); iter++){
         if ((*iter).getSocket_fd() == fd) {
-            std::cout << "Erased: " << fd << std::endl;
             playerConnections.erase(iter);
             return;
         }
@@ -380,7 +369,6 @@ void GameServer::endConnection(int fd) {
 
     for (auto iter2 = supportersSockets.begin(); iter2 != supportersSockets.end(); iter2++) {
         if ((*iter2) == fd) {
-            std::cout << "Erased: " << fd << std::endl;
             supportersSockets.erase(iter2);
             return;
         }
@@ -392,7 +380,6 @@ void GameServer::attempt_send_message(int fd, const char* message){
     if (socketIsActive(fd)) {
         int error_code = send_message(fd, message);
         if (error_code == -1){
-            std::cout << "Ended connection with" << fd << std::endl;
             endConnection(fd);
         }
     }
@@ -410,7 +397,6 @@ bool GameServer::socketIsActive(int fd) {
         if (socket == fd) {
             return true;
         }
-        std::cout << "Le socket Supporter " << fd << " est inactif" << std::endl;
     }
 
     return false;

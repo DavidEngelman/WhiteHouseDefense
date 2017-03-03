@@ -416,14 +416,12 @@ unsigned int GameManager::getMapSeedFromServer() const {
 
     unsigned int seed;
     receive_data(server_socket, &seed, sizeof(unsigned int));
-    std::cout << "Received seed: " << seed << std::endl;
     return seed;
 }
 
 int GameManager::getQuadrantFromServer() {
     int quadrant;
     receive_data(server_socket, &quadrant, sizeof(int));
-    std::cout << "Received quadrant: " << quadrant << std::endl;
     return quadrant;
 }
 

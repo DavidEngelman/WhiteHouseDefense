@@ -64,10 +64,8 @@ void ensure_buffer_is_big_enough(char *buffer, int length) {
  * Otherwise, puts the message in the buffer and return the length of the message.
  */
 int receive_message(int socket_fd, char *buffer) {
-    std::cout << "Received message from: " << socket_fd <<std::endl;
     int length = get_message_length(socket_fd);  // Gets the length
     if (length == -1){ // Socket fermé
-        std::cout << "Le socket " << socket_fd << " est fermé " << std::endl;
         return -1;
     }
 
@@ -114,7 +112,6 @@ void send_data(int socket_fd, char *buffer, int length){
 
 int send_message(int socket_fd, const char *message) {
     size_t length = strlen(message) + 1;
-    std::cout << "Sending message to: "<< socket_fd <<std::endl;
     //std::cout << "Sending message of size (including \\0) of " << length << " bytes" << std::endl;
     //std::cout << "Message: " << message << "to" << socket_fd <<  std::endl;
     if (send(socket_fd, &length, sizeof(length), MSG_NOSIGNAL) == -1){
