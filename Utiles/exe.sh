@@ -15,20 +15,38 @@ xdotool key "Return"
 xdotool key ctrl+shift+t
 xdotool type "./server"
 xdotool key "Return"
-
 xdotool key ctrl+Page_Down
-xdotool type "1"
-xdotool key "Return"
-xdotool key alt+o
 
-for i in `seq 1 4`;
-do
-	xdotool type ${i}
-	xdotool key "Return"
-	xdotool type ${i}
-	xdotool key "Return"
-	xdotool key ctrl+shift+n
-done
+if [ $1 == "REGISTER" ]
+then
+    xdotool type "2"
+    xdotool key "Return"
+    xdotool key alt+o
+
+    for i in `seq 1 4`;
+    do
+        for i in `seq 1 4`;
+        do
+            xdotool type ${i}
+            xdotool key "Return"
+        done
+        xdotool key ctrl+shift+n
+    done
+else
+    xdotool type "1"
+    xdotool key "Return"
+    xdotool key alt+o
+
+    for i in `seq 1 4`;
+    do
+        for i in `seq 1 2`;
+        do
+            xdotool type ${i}
+            xdotool key "Return"
+        done
+        xdotool key ctrl+shift+n
+    done
+fi
 
 xdotool key alt+g
 xdotool type "1"
