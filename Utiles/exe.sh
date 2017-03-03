@@ -1,13 +1,33 @@
 #!/bin/bash
 
-xdotool key ctrl+super+Up #full sreen
+: '
+If you run the script without any argument, you will be automatically connected to 4 account :
+"1", "2", "3", "4"
+
+How to use the script :
+
+If you want to register the accounts "1", "2", "3", "4", run the program in this way :
+    ./exe.sh REGISTER
+
+If you want to directly launch a classic game run this command :
+    ./exe.sh PLAY
+'
+
+
+if [ $(uname -r | grep -c fc) -ne 0 ] # Fedora
+then
+    xdotool key super+Up
+else
+    xdotool key ctrl+super+Up
+fi
 xdotool key ctrl+shift+o
 xdotool key ctrl+shift+n
 xdotool key ctrl+shift+e
 xdotool key ctrl+shift+n
 xdotool key ctrl+shift+e
 xdotool key super+g
-xdotool type "cd CLionProjects/Group4/cmake-build-debug/code/"
+xdotool key alt+g
+xdotool type "cd /home/jepsiko/CLionProjects/Group4/cmake-build-debug/code/"
 xdotool key "Return"
 xdotool type "./client 127.0.0.1"
 xdotool key "Return"
@@ -37,7 +57,7 @@ else
 	echo d2
     xdotool type "1"
     xdotool key "Return"
-    xdotool key ctrl+o
+    xdotool key alt+o
 
     for i in `seq 1 4`;
     do
@@ -50,9 +70,12 @@ else
     done
 fi
 
-xdotool key ctrl+g
-xdotool type "1"
-xdotool key "Return"
-xdotool type "1"
-xdotool key "Return"
-xdotool key ctrl+o
+if [ "$1" = "PLAY" ]
+then
+    xdotool key alt+g
+    xdotool type "1"
+    xdotool key "Return"
+    xdotool type "1"
+    xdotool key "Return"
+    xdotool key alt+o
+fi
