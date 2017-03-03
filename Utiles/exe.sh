@@ -23,9 +23,9 @@ xdotool key alt+o
 
 for i in `seq 1 4`;
 do
-	xdotool type $i
+	xdotool type ${i}
 	xdotool key "Return"
-	xdotool type $i
+	xdotool type ${i}
 	xdotool key "Return"
 	xdotool key ctrl+shift+n
 done
