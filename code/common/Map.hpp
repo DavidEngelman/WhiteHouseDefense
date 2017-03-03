@@ -1,7 +1,7 @@
 #ifndef MAP_HPP
 #define MAP_HPP
 
-#define SIZE 31 //Not > 41 because it's too big for a screen
+const int SIZE = 31; //Not > 41 because it's too big for a screen
 
 #define GRASS "◼  "
 #define GREEN_GRASS "\033[32m◼\033[0m  "
@@ -53,6 +53,7 @@ public:
     Map(unsigned seed);
     const void display(GameState& gameState, int quadrant) const;
     const bool isPath(Position pos) const;
+    bool isDelimiter(Position pos);
     static const int computeQuadrant(Position pos);
 };
 
