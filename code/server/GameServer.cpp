@@ -1,7 +1,6 @@
 #include "GameServer.hpp"
 #include "../client/GameManager.hpp"
-#include "../common/GunTower.hpp"
-#include "../common/SniperTower.hpp"
+#include "../common/AttackTower.hpp"
 
 const bool DEBUG = false;
 
@@ -48,28 +47,28 @@ void GameServer::processClientCommands() {
 void GameServer::get_and_process_command(int client_socket_fd, char *buffer) {
 //    int timeout = NUM_SECONDS_TO_PLACE_TOWER - timer.elapsedTimeInSeconds();
 //    receive_message_with_timeout(client_socket_fd, buffer, 5);
-    receive_message(client_socket_fd, buffer);
-    std::cout << "Received command: " << buffer;
-    std::string command_type = get_command_type(buffer);
+    if (receive_message(client_socket_fd, buffer) != -1) {
+        std::cout << "Received command: " << buffer;
+        std::string command_type = get_command_type(buffer);
 
-    if (command_type == PLACE_TOWER_COMMAND_STRING) {
-        std::cout << "placeTower"<< std::endl;
-        TowerCommand command;
-        command.parse(buffer);
-        addTowerInGameState(command);
+        if (command_type == PLACE_TOWER_COMMAND_STRING) {
+            std::cout << "placeTower" << std::endl;
+            TowerCommand command;
+            command.parse(buffer);
+            addTowerInGameState(command);
+        } else if (command_type == DELETE_TOWER_COMMAND_STRING) {
+            TowerCommand command;
+            command.parse(buffer);
+            deleteTowerInGameState(command);
+        } else if (command_type == UPGRADE_TOWER_COMMAND_STRING) {
+            TowerCommand command;
+            command.parse(buffer);
+            upgradeTowerInGameState(command);
+        }
+    }else{
+        endConnection(client_socket_fd);
     }
-
-    else if (command_type == DELETE_TOWER_COMMAND_STRING) {
-        TowerCommand command;
-        command.parse(buffer);
-        deleteTowerInGameState(command);
-    }
-
-    else if (command_type == UPGRADE_TOWER_COMMAND_STRING) {
-        TowerCommand command;
-        command.parse(buffer);
-        upgradeTowerInGameState(command);
-    }
+    
 
 }
 
@@ -108,7 +107,10 @@ void GameServer::runWave() {
     while (!isWaveFinished) {
         while (!isWaveFinished && timer.elapsedTimeInMiliseconds() < INTERVAL_BETWEEN_SENDS_IN_MS) {
             isWaveFinished = gameEngine->update();
-            usleep(100);
+            // TODO: mettre peut etre un sleep ici? on ne va pas faire des tonnes de updates de toute facon
+            usleep(100); // C'est en microsecondes
+            // car si gameEngine voit que pas assez de temps s'est ecoulé depuis le tick precedent,
+            // il ne fait rien
         }
 
         if (DEBUG){
@@ -186,47 +188,24 @@ void GameServer::createPlayerStates() {
 void GameServer::sendTowerPhase() {
     for (PlayerConnection &playerConnection : playerConnections) {
         int socketFd = playerConnection.getSocket_fd();
-        send_message(socketFd, "t");
+        attempt_send_message(socketFd, "t");
     }
 
     for (int socketFd: supportersSockets) {
-        send_message(socketFd, "t");
+        attempt_send_message(socketFd, "t");
     }
 }
 
 void GameServer::sendWavePhase() {
     for (PlayerConnection &playerConnection : playerConnections) {
         int socketFd = playerConnection.getSocket_fd();
-        send_message(socketFd, "w");
+        attempt_send_message(socketFd, "w");
     }
 
     for (int socketFd: supportersSockets) {
-        send_message(socketFd, "w");
+        attempt_send_message(socketFd, "w");
     }
 }
-
-
-
-
-/*void GameServer::sendEndToPlayer(PlayerConnection &connection) {
-    send_message(connection.getSocket_fd(), END_OF_GAME); //send "end" to client
-}
-
-void GameServer::sendWinnerToPlayer(PlayerConnection &connection) {
-    int winner_id = gameEngine.getGameState().getWinnerClassic();
-    send_message(connection.getSocket_fd(), std::to_string(winner_id).c_str());
-}
-
-
-void GameServer::handleEndOfGame() {
-    for (int i = 0; i < NUM_PLAYERS; i++) {
-        sendEndToPlayer(playerConnections[i]);
-        sendWinnerToPlayer(playerConnections[i]);
-    }
-}
-*/
-
-
 
 int GameServer::connectToServer(int port) {
     return init_connection_to_server((char*) "127.0.0.1", port); //Faudrait mettre des constantes :)
@@ -236,7 +215,7 @@ int GameServer::connectToServer(int port) {
 void GameServer::sendFinishedToMatchmaker() {
     int account_server_socket = connectToServer(5556);
     std::string message = "PopGame," + std::to_string(port) + ";" ;
-    send_message(account_server_socket, message.c_str());
+    attempt_send_message(account_server_socket, message.c_str());
 }
 
 void GameServer::updatePlayerStatsOnAccountServer() {
@@ -244,7 +223,7 @@ void GameServer::updatePlayerStatsOnAccountServer() {
     int p_id, pnj_killed;
     bool is_winner;
 
-    send_message(account_server_socket, "Update;");
+    attempt_send_message(account_server_socket, "Update;");
 
     for (PlayerState& ps : gameEngine->getGameState().getPlayerStates()){
         p_id = ps.getPlayer_id();
@@ -254,7 +233,7 @@ void GameServer::updatePlayerStatsOnAccountServer() {
         std::string message = "Update," + std::to_string(p_id)+ "," + std::to_string(pnj_killed) + "," +
                 bool_to_string(is_winner) + ";";
 
-        send_message(account_server_socket, message.c_str());
+        attempt_send_message(account_server_socket, message.c_str());
     }
 
 
@@ -296,7 +275,6 @@ void GameServer::getAndProcessSpectatorJoinCommand() {
         }
     }
 }
-
 
 std::string GameServer::getMode() {
     return mode;
@@ -350,7 +328,7 @@ void GameServer::setupGameForPlayer(int player_socket_fd, int quadrant){
 }
 
 void GameServer::sendSetupGameStringToClient(int socket_fd) {
-    send_message(socket_fd, SETUP_GAME);
+    attempt_send_message(socket_fd, SETUP_GAME);
 }
 
 void GameServer::sendMapSeedToClient(int socket_fd) {
@@ -370,6 +348,23 @@ void GameServer::sendGameStateToPlayer(int socket_fd) {
     // TODO: une autre approche serait de passer une reference de string vers
     // serializeGameState, dans lequel on ferait append. À considerer
     const std::string * serialized_game_state = gameEngine->serializeGameState();
-    send_message(socket_fd, (*serialized_game_state).c_str());
+    attempt_send_message(socket_fd, (*serialized_game_state).c_str());
     delete serialized_game_state;
+}
+
+void GameServer::endConnection(int fd) {
+    std::vector<PlayerConnection>::iterator iter;
+    for (iter = playerConnections.begin(); iter != playerConnections.end(); iter++){
+        if ((*iter).getSocket_fd() == fd) {
+            playerConnections.erase(iter);
+            break;
+        }
+    }
+
+}
+
+void GameServer::attempt_send_message(int fd, const char* message){
+    if (send_message(fd, message) == -1){
+        endConnection(fd);
+    }
 }

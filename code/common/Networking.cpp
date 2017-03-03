@@ -111,12 +111,17 @@ void send_data(int socket_fd, char *buffer, int length){
     }
 }
 
-void send_message(int socket_fd, const char *message) {
+int send_message(int socket_fd, const char *message) {
     size_t length = strlen(message) + 1;
     //std::cout << "Sending message of size (including \\0) of " << length << " bytes" << std::endl;
     //std::cout << "Message: " << message << std::endl;
-    send(socket_fd, &length, sizeof(length), 0); // Send the length
-    send(socket_fd, message, length, 0);         // Send the data
+    if (send(socket_fd, &length, sizeof(length), 0) == -1){
+        return -1;
+    } // Send the length
+    if (send(socket_fd, message, length, 0) == -1){
+        return -1;
+    }        // Send the data
+    return (int) length;
     //TODO remmettre send_data mais y avait un probleme
 }
 

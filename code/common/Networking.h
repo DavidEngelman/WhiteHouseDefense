@@ -20,6 +20,6 @@ int receive_message(int socket_fd, char *buffer);
 bool receive_message_with_timeout(int socket_fd, char *buffer, int timeout);
 
 void send_data(int socket_fd, char *buffer, int length);
-void send_message(int socket_fd, const char *message);
+int send_message(int socket_fd, const char *message);
 
 #endif //PROJET_NETWORKING_H

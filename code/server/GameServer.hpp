@@ -98,6 +98,10 @@ public:
     void setupGameForPlayer(int player_socket_fd, int quadrant);
 
     void sendFinishedToMatchmaker();
+
+    void endConnection(int fd);
+
+    void attempt_send_message(int fd, const char* message);
 };
 
 #endif
