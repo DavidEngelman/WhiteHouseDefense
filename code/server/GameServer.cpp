@@ -364,7 +364,8 @@ void GameServer::endConnection(int fd) {
 }
 
 void GameServer::attempt_send_message(int fd, const char* message){
-    if (send_message(fd, message) == -1){
+    int error_code = send_message(fd, message);
+    if (error_code == -1){
         endConnection(fd);
     }
 }
