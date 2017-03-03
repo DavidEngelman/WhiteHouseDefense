@@ -34,7 +34,7 @@ void GameServer::processClientCommands() {
     int numSecondsElapsed = timer.elapsedTimeInSeconds();
     while (numSecondsElapsed < NUM_SECONDS_TO_PLACE_TOWER) {
         int timeLeft = NUM_SECONDS_TO_PLACE_TOWER - numSecondsElapsed;
-        int client_index = get_readable_socket_index_with_timeout(client_sockets, 4, timeLeft);
+        int client_index = getReadableOpenSocket(timeLeft);
         if (client_index < 0 || client_index > 4) return;
 
         int client_socket_fd = client_sockets[client_index];
@@ -42,6 +42,15 @@ void GameServer::processClientCommands() {
 
         numSecondsElapsed = timer.elapsedTimeInSeconds();
     }
+}
+
+int GameServer::getReadableOpenSocket(int timeLeft) {
+    // TODO: solution temporaire. C'est debile de creer des vecteurs à chaque appel
+    std::vector<int> open_sockets;
+    for (PlayerConnection& playerConnection: playerConnections) {
+        open_sockets.push_back(playerConnection.getSocket_fd());
+    }
+    return get_readable_socket_index_with_timeout(open_sockets.data(), open_sockets.size(), timeLeft);
 }
 
 void GameServer::get_and_process_command(int client_socket_fd, char *buffer) {
@@ -364,8 +373,20 @@ void GameServer::endConnection(int fd) {
 }
 
 void GameServer::attempt_send_message(int fd, const char* message){
-    int error_code = send_message(fd, message);
-    if (error_code == -1){
-        endConnection(fd);
+    if (socketIsActive(fd)) {
+        int error_code = send_message(fd, message);
+        if (error_code == -1){
+            endConnection(fd);
+        }
     }
+}
+
+bool GameServer::socketIsActive(int fd) {
+    // TODO: pas efficace
+    for (PlayerConnection &playerConnection: playerConnections) {
+        if (playerConnection.getSocket_fd() == fd) {
+            return true;
+        }
+    }
+    return false;
 }

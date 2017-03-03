@@ -102,6 +102,10 @@ public:
     void endConnection(int fd);
 
     void attempt_send_message(int fd, const char* message);
+
+    int getReadableOpenSocket(int timeLeft);
+
+    bool socketIsActive(int fd);
 };
 
 #endif
