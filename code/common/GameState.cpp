@@ -49,7 +49,6 @@ int GameState::numPlayersAlive() {
             number_of_players_alive++;
         }
     }
-    std::cout << "NUM_PLAYER_ALIVE" << number_of_players_alive << std::endl;
     return number_of_players_alive;
 }
 

@@ -20,9 +20,11 @@ void GameServer::sendGameStateToPlayers() {
         sendGameStateToPlayer(playerConnections[i]);
     }
 
+    //mtx.lock();
     for (int socketFd: supportersSockets) {
         sendGameStateToPlayer(socketFd);
     }
+    //mtx.unlock();
 }
 
 
@@ -212,6 +214,7 @@ void GameServer::sendWavePhase() {
     }
 
     for (int socketFd: supportersSockets) {
+        std::cout << "Sending wave to supporter" << std::endl;
         attempt_send_message(socketFd, "w");
     }
 }
@@ -261,7 +264,6 @@ void GameServer::getAndProcessSpectatorJoinCommand() {
     while (1) {
         int client_socket_fd = accept_connection();
         std::cout << "Accepted new supporter connection with socket" << client_socket_fd << std::endl;
-
         char command_buffer[BUFFER_SIZE];
         receive_message(client_socket_fd, command_buffer);
 
@@ -270,17 +272,21 @@ void GameServer::getAndProcessSpectatorJoinCommand() {
         command.parse(command_buffer);
 
         if (command.getAction() == SUPPORT_PLAYER_STRING) {
+            //mtx.lock();
+
             std::string username = command.getNextToken();
             std::cout << "New spectator for " << username << std::endl;
             PlayerState& playerState = getPlayerStateWithUsername(username);
             playerState.setIsSupported(true);
-
+            std::cout << "setup spec" << std::endl;
             setupGameForPlayer(client_socket_fd, getQuadrantForPlayer(username));
+            std::cout << "setup spec done" << std::endl;
 
             // It's after the setup, because the supporter must first receive the game info before getting
             // treated in the main loop
             // TODO: peut etre utiliser ici un mutex pour éviter des problemes de coherence
             supportersSockets.push_back(client_socket_fd);
+            //mtx.unlock();
         }
     }
 }
@@ -341,6 +347,7 @@ void GameServer::sendSetupGameStringToClient(int socket_fd) {
 }
 
 void GameServer::sendMapSeedToClient(int socket_fd) {
+    std::cout <<"seed: "<< mapSeed << std::endl;
     send_data(socket_fd, (char *) &mapSeed, sizeof(unsigned int));
 }
 
@@ -365,6 +372,7 @@ void GameServer::endConnection(int fd) {
     std::vector<PlayerConnection>::iterator iter;
     for (iter = playerConnections.begin(); iter != playerConnections.end(); iter++){
         if ((*iter).getSocket_fd() == fd) {
+            std::cout << "Erased: " << fd << std::endl;
             playerConnections.erase(iter);
             return;
         }
@@ -372,6 +380,7 @@ void GameServer::endConnection(int fd) {
 
     for (auto iter2 = supportersSockets.begin(); iter2 != supportersSockets.end(); iter2++) {
         if ((*iter2) == fd) {
+            std::cout << "Erased: " << fd << std::endl;
             supportersSockets.erase(iter2);
             return;
         }
@@ -383,6 +392,7 @@ void GameServer::attempt_send_message(int fd, const char* message){
     if (socketIsActive(fd)) {
         int error_code = send_message(fd, message);
         if (error_code == -1){
+            std::cout << "Ended connection with" << fd << std::endl;
             endConnection(fd);
         }
     }
@@ -400,6 +410,7 @@ bool GameServer::socketIsActive(int fd) {
         if (socket == fd) {
             return true;
         }
+        std::cout << "Le socket Supporter " << fd << " est inactif" << std::endl;
     }
 
     return false;

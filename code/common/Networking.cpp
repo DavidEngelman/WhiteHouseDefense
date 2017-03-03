@@ -113,7 +113,7 @@ void send_data(int socket_fd, char *buffer, int length){
 int send_message(int socket_fd, const char *message) {
     size_t length = strlen(message) + 1;
     //std::cout << "Sending message of size (including \\0) of " << length << " bytes" << std::endl;
-    //std::cout << "Message: " << message << std::endl;
+    //std::cout << "Message: " << message << "to" << socket_fd <<  std::endl;
     if (send(socket_fd, &length, sizeof(length), MSG_NOSIGNAL) == -1){
         return -1;
     } // Send the length
