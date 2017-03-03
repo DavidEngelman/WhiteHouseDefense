@@ -135,9 +135,9 @@ void GameServer::runWave() {
 
 
 void GameServer::run() {
-//    startSpectatorThread();
+    startSpectatorThread();
     runGame();
-//    stopSpectatorThread();
+    stopSpectatorThread();
     sendFinishedToMatchmaker(); // tell to the matchmaker that the game is finished
 }
 
