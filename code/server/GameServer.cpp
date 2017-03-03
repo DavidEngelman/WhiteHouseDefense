@@ -1,3 +1,4 @@
+#include <csignal>
 #include "GameServer.hpp"
 #include "../client/GameManager.hpp"
 #include "../common/AttackTower.hpp"
@@ -34,7 +35,7 @@ void GameServer::processClientCommands() {
     int numSecondsElapsed = timer.elapsedTimeInSeconds();
     while (numSecondsElapsed < NUM_SECONDS_TO_PLACE_TOWER) {
         int timeLeft = NUM_SECONDS_TO_PLACE_TOWER - numSecondsElapsed;
-        int client_index = getReadableOpenSocket(timeLeft);
+        int client_index = getReadableReadableSocket(timeLeft);
         if (client_index < 0 || client_index > 4) return;
 
         int client_socket_fd = client_sockets[client_index];
@@ -44,7 +45,7 @@ void GameServer::processClientCommands() {
     }
 }
 
-int GameServer::getReadableOpenSocket(int timeLeft) {
+int GameServer::getReadableReadableSocket(int timeLeft) {
     // TODO: solution temporaire. C'est debile de creer des vecteurs à chaque appel
     std::vector<int> open_sockets;
     for (PlayerConnection& playerConnection: playerConnections) {
@@ -134,10 +135,9 @@ void GameServer::runWave() {
 
 
 void GameServer::run() {
-    startSpectatorThread();
+//    startSpectatorThread();
     runGame();
-    stopSpectatorThread();
-    // TODO:
+//    stopSpectatorThread();
     sendFinishedToMatchmaker(); // tell to the matchmaker that the game is finished
 }
 

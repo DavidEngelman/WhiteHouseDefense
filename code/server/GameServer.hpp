@@ -103,7 +103,7 @@ public:
 
     void attempt_send_message(int fd, const char* message);
 
-    int getReadableOpenSocket(int timeLeft);
+    int getReadableReadableSocket(int timeLeft);
 
     bool socketIsActive(int fd);
 };
