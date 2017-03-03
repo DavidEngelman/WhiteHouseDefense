@@ -11,15 +11,22 @@ const static std::string gameModes[3] = {CLASSIC_MODE, TIMED_MODE, TEAM_MODE};
 MainManager::MainManager(int port, App* my_app) : NetworkedManager(port, my_app) {}
 
 void MainManager::run() {
+    int choice;
     mainUI.display();
     switch (mainUI.select()) {
         case 1: {
             mainUI.displayGameModes();
-
+            choice = mainUI.selectGameModeInt();
             // Ce code suppose que les modes le resultat de mainUI.selectGameMode() est entre 0 et 2
-            std::string gameMode = gameModes[mainUI.selectGameModeInt()];
-            GameLauncher * game = new GameLauncher(5556, master_app, gameMode);
-            master_app->transition(game);
+
+            if (choice != 3) {
+                std::string gameMode = gameModes[choice];
+                GameLauncher * game = new GameLauncher(5556, master_app, gameMode);
+                master_app->transition(game);
+            }
+            else {
+                run();
+            }
             break;
         }
         case 2: {

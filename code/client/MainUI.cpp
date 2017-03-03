@@ -26,7 +26,7 @@ int MainUI::select(){
     std::cin >> x;
     while(std::cin.fail() or 0>x or x>6){
         display();
-        std::cout << "   Error, enter a integer between 1 and 5 " << std::endl;
+        std::cout << "   Error, enter a integer between 1 and 6 " << std::endl;
         std::cout << "   Enter your choice: ";
 
         std::cin.clear();
@@ -43,6 +43,7 @@ void MainUI::displayGameModes() {
     std::cout << "   |        1. Classic mode             |   " << std::endl;
     std::cout << "   |        2. Timed mode               |   " << std::endl;
     std::cout << "   |        3. Team mode                |   " << std::endl;
+    std::cout << "   |        4. Exit                     |   " << std::endl;
     std::cout << "   |                                    |   " << std::endl;
     std::cout << "   ======================================   " << std::endl;
 
@@ -52,9 +53,9 @@ int MainUI::selectGameModeInt() {
     int x = -1;
     std::cout << "   Select the game mode: ";
     std::cin >> x;
-    while(std::cin.fail() or 0>x or x>3){
+    while(std::cin.fail() or 0>x or x>4){
         displayGameModes();
-        std::cout << "   Error, enter a integer between 1 and 3 " << std::endl;
+        std::cout << "   Error, enter a integer between 1 and 4 " << std::endl;
         std::cout << "   Enter your choice: ";
 
         std::cin.clear();
