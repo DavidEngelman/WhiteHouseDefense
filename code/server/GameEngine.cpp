@@ -191,12 +191,9 @@ void GameEngine::showMap() {
 void GameEngine::checkIfGameIsOver() {
     bool isOver = false;
     std::string &mode = gameState.getMode();
-    std::cout << mode << std::endl;
     if (mode == CLASSIC_MODE) {
         isOver = (gameState.numPlayersAlive() <= 1);
-        std::cout << "IS_OVER" << isOver;
     } else if (mode == TIMED_MODE) {
-        std::cout << timerSinceGameStart.elapsedTimeInSeconds() << std::endl;
         isOver = timerSinceGameStart.elapsedTimeInSeconds() > TIMED_GAME_DURATION;
     } else if (mode == TEAM_MODE) {
         int numAlivePlayersInTeam1 = 0;
