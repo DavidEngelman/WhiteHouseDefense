@@ -21,3 +21,12 @@ void Drawing::drawWhiteHouse(std::string title) {
     std::cout << "|" << std::endl;
     std::cout << "   ======================================   " << std::endl;
 }
+
+void Drawing::drawTitleGameType(std::string gameType) {
+    unsigned long nbSpace = (36 - gameType.length()) / 2;
+    std::cout << "   ======================================   " << std::endl;
+    std::cout << "   |" << std::string(nbSpace, ' ') << gameType << std::string(nbSpace, ' ');
+    if (gameType.length() % 2 == 1) std::cout << " ";
+    std::cout << "|" << std::endl;
+    std::cout << "   ======================================   " << std::endl;
+}

@@ -4,30 +4,20 @@
 
 #include "AbstractTower.hpp"
 #include "PNJ.hpp"
+#include "../common/Constants.h"
 
 class AttackTower : public AbstractTower {
-
-private:
-
-    int damageAmount;
+    int damage;
 
 public:
 
-    AttackTower(int damageAmount);
+    AttackTower(Position position, int damage, int price, float range);
 
-    virtual ~AttackTower() = default;
+    ~AttackTower() = default;
 
-    virtual int getDamageAmount() const;
+    int getDamageAmount() const;
 
-    virtual void setDamageAmount(int newDamageAmount);
-
-    virtual void shoot(PNJ target) override;
-
-    virtual void dealDamageTo(PNJ pnj);
-
-    virtual std::string serialize() override;
-
+    virtual void dealDamageTo(PNJ &pnj);
 };
-
 
 #endif //PROJET_ATTACKTOWER_H

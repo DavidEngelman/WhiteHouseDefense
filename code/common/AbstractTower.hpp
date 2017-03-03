@@ -3,41 +3,51 @@
 
 #include "../common/Position.hpp"
 #include "PNJ.hpp"
+#include "Wave.h"
 #include <string>
+
+#define LEVEL_MAX 5
+
+class Wave;
+class PNJ;
 
 class AbstractTower {
 
 protected:
 
-    int owner; // player ID
+    int quadrant;
     const int price;
-    int radius;
+    float range;
     Position position;
+    int level;
 
 public:
 
-    AbstractTower(Position position, int price, int owner, int radius);
+    AbstractTower(Position position, int price, float range);
+
+    int getQuadrant() const;
+
+    int getLevel() const;
+
+    bool upgrade();
 
     virtual ~AbstractTower() = default;
 
-    virtual void shoot(PNJ target) = 0; // HAS TO BE DEFINED BY INHERITORS
+    virtual bool shoot(Wave& wave) = 0; // HAS TO BE DEFINED BY INHERITORS
 
-    virtual int getOwner() const;
+    int getOwner() const;
+    void setOwner(int newOwner);
 
-    virtual void setOwner(int newOwner);
+    int getPrice() const;
+    float getRange() const;
 
-    virtual const int getPrice() const;
-
-    virtual int getRadius() const;
-
-    virtual void setRadius(int newRadius);
-
-    virtual Position getPosition() const;
-
-    //The position is defined in the map class
-    virtual void setPosition(Position newPosition);
+    Position getPosition() const;
 
     virtual std::string serialize();
+
+    bool operator==(const AbstractTower &rhs) const;
+
+    bool operator!=(const AbstractTower &rhs) const;
 };
 
 #endif // PROJET_ABSTRACTTOWER_H

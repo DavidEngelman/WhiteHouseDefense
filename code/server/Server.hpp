@@ -15,7 +15,7 @@
 
 #define BACKLOG 5
 
-static const int BUFFER_SIZE = 500;
+static const int BUFFER_SIZE = 5000;
 
 class Server {
 
@@ -39,11 +39,14 @@ protected:
 
     int accept_connection();
 
-    int get_readable_socket(int * sockets, int num_sockets);
+    int get_readable_socket_index(int *sockets, int num_sockets);
+
+    int get_readable_socket_index_with_timeout(int *sockets, int num_sockets, int timeout_val);
 
     std::string get_command_type(char* data);
 
 public:
+    int getPort() const;
 
     Server(int port);
 

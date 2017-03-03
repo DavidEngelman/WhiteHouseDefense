@@ -13,6 +13,7 @@
 #include <netinet/in.h>
 #include <iostream>
 #include "AbstractManager.h"
+#include "../common/Networking.h"
 
 
 class NetworkedManager : public AbstractManager {
@@ -23,11 +24,8 @@ protected:
 
 public:
 
-    NetworkedManager(int port, char* adress, App* my_app);
-    void init();
-    int create_socket();
-    int connect_to_server(int socket, struct hostent* addr);
-    
+    NetworkedManager(int port, App* my_app);
+
     ~NetworkedManager();
 
 

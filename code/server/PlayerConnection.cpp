@@ -6,11 +6,11 @@
 
 PlayerConnection::PlayerConnection(int id, int socket) : player_id(id), socket_fd(socket){}
 
-int PlayerConnection::getPlayer_id() const {
+int PlayerConnection::getPlayer_id() {
     return player_id;
 }
 
-int PlayerConnection::getSocket_fd() const {
+int PlayerConnection::getSocket_fd()  {
     return socket_fd;
 }
 
@@ -33,4 +33,13 @@ bool PlayerConnection::operator!=(const PlayerConnection &rhs) const {
 
 PlayerConnection::~PlayerConnection() {
 //    close(socket_fd);
+}
+
+
+std::string & PlayerConnection::getUsername() {
+    return username;
+}
+
+void PlayerConnection::setUsername(const std::string &username) {
+    PlayerConnection::username = username;
 }

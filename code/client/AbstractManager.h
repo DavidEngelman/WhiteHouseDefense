@@ -7,11 +7,10 @@ class AbstractManager {
 
 protected:
 
-    App* my_master_app;
-    char* server_ip_address;
+    App* master_app;
 
 public:
-    AbstractManager(char* addr, App* my_app);
+    AbstractManager(App* my_app);
 
     virtual void run() = 0;
     virtual ~AbstractManager();

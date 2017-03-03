@@ -3,7 +3,7 @@
 #include "MatchMaker.hpp"
 
 
-void * launch_account_server(void * bla){
+void * launch_account_server(void * dummy){
     AccountServer accountServer = AccountServer(5555, "database.db");
     accountServer.run();
     return nullptr;

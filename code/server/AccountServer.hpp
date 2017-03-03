@@ -3,6 +3,7 @@
 #include "Database.hpp"
 #include "../common/Credentials.h"
 #include "LoginRegisterCommand.hpp"
+#include "UpdateStatsCommand.h"
 #include "Command.hpp"
 #include "PlayerConnection.hpp"
 #include <algorithm>
@@ -32,10 +33,9 @@ public:
     void *client_handler(int client_sock);
 
     const std::vector<PlayerConnection> &getConnectedPlayers() const;
-
     bool is_player_already_connected(PlayerConnection& player);
-
     void add_connected_player(PlayerConnection& player);
+    bool handle_exit(int player_id);
 
     AccountServer(int port, const char *databaseName);
 
@@ -85,6 +85,8 @@ public:
     bool handle_removeFriend(int client_sock_fd, std::string requester, std::string toRemove);
     bool handle_acceptFriendRequest(int client_sock_fd, std::string requester,std::string toAccept );
     bool handle_declineFriendRequest(int client_sock_fd, std::string requester, std::string toDecline);
+
+    bool handle_accountUpdate(int client_sock_fd);
 
 
 };

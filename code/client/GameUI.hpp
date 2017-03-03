@@ -2,18 +2,39 @@
 #define GAMEUI_HPP
 
 #include "../common/GameState.hpp"
+#include "../common/Map.hpp"
+#include "Drawing.hpp"
+
 
 class GameUI {
+private:
+    Map* map;
 
+	bool checkCoord(int x, int y);
 
 public:
-	void getUserCommands();
+    GameUI(unsigned seed);
 
-	void draw(GameState gameState);
+	Position getPosBuyingTower();
 
-	void showNoInternetError();
+	Map *getMap() const;
 
-	void display();
+	Position getPosSellingTower();
+	int getChoice();
+
+	void display(GameState& gameState, int quadrant);
+	void displayPosingPhase();
+	void displayTowerShop();
+
+	void displayGameOver(GameState& gamestate);
+
+	void displayPlayerInfos(GameState &gameState, int quadrant);
+	void displayInfoForSupporter(GameState& gameState);
+    void sortRanking(PlayerState players[]);
+
+	void display_dead_message();
+
+    void displayPlayersPlacingTowersMessage();
 };
 
 #endif

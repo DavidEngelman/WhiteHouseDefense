@@ -1,11 +1,16 @@
 #include "MatchMaker.hpp"
 
+
 MatchMaker::MatchMaker(int port) : Server(port),
                                    classicPendingMatch(PendingMatch(CLASSIC_MODE)),
                                    timedPendingMatch(PendingMatch(TIMED_MODE)),
-                                   teamPendingMatch(PendingMatch(TEAM_MODE)) {
+                                   teamPendingMatch(PendingMatch(TEAM_MODE)),
+                                   current_server_port(5556){
+
     std::cout << "Constructor" << std::endl;
 };
+
+
 
 void MatchMaker::run() {
     start_socket_listen();
@@ -16,9 +21,6 @@ void MatchMaker::run() {
         client_socket_fd = accept_connection();
         std::cout << "New client in the matchmaking" << std::endl;
 
-        // TODO: demander à l'assistant si il faut toujours des threads/forks pour processus
-        // Fork est pas bon ici
-        // Utiliser threads
         get_and_process_command(client_socket_fd);
     }
 }
@@ -27,10 +29,32 @@ void MatchMaker::get_and_process_command(int socket_fd) {
     char command_buffer[BUFFER_SIZE];
     receive_message(socket_fd, command_buffer);
 
-    MatchmakingCommand matchmakingCommand(socket_fd);
-    matchmakingCommand.parse(command_buffer);
+    Command command;
+    command.parse(command_buffer);
 
-    addPlayerToPendingMatch(matchmakingCommand.getPlayerConnection(), matchmakingCommand.getMode());
+    if (command.getAction() == GAME_IN_PROGRESS_REQUEST) {
+        handleRequestFromSpectator(socket_fd);
+    }
+    else if(command.getAction() == "PopGame"){
+        removeGameFromGamesInProgress(stoi(command.getNextToken()));
+    }
+    else {
+        MatchmakingCommand matchmakingCommand(socket_fd);
+        matchmakingCommand.parse(command_buffer);
+
+        addPlayerToPendingMatch(matchmakingCommand.getPlayerConnection(), matchmakingCommand.getMode());
+    }
+}
+
+void MatchMaker::handleRequestFromSpectator(int socket_fd) {
+    std::string stringToSend;
+    for( GameServer* gameServer : activeGames) {
+        stringToSend += std::to_string(gameServer->getPort()) + ",";
+        stringToSend += gameServer->getMode() + ",";
+        stringToSend += gameServer->getAllPlayers();
+    }
+
+    send_message(socket_fd, stringToSend.c_str());
 }
 
 void MatchMaker::addPlayerToPendingMatch(PlayerConnection player_connection, std::string mode) {
@@ -53,36 +77,47 @@ PendingMatch &MatchMaker::getMatch(std::string mode) {
     } else if (mode == TEAM_MODE) {
         return teamPendingMatch;
     } else {
-        // TODO: give a null return value instead of throwing an exception
         perror("Invalid match mode");
     }
 }
 
 
 void MatchMaker::launchMatch(PendingMatch match) {
-    launchGameServer(match);
+    ++current_server_port;
+    launchGameServerThread(match);
     const std::vector<PlayerConnection> &players = match.getPlayerConnections();
     for (auto iterator = players.begin(); iterator != players.end(); iterator++) {
         announceMatchStart(*iterator);
     }
 }
 
-void MatchMaker::launchGameServer(PendingMatch& match) {
-    // TODO: completer une fois qu'il y a la classe GameServer
+void MatchMaker::launchGameServer(PendingMatch match) {
+    GameServer* game_server = new GameServer(current_server_port,  match.getPlayerConnections(), match.getMode());
+    activeGames.push_back(game_server);
+    game_server->run();
+}
+
+void MatchMaker::launchGameServerThread(PendingMatch& match){
+
+    std::thread t1 (&MatchMaker::launchGameServer, this, match);
+    t1.detach();
+
 }
 
 void MatchMaker::announceMatchStart(PlayerConnection playerConnection) {
-    //TODO
-    /*
-     * Un truc du genre:
-     * send_message(player, MATCHSTARTING) //Ou MATCHSTARTING serait un nombre (par exemple 32) et du coté du MainManager
-     *                                     // on saurait que 32 veut dire afficher :"La partie va commencer"
-     *                                     //Je ferais ca demain je suis fatigué
-     */
-    // Pour l'instant, ça envoie un bete string
 
-    // TODO: si il y a plusieurs servers de jeu d'un meme mode, il faudra trouver un moyen de
-    // lui signaler vers lequel il doit parler
 
     send_message(playerConnection.getSocket_fd(), GAME_STARTING_STRING);
+    send_data(playerConnection.getSocket_fd(), (char *) &current_server_port, sizeof(int));
 }
+
+void MatchMaker::removeGameFromGamesInProgress(int port) {
+    std::vector<GameServer*>::iterator gameserverIter;
+    for (gameserverIter = activeGames.begin(); gameserverIter != activeGames.end(); gameserverIter++){
+        if ((*gameserverIter)->getPort() == port) {
+            activeGames.erase(gameserverIter);
+            break;
+        }
+    }
+}
+

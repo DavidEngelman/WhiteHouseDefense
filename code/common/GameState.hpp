@@ -5,34 +5,65 @@
 #include "PlayerState.hpp"
 #include "AbstractTower.hpp"
 #include "PNJ.hpp"
-#include "Map.hpp"
 #include "Wave.h"
 #include "../common/Strings.hpp"
 
 const static std::vector<std::string> validModes = {CLASSIC_MODE, TEAM_MODE, TIMED_MODE};
 
+class AbstractTower; // Ah, les dependences circulaires :(
+
+/*
+ * Represents the changing parts of the game: the towers, the waves and NPCs, the player
+ * states (money, life, ...).
+ */
 class GameState {
-	std::vector<PlayerState> player_states;
-	std::vector<AbstractTower>       towers;
+private:
+
+    std::vector<PlayerState> player_states;
+    std::vector<AbstractTower *> towers;
     std::vector<Wave> waves;
+    bool isGameOver;
 
     std::string mode;
 
-    Map map;
 
 public:
 
-    std::string serialize();
 
-    bool is_only_one_alive();
+    GameState();
+    GameState(std::string mode);
 
-    bool isFinished();
+    ~GameState();
 
-    void decrease_player_hp(PlayerState &player, int amount);
+    bool getIsGameOver() const;
 
-    void increase_player_hp(PlayerState &player, int amount);
+    void setIsGameOver(bool isGameOver);
 
-    void add_tower(Position position);
+    std::string &getMode();
+
+    std::vector<Wave> &getWaves();
+
+    void addWave(Wave wave);
+
+    void clearWaves();
+
+    std::vector<AbstractTower *> &getTowers();
+
+    void addTower(AbstractTower *tower, int& quadrant);
+
+    std::vector<PlayerState> &getPlayerStates();
+
+    std::string * serialize();
+
+    int numPlayersAlive();
+
+    void setGameMode(std::string _mode);
+
+
+    void DecreasePlayerHp(PlayerState &player, int amount);
+
+    void IncreasePlayerHp(PlayerState &player, int amount);
+
 
     // Cette fonction aussi
     void updateGameState(int commands);
@@ -43,7 +74,18 @@ public:
     // où est cette classe comptabilise le temps écoulé et fait les calculs pour voir de combien
     // les mexicains ont avancé (entre autres)
 
-    bool isWaveFinished();
+    bool isRoundFinished();
+
+    int getWinnerClassic();
+
+    bool isPlayerAlive(const int quadrant);
+
+
+    void addPlayerState(PlayerState &state);
+
+    void deleteTower(Position &position, int &quadrant);
+
+    void upgradeTower(Position &position, int &quadrant);
 };
 
 #endif

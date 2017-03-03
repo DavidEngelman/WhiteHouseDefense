@@ -1,13 +1,24 @@
 #ifndef PROJET_STRINGS_HPP
 #define PROJET_STRINGS_HPP
 
+#include <string>
+
 #define GAME_STARTING_STRING "GameStarting"
 #define CLASSIC_MODE "ClassicMode"
 #define TIMED_MODE "TimedMode"
 #define TEAM_MODE "TeamMode"
 
+#define GAME_IN_PROGRESS_REQUEST "games"
 
-#define PLACE_TOWER_COMMAND_STRING "PlaceTower"
+static const std::string PLACE_TOWER_COMMAND_STRING =  "PlaceTower";
+static const std::string DELETE_TOWER_COMMAND_STRING  = "DeleteTower";
+static const std::string UPGRADE_TOWER_COMMAND_STRING = "UpgradeTower";
+
+static const std::string JOIN_GAME_AS_SPECTATOR = "Support";
+static const std::string SUPPORT_PLAYER_STRING = "SupportPlayer";
+
+#define SETUP_GAME "SetupGame"
+#define END_OF_GAME "end"
 
 #define GET_FRIENDLIST "getFriendList;"
 #define GET_FRIEND_REQUESTS "getFriendRequests;"
@@ -17,5 +28,9 @@
 #define ACCEPT_FRIEND_REQUEST "acceptFriendRequest;"
 #define DECLINE_FRIEND_REQUEST "declineFriendRequest;"
 #define GET_PROFILE "getProfileByUsername;"
+
+
+#define GUN_TOWER_STR "GunTower"
+#define SNIPER_TOWER_STR "SniperTower"
 
 #endif //PROJET_STRINGS_HPP

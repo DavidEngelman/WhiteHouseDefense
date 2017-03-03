@@ -4,7 +4,7 @@
 AccountServer::AccountServer(int port, const char *databaseName) : Server(port), myDatabase(Database(databaseName)) {}
 
 void* AccountServer::client_handler(int client_sock) {
-
+    std::cout << "Handling new client" << std::endl;
     char message_buffer[BUFFER_SIZE];
     get_and_process_command(client_sock, message_buffer);
 
@@ -18,7 +18,7 @@ void AccountServer::run() {
     while (1) {
 
         newClient = accept_connection();
-        std::cout << "New client connected wouhouuu" << std::endl;
+        //std::cout << "New client connected wouhouuu" << std::endl;
         //add_new_client(newClient); Je laisse ca la au cas ou
 
         std::thread t1(&AccountServer::client_handler, this, newClient);
@@ -251,8 +251,10 @@ void AccountServer::get_and_process_command(int client, char* message_buffer) {
         if (!success) {
             return;
         }
-
-        std::string command_type = get_command_type(message_buffer);
+        
+        Command command;
+        command.parse(message_buffer);
+        std::string command_type = command.getAction();
 
         if ((command_type == "login") || (command_type == "register")) {
 
@@ -270,11 +272,6 @@ void AccountServer::get_and_process_command(int client, char* message_buffer) {
                 // Show "unknown command" error
             }
         } else if (command_type == "ranking") {
-
-            //Si on est dans le cas ou un user veut voir le ranking
-
-            Command command;
-            command.parse(message_buffer);
             ok = handle_ranking(client);
 
         } else if (command_type == "getProfileByUsername") {
@@ -320,6 +317,13 @@ void AccountServer::get_and_process_command(int client, char* message_buffer) {
 
                 handle_declineFriendRequest(client, friendListCommand.getRequester(), friendListCommand.getReceiver());
             }
+
+        } else if (command_type == "Update"){
+            ok = handle_accountUpdate(client);
+
+        } else if(command_type == "Exit"){
+            int id = stoi(command.getNextToken());
+            ok = handle_exit(id);
         }
     }
 }
@@ -337,6 +341,32 @@ bool AccountServer::is_player_already_connected(PlayerConnection& player){
     return (std::find(connectedPlayers.begin(), connectedPlayers.end(), player) != connectedPlayers.end());
 }
 
+/*
+ *Remove a player from the connected players (using his ID as identifier)
+*/
+bool AccountServer::handle_exit(int player_id){
+    
+    std::vector<PlayerConnection>::iterator iter;
+    for (iter = connectedPlayers.begin(); iter != connectedPlayers.end(); iter++){
+        if ((*iter).getPlayer_id() == player_id) {
+            connectedPlayers.erase(iter);
+            break;
+        }
+    }
+}
+
+
+bool AccountServer::handle_accountUpdate(int client_sock_fd) {
+    char message[BUFFER_SIZE];
+    for (int i = 0; i < 4; ++i) {
+        //Recevoir les infos des 4 joueurs de la game
+        receive_message(client_sock_fd, message);
+        UpdateStatsCommand command;
+        command.parse(message);
+        myDatabase.updateAfterGameStats(command.getPlayerId(), command.getPnjKilled(), command.getIsWinner());
+    }
+    return true;
+}
 
 
 

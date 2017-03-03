@@ -7,15 +7,15 @@ ssize_t receive_data(int socket_fd, void *message, int length) {
     return recv(socket_fd, message, (size_t) length, 0);
 }
 
-char *get_data_from_socket(int socket_fd, char *buffer, int size) {
+int get_data_from_socket(int socket_fd, char *buffer, int size) {
     ssize_t data_bytes_read = receive_data(socket_fd, buffer, size);
 
     if (data_bytes_read == -1) {
         perror("Receive: packet data");
-        exit(EXIT_FAILURE);
+        return -1;
     }
 
-    return buffer;
+    return (int) data_bytes_read;
 }
 
 int get_message_length(int socket_fd) {
@@ -30,7 +30,7 @@ int get_message_length(int socket_fd) {
 
     if (length_bytes_read == -1) {
         perror("Receive: packet length");
-        exit(EXIT_FAILURE);
+        return -1;
     } else if (length_bytes_read == 0){
         // Le client a fermé le socket
         return -1;
@@ -72,8 +72,7 @@ int receive_message(int socket_fd, char *buffer) {
 
 //    ensure_buffer_is_big_enough(buffer, length);
 
-    get_data_from_socket(socket_fd, buffer, length);  // Gets the data
-    return length;
+    return get_data_from_socket(socket_fd, buffer, length);  // Gets the data
 }
 
 /*
@@ -106,16 +105,64 @@ bool receive_message_with_timeout(int socket_fd, char *buffer, int timeout_val){
 // Send
 
 void send_data(int socket_fd, char *buffer, int length){
-    if (send(socket_fd, buffer, sizeof(length), 0) == - 1) {
+    if (send(socket_fd, buffer, sizeof(length), MSG_NOSIGNAL) == - 1) {
         perror("Send");
     }
 }
 
-void send_message(int socket_fd, const char *message) {
+int send_message(int socket_fd, const char *message) {
     size_t length = strlen(message) + 1;
-    std::cout << "Sending message of size (including \\0) of " << length << " bytes" << std::endl;
-    send(socket_fd, &length, sizeof(length), 0); // Send the length
-    send(socket_fd, message, length, 0);         // Send the data
+    //std::cout << "Sending message of size (including \\0) of " << length << " bytes" << std::endl;
+    //std::cout << "Message: " << message << std::endl;
+    if (send(socket_fd, &length, sizeof(length), MSG_NOSIGNAL) == -1){
+        return -1;
+    } // Send the length
+    if (send(socket_fd, message, length, MSG_NOSIGNAL) == -1){
+        return -1;
+    }        // Send the data
+    return (int) length;
     //TODO remmettre send_data mais y avait un probleme
 }
 
+int init_connection_to_server(char* server_ip_address, int port){
+    struct hostent *he;
+    int serv_socket;
+    if ((he=gethostbyname(server_ip_address)) == NULL) {
+        perror("gethostbyname");
+        exit(1);
+    }
+
+    serv_socket = create_socket();
+    if (connect_to_server(serv_socket, port, he) == -1) {
+        perror("connect");
+        exit(1);
+    }
+    return serv_socket;
+}
+
+int create_socket() {
+    int sockfd;
+
+    if ((sockfd = socket(AF_INET, SOCK_STREAM, 0)) == -1) {
+        perror("socket");
+        exit(1);
+    }
+
+    return sockfd;
+
+}
+
+/*
+ * Returns the socket_fd created by the connect call.
+ */
+int connect_to_server(int socket, int port, struct hostent *addr) {
+    struct sockaddr_in their_addr;
+
+    their_addr.sin_family = AF_INET;    // host byte order
+    their_addr.sin_port = htons(port);  // short, network byte order
+    their_addr.sin_addr = *((struct in_addr *)addr->h_addr);
+
+    memset(&(their_addr.sin_zero), '\0', 8);  // zero the rest of the struct
+
+    return connect(socket, (struct sockaddr *)&their_addr, sizeof(struct sockaddr));
+}

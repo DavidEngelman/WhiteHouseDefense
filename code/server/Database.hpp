@@ -43,6 +43,7 @@ public:
     static int callback_FriendList(void *ptr, int argc, char **argv, char **azColName);
 
     int open();
+    int exec(const char *query, int (*callback)(void*,int,char**,char**), void * data, char * ErrMsg );
     int insert_account(Credentials credentials);
     int get_nb_entries();
     bool is_identifiers_valid(Credentials credentials);
@@ -59,11 +60,9 @@ public:
     int removeFriend(std::string username, std::string toRemove);
     int declineFriendRequest(std::string username, std::string toDecline);
 
+    void updateAfterGameStats(int id, int pnjKilled, bool isWinner);
 
 
-    void update_record();
-    void delete_record();
-    void testMethod();
 
     virtual ~Database();
 
