@@ -17,15 +17,16 @@ xdotool type "./server"
 xdotool key "Return"
 xdotool key ctrl+Page_Down
 
-if [ $1 == "REGISTER" ]
+if [ "$1" = "REGISTER" ]
 then
+	echo d1
     xdotool type "2"
     xdotool key "Return"
     xdotool key alt+o
 
     for i in `seq 1 4`;
     do
-        for i in `seq 1 4`;
+        for j in `seq 1 4`;
         do
             xdotool type ${i}
             xdotool key "Return"
@@ -33,13 +34,14 @@ then
         xdotool key ctrl+shift+n
     done
 else
+	echo d2
     xdotool type "1"
     xdotool key "Return"
-    xdotool key alt+o
+    xdotool key ctrl+o
 
     for i in `seq 1 4`;
     do
-        for i in `seq 1 2`;
+        for j in `seq 1 2`;
         do
             xdotool type ${i}
             xdotool key "Return"
@@ -48,6 +50,9 @@ else
     done
 fi
 
-xdotool key alt+g
+xdotool key ctrl+g
 xdotool type "1"
+xdotool key "Return"
 xdotool type "1"
+xdotool key "Return"
+xdotool key ctrl+o
