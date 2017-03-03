@@ -366,7 +366,14 @@ void GameServer::endConnection(int fd) {
     for (iter = playerConnections.begin(); iter != playerConnections.end(); iter++){
         if ((*iter).getSocket_fd() == fd) {
             playerConnections.erase(iter);
-            break;
+            return;
+        }
+    }
+
+    for (auto iter2 = supportersSockets.begin(); iter2 != supportersSockets.end(); iter2++) {
+        if ((*iter2) == fd) {
+            supportersSockets.erase(iter2);
+            return;
         }
     }
 
@@ -388,5 +395,12 @@ bool GameServer::socketIsActive(int fd) {
             return true;
         }
     }
+
+    for (int socket: supportersSockets) {
+        if (socket == fd) {
+            return true;
+        }
+    }
+
     return false;
 }
