@@ -56,11 +56,10 @@ void GameEngine::dealDamageToBase() {
             if (pnj.isInPlayerBase()) {
                 if (!DEBUG) player_state.decrease_hp(PNJ_DAMAGE);
                 pnj.setHealthPoints(0);
-                // TODO: Faudrait enlever ces PNJ de la vague...
-                // C'est fait dans updateWaves au round suivant, mais c'est pas evident tout de suite
+                // On enleve pas les PNJ morts dans le vagues maintenant, parce que ça va
+                // être fait dans updateWaves au round suivant
             }
         }
-        //wave.removeDeadPNJs();
     }
 }
 

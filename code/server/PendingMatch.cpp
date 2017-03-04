@@ -1,8 +1,5 @@
 #include "PendingMatch.h"
 
-// TODO: bien reflechir à ce qu'on garde comme information dans le std::vector
-// Choisir et puis écrire pourquoi on a choisi ça
-
 PendingMatch::PendingMatch(std::string modeName) : mode(modeName) {}
 
 const std::string &PendingMatch::getMode() const {

@@ -115,10 +115,7 @@ void GameServer::runWave() {
     while (!isWaveFinished) {
         while (!isWaveFinished && timer.elapsedTimeInMiliseconds() < INTERVAL_BETWEEN_SENDS_IN_MS) {
             isWaveFinished = gameEngine->update();
-            // TODO: mettre peut etre un sleep ici? on ne va pas faire des tonnes de updates de toute facon
-            usleep(100); // C'est en microsecondes
-            // car si gameEngine voit que pas assez de temps s'est ecoulé depuis le tick precedent,
-            // il ne fait rien
+            usleep(100); // Pour eviter d'appeller update des tonnes de fois par tick. C'est en microsecondes
         }
 
         if (DEBUG){

@@ -148,5 +148,3 @@ void GameUI::displayPlayersPlacingTowersMessage() {
     std::cout << "Please wait. The remaining players are placing towers" << std::endl;
 }
 
-/* TODO: En mode par équipe, les équipes sont: NORTH & EAST, SOUTH & WEST. Adapter l'UI en mode par équipe pour
- * afficher cette information (et peut etre afficher la map du coequipier de facon differente) */
