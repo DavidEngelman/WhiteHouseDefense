@@ -9,7 +9,12 @@ If you run the script without any argument, you will be automatically connected 
 Usage :
     ./exe.sh [SHOW] [REGISTER] [PLAY] [GAMEMODE]
 
+    /!\ The order is important so do not type in : ./exe.sh REGISTER SHOW /!\
+
 How to use the script :
+
+If you want to put all the clients in new tabs instead of dividing the screen by 4 :
+    ./exe.sh SHOW
 
 If you want to register the accounts "1", "2", "3", "4" :
     ./exe.sh REGISTER
@@ -25,19 +30,19 @@ If you want to launch a team game run this command :
 '
 
 function forAllClients {
-
-    if [ show = "SHOW" ]
+    if [ "${show}" = "SHOW" ]
     then
         for i in `seq 1 4`;
         do
-            xdotool type "$1"
+            xdotool type --delay 100 "$1"
             xdotool key "Return"
+            sleep 1
             xdotool key ctrl+Page_Down
         done
-        xdotool key ctrl+Page_Down
+        xdotool key ctrl+Page_Down # Jump over the server tab
     else
         xdotool key alt+g
-        xdotool type "$1"
+        xdotool type --delay 100 "$1"
         xdotool key "Return"
         xdotool key alt+o
     fi
@@ -50,12 +55,19 @@ then
 else
     xdotool key ctrl+super+Up
 fi
+sleep 1
 
 show=""
 if [ "$1" = "SHOW" ]
 then
+    # Open 3 tabs
     show="SHOW"
     xdotool key ctrl+shift+t
+    sleep 1
+    xdotool key ctrl+shift+t
+    sleep 1
+    xdotool key ctrl+shift+t
+    sleep 1
     shift
 else
     # Divide the terminal in 4
@@ -73,19 +85,24 @@ else
     xdotool key super+g
 fi
 
+# Create a new tab and run the server
+xdotool key ctrl+shift+t
+sleep 1
+xdotool type --delay 100 "cd ~/CLionProjects/Group4/cmake-build-debug/code/"
+xdotool key "Return"
+xdotool type --delay 100 "./server"
+xdotool key "Return"
+sleep 1
+xdotool key ctrl+Page_Down
+
 # Run all the clients
 forAllClients "cd ~/CLionProjects/Group4/cmake-build-debug/code/"
 forAllClients "./client 127.0.0.1"
 
-# Create a new tab and run the server
-xdotool key ctrl+shift+t
-xdotool type "./server"
-xdotool key "Return"
-xdotool key ctrl+Page_Down
-
 
 if [ "$1" = "REGISTER" ]
 then
+    echo REGISTER
     forAllClients "2"
 
     # Register all the players
@@ -93,10 +110,22 @@ then
     do
         for j in `seq 1 2`;
         do
-            forAllClients ${i}
+            xdotool type ${i}
+            xdotool key "Return"
         done
-        xdotool key ctrl+shift+n
+
+        if [ "${show}" = "SHOW" ]
+        then
+            xdotool key ctrl+Page_Down
+        else
+            xdotool key ctrl+shift+n
+        fi
+        sleep 1
     done
+    if [ "${show}" = "SHOW" ]
+    then
+        xdotool key ctrl+Page_Down
+    fi
 
     shift
 else
@@ -108,10 +137,22 @@ for i in `seq 1 4`;
 do
     for j in `seq 1 2`;
     do
-        forAllClients ${i}
+        xdotool type ${i}
+        xdotool key "Return"
     done
-    xdotool key ctrl+shift+n
+
+    if [ "${show}" = "SHOW" ]
+    then
+        xdotool key ctrl+Page_Down
+    else
+        xdotool key ctrl+shift+n
+    fi
+    sleep 1
 done
+if [ "${show}" = "SHOW" ]
+then
+    xdotool key ctrl+Page_Down
+fi
 
 # Launch a game
 if [ "$1" = "PLAY" ]
