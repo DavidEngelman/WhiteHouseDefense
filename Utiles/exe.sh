@@ -3,11 +3,10 @@
 : '
 /!\ YOU MUST RUN THIS SCRIPT ON TERMINATOR /!\
 
-If you run the script without any argument, you will be automatically connected to 4 account :
-"1", "2", "3", "4"
+If you run the script without any argument, it will launche 4 clients and 1 server
 
 Usage :
-    ./exe.sh [SHOW] [REGISTER] [PLAY] [GAMEMODE]
+    ./exe.sh [SHOW] [REGISTER] [LOGIN] [PLAY] [GAMEMODE]
 
     /!\ The order is important so do not type in : ./exe.sh REGISTER SHOW /!\
 
@@ -132,45 +131,56 @@ then
 
     shift
 else
-    forAllClients "1"
+    if [ "$1" = "LOGIN" ]
+    then
+        forAllClients "1"
+    fi
 fi
 
-# Connect all the players
-for i in `seq 1 4`;
-do
-    for j in `seq 1 2`;
+if [ "$1" = "LOGIN" ] || [ "$1" = "PLAY" ]
+then
+    # Connect all the players
+    for i in `seq 1 4`;
     do
-        xdotool type ${i}
-        xdotool key "Return"
-    done
+        for j in `seq 1 2`;
+        do
+            xdotool type ${i}
+            xdotool key "Return"
+        done
 
+        if [ "${show}" = "SHOW" ]
+        then
+            xdotool key ctrl+Page_Down
+        else
+            xdotool key ctrl+shift+n
+        fi
+        sleep 1
+    done
     if [ "${show}" = "SHOW" ]
     then
         xdotool key ctrl+Page_Down
-    else
-        xdotool key ctrl+shift+n
     fi
-    sleep 1
-done
-if [ "${show}" = "SHOW" ]
-then
-    xdotool key ctrl+Page_Down
-fi
 
-# Launch a game
-if [ "$1" = "PLAY" ]
-then
-    forAllClients "1"
-
-    shift
-
-    if [ "$1" = "TEAM" ]
+    if [ "$1" = "LOGIN" ]
     then
-        forAllClients "3"
-    elif [ "$1" = "TIMED" ]
+        shift
+    fi
+
+    # Launch a game
+    if [ "$1" = "PLAY" ]
     then
-        forAllClients "2"
-    else
         forAllClients "1"
+
+        shift
+
+        if [ "$1" = "TEAM" ]
+        then
+            forAllClients "3"
+        elif [ "$1" = "TIMED" ]
+        then
+            forAllClients "2"
+        else
+            forAllClients "1"
+        fi
     fi
 fi

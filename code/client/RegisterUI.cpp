@@ -17,7 +17,7 @@ void RegisterUI::ask_username() {
 }
 
 void RegisterUI::ask_password() {
-    std::cout << "   Enter a password:" << std::endl << "   ";
+    std::string confirm;
 
     // Disable the echo when entering the password
     termios oldt;
@@ -26,16 +26,31 @@ void RegisterUI::ask_password() {
     newt.c_lflag &= ~ECHO;
     tcsetattr(STDIN_FILENO, TCSANOW, &newt);
 
+    std::cout << "   Enter a password:" << std::endl << "   ";
     std::cin >> password_entry;
+    std::cout << std::endl;
+
+    std::cin.clear();
+    std::cin.ignore();
+
+    std::cout << "   Confirm your password:" << std::endl << "   ";
+    std::cin >> confirm;
+
+    std::cin.clear();
+    std::cin.ignore();
 
     // Enable the echo
     tcsetattr(STDIN_FILENO, TCSANOW, &oldt);
 
-    std::cin.clear();
-    std::cin.ignore();
-    password_entry = crypt(password_entry.c_str(), "g4");
-    for (unsigned i = 0; i < password_entry.length(); i++) {
-        if (password_entry[i] == ',' || password_entry[i] == ';') password_entry.erase(i);
+    if (confirm != password_entry) {
+        Drawing::drawWhiteHouse("REGISTER SCREEN");
+        std::cout << "   ERROR : Your password doesn't correspond to the confirmation" << std::endl;
+        display();
+    } else {
+        password_entry = crypt(password_entry.c_str(), "g4");
+        for (unsigned i = 0; i < password_entry.length(); i++) {
+            if (password_entry[i] == ',' || password_entry[i] == ';') password_entry.erase(i);
+        }
     }
 }
 
