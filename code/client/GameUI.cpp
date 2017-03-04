@@ -1,7 +1,6 @@
 #include "GameUI.hpp"
 #include <iostream>
 #include "../common/Tools.hpp"
-#include "../common/Constants.h"
 
 
 GameUI::GameUI(unsigned seed) : map(new Map(seed)) {}
@@ -58,7 +57,7 @@ void GameUI::displayPlayerInfos(GameState &gameState, int quadrant) {
     int hp = gameState.getPlayerStates()[quadrant].getHp();
     bool isSupported = gameState.getPlayerStates()[quadrant].getIsSupported();
 
-    std::string infos = "Money: " + std::to_string(gold) + "\tNPC killed: " + std::to_string(pnj_killed)
+    std::string infos = "Money: " + std::to_string(gold) + " $ " + "\tNPC killed: " + std::to_string(pnj_killed)
     +"\nHP: " + std::to_string(hp) + "\tSupported: " + bool_to_string(isSupported) +
     "\t Quadrant: " + QUADRANT_NAMES[quadrant];
 
