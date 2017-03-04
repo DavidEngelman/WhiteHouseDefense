@@ -1,6 +1,3 @@
-//
-//
-
 #include "PlayerConnection.hpp"
 #include "../common/Networking.h" //for close
 

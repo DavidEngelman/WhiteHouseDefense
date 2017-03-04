@@ -5,11 +5,10 @@ MatchMaker::MatchMaker(int port) : Server(port),
                                    classicPendingMatch(PendingMatch(CLASSIC_MODE)),
                                    timedPendingMatch(PendingMatch(TIMED_MODE)),
                                    teamPendingMatch(PendingMatch(TEAM_MODE)),
-                                   current_server_port(5556){
+                                   current_server_port(5556) {
 
     std::cout << "Constructor" << std::endl;
 };
-
 
 
 void MatchMaker::run() {
@@ -17,7 +16,6 @@ void MatchMaker::run() {
     int client_socket_fd;
 
     while (1) {
-
         client_socket_fd = accept_connection();
         std::cout << "New client in the matchmaking" << std::endl;
 
@@ -34,11 +32,9 @@ void MatchMaker::get_and_process_command(int socket_fd) {
 
     if (command.getAction() == GAME_IN_PROGRESS_REQUEST) {
         handleRequestFromSpectator(socket_fd);
-    }
-    else if(command.getAction() == "PopGame"){
+    } else if (command.getAction() == "PopGame") {
         removeGameFromGamesInProgress(stoi(command.getNextToken()));
-    }
-    else {
+    } else {
         MatchmakingCommand matchmakingCommand(socket_fd);
         matchmakingCommand.parse(command_buffer);
 
@@ -48,7 +44,7 @@ void MatchMaker::get_and_process_command(int socket_fd) {
 
 void MatchMaker::handleRequestFromSpectator(int socket_fd) {
     std::string stringToSend;
-    for( GameServer* gameServer : activeGames) {
+    for (GameServer *gameServer : activeGames) {
         stringToSend += std::to_string(gameServer->getPort()) + ",";
         stringToSend += gameServer->getMode() + ",";
         stringToSend += gameServer->getAllPlayers();
@@ -58,7 +54,7 @@ void MatchMaker::handleRequestFromSpectator(int socket_fd) {
 }
 
 void MatchMaker::addPlayerToPendingMatch(PlayerConnection player_connection, std::string mode) {
-    PendingMatch& match = getMatch(mode);
+    PendingMatch &match = getMatch(mode);
     match.add_player_to_queue(player_connection);
     std::cout << "player_added" << std::endl;
     std::cout << match.getPlayerConnections().size() << std::endl;
@@ -92,28 +88,26 @@ void MatchMaker::launchMatch(PendingMatch match) {
 }
 
 void MatchMaker::launchGameServer(PendingMatch match) {
-    GameServer* game_server = new GameServer(current_server_port,  match.getPlayerConnections(), match.getMode());
+    GameServer *game_server = new GameServer(current_server_port, match.getPlayerConnections(), match.getMode());
     activeGames.push_back(game_server);
     game_server->run();
 }
 
-void MatchMaker::launchGameServerThread(PendingMatch& match){
+void MatchMaker::launchGameServerThread(PendingMatch &match) {
 
-    std::thread t1 (&MatchMaker::launchGameServer, this, match);
+    std::thread t1(&MatchMaker::launchGameServer, this, match);
     t1.detach();
 
 }
 
 void MatchMaker::announceMatchStart(PlayerConnection playerConnection) {
-
-
     send_message(playerConnection.getSocket_fd(), GAME_STARTING_STRING);
     send_data(playerConnection.getSocket_fd(), (char *) &current_server_port, sizeof(int));
 }
 
 void MatchMaker::removeGameFromGamesInProgress(int port) {
-    std::vector<GameServer*>::iterator gameserverIter;
-    for (gameserverIter = activeGames.begin(); gameserverIter != activeGames.end(); gameserverIter++){
+    std::vector<GameServer *>::iterator gameserverIter;
+    for (gameserverIter = activeGames.begin(); gameserverIter != activeGames.end(); gameserverIter++) {
         if ((*gameserverIter)->getPort() == port) {
             activeGames.erase(gameserverIter);
             break;

@@ -4,8 +4,7 @@
 #include <string>
 
 
-
-class PlayerConnection{
+class PlayerConnection {
 
 private:
     int player_id;
@@ -20,9 +19,9 @@ public:
 
     PlayerConnection(int id, int socket);
 
-    int getPlayer_id() ;
+    int getPlayer_id();
 
-    int getSocket_fd() ;
+    int getSocket_fd();
 
     void setPlayer_id(int player_id);
 
