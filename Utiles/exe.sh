@@ -85,7 +85,8 @@ else
     xdotool key super+g
 fi
 
-executableDirectory="~/MEGAsync/GitProjects/Group4/cmake-build-debug/code/"
+#executableDirectory="~/MEGAsync/GitProjects/Group4/cmake-build-debug/code/"
+executableDirectory="~/CLionProjects/Group4/cmake-build-debug/code/"
 
 # Create a new tab and run the server
 xdotool key ctrl+shift+t
