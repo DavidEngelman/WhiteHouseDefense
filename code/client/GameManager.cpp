@@ -130,7 +130,12 @@ void GameManager::sendSellRequest(Position towerPos) {
 
 void GameManager::run() {
     gameUI.display(gameState, quadrant);
-    gameUI.displayPlayerInfos(gameState, quadrant);
+
+    if (!isSupporter)
+        gameUI.displayPlayerInfos(gameState, quadrant);
+    else
+        gameUI.displayInfoForSupporter(gameState);
+
     char server_msg_buff [BUFFER_SIZE];
 
     while(!gameState.getIsGameOver()) {

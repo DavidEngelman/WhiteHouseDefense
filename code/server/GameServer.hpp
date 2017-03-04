@@ -19,10 +19,8 @@ static const int NUM_PLAYERS = 4;
 static const int NUM_SECONDS_TO_PLACE_TOWER = 20;
 static const int INTERVAL_BETWEEN_SENDS_IN_MS = 200;
 
-static std::mutex mtx;
 
-
-class   GameServer : public Server {
+class GameServer : public Server {
 
 private:
 
