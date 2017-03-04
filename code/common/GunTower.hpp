@@ -1,7 +1,3 @@
-//
-// Created by jepsiko on 02/03/17.
-//
-
 #ifndef PROJET_GUNTOWER_H
 #define PROJET_GUNTOWER_H
 

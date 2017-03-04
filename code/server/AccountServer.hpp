@@ -11,16 +11,6 @@
 
 #define ALREADY_CO "-2"
 
-/* Ceci serait peut être mieux, je ne suis pas sur...
-
-typedef struct Command {
-    std::string action;
-    std::string username;
-    std::string password;
-};
-
- * */
-
 class AccountServer : public Server {
 
 private:
@@ -55,7 +45,6 @@ public:
     void send_already_connected_error(int client_sock);
 
 
-    void parse_command(char *data, Command *command);
 
     bool handle_login(Credentials credentials, int client_sock_fd);
 

@@ -59,27 +59,9 @@ public:
 
     void setGameMode(std::string _mode);
 
-
-    void DecreasePlayerHp(PlayerState &player, int amount);
-
-    void IncreasePlayerHp(PlayerState &player, int amount);
-
-
-    // Cette fonction aussi
-    void updateGameState(int commands);
-
-    // Par contre il faudra une fonction pour faire évoluer l'état du jeu lors d'une vague.
-    // genre: void updateGameState(int timeEllaped);
-    // ou tout simplement: void updateGameState();
-    // où est cette classe comptabilise le temps écoulé et fait les calculs pour voir de combien
-    // les mexicains ont avancé (entre autres)
-
     bool isRoundFinished();
 
-    int getWinnerClassic();
-
     bool isPlayerAlive(const int quadrant);
-
 
     void addPlayerState(PlayerState &state);
 

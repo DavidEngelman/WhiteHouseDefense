@@ -1,32 +1,26 @@
-//
-// Created by david on 11/02/17.
-//
-
 #include "Database.hpp"
 
-Database::Database(const char* filename) : filename(filename) {
+Database::Database(const char *filename) : filename(filename) {
     open();
 }
 
 int Database::open() {
     rc = sqlite3_open(filename, &db);
 
-    if( rc ){
+    if (rc) {
         fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
-        return(-1);
-    }
-
-    else{
+        return (-1);
+    } else {
         fprintf(stderr, "Opened database successfully\n");
     }
     return 0;
 
 }
 
-int Database::exec(const char *query, int (*callback)(void*,int,char**,char**), void * data, char * ErrMsg ) {
+int Database::exec(const char *query, int (*callback)(void *, int, char **, char **), void *data, char *ErrMsg) {
 
     rc = sqlite3_exec(db, query, callback, data, &ErrMsg);
-    if( rc != SQLITE_OK ){
+    if (rc != SQLITE_OK) {
         fprintf(stderr, "SQL error: %s\n", ErrMsg);
         sqlite3_free(ErrMsg);
         return -1;
@@ -34,24 +28,24 @@ int Database::exec(const char *query, int (*callback)(void*,int,char**,char**), 
     return 0;
 }
 
-int Database::callback_ranking(void *ptr, int argc, char **argv, char **azColName){
+int Database::callback_ranking(void *ptr, int argc, char **argv, char **azColName) {
     std::vector<RankingInfos> *list = reinterpret_cast<std::vector<RankingInfos> *>(ptr);
     RankingInfos res;
     res.username = argv[0];
-    res.victories= atoi(argv[1]);
+    res.victories = atoi(argv[1]);
     list->push_back(res);
     return 0;
 }
 
-int Database::callback_counter(void *count, int argc, char **argv, char **azColName){
-    int *c = (int*)count;
+int Database::callback_counter(void *count, int argc, char **argv, char **azColName) {
+    int *c = (int *) count;
     *c = atoi(argv[0]);
     return 0;
 }
 
 
-int Database::callback_account_usrname(void *ptr, int argc, char **argv, char **azColName){
-    PublicAccountInfos *infos = reinterpret_cast<PublicAccountInfos*>(ptr);
+int Database::callback_account_usrname(void *ptr, int argc, char **argv, char **azColName) {
+    PublicAccountInfos *infos = reinterpret_cast<PublicAccountInfos *>(ptr);
     infos->username = argv[0];
     infos->victories = argv[1];
     infos->pnjKilled = argv[2];
@@ -59,19 +53,18 @@ int Database::callback_account_usrname(void *ptr, int argc, char **argv, char **
     return 0;
 }
 
-int Database::callback_account_id(void *ptr, int argc, char **argv, char **azColName){
-    std::string *c = (std::string*)ptr;
+int Database::callback_account_id(void *ptr, int argc, char **argv, char **azColName) {
+    std::string *c = (std::string *) ptr;
     *c = argv[0];
     return 0;
 }
 
-int Database::callback_FriendList(void *ptr, int argc, char **argv, char **azColName){
-    std::vector<std::string> *list = reinterpret_cast<std::vector<std::string>*>(ptr);
+int Database::callback_FriendList(void *ptr, int argc, char **argv, char **azColName) {
+    std::vector<std::string> *list = reinterpret_cast<std::vector<std::string> *>(ptr);
     std::string currentFriend = argv[0];
     list->push_back(currentFriend);
     return 0;
 }
-
 
 
 int Database::insert_account(Credentials credentials) {
@@ -80,11 +73,12 @@ int Database::insert_account(Credentials credentials) {
     int id = get_nb_entries() + 1;
 
     std::string command = "";
-    command += "insert into Accounts(id,username,password) values(" + std::to_string(id) + ",'" + credentials.getUsername() + "','"
-            + credentials.getPassword() + "')";
+    command += "insert into Accounts(id,username,password) values(" + std::to_string(id) + ",'" +
+               credentials.getUsername() + "','"
+               + credentials.getPassword() + "')";
 
 
-    char* query = (char *) command.c_str();
+    char *query = (char *) command.c_str();
 
     return exec(query, NULL, 0, zErrMsg);
 
@@ -95,7 +89,7 @@ int Database::get_nb_entries() {
     /*Utilisé pour obtenir le prochain id disponible lors du rajout d'un compte dans la database*/
 
     char *zErrMsg = 0;
-    char *query = (char *)"select Count(*) from Accounts";
+    char *query = (char *) "select Count(*) from Accounts";
     int count = 1;
 
     exec(query, callback_counter, &count, zErrMsg);
@@ -111,10 +105,11 @@ bool Database::is_identifiers_valid(Credentials credentials) {
     int count = 0;
     bool valid = false;
     std::string command = "";
-    command += "select COUNT(username) FROM Accounts WHERE username='" + credentials.getUsername() + "' AND password='" +
+    command +=
+            "select COUNT(username) FROM Accounts WHERE username='" + credentials.getUsername() + "' AND password='" +
             credentials.getPassword() + "'";
 
-    char* query = (char *) command.c_str();
+    char *query = (char *) command.c_str();
 
     exec(query, callback_counter, &count, zErrMsg);
 
@@ -136,7 +131,7 @@ std::vector<RankingInfos> Database::getRanking() {
      * */
     std::vector<RankingInfos> list;
     char *zErrMsg = 0;
-    char *query = (char *)"select username, victories from Accounts order by victories DESC";
+    char *query = (char *) "select username, victories from Accounts order by victories DESC";
 
     exec(query, callback_ranking, &list, zErrMsg);
 
@@ -150,12 +145,13 @@ PublicAccountInfos Database::getUsrInfosByUsrname(std::string username) {
     std::string command = "";
     command += "select username, victories, pnjKilled, id from Accounts WHERE username='" + username + "'";
 
-    char* query = (char *) command.c_str();
+    char *query = (char *) command.c_str();
 
     exec(query, callback_account_usrname, &infos, zErrMsg);
 
     return infos;
 }
+
 int Database::getIDbyUsername(std::string username) {
     return getUsrInfosByUsrname(username).ID;
 }
@@ -166,14 +162,13 @@ int Database::sendFriendRequest(std::string username, std::string toAdd) {
     char *zErrMsg = 0;
     std::string command = "";
     command += "insert into FriendRequests(ReceiverID, SenderID) values('" + toAdd + "','" + username + "') ;"
-            + "insert into PendingInvitations(RequesterID, ReceiverID) values('" + username + "','" + toAdd + "') ;";
+               + "insert into PendingInvitations(RequesterID, ReceiverID) values('" + username + "','" + toAdd + "') ;";
 
-    char* query = (char *) command.c_str();
+    char *query = (char *) command.c_str();
 
     return exec(query, NULL, 0, zErrMsg);
 
 }
-
 
 
 int Database::acceptFriendRequest(std::string username, std::string toAccept) {
@@ -182,24 +177,24 @@ int Database::acceptFriendRequest(std::string username, std::string toAccept) {
     char *zErrMsg = 0;
     std::string command = "";
     command += "insert into FriendList(ID1, ID2) values('" + username + "','" + toAccept + "') ;" +
-            "DELETE FROM `FriendRequests` WHERE `ReceiverID`='" + username + "' AND `SenderID`='" + toAccept +
-            "' ;" +  "DELETE FROM `PendingInvitations` WHERE `RequesterID`='" + toAccept + "' AND `ReceiverID`='" +
-            username + "' ;";
+               "DELETE FROM `FriendRequests` WHERE `ReceiverID`='" + username + "' AND `SenderID`='" + toAccept +
+               "' ;" + "DELETE FROM `PendingInvitations` WHERE `RequesterID`='" + toAccept + "' AND `ReceiverID`='" +
+               username + "' ;";
 
 
-    char* query = (char *) command.c_str();
+    char *query = (char *) command.c_str();
 
     return exec(query, NULL, 0, zErrMsg);
 }
 
-int Database::removeFriend(std::string username, std::string toRemove){
+int Database::removeFriend(std::string username, std::string toRemove) {
 
     char *zErrMsg = 0;
     std::string command = "";
     command += "DELETE FROM `FriendList` WHERE `ID1`='" + username + "' AND `ID2`='" + toRemove + "' ;" +
-            "DELETE FROM `FriendList` WHERE `ID1`='" + toRemove + "' AND `ID2`='" + username + "' ;";
+               "DELETE FROM `FriendList` WHERE `ID1`='" + toRemove + "' AND `ID2`='" + username + "' ;";
 
-    char* query = (char *) command.c_str();
+    char *query = (char *) command.c_str();
 
     return exec(query, NULL, 0, zErrMsg);
 }
@@ -213,47 +208,48 @@ int Database::declineFriendRequest(std::string username, std::string toDecline) 
     char *zErrMsg = 0;
     std::string command = "";
     command += "DELETE FROM `FriendRequests` WHERE `ReceiverID`='" + username + "' AND `SenderID`='" + toDecline +
-            "' ;" + "DELETE FROM `PendingInvitations` WHERE `RequesterID`='" + toDecline + "' AND `ReceiverID`='" +
-            username + "' ;";
+               "' ;" + "DELETE FROM `PendingInvitations` WHERE `RequesterID`='" + toDecline + "' AND `ReceiverID`='" +
+               username + "' ;";
 
 
-    char* query = (char *) command.c_str();
+    char *query = (char *) command.c_str();
 
     return exec(query, NULL, 0, zErrMsg);
 }
 
-std::vector<std::string> Database::getFriendList(std::string username){
+std::vector<std::string> Database::getFriendList(std::string username) {
     std::vector<std::string> friendList;
     char *zErrMsg = 0;
     std::string command = "";
     command += "select ID2 from FriendList WHERE ID1 ='" + username + "';" + "select ID1 from FriendList WHERE ID2 ='" +
-            username + "';";
+               username + "';";
 
-    char* query = (char *) command.c_str();
+    char *query = (char *) command.c_str();
 
     exec(query, callback_FriendList, &friendList, zErrMsg);
     return friendList;
 }
 
-std::vector<std::string> Database::getFriendRequests(std::string username){
+std::vector<std::string> Database::getFriendRequests(std::string username) {
     std::vector<std::string> friendRequests;
     char *zErrMsg = 0;
     std::string command = "";
     command += "select SenderID from FriendRequests WHERE ReceiverID ='" + username + "'";
 
-    char* query = (char *) command.c_str();
+    char *query = (char *) command.c_str();
 
     exec(query, callback_FriendList, &friendRequests, zErrMsg);
 
     return friendRequests;
 }
-std::vector<std::string> Database::getPendingInvitations(std::string username){
+
+std::vector<std::string> Database::getPendingInvitations(std::string username) {
     std::vector<std::string> friendRequests;
     char *zErrMsg = 0;
     std::string command = "";
     command += "select ReceiverID from PendingInvitations WHERE RequesterID ='" + username + "'";
 
-    char* query = (char *) command.c_str();
+    char *query = (char *) command.c_str();
 
     exec(query, callback_FriendList, &friendRequests, zErrMsg);
 
@@ -264,18 +260,17 @@ void Database::updateAfterGameStats(int id, int pnjKilled, bool isWinner) {
     char *zErrMsg = 0;
     std::string command = "";
     int victoryIncrement = 0;
-    if (isWinner){
+    if (isWinner) {
         victoryIncrement = 1;
     }
     command += "UPDATE Accounts SET pnjKilled = pnjKilled + " + std::to_string(pnjKilled) + ", victories = victories + "
                + std::to_string(victoryIncrement) + " WHERE id = " + std::to_string(id) + ";";
 
     std::cout << "Commande : " << command << std::endl;
-    char* query = (char *) command.c_str();
+    char *query = (char *) command.c_str();
 
     exec(query, NULL, 0, zErrMsg);
 }
-
 
 
 Database::~Database() {

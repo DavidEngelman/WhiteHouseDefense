@@ -1,7 +1,3 @@
-//
-// Created by jepsiko on 03/03/17.
-//
-
 #ifndef PROJET_SNIPERTOWER_HPP
 #define PROJET_SNIPERTOWER_HPP
 

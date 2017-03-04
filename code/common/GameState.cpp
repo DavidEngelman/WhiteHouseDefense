@@ -5,14 +5,6 @@
 GameState::GameState() : isGameOver(false){}
 GameState::GameState(std::string mode) : mode(mode), isGameOver(false) {}
 
-void GameState::DecreasePlayerHp(PlayerState &player, int amount) { //TODO ça sert à rien cette fonction, non ?
-    player.decrease_hp(amount);
-}
-
-void GameState::IncreasePlayerHp(PlayerState &player, int amount) { //TODO idem qu'au dessus
-    player.decrease_hp(amount);
-}
-
 std::string* GameState::serialize() {
     std::string * serialized_me = new std::string();
 
@@ -51,17 +43,6 @@ int GameState::numPlayersAlive() {
     }
     return number_of_players_alive;
 }
-
-int GameState::getWinnerClassic() {
-    for (PlayerState &ps: player_states) {
-        if (ps.getIsWinner()) {
-            return ps.getPlayer_id(); //TODO peut etre changer avec le username
-        }
-    }
-
-    return -1;
-}
-
 
 
 bool GameState::isRoundFinished() {

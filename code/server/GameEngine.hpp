@@ -8,8 +8,6 @@
 #include "../common/AttackTower.hpp"
 #include <thread>
 
-// 2 minutes
-
 class GameEngine {
 
 private:
