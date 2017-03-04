@@ -1,7 +1,3 @@
-//
-// Created by jurgen on 2/18/17.
-//
-
 #include "FriendListUI.hpp"
 
 
@@ -20,19 +16,20 @@ void FriendListUI::display() {
 
 
 }
+
 void FriendListUI::displayFriendList(std::string friendlist, std::string command) {
     if (friendlist.size() == 0) {
-        if (command == "pending"){
-            std::cout << "You have no pending Invitation "<<std::endl;
-        }else {
-            std::cout << "Sadly, you have no " << command << " :( "<<std::endl;
+        if (command == "pending") {
+            std::cout << "You have no pending Invitation " << std::endl;
+        } else {
+            std::cout << "Sadly, you have no " << command << " :( " << std::endl;
         }
     } else {
-        if (command == "pending"){
-            std::cout << "Your pending Invitations :  " ;
-        }else if (command == "friends"){
+        if (command == "pending") {
+            std::cout << "Your pending Invitations :  ";
+        } else if (command == "friends") {
             std::cout << "Your Friends  :  ";
-        }else{
+        } else {
             std::cout << "Your Friend Requests : ";
         }
         std::string prettyList = " | ";
@@ -51,17 +48,18 @@ void FriendListUI::displayFriendList(std::string friendlist, std::string command
 }
 
 std::string FriendListUI::askUsername() {
-    std::string username ;
+    std::string username;
     std::cin >> username;
-    std::cout<<std::endl;
+    std::cout << std::endl;
     return username;
 }
-int FriendListUI::select(){
+
+int FriendListUI::select() {
     /* Ask at the user his choice */
     int x = -1;
     std::cout << "   Enter your choice: ";
     std::cin >> x;
-    while(std::cin.fail() or 0>x or x>8){
+    while (std::cin.fail() or 0 > x or x > 8) {
         display();
         std::cout << "   Error, enter a integer between 1 and 8" << std::endl;
         std::cout << "   Enter your choice: ";
