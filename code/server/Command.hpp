@@ -31,7 +31,7 @@ public:
     virtual ~Command()= default;
 
 
-
+    void setData(char *data);
 };
 
 

@@ -1,11 +1,8 @@
-//
-//
-
 #include "GameInfo.h"
 
 void GameInfo::print() {
-    std::cout <<  "Mode: " << gameMode << " - Players: ";
-    for (std::string& player : players){
+    std::cout << "Mode: " << gameMode << " - Players: ";
+    for (std::string &player : players) {
         std::cout << player << " | ";
     }
     std::cout << std::endl;
@@ -13,7 +10,7 @@ void GameInfo::print() {
 }
 
 bool GameInfo::isInPlayers(std::string player) {
-    for (std::string& pl : players){
+    for (std::string &pl : players) {
         if (pl == player)
             return true;
     }

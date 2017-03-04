@@ -37,4 +37,12 @@ const int SNIPER_TOWER_PRICE = 100;
 const int SNIPER_TOWER_RANGE = 10;
 const int SNIPER_TOWER_DAMAGE = 10;
 
+static const int STEP_DURATION_IN_MS = 1000;
+static const int INITIAL_NUMBER_OF_PNJS_PER_WAVE = 5;
+static const int TIMED_GAME_DURATION = 120;
+
+static const int NUM_PLAYERS = 4;
+static const int NUM_SECONDS_TO_PLACE_TOWER = 20;
+static const int INTERVAL_BETWEEN_SENDS_IN_MS = 200;
+
 #endif //PROJET_CONSTANTS_H

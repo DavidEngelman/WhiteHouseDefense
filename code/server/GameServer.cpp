@@ -224,7 +224,7 @@ void GameServer::updatePlayerStatsOnAccountServer() {
     int p_id, pnj_killed;
     bool is_winner;
 
-    attempt_send_message(account_server_socket, "Update;");
+    send_message(account_server_socket, "Update;");
 
     for (PlayerState& ps : gameEngine->getGameState().getPlayerStates()){
         p_id = ps.getPlayer_id();
@@ -234,7 +234,7 @@ void GameServer::updatePlayerStatsOnAccountServer() {
         std::string message = "Update," + std::to_string(p_id)+ "," + std::to_string(pnj_killed) + "," +
                 bool_to_string(is_winner) + ";";
 
-        attempt_send_message(account_server_socket, message.c_str());
+        send_message(account_server_socket, message.c_str());
     }
 
 
@@ -252,6 +252,9 @@ void *GameServer::staticJoinSpectatorThread(void * self) {
 void GameServer::getAndProcessSpectatorJoinCommand() {
     while (1) {
         int client_socket_fd = accept_connection();
+        if (client_socket_fd == -1) {
+            continue;
+        }
         char command_buffer[BUFFER_SIZE];
         receive_message(client_socket_fd, command_buffer);
 
