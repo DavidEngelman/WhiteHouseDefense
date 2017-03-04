@@ -85,10 +85,12 @@ else
     xdotool key super+g
 fi
 
+executableDirectory="~/CLionProjects/Group4/cmake-build-debug/code/"
+
 # Create a new tab and run the server
 xdotool key ctrl+shift+t
 sleep 1
-xdotool type --delay 100 "cd ~/CLionProjects/Group4/cmake-build-debug/code/"
+xdotool type --delay 100 "cd $executableDirectory"
 xdotool key "Return"
 xdotool type --delay 100 "./server"
 xdotool key "Return"
@@ -96,7 +98,7 @@ sleep 1
 xdotool key ctrl+Page_Down
 
 # Run all the clients
-forAllClients "cd ~/CLionProjects/Group4/cmake-build-debug/code/"
+forAllClients "cd $executableDirectory"
 forAllClients "./client 127.0.0.1"
 
 
