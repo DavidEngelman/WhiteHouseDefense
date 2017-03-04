@@ -1,5 +1,6 @@
 
 
+#include <termios.h>
 #include "RegisterUI.hpp"
 #include "Drawing.hpp"
 #include "unistd.h"
@@ -17,7 +18,19 @@ void RegisterUI::ask_username() {
 
 void RegisterUI::ask_password() {
     std::cout << "   Enter a password:" << std::endl << "   ";
+
+    // Disable the echo when entering the password
+    termios oldt;
+    tcgetattr(STDIN_FILENO, &oldt);
+    termios newt = oldt;
+    newt.c_lflag &= ~ECHO;
+    tcsetattr(STDIN_FILENO, TCSANOW, &newt);
+
     std::cin >> password_entry;
+
+    // Enable the echo
+    tcsetattr(STDIN_FILENO, TCSANOW, &oldt);
+
     std::cin.clear();
     std::cin.ignore();
     password_entry = crypt(password_entry.c_str(), "g4");
