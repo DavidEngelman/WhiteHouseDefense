@@ -30,7 +30,6 @@ public:
 
 	void displayPlayerInfos(GameState &gameState, int quadrant);
 	void displayInfoForSupporter(GameState& gameState);
-    void sortRanking(PlayerState players[]);
 
 	void display_dead_message();
 
