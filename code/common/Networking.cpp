@@ -38,26 +38,6 @@ int get_message_length(int socket_fd) {
     return (int) (length * sizeof(char));
 }
 
-/* TODO: y avait un probleme avec cette methode, je l ai mis en comm pour le moment
-void ensure_buffer_is_big_enough(char *buffer, int length) {
-    if (buffer == NULL) {
-        buffer = malloc(length);
-    } else if (sizeof(buffer) < length) {
-        buffer = realloc(buffer, length);
-        if (buffer == NULL) {
-            perror("Receive_data - Couldn't grow buffer");
-            exit(EXIT_FAILURE);
-        }
-    }
-}
-*/
-
-
-/*
- * TODO: est-ce que receive_data et receive_new_data recoivent un buffer et l'utilise en espérant
- * qu'il soit assez grand, ou font-t-il un malloc/realloc du buffer?
- */
-
 /*
  * Reads from the socket and puts the result in the buffer.
  * If the socket is closed, doesn't modify the buffer and returns -1.
@@ -121,7 +101,6 @@ int send_message(int socket_fd, const char *message) {
         return -1;
     }        // Send the data
     return (int) length;
-    //TODO remmettre send_data mais y avait un probleme
 }
 
 int init_connection_to_server(char* server_ip_address, int port){

@@ -16,13 +16,10 @@ void AccountServer::run() {
     std::thread t1;
 
     while (1) {
-
         newClient = accept_connection();
-        //std::cout << "New client connected wouhouuu" << std::endl;
-        //add_new_client(newClient); Je laisse ca la au cas ou
 
         std::thread t1(&AccountServer::client_handler, this, newClient);
-        t1.detach(); // TODO: bien comprendre et verifier si c'est bien ce qu'on veut
+        t1.detach();
     }
 }
 
