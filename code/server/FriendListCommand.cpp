@@ -1,23 +1,15 @@
-//
-// Created by jurgen on 2/18/17.
-//
-
 #include "FriendListCommand.h"
 
 void FriendListCommand::parse(char *data) {
-
-    int i = extract_action(data);
-    while (data[i] != ',' && data[i] != ';') {
-        requester += data[i];
-        i++;
-    }
-    if (data[i] == ',') {
-        i++;
-
-        while (data[i] != ',' && data[i] != ';') {
-            receiver += data[i];
-            i++;
-        }
+    /*
+     * The format of the command is "<Action>,<Requester>;" or "<Action>,<Requester>,<Receiver>;"
+     * Examples: "getProfileByUsername,bob"
+     *           "addFriend,bob,alice"
+     */
+    Command::parse(data); // Parses the action
+    requester = getNextToken(); // Always there
+    if (!hasReachedEnd()){
+        receiver = getNextToken();
     }
 }
 

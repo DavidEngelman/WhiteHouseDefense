@@ -1,6 +1,7 @@
 //
 //
 
+#include <iostream>
 #include "UpdateStatsCommand.h"
 
 int UpdateStatsCommand::getPlayerId() {
@@ -16,36 +17,14 @@ bool UpdateStatsCommand::getIsWinner() {
 }
 
 void UpdateStatsCommand::parse(char *data) {
-    std::string id, pnj_killed, is_winner;
-
-    int i = extract_action(data);
-
-    while (data[i] != ',') {
-
-        id += data[i];
-        i++;
-    }
-    i++;
-
-    // Extracts pnjKilled
-    while (data[i] != ',') {
-
-        pnj_killed += data[i];
-        i++;
-    }
-    i++;
-
-    // Extracts isWinner
-    while (data[i] != ';') {
-
-        is_winner += data[i];
-        i++;
-    }
-    i++; // passe la virgule
-
-    playerId = stoi(id);
-    pnjKilled = stoi(pnj_killed);
-    isWinner = stringToBool(is_winner);
-
+    /*
+     * The format of the command is "Update,<PlayerID>,<PNJKilled>,<isWinner>;"
+     * Example: "Update,12,4,false;"
+     */
+    std::cout << "Pasing stats" << std::endl;
+    Command::parse(data); // Parses the action
+    playerId = std::stoi(getNextToken());
+    pnjKilled = std::stoi(getNextToken());
+    isWinner = stringToBool(getNextToken());
 }
 

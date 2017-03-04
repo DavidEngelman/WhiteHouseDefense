@@ -7,31 +7,10 @@ void LoginRegisterCommand::parse(char *data) {
  *
  * Example: "login,bob,leponge" -> Command{"command", Credentials{"bob", "leponge"}}
  */
-
     // TODO? Gerer les cas où le message n'est pas correct (genre "login,bob;")
-
-    std::string username;
-    std::string password;
-
-    int i = extract_action(data);
-    //std::cout << data[i] << std::endl;
-
-    // Extracts the username (ex: bob)
-    while (data[i] != ',') {
-
-        username += data[i];
-        i++;
-    }
-    i++; // passe la virgule
-
-    // Extracts the password (ex: leponge)
-    while (data[i] != ';') {
-        password += data[i];
-        i++;
-    }
-
-    creds.setUsername(username);
-    creds.setPassword(password);
+    Command::parse(data); // Fait parse de l'action
+    creds.setUsername(getNextToken());
+    creds.setPassword(getNextToken());
 }
 
 const Credentials &LoginRegisterCommand::getCreds() const {
