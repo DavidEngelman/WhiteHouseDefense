@@ -153,7 +153,8 @@ void GameEngine::addPNJS(std::vector<Wave> &waves) {
         int currentNumOfPnjs = wave.getNumber_of_added_pnjs();
         int numOfPNJsInWave = wave.getNumber_of_pnjs();
 
-        int numPnjsShouldHaveAdded = min(timerSinceWaveStart.elapsedTimeInMiliseconds() / 1000, numOfPNJsInWave);
+        int numPnjsShouldHaveAdded = min(timerSinceWaveStart.elapsedTimeInMiliseconds() /
+                                         INTERVAL_BETWEEN_PNJS_IN_WAVE_IN_MS, numOfPNJsInWave);
         int numPNJsToAdd = numPnjsShouldHaveAdded - currentNumOfPnjs;
 
         if (numPNJsToAdd > 0) {

@@ -49,5 +49,6 @@ static const int TIMED_GAME_DURATION = 120;
 static const int NUM_PLAYERS = 4;
 static const int NUM_SECONDS_TO_PLACE_TOWER = 20;
 static const int INTERVAL_BETWEEN_SENDS_IN_MS = 200;
+static const int INTERVAL_BETWEEN_PNJS_IN_WAVE_IN_MS = 1000;
 
 #endif //PROJET_CONSTANTS_H
