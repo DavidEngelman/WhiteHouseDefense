@@ -23,9 +23,9 @@ CLIENTFILES = client/NetworkedManager.cpp client/ClientLauncher.cpp client/Login
 WARNINGS = -Wall -Wextra
 
 server: $(SERVERFILES)
-	g++ $(WARNINGS) -std=c++11 $(SERVERFILES) -o output/Server -pthread \
+	g++ -std=c++11 $(SERVERFILES) -o output/Server -pthread \
 	-I/usr/include -lsqlite3 -lcrypt
 
 client: $(CLIENTFILES)
-	g++ $(WARNINGS) -std=c++11 $(CLIENTFILES) -o output/Client -pthread \
+	g++ -std=c++11 $(CLIENTFILES) -o output/Client -pthread \
 	-I/usr/include -lsqlite3 -lcrypt
