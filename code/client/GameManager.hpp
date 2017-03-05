@@ -9,6 +9,7 @@
 #include "MainManager.hpp"
 #include "../common/GunTower.hpp"
 #include "../common/SniperTower.hpp"
+#include "../common/ShockTower.hpp"
 #include <cstdlib>
 #include <cctype>
 #include <pthread.h>

@@ -2,7 +2,6 @@
 
 #include "GameManager.hpp"
 #include "../server/Server.hpp"
-#include "../common/ShockTower.hpp"
 
 
 GameManager::GameManager(int socket, App *app) :
