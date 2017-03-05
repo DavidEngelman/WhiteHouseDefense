@@ -10,13 +10,13 @@ ShockTower::ShockTower(const Position &position) :
         AttackTower(position, SHOCK_TOWER_DAMAGE, SHOCK_TOWER_PRICE, SHOCK_TOWER_RANGE) {}
 
 int ShockTower::shoot(Wave &wave) {
-    std::vector<PNJ> targets;
+    std::vector<PNJ*> targets;
     int killed = 0;
     targets = get_targets(wave);
     for (auto &target : targets) {
-        dealDamageTo(target);
-        std::cout << target.serialize() << std::endl;
-        if (target.getHealthPoints() <= 0) {
+        dealDamageTo(*target);
+        std::cout << target->serialize() << std::endl;
+        if (target->getHealthPoints() <= 0) {
             killed += 1;
         }
     }
@@ -35,16 +35,16 @@ std::string ShockTower::serialize() {
     return serialized_me;
 }
 
-std::vector<PNJ> &ShockTower::get_targets(Wave &wave) {
+std::vector<PNJ*> ShockTower::get_targets(Wave &wave) {
     double dist;
-    std::vector<PNJ> &targets = wave.getPnjs();
-    for (PNJ &pnj: targets) {
+    std::vector<PNJ*> targets;
+    for (auto &pnj: wave.getPnjs()) {
         int distance_x = getPosition().getX() - pnj.getPosition().getX();
         int distance_y = getPosition().getY() - pnj.getPosition().getY();
 
         dist = sqrt(((distance_x) * (distance_x)) + (distance_y * distance_y));
         if (dist < getRange()) {
-            targets.push_back(pnj);
+            targets.push_back(&pnj);
         }
     }
 

@@ -19,7 +19,7 @@ public:
 
     virtual std::string serialize() override;
 
-    std::vector<PNJ> &get_targets(Wave& wave);
+    std::vector<PNJ*> get_targets(Wave& wave);
 };
 
 
