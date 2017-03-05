@@ -48,3 +48,7 @@ std::vector<PNJ*> ShockTower::get_targets(Wave &wave) {
 
     return targets;
 }
+
+std::string ShockTower::getType() {
+    return SHOCK_TOWER_STR;
+}

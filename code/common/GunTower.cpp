@@ -54,3 +54,7 @@ PNJ *GunTower::get_closest_pnj(Wave &wave) {
 
     return closest_pnj;
 }
+
+std::string GunTower::getType() {
+    return GUN_TOWER_STR;
+}

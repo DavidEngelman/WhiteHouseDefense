@@ -31,23 +31,27 @@ const void Map::display(GameState& gameState, int quadrant) const {
     }
     std::cout << std::endl;
 
-    bool has_tower;
+    std::string typeOfTower;
     bool has_npc;
     for (int y = 0; y < SIZE; y++) {
         std::cout << y << "\t";
         for (int x = 0; x < SIZE; x++) {
             switch (matrix[y][x]) {
                 case GRASS_INT:
-                    has_tower = false;
+                    typeOfTower = "";
                     for (auto &tower : towers) {
                         Position pos = tower->getPosition();
                         if (x == pos.getX() && y == pos.getY()) {
-                            has_tower = true;
+                            typeOfTower = tower->getType();
                             break;
                         }
                     }
-                    if (has_tower){
-                        std::cout << TOWER;
+                    if (typeOfTower == GUN_TOWER_STR){
+                        std::cout << GUN_TOWER_CHAR;
+                    } else if (typeOfTower == SNIPER_TOWER_STR) {
+                        std::cout << SNIPER_TOWER_CHAR;
+                    } else if (typeOfTower == SHOCK_TOWER_STR) {
+                        std::cout << SHOCK_TOWER_CHAR;
                     } else {
 
                         if (computeQuadrant(Position(x,y)) == quadrant) {

@@ -17,6 +17,7 @@ public:
 
     PNJ* get_closest_pnj(Wave& wave);
 
+    std::string getType() override;
 };
 
 
