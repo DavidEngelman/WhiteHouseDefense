@@ -119,7 +119,7 @@ then
     # Register all the players
     for i in $(seq 1 4);
     do
-        for j in $(seq 1 2);
+        for j in $(seq 1 3);
         do
             xdotool type ${i}
             xdotool key "Return"
