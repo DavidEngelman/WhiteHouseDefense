@@ -34,7 +34,9 @@ static const std::string SUPPORT_PLAYER_STRING = "SupportPlayer";
 #define GUN_TOWER_CHAR "\033[31m♜\033[0m  "
 
 #define SNIPER_TOWER_STR "SniperTower"
+#define SNIPER_TOWER_CHAR "\033[31m✛\033[0m  "
 
 #define SHOCK_TOWER_STR "ShockTower"
+#define SHOCK_TOWER_CHAR "\033[31m⚡\033[0m  "
 
 #endif //PROJET_STRINGS_HPP

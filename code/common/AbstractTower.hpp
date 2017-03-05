@@ -34,6 +34,7 @@ public:
     virtual ~AbstractTower() = default;
 
     virtual int shoot(Wave& wave) = 0; // HAS TO BE DEFINED BY INHERITORS
+    virtual std::string getType() = 0;
 
     int getOwner() const;
     void setOwner(int newOwner);
