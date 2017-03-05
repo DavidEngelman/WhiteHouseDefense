@@ -31,6 +31,8 @@ private:
 
     GameEngine * gameEngine;
     std::vector<PlayerConnection> playerConnections;
+
+private:
     int client_sockets[4];
     std::vector<int> supportersSockets;
 
@@ -106,6 +108,8 @@ public:
     int getReadableReadableSocket(int timeLeft);
 
     bool socketIsActive(int fd);
+
+    std::vector<PlayerConnection> &getPlayerConnections();
 };
 
 #endif
