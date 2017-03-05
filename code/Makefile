@@ -7,7 +7,7 @@ SERVERFILES = server/ServerLauncher.cpp common/Networking.cpp server/Server.cpp 
                        common/GameState.cpp server/GameServer.cpp server/TowerCommand.cpp server/Timer.cpp \
                        server/FriendListCommand.cpp common/AbstractTower.cpp server/PlayerConnection.cpp common/PlayerState.cpp common/Wave.cpp \
                        common/PNJ.cpp common/Position.cpp common/Map.cpp server/GameEngine.cpp server/GameEngine.hpp common/Constants.h common/Direction.h \
-                       common/AttackTower.cpp common/Tools.hpp common/Tools.cpp server/UpdateStatsCommand.cpp common/GunTower.cpp
+                       common/AttackTower.cpp common/Tools.hpp common/Tools.cpp server/UpdateStatsCommand.cpp common/GunTower.cpp common/SniperTower.cpp
 
 CLIENTFILES = client/NetworkedManager.cpp client/ClientLauncher.cpp client/LoginManager.cpp client/LoginUI.cpp \
                       client/RegisterManager.cpp client/RegisterUI.cpp common/Networking.cpp common/Credentials.cpp \
@@ -19,14 +19,14 @@ CLIENTFILES = client/NetworkedManager.cpp client/ClientLauncher.cpp client/Login
                       client/ProfileManager.cpp common/PNJ.cpp client/GameUI.cpp common/PlayerState.cpp \
                       common/GameState.cpp common/Wave.cpp common/Constants.h common/AttackTower.cpp common/Tools.hpp\
                       common/Tools.cpp client/SpectatorManager.cpp client/SpectatorManager.hpp client/SpectatorUI.cpp\
-                      client/SpectatorUI.hpp client/GameInfo.cpp common/GunTower.cpp
+                      client/SpectatorUI.hpp client/GameInfo.cpp common/GunTower.cpp common/SniperTower.cpp
 
 WARNINGS = -Wall -Wextra
 
 server: $(SERVERFILES)
-	g++ $(WARNINGS) -std=c++11 $(SERVERFILES) -o output/Server -pthread \
+	g++ -std=c++11 $(SERVERFILES) -o output/Server -pthread \
 	-I/usr/include -lsqlite3 -lcrypt
 
 client: $(CLIENTFILES)
-	g++ $(WARNINGS) -std=c++11 $(CLIENTFILES) -o output/Client -pthread \
+	g++ -std=c++11 $(CLIENTFILES) -o output/Client -pthread \
 	-I/usr/include -lsqlite3 -lcrypt
