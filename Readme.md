@@ -7,9 +7,9 @@ POUR COMPILER UN MAKEFILE SE TROUVE DANS LE DOSSIER CODE ET LES EXCECUTABLES SON
 POUR COMPILER : make all -B
 
 
-Fichier Latex: https://www.overleaf.com/7386310xdknywxfyrdk#/25598149/
+**Fichier Latex:** https://www.overleaf.com/7386310xdknywxfyrdk#/25598149/
 
-Site Web: http://infof209.weebly.com/
+**Site Web:** http://infof209.weebly.com/
 
-Le SRD: http://infof209.weebly.com/communications/srd
+**Le SRD:** http://infof209.weebly.com/communications/srd
 
