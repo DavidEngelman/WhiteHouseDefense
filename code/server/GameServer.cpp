@@ -397,3 +397,7 @@ bool GameServer::socketIsActive(int fd) {
 
     return false;
 }
+
+std::vector<PlayerConnection> &GameServer::getPlayerConnections()  {
+    return playerConnections;
+}
