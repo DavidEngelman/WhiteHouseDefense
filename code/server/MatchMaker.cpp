@@ -109,6 +109,9 @@ void MatchMaker::removeGameFromGamesInProgress(int port) {
     std::vector<GameServer *>::iterator gameserverIter;
     for (gameserverIter = activeGames.begin(); gameserverIter != activeGames.end(); gameserverIter++) {
         if ((*gameserverIter)->getPort() == port) {
+            for (PlayerConnection& pc : (*gameserverIter)->getPlayerConnections()){
+                close(pc.getSocket_fd());
+            }
             activeGames.erase(gameserverIter);
             break;
         }
