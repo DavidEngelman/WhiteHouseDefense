@@ -101,9 +101,9 @@ public:
 
     void sendFinishedToMatchmaker();
 
-    void endConnection(int fd);
+    void removeClosedSocketFromSocketLists(int fd);
 
-    void attempt_send_message(int fd, const char* message);
+    void attemptSendMessageToClientSocket(int fd, const char *message);
 
     int getReadableReadableSocket(int timeLeft);
 

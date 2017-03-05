@@ -5,9 +5,8 @@
 const bool DEBUG = false;
 
 GameServer::GameServer(int port, std::vector<PlayerConnection> &playerConnections, std::string _mode) :
-Server(port), playerConnections(playerConnections), mode(_mode), mapSeed((unsigned int) time(0)){
-
-    if (!DEBUG){
+        Server(port), playerConnections(playerConnections), mode(_mode), mapSeed((unsigned int) time(0)) {
+    if (!DEBUG) {
         for (int i = 0; i < 4; i++) {
             client_sockets[i] = playerConnections[i].getSocket_fd();
         }
@@ -23,7 +22,6 @@ void GameServer::sendGameStateToPlayers() {
         sendGameStateToPlayer(socketFd);
     }
 }
-
 
 
 void GameServer::processClientCommands() {
@@ -47,7 +45,7 @@ void GameServer::processClientCommands() {
 int GameServer::getReadableReadableSocket(int timeLeft) {
     // TODO: solution temporaire. C'est debile de creer des vecteurs à chaque appel
     std::vector<int> open_sockets;
-    for (PlayerConnection& playerConnection: playerConnections) {
+    for (PlayerConnection &playerConnection: playerConnections) {
         open_sockets.push_back(playerConnection.getSocket_fd());
     }
     return get_readable_socket_index_with_timeout(open_sockets.data(), open_sockets.size(), timeLeft);
@@ -72,18 +70,18 @@ void GameServer::get_and_process_command(int client_socket_fd, char *buffer) {
             command.parse(buffer);
             upgradeTowerInGameState(command);
         }
-    }else{
-        endConnection(client_socket_fd);
+    } else {
+        removeClosedSocketFromSocketLists(client_socket_fd);
     }
-    
+
 
 }
 
 void GameServer::addTowerInGameState(TowerCommand &command) {
-    AbstractTower * tower;
-    if (command.getTowerType() == GUN_TOWER_STR){
+    AbstractTower *tower;
+    if (command.getTowerType() == GUN_TOWER_STR) {
         tower = new GunTower(command.getPosition());
-    } else if (command.getTowerType() == SNIPER_TOWER_STR){
+    } else if (command.getTowerType() == SNIPER_TOWER_STR) {
         tower = new SniperTower(command.getPosition());
     } else {
         tower = new ShockTower(command.getPosition());
@@ -118,7 +116,7 @@ void GameServer::runWave() {
             usleep(100); // Pour eviter d'appeller update des tonnes de fois par tick. C'est en microsecondes
         }
 
-        if (DEBUG){
+        if (DEBUG) {
             gameEngine->showMap();
             // TODO: updateMap()
         } else {
@@ -148,12 +146,12 @@ void GameServer::runGame() {
     // Creer les playerState
     createPlayerStates();
 
-    if (!DEBUG){
+    if (!DEBUG) {
         setupGameForPlayers();
     }
 
     while (!gameEngine->isGameFinished()) {
-        if (!DEBUG){
+        if (!DEBUG) {
 
             gameEngine->getTimerSinceGameStart().pause(); // peut etre faire ca juste en mode contre la montre
             sendTowerPhase();
@@ -189,34 +187,34 @@ void GameServer::createPlayerStates() {
 void GameServer::sendTowerPhase() {
     for (PlayerConnection &playerConnection : playerConnections) {
         int socketFd = playerConnection.getSocket_fd();
-        attempt_send_message(socketFd, "t");
+        attemptSendMessageToClientSocket(socketFd, "t");
     }
 
     for (int socketFd: supportersSockets) {
-        attempt_send_message(socketFd, "t");
+        attemptSendMessageToClientSocket(socketFd, "t");
     }
 }
 
 void GameServer::sendWavePhase() {
     for (PlayerConnection &playerConnection : playerConnections) {
         int socketFd = playerConnection.getSocket_fd();
-        attempt_send_message(socketFd, "w");
+        attemptSendMessageToClientSocket(socketFd, "w");
     }
 
     for (int socketFd: supportersSockets) {
-        attempt_send_message(socketFd, "w");
+        attemptSendMessageToClientSocket(socketFd, "w");
     }
 }
 
 int GameServer::connectToServer(int port) {
-    return init_connection_to_server((char*) "127.0.0.1", port); //Faudrait mettre des constantes :)
+    return init_connection_to_server((char *) "127.0.0.1", port); //Faudrait mettre des constantes :)
 
 }
 
 void GameServer::sendFinishedToMatchmaker() {
-    int account_server_socket = connectToServer(5556);
-    std::string message = "PopGame," + std::to_string(port) + ";" ;
-    attempt_send_message(account_server_socket, message.c_str());
+    int matchmaker_server_socket = connectToServer(5556);
+    std::string message = "PopGame," + std::to_string(port) + ";";
+    send_message(matchmaker_server_socket, message.c_str());
 }
 
 void GameServer::updatePlayerStatsOnAccountServer() {
@@ -226,13 +224,13 @@ void GameServer::updatePlayerStatsOnAccountServer() {
 
     send_message(account_server_socket, "Update;");
 
-    for (PlayerState& ps : gameEngine->getGameState().getPlayerStates()){
+    for (PlayerState &ps : gameEngine->getGameState().getPlayerStates()) {
         p_id = ps.getPlayer_id();
         pnj_killed = ps.getPnjKilled();
         is_winner = ps.getIsWinner();
 
-        std::string message = "Update," + std::to_string(p_id)+ "," + std::to_string(pnj_killed) + "," +
-                bool_to_string(is_winner) + ";";
+        std::string message = "Update," + std::to_string(p_id) + "," + std::to_string(pnj_killed) + "," +
+                              bool_to_string(is_winner) + ";";
 
         send_message(account_server_socket, message.c_str());
     }
@@ -244,8 +242,8 @@ void GameServer::stopSpectatorThread() {
     pthread_cancel(spectatorJoinThread);
 }
 
-void *GameServer::staticJoinSpectatorThread(void * self) {
-    static_cast<GameServer*>(self)->getAndProcessSpectatorJoinCommand();
+void *GameServer::staticJoinSpectatorThread(void *self) {
+    static_cast<GameServer *>(self)->getAndProcessSpectatorJoinCommand();
     return nullptr;
 }
 
@@ -266,7 +264,7 @@ void GameServer::getAndProcessSpectatorJoinCommand() {
 
             std::string username = command.getNextToken();
             std::cout << "New spectator for " << username << std::endl;
-            PlayerState& playerState = getPlayerStateWithUsername(username);
+            PlayerState &playerState = getPlayerStateWithUsername(username);
             playerState.setIsSupported(true);
             setupGameForPlayer(client_socket_fd, getQuadrantForPlayer(username));
 
@@ -283,14 +281,14 @@ std::string GameServer::getMode() {
 }
 
 PlayerState &GameServer::getPlayerStateWithUsername(std::string username) {
-    for(PlayerState& playerState: gameEngine->getGameState().getPlayerStates()){
+    for (PlayerState &playerState: gameEngine->getGameState().getPlayerStates()) {
         if (playerState.getUsername() == username) {
             return playerState;
         }
     }
 }
 
-int GameServer::getQuadrantForPlayer(std::string username){
+int GameServer::getQuadrantForPlayer(std::string username) {
     int quadrant = 0;
     for (PlayerConnection &playerConnection: playerConnections) {
         if (playerConnection.getUsername() == username) {
@@ -301,10 +299,10 @@ int GameServer::getQuadrantForPlayer(std::string username){
 }
 
 std::string GameServer::getAllPlayers() {
-    std::string res ="";
+    std::string res = "";
     int count = 1;
 
-    for (auto& pc : playerConnections){
+    for (auto &pc : playerConnections) {
 
         res += pc.getUsername();
         res += count == playerConnections.size() ? ";" : ",";
@@ -315,14 +313,14 @@ std::string GameServer::getAllPlayers() {
 
 void GameServer::setupGameForPlayers() {
     unsigned int quadrant = 0;
-    for (PlayerConnection& playerConnection: playerConnections) {
+    for (PlayerConnection &playerConnection: playerConnections) {
         int player_socket_fd = playerConnection.getSocket_fd();
         setupGameForPlayer(player_socket_fd, quadrant);
         quadrant++;
     }
 }
 
-void GameServer::setupGameForPlayer(int player_socket_fd, int quadrant){
+void GameServer::setupGameForPlayer(int player_socket_fd, int quadrant) {
     sendSetupGameStringToClient(player_socket_fd);
     sendMapSeedToClient(player_socket_fd);
     sendQuadrantToClient(player_socket_fd, quadrant);
@@ -330,7 +328,8 @@ void GameServer::setupGameForPlayer(int player_socket_fd, int quadrant){
 }
 
 void GameServer::sendSetupGameStringToClient(int socket_fd) {
-    send_message(socket_fd, SETUP_GAME); // Ici j'ai du remettre Send_message pcq sinon quand on envoyait le setupGame a un Spectater, ca ne fonctionnait pas car a ce moment la il n est pas encore dans sockets actifs
+    send_message(socket_fd,
+                 SETUP_GAME); // Ici j'ai du remettre Send_message pcq sinon quand on envoyait le setupGame a un Spectater, ca ne fonctionnait pas car a ce moment la il n est pas encore dans sockets actifs
 }
 
 void GameServer::sendMapSeedToClient(int socket_fd) {
@@ -349,14 +348,14 @@ void GameServer::sendGameStateToPlayer(PlayerConnection &connection) {
 void GameServer::sendGameStateToPlayer(int socket_fd) {
     // TODO: une autre approche serait de passer une reference de string vers
     // serializeGameState, dans lequel on ferait append. À considerer
-    const std::string * serialized_game_state = gameEngine->serializeGameState();
+    const std::string *serialized_game_state = gameEngine->serializeGameState();
     send_message(socket_fd, (*serialized_game_state).c_str());
     delete serialized_game_state;
 }
 
-void GameServer::endConnection(int fd) {
+void GameServer::removeClosedSocketFromSocketLists(int fd) {
     std::vector<PlayerConnection>::iterator iter;
-    for (iter = playerConnections.begin(); iter != playerConnections.end(); iter++){
+    for (iter = playerConnections.begin(); iter != playerConnections.end(); iter++) {
         if ((*iter).getSocket_fd() == fd) {
             playerConnections.erase(iter);
             return;
@@ -372,11 +371,11 @@ void GameServer::endConnection(int fd) {
 
 }
 
-void GameServer::attempt_send_message(int fd, const char* message){
+void GameServer::attemptSendMessageToClientSocket(int fd, const char *message) {
     if (socketIsActive(fd)) {
         int error_code = send_message(fd, message);
-        if (error_code == -1){
-            endConnection(fd);
+        if (error_code == -1) {
+            removeClosedSocketFromSocketLists(fd);
         }
     }
 }
@@ -398,6 +397,6 @@ bool GameServer::socketIsActive(int fd) {
     return false;
 }
 
-std::vector<PlayerConnection> &GameServer::getPlayerConnections()  {
+std::vector<PlayerConnection> &GameServer::getPlayerConnections() {
     return playerConnections;
 }
