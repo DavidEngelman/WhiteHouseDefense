@@ -13,7 +13,7 @@ void GameLauncher::sendJoinRequest() {
     std::string message = mode + "," + std::to_string(master_app->get_id()) +
             "," + master_app->get_username() + ";";
     send_message(server_socket, message.c_str());
-    std::cout << "In Queue... avec le socket " << server_socket << std::endl;
+    std::cout << "In Queue..." << std::endl;
 
 
     /* Recevoir reponse du server */
