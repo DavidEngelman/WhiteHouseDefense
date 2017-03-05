@@ -94,6 +94,7 @@ void GameUI::displayTowerShop() {
     std::cout << "You can choose among the following towers: " << std::endl;
     std::cout << "1. GunTower : " << std::to_string(GUN_TOWER_PRICE) << " $ " << std::endl;
     std::cout << "2. SniperTower : " << std::to_string(SNIPER_TOWER_PRICE) << " $ " << std::endl;
+    std::cout << "3. ShockTower : " << std::to_string(SHOCK_TOWER_PRICE) << " $ " << std::endl;
     std::cout << std::endl;
 }
 

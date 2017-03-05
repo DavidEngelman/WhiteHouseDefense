@@ -33,7 +33,7 @@ public:
 
     virtual ~AbstractTower() = default;
 
-    virtual bool shoot(Wave& wave) = 0; // HAS TO BE DEFINED BY INHERITORS
+    virtual int shoot(Wave& wave) = 0; // HAS TO BE DEFINED BY INHERITORS
 
     int getOwner() const;
     void setOwner(int newOwner);

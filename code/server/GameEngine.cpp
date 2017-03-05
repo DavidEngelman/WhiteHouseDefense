@@ -67,8 +67,9 @@ void GameEngine::dealDamageToBase() {
 void GameEngine::dealDamage(std::vector<Wave> &waves) {
     for (AbstractTower *tower: gameState.getTowers()) {
         Wave &wave = getWaveInSameQuadrant(*tower, waves);
-        bool killedPNJ = tower->shoot(wave);
-        if (killedPNJ && !DEBUG) {
+        int killedPNJ = tower->shoot(wave);
+        for (int i = 0; i < killedPNJ; i++) {
+            if (DEBUG) break;
             PlayerState &player_state = getPlayerStateForWave(wave);
             addKillToStat(player_state);
             giveGold(player_state);

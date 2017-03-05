@@ -8,14 +8,14 @@
 GunTower::GunTower(const Position &position) :
         AttackTower::AttackTower(position, GUN_TOWER_DAMAGE, GUN_TOWER_PRICE, GUN_TOWER_RANGE) {}
 
-bool GunTower::shoot(Wave &wave) {
+int GunTower::shoot(Wave &wave) {
     PNJ *my_target;
-    bool killed = false;
+    int killed = 0;
     my_target = get_closest_pnj(wave);
     if ((my_target != nullptr) && (!my_target->isInPlayerBase()) && (my_target->getHealthPoints() > 0)) {
         dealDamageTo(*my_target);
         if (my_target->getHealthPoints() <= 0) {
-            killed = true;
+            killed = 1;
         }
     }
     return killed;

@@ -29,6 +29,7 @@ static const int GOLD_EARNED_BY_TICK= 1;
 
 static const float PERCENTAGE_RECOVERED_MONEY= (const float) (50 / 100.0);
 
+// Constant of the towers
 const int GUN_TOWER_PRICE = 50;
 const int GUN_TOWER_RANGE = 4;
 const int GUN_TOWER_DAMAGE = 20;
@@ -36,6 +37,10 @@ const int GUN_TOWER_DAMAGE = 20;
 const int SNIPER_TOWER_PRICE = 100;
 const int SNIPER_TOWER_RANGE = 10;
 const int SNIPER_TOWER_DAMAGE = 10;
+
+const int SHOCK_TOWER_PRICE = 150;
+const int SHOCK_TOWER_RANGE = 3;
+const int SHOCK_TOWER_DAMAGE = 5;
 
 static const int STEP_DURATION_IN_MS = 1000;
 static const int INITIAL_NUMBER_OF_PNJS_PER_WAVE = 5;

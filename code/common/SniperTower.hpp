@@ -11,7 +11,7 @@ public:
 
     ~SniperTower() = default;
 
-    virtual bool shoot(Wave &wave) override;
+    virtual int shoot(Wave &wave) override;
 
     virtual std::string serialize() override;
 

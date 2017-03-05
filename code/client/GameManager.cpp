@@ -2,6 +2,7 @@
 
 #include "GameManager.hpp"
 #include "../server/Server.hpp"
+#include "../common/ShockTower.hpp"
 
 
 GameManager::GameManager(int socket, App *app) :
@@ -48,9 +49,16 @@ void *GameManager::input_thread() {
                     gameState.addTower(new GunTower(Position(towerPos.getX(), towerPos.getY())), quadrant);
                     sendBuyRequest(towerPos, GUN_TOWER_STR);
                 }
+            } else if (towerchoice == 2) {
+                if (checkValidity(towerPos, gameState, SNIPER_TOWER_STR)) {
+                    gameState.addTower(new SniperTower(Position(towerPos.getX(), towerPos.getY())), quadrant);
+                    sendBuyRequest(towerPos, SNIPER_TOWER_STR);
+                }
             } else {
-                gameState.addTower(new SniperTower(Position(towerPos.getX(), towerPos.getY())), quadrant);
-                sendBuyRequest(towerPos, SNIPER_TOWER_STR);
+                if (checkValidity(towerPos, gameState, SHOCK_TOWER_STR)) {
+                    gameState.addTower(new ShockTower(Position(towerPos.getX(), towerPos.getY())), quadrant);
+                    sendBuyRequest(towerPos, SHOCK_TOWER_STR);
+                }
             }
         }else if (choice == 2){
             Position toSell = gameUI.getPosSellingTower();
@@ -317,8 +325,12 @@ void GameManager::unSerializeTower(std::string serialized_tower) {
     }
 
     AbstractTower *tower;
-    if (typeOfTower == "GunTower") tower = new GunTower(Position(x, y));
-    else tower = new SniperTower(Position(x, y));
+    Position pos = Position(x, y);
+
+    if (typeOfTower == "GunTower") tower = new GunTower(pos);
+    else if (typeOfTower == "SniperTower") tower = new SniperTower(pos);
+    else tower = new ShockTower(pos);
+
     //TODO: remplacer par gameState.addTower(tower)
     //Pour ne pas utiliser un getter pour modifier la classe, ça n'a aucun sens
     gameState.getTowers().push_back(tower);

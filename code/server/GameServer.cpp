@@ -2,6 +2,7 @@
 #include "GameServer.hpp"
 #include "../client/GameManager.hpp"
 #include "../common/AttackTower.hpp"
+#include "../common/ShockTower.hpp"
 
 const bool DEBUG = false;
 
@@ -84,9 +85,10 @@ void GameServer::addTowerInGameState(TowerCommand &command) {
     AbstractTower * tower;
     if (command.getTowerType() == GUN_TOWER_STR){
         tower = new GunTower(command.getPosition());
-    }
-    else {
+    } else if (command.getTowerType() == SNIPER_TOWER_STR){
         tower = new SniperTower(command.getPosition());
+    } else {
+        tower = new ShockTower(command.getPosition());
     }
 
     int quadrant = command.getPlayerQuadrant();
