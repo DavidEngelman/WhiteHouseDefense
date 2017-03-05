@@ -29,9 +29,12 @@ static const std::string SUPPORT_PLAYER_STRING = "SupportPlayer";
 #define DECLINE_FRIEND_REQUEST "declineFriendRequest;"
 #define GET_PROFILE "getProfileByUsername;"
 
-
+// Towers
 #define GUN_TOWER_STR "GunTower"
+#define GUN_TOWER_CHAR "\033[31m♜\033[0m  "
+
 #define SNIPER_TOWER_STR "SniperTower"
+
 #define SHOCK_TOWER_STR "ShockTower"
 
 #endif //PROJET_STRINGS_HPP

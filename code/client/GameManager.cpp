@@ -97,8 +97,10 @@ bool GameManager::checkValidity(Position towerPos, GameState& gamestate, std::st
 
     if (typeOfTower == GUN_TOWER_STR) {
         price = GUN_TOWER_PRICE;
-    } else {
+    } else if (typeOfTower == SNIPER_TOWER_STR) {
         price = SNIPER_TOWER_PRICE;
+    } else {
+        price = SHOCK_TOWER_PRICE;
     }
 
     if (gameState.getPlayerStates()[quadrant].getMoney()  < price) { // if player has enough money
