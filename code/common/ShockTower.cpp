@@ -14,8 +14,8 @@ int ShockTower::shoot(Wave &wave) {
     int killed = 0;
     targets = get_targets(wave);
     for (auto &target : targets) {
-        std::cout << target.serialize() << std::endl;
         dealDamageTo(target);
+        std::cout << target.serialize() << std::endl;
         if (target.getHealthPoints() <= 0) {
             killed += 1;
         }
