@@ -9,13 +9,22 @@ const int SIZE = 31; //Not > 41 because it's too big for a screen
 
 #define PATH "   "
 #define LIMIT "\033[34m◼\033[0m  "
-#define TOWER "\033[31m♜\033[0m  "
 #define NPC "\033[33m☪\033[0m  "
 #define BASE "\033[31m✈\033[0m  "
 
 #define PATH_INT 0
 #define GRASS_INT -1
 #define LIMIT_INT -2
+
+// Tiles
+#define CROSS 0
+#define UP_DOWN 1
+#define LEFT_RIGHT 2
+#define LEFT_DOWN 3
+#define LEFT_UP 4
+#define UP_RIGHT 5
+#define DOWN_RIGHT 6
+#define CASTLE 7
 
 #include <string>
 #include <vector>
@@ -40,20 +49,21 @@ class GameState;
 class Map {
 private:
     int matrix[SIZE][SIZE];
-
-private:
+    int tileMatrix[SIZE][SIZE];
 
     void generateRandomMatrix();
     void initMap();
     void generateQuarterMap(Position position);
     const bool isNextToPath(Position position);
     void copyQuarter();
+    void generateTiles();
+    int computeTile(Position pos);
 
 public:
     Map(unsigned seed);
     const void display(GameState& gameState, int quadrant) const;
     const bool isPath(Position pos) const;
-    bool isDelimiter(Position pos);
+    bool isDelimiter(Position pos) const;
     static const int computeQuadrant(Position pos);
 };
 
