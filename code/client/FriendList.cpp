@@ -10,7 +10,7 @@ bool FriendList::is_present(std::string toFind) {
 }
 
 void FriendList::update(std::string friendstring) {
-    // TODO: quand on enleve un ami, ça ne l'enleve pas de la friendlist
+    friendlist.clear();
     std::istringstream ss(friendstring);
     std::string token;
     while (std::getline(ss, token, ',')) {

@@ -1,0 +1,22 @@
+
+.QFrame{
+                            border: 2px solid gold;
+                            border-radius: 12px;
+}
+QPushButton {
+                            border: 2px solid darkbrown;
+                            padding: 0 8px;
+                            background-image : url(/Users/Jurgen/Desktop/game pictures/buttons/mainmenu.png);
+                            font-family:
+                            verdana 14px;
+}
+QPushButton:pressed {
+
+                            background-image : url(/Users/Jurgen/Desktop/game pictures/buttons/connectPressed.png);
+}
+
+QLabel {
+                            color: gold;
+
+}
+
