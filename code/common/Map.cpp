@@ -215,13 +215,9 @@ const int Map::computeQuadrant(Position pos) {
 }
 
 bool Map::isDelimiter(Position pos) const {
-    int x = pos.getX();
-    int y = pos.getY();
-
-    // Le centre n'est pas un delimiter
-    if ((x == SIZE / 2) && (y == SIZE / 2)) return false;
-
-    return (x == y) || (x == ((SIZE - 1) - y));
+    // The center is not a delimiter
+    if ((pos.getX() == SIZE / 2) && (pos.getY() == SIZE / 2)) return false;
+    return (pos.getX() == pos.getY()) || (pos.getX() == ((SIZE - 1) - pos.getY()));
 }
 
 void Map::generateTiles() {
@@ -239,15 +235,10 @@ void Map::generateTiles() {
 int Map::computeTile(Position pos) {
     if (pos.getX() == SIZE/2 and pos.getY() == SIZE/2) return CROSS;
 
-    bool up = false;
-    bool down = false;
-    bool left = false;
-    bool right = false;
-
-    if (matrix[pos.getY()-1][pos.getX()] == 0) up = true;
-    if (matrix[pos.getY()+1][pos.getX()] == 0) down = true;
-    if (matrix[pos.getY()][pos.getX()-1] == 0) left = true;
-    if (matrix[pos.getY()][pos.getX()+1] == 0) right = true;
+    bool up =       matrix[pos.getY()-1][pos.getX()] == 0;
+    bool down =     matrix[pos.getY()+1][pos.getX()] == 0;
+    bool left =     matrix[pos.getY()][pos.getX()-1] == 0;
+    bool right =    matrix[pos.getY()][pos.getX()+1] == 0;
 
     if (up and down) return UP_DOWN;
     else if (left and right) return LEFT_RIGHT;
