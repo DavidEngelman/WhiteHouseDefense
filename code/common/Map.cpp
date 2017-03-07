@@ -145,13 +145,16 @@ void Map::generateQuarterMap(Position end) {
     }
 
     std::vector<Position> possibleWays;
+
     Position nextToEnd(end.getX(), end.getY()-1);
     if (matrix[nextToEnd.getY()][nextToEnd.getX()] != LIMIT_INT && !isNextToPath(nextToEnd))
         possibleWays.push_back(nextToEnd);
+
     nextToEnd.setY(end.getY());
     nextToEnd.setX(end.getX()-1);
     if (matrix[nextToEnd.getY()][nextToEnd.getX()] != LIMIT_INT && !isNextToPath(nextToEnd))
         possibleWays.push_back(nextToEnd);
+
     nextToEnd.setX(end.getX()+1);
     if (matrix[nextToEnd.getY()][nextToEnd.getX()] != LIMIT_INT && !isNextToPath(nextToEnd))
         possibleWays.push_back(nextToEnd);
