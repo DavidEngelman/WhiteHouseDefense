@@ -7,11 +7,13 @@
 #include "MainManager.hpp"
 #include "../common/Credentials.h"
 #include "App.hpp"
+#include "LoginGUI.hpp"
 
 class LoginManager : public NetworkedManager {
 
 private:
 	LoginUI loginUI;
+	LoginGUI loginGUI;
 	Credentials loginCredentials;
 
 public:

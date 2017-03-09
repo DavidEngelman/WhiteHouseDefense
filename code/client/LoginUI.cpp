@@ -5,10 +5,6 @@
 #include "Drawing.hpp"
 #include "unistd.h"
 
-LoginUI::LoginUI() {
-    Drawing::drawWhiteHouse("LOGIN SCREEN");
-}
-
 void LoginUI::ask_username() {
     std::cout << "   Enter your username:" << std::endl << "   ";
     std::cin >> username_entry;
@@ -45,6 +41,7 @@ void LoginUI::displayError() {
 }
 
 void LoginUI::display() {
+    Drawing::drawWhiteHouse("LOGIN SCREEN");
     ask_username();
     ask_password();
 }

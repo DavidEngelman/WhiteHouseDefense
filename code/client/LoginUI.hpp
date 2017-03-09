@@ -10,8 +10,6 @@ private:
 	std::string password_entry;
 
 public:
-
-	LoginUI();
 	std::string get_username_entry() { return username_entry; };
 	std::string get_password_entry() { return password_entry; };
 	void ask_username();

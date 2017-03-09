@@ -17,6 +17,5 @@ void WelcomeManager::run() {
         }
     } else {
         welcomeGUI.setupGUI();
-
     }
 }
