@@ -9,8 +9,7 @@
 #include "AbstractGUI.hpp"
 
 class WelcomeGUI : public AbstractGUI {
-public:
-    void test();
+
 };
 
 

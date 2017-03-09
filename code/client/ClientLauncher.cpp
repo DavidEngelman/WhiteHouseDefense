@@ -1,5 +1,7 @@
 #include <iostream>
 #include <cstring>
+#include <QtWidgets/QApplication>
+#include <QtWidgets/QPushButton>
 #include "App.hpp"
 #include "global.hpp"
 
@@ -13,6 +15,15 @@ int main(int argc, char *argv[]) {
         if (strcmp(argv[2], "-c") == 0 or strcmp(argv[2], "--console") == 0) {
             isConsole = true;
         }
+    }
+
+    if (!isConsole) { // Pour tester Qt
+        QApplication application(argc, argv);
+
+        QPushButton button("TEST");
+        button.show();
+
+        return application.exec();
     }
 
     App app(argv[1]);

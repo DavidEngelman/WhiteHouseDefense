@@ -5,7 +5,6 @@ WelcomeManager::WelcomeManager(App* my_app) : AbstractManager(my_app) {}
 
 void WelcomeManager::run() {
     if (isConsole) {
-
         welcomeUI.display();
         int choice = welcomeUI.select();
 
@@ -17,6 +16,6 @@ void WelcomeManager::run() {
             master_app->transition(registerManager);
         }
     } else {
-        welcomeGUI.test();
+        //TODO : GUI part
     }
 }
