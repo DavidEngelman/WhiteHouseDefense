@@ -10,7 +10,7 @@ set(CLIENT_FILES  "client/NetworkedManager.cpp" "client/ClientLauncher.cpp" "cli
         client/WelcomeManager.cpp client/WelcomeUI.cpp
           client/FriendList.cpp client/GameManager.cpp
         "client/ProfileManager.cpp" "common/PNJ.cpp" client/GameUI.cpp common/PlayerState.cpp
-        common/GameState.cpp common/Wave.cpp common/Constants.h common/AttackTower.cpp common/Tools.hpp common/Tools.cpp client/SpectatorManager.cpp client/SpectatorManager.hpp client/SpectatorUI.cpp client/SpectatorUI.hpp client/GameInfo.cpp common/GunTower.cpp common/GunTower.hpp common/SniperTower.cpp common/SniperTower.hpp common/ShockTower.cpp common/ShockTower.hpp)
+        common/GameState.cpp common/Wave.cpp common/Constants.h common/AttackTower.cpp common/Tools.hpp common/Tools.cpp client/SpectatorManager.cpp client/SpectatorManager.hpp client/SpectatorUI.cpp client/SpectatorUI.hpp client/GameInfo.cpp common/GunTower.cpp common/GunTower.hpp common/SniperTower.cpp common/SniperTower.hpp common/ShockTower.cpp common/ShockTower.hpp client/AbstractUI.cpp client/AbstractUI.hpp client/AbstractGUI.cpp client/AbstractGUI.hpp client/FriendListGUI.cpp client/FriendListGUI.hpp client/GameGUI.cpp client/GameGUI.hpp client/LoginGUI.cpp client/LoginGUI.hpp client/mainGUI.cpp client/mainGUI.hpp client/ProfileGUI.cpp client/ProfileGUI.hpp client/RankingGUI.cpp client/RankingGUI.hpp client/RegisterGUI.cpp client/RegisterGUI.hpp client/SpectatorGUI.cpp client/SpectatorGUI.hpp client/WelcomeGUI.cpp client/WelcomeGUI.hpp)
 
 
 add_executable(client ${CLIENT_FILES})

@@ -6,8 +6,9 @@
 
 #include <vector>
 #include "GameInfo.hpp"
+#include "AbstractUI.hpp"
 
-class SpectatorUI {
+class SpectatorUI : public AbstractUI {
 
 public:
 

@@ -6,9 +6,10 @@
 
 #include <string>
 #include <iostream>
+#include "AbstractUI.hpp"
 
 
-class WelcomeUI {
+class WelcomeUI : public AbstractUI {
 
 public:
     void display();

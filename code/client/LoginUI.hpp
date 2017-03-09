@@ -1,7 +1,8 @@
 #include <string>
 #include <iostream>
+#include "AbstractUI.hpp"
 
-class LoginUI {
+class LoginUI : public AbstractUI {
 
 private:
 

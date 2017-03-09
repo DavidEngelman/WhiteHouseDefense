@@ -4,8 +4,9 @@
 
 #include <string>
 #include <iostream>
+#include "AbstractUI.hpp"
 
-class RankingUI {
+class RankingUI : public AbstractUI {
 
 
 public:

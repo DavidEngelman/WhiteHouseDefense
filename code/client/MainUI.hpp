@@ -1,10 +1,11 @@
 
 #include <iostream>
+#include "AbstractUI.hpp"
 
 #ifndef MAINUI_HPP
 #define MAINUI_HPP
 
-class MainUI {
+class MainUI : public AbstractUI {
 
 
 public:

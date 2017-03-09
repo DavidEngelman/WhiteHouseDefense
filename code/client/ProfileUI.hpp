@@ -2,9 +2,10 @@
 #define PROFILEUI_HPP
 
 #include <iostream>
+#include "AbstractUI.hpp"
 
 
-class ProfileUI {
+class ProfileUI : public AbstractUI {
 
 
 public:

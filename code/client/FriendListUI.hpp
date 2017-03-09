@@ -2,8 +2,9 @@
 #define FRIENDLISTUI_HPP
 
 #include <iostream>
+#include "AbstractUI.hpp"
 
-class FriendListUI {
+class FriendListUI : public AbstractUI {
 	
 public:
 	void display();

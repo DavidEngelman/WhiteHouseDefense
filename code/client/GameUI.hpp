@@ -4,9 +4,10 @@
 #include "../common/GameState.hpp"
 #include "../common/Map.hpp"
 #include "Drawing.hpp"
+#include "AbstractUI.hpp"
 
 
-class GameUI {
+class GameUI : public AbstractUI {
 private:
     Map* map;
 

@@ -3,8 +3,9 @@
 
 #include <iostream>
 #include <string>
+#include "AbstractUI.hpp"
 
-class RegisterUI {
+class RegisterUI : public AbstractUI {
 	std::string username_entry;
 	std::string password_entry;
 
