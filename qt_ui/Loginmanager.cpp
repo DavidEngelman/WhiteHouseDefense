@@ -2,7 +2,7 @@
 
 LoginManager::LoginManager() : QWidget(nullptr){
 
-    QFile File("/Users/Jurgen/qtinfo209/americanLogin.qss");
+    QFile File("../qt_ui/americanLogin.qss");
     File.open(QFile::ReadOnly);
     QString styleSheet = QLatin1String(File.readAll());
     this->setStyleSheet(styleSheet);
@@ -10,7 +10,7 @@ LoginManager::LoginManager() : QWidget(nullptr){
     //---------------------------------------------------------------------------------
     this->setFixedHeight(600);
     this->setFixedWidth(750);
-    QPixmap bkgnd("/Users/Jurgen/Desktop/game pictures/backgrounds/americanBg");
+    QPixmap bkgnd("../qt_ui/game_pictures/backgrounds/americanBg");
     bkgnd = bkgnd.scaled(this->size(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
     QPalette palette;
     palette.setBrush(QPalette::Background, bkgnd);
@@ -52,7 +52,7 @@ LoginManager::LoginManager() : QWidget(nullptr){
     fields->move(this->size().width() / 2 - 125, this->size().height() / 2 +105);
 
     QMediaPlayer *player = new QMediaPlayer;
-    player->setMedia(QUrl::fromLocalFile("/Users/Jurgen/Desktop/game pictures/sounds/americanAnthem.mp3"));
+    player->setMedia(QUrl::fromLocalFile("../qt_ui/game_pictures/sounds/americanAnthem.mp3"));
     player->setVolume(100);
     player->play();
 

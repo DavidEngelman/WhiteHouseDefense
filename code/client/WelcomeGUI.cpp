@@ -3,22 +3,28 @@
 //
 
 #include <iostream>
+#include <QtWidgets/QFrame>
+#include <QCoreApplication>
 #include "WelcomeGUI.hpp"
 
+WelcomeGUI::WelcomeGUI(QWidget *parent) : QWidget(parent){}
+
+
 void WelcomeGUI::setupGUI() {
+    QFrame * fields = new QFrame(this);
     fieldsLayout = new QFormLayout;
 
-    loginButton = new QPushButton("LOGIN", this);
+    loginButton = new QPushButton("LOGIN", fields);
     loginButton->setFixedSize(QSize(212,45));
-    QObject::connect(loginButton, SIGNAL(clicked()), this, SLOT(openWindow("LOGIN")));
+    connect(loginButton, SIGNAL (released()), this, SLOT (openWindow()));
 
-    registerButton = new QPushButton("REGISTER", this);
+    registerButton = new QPushButton("REGISTER", fields);
     registerButton->setFixedSize(QSize(212,45));
-    QObject::connect(registerButton, SIGNAL(clicked()), this, SLOT(openWindow("REGISTER")));
+    connect(registerButton, SIGNAL (released()), this, SLOT (openWindow()));
 
-    quitButton = new QPushButton("QUIT", this);
+    quitButton = new QPushButton("QUIT", fields);
     quitButton->setFixedSize(QSize(212,45));
-    QObject::connect(quitButton, SIGNAL(clicked()), this, SLOT(close()));
+    connect(quitButton, SIGNAL(clicked()), this, SLOT(close()));
 
     fieldsLayout->addRow(loginButton);
     fieldsLayout->addRow(registerButton);
@@ -28,12 +34,10 @@ void WelcomeGUI::setupGUI() {
     this->show();
 }
 
-void WelcomeGUI::openWindow(std::string windowType) {
-    if (windowType == "LOGIN"){
-        std::cout << "LOGIN" << std::endl;
-    }else if (windowType == "REGISTER"){
-        std::cout << "REGISTER" << std::endl;
-    } else {
-        std::cerr << "UNKNOWN" << std::endl;
-    }
+void WelcomeGUI::openWindow() {
+    std::cout << "opening window" << std::endl;
+}
+
+WelcomeGUI::~WelcomeGUI(){
+
 }

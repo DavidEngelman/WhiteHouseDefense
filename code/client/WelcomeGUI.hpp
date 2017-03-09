@@ -6,11 +6,22 @@
 #define PROJET_WELCOMEGUI_HPP
 
 
-#include <QtWidgets/QPushButton>
-#include <QtWidgets/QFormLayout>
-#include "AbstractGUI.hpp"
+#include <QWidget>
+#include <QMainWindow>
+#include <QLineEdit>
+#include <QMessageBox>
+#include <QLabel>
+#include <QFile>
+#include <QPushButton>
+#include <QVBoxLayout>
+#include <QFormLayout>
+#include <QFrame>
+#include <QtMultimedia/QMediaPlayer>
+#include <iostream>
+#include <QGraphicsEffect>
 
-class WelcomeGUI : public AbstractGUI {
+class WelcomeGUI : public QWidget {
+
     Q_OBJECT
 
 private:
@@ -20,10 +31,12 @@ private:
     QFormLayout *fieldsLayout;
 
 public slots:
-    void openWindow(std::string windowType);
+    void openWindow();
 
 public:
+    WelcomeGUI(QWidget *parent = 0);
     void setupGUI();
+    ~WelcomeGUI();
 };
 
 

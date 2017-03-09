@@ -21,10 +21,13 @@ class MainManager : public QWidget
     Q_OBJECT
 
 public:
+
     explicit MainManager(QWidget *parent = 0);
     ~MainManager();
+
 public slots:
-    void openWindow(int windowType);
+    void openWindow();
+
 
 private:
     void setTheme(int themeInt);

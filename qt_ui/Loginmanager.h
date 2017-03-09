@@ -6,6 +6,7 @@
 class LoginManager : public QWidget
 {
     Q_OBJECT
+
 public:
     explicit LoginManager();
 
