@@ -2,4 +2,4 @@
 // Created by jepsiko on 09/03/17.
 //
 
-#include "mainGUI.hpp"
+#include "MainGUI.hpp"

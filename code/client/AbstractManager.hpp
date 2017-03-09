@@ -2,6 +2,7 @@
 #define PROJET_ABSTRACTMANAGER_H
 
 #include "App.hpp"
+#include "global.hpp"
 
 class AbstractManager {
 
