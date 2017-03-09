@@ -9,8 +9,8 @@
 #include "LoginGUI.hpp"
 
 void LoginGUI::loginUser() {
-    QString username = usernameL->text();
-    QString password = passwordL->text();
+    username = usernameL->text().toStdString();
+    password = passwordL->text().toStdString();
 
     // TODO: send login request
 }

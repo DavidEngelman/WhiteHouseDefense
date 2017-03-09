@@ -20,6 +20,8 @@ private:
     QLineEdit *usernameL;
     QLineEdit *passwordL;
     QPushButton *connect;
+    std::string username;
+    std::string password;
 
 public:
     void setupGUI();

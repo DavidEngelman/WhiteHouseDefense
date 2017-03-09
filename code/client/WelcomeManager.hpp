@@ -17,6 +17,8 @@ private:
 public:
     WelcomeManager(App* my_app);
     void run() override;
+    void goToLogin();
+    void goToRegister();
 
 };
 

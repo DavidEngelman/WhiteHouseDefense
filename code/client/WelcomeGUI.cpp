@@ -38,6 +38,7 @@ void WelcomeGUI::setupGUI() {
 
 void WelcomeGUI::openLogin(){
     std::cout << "Login" << std::endl;
+    manager->goToLogin();
     //TODO : send a message to the WelcomeManager for making the transition
 }
 
@@ -69,6 +70,8 @@ void WelcomeGUI::setTheme() {
     player->play();
 }
 
-WelcomeGUI::~WelcomeGUI(){
+WelcomeGUI::~WelcomeGUI() {
 
 }
+
+WelcomeGUI::WelcomeGUI(WelcomeManager *manager) : manager(manager) {}

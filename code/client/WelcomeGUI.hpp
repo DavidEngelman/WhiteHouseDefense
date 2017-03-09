@@ -19,27 +19,28 @@
 #include <QtMultimedia/QMediaPlayer>
 #include <iostream>
 #include <QGraphicsEffect>
+#include "WelcomeManager.hpp"
 
 class WelcomeGUI : public QWidget {
 
     Q_OBJECT
 
 private:
+    WelcomeManager *manager;
     QPushButton *loginButton;
     QPushButton *registerButton;
     QPushButton *quitButton;
     QFormLayout *fieldsLayout;
+    void setTheme();
 
 public slots:
     void openLogin();
     void openRegister();
 
 public:
+    WelcomeGUI(WelcomeManager *manager);
     void setupGUI();
     ~WelcomeGUI();
-
-
-    void setTheme();
 };
 
 
