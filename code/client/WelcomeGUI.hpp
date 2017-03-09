@@ -32,11 +32,15 @@ private:
 
 public slots:
     void openWindow();
+    void openLogin();
+    void openRegister();
 
 public:
     WelcomeGUI(QWidget *parent = 0);
     void setupGUI();
     ~WelcomeGUI();
+
+
 };
 
 

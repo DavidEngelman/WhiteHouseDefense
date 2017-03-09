@@ -16,11 +16,11 @@ void WelcomeGUI::setupGUI() {
 
     loginButton = new QPushButton("LOGIN", fields);
     loginButton->setFixedSize(QSize(212,45));
-    connect(loginButton, SIGNAL (released()), this, SLOT (openWindow()));
+    connect(loginButton, SIGNAL (released()), this, SLOT (openLogin()));
 
     registerButton = new QPushButton("REGISTER", fields);
     registerButton->setFixedSize(QSize(212,45));
-    connect(registerButton, SIGNAL (released()), this, SLOT (openWindow()));
+    connect(registerButton, SIGNAL (released()), this, SLOT (openRegister()));
 
     quitButton = new QPushButton("QUIT", fields);
     quitButton->setFixedSize(QSize(212,45));
@@ -37,6 +37,15 @@ void WelcomeGUI::setupGUI() {
 void WelcomeGUI::openWindow() {
     std::cout << "opening window" << std::endl;
 }
+void WelcomeGUI::openLogin(){
+    std::cout << "Login!" << std::endl;
+
+}
+void WelcomeGUI::openRegister(){
+    std::cout << "Register" << std::endl;
+
+}
+
 
 WelcomeGUI::~WelcomeGUI(){
 
