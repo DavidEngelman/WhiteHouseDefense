@@ -17,6 +17,7 @@ set(CLIENT_FILES  "client/NetworkedManager.cpp" "client/ClientLauncher.cpp" "cli
 add_executable(client ${CLIENT_FILES})
 
 find_package(Qt5Widgets REQUIRED)
+find_package(Qt5Multimedia REQUIRED)
 
 
 find_package (Threads)
@@ -37,7 +38,7 @@ target_link_libraries(server sqlite3)
 target_link_libraries(client crypt)
 target_link_libraries(server Threads::Threads)
 target_link_libraries(client Threads::Threads)
-target_link_libraries(client Qt5::Widgets)
+target_link_libraries(client Qt5::Widgets Qt5::Multimedia)
 
 
 

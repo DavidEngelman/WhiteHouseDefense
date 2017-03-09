@@ -41,6 +41,7 @@ public:
     ~WelcomeGUI();
 
 
+    void setTheme();
 };
 
 

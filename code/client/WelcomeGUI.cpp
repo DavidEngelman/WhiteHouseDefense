@@ -11,6 +11,8 @@ WelcomeGUI::WelcomeGUI(QWidget *parent) : QWidget(parent){}
 
 
 void WelcomeGUI::setupGUI() {
+    setTheme();
+
     QFrame * fields = new QFrame(this);
     fieldsLayout = new QFormLayout;
 
@@ -30,6 +32,7 @@ void WelcomeGUI::setupGUI() {
     fieldsLayout->addRow(registerButton);
     fieldsLayout->addRow(quitButton);
 
+
     this->setLayout(fieldsLayout);
     this->show();
 }
@@ -46,6 +49,27 @@ void WelcomeGUI::openRegister(){
 
 }
 
+void WelcomeGUI::setTheme() {
+    QFile File;
+    QString styleSheet;
+    QPixmap bkgnd;
+    QPalette palette;
+    QMediaPlayer *player = new QMediaPlayer;
+
+    File.setFileName("../../qt_ui/americanMain.qss");
+    File.open(QFile::ReadOnly);
+    styleSheet = QLatin1String(File.readAll());
+    this->setStyleSheet(styleSheet);
+    this->setFixedHeight(600);
+    this->setFixedWidth(750);
+    bkgnd = QPixmap("../../qt_ui/game_pictures/backgrounds/americanBg");
+    bkgnd = bkgnd.scaled(this->size(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+    palette.setBrush(QPalette::Background, bkgnd);
+    this->setPalette(palette);
+    player->setMedia(QUrl::fromLocalFile("../../qt_ui/game_pictures/sounds/americanAnthem.mp3"));
+    player->setVolume(100);
+    player->play();
+}
 
 WelcomeGUI::~WelcomeGUI(){
 
