@@ -6,10 +6,12 @@
 #define PROJET_ABSTRACTGUI_HPP
 
 
+#include <QtWidgets/QWidget>
 #include "AbstractUI.hpp"
 
-class AbstractGUI : public AbstractUI {
-
+class AbstractGUI : public AbstractUI, public QWidget {
+public:
+    virtual void setupGUI() = 0; // MUST BE IMPLEMENTED IN INHERITORS
 };
 
 

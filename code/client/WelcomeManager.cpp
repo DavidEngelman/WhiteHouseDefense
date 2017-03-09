@@ -16,6 +16,6 @@ void WelcomeManager::run() {
             master_app->transition(registerManager);
         }
     } else {
-        //TODO : GUI part
+        welcomeGUI.setupGUI();
     }
 }

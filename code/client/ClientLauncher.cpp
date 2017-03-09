@@ -17,12 +17,18 @@ int main(int argc, char *argv[]) {
         }
     }
 
-    if (!isConsole) { // Pour tester Qt
+    /*if (!isConsole) { // Pour tester Qt
         QApplication application(argc, argv);
 
         QPushButton button("TEST");
         button.show();
 
+        return application.exec();
+    }*/
+
+    if (!isConsole) {
+        QApplication application(argc, argv);
+        App app(argv[1]);
         return application.exec();
     }
 

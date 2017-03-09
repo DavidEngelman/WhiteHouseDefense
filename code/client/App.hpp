@@ -2,6 +2,7 @@
 #define PROJET_APP_HPP
 
 #include <string>
+#include <QtWidgets/QApplication>
 
 class AbstractManager;
 
