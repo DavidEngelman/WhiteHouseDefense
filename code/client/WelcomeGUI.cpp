@@ -14,7 +14,7 @@ void WelcomeGUI::setupGUI() {
     setTheme();
 
     QFrame * fields = new QFrame(this);
-    fieldsLayout = new QFormLayout;
+    QFormLayout * fieldsLayout = new QFormLayout;
 
     loginButton = new QPushButton("LOGIN", fields);
     loginButton->setFixedSize(QSize(212,45));
@@ -32,8 +32,10 @@ void WelcomeGUI::setupGUI() {
     fieldsLayout->addRow(registerButton);
     fieldsLayout->addRow(quitButton);
 
+    fields->setLayout(fieldsLayout);
+    fields->move(this->size().width() / 2 - 125, this->size().height() / 2 +100);
 
-    this->setLayout(fieldsLayout);
+    fields->setLayout(fieldsLayout);
     this->show();
 }
 
