@@ -5,7 +5,7 @@
 #define PROJET_SPECTATORUI_HPP
 
 #include <vector>
-#include "GameInfo.h"
+#include "GameInfo.hpp"
 
 class SpectatorUI {
 

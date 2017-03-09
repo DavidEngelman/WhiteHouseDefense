@@ -3,7 +3,7 @@
 
 #include "MainUI.hpp"
 #include "NetworkedManager.hpp"
-#include "AbstractManager.h"
+#include "AbstractManager.hpp"
 #include "App.hpp"
 
 class MainManager : public NetworkedManager {

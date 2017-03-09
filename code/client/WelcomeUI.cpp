@@ -1,5 +1,5 @@
 
-#include "WelcomeUI.h"
+#include "WelcomeUI.hpp"
 #include "Drawing.hpp"
 
 void WelcomeUI::display() {

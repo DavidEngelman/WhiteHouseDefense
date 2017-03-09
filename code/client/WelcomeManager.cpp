@@ -1,5 +1,5 @@
 
-#include "WelcomeManager.h"
+#include "WelcomeManager.hpp"
 
 WelcomeManager::WelcomeManager(App* my_app) : AbstractManager(my_app) {}
 

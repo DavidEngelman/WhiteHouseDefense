@@ -1,4 +1,4 @@
-#include "GameInfo.h"
+#include "GameInfo.hpp"
 
 void GameInfo::print() {
     std::cout << "Mode: " << gameMode << " - Players: ";
