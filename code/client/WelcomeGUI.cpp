@@ -7,14 +7,12 @@
 #include <QCoreApplication>
 #include "WelcomeGUI.hpp"
 
-WelcomeGUI::WelcomeGUI(QWidget *parent) : QWidget(parent){}
-
 
 void WelcomeGUI::setupGUI() {
     setTheme();
 
     QFrame * fields = new QFrame(this);
-    QFormLayout * fieldsLayout = new QFormLayout;
+    fieldsLayout = new QFormLayout;
 
     loginButton = new QPushButton("LOGIN", fields);
     loginButton->setFixedSize(QSize(212,45));
@@ -35,20 +33,17 @@ void WelcomeGUI::setupGUI() {
     fields->setLayout(fieldsLayout);
     fields->move(this->size().width() / 2 - 125, this->size().height() / 2 +100);
 
-    fields->setLayout(fieldsLayout);
     this->show();
 }
 
-void WelcomeGUI::openWindow() {
-    std::cout << "opening window" << std::endl;
-}
 void WelcomeGUI::openLogin(){
-    std::cout << "Login!" << std::endl;
-
+    std::cout << "Login" << std::endl;
+    //TODO : send a message to the WelcomeManager for making the transition
 }
+
 void WelcomeGUI::openRegister(){
     std::cout << "Register" << std::endl;
-
+    //TODO : send a message to the WelcomeManager for making the transition
 }
 
 void WelcomeGUI::setTheme() {
@@ -68,6 +63,7 @@ void WelcomeGUI::setTheme() {
     bkgnd = bkgnd.scaled(this->size(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
     palette.setBrush(QPalette::Background, bkgnd);
     this->setPalette(palette);
+    //TODO : GStreamer; Unable to pause - "file:../../qt_ui/game_pictures/sound/americanAnthem.mp3"
     player->setMedia(QUrl::fromLocalFile("../../qt_ui/game_pictures/sounds/americanAnthem.mp3"));
     player->setVolume(100);
     player->play();
