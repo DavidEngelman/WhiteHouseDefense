@@ -10,6 +10,8 @@
 #include <QtWidgets/QPushButton>
 #include "AbstractGUI.hpp"
 
+class LoginManager;
+
 class LoginGUI : public AbstractGUI {
     Q_OBJECT
 
@@ -17,6 +19,7 @@ public slots:
     void loginUser();
 
 private:
+    LoginManager *manager;
     QLineEdit *usernameL;
     QLineEdit *passwordL;
     QPushButton *connect;
@@ -24,7 +27,12 @@ private:
     std::string password;
 
 public:
+    LoginGUI(LoginManager *manager);
     void setupGUI();
+    std::string getUsername();
+    std::string getPassword();
+    void displayError();
+    void displayAlreadyConnected();
 };
 
 

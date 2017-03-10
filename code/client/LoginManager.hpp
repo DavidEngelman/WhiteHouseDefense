@@ -7,20 +7,24 @@
 #include "MainManager.hpp"
 #include "../common/Credentials.h"
 #include "App.hpp"
-#include "LoginGUI.hpp"
+
+class LoginGUI;
 
 class LoginManager : public NetworkedManager {
 
 private:
 	LoginUI loginUI;
-	LoginGUI loginGUI;
+	LoginGUI *loginGUI;
 	Credentials loginCredentials;
+
+	std::string attemptLogin(Credentials credentials);
+	bool checkCredentialsValidity(Credentials credentials);
+    void goToMainManager();
 
 public:
 	LoginManager(int port, App* my_app);
-	std::string attemptLogin(Credentials credentials);
-	bool checkCredentialsValidity(Credentials credentials);
 	void run() override;
+    void login();
 };
 
 #endif

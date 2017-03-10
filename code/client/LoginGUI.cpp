@@ -6,13 +6,15 @@
 #include <QtWidgets/QFormLayout>
 #include <QtWidgets/QLabel>
 #include <QtMultimedia/QMediaPlayer>
+#include <QtWidgets/QMessageBox>
 #include "LoginGUI.hpp"
+#include "LoginManager.hpp"
 
 void LoginGUI::loginUser() {
     username = usernameL->text().toStdString();
     password = passwordL->text().toStdString();
 
-    // TODO: send login request
+    manager->login();
 }
 
 void LoginGUI::setupGUI() {
@@ -33,10 +35,10 @@ void LoginGUI::setupGUI() {
     QFrame * fields = new QFrame(this);
     QFormLayout * fieldsLayout = new QFormLayout;
 
-    usernameL = new QLineEdit( fields);
+    usernameL = new QLineEdit(fields);
     usernameL->setSelection(0, 10);
 
-    passwordL = new QLineEdit( fields);
+    passwordL = new QLineEdit(fields);
     passwordL->setEchoMode(QLineEdit::Password); // Display bullets instead of char
 
     QString s1 = "USERNAME  ";
@@ -45,11 +47,11 @@ void LoginGUI::setupGUI() {
 
     QLabel *l1 = new QLabel();
     l1->setText(s1);
-    l1-> setFont(police);
+    l1->setFont(police);
 
     QLabel *l2 = new QLabel();
     l2->setText(s2);
-    l2-> setFont(police);
+    l2->setFont(police);
 
     connect = new QPushButton("LOGIN",fields);
     connect->setFixedSize(QSize(212,45));
@@ -68,3 +70,23 @@ void LoginGUI::setupGUI() {
 
     this->show();
 }
+
+std::string LoginGUI::getUsername() {
+    return username;
+}
+
+std::string LoginGUI::getPassword() {
+    return password;
+}
+
+void LoginGUI::displayError() {
+    QMessageBox::critical(this, "Error in login", "Error : username or password incorrect, please try again");
+    passwordL->setText("");
+}
+
+void LoginGUI::displayAlreadyConnected() {
+    QMessageBox::critical(this, "Already connected", "Error : Someone is already connected on this account");
+    passwordL->setText("");
+}
+
+LoginGUI::LoginGUI(LoginManager *manager) : manager(manager){}
