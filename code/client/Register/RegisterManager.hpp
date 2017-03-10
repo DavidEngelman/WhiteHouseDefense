@@ -8,11 +8,13 @@
 #include "../Login/LoginManager.hpp"
 #include "../App.hpp"
 
+class RegisterGUI;
 
 class RegisterManager : public NetworkedManager {
 
 private:
 	RegisterUI registerUI;
+	RegisterGUI *registerGUI;
     Credentials toRegister;
 
 public:
