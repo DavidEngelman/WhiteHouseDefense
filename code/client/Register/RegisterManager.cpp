@@ -1,5 +1,6 @@
 #include "RegisterManager.hpp"
 #include "RegisterGUI.hpp"
+#include "../Welcome/WelcomeManager.hpp"
 
 RegisterManager::RegisterManager(int port, App *my_app) :
         NetworkedManager(port, my_app), registerGUI(new RegisterGUI(this)) {};
@@ -108,4 +109,10 @@ void RegisterManager::goToLogin() {
 
     LoginManager *loginManager = new LoginManager(port, master_app);
     master_app->transition(loginManager);
+}
+
+void RegisterManager::goToWelcome() {
+    if (!isConsole) registerGUI->close();
+    WelcomeManager *welcomeManager = new WelcomeManager(master_app);
+    master_app->transition(welcomeManager);
 }

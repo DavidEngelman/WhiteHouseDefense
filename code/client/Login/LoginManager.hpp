@@ -25,6 +25,8 @@ public:
 	LoginManager(int port, App* my_app);
 	void run() override;
     void login();
+
+	void goToWelcome();
 };
 
 #endif

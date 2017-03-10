@@ -1,6 +1,7 @@
 
 #include "LoginManager.hpp"
 #include "LoginGUI.hpp"
+#include "../Welcome/WelcomeManager.hpp"
 
 LoginManager::LoginManager(int port, App *my_app) : NetworkedManager(port, my_app),
                                                     loginGUI(new LoginGUI(this)) {}
@@ -103,4 +104,10 @@ void LoginManager::goToMain() {
     if (!isConsole) loginGUI->close();
     MainManager *mainManager = new MainManager(5555, master_app);
     master_app->transition(mainManager);
+}
+
+void LoginManager::goToWelcome() {
+    if (!isConsole) loginGUI->close();
+    WelcomeManager *welcomeManager = new WelcomeManager(master_app);
+    master_app->transition(welcomeManager);
 }

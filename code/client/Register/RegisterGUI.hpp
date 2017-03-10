@@ -17,6 +17,7 @@ Q_OBJECT
 
 public slots:
     void registerUser();
+    void cancelRegister();
 
 private:
     RegisterManager *manager;
@@ -24,6 +25,7 @@ private:
     QLineEdit *passwordL;
     QLineEdit *confirmL;
     QPushButton *connect;
+    QPushButton *cancel;
     std::string username;
     std::string password;
     std::string confirm;
