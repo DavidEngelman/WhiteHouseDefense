@@ -1,6 +1,4 @@
-//
-// Created by jepsiko on 09/03/17.
-//
+
 
 #ifndef PROJET_SPECTATORGUI_HPP
 #define PROJET_SPECTATORGUI_HPP
