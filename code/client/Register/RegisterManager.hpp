@@ -16,15 +16,15 @@ private:
 	RegisterUI registerUI;
 	RegisterGUI *registerGUI;
     Credentials toRegister;
+    bool attemptRegister(Credentials credentials);
+    bool checkCredentialsValidity(Credentials credentials);
+    void goToLogin();
 
 public:
 
 	RegisterManager(int port, App* my_app);
-
-	bool attemptRegister(Credentials credentials);
-	bool checkCredentialsValidity(Credentials credentials);
 	void run() override;
-
+    void registerUser();
 };
 
 #endif

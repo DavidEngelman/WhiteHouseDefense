@@ -43,7 +43,7 @@ void LoginManager::run() {
 
         master_app->set_id(stoi(success));
         master_app->set_username(loginCredentials.getUsername());
-        goToMainManager();
+        goToMain();
     } else {
 
 
@@ -96,10 +96,10 @@ void LoginManager::login() {
         valid = false;
     }
 
-    if (valid) goToMainManager();
+    if (valid) goToMain();
 }
 
-void LoginManager::goToMainManager() {
+void LoginManager::goToMain() {
     if (!isConsole) loginGUI->close();
     MainManager *mainManager = new MainManager(5555, master_app);
     master_app->transition(mainManager);

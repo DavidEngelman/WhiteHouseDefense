@@ -29,8 +29,10 @@ private:
 public:
     LoginGUI(LoginManager *manager);
     void setupGUI();
-    std::string getUsername();
-    std::string getPassword();
+
+    std::string getUsername() { return username; };
+    std::string getPassword() { return password; };
+
     void displayError();
     void displayAlreadyConnected();
 };

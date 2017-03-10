@@ -41,9 +41,6 @@ void LoginGUI::setupGUI() {
     passwordL = new QLineEdit(fields);
     passwordL->setEchoMode(QLineEdit::Password); // Display bullets instead of char
 
-    QObject::connect(usernameL, SIGNAL(returnPressed()), passwordL, SLOT(setFocus()));
-    QObject::connect(passwordL, SIGNAL(returnPressed()), connect, SLOT(clicked()));
-
     QString s1 = "USERNAME";
     QString s2 = "PASSWORD";
     QString s3 = "LOGIN";
@@ -58,7 +55,12 @@ void LoginGUI::setupGUI() {
 
     connect = new QPushButton(s3,fields);
     connect->setFixedSize(QSize(212,45));
+
+
     QObject::connect(connect, SIGNAL(clicked()), this, SLOT(loginUser()));
+    QObject::connect(usernameL, SIGNAL(returnPressed()), passwordL, SLOT(setFocus()));
+    QObject::connect(passwordL, SIGNAL(returnPressed()), connect, SIGNAL(clicked()));
+
 
     fieldsLayout->addRow(l1, usernameL);
     fieldsLayout->addRow(l2, passwordL);
@@ -72,14 +74,6 @@ void LoginGUI::setupGUI() {
     player->play();
 
     this->show();
-}
-
-std::string LoginGUI::getUsername() {
-    return username;
-}
-
-std::string LoginGUI::getPassword() {
-    return password;
 }
 
 void LoginGUI::displayError() {

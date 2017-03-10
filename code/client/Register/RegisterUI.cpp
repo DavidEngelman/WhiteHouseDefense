@@ -41,23 +41,17 @@ void RegisterUI::ask_password() {
 
     // Enable the echo
     tcsetattr(STDIN_FILENO, TCSANOW, &oldt);
-
-    if (confirm != password_entry) {
-        Drawing::drawWhiteHouse("REGISTER SCREEN");
-        std::cout << "   ERROR : Your password doesn't correspond to the confirmation" << std::endl;
-        display();
-    } else {
-        password_entry = crypt(password_entry.c_str(), "g4");
-        for (unsigned i = 0; i < password_entry.length(); i++) {
-            if (password_entry[i] == ',' || password_entry[i] == ';') password_entry.erase(i);
-        }
-    }
 }
 
 
 void RegisterUI::displayError() {
     Drawing::drawWhiteHouse("REGISTER SCREEN");
     std::cout << "   Error : This username is already used or is not valid \n";
+}
+
+void RegisterUI::displayConfirmError() {
+    Drawing::drawWhiteHouse("REGISTER SCREEN");
+    std::cout << "   ERROR : Your password doesn't correspond to the confirmation" << std::endl;
 }
 
 void RegisterUI::display() {

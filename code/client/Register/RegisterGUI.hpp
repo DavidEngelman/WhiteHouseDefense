@@ -26,12 +26,19 @@ private:
     QPushButton *connect;
     std::string username;
     std::string password;
+    std::string confirm;
 
 public:
     RegisterGUI(RegisterManager *manager);
     void setupGUI();
-    std::string getUsername();
-    std::string getPassword();
+
+    std::string getUsername() { return username; };
+    std::string getPassword() { return password; };
+    std::string getConfirm() { return confirm; };
+
+    void displaySuccess();
+    void displayError();
+    void displayConfirmError();
 };
 
 

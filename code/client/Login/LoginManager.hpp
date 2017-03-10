@@ -19,7 +19,7 @@ private:
 
 	std::string attemptLogin(Credentials credentials);
 	bool checkCredentialsValidity(Credentials credentials);
-    void goToMainManager();
+    void goToMain();
 
 public:
 	LoginManager(int port, App* my_app);

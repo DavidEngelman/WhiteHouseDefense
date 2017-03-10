@@ -6,6 +6,7 @@
 #include <QtWidgets/QFormLayout>
 #include <QtWidgets/QLabel>
 #include <QtMultimedia/QMediaPlayer>
+#include <QtWidgets/QMessageBox>
 #include "RegisterGUI.hpp"
 #include "RegisterManager.hpp"
 
@@ -38,10 +39,6 @@ void RegisterGUI::setupGUI() {
     confirmL = new QLineEdit(fields);
     confirmL->setEchoMode(QLineEdit::Password); // Display bullets instead of char
 
-    QObject::connect(usernameL, SIGNAL(returnPressed()), passwordL, SLOT(setFocus()));
-    QObject::connect(passwordL, SIGNAL(returnPressed()), confirmL, SLOT(setFocus()));
-    QObject::connect(confirmL, SIGNAL(returnPressed()), connect, SLOT(clicked()));
-
     QString s1 = "USERNAME";
     QString s2 = "PASSWORD";
     QString s3 = "CONFIRM";
@@ -61,7 +58,13 @@ void RegisterGUI::setupGUI() {
 
     connect = new QPushButton(s4,fields);
     connect->setFixedSize(QSize(212,45));
+
+
+    QObject::connect(usernameL, SIGNAL(returnPressed()), passwordL, SLOT(setFocus()));
+    QObject::connect(passwordL, SIGNAL(returnPressed()), confirmL, SLOT(setFocus()));
+    QObject::connect(confirmL, SIGNAL(returnPressed()), connect, SIGNAL(clicked()));
     QObject::connect(connect, SIGNAL(clicked()), this, SLOT(registerUser()));
+
 
     fieldsLayout->addRow(l1, usernameL);
     fieldsLayout->addRow(l2, passwordL);
@@ -78,14 +81,22 @@ void RegisterGUI::setupGUI() {
     this->show();
 }
 
-std::string RegisterGUI::getUsername() {
-    return username;
-}
-
-std::string RegisterGUI::getPassword() {
-    return password;
-}
-
 void RegisterGUI::registerUser() {
+    username = usernameL->text().toStdString();
+    password = passwordL->text().toStdString();
+    confirm = confirmL->text().toStdString();
 
+    manager->registerUser();
+}
+
+void RegisterGUI::displaySuccess() {
+    QMessageBox::information(this, "Registered successfully", "Your account was registered successfully, you can now login normally.");
+}
+
+void RegisterGUI::displayError() {
+    QMessageBox::critical(this, "Error in register", "Error : This username is already used or is not valid");
+}
+
+void RegisterGUI::displayConfirmError() {
+    QMessageBox::critical(this, "Confirmation error", "ERROR : Your password doesn't correspond to the confirmation");
 }
