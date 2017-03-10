@@ -44,8 +44,8 @@ void LoginGUI::setupGUI() {
     QObject::connect(usernameL, SIGNAL(returnPressed()), passwordL, SLOT(setFocus()));
     QObject::connect(passwordL, SIGNAL(returnPressed()), connect, SLOT(clicked()));
 
-    QString s1 = "USERNAME  ";
-    QString s2 = "PASSWORD  ";
+    QString s1 = "USERNAME";
+    QString s2 = "PASSWORD";
     QString s3 = "LOGIN";
 
     QLabel *l1 = new QLabel();

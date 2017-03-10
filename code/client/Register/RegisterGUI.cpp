@@ -42,9 +42,9 @@ void RegisterGUI::setupGUI() {
     QObject::connect(passwordL, SIGNAL(returnPressed()), confirmL, SLOT(setFocus()));
     QObject::connect(confirmL, SIGNAL(returnPressed()), connect, SLOT(clicked()));
 
-    QString s1 = "USERNAME  ";
-    QString s2 = "PASSWORD  ";
-    QString s3 = "CONFIRM   ";
+    QString s1 = "USERNAME";
+    QString s2 = "PASSWORD";
+    QString s3 = "CONFIRM";
     QString s4 = "REGISTER";
 
     QLabel *l1 = new QLabel();
