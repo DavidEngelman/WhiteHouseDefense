@@ -2,6 +2,7 @@
 
 : '
 /!\ YOU MUST RUN THIS SCRIPT ON TERMINATOR /!\
+de/
 
 If you run the script without any argument, it will launche 4 clients and 1 server
 
