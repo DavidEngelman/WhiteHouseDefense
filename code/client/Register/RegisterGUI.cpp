@@ -95,14 +95,20 @@ void RegisterGUI::registerUser() {
 
 void RegisterGUI::displaySuccess() {
     QMessageBox::information(this, "Registered successfully", "Your account was registered successfully, you can now login normally.");
+    passwordL->setText("");
+    confirmL->setText("");
 }
 
 void RegisterGUI::displayError() {
     QMessageBox::critical(this, "Error in register", "Error : This username is already used or is not valid");
+    passwordL->setText("");
+    confirmL->setText("");
 }
 
 void RegisterGUI::displayConfirmError() {
     QMessageBox::critical(this, "Confirmation error", "ERROR : Your password doesn't correspond to the confirmation");
+    passwordL->setText("");
+    confirmL->setText("");
 }
 
 void RegisterGUI::cancelRegister() {
