@@ -40,6 +40,7 @@ void LoginGUI::setupGUI() {
 
     passwordL = new QLineEdit(fields);
     passwordL->setEchoMode(QLineEdit::Password); // Display bullets instead of char
+    QObject::connect(passwordL, SIGNAL(returnPressed()), this, SLOT(loginUser()));
 
     QString s1 = "USERNAME  ";
     QString s2 = "PASSWORD  ";
