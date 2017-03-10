@@ -9,17 +9,17 @@
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QPushButton>
 #include "../Abstract/AbstractGUI.hpp"
+#include "LoginConsoleUI.hpp"
 
 class LoginManager;
 
-class LoginGUI : public AbstractGUI {
+class LoginGUI : public AbstractGUI, public LoginUI {
     Q_OBJECT
 
 public slots:
     void loginUser();
 
 private:
-    LoginManager *manager;
     QLineEdit *usernameL;
     QLineEdit *passwordL;
     QPushButton *connect;
@@ -28,11 +28,12 @@ private:
 
 public:
     LoginGUI(LoginManager *manager);
-    void setupGUI();
+    virtual ~LoginGUI();
+
 
     std::string getUsername() { return username; };
     std::string getPassword() { return password; };
-
+    void display();
     void displayError();
     void displayAlreadyConnected();
 };

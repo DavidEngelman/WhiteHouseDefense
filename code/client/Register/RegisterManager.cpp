@@ -46,7 +46,7 @@ void RegisterManager::run() {
 
         goToLogin();
     } else {
-        registerGUI->setupGUI();
+        registerGUI->display();
     }
 }
 

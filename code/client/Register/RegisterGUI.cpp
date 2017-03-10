@@ -12,7 +12,7 @@
 
 RegisterGUI::RegisterGUI(RegisterManager *manager) : manager(manager) {}
 
-void RegisterGUI::setupGUI() {
+void RegisterGUI::display() {
     QFile File("../../qt_ui/americanLogin.qss");
     File.open(QFile::ReadOnly);
     QString styleSheet = QLatin1String(File.readAll());

@@ -1,7 +1,3 @@
-//
-// Created by jepsiko on 09/03/17.
-//
-
 #include <QtCore/QFile>
 #include <QtWidgets/QFormLayout>
 #include <QtWidgets/QLabel>
@@ -17,7 +13,7 @@ void LoginGUI::loginUser() {
     manager->login();
 }
 
-void LoginGUI::setupGUI() {
+void LoginGUI::display() {
     QFile File("../../qt_ui/americanLogin.qss");
     File.open(QFile::ReadOnly);
     QString styleSheet = QLatin1String(File.readAll());
@@ -86,4 +82,8 @@ void LoginGUI::displayAlreadyConnected() {
     passwordL->setText("");
 }
 
-LoginGUI::LoginGUI(LoginManager *manager) : manager(manager){}
+LoginGUI::LoginGUI(LoginManager *manager) : LoginUI(manager){}
+
+LoginGUI::~LoginGUI() {
+//    close();
+}

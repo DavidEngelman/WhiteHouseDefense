@@ -9,9 +9,9 @@
 #include <QtWidgets/QWidget>
 #include "AbstractUI.hpp"
 
-class AbstractGUI : public AbstractUI, public QWidget {
+class AbstractGUI : public QWidget, public AbstractUI {
 public:
-    virtual void setupGUI() = 0; // MUST BE IMPLEMENTED IN INHERITORS
+    virtual void display() = 0; // MUST BE IMPLEMENTED IN INHERITORS
 };
 
 
