@@ -40,8 +40,9 @@ public slots:
 
 public:
     WelcomeGUI(WelcomeManager *manager);
+    virtual ~WelcomeGUI();
+
     void setupGUI();
-    ~WelcomeGUI();
 };
 
 

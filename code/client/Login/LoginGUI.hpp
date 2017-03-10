@@ -1,7 +1,3 @@
-//
-// Created by jepsiko on 09/03/17.
-//
-
 #ifndef PROJET_LOGINGUI_HPP
 #define PROJET_LOGINGUI_HPP
 
@@ -9,9 +5,7 @@
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QPushButton>
 #include "../Abstract/AbstractGUI.hpp"
-#include "LoginConsoleUI.hpp"
-
-class LoginManager;
+#include "LoginUI.hpp"
 
 class LoginGUI : public AbstractGUI, public LoginUI {
     Q_OBJECT

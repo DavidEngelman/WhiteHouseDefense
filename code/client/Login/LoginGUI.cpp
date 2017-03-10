@@ -3,8 +3,8 @@
 #include <QtWidgets/QLabel>
 #include <QtMultimedia/QMediaPlayer>
 #include <QtWidgets/QMessageBox>
+#include <QtCore/QFileInfo>
 #include "LoginGUI.hpp"
-#include "LoginManager.hpp"
 
 void LoginGUI::loginUser() {
     username = usernameL->text().toStdString();
@@ -29,7 +29,7 @@ void LoginGUI::display() {
     QFont police("calibri");
 
     QFrame * fields = new QFrame(this);
-    QFormLayout * fieldsLayout = new QFormLayout;
+    QFormLayout * fieldsLayout = new QFormLayout(this);
 
     usernameL = new QLineEdit(fields);
     usernameL->setSelection(0, 10);
@@ -41,11 +41,11 @@ void LoginGUI::display() {
     QString s2 = "PASSWORD";
     QString s3 = "LOGIN";
 
-    QLabel *l1 = new QLabel();
+    QLabel *l1 = new QLabel(fields);
     l1->setText(s1);
     l1->setFont(police);
 
-    QLabel *l2 = new QLabel();
+    QLabel *l2 = new QLabel(fields);
     l2->setText(s2);
     l2->setFont(police);
 
@@ -64,8 +64,9 @@ void LoginGUI::display() {
     fields->setLayout(fieldsLayout);
     fields->move(this->size().width() / 2 - 125, this->size().height() / 2 +105);
 
-    QMediaPlayer *player = new QMediaPlayer;
-    player->setMedia(QUrl::fromLocalFile("../../qt_ui/game_pictures/sounds/americanAnthem.mp3"));
+    QMediaPlayer *player = new QMediaPlayer(this);
+    // Les path relatifs marchen en utilisant QFileInfo
+    player->setMedia(QUrl::fromLocalFile(QFileInfo("../../qt_ui/game_pictures/sounds/americanAnthem.mp3").absoluteFilePath()));
     player->setVolume(100);
     player->play();
 
@@ -85,5 +86,5 @@ void LoginGUI::displayAlreadyConnected() {
 LoginGUI::LoginGUI(LoginManager *manager) : LoginUI(manager){}
 
 LoginGUI::~LoginGUI() {
-//    close();
+    close();
 }

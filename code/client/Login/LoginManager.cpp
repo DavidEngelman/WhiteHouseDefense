@@ -1,6 +1,7 @@
 
 #include "LoginManager.hpp"
 #include "LoginGUI.hpp"
+#include "LoginConsoleUI.hpp"
 
 LoginManager::LoginManager(int port, App *my_app) : NetworkedManager(port, my_app) {
     if (isConsole) {
@@ -11,7 +12,7 @@ LoginManager::LoginManager(int port, App *my_app) : NetworkedManager(port, my_ap
 }
 
 LoginManager::~LoginManager() {
-    delete loginUI;
+    delete(loginUI);
 }
 
 void LoginManager::run() {

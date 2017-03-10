@@ -11,6 +11,8 @@ protected:
     LoginManager *manager;
 public:
     LoginUI(LoginManager * manager): manager(manager) {};
+    // NE PAS ENLEVER. FONDAMENTAL POUR ASSURER DESTRUCTION CORRECTE DES OBJETS;
+    virtual ~LoginUI() = default;
     virtual std::string getUsername() = 0;
     virtual std::string getPassword() = 0;
     virtual void display() = 0;

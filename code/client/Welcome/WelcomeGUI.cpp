@@ -1,10 +1,7 @@
-//
-// Created by jepsiko on 09/03/17.
-//
-
 #include <iostream>
 #include <QtWidgets/QFrame>
 #include <QCoreApplication>
+#include <QtCore/QFileInfo>
 #include "WelcomeGUI.hpp"
 #include "WelcomeManager.hpp"
 
@@ -50,7 +47,7 @@ void WelcomeGUI::setTheme() {
     QString styleSheet;
     QPixmap bkgnd;
     QPalette palette;
-    QMediaPlayer *player = new QMediaPlayer;
+    QMediaPlayer *player = new QMediaPlayer(this);
 
     File.setFileName("../../qt_ui/americanMain.qss");
     File.open(QFile::ReadOnly);
@@ -62,14 +59,14 @@ void WelcomeGUI::setTheme() {
     bkgnd = bkgnd.scaled(this->size(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
     palette.setBrush(QPalette::Background, bkgnd);
     this->setPalette(palette);
-    //TODO : GStreamer; Unable to pause - "file:../../qt_ui/game_pictures/sound/americanAnthem.mp3"
-    player->setMedia(QUrl::fromLocalFile("../../qt_ui/game_pictures/sounds/americanAnthem.mp3"));
+    player->setMedia(QUrl::fromLocalFile(QFileInfo("../../qt_ui/game_pictures/sounds/americanAnthem.mp3").absoluteFilePath()));
     player->setVolume(100);
     player->play();
 }
 
 WelcomeGUI::~WelcomeGUI() {
-
+    close();
+    std::cout << "Welcome GUI closed." << std::endl;
 }
 
 WelcomeGUI::WelcomeGUI(WelcomeManager *manager) : manager(manager) {}
