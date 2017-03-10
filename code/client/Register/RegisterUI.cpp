@@ -5,9 +5,7 @@
 #include "../Drawing.hpp"
 #include "unistd.h"
 
-RegisterUI::RegisterUI() {
-    Drawing::drawWhiteHouse("REGISTER SCREEN");
-}
+RegisterUI::RegisterUI() {}
 
 void RegisterUI::ask_username() {
     std::cout << "   Enter a username:     ( 16 characters max. )" << std::endl << "   ";
@@ -55,6 +53,7 @@ void RegisterUI::displayConfirmError() {
 }
 
 void RegisterUI::display() {
+    Drawing::drawWhiteHouse("REGISTER SCREEN");
     ask_username();
     ask_password();
 }

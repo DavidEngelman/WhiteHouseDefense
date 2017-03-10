@@ -6,8 +6,15 @@
 
 #include "../Abstract/AbstractGUI.hpp"
 
-class SpectatorGUI : public AbstractGUI {
+class SpectatorManager;
 
+class SpectatorGUI : public AbstractGUI {
+private:
+    SpectatorManager *manager;
+
+public:
+    SpectatorGUI(SpectatorManager *manager);
+    void setupGUI();
 };
 
 
