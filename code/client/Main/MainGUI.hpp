@@ -8,8 +8,16 @@
 
 #include "../Abstract/AbstractGUI.hpp"
 
-class mainGUI : public AbstractGUI {
+class MainManager;
 
+class MainGUI : public AbstractGUI {
+
+public:
+    void setupGUI();
+    MainGUI(MainManager *manager);
+
+private:
+    MainManager *manager;
 };
 
 

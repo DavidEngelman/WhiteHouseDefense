@@ -6,10 +6,13 @@
 #include "../Abstract/AbstractManager.hpp"
 #include "../App.hpp"
 
+class MainGUI;
+
 class MainManager : public NetworkedManager {
 
 private:
 	MainUI mainUI;
+	MainGUI *mainGUI;
 
 public:
 	MainManager(int port, App* my_app);
