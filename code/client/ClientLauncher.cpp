@@ -6,6 +6,7 @@
 #include "global.hpp"
 
 int main(int argc, char *argv[]) {
+    
     isConsole = false;
 
     if (argc == 1){

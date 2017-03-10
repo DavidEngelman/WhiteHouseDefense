@@ -15,7 +15,6 @@ set(CLIENT_FILES  "client/NetworkedManager.cpp" "client/ClientLauncher.cpp" "cli
 
 
 add_executable(client ${CLIENT_FILES})
-
 find_package(Qt5Widgets REQUIRED)
 find_package(Qt5Multimedia REQUIRED)
 
