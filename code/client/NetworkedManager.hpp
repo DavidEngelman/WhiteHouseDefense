@@ -12,7 +12,7 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <iostream>
-#include "AbstractManager.hpp"
+#include "Abstract/AbstractManager.hpp"
 #include "../common/Networking.h"
 
 

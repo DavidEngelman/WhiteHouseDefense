@@ -1,5 +1,5 @@
 #include "App.hpp"
-#include "WelcomeManager.hpp"
+#include "Welcome/WelcomeManager.hpp"
 
 App::App(char* server_ip_addr) : server_ip_address(server_ip_addr),
     player_id(-1), username("\0"), current_manager(new WelcomeManager(this)) {
