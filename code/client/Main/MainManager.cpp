@@ -17,7 +17,7 @@ void MainManager::run() {
         case 1: {
             mainUI.displayGameModes();
             choice = mainUI.selectGameModeInt();
-            // Ce code suppose que les modes le resultat de mainUI.selectGameMode() est entre 0 et 2
+            // Ce code suppose que le resultat de mainUI.selectGameMode() est entre 0 et 2
 
             if (choice != 3) {
                 std::string gameMode = gameModes[choice];
