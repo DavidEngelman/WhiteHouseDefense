@@ -5,13 +5,14 @@
 #include "WelcomeUI.hpp"
 #include "LoginManager.hpp"
 #include "RegisterManager.hpp"
-#include "WelcomeGUI.hpp"
+
+class WelcomeGUI;
 
 class WelcomeManager : public AbstractManager {
 
 private:
     WelcomeUI welcomeUI;
-    WelcomeGUI welcomeGUI;
+    WelcomeGUI *welcomeGUI;
 
 
 public:

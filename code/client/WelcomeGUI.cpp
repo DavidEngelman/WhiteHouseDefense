@@ -6,6 +6,7 @@
 #include <QtWidgets/QFrame>
 #include <QCoreApplication>
 #include "WelcomeGUI.hpp"
+#include "WelcomeManager.hpp"
 
 
 void WelcomeGUI::setupGUI() {
@@ -37,14 +38,11 @@ void WelcomeGUI::setupGUI() {
 }
 
 void WelcomeGUI::openLogin(){
-    std::cout << "Login" << std::endl;
     manager->goToLogin();
-    //TODO : send a message to the WelcomeManager for making the transition
 }
 
 void WelcomeGUI::openRegister(){
-    std::cout << "Register" << std::endl;
-    //TODO : send a message to the WelcomeManager for making the transition
+    manager->goToRegister();
 }
 
 void WelcomeGUI::setTheme() {

@@ -19,7 +19,8 @@
 #include <QtMultimedia/QMediaPlayer>
 #include <iostream>
 #include <QGraphicsEffect>
-#include "WelcomeManager.hpp"
+
+class WelcomeManager;
 
 class WelcomeGUI : public QWidget {
 
