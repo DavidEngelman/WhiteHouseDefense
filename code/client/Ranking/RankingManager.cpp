@@ -19,49 +19,44 @@ std::string RankingManager::getRanking() {
 
 }
 
-std::string RankingManager::createRanking(std::string message_from_server) {
+std::vector<RankingInfos> RankingManager::createRanking(std::string message_from_server) {
 
     /* Transforme le message recu du serveur pour etre affiché au client */
 
-    std::string result = "";
+    std::vector<RankingInfos> ranking;
+    RankingInfos infos;
+    std::string message;
     int i = 0;
-    int pos = 1;
-
-    std::cout << pos << ") ";
 
     while (i < message_from_server.size()){
 
         if (message_from_server[i] == ','){
-            result += "\t\t\t\t\t";
+            infos.username = message;
+            message = "";
             i++;
         }
 
         if (message_from_server[i] == '|'){
-
-            result += " victories";
-
+            infos.victories = stoi(message);
             if (i != message_from_server.size() - 1){
-
-                pos++;
-                result+="\n";
-                result+=std::to_string(pos);
-                result+=") ";
+                ranking.push_back(infos);
+                message = "";
             }
             i++;
         }
 
         else{
-            result+= message_from_server[i];
+            message+= message_from_server[i];
             i++;
         }
     }
 
-    return result;
+    return ranking;
 
 }
 
 void RankingManager::run() {
-    std::string ranking = createRanking(getRanking());
+    std::vector<RankingInfos> ranking = createRanking(getRanking());
     rankingUI.display(ranking);
 
     MainManager * mainManager = new MainManager(5555, master_app);

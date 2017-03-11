@@ -5,13 +5,14 @@
 #include <string>
 #include <iostream>
 #include "../Abstract/AbstractUI.hpp"
+#include "../../common/RankingInfos.h"
 
 class RankingUI : public AbstractUI {
 
 
 public:
 	RankingUI() = default;
-	void display(std::string ranking);
+	void display(std::vector<RankingInfos> &ranking);
 	
 };
 
