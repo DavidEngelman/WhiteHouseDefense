@@ -48,10 +48,6 @@ void ProfileManager::getAndParseProfile(std::string username) {
     parseProfileData(buffer);
 }
 
-std::string ProfileManager::getPlayerUsername() {
-    return master_app->get_username();
-}
-
 void ProfileManager::parseProfileData(char *profileData) {
     Message message;
     message.setData(profileData);

@@ -21,16 +21,14 @@ private:
     std::string username;
     int victories;
     int npcKilled;
-    
+
 public:
 	ProfileManager(int port, App* my_app);
-    
-	std::string getPlayerUsername();
 
     int getVictories() const;
 
     int getNPCKilled() const;
-    
+
     std::string& getUsername();
 
 
