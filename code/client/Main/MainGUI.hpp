@@ -1,15 +1,18 @@
-//
-// Created by jepsiko on 09/03/17.
-//
-
 #ifndef PROJET_MAINGUI_HPP
 #define PROJET_MAINGUI_HPP
 
-
 #include "../Abstract/AbstractGUI.hpp"
+#include "MainUI.hpp"
 
-class mainGUI : public AbstractGUI {
+class MainGUI : public AbstractGUI, public MainUI {
 
+public:
+    MainGUI(MainManager *manager);
+    void display() override;
+    void displayGameModesMenu() override;
+
+    void handleMenuChoice();
+    void handleGameModeChoice();
 };
 
 

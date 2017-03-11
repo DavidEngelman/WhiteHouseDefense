@@ -1,19 +1,25 @@
+#ifndef PROJET_MAINUI_HPP
+#define PROJET_MAINUI_HPP
 
-#include <iostream>
-#include "../Abstract/AbstractUI.hpp"
+#include <string>
+#include "MainManager.hpp"
 
-#ifndef MAINUI_HPP
-#define MAINUI_HPP
+class MainManager;
 
-class MainUI : public AbstractUI {
-
-
+class MainUI {
+protected:
+    int menuChoice;
+    int gameModeChoice;
+    MainManager *manager;
 public:
-	void display();
-	int select();
+    MainUI(MainManager * manager): manager(manager), menuChoice(-1), gameModeChoice(-1) {};
+    // NE PAS ENLEVER. FONDAMENTAL POUR ASSURER DESTRUCTION CORRECTE DES OBJETS;
+    virtual ~MainUI() = default;
+    virtual int getMenuChoice() { return menuChoice; };
+    virtual int getGameModeChoice() { return gameModeChoice; }
 
-	void displayGameModes();
-    int selectGameModeInt();
+    virtual void display() = 0;
+    virtual void displayGameModesMenu() = 0;
 };
 
-#endif
+#endif //PROJET_MAINUI_HPP

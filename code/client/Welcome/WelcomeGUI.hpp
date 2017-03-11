@@ -6,7 +6,6 @@
 #define PROJET_WELCOMEGUI_HPP
 
 
-#include <QWidget>
 #include <QMainWindow>
 #include <QLineEdit>
 #include <QMessageBox>
@@ -17,12 +16,12 @@
 #include <QFormLayout>
 #include <QFrame>
 #include <QtMultimedia/QMediaPlayer>
-#include <iostream>
 #include <QGraphicsEffect>
+#include "../Abstract/AbstractGUI.hpp"
 
 class WelcomeManager;
 
-class WelcomeGUI : public QWidget {
+class WelcomeGUI : public AbstractGUI {
 
     Q_OBJECT
 
@@ -42,7 +41,7 @@ public:
     WelcomeGUI(WelcomeManager *manager);
     virtual ~WelcomeGUI();
 
-    void setupGUI();
+    void display();
 };
 
 
