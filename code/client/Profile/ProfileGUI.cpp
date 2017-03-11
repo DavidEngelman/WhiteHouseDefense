@@ -12,7 +12,7 @@
 ProfileGUI::ProfileGUI(ProfileManager *manager) : manager(manager) {}
 
 
-void ProfileGUI::setupGUI() {
+void ProfileGUI::display() {
     std::string infos = manager->getProfile(manager->getUsername());
     std::cout <<infos << std::endl;
 

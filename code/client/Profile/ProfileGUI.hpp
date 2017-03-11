@@ -15,7 +15,7 @@ class ProfileGUI : public AbstractGUI {
 
 public:
     ProfileGUI(ProfileManager *manager);
-    void setupGUI() override;
+    void display() override;
 
 };
 

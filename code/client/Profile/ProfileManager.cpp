@@ -32,7 +32,7 @@ void ProfileManager::ProfileManagerProcess() {
         MainManager *mainManager = new MainManager(5555, master_app);
         master_app->transition(mainManager);
     } else{
-        profileGUI->setupGUI();
+        profileGUI->display();
 
     }
 }
