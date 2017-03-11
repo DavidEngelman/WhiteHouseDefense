@@ -20,10 +20,12 @@ void MainGUI::setupGUI() {
 
     this->setFixedHeight(600);
     this->setFixedWidth(750);
-    QPixmap bkgnd("../../qt_ui/game_pictures/backgrounds/Whitehouse");
-    bkgnd = bkgnd.scaled(this->size(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+    this->showFullScreen();
+
+    QScreen *screen = QGuiApplication::primaryScreen();//?????
+
     QPalette palette;
-    palette.setBrush(QPalette::Background, bkgnd);
+    palette.setColor(QPalette::Background,QColor::fromRgb(0,0,80));//faut trouver la bonne couleur
     this->setPalette(palette);
     QFont police("calibri");
     this->show();

@@ -97,7 +97,11 @@ void LoginManager::login() {
         valid = false;
     }
 
-    if (valid) goToMain();
+    if (valid){
+        master_app->set_id(stoi(success));
+        master_app->set_username(loginCredentials.getUsername());
+        goToMain();
+    }
 }
 
 void LoginManager::goToMain() {
