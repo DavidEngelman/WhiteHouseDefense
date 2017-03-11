@@ -26,7 +26,7 @@ set(CLIENT_FILES "client/NetworkedManager.cpp" "client/ClientLauncher.cpp" "clie
         client/Ranking/RankingGUI.cpp client/Ranking/RankingGUI.hpp client/Register/RegisterGUI.cpp
         client/Register/RegisterGUI.hpp client/Spectator/SpectatorGUI.cpp client/Spectator/SpectatorGUI.hpp
         client/Welcome/WelcomeGUI.cpp client/Welcome/WelcomeGUI.hpp client/global.hpp client/global.cpp
-        client/Login/LoginUI.hpp client/Profile/ProfileUI.hpp)
+        client/Login/LoginUI.hpp client/Profile/ProfileUI.hpp common/Message.cpp common/Message.hpp)
 
 
 add_executable(client ${CLIENT_FILES})
@@ -38,12 +38,12 @@ find_package(Qt5Multimedia REQUIRED)
 find_package(Threads)
 
 set(SERVER_FILES "server/ServerLauncher.cpp" "common/Networking.cpp" "server/Server.cpp" "server/AccountServer.cpp" "server/Database.cpp"
-        "common/Credentials.cpp" "common/Account.cpp" "server/Command.cpp" "server/LoginRegisterCommand.cpp"
+        "common/Credentials.cpp" "common/Account.cpp" "common/Command.cpp" "server/LoginRegisterCommand.cpp"
         "server/MatchmakingCommand.cpp" "server/MatchMaker.cpp" "server/MatchMaker.cpp" "server/PendingMatch.cpp"
         common/GameState.cpp "server/GameServer.cpp" "server/TowerCommand.cpp" "server/Timer.cpp"
         "server/FriendListCommand.cpp" common/AbstractTower.cpp server/PlayerConnection.cpp common/PlayerState.cpp common/Wave.cpp
         "common/PNJ.cpp" "common/Position.cpp" common/Map.cpp server/GameEngine.cpp server/GameEngine.hpp common/Constants.h common/Direction.h
-        common/AttackTower.cpp common/Tools.hpp common/Tools.cpp server/UpdateStatsCommand.cpp common/GunTower.cpp common/GunTower.hpp common/SniperTower.cpp common/SniperTower.hpp common/ShockTower.cpp common/ShockTower.hpp)
+        common/AttackTower.cpp common/Tools.hpp common/Tools.cpp server/UpdateStatsCommand.cpp common/GunTower.cpp common/GunTower.hpp common/SniperTower.cpp common/SniperTower.hpp common/ShockTower.cpp common/ShockTower.hpp common/Message.cpp common/Message.hpp)
 
 add_executable(server ${SERVER_FILES})
 
