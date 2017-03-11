@@ -3,9 +3,14 @@
 #include <QtWidgets/QFormLayout>
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QLabel>
+#include <QtWidgets/QMessageBox>
 #include "ProfileGUI.hpp"
 
 ProfileGUI::ProfileGUI(ProfileManager *manager) : ProfileUI(manager) {}
+
+ProfileGUI::~ProfileGUI() {
+    close();
+}
 
 
 void ProfileGUI::display() {
@@ -20,7 +25,7 @@ void ProfileGUI::display() {
 }
 
 void ProfileGUI::displayNoSuchProfileError() {
-    // TODO
+    QMessageBox::critical(this, "No such profile", "Error : There is no profile with that username");
 }
 
 void ProfileGUI::displayProfile() {

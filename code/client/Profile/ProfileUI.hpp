@@ -14,6 +14,7 @@ public:
     ProfileUI(ProfileManager *profileManager) : profileManager(profileManager),
                                                 choice(-1),
                                                 username("Username not initialized") {};
+    virtual ~ProfileUI() = default;
 
     std::string getUsername() { return username; }
 

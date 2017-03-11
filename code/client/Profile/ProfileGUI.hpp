@@ -12,6 +12,7 @@ class ProfileGUI : public AbstractGUI, public ProfileUI {
 
 public:
     ProfileGUI(ProfileManager *manager);
+    virtual ~ProfileGUI();
     void display() override;
 
     void displayNoSuchProfileError() override;
