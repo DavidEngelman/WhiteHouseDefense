@@ -38,18 +38,18 @@ void RankingGUI::createTable() {
     this->setPalette(palette);
 
 
-    rankingTable = new QTableWidget();
+    rankingTable = new QTableWidget(this);
+    rankingTable->resize(400, rankingTable->height());
+    rankingTable->resize(1000, rankingTable->width());
     rankingTable->setFont(font);
     rankingTable->setColumnCount(2);
     rankingHeader << "Username" << "Victories";
     rankingTable->setHorizontalHeaderLabels(rankingHeader);
-    rankingTable->horizontalHeader()->setFixedWidth(500);
+
     rankingTable->verticalHeader()->setVisible(true);
     rankingTable->setShowGrid(false);
 
     layout->addWidget(rankingTable, 200, 400, Qt::AlignCenter);
-    rankingTable->resize(400, rankingTable->height());
-    rankingTable->resize(600, rankingTable->width());
     this->setLayout(layout);
 
 }
