@@ -4,6 +4,7 @@
 #include <QDesktopWidget>
 #include <QHeaderView>
 #include <QtWidgets/QApplication>
+#include <QtWidgets/QGridLayout>
 
 
 RankingGUI::RankingGUI(RankingManager *manager) : rankingTable(NULL), manager(manager) {}
@@ -14,14 +15,43 @@ void RankingGUI::setupGUI() {
 
 
 void RankingGUI::createTable() {
-    rankingTable = new QTableWidget(this);
+
+
+    setStyleSheet("QTableWidget {background-color: transparent ;}"
+                          "QTableView{border : 2px solid gold}"
+                          "QTableView{background-color: transparent;}"
+                          "QHeaderView {background-color: gold;}"
+    );
+
+    QFont font("calibri",24);
+
+
+    this->setFixedHeight(600);
+    this->setFixedWidth(1000);
+
+    QGridLayout *layout = new QGridLayout;
+
+    QPixmap bkgnd("../../qt_ui/game_pictures/backgrounds/gold_ranking_bg.jpg");
+    bkgnd = bkgnd.scaled(this->size(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+    QPalette palette;
+    palette.setBrush(QPalette::Background, bkgnd);
+    this->setPalette(palette);
+
+
+    rankingTable = new QTableWidget();
+    rankingTable->setFont(font);
     rankingTable->setColumnCount(2);
     rankingHeader << "Username" << "Victories";
     rankingTable->setHorizontalHeaderLabels(rankingHeader);
+    rankingTable->horizontalHeader()->setFixedWidth(500);
     rankingTable->verticalHeader()->setVisible(true);
     rankingTable->setShowGrid(false);
     rankingTable->setEditTriggers(QAbstractItemView::NoEditTriggers);
-    rankingTable->setGeometry(QApplication::desktop()->screenGeometry());
+
+    layout->addWidget(rankingTable, 200, 400, Qt::AlignCenter);
+
+    this->setLayout(layout);
+
 }
 
 void RankingGUI::fillRanking(std::vector<RankingInfos> &ranking) {
