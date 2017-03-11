@@ -6,7 +6,8 @@
 #include <QtWidgets/QMessageBox>
 #include "ProfileGUI.hpp"
 
-ProfileGUI::ProfileGUI(ProfileManager *manager) : ProfileUI(manager) {}
+ProfileGUI::ProfileGUI(ProfileManager *manager) : ProfileUI(manager), usernameT(new QString), victoriesT(new QString),
+pnjKilledT(new QString) {}
 
 ProfileGUI::~ProfileGUI() {
     close();
@@ -19,9 +20,9 @@ void ProfileGUI::display() {
     QString styleSheet = QLatin1String(File.readAll());
     this->setStyleSheet(styleSheet);
 
-    this->setFixedHeight(600);
-    this->setFixedWidth(750);
-    QPixmap bkgnd("../../qt_ui/game_pictures/backgrounds/americanBg");
+    this->setFixedHeight(480);
+    this->setFixedWidth(852);
+    QPixmap bkgnd("../../qt_ui/game_pictures/backgrounds/profile_bckgrd.jpeg");
     bkgnd = bkgnd.scaled(this->size(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
     QPalette palette;
     palette.setBrush(QPalette::Background, bkgnd);
@@ -54,6 +55,16 @@ void ProfileGUI::display() {
 
     // TODO: add profile data
 
+    *usernameT = QString::fromStdString(profileManager->getUsername());
+    *victoriesT = QString::number(profileManager->getVictories());
+    *pnjKilledT = QString::number(profileManager->getNPCKilled());
+
+    QLabel *label_username = new QLabel(this);
+    label_username->setText(*usernameT);
+    label_username->setFont(police);
+
+    label_username->move(this->size().width() / 2 - label_username->width()/2, 30);
+
     this->show();
 }
 
@@ -62,7 +73,10 @@ void ProfileGUI::displayNoSuchProfileError() {
 }
 
 void ProfileGUI::updateProfile() {
-    // TODO
+    *usernameT = QString::fromStdString(profileManager->getUsername());
+    *victoriesT = QString::number(profileManager->getVictories());
+    *pnjKilledT = QString::number(profileManager->getNPCKilled());
+    this->update();
 }
 
 void ProfileGUI::showUser() {

@@ -13,11 +13,13 @@ ProfileManager::ProfileManager(int port, App *my_app) :
     } else {
         profileUI = new ProfileConsoleUI(this);
     }
+
 }
 
 void ProfileManager::run() {
     profileUI->display();
     showMyProfile();
+
 }
 
 void ProfileManager::showMyProfile() {

@@ -13,7 +13,10 @@ Q_OBJECT
 private:
     QLineEdit *usernameL;
     QPushButton *searchButton;
-    ProfileManager *manager;
+    //ProfileManager *manager;
+    QString* usernameT;
+    QString* victoriesT;
+    QString* pnjKilledT;
 
 public slots:
     void showUser();
