@@ -22,7 +22,7 @@ public:
 
     virtual void displayNoSuchProfileError() = 0;
 
-    virtual void displayProfile() = 0;
+    virtual void updateProfile() = 0;
 };
 
 #endif //PROJET_PROFILEUI_HPP

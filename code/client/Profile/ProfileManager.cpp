@@ -8,7 +8,7 @@
 
 ProfileManager::ProfileManager(int port, App *my_app) :
         NetworkedManager(port, my_app) {
-    if (false && !isConsole) {
+    if (!isConsole) {
         profileUI = new ProfileGUI(this);
     } else {
         profileUI = new ProfileConsoleUI(this);
@@ -16,12 +16,13 @@ ProfileManager::ProfileManager(int port, App *my_app) :
 }
 
 void ProfileManager::run() {
+    profileUI->display();
     showMyProfile();
 }
 
 void ProfileManager::showMyProfile() {
     getAndParseProfile(master_app->get_username());
-    profileUI->displayProfile();
+    profileUI->updateProfile();
 }
 
 void ProfileManager::showProfile() {
@@ -31,7 +32,7 @@ void ProfileManager::showProfile() {
     if (username == "") { // No such profile
         profileUI->displayNoSuchProfileError();
     } else {
-        profileUI->displayProfile();
+        profileUI->updateProfile();
     }
 }
 

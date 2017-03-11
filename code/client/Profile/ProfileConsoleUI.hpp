@@ -18,7 +18,7 @@ public:
 
     void displayNoSuchProfileError() override;
 
-    void displayProfile() override;
+    void updateProfile() override;
 };
 
 #endif

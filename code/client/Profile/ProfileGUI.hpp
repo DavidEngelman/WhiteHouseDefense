@@ -1,14 +1,22 @@
 #ifndef PROJET_PROFILEGUI_HPP
 #define PROJET_PROFILEGUI_HPP
 
-
+#include <QtWidgets/QPushButton>
+#include <QtWidgets/QLineEdit>
 #include "../Abstract/AbstractGUI.hpp"
 #include "ProfileManager.hpp"
 #include "ProfileUI.hpp"
 
 class ProfileGUI : public AbstractGUI, public ProfileUI {
+Q_OBJECT
+
+private:
+    QLineEdit *usernameL;
+    QPushButton *searchButton;
     ProfileManager *manager;
 
+public slots:
+    void showUser();
 
 public:
     ProfileGUI(ProfileManager *manager);
@@ -17,7 +25,7 @@ public:
 
     void displayNoSuchProfileError() override;
 
-    void displayProfile() override;
+    void updateProfile() override;
 };
 
 

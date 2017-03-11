@@ -48,7 +48,7 @@ void ProfileConsoleUI::askUsername() {
     username = userName;
 }
 
-void ProfileConsoleUI::displayProfile() {
+void ProfileConsoleUI::updateProfile() {
     std::cout << "Username : " << profileManager->getUsername() << std::endl;
     std::cout << "Victories : " << profileManager->getVictories() << std::endl;
     std::cout << "NPC Killed : " << profileManager->getNPCKilled() << std::endl;
