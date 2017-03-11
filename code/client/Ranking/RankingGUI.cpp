@@ -46,10 +46,10 @@ void RankingGUI::createTable() {
     rankingTable->horizontalHeader()->setFixedWidth(500);
     rankingTable->verticalHeader()->setVisible(true);
     rankingTable->setShowGrid(false);
-    rankingTable->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
     layout->addWidget(rankingTable, 200, 400, Qt::AlignCenter);
-
+    rankingTable->resize(400, rankingTable->height());
+    rankingTable->resize(600, rankingTable->width());
     this->setLayout(layout);
 
 }
