@@ -2,7 +2,8 @@
 #include "RankingManager.hpp"
 #include "../Main/MainManager.hpp"
 
-RankingManager::RankingManager(int port, App *my_app) : NetworkedManager(port, my_app) {}
+RankingManager::RankingManager(int port, App *my_app) : NetworkedManager(port, my_app),
+                                                        rankingGUI(new RankingGUI(this)) {}
 
 void RankingManager::sendRequest() {
     std::string message = "ranking;";
@@ -57,10 +58,15 @@ std::vector<RankingInfos> RankingManager::createRanking(std::string message_from
 
 void RankingManager::run() {
     std::vector<RankingInfos> ranking = createRanking(getRanking());
-    rankingUI.display(ranking);
 
-    MainManager * mainManager = new MainManager(5555, master_app);
-    master_app->transition(mainManager);
+    if (isConsole) {
+        rankingUI.display(ranking);
+
+        MainManager *mainManager = new MainManager(5555, master_app);
+        master_app->transition(mainManager);
+    } else {
+        rankingGUI->display(ranking);
+    }
 }
 
 

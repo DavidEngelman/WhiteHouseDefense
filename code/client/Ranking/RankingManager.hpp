@@ -9,11 +9,13 @@
 #include "../../common/Networking.h"
 #include "../App.hpp"
 #include "../../common/RankingInfos.h"
+#include "RankingGUI.hpp"
 
 class RankingManager : public NetworkedManager  {
 
 private:
 	RankingUI rankingUI;
+	RankingGUI *rankingGUI;
 
 public:
 	RankingManager(int port, App* my_app);
