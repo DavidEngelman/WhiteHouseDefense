@@ -13,7 +13,7 @@ MainManager::MainManager(int port, App *my_app) :
         NetworkedManager(port, my_app), mainGUI(new MainGUI(this)) {}
 
 void MainManager::run() {
-    if(isConsole) {
+    if(true) { //OUBLIEZ PAS DE REMETTRE isConsole
         int choice;
         mainUI.display();
         switch (mainUI.select()) {

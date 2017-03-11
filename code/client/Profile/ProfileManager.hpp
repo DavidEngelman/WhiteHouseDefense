@@ -10,10 +10,13 @@
 #include "../Main/MainManager.hpp"
 #include "../App.hpp"
 
+class ProfileGUI;
 
 class ProfileManager : public NetworkedManager {
 
 private:
+
+	ProfileGUI* profileGUI;
 	ProfileUI profileUI;
 
 public:
@@ -21,6 +24,7 @@ public:
 	void ProfileManagerProcess();
 	std::string getProfile(std::string username);
 	void run() override;
+	std::string getUsername();
 };
 
 
