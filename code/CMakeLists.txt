@@ -7,7 +7,7 @@ set(CLIENT_FILES "client/NetworkedManager.cpp" "client/ClientLauncher.cpp" "clie
         "client/Register/RegisterManager.cpp" "client/Register/RegisterUI.cpp" "common/Networking.cpp" "common/Credentials.cpp"
         client/Main/MainManager.cpp client/Main/MainUI.hpp common/Map.cpp client/Drawing.cpp client/Drawing.hpp "client/Ranking/RankingManager.cpp" "client/Ranking/RankingUI.cpp" "client/Game/GameLauncher.cpp"
         "client/FriendList/FriendListManager.cpp" "client/FriendList/FriendListUI.cpp" common/AbstractTower.cpp
-        "client/Profile/ProfileUI.cpp" common/Position.cpp client/App.cpp client/App.hpp
+        "client/Profile/ProfileConsoleUI.cpp" common/Position.cpp client/App.cpp client/App.hpp
         client/Welcome/WelcomeManager.cpp client/Welcome/WelcomeUI.cpp client/Welcome/WelcomeGUI.cpp
         client/FriendList/FriendList.cpp client/Game/GameManager.cpp
         "client/Profile/ProfileManager.cpp" "common/PNJ.cpp" client/Game/GameUI.cpp common/PlayerState.cpp
@@ -26,7 +26,7 @@ set(CLIENT_FILES "client/NetworkedManager.cpp" "client/ClientLauncher.cpp" "clie
         client/Ranking/RankingGUI.cpp client/Ranking/RankingGUI.hpp client/Register/RegisterGUI.cpp
         client/Register/RegisterGUI.hpp client/Spectator/SpectatorGUI.cpp client/Spectator/SpectatorGUI.hpp
         client/Welcome/WelcomeGUI.cpp client/Welcome/WelcomeGUI.hpp client/global.hpp client/global.cpp
-        client/Login/LoginUI.hpp)
+        client/Login/LoginUI.hpp client/Profile/ProfileUI.hpp)
 
 
 add_executable(client ${CLIENT_FILES})

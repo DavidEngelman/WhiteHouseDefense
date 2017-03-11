@@ -1,53 +1,51 @@
+#include "../../common/Constants.h"
 #include "ProfileManager.hpp"
 #include "ProfileGUI.hpp"
+#include "ProfileConsoleUI.hpp"
 
-ProfileManager::ProfileManager(int port, App* my_app) :
-        NetworkedManager(port, my_app),  profileGUI(new ProfileGUI(this)) {}
-
-void ProfileManager::ProfileManagerProcess() {
-
+ProfileManager::ProfileManager(int port, App *my_app) :
+        NetworkedManager(port, my_app) {
     if (isConsole) {
-        profileUI.display();
-        int choice = profileUI.select();
-        while (choice != 3) {
-            if (choice == 1) {
-                profileUI.displayProfile(getProfile(master_app->get_username()));
-            } else if (choice == 2) {
-
-                std::string profile = profileUI.askUsername();
-                std::string serv_resp = getProfile(profile);
-                if (serv_resp.size() == 3) { // le serveur renvoie ,,;
-                    std::cout << "No profile was found with that username" << std::endl;
-                } else {
-                    profileUI.displayProfile(serv_resp);
-                }
-            }
-            profileUI.display();
-            choice = profileUI.select();
-        }
-        MainManager *mainManager = new MainManager(5555, master_app);
-        master_app->transition(mainManager);
-    } else{
-        profileGUI->display();
-
+        profileUI = new ProfileConsoleUI(this);
+    } else {
+        profileUI = new ProfileGUI(this);
     }
 }
 
+void ProfileManager::run() {
+    profileUI->display();
+}
+
+void ProfileManager::showMyProfile() {
+    profileUI->displayProfile(getProfile(master_app->get_username()));
+}
+
+void ProfileManager::showProfile() {
+    std::string profile = profileUI->getUsername();
+    std::string server_response = getProfile(profile);
+    if (server_response.size() == 3) { // le serveur renvoie ,,;
+        profileUI->displayNoSuchProfileError();
+    } else {
+        profileUI->displayProfile(server_response);
+    }
+}
+
+void ProfileManager::goToMainMenu() {
+    MainManager *mainManager = new MainManager(ACCOUNT_SERVER_PORT, master_app);
+    master_app->transition(mainManager);
+}
+
 std::string ProfileManager::getProfile(std::string username) {
-    std::string message = GET_PROFILE + username+ ";";
+    std::string message = GET_PROFILE + username + ";";
     send_message(server_socket, message.c_str());
     char buffer[MAX_BUFF_SIZE];
     receive_message(server_socket, buffer);
     return std::string(buffer);
 }
 
-
-void ProfileManager::run() {
-    ProfileManagerProcess();
-
-}
-
 std::string ProfileManager::getUsername() {
     std::cout << master_app->get_username() << std::endl;
     return master_app->get_username();
 }
+
+
