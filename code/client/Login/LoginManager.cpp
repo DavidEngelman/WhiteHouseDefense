@@ -2,6 +2,7 @@
 #include "LoginManager.hpp"
 #include "LoginGUI.hpp"
 #include "LoginConsoleUI.hpp"
+#include "../Welcome/WelcomeManager.hpp"
 
 LoginManager::LoginManager(int port, App *my_app) : NetworkedManager(port, my_app) {
     if (isConsole) {
@@ -49,7 +50,11 @@ void LoginManager::login() {
         valid = false;
     }
 
-    if (valid) goToMain();
+    if (valid) {
+        master_app->set_id(stoi(success));
+        master_app->set_username(loginCredentials.getUsername());
+        goToMain();
+    }
 }
 
 bool LoginManager::checkCredentialsValidity(Credentials credentials) {
@@ -71,4 +76,10 @@ std::string LoginManager::attemptLogin(Credentials credentials) {
 void LoginManager::goToMain() {
     MainManager *mainManager = new MainManager(5555, master_app);
     master_app->transition(mainManager);
+}
+
+void LoginManager::goToWelcome() {
+    if (!isConsole) loginGUI->close();
+    WelcomeManager *welcomeManager = new WelcomeManager(master_app);
+    master_app->transition(welcomeManager);
 }

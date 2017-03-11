@@ -13,12 +13,14 @@
 #include "../Main/MainManager.hpp"
 #include "../Game/GameManager.hpp"
 
+class SpectatorGUI;
 
 class SpectatorManager : public NetworkedManager{
 private:
 
     std::vector<GameInfo> allGames;
     SpectatorUI spectatorUI;
+    SpectatorGUI *spectatorGUI;
 
     void getGamesFromMatchMaker();
     void parse_message_from_server(const std::string& message);

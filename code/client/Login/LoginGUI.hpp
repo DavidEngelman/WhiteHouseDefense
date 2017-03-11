@@ -12,11 +12,13 @@ class LoginGUI : public AbstractGUI, public LoginUI {
 
 public slots:
     void loginUser();
+    void cancelLogin();
 
 private:
     QLineEdit *usernameL;
     QLineEdit *passwordL;
     QPushButton *connect;
+    QPushButton *cancel;
     std::string username;
     std::string password;
 

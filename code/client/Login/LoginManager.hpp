@@ -25,6 +25,8 @@ public:
     virtual ~LoginManager();
 	void run() override;
     void login();
+
+	void goToWelcome();
 };
 
 #endif

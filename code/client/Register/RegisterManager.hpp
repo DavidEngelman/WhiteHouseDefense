@@ -24,7 +24,8 @@ public:
 
 	RegisterManager(int port, App* my_app);
 	void run() override;
-    void registerUser();
+	void registerUser();
+	void goToWelcome();
 };
 
 #endif

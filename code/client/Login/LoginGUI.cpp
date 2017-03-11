@@ -40,6 +40,7 @@ void LoginGUI::display() {
     QString s1 = "USERNAME";
     QString s2 = "PASSWORD";
     QString s3 = "LOGIN";
+    QString s4 = "CANCEL";
 
     QLabel *l1 = new QLabel(fields);
     l1->setText(s1);
@@ -52,15 +53,18 @@ void LoginGUI::display() {
     connect = new QPushButton(s3,fields);
     connect->setFixedSize(QSize(212,45));
 
+    cancel = new QPushButton(s4,fields);
+    cancel->setFixedSize(QSize(212,45));
 
     QObject::connect(connect, SIGNAL(clicked()), this, SLOT(loginUser()));
     QObject::connect(usernameL, SIGNAL(returnPressed()), passwordL, SLOT(setFocus()));
     QObject::connect(passwordL, SIGNAL(returnPressed()), connect, SIGNAL(clicked()));
-
+    QObject::connect(cancel, SIGNAL(clicked()), this, SLOT(cancelLogin()));
 
     fieldsLayout->addRow(l1, usernameL);
     fieldsLayout->addRow(l2, passwordL);
     fieldsLayout->addRow(connect);
+    fieldsLayout->addRow(cancel);
     fields->setLayout(fieldsLayout);
     fields->move(this->size().width() / 2 - 125, this->size().height() / 2 +105);
 
@@ -87,4 +91,8 @@ LoginGUI::LoginGUI(LoginManager *manager) : LoginUI(manager){}
 
 LoginGUI::~LoginGUI() {
     close();
+}
+
+void LoginGUI::cancelLogin() {
+    manager->goToWelcome();
 }

@@ -43,6 +43,7 @@ void RegisterGUI::display() {
     QString s2 = "PASSWORD";
     QString s3 = "CONFIRM";
     QString s4 = "REGISTER";
+    QString s5 = "CANCEL";
 
     QLabel *l1 = new QLabel();
     l1->setText(s1);
@@ -59,17 +60,20 @@ void RegisterGUI::display() {
     connect = new QPushButton(s4,fields);
     connect->setFixedSize(QSize(212,45));
 
-
+    cancel = new QPushButton(s5,fields);
+    cancel->setFixedSize(QSize(212,45));
+    
     QObject::connect(usernameL, SIGNAL(returnPressed()), passwordL, SLOT(setFocus()));
     QObject::connect(passwordL, SIGNAL(returnPressed()), confirmL, SLOT(setFocus()));
     QObject::connect(confirmL, SIGNAL(returnPressed()), connect, SIGNAL(clicked()));
     QObject::connect(connect, SIGNAL(clicked()), this, SLOT(registerUser()));
-
+    QObject::connect(cancel, SIGNAL(clicked()), this, SLOT(cancelRegister()));
 
     fieldsLayout->addRow(l1, usernameL);
     fieldsLayout->addRow(l2, passwordL);
     fieldsLayout->addRow(l3, confirmL);
     fieldsLayout->addRow(connect);
+    fieldsLayout->addRow(cancel);
     fields->setLayout(fieldsLayout);
     fields->move(this->size().width() / 2 - 125, this->size().height() / 2 +105);
 
@@ -91,12 +95,22 @@ void RegisterGUI::registerUser() {
 
 void RegisterGUI::displaySuccess() {
     QMessageBox::information(this, "Registered successfully", "Your account was registered successfully, you can now login normally.");
+    passwordL->setText("");
+    confirmL->setText("");
 }
 
 void RegisterGUI::displayError() {
     QMessageBox::critical(this, "Error in register", "Error : This username is already used or is not valid");
+    passwordL->setText("");
+    confirmL->setText("");
 }
 
 void RegisterGUI::displayConfirmError() {
     QMessageBox::critical(this, "Confirmation error", "ERROR : Your password doesn't correspond to the confirmation");
+    passwordL->setText("");
+    confirmL->setText("");
+}
+
+void RegisterGUI::cancelRegister() {
+    manager->goToWelcome();
 }
