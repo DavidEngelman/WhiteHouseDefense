@@ -16,7 +16,7 @@ ProfileManager::ProfileManager(int port, App *my_app) :
 }
 
 void ProfileManager::run() {
-    profileUI->display();
+    showMyProfile();
 }
 
 void ProfileManager::showMyProfile() {
