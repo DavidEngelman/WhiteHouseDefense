@@ -9,6 +9,7 @@
  */
 
 Map::Map(unsigned seed) {
+    if (seed == 0) initMapFromFile("filename");
     srand(seed);
     generateRandomMatrix();
 }
@@ -220,4 +221,13 @@ bool Map::isDelimiter(Position pos) const {
     // The center is not a delimiter
     if ((pos.getX() == SIZE / 2) && (pos.getY() == SIZE / 2)) return false;
     return (pos.getX() == pos.getY()) || (pos.getX() == ((SIZE - 1) - pos.getY()));
+}
+
+void Map::initMapFromFile(std::string filename) {
+    std::ifstream file(filename, std::ios::in);
+    for (int y = 0; y < SIZE; y++) {
+        for (int x = 0; x < SIZE; x++) {
+
+        }
+    }
 }

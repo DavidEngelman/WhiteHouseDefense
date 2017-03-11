@@ -45,6 +45,7 @@ protected:
     void generateQuarterMap(Position position);
     bool isNextToPath(Position position);
     void copyQuarter();
+    void initMapFromFile(std::string filename);
 
 
 public:

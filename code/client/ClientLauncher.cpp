@@ -4,6 +4,7 @@
 #include <QtWidgets/QPushButton>
 #include "App.hpp"
 #include "global.hpp"
+#include "MapGUI.hpp"
 
 int main(int argc, char *argv[]) {
     
@@ -29,7 +30,14 @@ int main(int argc, char *argv[]) {
 
     if (!isConsole) {
         QApplication application(argc, argv);
+        /* Pour tester la MapGUI
         App app(argv[1]);
+         */
+        MapGUI mapGUI(0);
+        mapGUI.setupGUI();
+        GameState gameState = GameState("CLASSIC");
+        mapGUI.display(gameState, 0);
+
         return application.exec();
     }
 

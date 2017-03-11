@@ -34,5 +34,53 @@ int MapGUI::computeTile(Position pos) {
 MapGUI::MapGUI(unsigned int seed) : Map(seed) { generateTiles(); }
 
 void MapGUI::display(GameState &gameState, int quadrant) const {
+    //Map::display(gameState, quadrant);
+}
 
+void MapGUI::setupGUI() {
+    this->setFixedSize(TILES_SIZE*SIZE, TILES_SIZE*SIZE);
+    this->show();
+}
+
+void MapGUI::paintEvent(QPaintEvent *) {
+    QPainter painter(this);
+    QImage image;
+
+    for (int y = 0; y < SIZE; y++) {
+        for (int x = 0; x < SIZE; x++) {
+            switch (tileMatrix[x][y]) {
+                case GRASS_INT:
+                    image = QImage("../../qt_ui/game_pictures/tiles/grass.png");
+                    break;
+                case CROSS:
+                    image = QImage("../../qt_ui/game_pictures/tiles/cross.png");
+                    break;
+                case UP_DOWN:
+                    image = QImage("../../qt_ui/game_pictures/tiles/up_down.png");
+                    break;
+                case LEFT_RIGHT:
+                    image = QImage("../../qt_ui/game_pictures/tiles/left_right.png");
+                    break;
+                case LEFT_DOWN:
+                    image = QImage("../../qt_ui/game_pictures/tiles/left_down.png");
+                    break;
+                case LEFT_UP:
+                    image = QImage("../../qt_ui/game_pictures/tiles/left_up.png");
+                    break;
+                case UP_RIGHT:
+                    image = QImage("../../qt_ui/game_pictures/tiles/up_right.png");
+                    break;
+                case DOWN_RIGHT:
+                    image = QImage("../../qt_ui/game_pictures/tiles/down_right.png");
+                    break;
+                case CASTLE:
+                    image = QImage("../../qt_ui/game_pictures/tiles/castle.png");
+                    break;
+                default:
+                    image = QImage("../../qt_ui/game_pictures/tiles/limit.png");
+                    break;
+            }
+            painter.drawImage(x*TILES_SIZE, y*TILES_SIZE, image);
+        }
+    }
 }
