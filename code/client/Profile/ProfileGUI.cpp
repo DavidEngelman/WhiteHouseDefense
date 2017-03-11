@@ -1,7 +1,3 @@
-//
-// Created by jepsiko on 09/03/17.
-//
-
 #include <QtCore/QFile>
 #include <QtWidgets/QFrame>
 #include <QtWidgets/QFormLayout>
