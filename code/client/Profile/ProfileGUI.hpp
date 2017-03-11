@@ -16,7 +16,7 @@ public:
 
     void displayNoSuchProfileError() override;
 
-    void displayProfile(std::string profileData) override;
+    void displayProfile() override;
 };
 
 

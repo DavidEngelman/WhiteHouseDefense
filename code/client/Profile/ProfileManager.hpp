@@ -17,21 +17,34 @@ class ProfileManager : public NetworkedManager {
 
 private:
 	ProfileUI * profileUI;
+
+    std::string username;
+    int victories;
+    int npcKilled;
+    
 public:
 	ProfileManager(int port, App* my_app);
-	void ProfileManagerProcess();
+    
+	std::string getPlayerUsername();
 
-    std::string getProfile(std::string username);
-	std::string getUsername();
+    int getVictories() const;
+
+    int getNPCKilled() const;
+    
+    std::string& getUsername();
+
 
     void run() override;
-	void handleUserChoice();
 
     void showMyProfile();
 
     void showProfile();
 
     void goToMainMenu();
+
+    void getAndParseProfile(std::string username);
+
+    void parseProfileData(char * profileData);
 };
 
 

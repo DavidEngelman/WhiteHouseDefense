@@ -1,14 +1,17 @@
+#include <assert.h>
 #include "../../common/Constants.h"
+#include "../../common/Message.hpp"
 #include "ProfileManager.hpp"
 #include "ProfileGUI.hpp"
 #include "ProfileConsoleUI.hpp"
 
+
 ProfileManager::ProfileManager(int port, App *my_app) :
         NetworkedManager(port, my_app) {
-    if (isConsole) {
-        profileUI = new ProfileConsoleUI(this);
-    } else {
+    if (false && !isConsole) {
         profileUI = new ProfileGUI(this);
+    } else {
+        profileUI = new ProfileConsoleUI(this);
     }
 }
 
@@ -17,16 +20,18 @@ void ProfileManager::run() {
 }
 
 void ProfileManager::showMyProfile() {
-    profileUI->displayProfile(getProfile(master_app->get_username()));
+    getAndParseProfile(master_app->get_username());
+    profileUI->displayProfile();
 }
 
 void ProfileManager::showProfile() {
     std::string profile = profileUI->getUsername();
-    std::string server_response = getProfile(profile);
-    if (server_response.size() == 3) { // le serveur renvoie ,,;
+    getAndParseProfile(profile);
+
+    if (username == "") { // No such profile
         profileUI->displayNoSuchProfileError();
     } else {
-        profileUI->displayProfile(server_response);
+        profileUI->displayProfile();
     }
 }
 
@@ -35,17 +40,41 @@ void ProfileManager::goToMainMenu() {
     master_app->transition(mainManager);
 }
 
-std::string ProfileManager::getProfile(std::string username) {
+void ProfileManager::getAndParseProfile(std::string username) {
     std::string message = GET_PROFILE + username + ";";
     send_message(server_socket, message.c_str());
     char buffer[MAX_BUFF_SIZE];
     receive_message(server_socket, buffer);
-    return std::string(buffer);
+    parseProfileData(buffer);
 }
 
-std::string ProfileManager::getUsername() {
-    std::cout << master_app->get_username() << std::endl;
+std::string ProfileManager::getPlayerUsername() {
     return master_app->get_username();
+}
+
+void ProfileManager::parseProfileData(char *profileData) {
+    Message message;
+    message.setData(profileData);
+
+    username = message.getNextToken();
+
+    if (username != "") { /* If the response isn't empty, the profile exists */
+        victories = std::stoi(message.getNextToken());
+        npcKilled = std::stoi(message.getNextToken());
+        assert(message.hasReachedEnd());
+    }
+}
+
+int ProfileManager::getVictories() const {
+    return victories;
+}
+
+int ProfileManager::getNPCKilled() const {
+    return npcKilled;
+}
+
+std::string &ProfileManager::getUsername() {
+    return username;
 }
 
 

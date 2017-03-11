@@ -10,8 +10,8 @@ ProfileGUI::ProfileGUI(ProfileManager *manager) : ProfileUI(manager) {}
 
 void ProfileGUI::display() {
     // TODO
-    std::string infos = manager->getProfile(manager->getUsername());
-    std::cout << infos << std::endl;
+//    std::string infos = manager->getAndParseProfile(manager->getPlayerUsername());
+//    std::cout << infos << std::endl;
 
     QLabel *name = new QLabel;
 
@@ -23,6 +23,6 @@ void ProfileGUI::displayNoSuchProfileError() {
     // TODO
 }
 
-void ProfileGUI::displayProfile(std::string profileData) {
+void ProfileGUI::displayProfile() {
     // TODO
 }

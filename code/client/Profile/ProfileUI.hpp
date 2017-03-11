@@ -21,7 +21,7 @@ public:
 
     virtual void displayNoSuchProfileError() = 0;
 
-    virtual void displayProfile(std::string profileData) = 0;
+    virtual void displayProfile() = 0;
 };
 
 #endif //PROJET_PROFILEUI_HPP
