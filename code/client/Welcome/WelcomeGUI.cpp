@@ -6,7 +6,7 @@
 #include "WelcomeManager.hpp"
 
 
-void WelcomeGUI::setupGUI() {
+void WelcomeGUI::display() {
     setTheme();
 
     QFrame * fields = new QFrame(this);

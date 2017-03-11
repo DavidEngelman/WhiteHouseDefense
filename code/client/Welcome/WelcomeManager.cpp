@@ -1,4 +1,3 @@
-
 #include "WelcomeManager.hpp"
 #include "WelcomeGUI.hpp"
 
@@ -12,7 +11,7 @@ void WelcomeManager::run() {
         if (choice == 1) goToLogin();
         else if (choice == 2) goToRegister();
     } else {
-        welcomeGUI->setupGUI();
+        welcomeGUI->display();
     }
 }
 

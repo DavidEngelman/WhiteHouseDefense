@@ -41,7 +41,7 @@ public:
     WelcomeGUI(WelcomeManager *manager);
     virtual ~WelcomeGUI();
 
-    void setupGUI();
+    void display();
 };
 
 

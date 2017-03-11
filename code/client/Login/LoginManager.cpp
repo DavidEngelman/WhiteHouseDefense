@@ -79,7 +79,6 @@ void LoginManager::goToMain() {
 }
 
 void LoginManager::goToWelcome() {
-    if (!isConsole) loginGUI->close();
     WelcomeManager *welcomeManager = new WelcomeManager(master_app);
     master_app->transition(welcomeManager);
 }

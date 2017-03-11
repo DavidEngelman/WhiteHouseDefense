@@ -4,7 +4,7 @@
 #include "SpectatorManager.hpp"
 
 
-void SpectatorGUI::setupGUI() {
+void SpectatorGUI::display() {
 //TODO
 }
 
