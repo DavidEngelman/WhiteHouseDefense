@@ -7,12 +7,15 @@
 ProfileGUI::ProfileGUI(ProfileManager *manager) : ProfileUI(manager), usernameT(new QString("No Username")), victoriesT(new QString),
 NPCKilledT(new QString) {}
 
+
 ProfileGUI::~ProfileGUI() {
     close();
 }
 
 
 void ProfileGUI::display() {
+
+
     /* Set stylesheet */
     setStylesheetFromPath("../../qt_ui/profile.qss");
 
@@ -40,6 +43,16 @@ void ProfileGUI::display() {
     QString usernameString = "Username";
     QString searchButtonString = "SEARCH";
 
+    QPixmap* victoryPic = new QPixmap("../../qt_ui/game_pictures/pictures/trophy2.png");
+    QLabel *victoryPicLabel = new QLabel(this);
+    victoryPicLabel->setFixedSize(victoryPic->size());
+    victoryPicLabel->setPixmap(*victoryPic);
+
+    QPixmap* mexicanPic = new QPixmap("../../qt_ui/game_pictures/pictures/mexican.gif");
+    QLabel *mexicanPicLabel = new QLabel(this);
+    mexicanPicLabel->setFixedSize(mexicanPic->size());
+    mexicanPicLabel->setPixmap(*mexicanPic);
+
     QLabel *label = new QLabel(this);
     label->setText(usernameString);
     label->setFont(police);
@@ -62,6 +75,7 @@ void ProfileGUI::display() {
     *NPCKilledT = QString::fromStdString("NPC killed:\n" + std::to_string(profileManager->getNPCKilled()));
 
     userNameLabel = new QLabel(this);
+    userNameLabel->wordWrap();
     userNameLabel->setFont(policeUsername);
     userNameLabel->setText(*usernameT);
 
@@ -77,10 +91,11 @@ void ProfileGUI::display() {
     std::cout << (*victoriesT).toStdString() << std::endl;
     std::cout << (*NPCKilledT).toStdString() << std::endl;
 
-    userNameLabel->move(this->width()/2, this->height()/2 - 105 );
-    victoriesLabel->move(this->width()/2  - 100, this->height()/2 + 150 );
-    NPCKilledLabel->move(this->width()/2  + 100, this->height()/2 + 150 );
-
+    userNameLabel->move((this->width()/2) - usernameT->size()/2, this->height()/2 - 105 );
+    victoryPicLabel->move(this->width()/2 - 124, this->height()/2 + 22);
+    victoriesLabel->move(this->width()/2  - 100, this->height()/2 + 135 );
+    NPCKilledLabel->move(this->width()/2  + 100, this->height()/2 + 135 );
+    mexicanPicLabel->move(this->width()/2 + 95, this->height()/2 + 5);
 
     this->setLayout(maingridLayout);
 

@@ -5,38 +5,41 @@
 #include "App.hpp"
 #include "global.hpp"
 #include "Profile/ProfileManager.hpp"
+#include "Profile/ProfileGUI.hpp"
 
 static const bool DEBUG = true;
 
 int main(int argc, char *argv[]) {
 
-        isConsole = false;
+            isConsole = false;
 
-        if (argc == 1) {
-            std::cerr << "Don't forget the ip_adress of the server as argument! ;)" << std::endl;
-            exit(1);
-        } else if (argc == 3) {
-            if (strcmp(argv[2], "-c") == 0 or strcmp(argv[2], "--console") == 0) {
-                isConsole = true;
+            if (argc == 1) {
+                std::cerr << "Don't forget the ip_adress of the server as argument! ;)" << std::endl;
+                exit(1);
+            } else if (argc == 3) {
+                if (strcmp(argv[2], "-c") == 0 or strcmp(argv[2], "--console") == 0) {
+                    isConsole = true;
+                }
             }
-        }
 
-        /*if (!isConsole) { // Pour tester Qt
-            QApplication application(argc, argv);
+            /*if (!isConsole) { // Pour tester Qt
+                QApplication application(argc, argv);
 
-            QPushButton button("TEST");
-            button.show();
+                QPushButton button("TEST");
+                button.show();
 
-            return application.exec();
-        }*/
+                return application.exec();
+            }*/
 
-        if (!isConsole) {
-            QApplication application(argc, argv);
+            if (!isConsole) {
+                QApplication application(argc, argv);
+                App app(argv[1]);
+                application.exec();
+
+            }
+
             App app(argv[1]);
-            return application.exec();
-        }
 
-        App app(argv[1]);
 
     return 0;
 }
