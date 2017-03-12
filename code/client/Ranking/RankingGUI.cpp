@@ -36,7 +36,6 @@ void RankingGUI::createTable() {
 
     setStyleSheet("QTableWidget {background-color: rgba(99, 99, 99, 60);}"
 
-                          "QTableView{border : 4px solid gold}"
                           "QHeaderView::section {background-color: grey;"
                           "color: white;"
                           "border: 10px solid grey;}"
