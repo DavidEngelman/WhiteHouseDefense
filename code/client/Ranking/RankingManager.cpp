@@ -39,10 +39,8 @@ std::vector<RankingInfos> RankingManager::createRanking(std::string message_from
 
         if (message_from_server[i] == '|'){
             infos.victories = stoi(message);
-            if (i != message_from_server.size() - 1){
-                ranking.push_back(infos);
-                message = "";
-            }
+            ranking.push_back(infos);
+            message = "";
             i++;
         }
 
