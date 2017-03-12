@@ -6,7 +6,7 @@
 #include <QtWidgets/QMessageBox>
 #include "ProfileGUI.hpp"
 
-ProfileGUI::ProfileGUI(ProfileManager *manager) : ProfileUI(manager), usernameT(new QString), victoriesT(new QString),
+ProfileGUI::ProfileGUI(ProfileManager *manager) : ProfileUI(manager), usernameT(new QString("No Username")), victoriesT(new QString),
 pnjKilledT(new QString) {}
 
 ProfileGUI::~ProfileGUI() {
@@ -15,18 +15,16 @@ ProfileGUI::~ProfileGUI() {
 
 
 void ProfileGUI::display() {
-    QFile File("../../qt_ui/profile.qss");
-    File.open(QFile::ReadOnly);
-    QString styleSheet = QLatin1String(File.readAll());
-    this->setStyleSheet(styleSheet);
+    /* Set stylesheet */
+    setStylesheetFromPath("../../qt_ui/profile.qss");
 
+    /* Set dimensions */
     this->setFixedHeight(480);
     this->setFixedWidth(852);
-    QPixmap bkgnd("../../qt_ui/game_pictures/backgrounds/profile_bckgrd.jpeg");
-    bkgnd = bkgnd.scaled(this->size(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
-    QPalette palette;
-    palette.setBrush(QPalette::Background, bkgnd);
-    this->setPalette(palette);
+
+    /* Set background */
+    setBackgroundFromPath("../../qt_ui/game_pictures/backgrounds/profile_bckgrd.jpeg");
+
     QFont police("calibri");
 
     QFrame *fields = new QFrame(this);
@@ -51,7 +49,7 @@ void ProfileGUI::display() {
     fieldsLayout->addRow(label, usernameL);
     fieldsLayout->addRow(searchButton);
     fields->setLayout(fieldsLayout);
-    fields->move(this->size().width() / 2 - 125, this->size().height() / 2 + 105);
+    fields->move(this->size().width() / 2 - 125, this->size().height() / 2 - 105);
 
     // TODO: add profile data
 
@@ -59,10 +57,9 @@ void ProfileGUI::display() {
     *victoriesT = QString::number(profileManager->getVictories());
     *pnjKilledT = QString::number(profileManager->getNPCKilled());
 
-    QLabel *label_username = new QLabel(this);
+    QLabel *label_username = new QLabel(fields);
     label_username->setText(*usernameT);
     label_username->setFont(police);
-
     label_username->move(this->size().width() / 2 - label_username->width()/2, 30);
 
     this->show();

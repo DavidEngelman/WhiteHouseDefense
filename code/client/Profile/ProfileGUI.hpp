@@ -13,7 +13,6 @@ Q_OBJECT
 private:
     QLineEdit *usernameL;
     QPushButton *searchButton;
-    //ProfileManager *manager;
     QString* usernameT;
     QString* victoriesT;
     QString* pnjKilledT;
@@ -24,11 +23,13 @@ public slots:
 public:
     ProfileGUI(ProfileManager *manager);
     virtual ~ProfileGUI();
+
     void display() override;
 
     void displayNoSuchProfileError() override;
 
     void updateProfile() override;
+
 };
 
 

@@ -18,7 +18,7 @@ set(CLIENT_FILES "client/NetworkedManager.cpp" "client/ClientLauncher.cpp" "clie
         client/Game/GameInfo.cpp common/GunTower.cpp common/GunTower.hpp
         common/SniperTower.cpp common/SniperTower.hpp
         common/ShockTower.cpp common/ShockTower.hpp
-        client/Abstract/AbstractUI.hpp client/Abstract/AbstractGUI.hpp client/FriendList/FriendListGUI.cpp
+        client/Abstract/AbstractUI.hpp client/Abstract/AbstractGUI.cpp client/Abstract/AbstractGUI.hpp client/FriendList/FriendListGUI.cpp
         client/FriendList/FriendListGUI.hpp client/Game/GameGUI.cpp client/Game/GameGUI.hpp
         client/Login/LoginGUI.cpp client/Login/LoginGUI.hpp
         client/Main/MainGUI.cpp client/Main/MainGUI.hpp  client/Main/MainConsoleUI.cpp
