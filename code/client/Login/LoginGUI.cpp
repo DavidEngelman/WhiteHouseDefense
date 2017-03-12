@@ -90,6 +90,7 @@ void LoginGUI::displayAlreadyConnected() {
 LoginGUI::LoginGUI(LoginManager *manager) : LoginUI(manager){}
 
 LoginGUI::~LoginGUI() {
+    std::cout << "Login GUI closed." << std::endl;
     close();
 }
 
