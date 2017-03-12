@@ -3,6 +3,7 @@
 
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QLineEdit>
+#include <QtWidgets/QLabel>
 #include "../Abstract/AbstractGUI.hpp"
 #include "ProfileManager.hpp"
 #include "ProfileUI.hpp"
@@ -11,11 +12,17 @@ class ProfileGUI : public AbstractGUI, public ProfileUI {
 Q_OBJECT
 
 private:
-    QLineEdit *usernameL;
+    QLineEdit *usernameLineEdit;
     QPushButton *searchButton;
+
+    QLabel *userNameLabel;
+    QLabel *victoriesLabel;
+    QLabel *NPCKilledLabel;
+
+
     QString* usernameT;
     QString* victoriesT;
-    QString* pnjKilledT;
+    QString* NPCKilledT;
 
 public slots:
     void showUser();

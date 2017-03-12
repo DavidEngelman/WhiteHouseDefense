@@ -1,13 +1,11 @@
 #include <QtCore/QFile>
 #include <QtWidgets/QFrame>
 #include <QtWidgets/QFormLayout>
-#include <QtWidgets/QLineEdit>
-#include <QtWidgets/QLabel>
 #include <QtWidgets/QMessageBox>
 #include "ProfileGUI.hpp"
 
 ProfileGUI::ProfileGUI(ProfileManager *manager) : ProfileUI(manager), usernameT(new QString("No Username")), victoriesT(new QString),
-pnjKilledT(new QString) {}
+NPCKilledT(new QString) {}
 
 ProfileGUI::~ProfileGUI() {
     close();
@@ -27,40 +25,56 @@ void ProfileGUI::display() {
 
     QFont police("calibri");
 
-    QFrame *fields = new QFrame(this);
-    QFormLayout *fieldsLayout = new QFormLayout(this);
+    QFrame *frame = new QFrame(this);
+    QVBoxLayout *mainLayout = new QVBoxLayout(frame);
+    QFormLayout *fieldsLayout = new QFormLayout();
 
-    usernameL = new QLineEdit(fields);
-    usernameL->setSelection(0, 10);
+    usernameLineEdit = new QLineEdit(frame);
+    usernameLineEdit->setSelection(0, 10);
 
     QString usernameString = "Username";
     QString searchButtonString = "SEARCH";
 
-    QLabel *label = new QLabel(fields);
+    QLabel *label = new QLabel(frame);
     label->setText(usernameString);
     label->setFont(police);
 
-    searchButton = new QPushButton(searchButtonString, fields);
+    searchButton = new QPushButton(searchButtonString, frame);
     searchButton->setFixedSize(QSize(212, 45));
 
     QObject::connect(searchButton, SIGNAL(clicked()), this, SLOT(showUser()));
-    QObject::connect(usernameL, SIGNAL(returnPressed()), searchButton, SIGNAL(clicked()));
+    QObject::connect(usernameLineEdit, SIGNAL(returnPressed()), searchButton, SIGNAL(clicked()));
 
-    fieldsLayout->addRow(label, usernameL);
+    fieldsLayout->addRow(label, usernameLineEdit);
     fieldsLayout->addRow(searchButton);
-    fields->setLayout(fieldsLayout);
-    fields->move(this->size().width() / 2 - 125, this->size().height() / 2 - 105);
 
-    // TODO: add profile data
+    *usernameT = QString::fromStdString("Username: " + profileManager->getUsername());
+    *victoriesT = QString::fromStdString("Victories: " + std::to_string(profileManager->getVictories()));
+    *NPCKilledT = QString::fromStdString("NPC killed: " + std::to_string(profileManager->getNPCKilled()));
 
-    *usernameT = QString::fromStdString(profileManager->getUsername());
-    *victoriesT = QString::number(profileManager->getVictories());
-    *pnjKilledT = QString::number(profileManager->getNPCKilled());
+    userNameLabel = new QLabel(frame);
+    userNameLabel->setFont(police);
+    userNameLabel->setText(*usernameT);
 
-    QLabel *label_username = new QLabel(fields);
-    label_username->setText(*usernameT);
-    label_username->setFont(police);
-    label_username->move(this->size().width() / 2 - label_username->width()/2, 30);
+    victoriesLabel = new QLabel(frame);
+    victoriesLabel->setFont(police);
+    victoriesLabel->setText(*victoriesT);
+
+    NPCKilledLabel = new QLabel(frame);
+    NPCKilledLabel->setFont(police);
+    NPCKilledLabel->setText(*NPCKilledT);
+
+    std::cout << (*usernameT).toStdString() << std::endl;
+    std::cout << (*victoriesT).toStdString() << std::endl;
+    std::cout << (*NPCKilledT).toStdString() << std::endl;
+
+    mainLayout->addLayout(fieldsLayout);
+    mainLayout->addWidget(userNameLabel);
+    mainLayout->addWidget(victoriesLabel);
+    mainLayout->addWidget(NPCKilledLabel);
+
+    frame->setLayout(mainLayout);
+    frame->move(this->size().width() / 2 - 125, this->size().height() / 2 - 105);
 
     this->show();
 }
@@ -70,12 +84,18 @@ void ProfileGUI::displayNoSuchProfileError() {
 }
 
 void ProfileGUI::updateProfile() {
-    *usernameT = QString::fromStdString(profileManager->getUsername());
-    *victoriesT = QString::number(profileManager->getVictories());
-    *pnjKilledT = QString::number(profileManager->getNPCKilled());
-    this->update();
+    *usernameT = QString::fromStdString("Username: " + profileManager->getUsername());
+    *victoriesT = QString::fromStdString("Victories: " + std::to_string(profileManager->getVictories()));
+    *NPCKilledT = QString::fromStdString("NPC killed: " + std::to_string(profileManager->getNPCKilled()));
+
+    userNameLabel->setText(*usernameT);
+    victoriesLabel->setText(*victoriesT);
+    NPCKilledLabel->setText(*NPCKilledT);
+
+//    this
 }
 
 void ProfileGUI::showUser() {
-    // TODO
+    username = usernameLineEdit->text().toStdString();
+    profileManager->showProfile();
 }

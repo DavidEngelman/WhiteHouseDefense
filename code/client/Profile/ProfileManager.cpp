@@ -7,7 +7,7 @@
 
 
 ProfileManager::ProfileManager(int port, App *my_app) :
-        NetworkedManager(port, my_app) {
+        NetworkedManager(port, my_app), username("Loading..."), victories(-1), npcKilled(-1) {
     if (!isConsole) {
         profileUI = new ProfileGUI(this);
     } else {
@@ -19,7 +19,6 @@ ProfileManager::ProfileManager(int port, App *my_app) :
 void ProfileManager::run() {
     profileUI->display();
     showMyProfile();
-
 }
 
 void ProfileManager::showMyProfile() {
