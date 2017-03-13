@@ -33,6 +33,7 @@ int main(int argc, char *argv[]) {
 
             if (!isConsole) {
                 QApplication application(argc, argv);
+                QCoreApplication::setApplicationName("White house defense");
                 App app(argv[1]);
                 return application.exec();
 

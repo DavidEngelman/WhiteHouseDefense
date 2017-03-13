@@ -37,6 +37,7 @@ void ProfileGUI::display() {
 
     homeButton = new QPushButton("HOME", this);
     homeButton->setFixedSize(QSize(70, 35));
+    homeButton->setCursor(Qt::PointingHandCursor);
 
     homeButton->setStyleSheet("border-image:url(../../qt_ui/game_pictures/buttons/gold_button_2.svg);");
 
@@ -63,6 +64,9 @@ void ProfileGUI::display() {
 
     topLayout->addWidget(usernameLineEdit);
     topLayout->addWidget(searchButton);
+
+    //topLayout->setAlignment(usernameLineEdit, Qt::AlignHCenter);
+    //topLayout->setAlignment(searchButton, Qt::AlignLeft);
 
 
     ///----------USERNAME----------
