@@ -26,14 +26,38 @@ void MapGUI::paintEvent(QPaintEvent *) {
                 case GRASS_INT:
                     image = QImage("../../qt_ui/game_pictures/tiles/grass.png");
                     break;
+                case BASE_INT:
+                    image = QImage("../../qt_ui/game_pictures/tiles/base.png");
+                    break;
+                case GRASS_ROCK_INT:
+                    image = QImage("../../qt_ui/game_pictures/tiles/grassrock.png");
+                    break;
                 case TREE_INT:
                     image = QImage("../../qt_ui/game_pictures/tiles/tree.png");
                     break;
                 case PINE_INT:
                     image = QImage("../../qt_ui/game_pictures/tiles/pine.png");
                     break;
+                case SAND_INT:
+                    image = QImage("../../qt_ui/game_pictures/tiles/sand.png");
+                    break;
+                case PALMER_INT:
+                    image = QImage("../../qt_ui/game_pictures/tiles/palmer.png");
+                    break;
+                case WATER_INT:
+                    image = QImage("../../qt_ui/game_pictures/tiles/water.png");
+                    break;
+                case SAND_STONE_INT:
+                    image = QImage("../../qt_ui/game_pictures/tiles/sandstone.png");
+                    break;
+                case SAND_ROCK_INT:
+                    image = QImage("../../qt_ui/game_pictures/tiles/sandrock.png");
+                    break;
+                case WATER_ROCK_INT:
+                    image = QImage("../../qt_ui/game_pictures/tiles/waterrock.png");
+                    break;
                 default:
-                    image = QImage("../../qt_ui/game_pictures/tiles/grassrock.png");
+                    image = QImage("../../qt_ui/game_pictures/tiles/unknown.png");
                     break;
             }
             painter.drawImage(x*TILES_SIZE, y*TILES_SIZE, image);

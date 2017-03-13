@@ -10,6 +10,7 @@
 
 Map::Map(unsigned seed) {
     if (seed == 0) initMapFromFile("../../maps/map1.map");
+    else if (seed == 1) initMapFromFile("../../maps/map2.map");
     else {
         srand(seed);
         generateRandomMatrix();
@@ -43,10 +44,17 @@ void Map::display(GameState &gameState, int quadrant) const {
                 case TREE_INT:
                     std::cout << TREE;
                     break;
+
                 case PINE_INT:
                     std::cout << PINE;
                     break;
+
+                case PALMER_INT:
+                    std::cout << PALMER;
+                    break;
+
                 case GRASS_INT:
+                case SAND_INT:
                     typeOfTower = "";
                     for (auto &tower : towers) {
                         Position pos = tower->getPosition();
@@ -62,20 +70,10 @@ void Map::display(GameState &gameState, int quadrant) const {
                     } else if (typeOfTower == SHOCK_TOWER_STR) {
                         std::cout << SHOCK_TOWER_CHAR;
                     } else {
-
-                        if (computeQuadrant(Position(x, y)) == quadrant) {
-                            std::cout << GREEN_GRASS;
-                        } else {
-
-                            if ((mode == TEAM_MODE) && (PARTNERS[computeQuadrant(Position(x, y))] == quadrant)) {
-                                std::cout << PURPLE_GRASS;
-                            } else {
-                                std::cout << GRASS;
-                            }
-                        }
+                        std::cout << GRASS;
                     }
-
                     break;
+
                 case PATH_INT:
                     has_npc = false;
                     for (auto &wave : waves) {
@@ -92,11 +90,36 @@ void Map::display(GameState &gameState, int quadrant) const {
                     if (has_npc) std::cout << NPC;
                     else std::cout << PATH;
                     break;
+
                 case BASE_INT:
-                    std::cout << BASE;
+                    if (computeQuadrant(Position(x, y)) == quadrant) {
+                        std::cout << GREEN_BASE;
+                    } else {
+
+                        if ((mode == TEAM_MODE) && (PARTNERS[computeQuadrant(Position(x, y))] == quadrant)) {
+                            std::cout << PURPLE_BASE;
+                        } else {
+                            std::cout << BASE;
+                        }
+                    }
                     break;
+
+                case WATER_ROCK_INT:
+                case SAND_ROCK_INT:
+                case GRASS_ROCK_INT:
+                    std::cout << ROCK;
+                    break;
+
+                case WATER_INT:
+                    std::cout << WATER;
+                    break;
+
+                case SAND_STONE_INT:
+                    std::cout << MUD;
+                    break;
+
                 default:
-                    std::cout << LIMIT;
+                    std::cout << UNKNOWN;
                     break;
             }
         }
@@ -135,7 +158,7 @@ void Map::initMap() {
             } else if (y == SIZE / 2 and SIZE / 2 - 2 <= x and x <= SIZE / 2 + 2) {
                 matrix[y][x] = PATH_INT;
             } else if (x == y or x + y == SIZE - 1) {
-                matrix[y][x] = LIMIT_INT;
+                matrix[y][x] = GRASS_ROCK_INT;
             } else {
                 matrix[y][x] = GRASS_INT;
             }
@@ -155,16 +178,16 @@ void Map::generateQuarterMap(Position end) {
     std::vector<Position> possibleWays;
 
     Position nextToEnd(end.getX(), end.getY() - 1);
-    if (matrix[nextToEnd.getY()][nextToEnd.getX()] != LIMIT_INT && !isNextToPath(nextToEnd))
+    if (matrix[nextToEnd.getY()][nextToEnd.getX()] != GRASS_ROCK_INT && !isNextToPath(nextToEnd))
         possibleWays.push_back(nextToEnd);
 
     nextToEnd.setY(end.getY());
     nextToEnd.setX(end.getX() - 1);
-    if (matrix[nextToEnd.getY()][nextToEnd.getX()] != LIMIT_INT && !isNextToPath(nextToEnd))
+    if (matrix[nextToEnd.getY()][nextToEnd.getX()] != GRASS_ROCK_INT && !isNextToPath(nextToEnd))
         possibleWays.push_back(nextToEnd);
 
     nextToEnd.setX(end.getX() + 1);
-    if (matrix[nextToEnd.getY()][nextToEnd.getX()] != LIMIT_INT && !isNextToPath(nextToEnd))
+    if (matrix[nextToEnd.getY()][nextToEnd.getX()] != GRASS_ROCK_INT && !isNextToPath(nextToEnd))
         possibleWays.push_back(nextToEnd);
 
     unsigned int way = (unsigned int) (rand() % possibleWays.size());
@@ -228,36 +251,23 @@ int Map::computeQuadrant(Position pos) {
 bool Map::isObstacle(Position pos) const {
     int cell = matrix[pos.getY()][pos.getX()];
 
-    return (cell == LIMIT_INT or cell == TREE_INT or cell == PINE_INT);
+    return cell == GRASS_ROCK_INT or cell == TREE_INT or cell == PINE_INT
+        or cell == PALMER_INT or cell == WATER_INT or cell == SAND_STONE_INT
+        or cell == WATER_ROCK_INT or cell == SAND_ROCK_INT;
 }
 
 void Map::initMapFromFile(std::string filename) {
     std::ifstream file(filename, std::ios::in);
     char c;
+    std::string number = "";
     int x = 0;
     int y = 0;
     while (file >> c) {
         if (c != ',') {
-            switch (c) {
-                case '0':
-                    matrix[y][x] = PATH_INT;
-                    break;
-                case '1':
-                    matrix[y][x] = GRASS_INT;
-                    break;
-                case '2':
-                    matrix[y][x] = BASE_INT;
-                    break;
-                case '3':
-                    matrix[y][x] = LIMIT_INT;
-                    break;
-                case '4':
-                    matrix[y][x] = TREE_INT;
-                    break;
-                default:
-                    matrix[y][x] = PINE_INT;
-                    break;
-            }
+            number += c;
+        } else {
+            matrix[y][x] = stoi(number);
+            number = "";
 
             x++;
             if (x == SIZE) {

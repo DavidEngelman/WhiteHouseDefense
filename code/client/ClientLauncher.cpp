@@ -33,7 +33,7 @@ int main(int argc, char *argv[]) {
         /* Pour tester la MapGUI
         App app(argv[1]);
          */
-        MapGUI mapGUI(0);
+        MapGUI mapGUI(1);
         mapGUI.display();
         GameState gameState = GameState("CLASSIC");
         mapGUI.display(gameState, 0);

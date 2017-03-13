@@ -20,7 +20,7 @@
    <image width="16" height="16" source="../qt_ui/game_pictures/tiles/lava.png"/>
   </tile>
   <tile id="6">
-   <image width="16" height="16" source="../qt_ui/game_pictures/tiles/limit.png"/>
+   <image width="16" height="16" source="../qt_ui/game_pictures/tiles/grassrock.png"/>
   </tile>
   <tile id="7">
    <image width="16" height="16" source="../qt_ui/game_pictures/tiles/mud.png"/>
@@ -53,13 +53,13 @@
    <image width="16" height="16" source="../qt_ui/game_pictures/tiles/stone.png"/>
   </tile>
   <tile id="17">
-   <image width="16" height="16" source="../qt_ui/game_pictures/tiles/tile014.png"/>
+   <image width="16" height="16" source="../qt_ui/game_pictures/tiles/deadtreemud.png"/>
   </tile>
   <tile id="18">
    <image width="16" height="16" source="../qt_ui/game_pictures/tiles/tree.png"/>
   </tile>
   <tile id="19">
-   <image width="16" height="16" source="../qt_ui/game_pictures/tiles/treedirt.png"/>
+   <image width="16" height="16" source="../qt_ui/game_pictures/tiles/deadtreedirt.png"/>
   </tile>
   <tile id="20">
    <image width="16" height="16" source="../qt_ui/game_pictures/tiles/treemud.png"/>
