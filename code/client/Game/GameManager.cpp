@@ -109,7 +109,7 @@ bool GameManager::checkValidity(Position towerPos, GameState& gamestate, std::st
         validity = false;
     } else if (Map::computeQuadrant(towerPos) != quadrant) { // if the position is in the right quadrant
         validity = false;
-    } else if (gameUI.getMap()->isPath(towerPos) || gameUI.getMap()->isDelimiter(towerPos)){
+    } else if (gameUI.getMap()->isPath(towerPos) || gameUI.getMap()->isObstacle(towerPos)){
         validity = false;
     }
     return validity;

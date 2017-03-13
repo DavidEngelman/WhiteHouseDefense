@@ -40,6 +40,12 @@ void Map::display(GameState &gameState, int quadrant) const {
         std::cout << y << "\t";
         for (int x = 0; x < SIZE; x++) {
             switch (matrix[y][x]) {
+                case TREE_INT:
+                    std::cout << TREE;
+                    break;
+                case PINE_INT:
+                    std::cout << PINE;
+                    break;
                 case GRASS_INT:
                     typeOfTower = "";
                     for (auto &tower : towers) {
@@ -71,24 +77,23 @@ void Map::display(GameState &gameState, int quadrant) const {
 
                     break;
                 case PATH_INT:
-                    if (x == 0 or y == 0 or x == SIZE - 1 or y == SIZE - 1) std::cout << BASE;
-                    else {
-                        has_npc = false;
-                        for (auto &wave : waves) {
-                            std::vector<PNJ> &pnjs = wave.getPnjs();
-                            for (auto &pnj : pnjs) {
-                                Position pos = pnj.getPosition();
-                                if (x == pos.getX() && y == pos.getY()) {
-                                    has_npc = true;
-                                    break;
-                                }
+                    has_npc = false;
+                    for (auto &wave : waves) {
+                        std::vector<PNJ> &pnjs = wave.getPnjs();
+                        for (auto &pnj : pnjs) {
+                            Position pos = pnj.getPosition();
+                            if (x == pos.getX() && y == pos.getY()) {
+                                has_npc = true;
+                                break;
                             }
-                            if (has_npc) break;
                         }
-                        if (has_npc) std::cout << NPC;
-                        else std::cout << PATH;
+                        if (has_npc) break;
                     }
-
+                    if (has_npc) std::cout << NPC;
+                    else std::cout << PATH;
+                    break;
+                case BASE_INT:
+                    std::cout << BASE;
                     break;
                 default:
                     std::cout << LIMIT;
@@ -143,6 +148,7 @@ void Map::initMap() {
  */
 void Map::generateQuarterMap(Position end) {
     if (end.getY() == 0) {
+        matrix[end.getY()][end.getX()] = BASE_INT;
         return;
     }
 
@@ -219,17 +225,10 @@ int Map::computeQuadrant(Position pos) {
     }
 }
 
-bool Map::isDelimiter(Position pos) const {
-    // The center is not a delimiter
-    if ((pos.getX() == SIZE / 2) && (pos.getY() == SIZE / 2)) return false;
-    return (pos.getX() == pos.getY()) || (pos.getX() == ((SIZE - 1) - pos.getY()));
-}
-
 bool Map::isObstacle(Position pos) const {
-    int x = pos.getX();
-    int y = pos.getY();
+    int cell = matrix[pos.getY()][pos.getX()];
 
-    return (matrix[y][x] == TREE_INT);
+    return (cell == LIMIT_INT or cell == TREE_INT or cell == PINE_INT);
 }
 
 void Map::initMapFromFile(std::string filename) {
@@ -240,23 +239,23 @@ void Map::initMapFromFile(std::string filename) {
     while (file >> c) {
         if (c != ',') {
             switch (c) {
+                case '0':
+                    matrix[y][x] = PATH_INT;
+                    break;
+                case '1':
+                    matrix[y][x] = GRASS_INT;
+                    break;
+                case '2':
+                    matrix[y][x] = BASE_INT;
+                    break;
                 case '3':
                     matrix[y][x] = LIMIT_INT;
                     break;
-                case '1':
+                case '4':
                     matrix[y][x] = TREE_INT;
                     break;
-                case '2':
-                    matrix[y][x] = PINE_INT;
-                    break;
-                case '8':
-                    matrix[y][x] = PATH_INT;
-                    break;
-                case '5':
-                    matrix[y][x] = PATH_INT;
-                    break;
                 default:
-                    matrix[y][x] = GRASS_INT;
+                    matrix[y][x] = PINE_INT;
                     break;
             }
 

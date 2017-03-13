@@ -11,14 +11,15 @@ const int SIZE = 41;
 #define LIMIT "\033[34m⛰\033[0m  "
 #define NPC "\033[33m☪\033[0m  "
 #define BASE "\033[31m✈\033[0m  "
-#define TREE "\033[34m☘\033[0m  "
-#define PINE "\033[34m△\033[0m  "
+#define TREE "\033[32m☘\033[0m  "
+#define PINE "\033[32m△\033[0m  "
 
 #define PATH_INT 0
-#define GRASS_INT -1
-#define LIMIT_INT -2
-#define TREE_INT -3
-#define PINE_INT -4
+#define GRASS_INT 1
+#define BASE_INT 2
+#define LIMIT_INT 3
+#define TREE_INT 4
+#define PINE_INT 5
 
 #include <string>
 #include <vector>
@@ -56,10 +57,9 @@ public:
     Map(unsigned seed);
     virtual void display(GameState& gameState, int quadrant) const;
     bool isPath(Position pos) const;
-    bool isDelimiter(Position pos) const;
+    bool isObstacle(Position pos) const;
     static int computeQuadrant(Position pos);
 
-    bool isObstacle(Position pos) const;
 };
 
 #endif
