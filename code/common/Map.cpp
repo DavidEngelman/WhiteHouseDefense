@@ -9,7 +9,7 @@
  */
 
 Map::Map(unsigned seed) {
-    if (seed == 0) initMapFromFile("../../filename");
+    if (seed == 0) initMapFromFile("../../maps/map1.map");
     else {
         srand(seed);
         generateRandomMatrix();
@@ -19,8 +19,8 @@ Map::Map(unsigned seed) {
 /*
  * Display the map on the screen using the gameState for drawing the towers and the pnjs
  */
-void Map::display(GameState& gameState, int quadrant) const {
-    std::vector<AbstractTower*> &towers = gameState.getTowers();
+void Map::display(GameState &gameState, int quadrant) const {
+    std::vector<AbstractTower *> &towers = gameState.getTowers();
     std::vector<Wave> &waves = gameState.getWaves();
     std::string mode;
 
@@ -49,7 +49,7 @@ void Map::display(GameState& gameState, int quadrant) const {
                             break;
                         }
                     }
-                    if (typeOfTower == GUN_TOWER_STR){
+                    if (typeOfTower == GUN_TOWER_STR) {
                         std::cout << GUN_TOWER_CHAR;
                     } else if (typeOfTower == SNIPER_TOWER_STR) {
                         std::cout << SNIPER_TOWER_CHAR;
@@ -57,13 +57,13 @@ void Map::display(GameState& gameState, int quadrant) const {
                         std::cout << SHOCK_TOWER_CHAR;
                     } else {
 
-                        if (computeQuadrant(Position(x,y)) == quadrant) {
+                        if (computeQuadrant(Position(x, y)) == quadrant) {
                             std::cout << GREEN_GRASS;
-                        } else{
+                        } else {
 
-                            if ((mode == TEAM_MODE) && (PARTNERS[computeQuadrant(Position(x,y))] == quadrant)){
+                            if ((mode == TEAM_MODE) && (PARTNERS[computeQuadrant(Position(x, y))] == quadrant)) {
                                 std::cout << PURPLE_GRASS;
-                            } else{
+                            } else {
                                 std::cout << GRASS;
                             }
                         }
@@ -71,7 +71,7 @@ void Map::display(GameState& gameState, int quadrant) const {
 
                     break;
                 case PATH_INT:
-                    if (x == 0 or y == 0 or x == SIZE-1 or y == SIZE-1) std::cout << BASE;
+                    if (x == 0 or y == 0 or x == SIZE - 1 or y == SIZE - 1) std::cout << BASE;
                     else {
                         has_npc = false;
                         for (auto &wave : waves) {
@@ -111,7 +111,7 @@ void Map::display(GameState& gameState, int quadrant) const {
  */
 void Map::generateRandomMatrix() {
     initMap();
-    Position begin(SIZE/2, SIZE/2-2);
+    Position begin(SIZE / 2, SIZE / 2 - 2);
     generateQuarterMap(begin);
     copyQuarter();
 }
@@ -125,11 +125,11 @@ void Map::generateRandomMatrix() {
 void Map::initMap() {
     for (int y = 0; y < SIZE; y++) {
         for (int x = 0; x < SIZE; x++) {
-            if (x == SIZE/2 and SIZE/2-2 <= y and y <= SIZE/2+2) {
+            if (x == SIZE / 2 and SIZE / 2 - 2 <= y and y <= SIZE / 2 + 2) {
                 matrix[y][x] = PATH_INT;
-            } else if (y == SIZE/2 and SIZE/2-2 <= x and x <= SIZE/2+2) {
+            } else if (y == SIZE / 2 and SIZE / 2 - 2 <= x and x <= SIZE / 2 + 2) {
                 matrix[y][x] = PATH_INT;
-            } else if (x == y or x + y == SIZE-1) {
+            } else if (x == y or x + y == SIZE - 1) {
                 matrix[y][x] = LIMIT_INT;
             } else {
                 matrix[y][x] = GRASS_INT;
@@ -148,16 +148,16 @@ void Map::generateQuarterMap(Position end) {
 
     std::vector<Position> possibleWays;
 
-    Position nextToEnd(end.getX(), end.getY()-1);
+    Position nextToEnd(end.getX(), end.getY() - 1);
     if (matrix[nextToEnd.getY()][nextToEnd.getX()] != LIMIT_INT && !isNextToPath(nextToEnd))
         possibleWays.push_back(nextToEnd);
 
     nextToEnd.setY(end.getY());
-    nextToEnd.setX(end.getX()-1);
+    nextToEnd.setX(end.getX() - 1);
     if (matrix[nextToEnd.getY()][nextToEnd.getX()] != LIMIT_INT && !isNextToPath(nextToEnd))
         possibleWays.push_back(nextToEnd);
 
-    nextToEnd.setX(end.getX()+1);
+    nextToEnd.setX(end.getX() + 1);
     if (matrix[nextToEnd.getY()][nextToEnd.getX()] != LIMIT_INT && !isNextToPath(nextToEnd))
         possibleWays.push_back(nextToEnd);
 
@@ -172,10 +172,10 @@ void Map::generateQuarterMap(Position end) {
  */
 bool Map::isNextToPath(Position pos) {
     int count = 0;
-    if (matrix[pos.getY()+1][pos.getX()] == PATH_INT) count++;
-    if (pos.getY() > 0 && matrix[pos.getY()-1][pos.getX()] == PATH_INT) count++;
-    if (matrix[pos.getY()][pos.getX()+1] == PATH_INT) count++;
-    if (matrix[pos.getY()][pos.getX()-1] == PATH_INT) count++;
+    if (matrix[pos.getY() + 1][pos.getX()] == PATH_INT) count++;
+    if (pos.getY() > 0 && matrix[pos.getY() - 1][pos.getX()] == PATH_INT) count++;
+    if (matrix[pos.getY()][pos.getX() + 1] == PATH_INT) count++;
+    if (matrix[pos.getY()][pos.getX() - 1] == PATH_INT) count++;
     return count > 1;
 }
 
@@ -185,10 +185,10 @@ bool Map::isNextToPath(Position pos) {
 void Map::copyQuarter() {
     for (int y = 0; y < SIZE; y++) {
         for (int x = 0; x < SIZE; x++) {
-            if (y < x and x+y < SIZE) {
-                matrix[x][SIZE-1-y] = matrix[y][x];
-                matrix[SIZE-1-y][SIZE-1-x] = matrix[y][x];
-                matrix[SIZE-1-x][y] = matrix[y][x];
+            if (y < x and x + y < SIZE) {
+                matrix[x][SIZE - 1 - y] = matrix[y][x];
+                matrix[SIZE - 1 - y][SIZE - 1 - x] = matrix[y][x];
+                matrix[SIZE - 1 - x][y] = matrix[y][x];
             }
         }
     }
@@ -205,14 +205,14 @@ int Map::computeQuadrant(Position pos) {
     // The origin of the map is in the upper-left corner
     // The growing diagonal is : y = -x + size-1,
     // The decreasing diagonal is : y = x
-    bool aboveGrowingDiagonal = pos.getX()+pos.getY() < SIZE-1;
+    bool aboveGrowingDiagonal = pos.getX() + pos.getY() < SIZE - 1;
     bool aboveDecreasingDiagonal = pos.getX() > pos.getY();
 
-    if (aboveGrowingDiagonal && aboveDecreasingDiagonal){
+    if (aboveGrowingDiagonal && aboveDecreasingDiagonal) {
         return NORTH;
-    } else if (!aboveGrowingDiagonal && !aboveDecreasingDiagonal){
+    } else if (!aboveGrowingDiagonal && !aboveDecreasingDiagonal) {
         return SOUTH;
-    } else if (aboveGrowingDiagonal && !aboveDecreasingDiagonal){
+    } else if (aboveGrowingDiagonal && !aboveDecreasingDiagonal) {
         return WEST;
     } else {
         return EAST;
@@ -235,7 +235,37 @@ bool Map::isObstacle(Position pos) const {
 void Map::initMapFromFile(std::string filename) {
     std::ifstream file(filename, std::ios::in);
     char c;
+    int x = 0;
+    int y = 0;
     while (file >> c) {
-        std::cout << c;
+        if (c != ',') {
+            switch (c) {
+                case '3':
+                    matrix[y][x] = LIMIT_INT;
+                    break;
+                case '1':
+                    matrix[y][x] = TREE_INT;
+                    break;
+                case '2':
+                    matrix[y][x] = PINE_INT;
+                    break;
+                case '8':
+                    matrix[y][x] = PATH_INT;
+                    break;
+                case '5':
+                    matrix[y][x] = PATH_INT;
+                    break;
+                default:
+                    matrix[y][x] = GRASS_INT;
+                    break;
+            }
+
+            x++;
+            if (x == SIZE) {
+                x = 0;
+                y++;
+            }
+        }
     }
 }
+

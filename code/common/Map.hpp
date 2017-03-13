@@ -8,15 +8,17 @@ const int SIZE = 41;
 #define PURPLE_GRASS "\033[35m◼\033[0m  "
 
 #define PATH "   "
-#define LIMIT "\033[34m◼\033[0m  "
+#define LIMIT "\033[34m⛰\033[0m  "
 #define NPC "\033[33m☪\033[0m  "
 #define BASE "\033[31m✈\033[0m  "
 #define TREE "\033[34m☘\033[0m  "
+#define PINE "\033[34m△\033[0m  "
 
 #define PATH_INT 0
 #define GRASS_INT -1
 #define LIMIT_INT -2
 #define TREE_INT -3
+#define PINE_INT -4
 
 #include <string>
 #include <vector>
