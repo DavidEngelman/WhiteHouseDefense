@@ -5,11 +5,15 @@
 
 #include "../Abstract/AbstractGUI.hpp"
 #include "../../common/RankingInfos.h"
+#include "RankingConsoleUI.hpp"
 #include <QTableWidget>
+#include <QtWidgets/QTableWidget>
 
-class RankingManager;
+#include "RankingManager.hpp"
+#include "RankingUI.h"
 
-class RankingGUI : public AbstractGUI {
+
+class RankingGUI : public AbstractGUI, public RankingUI {
 
     Q_OBJECT
 
@@ -20,9 +24,9 @@ private:
 
 public:
     RankingGUI(RankingManager *manager);
-    void setupGUI() override;
+    void display() override;
     void fillRanking(std::vector<RankingInfos>& ranking);
-    void display(std::vector<RankingInfos>& ranking);
+    void display(std::vector<RankingInfos>& ranking) override ;
 
 
     void createTable();

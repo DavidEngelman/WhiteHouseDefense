@@ -5,17 +5,17 @@
 
 
 #include "../NetworkedManager.hpp"
-#include "RankingUI.hpp"
 #include "../../common/Networking.h"
 #include "../App.hpp"
 #include "../../common/RankingInfos.h"
-#include "RankingGUI.hpp"
+#include "RankingUI.h"
+
+class RankingUI;
 
 class RankingManager : public NetworkedManager  {
 
 private:
-	RankingUI rankingUI;
-	RankingGUI *rankingGUI;
+	RankingUI *rankingUI;
 
 public:
 	RankingManager(int port, App* my_app);

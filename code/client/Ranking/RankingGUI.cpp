@@ -11,9 +11,9 @@
 #define TABLE_HEIGHT_SIZE 400
 #define TABLE_WIDTH_SIZE 870
 
-RankingGUI::RankingGUI(RankingManager *manager) : rankingTable(NULL), manager(manager) {}
+RankingGUI::RankingGUI(RankingManager *manager) : RankingUI(manager){}
 
-void RankingGUI::setupGUI() {
+void RankingGUI::display() {
 
 
 
@@ -108,7 +108,7 @@ void RankingGUI::fillRanking(std::vector<RankingInfos> &ranking) {
 }
 
 void RankingGUI::display(std::vector<RankingInfos>& ranking) {
-    setupGUI();
+    display();
     fillRanking(ranking);
     this->show();
 
