@@ -52,9 +52,13 @@ void LoginGUI::display() {
 
     connect = new QPushButton(s3,fields);
     connect->setFixedSize(QSize(212,45));
+    connect->setCursor(Qt::PointingHandCursor);
+
 
     cancel = new QPushButton(s4,fields);
     cancel->setFixedSize(QSize(212,45));
+    cancel->setCursor(Qt::PointingHandCursor);
+
 
     QObject::connect(connect, SIGNAL(clicked()), this, SLOT(loginUser()));
     QObject::connect(usernameL, SIGNAL(returnPressed()), passwordL, SLOT(setFocus()));
