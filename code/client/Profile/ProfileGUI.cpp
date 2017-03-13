@@ -59,6 +59,7 @@ void ProfileGUI::display() {
 
     searchButton = new QPushButton(searchButtonString, this);
     searchButton->setFixedSize(QSize(212, 45));
+    searchButton->setCursor(Qt::PointingHandCursor);
 
     QObject::connect(searchButton, SIGNAL(clicked()), this, SLOT(showUser()));
     QObject::connect(usernameLineEdit, SIGNAL(returnPressed()), searchButton, SIGNAL(clicked()));
