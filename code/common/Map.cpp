@@ -9,7 +9,7 @@
  */
 
 Map::Map(unsigned seed) {
-    if (seed == 0) initMapFromFile("filename");
+    if (seed == 0) initMapFromFile("../../filename");
     else {
         srand(seed);
         generateRandomMatrix();
