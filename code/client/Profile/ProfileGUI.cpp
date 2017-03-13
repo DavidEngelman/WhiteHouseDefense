@@ -91,11 +91,11 @@ void ProfileGUI::display() {
     std::cout << (*victoriesT).toStdString() << std::endl;
     std::cout << (*NPCKilledT).toStdString() << std::endl;
 
-    userNameLabel->move((this->width()/2) - usernameT->size()/2, this->height()/2 - 105 );
-    victoryPicLabel->move(this->width()/2 - 124, this->height()/2 + 22);
-    victoriesLabel->move(this->width()/2  - 100, this->height()/2 + 135 );
-    NPCKilledLabel->move(this->width()/2  + 100, this->height()/2 + 135 );
-    mexicanPicLabel->move(this->width()/2 + 95, this->height()/2 + 5);
+    userNameLabel->move((this->width()/2) - userNameLabel->size().rwidth()/2, this->height()/2 - 105 );
+    victoryPicLabel->move(this->width()/4, this->height()/2 + 22);
+    victoriesLabel->move(this->width()/4, this->height()/2 + 135 );
+    NPCKilledLabel->move((this->width()/4) * 3, this->height()/2 + 135 );
+    mexicanPicLabel->move((this->width()/4) * 3, this->height()/2 + 5);
 
     this->setLayout(maingridLayout);
 

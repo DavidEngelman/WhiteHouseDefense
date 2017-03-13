@@ -91,7 +91,12 @@ LoginGUI::LoginGUI(LoginManager *manager) : LoginUI(manager){}
 
 LoginGUI::~LoginGUI() {
     std::cout << "Login GUI closed." << std::endl;
-    close();
+    disconnect(connect, 0, 0, 0);
+    disconnect(usernameL, 0, 0, 0);
+    disconnect(passwordL, 0, 0, 0);
+    disconnect(cancel, 0, 0, 0);
+
+    //close();
 }
 
 void LoginGUI::cancelLogin() {
