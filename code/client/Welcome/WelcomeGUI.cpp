@@ -1,4 +1,3 @@
-#include <iostream>
 #include <QtWidgets/QFrame>
 #include <QCoreApplication>
 #include <QtCore/QFileInfo>
@@ -66,7 +65,6 @@ void WelcomeGUI::setTheme() {
 
 WelcomeGUI::~WelcomeGUI() {
     close();
-    std::cout << "Welcome GUI closed." << std::endl;
 }
 
 WelcomeGUI::WelcomeGUI(WelcomeManager *manager) : manager(manager) {}

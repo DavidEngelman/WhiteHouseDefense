@@ -52,6 +52,7 @@ void MainManager::handleUserMenuChoice() {
         default: {
             std::string message = "Exit," + std::to_string(master_app->get_id());
             send_message(server_socket, message.c_str());
+            if (!isConsole) delete mainUI;
             break;
         }
     }
