@@ -11,10 +11,10 @@ protected:
     App* master_app;
 
 public:
-    AbstractManager(App* my_app);
+    AbstractManager(App* my_app) : master_app(my_app) {};
 
     virtual void run() = 0;
-    virtual ~AbstractManager();
+    virtual ~AbstractManager() {};
 
 };
 

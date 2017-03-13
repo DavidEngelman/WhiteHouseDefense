@@ -32,7 +32,7 @@ private:
 
 public:
     RegisterGUI(RegisterManager *manager);
-    void setupGUI();
+    void display();
 
     std::string getUsername() { return username; };
     std::string getPassword() { return password; };

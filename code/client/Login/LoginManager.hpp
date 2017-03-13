@@ -8,13 +8,12 @@
 #include "../../common/Credentials.h"
 #include "../App.hpp"
 
-class LoginGUI;
+class LoginUI;
 
 class LoginManager : public NetworkedManager {
 
 private:
-	LoginUI loginUI;
-	LoginGUI *loginGUI;
+	LoginUI* loginUI;
 	Credentials loginCredentials;
 
 	std::string attemptLogin(Credentials credentials);
@@ -23,6 +22,7 @@ private:
 
 public:
 	LoginManager(int port, App* my_app);
+    virtual ~LoginManager();
 	void run() override;
     void login();
 

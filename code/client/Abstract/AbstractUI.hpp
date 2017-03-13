@@ -1,13 +1,11 @@
-//
-// Created by jepsiko on 09/03/17.
-//
-
 #ifndef PROJET_ABSTRACTUI_HPP
 #define PROJET_ABSTRACTUI_HPP
 
 
 class AbstractUI {
-
+public:
+    // NE PAS ENLEVER. FONDAMENTAL POUR ASSURER DESTRUCTION CORRECTES DES OBJETS;
+    virtual ~AbstractUI() = default;
 };
 
 

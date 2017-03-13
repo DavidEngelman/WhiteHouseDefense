@@ -1,20 +1,23 @@
+#ifndef PROJET_LOGINUI_HPP
+#define PROJET_LOGINUI_HPP
+
 #include <string>
-#include <iostream>
-#include "../Abstract/AbstractUI.hpp"
+#include "LoginManager.hpp"
 
-class LoginUI : public AbstractUI {
+class LoginManager;
 
-private:
-
-	std::string username_entry;
-	std::string password_entry;
-
+class LoginUI {
+protected:
+    LoginManager *manager;
 public:
-	std::string get_username_entry() { return username_entry; };
-	std::string get_password_entry() { return password_entry; };
-	void ask_username();
-	void ask_password();
-	void display();
-	void displayError();
-	void display_already_co_message();
+    LoginUI(LoginManager * manager): manager(manager) {};
+    // NE PAS ENLEVER. FONDAMENTAL POUR ASSURER DESTRUCTION CORRECTE DES OBJETS;
+    virtual ~LoginUI() = default;
+    virtual std::string getUsername() = 0;
+    virtual std::string getPassword() = 0;
+    virtual void display() = 0;
+    virtual void displayError() = 0;
+    virtual void displayAlreadyConnected() = 0;
 };
+
+#endif //PROJET_LOGINUI_HPP
