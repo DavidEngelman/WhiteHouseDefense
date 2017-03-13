@@ -3,85 +3,125 @@
 
 MainManager::MainManager(QWidget *parent) : QWidget(parent){
 
-    setTheme(1);
+    this->setFixedHeight(480);
+    this->setFixedWidth(852);
 
-    QFrame * fields = new QFrame(this);
-    QFormLayout * fieldsLayout = new QFormLayout;
-
-    loginButton = new QPushButton("LOGIN",fields);
-    loginButton->setFixedSize(QSize(212,45));
-    connect(loginButton, SIGNAL (released()), this, SLOT (openWindow()));
-
-    registerButton = new QPushButton("REGISTER",fields);
-    registerButton->setFixedSize(QSize(212,45));
-    connect(registerButton, SIGNAL (released()), this, SLOT (openWindow()));
-
-    quitButton = new QPushButton("QUIT",fields);
-    quitButton->setFixedSize(QSize(212,45));
-    connect(quitButton, SIGNAL(clicked()), this, SLOT(close()));
-
-    fieldsLayout->addRow(loginButton);
-    fieldsLayout->addRow(registerButton);
-    fieldsLayout->addRow(quitButton);
-
-    fields->setLayout(fieldsLayout);
-    fields->move(this->size().width() / 2 - 125, this->size().height() / 2 +100);
-
-}
-void MainManager::openWindow(){
-
-    LoginManager * login = new LoginManager();
-    this->hide();
-    login->show();
-
-}
-
-
-void MainManager::setTheme(int themeInt){
-    QFile File;
-    QString styleSheet;
-    QPixmap bkgnd;
+    QPixmap bkgnd("../qt_ui/game_pictures/backgrounds/profile_bckgrd.jpeg");
+    bkgnd = bkgnd.scaled(this->size(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
     QPalette palette;
-    QMediaPlayer *player = new QMediaPlayer;
+    palette.setBrush(QPalette::Background, bkgnd);
+    this->setPalette(palette);
 
-    switch (themeInt) {
-    case 1:
-        File.setFileName("../qt_ui/americanMain.qss");
-        File.open(QFile::ReadOnly);
-        styleSheet = QLatin1String(File.readAll());
-        this->setStyleSheet(styleSheet);
-        this->setFixedHeight(600);
-        this->setFixedWidth(750);
-        bkgnd = QPixmap("../qt_ui/game_pictures/backgrounds/americanBg");
-        bkgnd = bkgnd.scaled(this->size(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
-        palette.setBrush(QPalette::Background, bkgnd);
-        this->setPalette(palette);
-        player->setMedia(QUrl::fromLocalFile("../qt_ui/game_pictures/sounds/americanAnthem.mp3"));
-        player->setVolume(100);
-        player->play();
+    QFont policeUsername("calibri", 24, QFont::Bold);
+    QFont policeStandart("calibri", 12, QFont::Bold);
 
-        break;
 
-    case 2:
-        File.setFileName("../qt_ui/urssMain.qss");
-        File.open(QFile::ReadOnly);
-        styleSheet = QLatin1String(File.readAll());
-        this->setStyleSheet(styleSheet);
-        this->setFixedHeight(600);
-        this->setFixedWidth(800);
-        bkgnd = QPixmap("../qt_ui/game_pictures/backgrounds/urssBg");
-        bkgnd = bkgnd.scaled(this->size(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
-        palette.setBrush(QPalette::Background, bkgnd);
-        this->setPalette(palette);
-        player->setMedia(QUrl::fromLocalFile("../qt_ui/game_pictures/sounds/urssAnthem.mp3"));
-        player->setVolume(100);
-        player->play();
+    ///----------LAYOUTS----------
 
-        break;
-    default:
-        break;
-    }
+    QVBoxLayout *mainLayout = new QVBoxLayout(this);
+    QHBoxLayout *searchLayout = new QHBoxLayout;
+    QHBoxLayout *statsLayout = new QHBoxLayout;
+    QVBoxLayout *victoryLayout = new QVBoxLayout;
+    QVBoxLayout *NPCLayout = new QVBoxLayout;
+
+
+    ///----------SEARCH----------
+
+    usernameLineEdit = new QLineEdit(this);
+    usernameLineEdit->setPlaceholderText("SEARCH PROFILE...");
+    //usernameLineEdit->setText("SEARCH PROFILE...");
+    usernameLineEdit->setFixedWidth(300);
+    usernameLineEdit->setFixedHeight(35);
+
+    QString usernameString = "Username";
+    QString searchButtonString = "SEARCH";
+
+    searchButton = new QPushButton(searchButtonString, this);
+    searchButton->setFixedSize(QSize(111, 35));
+
+    searchLayout->addWidget(usernameLineEdit);
+    searchLayout->addWidget(searchButton);
+
+    ///----------USERNAME----------
+
+    usernameT = new QString;
+
+    *usernameT = QString::fromStdString("Benjamin"); //profileManager->getUsername()
+
+    userNameLabel = new QLabel(this);
+    userNameLabel->setText(*usernameT);
+    userNameLabel->setFont(policeUsername);
+    userNameLabel->setStyleSheet("padding-top: 100;color : gold;");
+
+    ///----------VICTORIES----------
+
+    victoriesT = new QString;
+    *victoriesT = QString::fromStdString("Victories: 10 "); //"Victories:\n" + std::to_string(profileManager->getVictories())
+
+    victoriesLabel = new QLabel(this);
+    victoriesLabel->setFont(policeStandart);
+    victoriesLabel->setText(*victoriesT);
+    victoriesLabel->setStyleSheet("padding-left: 200;color : gold;");
+
+    QPixmap* victoryPic = new QPixmap("../qt_ui/game_pictures/pictures/trophy2.png");
+    QLabel *victoryPicLabel = new QLabel(this);
+    victoryPicLabel->setFixedWidth(400);
+    victoryPicLabel->setPixmap(*victoryPic);
+    victoryPicLabel->setStyleSheet("padding-left: 230;");
+
+
+    victoryLayout->addWidget(victoriesLabel);
+    victoryLayout->addWidget(victoryPicLabel);
+    victoryLayout->setAlignment(victoriesLabel, Qt::AlignCenter|Qt::AlignBottom);
+    victoryLayout->setAlignment(victoryPicLabel, Qt::AlignCenter|Qt::AlignTop);
+
+    ///----------NPC KILLED----------
+
+    NPCKilledT = new QString;
+    *NPCKilledT = QString::fromStdString("NPC killed: 40"); //"NPC killed:\n" + std::to_string(profileManager->getNPCKilled())
+
+
+    NPCKilledLabel = new QLabel(this);
+    NPCKilledLabel->setFont(policeStandart);
+    NPCKilledLabel->setText(*NPCKilledT);
+    NPCKilledLabel->setStyleSheet("padding-right: 200;color : gold;");
+
+
+    QPixmap* mexicanPic = new QPixmap("../qt_ui/game_pictures/pictures/mexican.gif");
+    QLabel *mexicanPicLabel = new QLabel(this);
+    mexicanPicLabel->setFixedWidth(400);
+    mexicanPicLabel->setPixmap(*mexicanPic);
+    mexicanPicLabel->setStyleSheet("padding-left: 40;");
+
+
+    NPCLayout->addWidget(NPCKilledLabel);
+    NPCLayout->addWidget(mexicanPicLabel);
+    NPCLayout->setAlignment(NPCKilledLabel, Qt::AlignCenter|Qt::AlignBottom);
+    NPCLayout->setAlignment(mexicanPicLabel, Qt::AlignCenter|Qt::AlignTop);
+
+    ///----------SETUP----------
+
+    statsLayout->addLayout(victoryLayout);
+    statsLayout->addLayout(NPCLayout);
+    statsLayout->setAlignment(victoryLayout, Qt::AlignLeft|Qt::AlignBottom);
+    statsLayout->setAlignment(NPCLayout, Qt::AlignRight|Qt::AlignBottom);
+
+
+    mainLayout->addLayout(searchLayout);
+    mainLayout->addWidget(userNameLabel);
+    mainLayout->addLayout(statsLayout);
+
+
+    mainLayout->setAlignment(searchLayout, Qt::AlignRight|Qt::AlignTop);
+    mainLayout->setAlignment(userNameLabel, Qt::AlignHCenter|Qt::AlignTop);
+
+    mainLayout->setStretch(1,1);
+
+    this->setLayout(mainLayout);
+
+///////////////////////////////////////////////////////////////////////////
 }
+
 
 MainManager::~MainManager(){
 
