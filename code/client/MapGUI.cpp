@@ -37,7 +37,7 @@ void MapGUI::display(GameState &gameState, int quadrant) const {
     //Map::display(gameState, quadrant);
 }
 
-void MapGUI::setupGUI() {
+void MapGUI::display() {
     this->setFixedSize(TILES_SIZE*SIZE, TILES_SIZE*SIZE);
     this->show();
 }

@@ -1,7 +1,7 @@
 #ifndef MAP_HPP
 #define MAP_HPP
 
-const int SIZE = 31; //Not > 41 because it's too big for a screen
+const int SIZE = 41;
 
 #define GRASS "◼  "
 #define GREEN_GRASS "\033[32m◼\033[0m  "
@@ -11,10 +11,12 @@ const int SIZE = 31; //Not > 41 because it's too big for a screen
 #define LIMIT "\033[34m◼\033[0m  "
 #define NPC "\033[33m☪\033[0m  "
 #define BASE "\033[31m✈\033[0m  "
+#define TREE "\033[34m☘\033[0m  "
 
 #define PATH_INT 0
 #define GRASS_INT -1
 #define LIMIT_INT -2
+#define TREE_INT -3
 
 #include <string>
 #include <vector>
@@ -54,6 +56,8 @@ public:
     bool isPath(Position pos) const;
     bool isDelimiter(Position pos) const;
     static int computeQuadrant(Position pos);
+
+    bool isObstacle(Position pos) const;
 };
 
 #endif

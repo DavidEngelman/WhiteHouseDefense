@@ -10,8 +10,10 @@
 
 Map::Map(unsigned seed) {
     if (seed == 0) initMapFromFile("filename");
-    srand(seed);
-    generateRandomMatrix();
+    else {
+        srand(seed);
+        generateRandomMatrix();
+    }
 }
 
 /*
@@ -223,11 +225,17 @@ bool Map::isDelimiter(Position pos) const {
     return (pos.getX() == pos.getY()) || (pos.getX() == ((SIZE - 1) - pos.getY()));
 }
 
+bool Map::isObstacle(Position pos) const {
+    int x = pos.getX();
+    int y = pos.getY();
+
+    return (matrix[y][x] == TREE_INT);
+}
+
 void Map::initMapFromFile(std::string filename) {
     std::ifstream file(filename, std::ios::in);
-    for (int y = 0; y < SIZE; y++) {
-        for (int x = 0; x < SIZE; x++) {
-
-        }
+    char c;
+    while (file >> c) {
+        std::cout << c;
     }
 }

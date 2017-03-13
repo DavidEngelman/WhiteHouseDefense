@@ -31,7 +31,8 @@ protected:
 
 public:
     MapGUI(unsigned int seed);
-    void setupGUI();
+    void setupGUI() {};
+    void display();
     void display(GameState& gameState, int quadrant) const;
 };
 

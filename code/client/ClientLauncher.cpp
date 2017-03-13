@@ -34,7 +34,7 @@ int main(int argc, char *argv[]) {
         App app(argv[1]);
          */
         MapGUI mapGUI(0);
-        mapGUI.setupGUI();
+        mapGUI.display();
         GameState gameState = GameState("CLASSIC");
         mapGUI.display(gameState, 0);
 
