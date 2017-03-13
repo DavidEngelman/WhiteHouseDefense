@@ -14,14 +14,17 @@ void WelcomeGUI::display() {
 
     loginButton = new QPushButton("LOGIN", fields);
     loginButton->setFixedSize(QSize(212,45));
+    loginButton->setCursor(Qt::PointingHandCursor);
     connect(loginButton, SIGNAL (released()), this, SLOT (openLogin()));
 
     registerButton = new QPushButton("REGISTER", fields);
     registerButton->setFixedSize(QSize(212,45));
+    registerButton->setCursor(Qt::PointingHandCursor);
     connect(registerButton, SIGNAL (released()), this, SLOT (openRegister()));
 
     quitButton = new QPushButton("QUIT", fields);
     quitButton->setFixedSize(QSize(212,45));
+    quitButton->setCursor(Qt::PointingHandCursor);
     connect(quitButton, SIGNAL(clicked()), this, SLOT(close()));
 
     fieldsLayout->addRow(loginButton);
