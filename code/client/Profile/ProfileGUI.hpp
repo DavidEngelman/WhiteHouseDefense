@@ -7,8 +7,15 @@
 
 
 #include "../Abstract/AbstractGUI.hpp"
+#include "ProfileManager.hpp"
 
 class ProfileGUI : public AbstractGUI {
+    ProfileManager *manager;
+
+
+public:
+    ProfileGUI(ProfileManager *manager);
+    void display() override;
 
 };
 

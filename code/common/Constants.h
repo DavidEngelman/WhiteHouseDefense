@@ -3,6 +3,10 @@
 
 #include <string>
 
+static const int ACCOUNT_SERVER_PORT = 5555;
+static const int MATCHMAKER_SERVER_PORT = 5556;
+
+
 static const int NORTH = 0;
 static const int EAST = 1;
 static const int SOUTH = 2;

@@ -1,22 +1,24 @@
 #ifndef MAINMANAGER_HPP
 #define MAINMANAGER_HPP
 
-#include "MainUI.hpp"
 #include "../NetworkedManager.hpp"
 #include "../Abstract/AbstractManager.hpp"
 #include "../App.hpp"
+#include "MainUI.hpp"
 
-class MainGUI;
+class MainUI;
 
 class MainManager : public NetworkedManager {
 
 private:
-	MainUI mainUI;
-	MainGUI *mainGUI;
+	MainUI * mainUI;
 
 public:
 	MainManager(int port, App* my_app);
 	void run() override;
+
+    void handleUserMenuChoice();
+    void handleGameModeChoice();
 };
 
 #endif

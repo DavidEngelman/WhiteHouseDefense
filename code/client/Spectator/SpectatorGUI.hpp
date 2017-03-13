@@ -14,7 +14,7 @@ private:
 
 public:
     SpectatorGUI(SpectatorManager *manager);
-    void setupGUI();
+    void display();
 };
 
 
