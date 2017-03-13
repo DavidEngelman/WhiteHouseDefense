@@ -28,17 +28,26 @@ void ProfileGUI::display() {
     ///----------LAYOUTS----------
 
     QVBoxLayout *mainLayout = new QVBoxLayout(this);
-    QHBoxLayout *searchLayout = new QHBoxLayout;
+    QHBoxLayout *topLayout = new QHBoxLayout;
     QHBoxLayout *statsLayout = new QHBoxLayout;
     QVBoxLayout *victoryLayout = new QVBoxLayout;
     QVBoxLayout *NPCLayout = new QVBoxLayout;
 
+    ///----------HOME_BUTTON----------
+
+    homeButton = new QPushButton("HOME", this);
+    homeButton->setFixedSize(QSize(70, 35));
+
+    homeButton->setStyleSheet("border-image:url(../../qt_ui/game_pictures/buttons/gold_button_2.svg);");
+
+
+    topLayout->addWidget(homeButton);
+    topLayout->setAlignment(homeButton, Qt::AlignLeft|Qt::AlignTop);
 
     ///----------SEARCH----------
 
     usernameLineEdit = new QLineEdit(this);
     usernameLineEdit->setPlaceholderText("SEARCH PROFILE...");
-    //usernameLineEdit->setText("SEARCH PROFILE...");
     usernameLineEdit->setFixedWidth(300);
     usernameLineEdit->setFixedHeight(35);
 
@@ -46,13 +55,15 @@ void ProfileGUI::display() {
     QString searchButtonString = "SEARCH";
 
     searchButton = new QPushButton(searchButtonString, this);
-    searchButton->setFixedSize(QSize(111, 35));
+    searchButton->setFixedSize(QSize(130, 35));
+    searchButton->setStyleSheet("border-image:url(../../qt_ui/game_pictures/buttons/gold_button_2.svg);");
 
     QObject::connect(searchButton, SIGNAL(clicked()), this, SLOT(showUser()));
     QObject::connect(usernameLineEdit, SIGNAL(returnPressed()), searchButton, SIGNAL(clicked()));
 
-    searchLayout->addWidget(usernameLineEdit);
-    searchLayout->addWidget(searchButton);
+    topLayout->addWidget(usernameLineEdit);
+    topLayout->addWidget(searchButton);
+
 
     ///----------USERNAME----------
 
@@ -119,12 +130,12 @@ void ProfileGUI::display() {
     statsLayout->setAlignment(NPCLayout, Qt::AlignRight|Qt::AlignBottom);
 
 
-    mainLayout->addLayout(searchLayout);
+    mainLayout->addLayout(topLayout);
     mainLayout->addWidget(userNameLabel);
     mainLayout->addLayout(statsLayout);
 
 
-    mainLayout->setAlignment(searchLayout, Qt::AlignRight|Qt::AlignTop);
+    mainLayout->setAlignment(topLayout, Qt::AlignTop);
     mainLayout->setAlignment(userNameLabel, Qt::AlignHCenter|Qt::AlignTop);
 
     mainLayout->setStretch(1,1);

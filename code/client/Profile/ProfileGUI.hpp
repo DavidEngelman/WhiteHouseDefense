@@ -14,6 +14,7 @@ Q_OBJECT
 private:
     QLineEdit *usernameLineEdit;
     QPushButton *searchButton;
+    QPushButton *homeButton;
 
     QLabel *userNameLabel;
     QLabel *victoriesLabel;
