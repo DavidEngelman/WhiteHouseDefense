@@ -70,6 +70,13 @@ void MainGUI::display() {
 void MainGUI::displayGameModesMenu() {
     // TODO: lui proposer le choix
 
+    delete newGame;
+    delete spectator;
+    delete profile;
+    delete friendList;
+    delete leaderBoard;
+    delete exit;
+
     QFrame * fields = new QFrame(this);
     QFormLayout * fieldsLayout = new QFormLayout(this);
 
