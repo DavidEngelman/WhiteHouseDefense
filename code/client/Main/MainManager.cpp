@@ -30,21 +30,25 @@ void MainManager::handleUserMenuChoice() {
             break;
         }
         case 2: {
+            if (!isConsole) delete mainUI;
             SpectatorManager *spectator = new SpectatorManager(MATCHMAKER_SERVER_PORT, master_app);
             master_app->transition(spectator);
             break;
         }
         case 3: {
+            if (!isConsole) delete mainUI;
             ProfileManager *profile = new ProfileManager(ACCOUNT_SERVER_PORT, master_app);
             master_app->transition(profile);
             break;
         }
         case 4: {
+            if (!isConsole) delete mainUI;
             FriendListManager *friendListManager = new FriendListManager(ACCOUNT_SERVER_PORT, master_app);
             master_app->transition(friendListManager);
             break;
         }
         case 5: {
+            if (!isConsole) delete mainUI;
             RankingManager *rankingManager = new RankingManager(ACCOUNT_SERVER_PORT, master_app);
             master_app->transition(rankingManager);
             break;
