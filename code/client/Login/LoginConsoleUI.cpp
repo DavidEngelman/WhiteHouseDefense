@@ -1,18 +1,18 @@
 
 
 #include <termios.h>
-#include "LoginUI.hpp"
+#include "LoginConsoleUI.hpp"
 #include "../Drawing.hpp"
 #include "unistd.h"
 
-void LoginUI::ask_username() {
+void LoginConsoleUI::ask_username() {
     std::cout << "   Enter your username:" << std::endl << "   ";
-    std::cin >> username_entry;
+    std::cin >> username;
     std::cin.clear();
     std::cin.ignore();
 }
 
-void LoginUI::ask_password() {
+void LoginConsoleUI::ask_password() {
     std::cout << "   Enter your password:" << std::endl << "   ";
 
     // Disable the echo when entering the password
@@ -22,7 +22,7 @@ void LoginUI::ask_password() {
     newt.c_lflag &= ~ECHO;
     tcsetattr(STDIN_FILENO, TCSANOW, &newt);
 
-    std::cin >> password_entry;
+    std::cin >> password;
 
     // Enable the echo
     tcsetattr(STDIN_FILENO, TCSANOW, &oldt);
@@ -31,19 +31,32 @@ void LoginUI::ask_password() {
     std::cin.ignore();
 }
 
-void LoginUI::displayError() {
+void LoginConsoleUI::displayError() {
     Drawing::drawWhiteHouse("LOGIN SCREEN");
     std::cout << "   Error : username or password incorrect, please try again\n";
 }
 
-void LoginUI::display() {
+void LoginConsoleUI::display() {
     Drawing::drawWhiteHouse("LOGIN SCREEN");
     ask_username();
     ask_password();
+    manager->login();
 }
 
-void LoginUI::display_already_co_message() {
+void LoginConsoleUI::displayAlreadyConnected() {
     Drawing::drawWhiteHouse("LOGIN SCREEN");
     std::cout << "   Error : Someone is already connected on this account :(\n";
+}
+
+std::string LoginConsoleUI::getUsername() {
+    return username;
+}
+
+std::string LoginConsoleUI::getPassword() {
+    return password;
+}
+
+LoginConsoleUI::LoginConsoleUI(LoginManager *manager) : LoginUI(manager) {
+
 }
 

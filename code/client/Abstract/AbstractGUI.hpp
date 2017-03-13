@@ -1,17 +1,21 @@
-//
-// Created by jepsiko on 09/03/17.
-//
-
-#ifndef PROJET_ABSTRACTGUI_HPP
-#define PROJET_ABSTRACTGUI_HPP
+#ifndef PROJET_ABSTRACT_GUI_HPP
+#define PROJET_ABSTRACT_GUI_HPP
 
 
 #include <QtWidgets/QWidget>
+#include <iostream>
 #include "AbstractUI.hpp"
 
-class AbstractGUI : public AbstractUI, public QWidget {
+class AbstractGUI : public QWidget, public AbstractUI {
 public:
-    virtual void setupGUI() = 0; // MUST BE IMPLEMENTED IN INHERITORS
+    virtual void display() = 0; // MUST BE IMPLEMENTED IN INHERITORS
+
+    // NE PAS ENLEVER. FONDAMENTAL POUR ASSURER LA DESTRUCTION CORRECTE DES OBJETS;
+    virtual ~AbstractGUI() = default;
+
+    virtual void setStylesheetFromPath(QString stylesheetPath);
+
+    virtual void setBackgroundFromPath(QString backgroundPath);
 };
 
 

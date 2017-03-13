@@ -1,21 +1,43 @@
-//
-// Created by jepsiko on 09/03/17.
-//
-
 #ifndef PROJET_PROFILEGUI_HPP
 #define PROJET_PROFILEGUI_HPP
 
-
+#include <QtWidgets/QPushButton>
+#include <QtWidgets/QLineEdit>
+#include <QtWidgets/QLabel>
 #include "../Abstract/AbstractGUI.hpp"
 #include "ProfileManager.hpp"
+#include "ProfileUI.hpp"
 
-class ProfileGUI : public AbstractGUI {
-    ProfileManager *manager;
+class ProfileGUI : public AbstractGUI, public ProfileUI {
+Q_OBJECT
 
+private:
+    QLineEdit *usernameLineEdit;
+    QPushButton *searchButton;
+
+    QLabel *userNameLabel;
+    QLabel *victoriesLabel;
+    QLabel *NPCKilledLabel;
+
+
+    QString* usernameT;
+    QString* victoriesT;
+    QString* NPCKilledT;
+
+public slots:
+    void showUser();
 
 public:
     ProfileGUI(ProfileManager *manager);
-    void setupGUI() override;
+    ProfileGUI();
+
+    virtual ~ProfileGUI();
+
+    void display() override;
+
+    void displayNoSuchProfileError() override;
+
+    void updateProfile() override;
 
 };
 

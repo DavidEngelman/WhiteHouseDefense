@@ -1,4 +1,3 @@
-
 #include "WelcomeManager.hpp"
 #include "WelcomeGUI.hpp"
 
@@ -12,7 +11,7 @@ void WelcomeManager::run() {
         if (choice == 1) goToLogin();
         else if (choice == 2) goToRegister();
     } else {
-        welcomeGUI->setupGUI();
+        welcomeGUI->display();
     }
 }
 
@@ -23,7 +22,11 @@ void WelcomeManager::goToLogin() {
 }
 
 void WelcomeManager::goToRegister() {
-    if (!isConsole) welcomeGUI->close();
     RegisterManager *registerManager = new RegisterManager(5555, master_app);
     master_app->transition(registerManager);
+}
+
+WelcomeManager::~WelcomeManager() {
+    // TODO: use better system.
+    if (!isConsole) delete(welcomeGUI);
 }

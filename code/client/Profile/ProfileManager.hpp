@@ -1,30 +1,48 @@
 #ifndef PROFILEMANAGER_HPP
 #define PROFILEMANAGER_HPP
+
 #define MAX_BUFF_SIZE 1000
 
 #include <iostream>
-#include "ProfileUI.hpp"
 #include "../../common/Networking.h"
 #include "../../common/Strings.hpp"
 #include "../NetworkedManager.hpp"
 #include "../Main/MainManager.hpp"
 #include "../App.hpp"
+#include "ProfileUI.hpp"
 
-class ProfileGUI;
+class ProfileUI;
 
 class ProfileManager : public NetworkedManager {
 
 private:
+	ProfileUI * profileUI;
 
-	ProfileGUI* profileGUI;
-	ProfileUI profileUI;
+    std::string username;
+    int victories;
+    int npcKilled;
 
 public:
 	ProfileManager(int port, App* my_app);
-	void ProfileManagerProcess();
-	std::string getProfile(std::string username);
-	void run() override;
-	std::string getUsername();
+
+    int getVictories() const;
+
+    int getNPCKilled() const;
+
+    std::string& getUsername();
+
+
+    void run() override;
+
+    void showMyProfile();
+
+    void showProfile();
+
+    void goToMainMenu();
+
+    void getAndParseProfile(std::string username);
+
+    void parseProfileData(char * profileData);
 };
 
 
