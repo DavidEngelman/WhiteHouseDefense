@@ -17,6 +17,10 @@ private:
     QCustomButton *friendList;
     QCustomButton *leaderBoard;
     QCustomButton *exit;
+    QCustomButton *classicMode;
+    QCustomButton *timedMode;
+    QCustomButton *teamMode;
+    QCustomButton *cancel;
 
 public:
     MainGUI(MainManager *manager);
@@ -24,10 +28,9 @@ public:
     void display() override;
     void displayGameModesMenu() override;
 
-    void handleGameModeChoice();
-
 public slots:
     void handleMenuChoice(int choice);
+    void handleGameModeChoice(int choice);
 };
 
 

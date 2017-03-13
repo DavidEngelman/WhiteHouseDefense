@@ -63,7 +63,7 @@ void MainConsoleUI::displayGameModeChoices() const {
     std::cout << "   |        1. Classic mode             |   " << std::endl;
     std::cout << "   |        2. Timed mode               |   " << std::endl;
     std::cout << "   |        3. Team mode                |   " << std::endl;
-    std::cout << "   |        4. Exit                     |   " << std::endl;
+    std::cout << "   |        4. Cancel                   |   " << std::endl;
     std::cout << "   |                                    |   " << std::endl;
     std::cout << "   ======================================   " << std::endl;
 }

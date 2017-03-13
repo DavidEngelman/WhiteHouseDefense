@@ -16,7 +16,7 @@ void MainGUI::display() {
     //QPixmap bkgnd("../../qt_ui/game_pictures/backgrounds/Whitehouse");
     //bkgnd = bkgnd.scaled(this->size(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
     QPalette palette;
-    palette.setColor(QPalette::Background,QColor::fromRgb(0,0,80));//faut trouver la bonne couleur
+    palette.setColor(QPalette::Background,QColor::fromRgb(16,24,70));
     this->setPalette(palette);
     QFont police("calibri");
 
@@ -69,41 +69,36 @@ void MainGUI::display() {
 
 void MainGUI::displayGameModesMenu() {
     // TODO: lui proposer le choix
-    QFile File("../../qt_ui/americanLogin.qss");
-    File.open(QFile::ReadOnly);
-    QString styleSheet = QLatin1String(File.readAll());
-    this->setStyleSheet(styleSheet);
-
-    QPalette palette;
-    palette.setColor(QPalette::Background,QColor::fromRgb(0,0,80));//faut trouver la bonne couleur
-    this->setPalette(palette);
-    QFont police("calibri");
 
     QFrame * fields = new QFrame(this);
     QFormLayout * fieldsLayout = new QFormLayout(this);
-    QString s1 = "NEW GAME";
-    QString s2 = "SPECTATOR";
-    QString s3 = "PROFILE";
 
-    newGame = new QCustomButton(1, s1,fields);
-    newGame->setFixedSize(QSize(212,45));
+    QString s1 = "CLASSIC MODE";
+    QString s2 = "TIMED MODE";
+    QString s3 = "TEAM MODE";
+    QString s4 = "CANCEL";
 
-    spectator = new QCustomButton(2, s2,fields);
-    spectator->setFixedSize(QSize(212,45));
+    classicMode = new QCustomButton(1, s1,fields);
+    classicMode->setFixedSize(QSize(212,45));
 
-    profile = new QCustomButton(3, s3,fields);
-    profile->setFixedSize(QSize(212,45));
+    timedMode = new QCustomButton(2, s2,fields);
+    timedMode->setFixedSize(QSize(212,45));
 
-    QObject::connect(newGame, SIGNAL(clicked(int)), this, SLOT(handleMenuChoice(int)));
-    QObject::connect(spectator, SIGNAL(clicked(int)), this, SLOT(handleMenuChoice(int)));
-    QObject::connect(profile, SIGNAL(clicked(int)), this, SLOT(handleMenuChoice(int)));
+    teamMode = new QCustomButton(3, s3,fields);
+    teamMode->setFixedSize(QSize(212,45));
 
-    fieldsLayout->addRow(newGame);
-    fieldsLayout->addRow(spectator);
-    fieldsLayout->addRow(profile);
-    fieldsLayout->addRow(friendList);
-    fieldsLayout->addRow(leaderBoard);
-    fieldsLayout->addRow(exit);
+    cancel = new QCustomButton(4, s4,fields);
+    cancel->setFixedSize(QSize(212,45));
+
+    QObject::connect(classicMode, SIGNAL(clicked(int)), this, SLOT(handleGameModeChoice(int)));
+    QObject::connect(timedMode, SIGNAL(clicked(int)), this, SLOT(handleGameModeChoice(int)));
+    QObject::connect(teamMode, SIGNAL(clicked(int)), this, SLOT(handleGameModeChoice(int)));
+    QObject::connect(cancel, SIGNAL(clicked(int)), this, SLOT(handleGameModeChoice(int)));
+
+    fieldsLayout->addRow(classicMode);
+    fieldsLayout->addRow(timedMode);
+    fieldsLayout->addRow(teamMode);
+    fieldsLayout->addRow(cancel);
     fields->setLayout(fieldsLayout);
     fields->move(this->size().width() / 2 - 125, this->size().height() / 2 +105);
 
@@ -117,7 +112,9 @@ void MainGUI::handleMenuChoice(int choice) {
     manager->handleUserMenuChoice();
 }
 
-void MainGUI::handleGameModeChoice(){
+void MainGUI::handleGameModeChoice(int choice){
     // TODO: gameModeChoice = le choix de l'utilisateur;
+    std::cout << choice << std::endl;
+    gameModeChoice = choice;
     manager->handleGameModeChoice();
 }
