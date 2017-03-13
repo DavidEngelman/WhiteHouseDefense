@@ -21,15 +21,19 @@ void MapGUI::paintEvent(QPaintEvent *) {
         for (int x = 0; x < SIZE; x++) {
             switch (matrix[y][x]) {
                 case GRASS_INT:
-                    image = QImage("../../qt_ui/game_pictures/tiles/grass.png");
+                    //image = QImage("../../qt_ui/game_pictures/tiles/grass.png");
                     break;
                 case PATH_INT:
-                    image = QImage("../../qt_ui/game_pictures/tiles/cross.png");
+                    //image = QImage("../../qt_ui/game_pictures/tiles/path.png");
                     break;
                 case TREE_INT:
+                    //image = QImage("../../qt_ui/game_pictures/tiles/tree.png");
+                    break;
+                case PINE_INT:
+                    //image = QImage("../../qt_ui/game_pictures/tiles/pine.png");
                     break;
                 default:
-                    image = QImage("../../qt_ui/game_pictures/tiles/limit.png");
+                    //image = QImage("../../qt_ui/game_pictures/tiles/limit.png");
                     break;
             }
             painter.drawImage(x*TILES_SIZE, y*TILES_SIZE, image);
