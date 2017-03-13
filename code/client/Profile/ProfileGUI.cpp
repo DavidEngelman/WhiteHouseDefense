@@ -7,12 +7,15 @@
 ProfileGUI::ProfileGUI(ProfileManager *manager) : ProfileUI(manager), usernameT(new QString("No Username")), victoriesT(new QString),
 NPCKilledT(new QString) {}
 
+
 ProfileGUI::~ProfileGUI() {
     close();
 }
 
 
 void ProfileGUI::display() {
+
+
     /* Set stylesheet */
     setStylesheetFromPath("../../qt_ui/profile.qss");
 
@@ -24,43 +27,63 @@ void ProfileGUI::display() {
     setBackgroundFromPath("../../qt_ui/game_pictures/backgrounds/profile_bckgrd.jpeg");
 
     QFont police("calibri");
+    QFont policeUsername("calibri", 24, QFont::Bold);
 
-    QFrame *frame = new QFrame(this);
-    QVBoxLayout *mainLayout = new QVBoxLayout(frame);
-    QFormLayout *fieldsLayout = new QFormLayout();
+    QVBoxLayout *maingridLayout = new QVBoxLayout(this);
+    QGridLayout *searchgridlayout = new QGridLayout;
 
-    usernameLineEdit = new QLineEdit(frame);
+
+    //QFrame *frame = new QFrame(this);
+    //QVBoxLayout *mainLayout = new QVBoxLayout(frame);
+    //QFormLayout *fieldsLayout = new QFormLayout();
+
+    usernameLineEdit = new QLineEdit(this);
     usernameLineEdit->setSelection(0, 10);
 
     QString usernameString = "Username";
     QString searchButtonString = "SEARCH";
 
-    QLabel *label = new QLabel(frame);
+    QPixmap* victoryPic = new QPixmap("../../qt_ui/game_pictures/pictures/trophy2.png");
+    QLabel *victoryPicLabel = new QLabel(this);
+    victoryPicLabel->setFixedSize(victoryPic->size());
+    victoryPicLabel->setPixmap(*victoryPic);
+
+    QPixmap* mexicanPic = new QPixmap("../../qt_ui/game_pictures/pictures/mexican.gif");
+    QLabel *mexicanPicLabel = new QLabel(this);
+    mexicanPicLabel->setFixedSize(mexicanPic->size());
+    mexicanPicLabel->setPixmap(*mexicanPic);
+
+    QLabel *label = new QLabel(this);
     label->setText(usernameString);
     label->setFont(police);
 
-    searchButton = new QPushButton(searchButtonString, frame);
+    searchButton = new QPushButton(searchButtonString, this);
     searchButton->setFixedSize(QSize(212, 45));
 
     QObject::connect(searchButton, SIGNAL(clicked()), this, SLOT(showUser()));
     QObject::connect(usernameLineEdit, SIGNAL(returnPressed()), searchButton, SIGNAL(clicked()));
 
-    fieldsLayout->addRow(label, usernameLineEdit);
-    fieldsLayout->addRow(searchButton);
+    searchgridlayout->addWidget(label, 0, 0);
+    searchgridlayout->addWidget(usernameLineEdit, 0, 1);
+    searchgridlayout->addWidget(searchButton, 0, 2);
+    maingridLayout->addLayout(searchgridlayout);
+    maingridLayout->setAlignment(searchgridlayout, Qt::AlignTop);
 
-    *usernameT = QString::fromStdString("Username: " + profileManager->getUsername());
-    *victoriesT = QString::fromStdString("Victories: " + std::to_string(profileManager->getVictories()));
-    *NPCKilledT = QString::fromStdString("NPC killed: " + std::to_string(profileManager->getNPCKilled()));
 
-    userNameLabel = new QLabel(frame);
-    userNameLabel->setFont(police);
+    *usernameT = QString::fromStdString(profileManager->getUsername());
+    *victoriesT = QString::fromStdString("Victories:\n" + std::to_string(profileManager->getVictories()));
+    *NPCKilledT = QString::fromStdString("NPC killed:\n" + std::to_string(profileManager->getNPCKilled()));
+
+    userNameLabel = new QLabel(this);
+    userNameLabel->wordWrap();
+    userNameLabel->setFont(policeUsername);
     userNameLabel->setText(*usernameT);
 
-    victoriesLabel = new QLabel(frame);
+    victoriesLabel = new QLabel(this);
     victoriesLabel->setFont(police);
     victoriesLabel->setText(*victoriesT);
 
-    NPCKilledLabel = new QLabel(frame);
+    NPCKilledLabel = new QLabel(this);
     NPCKilledLabel->setFont(police);
     NPCKilledLabel->setText(*NPCKilledT);
 
@@ -68,13 +91,13 @@ void ProfileGUI::display() {
     std::cout << (*victoriesT).toStdString() << std::endl;
     std::cout << (*NPCKilledT).toStdString() << std::endl;
 
-    mainLayout->addLayout(fieldsLayout);
-    mainLayout->addWidget(userNameLabel);
-    mainLayout->addWidget(victoriesLabel);
-    mainLayout->addWidget(NPCKilledLabel);
+    userNameLabel->move((this->width()/2) - usernameT->size()/2, this->height()/2 - 105 );
+    victoryPicLabel->move(this->width()/2 - 124, this->height()/2 + 22);
+    victoriesLabel->move(this->width()/2  - 100, this->height()/2 + 135 );
+    NPCKilledLabel->move(this->width()/2  + 100, this->height()/2 + 135 );
+    mexicanPicLabel->move(this->width()/2 + 95, this->height()/2 + 5);
 
-    frame->setLayout(mainLayout);
-    frame->move(this->size().width() / 2 - 125, this->size().height() / 2 - 105);
+    this->setLayout(maingridLayout);
 
     this->show();
 }
@@ -84,7 +107,7 @@ void ProfileGUI::displayNoSuchProfileError() {
 }
 
 void ProfileGUI::updateProfile() {
-    *usernameT = QString::fromStdString("Username: " + profileManager->getUsername());
+    *usernameT = QString::fromStdString(profileManager->getUsername());
     *victoriesT = QString::fromStdString("Victories: " + std::to_string(profileManager->getVictories()));
     *NPCKilledT = QString::fromStdString("NPC killed: " + std::to_string(profileManager->getNPCKilled()));
 

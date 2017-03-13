@@ -29,6 +29,8 @@ public slots:
 
 public:
     ProfileGUI(ProfileManager *manager);
+    ProfileGUI();
+
     virtual ~ProfileGUI();
 
     void display() override;
