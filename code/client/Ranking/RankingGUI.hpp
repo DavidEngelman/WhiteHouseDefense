@@ -1,15 +1,35 @@
-//
-// Created by jepsiko on 09/03/17.
-//
 
 #ifndef PROJET_RANKINGGUI_HPP
 #define PROJET_RANKINGGUI_HPP
 
 
 #include "../Abstract/AbstractGUI.hpp"
+#include "../../common/RankingInfos.h"
+#include "RankingConsoleUI.hpp"
+#include <QTableWidget>
+#include <QtWidgets/QTableWidget>
 
-class RankingGUI : public AbstractGUI {
+#include "RankingManager.hpp"
+#include "RankingUI.h"
 
+
+class RankingGUI : public AbstractGUI, public RankingUI {
+
+    Q_OBJECT
+
+private:
+    QTableWidget* rankingTable;
+    QStringList rankingHeader;
+    RankingManager *manager;
+
+public:
+    RankingGUI(RankingManager *manager);
+    void display() override;
+    void fillRanking(std::vector<RankingInfos>& ranking);
+    void display(std::vector<RankingInfos>& ranking) override ;
+
+
+    void createTable();
 };
 
 

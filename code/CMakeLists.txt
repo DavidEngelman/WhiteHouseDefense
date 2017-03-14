@@ -5,7 +5,7 @@ file(GLOB code database.db)
 
 set(CLIENT_FILES "client/NetworkedManager.cpp" "client/ClientLauncher.cpp" "client/Login/LoginManager.cpp" "client/Login/LoginConsoleUI.cpp"
         "client/Register/RegisterManager.cpp" "client/Register/RegisterUI.cpp" "common/Networking.cpp" "common/Credentials.cpp"
-        client/Main/MainManager.cpp client/Main/MainUI.hpp common/Map.cpp client/Drawing.cpp client/Drawing.hpp "client/Ranking/RankingManager.cpp" "client/Ranking/RankingUI.cpp" "client/Game/GameLauncher.cpp"
+        client/Main/MainManager.cpp client/Main/MainUI.hpp common/Map.cpp client/Drawing.cpp client/Drawing.hpp "client/Ranking/RankingManager.cpp" "client/Ranking/RankingConsoleUI.cpp" "client/Game/GameLauncher.cpp"
         "client/FriendList/FriendListManager.cpp" "client/FriendList/FriendListUI.cpp" common/AbstractTower.cpp
         "client/Profile/ProfileConsoleUI.cpp" common/Position.cpp client/App.cpp client/App.hpp
         client/Welcome/WelcomeManager.cpp client/Welcome/WelcomeUI.cpp client/Welcome/WelcomeGUI.cpp
@@ -54,7 +54,3 @@ target_link_libraries(client crypt)
 target_link_libraries(server Threads::Threads)
 target_link_libraries(client Threads::Threads)
 target_link_libraries(client Qt5::Widgets Qt5::Multimedia)
-
-
-
-
