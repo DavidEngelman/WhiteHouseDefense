@@ -6,7 +6,7 @@
 #include <iostream>
 #include "AbstractUI.hpp"
 
-class AbstractGUI : public QWidget, public AbstractUI {
+class AbstractGUI : public QWidget, public virtual AbstractUI {
 public:
     virtual void display() = 0; // MUST BE IMPLEMENTED IN INHERITORS
 

@@ -1,16 +1,14 @@
-//
-//
-
 #ifndef PROJET_RANKINGUI_H
 #define PROJET_RANKINGUI_H
 
 #include <vector>
 #include "../../common/RankingInfos.h"
+#include "../Abstract/AbstractUI.hpp"
 #include "RankingManager.hpp"
 
 class RankingManager;
 
-class RankingUI {
+class RankingUI: public virtual AbstractUI {
 
 protected:
     RankingManager *rankingManager;

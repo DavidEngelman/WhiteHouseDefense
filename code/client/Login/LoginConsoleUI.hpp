@@ -6,7 +6,7 @@
 #include "../Abstract/AbstractConsoleUI.hpp"
 #include "LoginUI.hpp"
 
-class LoginConsoleUI : public AbstractConsoleUI, public LoginUI {
+class LoginConsoleUI : public LoginUI, public AbstractConsoleUI {
 private:
 	std::string username;
 	std::string password;

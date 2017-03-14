@@ -3,9 +3,9 @@
 
 #include "AbstractUI.hpp"
 
-class AbstractConsoleUI: public AbstractUI {
+class AbstractConsoleUI: public virtual AbstractUI {
 public:
-    void destroy() override {
+    virtual void destroy() override {
         delete this;
     }
 };

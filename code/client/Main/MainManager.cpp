@@ -1,12 +1,13 @@
 
 #include "MainManager.hpp"
-#include "../Game/GameLauncher.hpp"
+//#include "../Game/GameLauncher.hpp"
 #include "../Profile/ProfileManager.hpp"
 #include "../Ranking/RankingManager.hpp"
-#include "../FriendList/FriendListManager.hpp"
-#include "../Spectator/SpectatorManager.hpp"
+//#include "../FriendList/FriendListManager.hpp"
+//#include "../Spectator/SpectatorManager.hpp"
 #include "MainGUI.hpp"
 #include "MainConsoleUI.hpp"
+#include "../../common/Constants.h"
 
 const static std::string gameModes[3] = {CLASSIC_MODE, TIMED_MODE, TEAM_MODE};
 
@@ -30,8 +31,8 @@ void MainManager::handleUserMenuChoice() {
             break;
         }
         case 2: {
-            SpectatorManager *spectator = new SpectatorManager(MATCHMAKER_SERVER_PORT, master_app);
-            master_app->transition(spectator);
+//            SpectatorManager *spectator = new SpectatorManager(MATCHMAKER_SERVER_PORT, master_app);
+//            master_app->transition(spectator);
             break;
         }
         case 3: {
@@ -40,8 +41,8 @@ void MainManager::handleUserMenuChoice() {
             break;
         }
         case 4: {
-            FriendListManager *friendListManager = new FriendListManager(ACCOUNT_SERVER_PORT, master_app);
-            master_app->transition(friendListManager);
+//            FriendListManager *friendListManager = new FriendListManager(ACCOUNT_SERVER_PORT, master_app);
+//            master_app->transition(friendListManager);
             break;
         }
         case 5: {
@@ -63,8 +64,8 @@ void MainManager::handleGameModeChoice() {
 
     if (choice != 3) { /* Un des 3 modes de jeu */
         std::string gameMode = gameModes[choice];
-        GameLauncher *game = new GameLauncher(MATCHMAKER_SERVER_PORT, master_app, gameMode);
-        master_app->transition(game);
+//        GameLauncher *game = new GameLauncher(MATCHMAKER_SERVER_PORT, master_app, gameMode);
+//        master_app->transition(game);
     } else { /* Retour au menu principal */
         // TODO: close previous window
         run();

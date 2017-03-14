@@ -11,7 +11,7 @@ class WelcomeGUI;
 class WelcomeManager : public AbstractManager {
 
 private:
-    WelcomeUI welcomeUI;
+    WelcomeUI * welcomeUI;
     WelcomeGUI *welcomeGUI;
 
 

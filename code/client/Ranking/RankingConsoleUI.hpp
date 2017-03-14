@@ -4,11 +4,11 @@
 
 #include <string>
 #include <iostream>
-#include "../Abstract/AbstractUI.hpp"
+#include "../Abstract/AbstractConsoleUI.hpp"
 #include "../../common/RankingInfos.h"
 #include "RankingUI.h"
 
-class RankingConsoleUI : public AbstractUI, public RankingUI {
+class RankingConsoleUI : public AbstractConsoleUI, public RankingUI {
 
 
 public:

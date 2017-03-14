@@ -6,7 +6,7 @@
 
 class MainManager;
 
-class MainUI: public AbstractUI {
+class MainUI: public virtual AbstractUI {
 protected:
     int menuChoice;
     int gameModeChoice;

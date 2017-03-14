@@ -7,7 +7,7 @@
 
 class LoginManager;
 
-class LoginUI: public AbstractUI {
+class LoginUI: public virtual AbstractUI {
 protected:
     LoginManager *manager;
 public:
