@@ -2,6 +2,7 @@
 #include <QtCore/QFile>
 #include <QtWidgets/QFormLayout>
 #include <QtMultimedia/QMediaPlayer>
+#include <QtWidgets/QDialogButtonBox>
 
 MainGUI::MainGUI(MainManager *manager) : MainUI(manager) {}
 
@@ -68,8 +69,19 @@ void MainGUI::display() {
 }
 
 void MainGUI::displayGameModesMenu() {
-    // TODO: lui proposer le choix
 
+    QDialogButtonBox* dialog = new QDialogButtonBox;
+    dialog->setWindowTitle("Select a game mode");
+
+    dialog->addButton("CLASSIC MODE", QDialogButtonBox::AcceptRole);
+    dialog->addButton("TEAM MODE",  QDialogButtonBox::AcceptRole);
+    dialog->addButton("TIMED MODE",  QDialogButtonBox::AcceptRole);
+
+    //TODO: connecter les boutons et gg
+
+    dialog->move(this->width() /2, this->height()/2);
+    dialog->show();
+    /*
     delete newGame;
     delete spectator;
     delete profile;
@@ -111,6 +123,8 @@ void MainGUI::displayGameModesMenu() {
 
     this->showMaximized();
     // créer un slot qui fera appel à handleGameModeChoice
+    */
+
 }
 
 void MainGUI::handleMenuChoice(int choice) {
