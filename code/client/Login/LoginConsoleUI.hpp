@@ -3,10 +3,10 @@
 
 #include <string>
 #include <iostream>
-#include "../Abstract/AbstractUI.hpp"
+#include "../Abstract/AbstractConsoleUI.hpp"
 #include "LoginUI.hpp"
 
-class LoginConsoleUI : public AbstractUI, public LoginUI {
+class LoginConsoleUI : public AbstractConsoleUI, public LoginUI {
 private:
 	std::string username;
 	std::string password;

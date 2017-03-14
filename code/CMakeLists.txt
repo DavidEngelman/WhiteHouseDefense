@@ -26,7 +26,7 @@ set(CLIENT_FILES "client/NetworkedManager.cpp" "client/ClientLauncher.cpp" "clie
         client/Ranking/RankingGUI.cpp client/Ranking/RankingGUI.hpp client/Register/RegisterGUI.cpp
         client/Register/RegisterGUI.hpp client/Spectator/SpectatorGUI.cpp client/Spectator/SpectatorGUI.hpp
         client/Welcome/WelcomeGUI.cpp client/Welcome/WelcomeGUI.hpp client/global.hpp client/global.cpp
-        client/Login/LoginUI.hpp client/Profile/ProfileUI.hpp common/Message.cpp common/Message.hpp)
+        client/Login/LoginUI.hpp client/Profile/ProfileUI.hpp common/Message.cpp common/Message.hpp client/Abstract/AbstractConsoleUI.hpp)
 
 
 add_executable(client ${CLIENT_FILES})

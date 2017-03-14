@@ -26,6 +26,7 @@ public:
     LoginGUI(LoginManager *manager);
     virtual ~LoginGUI();
 
+    void destroy() override;
 
     std::string getUsername() { return username; };
     std::string getPassword() { return password; };

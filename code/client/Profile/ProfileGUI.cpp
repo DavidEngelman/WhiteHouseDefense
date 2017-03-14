@@ -160,8 +160,6 @@ void ProfileGUI::updateProfile() {
     userNameLabel->setText(*usernameT);
     victoriesLabel->setText(*victoriesT);
     NPCKilledLabel->setText(*NPCKilledT);
-
-//    this
 }
 
 void ProfileGUI::showUser() {

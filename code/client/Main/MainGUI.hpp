@@ -8,6 +8,7 @@ class MainGUI : public AbstractGUI, public MainUI {
 
 public:
     MainGUI(MainManager *manager);
+    virtual ~MainGUI() = default; // TODO: a implementer
     void display() override;
     void displayGameModesMenu() override;
 

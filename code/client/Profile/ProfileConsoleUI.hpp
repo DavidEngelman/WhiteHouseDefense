@@ -2,11 +2,11 @@
 #define PROFILE_CONSOLE_UI_HPP
 
 #include <iostream>
-#include "../Abstract/AbstractUI.hpp"
+#include "../Abstract/AbstractConsoleUI.hpp"
 #include "ProfileUI.hpp"
 
 
-class ProfileConsoleUI : public AbstractUI, public ProfileUI {
+class ProfileConsoleUI : public AbstractConsoleUI, public ProfileUI {
 private:
     void displayMenu();
     void askUsername();

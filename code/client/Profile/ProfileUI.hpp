@@ -5,7 +5,7 @@
 
 class ProfileManager;
 
-class ProfileUI {
+class ProfileUI: public AbstractUI {
 protected:
     int choice;
     std::string username;

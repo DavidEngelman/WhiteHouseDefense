@@ -12,7 +12,7 @@
 class RankingManager : public NetworkedManager  {
 
 private:
-	RankingUI rankingUI;
+	RankingUI * rankingUI; // TODO: it's now a pointer
 
 public:
 	RankingManager(int port, App* my_app);

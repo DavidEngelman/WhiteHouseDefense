@@ -70,3 +70,7 @@ void MainManager::handleGameModeChoice() {
         run();
     }
 }
+
+MainManager::~MainManager() {
+    mainUI->destroy();
+}

@@ -13,6 +13,8 @@ public:
     // NE PAS ENLEVER. FONDAMENTAL POUR ASSURER LA DESTRUCTION CORRECTE DES OBJETS;
     virtual ~AbstractGUI() = default;
 
+    void destroy() override;
+
     virtual void setStylesheetFromPath(QString stylesheetPath);
 
     virtual void setBackgroundFromPath(QString backgroundPath);

@@ -3,10 +3,11 @@
 
 #include <string>
 #include "LoginManager.hpp"
+#include "../Abstract/AbstractUI.hpp"
 
 class LoginManager;
 
-class LoginUI {
+class LoginUI: public AbstractUI {
 protected:
     LoginManager *manager;
 public:

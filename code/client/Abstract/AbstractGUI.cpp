@@ -15,3 +15,8 @@ void AbstractGUI::setBackgroundFromPath(QString backgroundPath) {
     palette.setBrush(QPalette::Background, backgroundImage);
     setPalette(palette);
 }
+
+void AbstractGUI::destroy() {
+    close();
+    deleteLater();
+}

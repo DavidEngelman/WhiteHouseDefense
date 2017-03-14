@@ -30,7 +30,6 @@ public slots:
 
 public:
     ProfileGUI(ProfileManager *manager);
-    ProfileGUI();
 
     virtual ~ProfileGUI();
 
