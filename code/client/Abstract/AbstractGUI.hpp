@@ -8,7 +8,7 @@
 
 class AbstractGUI : public QWidget, public virtual AbstractUI {
 public:
-    virtual void display() = 0; // MUST BE IMPLEMENTED IN INHERITORS
+    //virtual void setUp() = 0; // MUST BE IMPLEMENTED IN INHERITORS
 
     // NE PAS ENLEVER. FONDAMENTAL POUR ASSURER LA DESTRUCTION CORRECTE DES OBJETS;
     virtual ~AbstractGUI() = default;

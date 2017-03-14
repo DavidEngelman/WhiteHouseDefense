@@ -4,7 +4,7 @@
 #include "../Profile/ProfileManager.hpp"
 #include "../Ranking/RankingManager.hpp"
 //#include "../FriendList/FriendListManager.hpp"
-//#include "../Spectator/SpectatorManager.hpp"
+#include "../Spectator/SpectatorManager.hpp"
 #include "MainGUI.hpp"
 #include "MainConsoleUI.hpp"
 #include "../../common/Constants.h"
@@ -31,8 +31,8 @@ void MainManager::handleUserMenuChoice() {
             break;
         }
         case 2: {
-//            SpectatorManager *spectator = new SpectatorManager(MATCHMAKER_SERVER_PORT, master_app);
-//            master_app->transition(spectator);
+            SpectatorManager *spectator = new SpectatorManager(MATCHMAKER_SERVER_PORT, master_app);
+            master_app->transition(spectator);
             break;
         }
         case 3: {

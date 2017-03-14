@@ -16,8 +16,9 @@ set(CLIENT_FILES "client/NetworkedManager.cpp" "client/ClientLauncher.cpp" "clie
         "client/Profile/ProfileManager.cpp" "common/PNJ.cpp" client/Game/GameUI.cpp common/PlayerState.cpp
         common/GameState.cpp common/Wave.cpp common/Constants.h common/AttackTower.cpp common/Tools.hpp
         common/Tools.cpp
-        #client/Spectator/SpectatorManager.cpp client/Spectator/SpectatorManager.hpp
-        #client/Spectator/SpectatorUI.cpp client/Spectator/SpectatorUI.hpp
+        client/Spectator/SpectatorGUI.cpp
+        client/Spectator/SpectatorManager.cpp
+        client/Spectator/SpectatorConsoleUI.cpp client/Spectator/SpectatorUI.hpp
         client/Game/GameInfo.cpp common/GunTower.cpp common/GunTower.hpp
         common/SniperTower.cpp common/SniperTower.hpp
         common/ShockTower.cpp common/ShockTower.hpp
@@ -30,7 +31,6 @@ set(CLIENT_FILES "client/NetworkedManager.cpp" "client/ClientLauncher.cpp" "clie
         client/Profile/ProfileGUI.cpp client/Profile/ProfileGUI.hpp
         client/Ranking/RankingGUI.cpp client/Ranking/RankingGUI.hpp client/Register/RegisterGUI.cpp
         client/Register/RegisterGUI.hpp
-        #client/Spectator/SpectatorGUI.cpp client/Spectator/SpectatorGUI.hpp
         client/Welcome/WelcomeGUI.cpp client/Welcome/WelcomeGUI.hpp client/global.hpp client/global.cpp
         client/Login/LoginUI.hpp client/Profile/ProfileUI.hpp
         common/Message.cpp common/Message.hpp

@@ -13,7 +13,7 @@
 
 RankingGUI::RankingGUI(RankingManager *manager) : RankingUI(manager){}
 
-void RankingGUI::display() {
+void RankingGUI::setUp() {
 
 
 
@@ -110,7 +110,7 @@ void RankingGUI::fillRanking(std::vector<RankingInfos> &ranking) {
 }
 
 void RankingGUI::display(std::vector<RankingInfos>& ranking) {
-    display();
+    setUp();
     fillRanking(ranking);
     this->show();
 

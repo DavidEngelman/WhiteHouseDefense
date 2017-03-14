@@ -7,20 +7,19 @@
 
 #include <vector>
 #include "../NetworkedManager.hpp"
-#include "SpectatorUI.hpp"
 #include "../../common/Strings.hpp"
 #include "../Game/GameInfo.hpp"
 #include "../Main/MainManager.hpp"
-#include "../Game/GameManager.hpp"
+//#include "../Game/GameManager.hpp"
+#include "SpectatorUI.hpp"
 
-class SpectatorGUI;
+class SpectatorUI;
 
 class SpectatorManager : public NetworkedManager{
 private:
 
     std::vector<GameInfo> allGames;
-    SpectatorUI spectatorUI;
-    SpectatorGUI *spectatorGUI;
+    SpectatorUI *spectatorUI;
 
     void getGamesFromMatchMaker();
     void parse_message_from_server(const std::string& message);
@@ -31,6 +30,8 @@ public:
     void run() override ;
 
     int createGameInfo(const std::string& message, int& i);
+
+    ~SpectatorManager();
 };
 
 

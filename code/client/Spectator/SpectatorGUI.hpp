@@ -5,16 +5,20 @@
 
 
 #include "../Abstract/AbstractGUI.hpp"
+#include "SpectatorManager.hpp"
+#include "SpectatorUI.hpp"
 
-class SpectatorManager;
+class SpectatorGUI : public AbstractGUI, public SpectatorUI {
 
-class SpectatorGUI : public AbstractGUI {
-private:
-    SpectatorManager *manager;
 
 public:
     SpectatorGUI(SpectatorManager *manager);
-    void display();
+    void display(std::vector<GameInfo>& gamesInfos) override ;
+    int gameSelection(int number_of_games_available) override ;
+    void displaySorryMessage() override ;
+    std::string playerSelection(GameInfo &game_info) override ;
+
+    virtual ~SpectatorGUI();
 };
 
 
