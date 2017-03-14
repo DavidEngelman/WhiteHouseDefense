@@ -29,6 +29,12 @@ const int SIZE = 41;
 #define SAND_STONE_INT 9
 #define SAND_ROCK_INT 10
 #define WATER_ROCK_INT 11
+#define LAVA_INT 12
+#define SNOW_INT 13
+#define PINE_SNOW_INT 14
+#define DIRT_INT 15
+#define DIRT_ROCK_INT 16
+#define STONE_INT 17
 
 #include <string>
 #include <vector>

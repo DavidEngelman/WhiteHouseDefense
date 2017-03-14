@@ -56,6 +56,24 @@ void MapGUI::paintEvent(QPaintEvent *) {
                 case WATER_ROCK_INT:
                     image = QImage("../../qt_ui/game_pictures/tiles/waterrock.png");
                     break;
+                case LAVA_INT:
+                    image = QImage("../../qt_ui/game_pictures/tiles/lava.png");
+                    break;
+                case SNOW_INT:
+                    image = QImage("../../qt_ui/game_pictures/tiles/snow.png");
+                    break;
+                case PINE_SNOW_INT:
+                    image = QImage("../../qt_ui/game_pictures/tiles/pinesnow.png");
+                    break;
+                case DIRT_INT:
+                    image = QImage("../../qt_ui/game_pictures/tiles/dirt.png");
+                    break;
+                case DIRT_ROCK_INT:
+                    image = QImage("../../qt_ui/game_pictures/tiles/dirtrock.png");
+                    break;
+                case STONE_INT:
+                    image = QImage("../../qt_ui/game_pictures/tiles/stone.png");
+                    break;
                 default:
                     image = QImage("../../qt_ui/game_pictures/tiles/unknown.png");
                     break;

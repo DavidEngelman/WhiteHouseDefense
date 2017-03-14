@@ -11,6 +11,7 @@
 Map::Map(unsigned seed) {
     if (seed == 0) initMapFromFile("../../maps/map1.map");
     else if (seed == 1) initMapFromFile("../../maps/map2.map");
+    else if (seed == 2) initMapFromFile("../../maps/map3.map");
     else {
         srand(seed);
         generateRandomMatrix();
@@ -40,12 +41,13 @@ void Map::display(GameState &gameState, int quadrant) const {
     for (int y = 0; y < SIZE; y++) {
         std::cout << y << "\t";
         for (int x = 0; x < SIZE; x++) {
-            switch (matrix[y][x]) {
+            switch (matrix[x][y]) {
                 case TREE_INT:
                     std::cout << TREE;
                     break;
 
-                case PINE_INT:
+                case PINE_INT: // Simulate an 'or' statement
+                case PINE_SNOW_INT:
                     std::cout << PINE;
                     break;
 
@@ -55,6 +57,9 @@ void Map::display(GameState &gameState, int quadrant) const {
 
                 case GRASS_INT:
                 case SAND_INT:
+                case SNOW_INT:
+                case DIRT_INT:
+                case STONE_INT:
                     typeOfTower = "";
                     for (auto &tower : towers) {
                         Position pos = tower->getPosition();
@@ -107,10 +112,12 @@ void Map::display(GameState &gameState, int quadrant) const {
                 case WATER_ROCK_INT:
                 case SAND_ROCK_INT:
                 case GRASS_ROCK_INT:
+                case DIRT_ROCK_INT:
                     std::cout << ROCK;
                     break;
 
                 case WATER_INT:
+                case LAVA_INT:
                     std::cout << WATER;
                     break;
 
@@ -154,13 +161,13 @@ void Map::initMap() {
     for (int y = 0; y < SIZE; y++) {
         for (int x = 0; x < SIZE; x++) {
             if (x == SIZE / 2 and SIZE / 2 - 2 <= y and y <= SIZE / 2 + 2) {
-                matrix[y][x] = PATH_INT;
+                matrix[x][y] = PATH_INT;
             } else if (y == SIZE / 2 and SIZE / 2 - 2 <= x and x <= SIZE / 2 + 2) {
-                matrix[y][x] = PATH_INT;
+                matrix[x][y] = PATH_INT;
             } else if (x == y or x + y == SIZE - 1) {
-                matrix[y][x] = GRASS_ROCK_INT;
+                matrix[x][y] = GRASS_ROCK_INT;
             } else {
-                matrix[y][x] = GRASS_INT;
+                matrix[x][y] = GRASS_INT;
             }
         }
     }
@@ -171,28 +178,28 @@ void Map::initMap() {
  */
 void Map::generateQuarterMap(Position end) {
     if (end.getY() == 0) {
-        matrix[end.getY()][end.getX()] = BASE_INT;
+        matrix[end.getX()][end.getY()] = BASE_INT;
         return;
     }
 
     std::vector<Position> possibleWays;
 
     Position nextToEnd(end.getX(), end.getY() - 1);
-    if (matrix[nextToEnd.getY()][nextToEnd.getX()] != GRASS_ROCK_INT && !isNextToPath(nextToEnd))
+    if (matrix[nextToEnd.getX()][nextToEnd.getY()] != GRASS_ROCK_INT && !isNextToPath(nextToEnd))
         possibleWays.push_back(nextToEnd);
 
     nextToEnd.setY(end.getY());
     nextToEnd.setX(end.getX() - 1);
-    if (matrix[nextToEnd.getY()][nextToEnd.getX()] != GRASS_ROCK_INT && !isNextToPath(nextToEnd))
+    if (matrix[nextToEnd.getX()][nextToEnd.getY()] != GRASS_ROCK_INT && !isNextToPath(nextToEnd))
         possibleWays.push_back(nextToEnd);
 
     nextToEnd.setX(end.getX() + 1);
-    if (matrix[nextToEnd.getY()][nextToEnd.getX()] != GRASS_ROCK_INT && !isNextToPath(nextToEnd))
+    if (matrix[nextToEnd.getX()][nextToEnd.getY()] != GRASS_ROCK_INT && !isNextToPath(nextToEnd))
         possibleWays.push_back(nextToEnd);
 
     unsigned int way = (unsigned int) (rand() % possibleWays.size());
 
-    matrix[possibleWays[way].getY()][possibleWays[way].getX()] = PATH_INT;
+    matrix[possibleWays[way].getX()][possibleWays[way].getY()] = PATH_INT;
     generateQuarterMap(possibleWays[way]);
 }
 
@@ -201,10 +208,10 @@ void Map::generateQuarterMap(Position end) {
  */
 bool Map::isNextToPath(Position pos) {
     int count = 0;
-    if (matrix[pos.getY() + 1][pos.getX()] == PATH_INT) count++;
-    if (pos.getY() > 0 && matrix[pos.getY() - 1][pos.getX()] == PATH_INT) count++;
-    if (matrix[pos.getY()][pos.getX() + 1] == PATH_INT) count++;
-    if (matrix[pos.getY()][pos.getX() - 1] == PATH_INT) count++;
+    if (matrix[pos.getX() + 1][pos.getY()] == PATH_INT) count++;
+    if (pos.getY() > 0 && matrix[pos.getX() - 1][pos.getY()] == PATH_INT) count++;
+    if (matrix[pos.getX()][pos.getY() + 1] == PATH_INT) count++;
+    if (matrix[pos.getX()][pos.getY() - 1] == PATH_INT) count++;
     return count > 1;
 }
 
@@ -215,9 +222,9 @@ void Map::copyQuarter() {
     for (int y = 0; y < SIZE; y++) {
         for (int x = 0; x < SIZE; x++) {
             if (y < x and x + y < SIZE) {
-                matrix[x][SIZE - 1 - y] = matrix[y][x];
-                matrix[SIZE - 1 - y][SIZE - 1 - x] = matrix[y][x];
-                matrix[SIZE - 1 - x][y] = matrix[y][x];
+                matrix[y][SIZE - 1 - x] = matrix[x][y];
+                matrix[SIZE - 1 - x][SIZE - 1 - y] = matrix[x][y];
+                matrix[SIZE - 1 - y][x] = matrix[x][y];
             }
         }
     }
@@ -253,7 +260,8 @@ bool Map::isObstacle(Position pos) const {
 
     return cell == GRASS_ROCK_INT or cell == TREE_INT or cell == PINE_INT
         or cell == PALMER_INT or cell == WATER_INT or cell == SAND_STONE_INT
-        or cell == WATER_ROCK_INT or cell == SAND_ROCK_INT;
+        or cell == WATER_ROCK_INT or cell == SAND_ROCK_INT or cell == LAVA_INT
+        or cell == PINE_SNOW_INT or cell == DIRT_ROCK_INT;
 }
 
 void Map::initMapFromFile(std::string filename) {
@@ -266,7 +274,7 @@ void Map::initMapFromFile(std::string filename) {
         if (c != ',') {
             number += c;
         } else {
-            matrix[y][x] = stoi(number);
+            matrix[x][y] = stoi(number);
             number = "";
 
             x++;
