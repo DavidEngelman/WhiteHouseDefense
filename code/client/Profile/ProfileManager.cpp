@@ -75,4 +75,9 @@ std::string &ProfileManager::getUsername() {
     return username;
 }
 
+ProfileManager::~ProfileManager() {
+    profileUI->destroy();
+
+}
+
 

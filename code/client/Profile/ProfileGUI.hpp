@@ -27,6 +27,7 @@ private:
 
 public slots:
     void showUser();
+    void goToMain();
 
 public:
     ProfileGUI(ProfileManager *manager);

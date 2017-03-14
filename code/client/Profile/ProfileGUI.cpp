@@ -40,6 +40,7 @@ void ProfileGUI::display() {
     homeButton->setCursor(Qt::PointingHandCursor);
 
     homeButton->setStyleSheet("border-image:url(../../qt_ui/game_pictures/buttons/gold_button_2.svg);");
+    QObject::connect(homeButton, SIGNAL(clicked()), this, SLOT(goToMain()));
 
 
     topLayout->addWidget(homeButton);
@@ -165,4 +166,9 @@ void ProfileGUI::updateProfile() {
 void ProfileGUI::showUser() {
     username = usernameLineEdit->text().toStdString();
     profileManager->showProfile();
+}
+
+void ProfileGUI::goToMain() {
+    profileManager->goToMainMenu();
+
 }

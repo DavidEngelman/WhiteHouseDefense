@@ -43,6 +43,8 @@ public:
     void getAndParseProfile(std::string username);
 
     void parseProfileData(char * profileData);
+
+	~ProfileManager();
 };
 
 
