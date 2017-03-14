@@ -1,23 +1,32 @@
 //
 //
 
-#ifndef PROJET_SPECTATORUI_HPP
-#define PROJET_SPECTATORUI_HPP
+#ifndef PROJET_SPECTATORUI_H
+#define PROJET_SPECTATORUI_H
 
-#include <vector>
+#include "SpectatorManager.hpp"
 #include "../Game/GameInfo.hpp"
-#include "../Abstract/AbstractUI.hpp"
+#include "string"
 
-class SpectatorUI : public AbstractUI {
+
+class SpectatorManager;
+
+class SpectatorUI: public virtual AbstractUI {
+
+protected:
+    SpectatorManager *spectatorManager;
+
 
 public:
+    SpectatorUI(SpectatorManager *spectatorManager) : spectatorManager(spectatorManager) {};
+    virtual void display(std::vector<GameInfo>& gamesInfos) = 0;
+    virtual void displaySorryMessage() = 0;
+    virtual std::string playerSelection(GameInfo &game_info) = 0;
+    virtual int gameSelection(int number_of_games_available) = 0;
 
-    void displaySpectatorUI(std::vector<GameInfo>& gamesInfos);
-    int gameSelection(int number_of_games_available);
-    void displaySorryMessage();
+    virtual ~SpectatorUI() = default;
 
-    std::string playerSelection(GameInfo &game_info);
+
 };
 
-
-#endif //PROJET_SPECTATORUI_HPP
+#endif //PROJET_SPECTATORUI_H

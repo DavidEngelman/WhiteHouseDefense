@@ -1,8 +1,10 @@
 
 #include <iostream>
-#include "SpectatorUI.hpp"
+#include "SpectatorConsoleUI.hpp"
 
-void SpectatorUI::displaySpectatorUI(std::vector<GameInfo>& gamesInfos) {
+SpectatorConsoleUI::SpectatorConsoleUI(SpectatorManager *spectatorManager) : SpectatorUI(spectatorManager) {}
+
+void SpectatorConsoleUI::display(std::vector<GameInfo>& gamesInfos) {
     system("clear");
     std::cout << "Here are the games being played at the moment: " << std::endl;
     int i = 1;
@@ -13,7 +15,7 @@ void SpectatorUI::displaySpectatorUI(std::vector<GameInfo>& gamesInfos) {
     }
 }
 
-void SpectatorUI::displaySorryMessage() {
+void SpectatorConsoleUI::displaySorryMessage() {
     int i;
     system("clear");
     std::cout << "Sorry, no games in progress... :(" << std::endl;
@@ -23,7 +25,7 @@ void SpectatorUI::displaySorryMessage() {
     std::cin.ignore();
 }
 
-int SpectatorUI::gameSelection(int number_of_games_available) {
+int SpectatorConsoleUI::gameSelection(int number_of_games_available) {
     int choice = -1;
     std::cout << "Enter the number of the game you want to spectate: ";
     std::cin >> choice;
@@ -38,7 +40,7 @@ int SpectatorUI::gameSelection(int number_of_games_available) {
     return choice -1;
 }
 
-std::string SpectatorUI::playerSelection(GameInfo& game_info) {
+std::string SpectatorConsoleUI::playerSelection(GameInfo& game_info) {
     std::string choice = "";
     std::cout << "Enter the username of the player you want to support: ";
     std::cin >> choice;

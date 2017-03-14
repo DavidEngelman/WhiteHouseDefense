@@ -1,11 +1,26 @@
 
 
 #include "SpectatorGUI.hpp"
-#include "SpectatorManager.hpp"
 
 
-void SpectatorGUI::display() {
-//TODO
+SpectatorGUI::SpectatorGUI(SpectatorManager *manager) : SpectatorUI(manager) {}
+
+SpectatorGUI::~SpectatorGUI() {
+    close();
 }
 
-SpectatorGUI::SpectatorGUI(SpectatorManager *manager) : manager(manager) {}
+void SpectatorGUI::display(std::vector<GameInfo> &gamesInfos) {
+
+}
+
+int SpectatorGUI::gameSelection(int number_of_games_available) {
+    return 0;
+}
+
+void SpectatorGUI::displaySorryMessage() {
+
+}
+
+std::string SpectatorGUI::playerSelection(GameInfo &game_info) {
+    return std::__cxx11::string();
+}
