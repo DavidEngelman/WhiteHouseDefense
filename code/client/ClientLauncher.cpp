@@ -1,10 +1,7 @@
 #include <iostream>
-#include <cstring>
 #include <QtWidgets/QApplication>
-#include <QtWidgets/QPushButton>
 #include "App.hpp"
 #include "global.hpp"
-#include "MapGUI.hpp"
 
 int main(int argc, char *argv[]) {
     
@@ -30,13 +27,19 @@ int main(int argc, char *argv[]) {
 
     if (!isConsole) {
         QApplication application(argc, argv);
-        /* Pour tester la MapGUI
         App app(argv[1]);
-         */
-        MapGUI mapGUI(2);
-        mapGUI.display();
+
+        /* Pour tester la MapGUI
+        MapGUI mapGUI(1);
+        int quadrant = 0;
         GameState gameState = GameState(TEAM_MODE);
-        mapGUI.display(gameState, 1);
+        PlayerState playerState = PlayerState();
+        gameState.addPlayerState(playerState);
+        gameState.addTower(new GunTower(Position(6, 2)), quadrant);
+        gameState.addTower(new SniperTower(Position(7, 2)), quadrant);
+        gameState.addTower(new ShockTower(Position(8, 2)), quadrant);
+        mapGUI.display(gameState, quadrant);
+        */
 
         return application.exec();
     }

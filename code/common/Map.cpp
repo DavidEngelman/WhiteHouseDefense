@@ -24,9 +24,7 @@ Map::Map(unsigned seed) {
 void Map::display(GameState &gameState, int quadrant) const {
     std::vector<AbstractTower *> &towers = gameState.getTowers();
     std::vector<Wave> &waves = gameState.getWaves();
-    std::string mode;
-
-    mode = gameState.getMode();
+    std::string &mode = gameState.getMode();
 
     system("clear");
     std::cout << "\t";

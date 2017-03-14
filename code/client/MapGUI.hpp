@@ -10,14 +10,17 @@
 #include "Abstract/AbstractGUI.hpp"
 
 class MapGUI : public Map, public AbstractGUI {
+private:
+    GameState gameState;
+    int quadrant;
 
 protected:
     void paintEvent(QPaintEvent *event) override;
 
 public:
     MapGUI(unsigned int seed);
-    void display();
-    void display(GameState& gameState, int quadrant) const;
+    void display() override;
+    void display(GameState& gameState, int quadrant);
 };
 
 
