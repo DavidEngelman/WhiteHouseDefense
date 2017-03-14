@@ -2,6 +2,7 @@
 #include <cstring>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QPushButton>
+#include <QtWidgets/QMainWindow>
 #include "App.hpp"
 #include "global.hpp"
 #include "Profile/ProfileManager.hpp"
@@ -33,6 +34,7 @@ int main(int argc, char *argv[]) {
 
     if (!isConsole) {
         QApplication application(argc, argv);
+        application.setApplicationName("Withe house defense");
         App app(argv[1]);
         std::cout << argv[1] << std::endl;
         return application.exec();

@@ -21,7 +21,7 @@ void RankingGUI::display() {
     this->setFixedWidth(1000);
 
 
-    QPixmap bkgnd("../../qt_ui/game_pictures/backgrounds/blue2.jpg");
+    QPixmap bkgnd("../../qt_ui/game_pictures/backgrounds/trump_background.png");
     bkgnd = bkgnd.scaled(this->size(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
     QPalette palette;
     palette.setBrush(QPalette::Background, bkgnd);
@@ -34,7 +34,7 @@ void RankingGUI::display() {
 void RankingGUI::createTable() {
 
 
-    setStyleSheet("QTableWidget {background-color: rgba(99, 99, 99, 60);}"
+    setStyleSheet("QTableWidget {background-color: rgba(0, 0, 0, 0);}"
 
                           "QHeaderView::section {background-color: grey;"
                           "color: white;"
