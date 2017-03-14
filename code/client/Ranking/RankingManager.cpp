@@ -3,6 +3,7 @@
 #include "../Main/MainManager.hpp"
 #include "RankingGUI.hpp"
 #include "RankingConsoleUI.hpp"
+#include "../../common/Constants.h"
 
 RankingManager::RankingManager(int port, App *my_app) : NetworkedManager(port, my_app) {
     if (!isConsole) {
@@ -73,6 +74,15 @@ void RankingManager::run() {
     } else {
         rankingUI->display(ranking);
     }
+}
+
+void RankingManager::goToMainMenu() {
+    MainManager * mainManager = new MainManager(ACCOUNT_SERVER_PORT, master_app);
+    master_app->transition(mainManager);
+}
+
+RankingManager::~RankingManager() {
+    rankingUI->destroy();
 }
 
 

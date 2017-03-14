@@ -8,7 +8,6 @@
 #include "MainUI.hpp"
 
 class MainUI;
-
 class MainManager : public NetworkedManager {
 
 private:

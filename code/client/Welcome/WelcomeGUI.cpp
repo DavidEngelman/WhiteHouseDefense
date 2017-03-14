@@ -2,6 +2,7 @@
 #include <QtWidgets/QFrame>
 #include <QCoreApplication>
 #include <QtCore/QFileInfo>
+#include <QtMultimedia/QMediaPlaylist>
 #include "WelcomeGUI.hpp"
 #include "WelcomeManager.hpp"
 
@@ -62,9 +63,17 @@ void WelcomeGUI::setTheme() {
     bkgnd = bkgnd.scaled(this->size(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
     palette.setBrush(QPalette::Background, bkgnd);
     this->setPalette(palette);
-    player->setMedia(QUrl::fromLocalFile(QFileInfo("../../qt_ui/game_pictures/sounds/americanAnthem.mp3").absoluteFilePath()));
+
+    /* Permet de joueur des choses en boucle */
+    QMediaPlaylist *playlist = new QMediaPlaylist();
+    playlist->addMedia(QUrl::fromLocalFile(QFileInfo("../../qt_ui/game_pictures/sounds/urssAnthem.mp3").absoluteFilePath()));
+    playlist->setPlaybackMode(QMediaPlaylist::Loop);
+
     player->setVolume(100);
+    player->setPlaylist(playlist);
     player->play();
+
+
 }
 
 WelcomeGUI::~WelcomeGUI() {

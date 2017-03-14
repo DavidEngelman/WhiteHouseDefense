@@ -4,6 +4,8 @@
 #include "../App.hpp"
 #include "../global.hpp"
 
+class MainManager;
+
 class AbstractManager {
 
 protected:
@@ -12,10 +14,9 @@ protected:
 
 public:
     AbstractManager(App* my_app) : master_app(my_app) {};
-
-    virtual void run() = 0;
     virtual ~AbstractManager() = default;
 
+    virtual void run() = 0;
 };
 
 

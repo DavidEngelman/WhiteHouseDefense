@@ -19,11 +19,13 @@ private:
 
 public:
 	RankingManager(int port, App* my_app);
+	~RankingManager();
 	std::string getRanking();
 	void sendRequest();
 	std::vector<RankingInfos> createRanking(std::string);
 	void run() override;
 
+	void goToMainMenu();
 };
 
 #endif

@@ -73,6 +73,8 @@ void RankingGUI::createTable() {
     QPushButton *backToMenuButton = new QPushButton(s1);
     backToMenuButton->setFixedSize(QSize(212,45));
 
+    QObject::connect(backToMenuButton, SIGNAL(clicked()), this, SLOT(goToMainMenu()));
+
     layout->addWidget(backToMenuButton);
 
     layout->setAlignment(backToMenuButton, Qt::AlignHCenter);
@@ -112,6 +114,10 @@ void RankingGUI::display(std::vector<RankingInfos>& ranking) {
     fillRanking(ranking);
     this->show();
 
+}
+
+void RankingGUI::goToMainMenu() {
+    rankingManager->goToMainMenu();
 }
 
 

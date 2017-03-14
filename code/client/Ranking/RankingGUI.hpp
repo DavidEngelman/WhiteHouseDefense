@@ -17,10 +17,16 @@ class RankingGUI : public AbstractGUI, public RankingUI {
 
     Q_OBJECT
 
+public slots:
+    void goToMainMenu();
+
 private:
     QTableWidget* rankingTable;
     QStringList rankingHeader;
     RankingManager *manager;
+
+
+
 
 public:
     RankingGUI(RankingManager *manager);

@@ -37,11 +37,6 @@ void ProfileManager::showProfile() {
     }
 }
 
-void ProfileManager::goToMainMenu() {
-    MainManager *mainManager = new MainManager(ACCOUNT_SERVER_PORT, master_app);
-    master_app->transition(mainManager);
-}
-
 void ProfileManager::getAndParseProfile(std::string username) {
     std::string message = GET_PROFILE + username + ";";
     send_message(server_socket, message.c_str());
@@ -78,6 +73,11 @@ std::string &ProfileManager::getUsername() {
 ProfileManager::~ProfileManager() {
     profileUI->destroy();
 
+}
+
+void ProfileManager::goToMainMenu() {
+    MainManager * mainManager = new MainManager(ACCOUNT_SERVER_PORT, master_app);
+    master_app->transition(mainManager);
 }
 
 
