@@ -63,7 +63,6 @@ void SpectatorConsoleUI::playerSelection_input(GameInfo& game_info) {
 
 void SpectatorConsoleUI::playerSelection(std::string player_name) {
     spectatorManager->setPlayerSelected(player_name);
-
 }
 
 void SpectatorConsoleUI::selectGameAndPlayerProcess() {

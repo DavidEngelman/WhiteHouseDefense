@@ -14,7 +14,9 @@
 SpectatorGUI::SpectatorGUI(SpectatorManager *manager) : SpectatorUI(manager), layout(new QVBoxLayout),
                                                         selectPlayerWindow(new QWidget()) {}
 
-
+void SpectatorGUI::selectGameAndPlayerProcess() {
+    display();
+}
 
 void SpectatorGUI::display() {
     setUp();
@@ -23,7 +25,7 @@ void SpectatorGUI::display() {
 
     QString s1 = "BACK TO MENU";
     QPushButton *backToMenuButton = new QPushButton(s1);
-    backToMenuButton->setFixedSize(QSize(212,45));
+    backToMenuButton->setFixedSize(QSize(212, 45));
     QObject::connect(backToMenuButton, SIGNAL(clicked()), this, SLOT(goToMainMenu()));
     layout->addWidget(backToMenuButton);
     layout->setAlignment(backToMenuButton, Qt::AlignHCenter);
@@ -52,45 +54,47 @@ void SpectatorGUI::displaySorryMessage() {
 
 void SpectatorGUI::fillTable() {
     QString join_string = "Join";
-    int i =0;
-    for(GameInfo &elem : allGames) {
+    int index = 0;
+    for (GameInfo &elem : allGames) {
 
-        gamesTable->insertRow( gamesTable->rowCount() );
+        gamesTable->insertRow(gamesTable->rowCount());
 
         QString mode = QString::fromStdString(elem.getGameMode());
-        QString playersNames = QString::fromStdString(fromVectToString(elem.getPlayers()));
+        QString playerNames = QString::fromStdString(fromVectToString(elem.getPlayers()));
 
-        QTableWidgetItem *mode_item = new QTableWidgetItem(mode);
-        mode_item->setForeground(QColor::fromRgb(255, 255, 255));
+        QTableWidgetItem *modeTableItem = new QTableWidgetItem(mode);
+        modeTableItem->setForeground(QColor::fromRgb(255, 255, 255));
 
-        QTableWidgetItem *playersName_item = new QTableWidgetItem(playersNames);
-        playersName_item->setForeground(QColor::fromRgb(255, 255, 255));
-        playersName_item->setTextAlignment(Qt::AlignCenter);
+        QTableWidgetItem *playerNameTableItem = new QTableWidgetItem(playerNames);
+        playerNameTableItem->setForeground(QColor::fromRgb(255, 255, 255));
+        playerNameTableItem->setTextAlignment(Qt::AlignCenter);
 
 
-        ///JOIN BUTTON
-        QWidget* pWidget = new QWidget();
-        QPushButton *join_item = new QPushButton(join_string);
-        join_item->setFixedSize(QSize(75,35));
-        QHBoxLayout* pLayout = new QHBoxLayout(pWidget);
-        pLayout->addWidget(join_item);
-        pLayout->setAlignment(Qt::AlignCenter);
-        pLayout->setContentsMargins(0, 0, 0, 0);
-        pWidget->setLayout(pLayout);
+        /* Create join button */
+        QWidget *buttonContainer = new QWidget();
+        QPushButton *joinButton = new QPushButton(join_string);
+        joinButton->setFixedSize(QSize(75, 35));
+        QHBoxLayout *buttonLayout = new QHBoxLayout(buttonContainer);
+        buttonLayout->addWidget(joinButton);
+        buttonLayout->setAlignment(Qt::AlignCenter);
+        buttonLayout->setContentsMargins(0, 0, 0, 0);
+        buttonContainer->setLayout(buttonLayout);
 
 
         //QObject::connect(join_item, SIGNAL(clicked()), this, SLOT(popUp()));
 
-        QSignalMapper* signalMapper = new QSignalMapper (this) ;
-        connect (join_item, SIGNAL(clicked()), signalMapper, SLOT(map())) ;
-        signalMapper -> setMapping (join_item, i) ;
-        connect (signalMapper, SIGNAL(mapped(int)), this, SLOT(gameSelection(int))) ;
+        /* Map button click to slot */
+        QSignalMapper *signalMapper = new QSignalMapper(this);
+        connect(joinButton, SIGNAL(clicked()), signalMapper, SLOT(map()));
+        signalMapper->setMapping(joinButton, index);
+        connect(signalMapper, SIGNAL(mapped(int)), this, SLOT(gameSelection(int)));
 
-        gamesTable->setItem(i,0,mode_item);
-        gamesTable->setItem(i, 1, playersName_item);
-        gamesTable->setCellWidget(i, 2, pWidget);
+        /* Add elements to table */
+        gamesTable->setItem(index, 0, modeTableItem);
+        gamesTable->setItem(index, 1, playerNameTableItem);
+        gamesTable->setCellWidget(index, 2, buttonContainer);
 
-        i++;
+        index++;
     }
 
 }
@@ -108,14 +112,13 @@ void SpectatorGUI::setUp() {
 }
 
 void SpectatorGUI::createTable() {
-
     setStyle();
-    QFont font("calibri",16);
+    QFont font("calibri", 16);
 
     gamesTable = new QTableWidget(this);
     gamesTable->setFont(font);
     gamesTable->setColumnCount(3);
-    gamesTable->setColumnWidth(1,TABLE_WIDTH_SIZE - 200);
+    gamesTable->setColumnWidth(1, TABLE_WIDTH_SIZE - 200);
     header << "Mode" << "Players" << "Join";
     gamesTable->setHorizontalHeaderLabels(header);
     gamesTable->horizontalHeader()->setStretchLastSection(true);
@@ -126,7 +129,6 @@ void SpectatorGUI::createTable() {
     gamesTable->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
     layout->addWidget(gamesTable);
-
 }
 
 void SpectatorGUI::setStyle() {
@@ -152,7 +154,7 @@ std::string SpectatorGUI::fromVectToString(std::vector<std::string> &players) {
             string += " - ";
         i++;
     }
-    return  string;
+    return string;
 
 }
 
@@ -167,15 +169,16 @@ void SpectatorGUI::popUp(int i) {
 
 void SpectatorGUI::setUpSelectPlayerWindow(int i) {
     QVBoxLayout *layout = new QVBoxLayout(selectPlayerWindow);
-    QFont font("calibri",12);
+    QFont font("calibri", 12);
     selectPlayerWindow->setWindowTitle("Player selection");
-    selectPlayerWindow->setFixedSize(200,200);
-    selectPlayerWindow->move(this->width()/2, this->height()/2);
+    selectPlayerWindow->setFixedSize(200, 200);
+    selectPlayerWindow->move(this->width() / 2, this->height() / 2);
     selectPlayerWindow->setWindowModality(Qt::ApplicationModal);
 
     list = new QListWidget(selectPlayerWindow);
     list->setFont(font);
-    connect(list, SIGNAL(itemDoubleClicked(QListWidgetItem*)), this, SLOT(playerSelection_onClick(QListWidgetItem*)));
+    connect(list, SIGNAL(itemDoubleClicked(QListWidgetItem * )), this,
+            SLOT(playerSelection_onClick(QListWidgetItem * )));
 
     layout->addWidget(list);
     setUpCheckBox(i);
@@ -183,18 +186,13 @@ void SpectatorGUI::setUpSelectPlayerWindow(int i) {
 }
 
 void SpectatorGUI::setUpCheckBox(int i) {
-    for(std::string &player : allGames[i].getPlayers()) {
+    for (std::string &player : allGames[i].getPlayers()) {
         //selectPlayerWindow->setCheckBox(new QCheckBox(QString::fromStdString(player)));
-        QListWidgetItem* item = new QListWidgetItem(QString::fromStdString(player), list);
+        QListWidgetItem *item = new QListWidgetItem(QString::fromStdString(player), list);
     }
 }
 
-void SpectatorGUI::selectGameAndPlayerProcess() {
-    display();
-
-}
-
-void SpectatorGUI::playerSelection_onClick(QListWidgetItem* item) {
+void SpectatorGUI::playerSelection_onClick(QListWidgetItem *item) {
     playerSelection(item->text().toUtf8().constData()); // convert QString to std::string
 }
 

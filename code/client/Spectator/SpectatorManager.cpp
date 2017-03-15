@@ -116,7 +116,6 @@ void SpectatorManager::setGameSelected(int game_num) {
 
 void SpectatorManager::setPlayerSelected(std::string player_name) {
     playerSelected = player_name;
-
 }
 
 int SpectatorManager::getGameSelected() {
