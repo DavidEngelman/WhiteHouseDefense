@@ -17,13 +17,9 @@ void MainGUI::display() {
     QString styleSheet = QLatin1String(File.readAll());
     this->setStyleSheet(styleSheet);
 
-    //this->setFixedHeight(600);
-    //this->setFixedWidth(750);
-    //QPixmap bkgnd("../../qt_ui/game_pictures/backgrounds/Whitehouse");
-    //bkgnd = bkgnd.scaled(this->size(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
-    QPalette palette;
-    palette.setColor(QPalette::Background,QColor::fromRgb(16,24,70));
-    this->setPalette(palette);
+    setBackgroundFromPath("../../qt_ui/game_pictures/backgrounds/whitehouse_bckgrd.png");
+
+
     QFont police("calibri");
 
     QFrame * fields = new QFrame(this);
@@ -37,18 +33,23 @@ void MainGUI::display() {
     QString s6 = "EXIT";
 
     newGame = new QCustomButton(1, s1,fields);
+    newGame->setCursor(Qt::PointingHandCursor);
     newGame->setFixedSize(QSize(212,45));
 
     spectator = new QCustomButton(2, s2,fields);
+    spectator->setCursor(Qt::PointingHandCursor);
     spectator->setFixedSize(QSize(212,45));
 
     profile = new QCustomButton(3, s3,fields);
+    profile->setCursor(Qt::PointingHandCursor);
     profile->setFixedSize(QSize(212,45));
 
     friendList = new QCustomButton(4, s4,fields);
+    friendList->setCursor(Qt::PointingHandCursor);
     friendList->setFixedSize(QSize(212,45));
 
     leaderBoard = new QCustomButton(5, s5,fields);
+    leaderBoard->setCursor(Qt::PointingHandCursor);
     leaderBoard->setFixedSize(QSize(212,45));
 
     QObject::connect(newGame, SIGNAL(clicked(int)), this, SLOT(handleMenuChoice(int)));
@@ -63,7 +64,7 @@ void MainGUI::display() {
     fieldsLayout->addRow(friendList);
     fieldsLayout->addRow(leaderBoard);
     fields->setLayout(fieldsLayout);
-    fields->move(this->size().width() / 2 - 125, this->size().height() / 2 -140);
+    fields->move(this->size().width() / 2 - 125, this->size().height() / 2 -40);
 
     this->show();
 }
