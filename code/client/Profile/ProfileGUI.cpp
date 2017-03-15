@@ -15,8 +15,8 @@ ProfileGUI::~ProfileGUI() {
 
 void ProfileGUI::display() {
 
-    this->setFixedHeight(480);
-    this->setFixedWidth(852);
+    this->setFixedHeight(600);
+    this->setFixedWidth(1000);
 
     /* Set background */
     setBackgroundFromPath("../../qt_ui/game_pictures/backgrounds/profile_bckgrd-2.png");
@@ -79,7 +79,7 @@ void ProfileGUI::display() {
     userNameLabel = new QLabel(this);
     userNameLabel->setText(*usernameT);
     userNameLabel->setFont(policeUsername);
-    userNameLabel->setStyleSheet("padding-top: 80;color : gold;");
+    userNameLabel->setStyleSheet("padding-top: 115;color : gold;");
 
     ///----------VICTORIES----------
 
