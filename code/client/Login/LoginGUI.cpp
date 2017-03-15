@@ -14,18 +14,13 @@ void LoginGUI::loginUser() {
 }
 
 void LoginGUI::display() {
-    QFile File("../../qt_ui/americanLogin.qss");
-    File.open(QFile::ReadOnly);
-    QString styleSheet = QLatin1String(File.readAll());
-    this->setStyleSheet(styleSheet);
+    setStylesheetFromPath("../../qt_ui/americanLogin.qss");
 
     this->setFixedHeight(600);
     this->setFixedWidth(750);
-    QPixmap bkgnd("../../qt_ui/game_pictures/backgrounds/americanBg");
-    bkgnd = bkgnd.scaled(this->size(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
-    QPalette palette;
-    palette.setBrush(QPalette::Background, bkgnd);
-    this->setPalette(palette);
+
+    setBackgroundFromPath("../../qt_ui/game_pictures/backgrounds/americanBg");
+
     QFont police("calibri");
 
     QFrame * fields = new QFrame(this);

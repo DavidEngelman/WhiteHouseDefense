@@ -6,10 +6,7 @@
 MainGUI::MainGUI(MainManager *manager) : MainUI(manager) {}
 
 void MainGUI::display() {
-    QFile File("../../qt_ui/americanLogin.qss");
-    File.open(QFile::ReadOnly);
-    QString styleSheet = QLatin1String(File.readAll());
-    this->setStyleSheet(styleSheet);
+    setStylesheetFromPath("../../qt_ui/americanLogin.qss");
 
     this->setFixedHeight(600);
     this->setFixedWidth(750);
