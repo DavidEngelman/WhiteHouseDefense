@@ -12,13 +12,9 @@ void MainGUI::display() {
     this->setFixedHeight(600);
     this->setFixedWidth(1000);
 
-    QFile File("../../qt_ui/americanLogin.qss");
-    File.open(QFile::ReadOnly);
-    QString styleSheet = QLatin1String(File.readAll());
-    this->setStyleSheet(styleSheet);
-
+    setStylesheetFromPath("../../qt_ui/americanLogin.qss");
     setBackgroundFromPath("../../qt_ui/game_pictures/backgrounds/whitehouse_bckgrd.png");
-
+    setMusicFromPath("../../qt_ui/game_pictures/sounds/trump_song.mp3");
 
     QFont police("calibri");
 

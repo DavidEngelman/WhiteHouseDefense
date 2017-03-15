@@ -46,27 +46,14 @@ void WelcomeGUI::openRegister(){
 }
 
 void WelcomeGUI::setTheme() {
-    QFile File;
-    QString styleSheet;
-    QPixmap bkgnd;
-    QPalette palette;
-    QMediaPlayer *player = new QMediaPlayer(this);
-
-    setStylesheetFromPath("../../qt_ui/americanMain.qss");
 
     this->setFixedHeight(600);
     this->setFixedWidth(750);
 
+    setStylesheetFromPath("../../qt_ui/americanMain.qss");
     setBackgroundFromPath("../../qt_ui/game_pictures/backgrounds/americanBg");
+    setMusicFromPath("../../qt_ui/game_pictures/sounds/americanAnthem.mp3");
 
-    /* Permet de joueur des choses en boucle */
-    QMediaPlaylist *playlist = new QMediaPlaylist();
-    playlist->addMedia(QUrl::fromLocalFile(QFileInfo("../../qt_ui/game_pictures/sounds/urssAnthem.mp3").absoluteFilePath()));
-    playlist->setPlaybackMode(QMediaPlaylist::Loop);
-
-    player->setVolume(100);
-    player->setPlaylist(playlist);
-    player->play();
 }
 
 WelcomeGUI::~WelcomeGUI() {
