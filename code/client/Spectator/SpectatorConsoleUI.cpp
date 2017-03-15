@@ -27,22 +27,26 @@ void SpectatorConsoleUI::displaySorryMessage() {
     spectatorManager->goToMainMenu();
 }
 
-void SpectatorConsoleUI::gameSelection(int number_of_games_available) {
+void SpectatorConsoleUI::gameSelection_input() {
     int choice = -1;
     std::cout << "Enter the number of the game you want to spectate: ";
     std::cin >> choice;
-    while(std::cin.fail() || (choice < 1 || choice > number_of_games_available) ){
-        std::cout << "Error, enter a integer between 1 and "<< number_of_games_available << std::endl;
+    while(std::cin.fail() || (choice < 1 || choice > allGames.size()) ){
+        std::cout << "Error, enter a integer between 1 and "<< allGames.size() << std::endl;
         std::cout <<"Enter the number of the game you want to spectate: ";
 
         std::cin.clear();
         std::cin.ignore();
         std::cin >> choice;
     }
-    spectatorManager->setGameSelected(choice -1);
+    gameSelection(choice - 1);
 }
 
-void SpectatorConsoleUI::playerSelection(GameInfo& game_info) {
+void SpectatorConsoleUI::gameSelection(int game_index){
+    spectatorManager->setGameSelected(game_index);
+}
+
+void SpectatorConsoleUI::playerSelection_input(GameInfo& game_info) {
     std::string choice = "";
     std::cout << "Enter the username of the player you want to support: ";
     std::cin >> choice;
@@ -54,13 +58,27 @@ void SpectatorConsoleUI::playerSelection(GameInfo& game_info) {
         std::cin.ignore();
         std::cin >> choice;
     }
-    spectatorManager->setPlayerSelected(choice);
+    playerSelection(choice);
 }
 
-void SpectatorConsoleUI::selectGameAndPlayer() {
-    display();
-    gameSelection((int) allGames.size());
-    playerSelection(allGames[spectatorManager->getGameSelected()]);
-    int gamePort = allGames[spectatorManager->getGameSelected()].getPort();
-    spectatorManager->connectToGame(gamePort, spectatorManager->getPlayerSelected());
+void SpectatorConsoleUI::playerSelection(std::string player_name) {
+    spectatorManager->setPlayerSelected(player_name);
+
 }
+
+void SpectatorConsoleUI::selectGameAndPlayerProcess() {
+
+    if (allGames.size() == 0){
+        displaySorryMessage();
+    } else{
+        display();
+        gameSelection_input();
+        playerSelection_input(allGames[spectatorManager->getGameSelected()]);
+        int gamePort = allGames[spectatorManager->getGameSelected()].getPort();
+        spectatorManager->connectToGame(gamePort, spectatorManager->getPlayerSelected());
+    }
+
+
+}
+
+

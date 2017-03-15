@@ -34,16 +34,20 @@ void SpectatorGUI::display() {
 
 }
 
-int SpectatorGUI::gameSelection(int number_of_games_available) {
-    return 0;
+void SpectatorGUI::gameSelection(int game_index) {
+    spectatorManager->setGameSelected(game_index);
+    popUp(game_index);
+
+}
+
+void SpectatorGUI::playerSelection(std::string player_name) {
+    spectatorManager->setPlayerSelected(player_name);
+    launchSupporterMode();
 }
 
 void SpectatorGUI::displaySorryMessage() {
+    //TODO
 
-}
-
-std::string SpectatorGUI::playerSelection(GameInfo &game_info) {
-    return std::__cxx11::string();
 }
 
 void SpectatorGUI::fillTable() {
@@ -80,7 +84,7 @@ void SpectatorGUI::fillTable() {
         QSignalMapper* signalMapper = new QSignalMapper (this) ;
         connect (join_item, SIGNAL(clicked()), signalMapper, SLOT(map())) ;
         signalMapper -> setMapping (join_item, i) ;
-        connect (signalMapper, SIGNAL(mapped(int)), this, SLOT(popUp(int))) ;
+        connect (signalMapper, SIGNAL(mapped(int)), this, SLOT(gameSelection(int))) ;
 
         gamesTable->setItem(i,0,mode_item);
         gamesTable->setItem(i, 1, playersName_item);
@@ -168,8 +172,10 @@ void SpectatorGUI::setUpSelectPlayerWindow(int i) {
     selectPlayerWindow->setFixedSize(200,200);
     selectPlayerWindow->move(this->width()/2, this->height()/2);
     selectPlayerWindow->setWindowModality(Qt::ApplicationModal);
+
     list = new QListWidget(selectPlayerWindow);
     list->setFont(font);
+    connect(list, SIGNAL(itemDoubleClicked(QListWidgetItem*)), this, SLOT(playerSelection_onClick(QListWidgetItem*)));
 
     layout->addWidget(list);
     setUpCheckBox(i);
@@ -183,17 +189,18 @@ void SpectatorGUI::setUpCheckBox(int i) {
     }
 }
 
-void SpectatorGUI::selectGameAndPlayer() {
+void SpectatorGUI::selectGameAndPlayerProcess() {
     display();
 
 }
 
-void SpectatorGUI::onJoinClick() {
-    //TODO
+void SpectatorGUI::playerSelection_onClick(QListWidgetItem* item) {
+    playerSelection(item->text().toUtf8().constData()); // convert QString to std::string
+}
+
+void SpectatorGUI::launchSupporterMode() {
+    int gamePort = allGames[spectatorManager->getGameSelected()].getPort();
+    spectatorManager->connectToGame(gamePort, spectatorManager->getPlayerSelected());
 
 }
 
-void SpectatorGUI::onPlayerSelection() {
-    //TODO
-
-}

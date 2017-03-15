@@ -17,24 +17,23 @@ void SpectatorManager::getGamesFromMatchMaker() {
     char buffer[5000];
     send_message(server_socket, "games;");
     receive_message(server_socket, buffer); //receive all the games in progress
+
+    //TODO REMPLACER CA PAR parse_message_from_server(buffer);
     parse_message_from_server("5557,classic,bibi,baba,bobo,bubu;5558,classic,lala,lili,lolo,lele;");
 
 }
 
 void SpectatorManager::run() {
     getGamesFromMatchMaker();
+    //Selection de la partie et du joueur a support
+    spectatorUI->selectGameAndPlayerProcess();
 
-    if ( false && allGames.size() == 0) {
-        //Si y a pas de game a spectate -> on pleure
-        spectatorUI->displaySorryMessage();
-    } else {
-        //Selection de la partie et du joueur a support
-        //spectatorUI->display();
-        spectatorUI->selectGameAndPlayer();
-    }
 }
 
 void SpectatorManager::connectToGame(int &gamePort, std::string &playerToSupport) {
+
+    std::cout << "ca marche" << std::endl;
+
     /* On dit au gameServer qu'on veut etre spectateur */
     int game_server_socket_fd = init_connection_to_server(master_app->get_ip(), gamePort);
 

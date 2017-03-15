@@ -26,30 +26,35 @@ private:
 
 public slots:
     void goToMainMenu();
-    void popUp(int i);
-    void onJoinClick();
-    void onPlayerSelection();
+    void gameSelection(int game_index) override ;
+    void playerSelection_onClick(QListWidgetItem* item);
+
 
 
 public:
+
     SpectatorGUI(SpectatorManager *manager);
 
-    void selectGameAndPlayer() override;
+    void selectGameAndPlayerProcess() override;
 
     void display() override ;
-    int gameSelection(int number_of_games_available) override ;
     void displaySorryMessage() override ;
-    std::string playerSelection(GameInfo &game_info) override ;
     void fillTable();
     void setUp();
     void setStyle();
     void createTable();
+    void popUp(int i);
+
 
     std::string fromVectToString(std::vector<std::string> &players);
 
     void setUpCheckBox(int i);
 
     void setUpSelectPlayerWindow(int i);
+
+    void playerSelection(std::string player_name) override;
+
+    void launchSupporterMode();
 };
 
 
