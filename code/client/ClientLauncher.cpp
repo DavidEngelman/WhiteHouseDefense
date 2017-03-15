@@ -2,13 +2,19 @@
 #include <cstring>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QPushButton>
+#include <QtWidgets/QMainWindow>
 #include "App.hpp"
 #include "global.hpp"
+#include "Profile/ProfileManager.hpp"
+#include "Profile/ProfileGUI.hpp"
+
+static const bool DEBUG = true;
 
 int main(int argc, char *argv[]) {
+
     isConsole = false;
 
-    if (argc == 1){
+    if (argc == 1) {
         std::cerr << "Don't forget the ip_adress of the server as argument! ;)" << std::endl;
         exit(1);
     } else if (argc == 3) {
@@ -28,11 +34,15 @@ int main(int argc, char *argv[]) {
 
     if (!isConsole) {
         QApplication application(argc, argv);
+        application.setApplicationName("White house defense");
         App app(argv[1]);
+        std::cout << argv[1] << std::endl;
         return application.exec();
+
     }
 
-    App app(argv[1]);
+//    App app(argv[1]);
+
 
     return 0;
 }

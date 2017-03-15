@@ -13,12 +13,8 @@
 #include <string.h>
 #include "../common/Credentials.h"
 #include <vector>
+#include "../common/RankingInfos.h"
 
-typedef struct RankingInfos  {
-    int victories;
-    std::string username;
-
-}RankingInfos;
 
 typedef struct PublicAccountInfos  {
     std::string victories, pnjKilled;

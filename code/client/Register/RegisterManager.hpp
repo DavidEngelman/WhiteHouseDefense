@@ -13,7 +13,7 @@ class RegisterGUI;
 class RegisterManager : public NetworkedManager {
 
 private:
-	RegisterUI registerUI;
+	RegisterUI *registerUI; // TODO: fix, it's a pointer so that it compiles
 	RegisterGUI *registerGUI;
     Credentials toRegister;
     bool attemptRegister(Credentials credentials);

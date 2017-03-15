@@ -22,7 +22,7 @@ public:
     App(char* server_ip_addr);
     virtual void transition(AbstractManager *new_manager);
 
-    ~App() = default;
+    ~App();
 
     char *get_ip();
     int get_id();

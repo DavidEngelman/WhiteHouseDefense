@@ -1,8 +1,18 @@
 
 #include "RankingManager.hpp"
 #include "../Main/MainManager.hpp"
+#include "RankingGUI.hpp"
+#include "RankingConsoleUI.hpp"
+#include "../../common/Constants.h"
 
-RankingManager::RankingManager(int port, App *my_app) : NetworkedManager(port, my_app) {}
+RankingManager::RankingManager(int port, App *my_app) : NetworkedManager(port, my_app) {
+    if (!isConsole) {
+        rankingUI = new RankingGUI(this);
+    } else {
+        rankingUI = new RankingConsoleUI(this);
+    }
+}
+
 
 void RankingManager::sendRequest() {
     std::string message = "ranking;";
@@ -19,53 +29,60 @@ std::string RankingManager::getRanking() {
 
 }
 
-std::string RankingManager::createRanking(std::string message_from_server) {
+std::vector<RankingInfos> RankingManager::createRanking(std::string message_from_server) {
 
     /* Transforme le message recu du serveur pour etre affiché au client */
 
-    std::string result = "";
+    std::vector<RankingInfos> ranking;
+    RankingInfos infos;
+    std::string message;
     int i = 0;
-    int pos = 1;
-
-    std::cout << pos << ") ";
 
     while (i < message_from_server.size()){
 
         if (message_from_server[i] == ','){
-            result += "\t\t\t\t\t";
+            infos.username = message;
+            message = "";
             i++;
         }
 
         if (message_from_server[i] == '|'){
-
-            result += " victories";
-
-            if (i != message_from_server.size() - 1){
-
-                pos++;
-                result+="\n";
-                result+=std::to_string(pos);
-                result+=") ";
-            }
+            infos.victories = stoi(message);
+            ranking.push_back(infos);
+            message = "";
             i++;
         }
 
         else{
-            result+= message_from_server[i];
+            message+= message_from_server[i];
             i++;
         }
     }
 
-    return result;
+    return ranking;
 
 }
 
 void RankingManager::run() {
-    std::string ranking = createRanking(getRanking());
-    rankingUI.display(ranking);
+    std::vector<RankingInfos> ranking = createRanking(getRanking());
 
-    MainManager * mainManager = new MainManager(5555, master_app);
+    if (isConsole) {
+        rankingUI->display(ranking);
+
+        MainManager *mainManager = new MainManager(5555, master_app);
+        master_app->transition(mainManager);
+    } else {
+        rankingUI->display(ranking);
+    }
+}
+
+void RankingManager::goToMainMenu() {
+    MainManager * mainManager = new MainManager(ACCOUNT_SERVER_PORT, master_app);
     master_app->transition(mainManager);
+}
+
+RankingManager::~RankingManager() {
+    rankingUI->destroy();
 }
 
 

@@ -2,7 +2,7 @@
 #define PROJET_TOWERCOMMAND_H
 
 #include "../common/Position.hpp"
-#include "Command.hpp"
+#include "../common/Command.hpp"
 #include <string>
 
 

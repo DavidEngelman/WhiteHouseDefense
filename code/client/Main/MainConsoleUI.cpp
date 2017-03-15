@@ -22,6 +22,8 @@ void MainConsoleUI::display() {
         std::cin >> x;
     }
     menuChoice = x;
+
+    manager->handleUserMenuChoice();
 }
 
 void MainConsoleUI::displayMenuChoices() const {
@@ -54,6 +56,7 @@ void MainConsoleUI::displayGameModesMenu() {
         std::cin >> x;
     }
     gameModeChoice = x - 1;
+    manager->handleGameModeChoice();
 }
 
 void MainConsoleUI::displayGameModeChoices() const {

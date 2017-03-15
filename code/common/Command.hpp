@@ -2,36 +2,25 @@
 #define PROJET_COMMAND_HPP
 
 #include <string>
+#include "Message.hpp"
 
 /*
  * Convention: pour les commandes simples, la fin du string de la commande est marqué par un ;.
  */
-class Command {
+class Command: public Message {
 
 protected:
-
     std::string action;
-    char * buffer;
-    bool _hasReachedEnd;
-    int currentPosInBuffer;
-
-
 public:
 
     std::string getAction() const;
+
     Command();
 
-    virtual int extract_action(char* data);
-
+    virtual int extractAction(char *data);
     virtual void parse(char* data);
 
-    std::string getNextToken();
-    bool hasReachedEnd();
-
     virtual ~Command()= default;
-
-
-    void setData(char *data);
 };
 
 

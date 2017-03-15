@@ -6,14 +6,14 @@
 
 class MainManager;
 
-class MainUI {
+class MainUI: public virtual AbstractUI {
 protected:
     int menuChoice;
     int gameModeChoice;
     MainManager *manager;
 public:
     MainUI(MainManager * manager): manager(manager), menuChoice(-1), gameModeChoice(-1) {};
-    // NE PAS ENLEVER. FONDAMENTAL POUR ASSURER DESTRUCTION CORRECTE DES OBJETS;
+    // NE PAS ENLEVER. FONDAMENTAL POUR ASSURER LA DESTRUCTION CORRECTE DES OBJETS;
     virtual ~MainUI() = default;
     virtual int getMenuChoice() { return menuChoice; };
     virtual int getGameModeChoice() { return gameModeChoice; }

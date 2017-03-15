@@ -3,11 +3,11 @@
 
 #include "../NetworkedManager.hpp"
 #include "../Abstract/AbstractManager.hpp"
+#include "../Abstract/AbstractUI.hpp"
 #include "../App.hpp"
 #include "MainUI.hpp"
 
 class MainUI;
-
 class MainManager : public NetworkedManager {
 
 private:
@@ -15,6 +15,7 @@ private:
 
 public:
 	MainManager(int port, App* my_app);
+	~MainManager();
 	void run() override;
 
     void handleUserMenuChoice();

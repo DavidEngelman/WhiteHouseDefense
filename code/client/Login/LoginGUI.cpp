@@ -29,7 +29,7 @@ void LoginGUI::display() {
     QFont police("calibri");
 
     QFrame * fields = new QFrame(this);
-    QFormLayout * fieldsLayout = new QFormLayout(this);
+    QFormLayout * fieldsLayout = new QFormLayout(fields);
 
     usernameL = new QLineEdit(fields);
     usernameL->setSelection(0, 10);
@@ -52,13 +52,17 @@ void LoginGUI::display() {
 
     connect = new QPushButton(s3,fields);
     connect->setFixedSize(QSize(212,45));
+    connect->setCursor(Qt::PointingHandCursor);
+
 
     cancel = new QPushButton(s4,fields);
     cancel->setFixedSize(QSize(212,45));
+    cancel->setCursor(Qt::PointingHandCursor);
 
-    QObject::connect(connect, SIGNAL(clicked()), this, SLOT(loginUser()));
+
     QObject::connect(usernameL, SIGNAL(returnPressed()), passwordL, SLOT(setFocus()));
-    QObject::connect(passwordL, SIGNAL(returnPressed()), connect, SIGNAL(clicked()));
+    QObject::connect(passwordL, SIGNAL(returnPressed()), this, SLOT(loginUser()));
+    QObject::connect(connect, SIGNAL(clicked()), this, SLOT(loginUser()));
     QObject::connect(cancel, SIGNAL(clicked()), this, SLOT(cancelLogin()));
 
     fieldsLayout->addRow(l1, usernameL);
@@ -89,10 +93,12 @@ void LoginGUI::displayAlreadyConnected() {
 
 LoginGUI::LoginGUI(LoginManager *manager) : LoginUI(manager){}
 
-LoginGUI::~LoginGUI() {
-    close();
-}
+LoginGUI::~LoginGUI() {}
 
 void LoginGUI::cancelLogin() {
     manager->goToWelcome();
 }
+
+//void LoginGUI::destroy() {
+//    AbstractGUI::destroy();
+//}

@@ -4,7 +4,7 @@
 #include "../common/Credentials.h"
 #include "LoginRegisterCommand.hpp"
 #include "UpdateStatsCommand.h"
-#include "Command.hpp"
+#include "../common/Command.hpp"
 #include "PlayerConnection.hpp"
 #include <algorithm>
 #include <thread>

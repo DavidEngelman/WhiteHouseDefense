@@ -59,10 +59,14 @@ void RegisterGUI::display() {
 
     connect = new QPushButton(s4,fields);
     connect->setFixedSize(QSize(212,45));
+    connect->setCursor(Qt::PointingHandCursor);
+
 
     cancel = new QPushButton(s5,fields);
     cancel->setFixedSize(QSize(212,45));
-    
+    cancel->setCursor(Qt::PointingHandCursor);
+
+
     QObject::connect(usernameL, SIGNAL(returnPressed()), passwordL, SLOT(setFocus()));
     QObject::connect(passwordL, SIGNAL(returnPressed()), confirmL, SLOT(setFocus()));
     QObject::connect(confirmL, SIGNAL(returnPressed()), connect, SIGNAL(clicked()));

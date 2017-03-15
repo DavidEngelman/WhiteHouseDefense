@@ -25,15 +25,19 @@ public:
     explicit MainManager(QWidget *parent = 0);
     ~MainManager();
 
-public slots:
-    void openWindow();
-
-
 private:
     void setTheme(int themeInt);
-    QPushButton *loginButton;
-    QPushButton *registerButton;
-    QPushButton *quitButton;
+    QLineEdit *usernameLineEdit;
+        QPushButton *searchButton;
+
+        QLabel *userNameLabel;
+        QLabel *victoriesLabel;
+        QLabel *NPCKilledLabel;
+
+
+        QString* usernameT;
+        QString* victoriesT;
+        QString* NPCKilledT;
 };
 
 #endif // MAINMANAGER_H

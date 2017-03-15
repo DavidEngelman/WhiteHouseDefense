@@ -2,7 +2,7 @@
 #define PROJET_MATCHMAKINGCOMMAND_HPP
 
 
-#include "Command.hpp"
+#include "../common/Command.hpp"
 #include "PendingMatch.h"
 #include <cstdlib>
 

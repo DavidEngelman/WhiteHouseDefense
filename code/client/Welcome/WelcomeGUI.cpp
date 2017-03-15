@@ -1,6 +1,7 @@
 #include <QtWidgets/QFrame>
 #include <QCoreApplication>
 #include <QtCore/QFileInfo>
+#include <QtMultimedia/QMediaPlaylist>
 #include "WelcomeGUI.hpp"
 #include "WelcomeManager.hpp"
 
@@ -13,14 +14,17 @@ void WelcomeGUI::display() {
 
     loginButton = new QPushButton("LOGIN", fields);
     loginButton->setFixedSize(QSize(212,45));
+    loginButton->setCursor(Qt::PointingHandCursor);
     connect(loginButton, SIGNAL (released()), this, SLOT (openLogin()));
 
     registerButton = new QPushButton("REGISTER", fields);
     registerButton->setFixedSize(QSize(212,45));
+    registerButton->setCursor(Qt::PointingHandCursor);
     connect(registerButton, SIGNAL (released()), this, SLOT (openRegister()));
 
     quitButton = new QPushButton("QUIT", fields);
     quitButton->setFixedSize(QSize(212,45));
+    quitButton->setCursor(Qt::PointingHandCursor);
     connect(quitButton, SIGNAL(clicked()), this, SLOT(close()));
 
     fieldsLayout->addRow(loginButton);
@@ -58,9 +62,17 @@ void WelcomeGUI::setTheme() {
     bkgnd = bkgnd.scaled(this->size(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
     palette.setBrush(QPalette::Background, bkgnd);
     this->setPalette(palette);
-    player->setMedia(QUrl::fromLocalFile(QFileInfo("../../qt_ui/game_pictures/sounds/americanAnthem.mp3").absoluteFilePath()));
+
+    /* Permet de joueur des choses en boucle */
+    QMediaPlaylist *playlist = new QMediaPlaylist();
+    playlist->addMedia(QUrl::fromLocalFile(QFileInfo("../../qt_ui/game_pictures/sounds/urssAnthem.mp3").absoluteFilePath()));
+    playlist->setPlaybackMode(QMediaPlaylist::Loop);
+
     player->setVolume(100);
+    player->setPlaylist(playlist);
     player->play();
+
+
 }
 
 WelcomeGUI::~WelcomeGUI() {

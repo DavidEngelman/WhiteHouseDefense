@@ -1,8 +1,16 @@
 #include "SpectatorManager.hpp"
 #include "SpectatorGUI.hpp"
+#include "SpectatorConsoleUI.hpp"
 
 SpectatorManager::SpectatorManager(int port, App *master_app) :
-        NetworkedManager(port, master_app), spectatorGUI(new SpectatorGUI(this)) {}
+        NetworkedManager(port, master_app) {
+
+    if (!isConsole) {
+        spectatorUI = new SpectatorGUI(this);
+    } else {
+        spectatorUI = new SpectatorConsoleUI(this);
+    }
+}
 
 void SpectatorManager::getGamesFromMatchMaker() {
     char buffer[5000];
@@ -17,15 +25,15 @@ void SpectatorManager::run() {
 
     if (allGames.size() == 0) {
         //Si y a pas de game a spectate -> on pleure
-        spectatorUI.displaySorryMessage();
+        spectatorUI->displaySorryMessage();
         MainManager *mng = new MainManager(5555, master_app);
         master_app->transition(mng);
     } else {
         //Selection de la partie et du jouer a support
-        spectatorUI.displaySpectatorUI(allGames);
-        int gameSelected = spectatorUI.gameSelection((int) allGames.size());
+        spectatorUI->display(allGames);
+        int gameSelected = spectatorUI->gameSelection((int) allGames.size());
         int gamePort = allGames[gameSelected].getPort();
-        std::string playerToSupport = spectatorUI.playerSelection(allGames[gameSelected]);
+        std::string playerToSupport = spectatorUI->playerSelection(allGames[gameSelected]);
 
 
         /* On dit au gameServer qu'on veut etre spectateur */
@@ -37,8 +45,8 @@ void SpectatorManager::run() {
         send_message(game_server_socket_fd, message.c_str());
 
         // Puis on lance le GameManager
-        GameManager *gameManager = new GameManager(game_server_socket_fd, true, master_app);
-        master_app->transition(gameManager);
+       // GameManager *gameManager = new GameManager(game_server_socket_fd, true, master_app);
+        //master_app->transition(gameManager);
     }
 }
 
@@ -89,5 +97,9 @@ int SpectatorManager::createGameInfo(const std::string &message, int &i) {
     allGames.push_back(gameInfo);
 
     return i;
+}
+
+SpectatorManager::~SpectatorManager() {
+    spectatorUI->destroy();
 }
 

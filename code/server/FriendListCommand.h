@@ -6,7 +6,7 @@
 #define PROJET_FRIENDLISTCOMMAND_H
 
 #include <iostream>
-#include "Command.hpp"
+#include "../common/Command.hpp"
 
 class FriendListCommand: public Command {
 private:
