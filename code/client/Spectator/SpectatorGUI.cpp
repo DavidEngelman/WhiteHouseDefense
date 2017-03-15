@@ -143,7 +143,7 @@ void SpectatorGUI::selectPlayerForGame(int gameIndex) {
     selectPlayerWindow->show();
 }
 
-void SpectatorGUI::setUpSelectPlayerWindow(int i) {
+void SpectatorGUI::setUpSelectPlayerWindow(int game_index) {
     QVBoxLayout *layout = new QVBoxLayout(selectPlayerWindow);
     QFont font("calibri", 12);
     selectPlayerWindow->setWindowTitle("Player selection");
@@ -157,11 +157,11 @@ void SpectatorGUI::setUpSelectPlayerWindow(int i) {
             SLOT(handlePlayerSelection(QListWidgetItem * )));
 
     layout->addWidget(list);
-    addPlayersToList(i);
+    addPlayersToList(game_index);
 }
 
-void SpectatorGUI::addPlayersToList(int i) {
-    for (std::string &player : (*_games)[i].getPlayers()) {
+void SpectatorGUI::addPlayersToList(int game_index) {
+    for (std::string &player : (*_games)[game_index].getPlayers()) {
         //selectPlayerWindow->setCheckBox(new QCheckBox(QString::fromStdString(player)));
         QListWidgetItem *item = new QListWidgetItem(QString::fromStdString(player), list);
     }
