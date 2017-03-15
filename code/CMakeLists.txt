@@ -3,6 +3,10 @@ set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_AUTOMOC TRUE)
 file(GLOB code database.db)
 
+find_package(Qt5Widgets REQUIRED)
+find_package(Qt5Multimedia REQUIRED)
+find_package(Threads)
+
 set(CLIENT_FILES client/ClientLauncher.cpp
 
 
@@ -97,12 +101,6 @@ set(CLIENT_FILES client/ClientLauncher.cpp
 
 
 add_executable(client ${CLIENT_FILES})
-
-find_package(Qt5Widgets REQUIRED)
-find_package(Qt5Multimedia REQUIRED)
-
-
-find_package(Threads)
 
 set(SERVER_FILES "server/ServerLauncher.cpp"
 
