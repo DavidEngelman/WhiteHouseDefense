@@ -52,16 +52,12 @@ void WelcomeGUI::setTheme() {
     QPalette palette;
     QMediaPlayer *player = new QMediaPlayer(this);
 
-    File.setFileName("../../qt_ui/americanMain.qss");
-    File.open(QFile::ReadOnly);
-    styleSheet = QLatin1String(File.readAll());
-    this->setStyleSheet(styleSheet);
+    setStylesheetFromPath("../../qt_ui/americanMain.qss");
+
     this->setFixedHeight(600);
     this->setFixedWidth(750);
-    bkgnd = QPixmap("../../qt_ui/game_pictures/backgrounds/americanBg");
-    bkgnd = bkgnd.scaled(this->size(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
-    palette.setBrush(QPalette::Background, bkgnd);
-    this->setPalette(palette);
+
+    setBackgroundFromPath("../../qt_ui/game_pictures/backgrounds/americanBg");
 
     /* Permet de joueur des choses en boucle */
     QMediaPlaylist *playlist = new QMediaPlaylist();
@@ -71,8 +67,6 @@ void WelcomeGUI::setTheme() {
     player->setVolume(100);
     player->setPlaylist(playlist);
     player->play();
-
-
 }
 
 WelcomeGUI::~WelcomeGUI() {
