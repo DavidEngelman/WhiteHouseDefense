@@ -27,7 +27,7 @@ void SpectatorConsoleUI::displaySorryMessage() {
     spectatorManager->goToMainMenu();
 }
 
-int SpectatorConsoleUI::gameSelection(int number_of_games_available) {
+void SpectatorConsoleUI::gameSelection(int number_of_games_available) {
     int choice = -1;
     std::cout << "Enter the number of the game you want to spectate: ";
     std::cin >> choice;
@@ -39,10 +39,10 @@ int SpectatorConsoleUI::gameSelection(int number_of_games_available) {
         std::cin.ignore();
         std::cin >> choice;
     }
-    return choice -1;
+    spectatorManager->setGameSelected(choice -1);
 }
 
-std::string SpectatorConsoleUI::playerSelection(GameInfo& game_info) {
+void SpectatorConsoleUI::playerSelection(GameInfo& game_info) {
     std::string choice = "";
     std::cout << "Enter the username of the player you want to support: ";
     std::cin >> choice;
@@ -54,5 +54,13 @@ std::string SpectatorConsoleUI::playerSelection(GameInfo& game_info) {
         std::cin.ignore();
         std::cin >> choice;
     }
-    return choice;
+    spectatorManager->setPlayerSelected(choice);
+}
+
+void SpectatorConsoleUI::selectGameAndPlayer() {
+    display();
+    gameSelection((int) allGames.size());
+    playerSelection(allGames[spectatorManager->getGameSelected()]);
+    int gamePort = allGames[spectatorManager->getGameSelected()].getPort();
+    spectatorManager->connectToGame(gamePort, spectatorManager->getPlayerSelected());
 }

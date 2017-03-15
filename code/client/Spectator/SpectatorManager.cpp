@@ -29,15 +29,8 @@ void SpectatorManager::run() {
         spectatorUI->displaySorryMessage();
     } else {
         //Selection de la partie et du joueur a support
-        spectatorUI->display();
-        if (isConsole) {
-            int gameSelected = spectatorUI->gameSelection((int) allGames.size());
-            int gamePort = allGames[gameSelected].getPort();
-            std::string playerToSupport = spectatorUI->playerSelection(allGames[gameSelected]);
-            connectToGame(gamePort, playerToSupport);
-        }
-
-
+        //spectatorUI->display();
+        spectatorUI->selectGameAndPlayer();
     }
 }
 
@@ -115,5 +108,23 @@ SpectatorManager::~SpectatorManager() {
 void SpectatorManager::goToMainMenu() {
     MainManager * mainManager = new MainManager(ACCOUNT_SERVER_PORT, master_app);
     master_app->transition(mainManager);
+}
+
+void SpectatorManager::setGameSelected(int game_num) {
+    gameSelected = game_num;
+
+}
+
+void SpectatorManager::setPlayerSelected(std::string player_name) {
+    playerSelected = player_name;
+
+}
+
+int SpectatorManager::getGameSelected() {
+    return gameSelected;
+}
+
+std::string &SpectatorManager::getPlayerSelected() {
+    return playerSelected;
 }
 

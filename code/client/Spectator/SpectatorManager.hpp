@@ -21,6 +21,9 @@ private:
     std::vector<GameInfo> allGames;
     SpectatorUI *spectatorUI;
 
+    int gameSelected;
+    std::string playerSelected;
+
     void getGamesFromMatchMaker();
     void parse_message_from_server(const std::string& message);
 
@@ -36,6 +39,13 @@ public:
     ~SpectatorManager();
 
     void connectToGame(int&, std::string&);
+
+    void setGameSelected(int game_num);
+    void setPlayerSelected(std::string player_name);
+
+    int getGameSelected();
+
+    std::string &getPlayerSelected();
 };
 
 

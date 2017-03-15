@@ -11,12 +11,15 @@
 #include <QtWidgets/QTableWidget>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QMessageBox>
+#include <QtWidgets/QListWidget>
+#include <vector>
 
 class SpectatorGUI : public AbstractGUI, public SpectatorUI {
 Q_OBJECT
 
 private:
-    QMessageBox *selectPlayerWindow;
+    QWidget *selectPlayerWindow;
+    QListWidget* list;
     QVBoxLayout *layout;
     QTableWidget* gamesTable;
     QStringList header;
@@ -24,10 +27,15 @@ private:
 public slots:
     void goToMainMenu();
     void popUp(int i);
+    void onJoinClick();
+    void onPlayerSelection();
 
 
 public:
     SpectatorGUI(SpectatorManager *manager);
+
+    void selectGameAndPlayer() override;
+
     void display() override ;
     int gameSelection(int number_of_games_available) override ;
     void displaySorryMessage() override ;

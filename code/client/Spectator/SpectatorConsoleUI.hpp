@@ -14,10 +14,12 @@ class SpectatorConsoleUI : public AbstractConsoleUI, public SpectatorUI {
 public:
     SpectatorConsoleUI(SpectatorManager *spectatorManager);
 
+    void selectGameAndPlayer() override;
+
     void display() override ;
-    int gameSelection(int number_of_games_available) override ;
     void displaySorryMessage() override ;
-    std::string playerSelection(GameInfo &game_info) override ;
+    void gameSelection(int number_of_games_available) override ;
+    void playerSelection(GameInfo &game_info) override ;
 };
 
 

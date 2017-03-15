@@ -26,7 +26,7 @@ void RankingGUI::createTable() {
     setStyleSheet("QTableWidget {background-color: rgba(0, 0, 0, 0);}"
 
                           "QHeaderView::section {background-color: grey;"
-                          "color: white;"
+                          "color: rgba(244, 215, 66);"
                           "border: 10px solid grey;}"
                           "QPushButton {border: 2px solid darkbrown;"
                           "padding: 0 8px;"
@@ -82,13 +82,13 @@ void RankingGUI::fillRanking(std::vector<RankingInfos> &ranking) {
         QString victories = QString::fromStdString(std::to_string(elem.victories));
 
         QTableWidgetItem *rank_item = new QTableWidgetItem(rank);
-        rank_item->setForeground(QColor::fromRgb(255, 255, 255));
+        rank_item->setForeground(QColor::fromRgb(244, 215, 66));
 
         QTableWidgetItem *usr_item = new QTableWidgetItem(UsrName);
-        usr_item->setForeground(QColor::fromRgb(255, 255, 255));
+        usr_item->setForeground(QColor::fromRgb(244, 215, 66));
 
         QTableWidgetItem *victory_item = new QTableWidgetItem(victories);
-        victory_item->setForeground(QColor::fromRgb(255, 255, 255));
+        victory_item->setForeground(QColor::fromRgb(244, 215, 66));
 
         rankingTable->setItem(i,0,rank_item);
         rankingTable->setItem(i, 1, usr_item);

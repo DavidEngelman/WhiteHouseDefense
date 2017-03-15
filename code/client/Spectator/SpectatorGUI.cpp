@@ -6,12 +6,13 @@
 #include <QtWidgets/QCheckBox>
 #include <QtWidgets/QAction>
 #include <QtCore/QSignalMapper>
+#include <QtWidgets/QListWidgetItem>
 
 #define TABLE_WIDTH_SIZE 870
 
 
 SpectatorGUI::SpectatorGUI(SpectatorManager *manager) : SpectatorUI(manager), layout(new QVBoxLayout),
-                                                        selectPlayerWindow(new QMessageBox(this)) {}
+                                                        selectPlayerWindow(new QWidget()) {}
 
 
 
@@ -161,12 +162,38 @@ void SpectatorGUI::popUp(int i) {
 }
 
 void SpectatorGUI::setUpSelectPlayerWindow(int i) {
+    QVBoxLayout *layout = new QVBoxLayout(selectPlayerWindow);
+    QFont font("calibri",12);
     selectPlayerWindow->setWindowTitle("Player selection");
+    selectPlayerWindow->setFixedSize(200,200);
+    selectPlayerWindow->move(this->width()/2, this->height()/2);
+    selectPlayerWindow->setWindowModality(Qt::ApplicationModal);
+    list = new QListWidget(selectPlayerWindow);
+    list->setFont(font);
+
+    layout->addWidget(list);
     setUpCheckBox(i);
+
 }
 
 void SpectatorGUI::setUpCheckBox(int i) {
     for(std::string &player : allGames[i].getPlayers()) {
-        selectPlayerWindow->setCheckBox(new QCheckBox(QString::fromStdString(player)));
+        //selectPlayerWindow->setCheckBox(new QCheckBox(QString::fromStdString(player)));
+        QListWidgetItem* item = new QListWidgetItem(QString::fromStdString(player), list);
     }
+}
+
+void SpectatorGUI::selectGameAndPlayer() {
+    display();
+
+}
+
+void SpectatorGUI::onJoinClick() {
+    //TODO
+
+}
+
+void SpectatorGUI::onPlayerSelection() {
+    //TODO
+
 }
