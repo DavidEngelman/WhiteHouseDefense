@@ -3,39 +3,96 @@ set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_AUTOMOC TRUE)
 file(GLOB code database.db)
 
-set(CLIENT_FILES "client/NetworkedManager.cpp" "client/ClientLauncher.cpp" "client/Login/LoginManager.cpp" "client/Login/LoginConsoleUI.cpp"
-        "client/Register/RegisterManager.cpp" "client/Register/RegisterUI.cpp" "common/Networking.cpp" "common/Credentials.cpp"
-        client/Main/MainManager.cpp client/Main/MainUI.hpp common/Map.cpp client/Drawing.cpp client/Drawing.hpp "client/Ranking/RankingManager.cpp" "client/Ranking/RankingConsoleUI.cpp"
-        # "client/Game/GameLauncher.cpp"
-        #"client/FriendList/FriendListManager.cpp" "client/FriendList/FriendListUI.cpp"
-        common/AbstractTower.cpp
-        "client/Profile/ProfileConsoleUI.cpp" common/Position.cpp client/App.cpp client/App.hpp
-        client/Welcome/WelcomeManager.cpp client/Welcome/WelcomeUI.cpp client/Welcome/WelcomeGUI.cpp
-        #client/FriendList/FriendList.cpp
-        #client/Game/GameManager.cpp
-        "client/Profile/ProfileManager.cpp" "common/PNJ.cpp" client/Game/GameUI.cpp common/PlayerState.cpp
-        common/GameState.cpp common/Wave.cpp common/Constants.h common/AttackTower.cpp common/Tools.hpp
-        common/Tools.cpp
+set(CLIENT_FILES client/ClientLauncher.cpp
+
+
+        #ABSTRACT
+        client/Abstract/AbstractUI.hpp
+        client/Abstract/AbstractGUI.cpp
+        client/Abstract/AbstractConsoleUI.hpp
+        client/Abstract/AbstractManager.hpp
+
+        #MANAGER
+        client/NetworkedManager.cpp
+
+        #MAIN
+        client/Main/MainManager.cpp
+        client/Main/MainGUI.cpp
+        client/Main/MainConsoleUI.cpp
+        client/Main/MainUI.hpp
+
+        #WELCOME
+        client/Welcome/WelcomeManager.cpp
+        client/Welcome/WelcomeUI.cpp
+        client/Welcome/WelcomeGUI.cpp
+        client/Welcome/WelcomeGUI.cpp
+
+        #REGISTER
+        client/Register/RegisterGUI.cpp
+        client/Register/RegisterGUI.hpp
+        client/Register/RegisterManager.cpp
+        client/Register/RegisterUI.cpp
+
+        #LOGIN
+        client/Login/LoginGUI.cpp
+        client/Login/LoginUI.hpp
+        client/Login/LoginManager.cpp
+        client/Login/LoginConsoleUI.cpp
+
+        #PROFIL
+        client/Profile/ProfileConsoleUI.cpp
+        client/Profile/ProfileManager.cpp
+        client/Profile/ProfileGUI.cpp
+        client/Profile/ProfileUI.hpp
+
+        #RANKING
+        client/Ranking/RankingManager.cpp
+        client/Ranking/RankingConsoleUI.cpp
+        client/Ranking/RankingGUI.cpp
+        client/Ranking/RankingUI.h
+
+        #SUPPORTER
         client/Spectator/SpectatorGUI.cpp
         client/Spectator/SpectatorManager.cpp
-        client/Spectator/SpectatorConsoleUI.cpp client/Spectator/SpectatorUI.hpp
-        client/Game/GameInfo.cpp common/GunTower.cpp common/GunTower.hpp
-        common/SniperTower.cpp common/SniperTower.hpp
-        common/ShockTower.cpp common/ShockTower.hpp
-        client/Abstract/AbstractUI.hpp client/Abstract/AbstractGUI.cpp client/Abstract/AbstractGUI.hpp
-        # client/FriendList/FriendListGUI.cpp
-        # client/FriendList/FriendListGUI.hpp
-        # client/Game/GameGUI.cpp client/Game/GameGUI.hpp
-        client/Login/LoginGUI.cpp client/Login/LoginGUI.hpp
-        client/Main/MainGUI.cpp client/Main/MainGUI.hpp  client/Main/MainConsoleUI.cpp
-        client/Profile/ProfileGUI.cpp client/Profile/ProfileGUI.hpp
-        client/Ranking/RankingGUI.cpp client/Ranking/RankingGUI.hpp client/Register/RegisterGUI.cpp
-        client/Register/RegisterGUI.hpp
-        client/Welcome/WelcomeGUI.cpp client/Welcome/WelcomeGUI.hpp client/global.hpp client/global.cpp
-        client/Login/LoginUI.hpp client/Profile/ProfileUI.hpp
-        common/Message.cpp common/Message.hpp
+        client/Spectator/SpectatorConsoleUI.cpp
+        client/Spectator/SpectatorUI.hpp
+
+        #FRIENDLIST
+        #"client/FriendList/FriendListManager.cpp"
+        #"client/FriendList/FriendListUI.cpp"
+        #client/FriendList/FriendListGUI.cpp
+        #client/FriendList/FriendList.cpp
+
+        #GAME
+        common/Map.cpp
+        common/AttackTower.cpp
+        common/AbstractTower.cpp
+        common/GunTower.cpp
+        common/ShockTower.cpp
+        common/SniperTower.cpp
+        common/PNJ.cpp
+        common/GameState.cpp
+        common/Wave.cpp
+        client/Game/GameUI.cpp
+        common/PlayerState.cpp
+        #client/Game/GameLauncher.cpp
+        #client/Game/GameGUI.cpp
+        #client/Game/GameManager.cpp
+        common/Position.cpp
+
+        #OTHERS
+        client/Game/GameInfo.cpp
+        client/global.cpp
+        common/Message.cpp
         client/QCustomButton.cpp
-        client/Abstract/AbstractConsoleUI.hpp)
+        common/Networking.cpp
+        common/Credentials.cpp
+        client/Drawing.cpp
+        client/Drawing.hpp
+        client/App.cpp
+        common/Constants.h common/Tools.hpp
+        common/Tools.cpp
+        )
 
 
 add_executable(client ${CLIENT_FILES})
