@@ -103,13 +103,50 @@ find_package(Qt5Multimedia REQUIRED)
 
 find_package(Threads)
 
-set(SERVER_FILES "server/ServerLauncher.cpp" "common/Networking.cpp" "server/Server.cpp" "server/AccountServer.cpp" "server/Database.cpp"
-        "common/Credentials.cpp" "common/Account.cpp" "common/Command.cpp" "server/LoginRegisterCommand.cpp"
-        "server/MatchmakingCommand.cpp" "server/MatchMaker.cpp" "server/MatchMaker.cpp" "server/PendingMatch.cpp"
-        common/GameState.cpp "server/GameServer.cpp" "server/TowerCommand.cpp" "server/Timer.cpp"
-        "server/FriendListCommand.cpp" common/AbstractTower.cpp server/PlayerConnection.cpp common/PlayerState.cpp common/Wave.cpp
-        "common/PNJ.cpp" "common/Position.cpp" common/Map.cpp server/GameEngine.cpp server/GameEngine.hpp common/Constants.h common/Direction.h
-        common/AttackTower.cpp common/Tools.hpp common/Tools.cpp server/UpdateStatsCommand.cpp common/GunTower.cpp common/GunTower.hpp common/SniperTower.cpp common/SniperTower.hpp common/ShockTower.cpp common/ShockTower.hpp common/Message.cpp common/Message.hpp)
+set(SERVER_FILES "server/ServerLauncher.cpp"
+
+        server/Server.cpp
+
+        #GAME
+        server/GameServer.cpp
+        common/AbstractTower.cpp
+        common/AttackTower.cpp
+        common/GunTower.cpp
+        common/SniperTower.cpp
+        common/ShockTower.cpp
+        common/PlayerState.cpp
+        common/Wave.cpp
+        common/PNJ.cpp
+        common/Position.cpp
+        common/Map.cpp
+        server/GameEngine.cpp
+        common/Direction.h
+        common/GameState.cpp
+
+        #ACCOUNT
+        server/AccountServer.cpp
+        server/Database.cpp
+
+        #COMMANDS
+        common/Command.cpp
+        server/LoginRegisterCommand.cpp
+        server/MatchmakingCommand.cpp
+        server/TowerCommand.cpp
+        server/FriendListCommand.cpp
+        server/UpdateStatsCommand.cpp
+
+        #MATCHMAKING
+        server/MatchMaker.cpp
+        server/PendingMatch.cpp
+
+        #TOOLS
+        common/Constants.h
+        common/Tools.cpp
+        server/Timer.cpp
+        server/PlayerConnection.cpp
+        common/Networking.cpp
+        common/Credentials.cpp
+        common/Message.cpp)
 
 add_executable(server ${SERVER_FILES})
 
