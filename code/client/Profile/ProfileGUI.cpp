@@ -19,7 +19,7 @@ void ProfileGUI::display() {
     this->setFixedWidth(852);
 
     /* Set background */
-    setBackgroundFromPath("../../qt_ui/game_pictures/backgrounds/profile_bckgrd.jpeg");
+    setBackgroundFromPath("../../qt_ui/game_pictures/backgrounds/profile_bckgrd-2.png");
 
     QFont policeUsername("calibri", 24, QFont::Bold);
     QFont policeStandart("calibri", 12, QFont::Bold);
@@ -79,7 +79,7 @@ void ProfileGUI::display() {
     userNameLabel = new QLabel(this);
     userNameLabel->setText(*usernameT);
     userNameLabel->setFont(policeUsername);
-    userNameLabel->setStyleSheet("padding-top: 100;color : gold;");
+    userNameLabel->setStyleSheet("padding-top: 80;color : gold;");
 
     ///----------VICTORIES----------
 
@@ -89,13 +89,13 @@ void ProfileGUI::display() {
     victoriesLabel = new QLabel(this);
     victoriesLabel->setFont(policeStandart);
     victoriesLabel->setText(*victoriesT);
-    victoriesLabel->setStyleSheet("padding-left: 200;color : gold;");
+    victoriesLabel->setStyleSheet("padding-left: 0;color : gold;");
 
     QPixmap* victoryPic = new QPixmap("../../qt_ui/game_pictures/pictures/trophy2.png");
     QLabel *victoryPicLabel = new QLabel(this);
     victoryPicLabel->setFixedWidth(400);
     victoryPicLabel->setPixmap(*victoryPic);
-    victoryPicLabel->setStyleSheet("padding-left: 230;");
+    victoryPicLabel->setStyleSheet("padding-left: 130;");
 
 
     victoryLayout->addWidget(victoriesLabel);
@@ -112,14 +112,14 @@ void ProfileGUI::display() {
     NPCKilledLabel = new QLabel(this);
     NPCKilledLabel->setFont(policeStandart);
     NPCKilledLabel->setText(*NPCKilledT);
-    NPCKilledLabel->setStyleSheet("padding-right: 200;color : gold;");
+    NPCKilledLabel->setStyleSheet("padding-right: 0;color : gold;");
 
 
     QPixmap* mexicanPic = new QPixmap("../../qt_ui/game_pictures/pictures/mexican.gif");
     QLabel *mexicanPicLabel = new QLabel(this);
     mexicanPicLabel->setFixedWidth(400);
     mexicanPicLabel->setPixmap(*mexicanPic);
-    mexicanPicLabel->setStyleSheet("padding-left: 40;");
+    mexicanPicLabel->setStyleSheet("padding-left: 140;");
 
 
     NPCLayout->addWidget(NPCKilledLabel);
