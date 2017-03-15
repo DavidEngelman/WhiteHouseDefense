@@ -7,6 +7,10 @@
 MainGUI::MainGUI(MainManager *manager) : MainUI(manager) {}
 
 void MainGUI::display() {
+
+    this->setFixedHeight(600);
+    this->setFixedWidth(1000);
+
     QFile File("../../qt_ui/americanLogin.qss");
     File.open(QFile::ReadOnly);
     QString styleSheet = QLatin1String(File.readAll());
@@ -63,9 +67,9 @@ void MainGUI::display() {
     fieldsLayout->addRow(leaderBoard);
     fieldsLayout->addRow(exit);
     fields->setLayout(fieldsLayout);
-    fields->move(this->size().width() / 2 - 125, this->size().height() / 2 +105);
+    fields->move(this->size().width() / 2 - 125, this->size().height() / 2 -140);
 
-    this->showMaximized();
+    this->show();
 }
 
 void MainGUI::displayGameModesMenu() {
