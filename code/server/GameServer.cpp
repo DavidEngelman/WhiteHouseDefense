@@ -107,6 +107,7 @@ void GameServer::processClientCommands() {
         int client_index = getReadableReadableSocket(timeLeft);
         if (client_index < 0 || client_index > 4) return;
 
+        // TODO: this may be a bug source
         int client_socket_fd = client_sockets[client_index];
         get_and_process_command(client_socket_fd, message_buffer);
 
