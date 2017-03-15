@@ -47,7 +47,7 @@ public:
 
     std::string fromVectToString(std::vector<std::string> &players);
 
-    void setUpCheckBox(int i);
+    void addPlayersToList(int i);
 
     void setUpSelectPlayerWindow(int i);
 };

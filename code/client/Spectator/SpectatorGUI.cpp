@@ -157,10 +157,10 @@ void SpectatorGUI::setUpSelectPlayerWindow(int i) {
             SLOT(handlePlayerSelection(QListWidgetItem * )));
 
     layout->addWidget(list);
-    setUpCheckBox(i);
+    addPlayersToList(i);
 }
 
-void SpectatorGUI::setUpCheckBox(int i) {
+void SpectatorGUI::addPlayersToList(int i) {
     for (std::string &player : (*_games)[i].getPlayers()) {
         //selectPlayerWindow->setCheckBox(new QCheckBox(QString::fromStdString(player)));
         QListWidgetItem *item = new QListWidgetItem(QString::fromStdString(player), list);

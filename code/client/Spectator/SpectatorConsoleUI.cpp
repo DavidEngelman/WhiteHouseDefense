@@ -68,7 +68,7 @@ std::string SpectatorConsoleUI::askUserToSelectPlayer() {
 }
 
 void SpectatorConsoleUI::showPlayersForCurrentGame(){
-    std::cout << std::endl << "Here are the games being played at the moment: " << std::endl;
+    std::cout << std::endl << "Here are the players in the game: " << std::endl;
     int playerIndex = 1;
     for (std::string playerName : selectedGame->getPlayers()) {
         std::cout << "Player " << playerIndex << ": " << playerName << std::endl;
