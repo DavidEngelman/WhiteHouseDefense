@@ -54,7 +54,6 @@ void SpectatorGUI::fillTable() {
         playerNameTableItem->setForeground(QColor::fromRgb(244, 215, 66));
         playerNameTableItem->setTextAlignment(Qt::AlignCenter);
 
-
         /* Create join button */
         QWidget *buttonContainer = new QWidget();
         QPushButton *joinButton = new QPushButton(join_string);
@@ -64,9 +63,6 @@ void SpectatorGUI::fillTable() {
         buttonLayout->setAlignment(Qt::AlignCenter);
         buttonLayout->setContentsMargins(0, 0, 0, 0);
         buttonContainer->setLayout(buttonLayout);
-
-
-        //QObject::connect(join_item, SIGNAL(clicked()), this, SLOT(popUp()));
 
         /* Map button click to slot */
         QSignalMapper *signalMapper = new QSignalMapper(this);
@@ -162,7 +158,6 @@ void SpectatorGUI::setUpSelectPlayerWindow(int game_index) {
 
 void SpectatorGUI::addPlayersToList(int game_index) {
     for (std::string &player : (*_games)[game_index].getPlayers()) {
-        //selectPlayerWindow->setCheckBox(new QCheckBox(QString::fromStdString(player)));
         QListWidgetItem *item = new QListWidgetItem(QString::fromStdString(player), list);
     }
 }

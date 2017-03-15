@@ -78,7 +78,6 @@ int SpectatorManager::parseGameInfoAndAddToGames(const std::string &message, int
 
 
     i++;
-//"5557,classic,bibi,baba,bobo,bubu;5558,classic,lala,lili,lolo,lele;"
 
     gameInfo.setPort(stoi(str_port));
     gameInfo.setGameMode(str_mode);
