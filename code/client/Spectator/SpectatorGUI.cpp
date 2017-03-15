@@ -102,13 +102,7 @@ void SpectatorGUI::fillTable() {
 void SpectatorGUI::setUp() {
     this->setFixedHeight(600);
     this->setFixedWidth(1000);
-
-    QPixmap bkgnd("../../qt_ui/game_pictures/backgrounds/supporter_bg.png");
-    bkgnd = bkgnd.scaled(this->size(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
-    QPalette palette;
-    palette.setBrush(QPalette::Background, bkgnd);
-    this->setPalette(palette);
-
+    setBackgroundFromPath("../../qt_ui/game_pictures/backgrounds/supporter_bg.png");
 }
 
 void SpectatorGUI::createTable() {
