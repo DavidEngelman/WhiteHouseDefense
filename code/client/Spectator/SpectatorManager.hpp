@@ -31,7 +31,11 @@ public:
 
     int createGameInfo(const std::string& message, int& i);
 
+    void goToMainMenu();
+
     ~SpectatorManager();
+
+    void connectToGame(int&, std::string&);
 };
 
 

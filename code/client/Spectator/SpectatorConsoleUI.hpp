@@ -14,7 +14,7 @@ class SpectatorConsoleUI : public AbstractConsoleUI, public SpectatorUI {
 public:
     SpectatorConsoleUI(SpectatorManager *spectatorManager);
 
-    void display(std::vector<GameInfo>& gamesInfos) override ;
+    void display() override ;
     int gameSelection(int number_of_games_available) override ;
     void displaySorryMessage() override ;
     std::string playerSelection(GameInfo &game_info) override ;

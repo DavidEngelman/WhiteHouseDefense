@@ -4,11 +4,11 @@
 
 SpectatorConsoleUI::SpectatorConsoleUI(SpectatorManager *spectatorManager) : SpectatorUI(spectatorManager) {}
 
-void SpectatorConsoleUI::display(std::vector<GameInfo>& gamesInfos) {
+void SpectatorConsoleUI::display() {
     system("clear");
     std::cout << "Here are the games being played at the moment: " << std::endl;
     int i = 1;
-    for( GameInfo game : gamesInfos) {
+    for( GameInfo game : allGames) {
         std::cout << "Game " << i << ": ";
         game.print();
         i++;
@@ -23,6 +23,8 @@ void SpectatorConsoleUI::displaySorryMessage() {
     std::cin >> i;
     std::cin.clear();
     std::cin.ignore();
+
+    spectatorManager->goToMainMenu();
 }
 
 int SpectatorConsoleUI::gameSelection(int number_of_games_available) {

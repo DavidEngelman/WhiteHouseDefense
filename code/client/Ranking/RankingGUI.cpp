@@ -1,12 +1,10 @@
 
 
 #include "RankingGUI.hpp"
-#include <QDesktopWidget>
 #include <QHeaderView>
-#include <QtWidgets/QApplication>
 #include <QtWidgets/QGridLayout>
 #include <QtWidgets/QPushButton>
-#include <QtCore/QFile>
+
 
 #define TABLE_HEIGHT_SIZE 400
 #define TABLE_WIDTH_SIZE 870
@@ -32,9 +30,9 @@ void RankingGUI::createTable() {
                           "border: 10px solid grey;}"
                           "QPushButton {border: 2px solid darkbrown;"
                           "padding: 0 8px;"
-                          "background-image : url(../../qt_ui/game_pictures/buttons/mainmenu.png);"
+                          "border-image:url(../../qt_ui/game_pictures/buttons/gold_button_2.svg);"
                           "font-family: verdana 14px; }"
-                          "QPushButton:pressed {background-image : url(../../qt_ui/game_pictures/buttons/connectPressed.png);,}"
+                          "QPushButton:pressed {background-image : url(../../qt_ui/game_pictures/buttons/connectPressed.png);}"
 
     );
 

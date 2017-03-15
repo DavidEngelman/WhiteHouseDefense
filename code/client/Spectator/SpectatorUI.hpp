@@ -15,14 +15,17 @@ class SpectatorUI: public virtual AbstractUI {
 
 protected:
     SpectatorManager *spectatorManager;
-
+    std::vector<GameInfo> allGames;
 
 public:
     SpectatorUI(SpectatorManager *spectatorManager) : spectatorManager(spectatorManager) {};
-    virtual void display(std::vector<GameInfo>& gamesInfos) = 0;
+    virtual void display() = 0;
     virtual void displaySorryMessage() = 0;
     virtual std::string playerSelection(GameInfo &game_info) = 0;
     virtual int gameSelection(int number_of_games_available) = 0;
+    void addGame(GameInfo &game) {
+        SpectatorUI::allGames.push_back(game);
+    }
 
     virtual ~SpectatorUI() = default;
 
