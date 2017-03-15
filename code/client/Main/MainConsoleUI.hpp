@@ -9,7 +9,6 @@
 class MainConsoleUI : public AbstractConsoleUI, public MainUI {
 public:
     MainConsoleUI(MainManager *manager);
-    virtual ~MainConsoleUI() = default;
 
     void display() override;
     void displayGameModesMenu() override;

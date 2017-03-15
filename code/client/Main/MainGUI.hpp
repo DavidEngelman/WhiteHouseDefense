@@ -16,7 +16,6 @@ private:
     QCustomButton *profile;
     QCustomButton *friendList;
     QCustomButton *leaderBoard;
-    QCustomButton *exit;
     QCustomButton *classicMode;
     QCustomButton *timedMode;
     QCustomButton *teamMode;

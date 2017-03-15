@@ -4,6 +4,7 @@
 #include <QtMultimedia/QMediaPlayer>
 #include <QtWidgets/QDialogButtonBox>
 
+
 MainGUI::MainGUI(MainManager *manager) : MainUI(manager) {}
 
 void MainGUI::display() {
@@ -50,22 +51,17 @@ void MainGUI::display() {
     leaderBoard = new QCustomButton(5, s5,fields);
     leaderBoard->setFixedSize(QSize(212,45));
 
-    exit = new QCustomButton(6, s6,fields);
-    exit->setFixedSize(QSize(212,45));
-
     QObject::connect(newGame, SIGNAL(clicked(int)), this, SLOT(handleMenuChoice(int)));
     QObject::connect(spectator, SIGNAL(clicked(int)), this, SLOT(handleMenuChoice(int)));
     QObject::connect(profile, SIGNAL(clicked(int)), this, SLOT(handleMenuChoice(int)));
     QObject::connect(friendList, SIGNAL(clicked(int)), this, SLOT(handleMenuChoice(int)));
     QObject::connect(leaderBoard, SIGNAL(clicked(int)), this, SLOT(handleMenuChoice(int)));
-    QObject::connect(exit, SIGNAL(clicked(int)), this, SLOT(handleMenuChoice(int)));
 
     fieldsLayout->addRow(newGame);
     fieldsLayout->addRow(spectator);
     fieldsLayout->addRow(profile);
     fieldsLayout->addRow(friendList);
     fieldsLayout->addRow(leaderBoard);
-    fieldsLayout->addRow(exit);
     fields->setLayout(fieldsLayout);
     fields->move(this->size().width() / 2 - 125, this->size().height() / 2 -140);
 

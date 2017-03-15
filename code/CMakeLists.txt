@@ -34,6 +34,7 @@ set(CLIENT_FILES "client/NetworkedManager.cpp" "client/ClientLauncher.cpp" "clie
         client/Welcome/WelcomeGUI.cpp client/Welcome/WelcomeGUI.hpp client/global.hpp client/global.cpp
         client/Login/LoginUI.hpp client/Profile/ProfileUI.hpp
         common/Message.cpp common/Message.hpp
+        client/QCustomButton.cpp
         client/Abstract/AbstractConsoleUI.hpp)
 
 
