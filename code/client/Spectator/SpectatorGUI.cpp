@@ -61,10 +61,10 @@ void SpectatorGUI::fillTable() {
         QString playersNames = QString::fromStdString(fromVectToString(elem.getPlayers()));
 
         QTableWidgetItem *mode_item = new QTableWidgetItem(mode);
-        mode_item->setForeground(QColor::fromRgb(255, 255, 255));
+        mode_item->setForeground(QColor::fromRgb(244, 215, 66));
 
         QTableWidgetItem *playersName_item = new QTableWidgetItem(playersNames);
-        playersName_item->setForeground(QColor::fromRgb(255, 255, 255));
+        playersName_item->setForeground(QColor::fromRgb(244, 215, 66));
         playersName_item->setTextAlignment(Qt::AlignCenter);
 
 
@@ -99,7 +99,7 @@ void SpectatorGUI::setUp() {
     this->setFixedHeight(600);
     this->setFixedWidth(1000);
 
-    QPixmap bkgnd("../../qt_ui/game_pictures/backgrounds/trump_background.png");
+    QPixmap bkgnd("../../qt_ui/game_pictures/backgrounds/supporter_bg.png");
     bkgnd = bkgnd.scaled(this->size(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
     QPalette palette;
     palette.setBrush(QPalette::Background, bkgnd);
