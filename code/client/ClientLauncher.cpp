@@ -23,6 +23,7 @@ int main(int argc, char *argv[]) {
         }
     }
 
+
     /*if (!isConsole) { // Pour tester Qt
         QApplication application(argc, argv);
 

@@ -25,9 +25,9 @@ private:
     QStringList header;
 
 public slots:
-    void goToMainMenu();
-    void gameSelection(int game_index) override ;
-    void playerSelection_onClick(QListWidgetItem* item);
+    void goToMainMenu() { SpectatorUI::goToMainMenu(); };
+    void selectPlayerForGame(int gameIndex) override;
+    void handlePlayerSelection(QListWidgetItem *item);
 
 
 
@@ -35,26 +35,21 @@ public:
 
     SpectatorGUI(SpectatorManager *manager);
 
-    void selectGameAndPlayerProcess() override;
+    void getGameAndPlayer() override;
 
-    void display() override ;
     void displaySorryMessage() override ;
+
+
     void fillTable();
     void setUp();
     void setStyle();
     void createTable();
-    void popUp(int i);
-
 
     std::string fromVectToString(std::vector<std::string> &players);
 
     void setUpCheckBox(int i);
 
     void setUpSelectPlayerWindow(int i);
-
-    void playerSelection(std::string player_name) override;
-
-    void launchSupporterMode();
 };
 
 

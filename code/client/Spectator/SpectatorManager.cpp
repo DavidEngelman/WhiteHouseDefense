@@ -5,7 +5,6 @@
 
 SpectatorManager::SpectatorManager(int port, App *master_app) :
         NetworkedManager(port, master_app) {
-
     if (!isConsole) {
         spectatorUI = new SpectatorGUI(this);
     } else {
@@ -13,29 +12,23 @@ SpectatorManager::SpectatorManager(int port, App *master_app) :
     }
 }
 
+void SpectatorManager::run() {
+    getGamesFromMatchMaker();
+    spectatorUI->displayAndSelectGameAndPlayer(&allGames); // Will call connectToGame once done
+}
+
 void SpectatorManager::getGamesFromMatchMaker() {
     char buffer[5000];
     send_message(server_socket, "games;");
     receive_message(server_socket, buffer); //receive all the games in progress
 
-    //TODO REMPLACER CA PAR parse_message_from_server(buffer);
+    // TODO: REMPLACER CA PAR parse_message_from_server(buffer);
     parse_message_from_server("5557,classic,bibi,baba,bobo,bubu;5558,classic,lala,lili,lolo,lele;");
-
 }
 
-void SpectatorManager::run() {
-    getGamesFromMatchMaker();
-    //Selection de la partie et du joueur a support
-    spectatorUI->selectGameAndPlayerProcess();
-
-}
-
-void SpectatorManager::connectToGame(int &gamePort, std::string &playerToSupport) {
-
-    std::cout << "ca marche" << std::endl;
-
+void SpectatorManager::connectToGame(GameInfo &game, std::string &playerToSupport) {
     /* On dit au gameServer qu'on veut etre spectateur */
-    int game_server_socket_fd = init_connection_to_server(master_app->get_ip(), gamePort);
+    int game_server_socket_fd = init_connection_to_server(master_app->get_ip(), game.getPort());
 
     // Structure of command: "SUPPORT_PLAYER_STRING,bob;"
     std::string message = SUPPORT_PLAYER_STRING + ","
@@ -45,18 +38,16 @@ void SpectatorManager::connectToGame(int &gamePort, std::string &playerToSupport
     // Puis on lance le GameManager
     // GameManager *gameManager = new GameManager(game_server_socket_fd, true, master_app);
     //master_app->transition(gameManager);
-
-
 }
 
 void SpectatorManager::parse_message_from_server(const std::string &message) {
-    int i = 0;
-    while (i < message.size()) {
-        i = createGameInfo(message, i);
+    int messageIndex = 0;
+    while (messageIndex < message.size()) {
+        messageIndex = parseGameInfoAndAddToGames(message, messageIndex);
     }
 }
 
-int SpectatorManager::createGameInfo(const std::string &message, int &i) {
+int SpectatorManager::parseGameInfoAndAddToGames(const std::string &message, int &i) {
     std::string str_port, str_mode, str_player;
     GameInfo gameInfo;
 
@@ -94,9 +85,6 @@ int SpectatorManager::createGameInfo(const std::string &message, int &i) {
     //gameInfo.players = str_players;
 
     allGames.push_back(gameInfo);
-
-    spectatorUI->addGame(gameInfo);
-
     return i;
 }
 
@@ -105,24 +93,6 @@ SpectatorManager::~SpectatorManager() {
 }
 
 void SpectatorManager::goToMainMenu() {
-    MainManager * mainManager = new MainManager(ACCOUNT_SERVER_PORT, master_app);
+    MainManager *mainManager = new MainManager(ACCOUNT_SERVER_PORT, master_app);
     master_app->transition(mainManager);
 }
-
-void SpectatorManager::setGameSelected(int game_num) {
-    gameSelected = game_num;
-
-}
-
-void SpectatorManager::setPlayerSelected(std::string player_name) {
-    playerSelected = player_name;
-}
-
-int SpectatorManager::getGameSelected() {
-    return gameSelected;
-}
-
-std::string &SpectatorManager::getPlayerSelected() {
-    return playerSelected;
-}
-

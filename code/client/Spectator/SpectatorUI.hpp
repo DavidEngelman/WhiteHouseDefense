@@ -1,6 +1,3 @@
-//
-//
-
 #ifndef PROJET_SPECTATORUI_H
 #define PROJET_SPECTATORUI_H
 
@@ -11,26 +8,42 @@
 
 class SpectatorManager;
 
-class SpectatorUI: public virtual AbstractUI {
+/*
+ * The sequences of calls will be:
+ * 1) selectGameAndPlayer(), which calls getGameAndPlayer(). If there's no game, it calls displaySorryMessage()
+ *                                                           and asks the manager to return to the main menu.
+ * 2) selectPlayerForGame(int gameIndex)
+ * 3) handlePlayerSelection(std::string playerName)
+ *
+ * This last function will call manager->connectToGame(gameInfo, selectedPlayer);
+ */
+
+class SpectatorUI : public virtual AbstractUI {
 
 protected:
     SpectatorManager *spectatorManager;
-    std::vector<GameInfo> allGames;
+    std::vector<GameInfo> *_games;
+    GameInfo *selectedGame;
+    std::string selectedPlayer;
+
 
 public:
-    SpectatorUI(SpectatorManager *spectatorManager) : spectatorManager(spectatorManager) {};
-    virtual void selectGameAndPlayerProcess() = 0;
-    virtual void display() = 0;
+    SpectatorUI(SpectatorManager *spectatorManager) : spectatorManager(spectatorManager), selectedGame(nullptr) {};
+
+    virtual void displayAndSelectGameAndPlayer(std::vector<GameInfo> *games);
+
+    virtual void goToMainMenu();
+
+    virtual void getGameAndPlayer() = 0;
+
     virtual void displaySorryMessage() = 0;
-    virtual void playerSelection(std::string player_name) = 0;
-    virtual void gameSelection(int game_index) = 0;
-    void addGame(GameInfo &game) {
-        SpectatorUI::allGames.push_back(game);
-    }
+
+    virtual void selectPlayerForGame(int gameIndex) = 0;
+
+    virtual void handlePlayerSelection(std::string &playerName);
 
     virtual ~SpectatorUI() = default;
-
-
 };
+
 
 #endif //PROJET_SPECTATORUI_H

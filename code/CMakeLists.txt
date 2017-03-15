@@ -56,6 +56,7 @@ set(CLIENT_FILES client/ClientLauncher.cpp
         client/Spectator/SpectatorManager.cpp
         client/Spectator/SpectatorConsoleUI.cpp
         client/Spectator/SpectatorUI.hpp
+        client/Spectator/SpectatorUI.cpp
 
         #FRIENDLIST
         #"client/FriendList/FriendListManager.cpp"

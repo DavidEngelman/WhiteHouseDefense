@@ -4,14 +4,31 @@
 
 SpectatorConsoleUI::SpectatorConsoleUI(SpectatorManager *spectatorManager) : SpectatorUI(spectatorManager) {}
 
-void SpectatorConsoleUI::display() {
+void SpectatorConsoleUI::getGameAndPlayer() {
+    int choice = -1;
+    displayCurrentGames();
+    std::cout << "Enter the number of the game you want to spectate: ";
+    std::cin >> choice;
+    while (std::cin.fail() || (choice < 1 || choice > (*_games).size())) {
+        displayCurrentGames();
+        std::cout << "Error, enter a integer between 1 and " << (*_games).size() << std::endl;
+        std::cout << "Enter the number of the game you want to spectate: ";
+
+        std::cin.clear();
+        std::cin.ignore();
+        std::cin >> choice;
+    }
+    selectPlayerForGame(choice - 1);
+}
+
+void SpectatorConsoleUI::displayCurrentGames() {
     system("clear");
     std::cout << "Here are the games being played at the moment: " << std::endl;
-    int i = 1;
-    for( GameInfo game : allGames) {
-        std::cout << "Game " << i << ": ";
+    int gameIndex = 1;
+    for (GameInfo game : *_games) {
+        std::cout << "Game " << gameIndex << ": ";
         game.print();
-        i++;
+        gameIndex++;
     }
 }
 
@@ -23,61 +40,39 @@ void SpectatorConsoleUI::displaySorryMessage() {
     std::cin >> i;
     std::cin.clear();
     std::cin.ignore();
-
-    spectatorManager->goToMainMenu();
 }
 
-void SpectatorConsoleUI::gameSelection_input() {
-    int choice = -1;
-    std::cout << "Enter the number of the game you want to spectate: ";
-    std::cin >> choice;
-    while(std::cin.fail() || (choice < 1 || choice > allGames.size()) ){
-        std::cout << "Error, enter a integer between 1 and "<< allGames.size() << std::endl;
-        std::cout <<"Enter the number of the game you want to spectate: ";
 
-        std::cin.clear();
-        std::cin.ignore();
-        std::cin >> choice;
-    }
-    gameSelection(choice - 1);
+
+void SpectatorConsoleUI::selectPlayerForGame(int gameIndex) {
+    selectedGame = &((*_games)[gameIndex]);
+    std::string playerName = askUserToSelectPlayer();
+    handlePlayerSelection(playerName);
 }
 
-void SpectatorConsoleUI::gameSelection(int game_index){
-    spectatorManager->setGameSelected(game_index);
-}
-
-void SpectatorConsoleUI::playerSelection_input(GameInfo& game_info) {
-    std::string choice = "";
+std::string SpectatorConsoleUI::askUserToSelectPlayer() {
+    std::string playerNameUserInput = "";
+    showPlayersForCurrentGame();
     std::cout << "Enter the username of the player you want to support: ";
-    std::cin >> choice;
-    while(std::cin.fail() || !(game_info.isInPlayers(choice))) {
+    std::cin >> playerNameUserInput;
+    while (std::cin.fail() || !(selectedGame->isInPlayers(playerNameUserInput))) {
+        showPlayersForCurrentGame();
         std::cout << "Error, username incorrect " << std::endl;
         std::cout << "Enter the username of the player you want to support: ";
 
         std::cin.clear();
         std::cin.ignore();
-        std::cin >> choice;
+        std::cin >> playerNameUserInput;
     }
-    playerSelection(choice);
+    return playerNameUserInput;
 }
 
-void SpectatorConsoleUI::playerSelection(std::string player_name) {
-    spectatorManager->setPlayerSelected(player_name);
-}
-
-void SpectatorConsoleUI::selectGameAndPlayerProcess() {
-
-    if (allGames.size() == 0){
-        displaySorryMessage();
-    } else{
-        display();
-        gameSelection_input();
-        playerSelection_input(allGames[spectatorManager->getGameSelected()]);
-        int gamePort = allGames[spectatorManager->getGameSelected()].getPort();
-        spectatorManager->connectToGame(gamePort, spectatorManager->getPlayerSelected());
+void SpectatorConsoleUI::showPlayersForCurrentGame(){
+    std::cout << std::endl << "Here are the games being played at the moment: " << std::endl;
+    int playerIndex = 1;
+    for (std::string playerName : selectedGame->getPlayers()) {
+        std::cout << "Player " << playerIndex << ": " << playerName << std::endl;
+        playerIndex++;
     }
-
-
 }
-
 

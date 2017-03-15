@@ -1,6 +1,3 @@
-//
-//
-
 #ifndef PROJET_SPECTATORMANAGER_HPP
 #define PROJET_SPECTATORMANAGER_HPP
 
@@ -15,37 +12,28 @@
 
 class SpectatorUI;
 
-class SpectatorManager : public NetworkedManager{
+class SpectatorManager : public NetworkedManager {
 private:
 
     std::vector<GameInfo> allGames;
     SpectatorUI *spectatorUI;
 
-    int gameSelected;
-    std::string playerSelected;
-
     void getGamesFromMatchMaker();
-    void parse_message_from_server(const std::string& message);
+
+    void parse_message_from_server(const std::string &message);
 
 public:
-    SpectatorManager(int port, App* master_app);
-
-    void run() override ;
-
-    int createGameInfo(const std::string& message, int& i);
-
-    void goToMainMenu();
+    SpectatorManager(int port, App *master_app);
 
     ~SpectatorManager();
 
-    void connectToGame(int&, std::string&);
+    void run() override;
 
-    void setGameSelected(int game_num);
-    void setPlayerSelected(std::string player_name);
+    void goToMainMenu();
 
-    int getGameSelected();
+    void connectToGame(GameInfo &, std::string &);
 
-    std::string &getPlayerSelected();
+    int parseGameInfoAndAddToGames(const std::string &message, int &i);
 };
 
 
