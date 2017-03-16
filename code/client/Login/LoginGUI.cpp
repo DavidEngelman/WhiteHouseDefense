@@ -5,6 +5,7 @@
 #include <QtWidgets/QMessageBox>
 #include <QtCore/QFileInfo>
 #include "LoginGUI.hpp"
+#include "../QHandPointerButton.hpp"
 
 void LoginGUI::loginUser() {
     username = usernameL->text().toStdString();
@@ -32,38 +33,29 @@ void LoginGUI::display() {
     passwordL = new QLineEdit(fields);
     passwordL->setEchoMode(QLineEdit::Password); // Display bullets instead of char
 
-    QString s1 = "USERNAME";
-    QString s2 = "PASSWORD";
-    QString s3 = "LOGIN";
-    QString s4 = "CANCEL";
+    QLabel *usernameLabel = new QLabel(fields);
+    usernameLabel->setText("USERNAME");
+    usernameLabel->setFont(police);
 
-    QLabel *l1 = new QLabel(fields);
-    l1->setText(s1);
-    l1->setFont(police);
+    QLabel *passwordLabel = new QLabel(fields);
+    passwordLabel->setText("PASSWORD");
+    passwordLabel->setFont(police);
 
-    QLabel *l2 = new QLabel(fields);
-    l2->setText(s2);
-    l2->setFont(police);
-
-    connect = new QPushButton(s3,fields);
-    connect->setFixedSize(QSize(212,45));
-    connect->setCursor(Qt::PointingHandCursor);
-
-
-    cancel = new QPushButton(s4,fields);
-    cancel->setFixedSize(QSize(212,45));
-    cancel->setCursor(Qt::PointingHandCursor);
+    connect = new QHandPointerButton("LOGIN", 212, 45, fields);
+    cancel = new QHandPointerButton("CANCEL", 212, 45, fields);
 
 
     QObject::connect(usernameL, SIGNAL(returnPressed()), passwordL, SLOT(setFocus()));
-    QObject::connect(passwordL, SIGNAL(returnPressed()), this, SLOT(loginUser()));
+    QObject::connect(passwordL, SIGNAL(returnPressed()), connect, SIGNAL(clicked()));
     QObject::connect(connect, SIGNAL(clicked()), this, SLOT(loginUser()));
     QObject::connect(cancel, SIGNAL(clicked()), this, SLOT(cancelLogin()));
 
-    fieldsLayout->addRow(l1, usernameL);
-    fieldsLayout->addRow(l2, passwordL);
+    fieldsLayout->addRow(usernameLabel, usernameL);
+    fieldsLayout->addRow(passwordLabel, passwordL);
     fieldsLayout->addRow(connect);
     fieldsLayout->addRow(cancel);
+    fieldsLayout->setAlignment(connect, Qt::AlignCenter);
+    fieldsLayout->setAlignment(cancel, Qt::AlignCenter);
     fields->setLayout(fieldsLayout);
     fields->move(this->size().width() / 2 - 125, this->size().height() / 2 +105);
 

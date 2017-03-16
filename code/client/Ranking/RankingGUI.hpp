@@ -33,8 +33,6 @@ public:
     void setUp();
     void fillRanking(std::vector<RankingInfos>& ranking);
     void display(std::vector<RankingInfos>& ranking) override ;
-
-
     void createTable();
 };
 

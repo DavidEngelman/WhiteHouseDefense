@@ -97,7 +97,7 @@ set(CLIENT_FILES client/ClientLauncher.cpp
         client/App.cpp
         common/Constants.h common/Tools.hpp
         common/Tools.cpp
-        )
+        client/QHandPointerButton.hpp)
 
 
 add_executable(client ${CLIENT_FILES})

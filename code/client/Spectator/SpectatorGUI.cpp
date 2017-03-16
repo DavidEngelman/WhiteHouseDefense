@@ -1,6 +1,7 @@
 
 
 #include "SpectatorGUI.hpp"
+#include "../QHandPointerButton.hpp"
 #include <QHeaderView>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QCheckBox>
@@ -20,9 +21,7 @@ void SpectatorGUI::getGameAndPlayer() {
     fillTable();
 
     /* Button to go back to Main Menu */
-    QString s1 = "BACK TO MENU";
-    QPushButton *backToMenuButton = new QPushButton(s1);
-    backToMenuButton->setFixedSize(QSize(212, 45));
+    QPushButton *backToMenuButton = new QHandPointerButton("BACK TO MENU", 212, 45);
     QObject::connect(backToMenuButton, SIGNAL(clicked()), this, SLOT(goToMainMenu()));
     layout->addWidget(backToMenuButton);
     layout->setAlignment(backToMenuButton, Qt::AlignHCenter);
@@ -56,7 +55,7 @@ void SpectatorGUI::fillTable() {
 
         /* Create join button */
         QWidget *buttonContainer = new QWidget();
-        QPushButton *joinButton = new QPushButton(join_string);
+        QPushButton *joinButton = new QHandPointerButton(join_string);
         joinButton->setFixedSize(QSize(75, 35));
         QHBoxLayout *buttonLayout = new QHBoxLayout(buttonContainer);
         buttonLayout->addWidget(joinButton);

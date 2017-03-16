@@ -11,5 +11,6 @@ void QCustomButton::clickedInt() {
 
 QCustomButton::QCustomButton(int number, QString text, QWidget *parent) : QPushButton(parent), myNumber(number) {
     setText(text);
+    setCursor(Qt::PointingHandCursor);
     QObject::connect(this, SIGNAL(clicked()), this, SLOT(clickedInt()));
 }

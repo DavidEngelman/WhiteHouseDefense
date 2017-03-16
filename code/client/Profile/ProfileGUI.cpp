@@ -3,6 +3,7 @@
 #include <QtWidgets/QFormLayout>
 #include <QtWidgets/QMessageBox>
 #include "ProfileGUI.hpp"
+#include "../QHandPointerButton.hpp"
 
 ProfileGUI::ProfileGUI(ProfileManager *manager) : ProfileUI(manager), usernameT(new QString("No Username")), victoriesT(new QString),
 NPCKilledT(new QString) {}
@@ -35,10 +36,7 @@ void ProfileGUI::display() {
 
     ///----------HOME_BUTTON----------
 
-    homeButton = new QPushButton("HOME", this);
-    homeButton->setFixedSize(QSize(70, 35));
-    homeButton->setCursor(Qt::PointingHandCursor);
-
+    homeButton = new QHandPointerButton("HOME", 70, 35, this);
     homeButton->setStyleSheet("border-image:url(../../qt_ui/game_pictures/buttons/gold_button_2.svg);");
     QObject::connect(homeButton, SIGNAL(clicked()), this, SLOT(goToMain()));
 
@@ -56,8 +54,7 @@ void ProfileGUI::display() {
     QString usernameString = "Username";
     QString searchButtonString = "SEARCH";
 
-    searchButton = new QPushButton(searchButtonString, this);
-    searchButton->setFixedSize(QSize(130, 35));
+    searchButton = new QHandPointerButton(searchButtonString, 130, 35, this);
     searchButton->setStyleSheet("border-image:url(../../qt_ui/game_pictures/buttons/gold_button_2.svg);");
 
     QObject::connect(searchButton, SIGNAL(clicked()), this, SLOT(showUser()));

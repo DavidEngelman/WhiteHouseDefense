@@ -65,8 +65,8 @@ void MainManager::handleGameModeChoice() {
         std::string gameMode = gameModes[choice];
 
         //TODO: REMETTRE CA QUAND ON AURA BIEN FAIT GAMEMANAGER
-        //GameLauncher *game = new GameLauncher(MATCHMAKER_SERVER_PORT, master_app, gameMode);
-        //master_app->transition(game);
+//        GameLauncher *game = new GameLauncher(MATCHMAKER_SERVER_PORT, master_app, gameMode);
+//        master_app->transition(game);
     } else { /* Retour au menu principal */
         // TODO: close previous window
         run();

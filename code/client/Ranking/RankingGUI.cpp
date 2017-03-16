@@ -1,6 +1,7 @@
 
 
 #include "RankingGUI.hpp"
+#include "../QHandPointerButton.hpp"
 #include <QHeaderView>
 #include <QtWidgets/QGridLayout>
 #include <QtWidgets/QPushButton>
@@ -58,14 +59,10 @@ void RankingGUI::createTable() {
 
     layout->addWidget(rankingTable);
 
-    QString s1 = "BACK TO MENU";
-    QPushButton *backToMenuButton = new QPushButton(s1);
-    backToMenuButton->setFixedSize(QSize(212,45));
-
+    QPushButton *backToMenuButton = new QHandPointerButton("BACK TO MENU", 212, 45);
     QObject::connect(backToMenuButton, SIGNAL(clicked()), this, SLOT(goToMainMenu()));
 
     layout->addWidget(backToMenuButton);
-
     layout->setAlignment(backToMenuButton, Qt::AlignHCenter);
 
     this->setLayout(layout);

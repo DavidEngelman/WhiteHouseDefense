@@ -4,6 +4,7 @@
 #include <QtMultimedia/QMediaPlaylist>
 #include "WelcomeGUI.hpp"
 #include "WelcomeManager.hpp"
+#include "../QHandPointerButton.hpp"
 
 
 void WelcomeGUI::display() {
@@ -12,20 +13,15 @@ void WelcomeGUI::display() {
     QFrame * fields = new QFrame(this);
     fieldsLayout = new QFormLayout;
 
-    loginButton = new QPushButton("LOGIN", fields);
-    loginButton->setFixedSize(QSize(212,45));
-    loginButton->setCursor(Qt::PointingHandCursor);
-    connect(loginButton, SIGNAL (released()), this, SLOT (openLogin()));
+    loginButton = new QHandPointerButton("LOGIN", 212, 45, fields);
+    connect(loginButton, SIGNAL (clicked()), this, SLOT (openLogin()));
 
-    registerButton = new QPushButton("REGISTER", fields);
-    registerButton->setFixedSize(QSize(212,45));
-    registerButton->setCursor(Qt::PointingHandCursor);
-    connect(registerButton, SIGNAL (released()), this, SLOT (openRegister()));
+    registerButton = new QHandPointerButton("REGISTER", 212, 45, fields);
+    connect(registerButton, SIGNAL (clicked()), this, SLOT (openRegister()));
 
-    quitButton = new QPushButton("QUIT", fields);
-    quitButton->setFixedSize(QSize(212,45));
-    quitButton->setCursor(Qt::PointingHandCursor);
+    quitButton = new QHandPointerButton("QUIT", 212, 45, fields);
     connect(quitButton, SIGNAL(clicked()), this, SLOT(close()));
+    
 
     fieldsLayout->addRow(loginButton);
     fieldsLayout->addRow(registerButton);
