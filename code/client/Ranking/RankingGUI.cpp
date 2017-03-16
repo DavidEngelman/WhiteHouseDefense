@@ -80,12 +80,15 @@ void RankingGUI::fillRanking(std::vector<RankingInfos> &ranking) {
 
         QTableWidgetItem *rank_item = new QTableWidgetItem(rank);
         rank_item->setForeground(QColor::fromRgb(244, 215, 66));
+        rank_item->setTextAlignment(Qt::AlignCenter);
 
         QTableWidgetItem *usr_item = new QTableWidgetItem(UsrName);
+        usr_item->setTextAlignment(Qt::AlignLeft);
         usr_item->setForeground(QColor::fromRgb(244, 215, 66));
 
         QTableWidgetItem *victory_item = new QTableWidgetItem(victories);
         victory_item->setForeground(QColor::fromRgb(244, 215, 66));
+        victory_item->setTextAlignment(Qt::AlignCenter);
 
         rankingTable->setItem(i,0,rank_item);
         rankingTable->setItem(i, 1, usr_item);
