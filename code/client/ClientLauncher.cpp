@@ -40,9 +40,14 @@ int main(int argc, char *argv[]) {
         std::cout << argv[1] << std::endl;
         return application.exec();
 
+    } else {
+        // TODO: enlever ca quand on en a plus besoin. Pour l'instant c'est ici parce que certains managers
+        // (comme le WelomeManager) créent de QWidgets meme en mode console.
+        QApplication application(argc, argv);
+        App app(argv[1]);
     }
 
-//    App app(argv[1]);
+//
 
 
     return 0;
