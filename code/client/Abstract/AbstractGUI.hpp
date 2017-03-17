@@ -9,7 +9,7 @@
 
 class AbstractGUI : public QWidget, public virtual AbstractUI {
 
-private:
+protected:
 
     QWidget* parent;
 

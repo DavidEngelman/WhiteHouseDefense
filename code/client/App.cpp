@@ -8,7 +8,7 @@ App::App(char* server_ip_addr) : server_ip_address(server_ip_addr),
      if(!isConsole){
         main_window = new QWidget();
         main_window->setFixedSize(750,600);
-        main_window->show();
+
      }
     current_manager = new WelcomeManager(this);
     current_manager->run();
