@@ -11,7 +11,7 @@
 class GameGUI : public AbstractGUI, public GameUI {
 
 public:
-    GameGUI(unsigned seed, GameManager *manager);
+    GameGUI(unsigned seed, GameManager *manager, QWidget* _parent);
     Position getPosBuyingTower() override ;
 
 

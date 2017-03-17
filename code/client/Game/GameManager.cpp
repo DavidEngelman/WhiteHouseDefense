@@ -14,7 +14,7 @@ GameManager::GameManager(int socket, App *app) :
         //quadrant(getQuadrantFromServer()) // recv. Ne pas changer l'ordre!
 {
     if (!isConsole) {
-        gameUI = new GameGUI(getMapSeedFromServer(), this);
+        gameUI = new GameGUI(getMapSeedFromServer(), this, master_app->getMainWindow());
     } else {
         gameUI = new GameConsoleUI(getMapSeedFromServer(),this);
     }
@@ -32,7 +32,7 @@ GameManager::GameManager(int socket, bool _isSupporter, App *app) :
         //quadrant(getQuadrantFromServer()) // recv. Ne pas changer l'ordre!
 {
     if (!isConsole) {
-        gameUI = new GameGUI(getMapSeedFromServer(), this);
+        gameUI = new GameGUI(getMapSeedFromServer(), this, master_app->getMainWindow());
     } else {
         gameUI = new GameConsoleUI(getMapSeedFromServer(),this);
     }

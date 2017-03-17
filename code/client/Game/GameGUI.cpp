@@ -2,7 +2,7 @@
 
 #include "GameGUI.hpp"
 
-GameGUI::GameGUI(unsigned seed, GameManager *manager) : GameUI(seed, manager) {}
+GameGUI::GameGUI(unsigned seed, GameManager *manager, QWidget* _parent) : AbstractGUI(_parent), GameUI(seed, manager) {}
 
 Position GameGUI::getPosBuyingTower() {
     return Position();

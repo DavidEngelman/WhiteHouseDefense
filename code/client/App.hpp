@@ -3,6 +3,7 @@
 
 #include <string>
 #include <QtWidgets/QApplication>
+#include <QtWidgets>
 
 class AbstractManager;
 
@@ -14,6 +15,8 @@ private:
     int player_id;
     std::string username;
     AbstractManager* current_manager;
+
+    QWidget* main_window;
 
 public:
 
@@ -30,6 +33,8 @@ public:
     
     void set_id(int id);
     void set_username(std::string name);
+
+    QWidget *getMainWindow();
 };
 
 

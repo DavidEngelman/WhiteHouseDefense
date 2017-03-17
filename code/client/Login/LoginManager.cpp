@@ -8,7 +8,7 @@ LoginManager::LoginManager(int port, App *my_app) : NetworkedManager(port, my_ap
     if (isConsole) {
         loginUI = new LoginConsoleUI(this);
     } else {
-        loginUI = new LoginGUI(this);
+        loginUI = new LoginGUI(this, master_app->getMainWindow());
     }
 }
 
@@ -75,6 +75,7 @@ std::string LoginManager::attemptLogin(Credentials credentials) {
 
 void LoginManager::goToMain() {
     MainManager *mainManager = new MainManager(5555, master_app);
+    master_app->getMainWindow()->setFixedSize(1000,600);
     master_app->transition(mainManager);
 }
 

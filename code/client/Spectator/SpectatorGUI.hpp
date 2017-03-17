@@ -33,7 +33,7 @@ public slots:
 
 public:
 
-    SpectatorGUI(SpectatorManager *manager);
+    SpectatorGUI(SpectatorManager *manager, QWidget* _parent);
 
     void getGameAndPlayer() override;
 

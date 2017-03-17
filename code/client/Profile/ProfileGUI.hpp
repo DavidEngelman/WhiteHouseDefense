@@ -30,7 +30,7 @@ public slots:
     void goToMain();
 
 public:
-    ProfileGUI(ProfileManager *manager);
+    ProfileGUI(ProfileManager *manager, QWidget* _parent);
 
     virtual ~ProfileGUI();
 

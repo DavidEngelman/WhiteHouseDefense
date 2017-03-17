@@ -24,7 +24,7 @@ private:
     QDialogButtonBox* dialog_game_mode_choice;
 
 public:
-    MainGUI(MainManager *manager);
+    MainGUI(MainManager *manager, QWidget* _parent);
     ~MainGUI() { close(); };
     void display() override;
     void displayGameModesMenu() override;

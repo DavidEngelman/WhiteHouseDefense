@@ -56,4 +56,4 @@ WelcomeGUI::~WelcomeGUI() {
     close();
 }
 
-WelcomeGUI::WelcomeGUI(WelcomeManager *manager) : manager(manager) {}
+WelcomeGUI::WelcomeGUI(WelcomeManager *manager, QWidget* _parent) : AbstractGUI(_parent), manager(manager) {}

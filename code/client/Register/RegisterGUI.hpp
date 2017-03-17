@@ -31,7 +31,7 @@ private:
     std::string confirm;
 
 public:
-    RegisterGUI(RegisterManager *manager);
+    RegisterGUI(RegisterManager *manager, QWidget* _parent);
     void display();
 
     std::string getUsername() { return username; };

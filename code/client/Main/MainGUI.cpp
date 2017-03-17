@@ -5,7 +5,7 @@
 #include <QtWidgets/QDialogButtonBox>
 
 
-MainGUI::MainGUI(MainManager *manager) : MainUI(manager) {}
+MainGUI::MainGUI(MainManager *manager, QWidget* _parent) : AbstractGUI(_parent), MainUI(manager) {}
 
 void MainGUI::display() {
 

@@ -5,10 +5,18 @@
 #include <QtWidgets/QWidget>
 #include <iostream>
 #include "AbstractUI.hpp"
+#include "../App.hpp"
 
 class AbstractGUI : public QWidget, public virtual AbstractUI {
+
+private:
+
+    QWidget* parent;
+
 public:
     //virtual void setUp() = 0; // MUST BE IMPLEMENTED IN INHERITORS
+
+    AbstractGUI(QWidget* _parent);
 
     // NE PAS ENLEVER. FONDAMENTAL POUR ASSURER LA DESTRUCTION CORRECTE DES OBJETS;
     virtual ~AbstractGUI() = default;

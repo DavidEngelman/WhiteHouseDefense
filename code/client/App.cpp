@@ -3,7 +3,14 @@
 #include "../common/Constants.h"
 
 App::App(char* server_ip_addr) : server_ip_address(server_ip_addr),
-    player_id(-1), username("\0"), current_manager(new WelcomeManager(this)) {
+    player_id(-1), username("\0"), current_manager(nullptr), main_window(nullptr)
+{
+     if(!isConsole){
+        main_window = new QWidget();
+        main_window->setFixedSize(750,600);
+        main_window->show();
+     }
+    current_manager = new WelcomeManager(this);
     current_manager->run();
 }
 
@@ -39,4 +46,8 @@ App::~App() {
         std::string message = "Exit," + std::to_string(player_id);
         send_message(socket, message.c_str());
     }
+}
+
+QWidget *App::getMainWindow() {
+    return main_window;
 }
