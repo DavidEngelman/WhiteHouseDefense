@@ -56,6 +56,8 @@ void MainGUI::display() {
 void MainGUI::displayGameModesMenu() {
     dialog_game_mode_choice = new QDialogButtonBox;
     dialog_game_mode_choice->setWindowTitle("Select a game mode");
+    dialog_game_mode_choice->setWindowModality(Qt::ApplicationModal);
+
 
     classicMode = new QCustomButton(0, "CLASSIC MODE", dialog_game_mode_choice);
     teamMode = new QCustomButton(1, "TEAM MODE", dialog_game_mode_choice);
