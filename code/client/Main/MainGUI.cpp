@@ -54,26 +54,26 @@ void MainGUI::display() {
 }
 
 void MainGUI::displayGameModesMenu() {
-    QDialogButtonBox* dialog = new QDialogButtonBox;
-    dialog->setWindowTitle("Select a game mode");
+    dialog_game_mode_choice = new QDialogButtonBox;
+    dialog_game_mode_choice->setWindowTitle("Select a game mode");
 
-    classicMode = new QCustomButton(0, "CLASSIC MODE", dialog);
-    teamMode = new QCustomButton(1, "TEAM MODE", dialog);
-    timedMode = new QCustomButton(2, "TEAM MODE", dialog);
-    cancel = new QCustomButton(3, "CANCEL", dialog);
+    classicMode = new QCustomButton(0, "CLASSIC MODE", dialog_game_mode_choice);
+    teamMode = new QCustomButton(1, "TEAM MODE", dialog_game_mode_choice);
+    timedMode = new QCustomButton(2, "TEAM MODE", dialog_game_mode_choice);
+    cancel = new QCustomButton(3, "CANCEL", dialog_game_mode_choice);
 
-    dialog->addButton(cancel, QDialogButtonBox::DestructiveRole);
-    dialog->addButton(timedMode,  QDialogButtonBox::AcceptRole);
-    dialog->addButton(teamMode,  QDialogButtonBox::AcceptRole);
-    dialog->addButton(classicMode, QDialogButtonBox::AcceptRole);
+    dialog_game_mode_choice->addButton(cancel, QDialogButtonBox::DestructiveRole);
+    dialog_game_mode_choice->addButton(timedMode,  QDialogButtonBox::AcceptRole);
+    dialog_game_mode_choice->addButton(teamMode,  QDialogButtonBox::AcceptRole);
+    dialog_game_mode_choice->addButton(classicMode, QDialogButtonBox::AcceptRole);
 
     connect(classicMode, SIGNAL(clicked(int)), this, SLOT(handleGameModeChoice(int)));
     connect(teamMode, SIGNAL(clicked(int)), this, SLOT(handleGameModeChoice(int)));
     connect(timedMode, SIGNAL(clicked(int)), this, SLOT(handleGameModeChoice(int)));
     connect(cancel, SIGNAL(clicked(int)), this, SLOT(handleGameModeChoice(int)));
 
-    dialog->move(this->width() /2, this->height()/2);
-    dialog->show();
+    dialog_game_mode_choice->move(this->width() /2, this->height()/2);
+    dialog_game_mode_choice->show();
 }
 
 void MainGUI::handleMenuChoice(int choice) {
@@ -84,6 +84,7 @@ void MainGUI::handleMenuChoice(int choice) {
 
 void MainGUI::handleGameModeChoice(int choice){
     // TODO: gameModeChoice = le choix de l'utilisateur;
+    dialog_game_mode_choice->deleteLater();
     std::cout << choice << std::endl;
     gameModeChoice = choice;
     manager->handleGameModeChoice();

@@ -6,6 +6,7 @@
 #include "../QCustomButton.h"
 #include <QtWidgets/QLineEdit>
 #include <QtCore/QSignalMapper>
+#include <QtWidgets/QDialogButtonBox>
 
 class MainGUI : public AbstractGUI, public MainUI {
     Q_OBJECT
@@ -20,6 +21,7 @@ private:
     QCustomButton *timedMode;
     QCustomButton *teamMode;
     QCustomButton *cancel;
+    QDialogButtonBox* dialog_game_mode_choice;
 
 public:
     MainGUI(MainManager *manager);
