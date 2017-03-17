@@ -21,7 +21,7 @@ public:
 
     int getPlayer_id();
 
-    int getSocket_fd();
+    int getSocketFd();
 
     void setPlayer_id(int player_id);
 

@@ -101,8 +101,8 @@ void MatchMaker::launchGameServerThread(PendingMatch &match) {
 }
 
 void MatchMaker::announceMatchStart(PlayerConnection playerConnection) {
-    send_message(playerConnection.getSocket_fd(), GAME_STARTING_STRING);
-    send_data(playerConnection.getSocket_fd(), (char *) &current_server_port, sizeof(int));
+    send_message(playerConnection.getSocketFd(), GAME_STARTING_STRING);
+    send_data(playerConnection.getSocketFd(), (char *) &current_server_port, sizeof(int));
 }
 
 void MatchMaker::removeGameFromGamesInProgress(int port) {
@@ -110,7 +110,7 @@ void MatchMaker::removeGameFromGamesInProgress(int port) {
     for (gameserverIter = activeGames.begin(); gameserverIter != activeGames.end(); gameserverIter++) {
         if ((*gameserverIter)->getPort() == port) {
             for (PlayerConnection& pc : (*gameserverIter)->getPlayerConnections()){
-                close(pc.getSocket_fd());
+                close(pc.getSocketFd());
             }
             activeGames.erase(gameserverIter);
             break;

@@ -8,11 +8,6 @@ const bool DEBUG = false;
 
 GameServer::GameServer(int port, std::vector<PlayerConnection> &playerConnections, std::string _mode) :
         Server(port), playerConnections(playerConnections), mode(_mode), mapSeed((unsigned int) time(0)) {
-    if (!DEBUG) {
-        for (int i = 0; i < 4; i++) {
-            client_sockets[i] = playerConnections[i].getSocket_fd();
-        }
-    }
 }
 
 void GameServer::run() {
@@ -42,7 +37,7 @@ void GameServer::runGame() {
 
             gameEngine->getTimerSinceGameStart().pause(); // peut etre faire ca juste en mode contre la montre
             sendTowerPhase();
-            processClientCommands();
+            sleep(NUM_SECONDS_TO_PLACE_TOWER);
             gameEngine->getTimerSinceGameStart().resume(); // peut etre faire ca juste en mode contre la montre
             sendWavePhase();
         }
@@ -95,41 +90,33 @@ void GameServer::sendGameStateToPlayers() {
 
 
 /*
- * RECEIVE AND PROCESS CLIENT COMMANDS (PLACE TOWERS AND SEND MESSAGES°
+ * Thread that processes user input (chat + place towers)
  */
 
-void GameServer::processClientCommands() {
-    char message_buffer[BUFFER_SIZE];
+void GameServer::startInputThread() {
+    pthread_create(&inputThread, NULL, &GameServer::staticInputThread, this);
+}
 
-    Timer timer;
-    timer.start();
-    int numSecondsElapsed = timer.elapsedTimeInSeconds();
-    while (numSecondsElapsed < NUM_SECONDS_TO_PLACE_TOWER) {
-        int timeLeft = NUM_SECONDS_TO_PLACE_TOWER - numSecondsElapsed;
-        int client_index = getReadableReadableSocket(timeLeft);
-        if (client_index < 0 || client_index > 4) return;
+void GameServer::stopInputThread() {
+    pthread_cancel(inputThread);
+}
 
-        // TODO: this may be a bug source
-        int client_socket_fd = client_sockets[client_index];
-        get_and_process_command(client_socket_fd, message_buffer);
+void *GameServer::staticInputThread(void * self) {
+    static_cast<GameServer *>(self)->getAndProcessPlayerInput();
+    return nullptr;
+}
 
-        numSecondsElapsed = timer.elapsedTimeInSeconds();
+void GameServer::getAndProcessPlayerInput() {
+    char messageBuffer[BUFFER_SIZE];
+    while(1) {
+        // TODO: the 10000 is absurdly high, not sure it's a good idea
+        int clientSocketFd = getReadableReadableSocket(10000);
+        getAndProcessUserInput(clientSocketFd, messageBuffer);
     }
 }
 
-int GameServer::getReadableReadableSocket(int timeLeft) {
-    // TODO: solution temporaire. C'est debile de creer des vecteurs à chaque appel
-    std::vector<int> open_sockets;
-    for (PlayerConnection &playerConnection: playerConnections) {
-        open_sockets.push_back(playerConnection.getSocket_fd());
-    }
-    return get_readable_socket_index_with_timeout(open_sockets.data(), open_sockets.size(), timeLeft);
-}
-
-void GameServer::get_and_process_command(int client_socket_fd, char *buffer) {
-//    int timeout = NUM_SECONDS_TO_PLACE_TOWER - timer.elapsedTimeInSeconds();
-//    receive_message_with_timeout(client_socket_fd, buffer, 5);
-    if (receive_message(client_socket_fd, buffer) != -1) {
+void GameServer::getAndProcessUserInput(int clientSocketFd, char *buffer) {
+    if (receive_message(clientSocketFd, buffer) != -1) {
         std::string command_type = get_command_type(buffer);
 
         if (command_type == PLACE_TOWER_COMMAND_STRING) {
@@ -144,12 +131,35 @@ void GameServer::get_and_process_command(int client_socket_fd, char *buffer) {
             TowerCommand command;
             command.parse(buffer);
             upgradeTowerInGameState(command);
+        } else if (command_type == USER_MESSAGE_STRING){
+            Command command;
+            command.parse(buffer);
+            std::string userMessage = command.getNextToken();
+            sendMessageToOtherPlayers(userMessage, clientSocketFd);
         }
     } else {
-        removeClosedSocketFromSocketLists(client_socket_fd);
+        removeClosedSocketFromSocketLists(clientSocketFd);
     }
+}
 
+void GameServer::sendMessageToOtherPlayers(std::string userMessage, int senderSocketFd) {
+    std::string message = RECEIVE_USER_MESSAGE_STRING + "," + userMessage + ";";
+    for (PlayerConnection &playerConnection : playerConnections) {
+        int socketFd = playerConnection.getSocketFd();
+        if (socketFd != senderSocketFd) {
+            send_message(socketFd, message.c_str());
+        }
+    }
+}
 
+int GameServer::getReadableReadableSocket(int timeLeft) {
+    // TODO: solution temporaire. C'est debile de creer des vecteurs à chaque appel
+    std::vector<int> open_sockets;
+    for (PlayerConnection &playerConnection: playerConnections) {
+        open_sockets.push_back(playerConnection.getSocketFd());
+    }
+    int socketIndex = get_readable_socket_index_with_timeout(open_sockets.data(), open_sockets.size(), timeLeft);
+    return open_sockets[socketIndex];
 }
 
 void GameServer::addTowerInGameState(TowerCommand &command) {
@@ -196,21 +206,7 @@ void GameServer::createPlayerStates() {
 }
 
 
-/*
- * Thread that processes user input (chat + place towers)
- */
 
-void GameServer::startInputThread() {
-    pthread_create(&inputThread, NULL, &GameServer::staticInputThread, this);
-}
-
-void GameServer::stopInputThread() {
-    pthread_cancel(inputThread);
-}
-
-void *GameServer::staticInputThread(void * self) {
-    static_cast<GameServer *>(self)->getAndProcessPlayerInput();
-}
 
 
 
@@ -300,7 +296,7 @@ std::string GameServer::getAllPlayers() {
 void GameServer::setupGameForPlayers() {
     unsigned int quadrant = 0;
     for (PlayerConnection &playerConnection: playerConnections) {
-        int player_socket_fd = playerConnection.getSocket_fd();
+        int player_socket_fd = playerConnection.getSocketFd();
         setupGameForPlayer(player_socket_fd, quadrant);
         quadrant++;
     }
@@ -319,7 +315,7 @@ void GameServer::setupGameForPlayer(int player_socket_fd, int quadrant) {
 
 void GameServer::sendTowerPhase() {
     for (PlayerConnection &playerConnection : playerConnections) {
-        int socketFd = playerConnection.getSocket_fd();
+        int socketFd = playerConnection.getSocketFd();
         attemptSendMessageToClientSocket(socketFd, "t");
     }
 
@@ -330,7 +326,7 @@ void GameServer::sendTowerPhase() {
 
 void GameServer::sendWavePhase() {
     for (PlayerConnection &playerConnection : playerConnections) {
-        int socketFd = playerConnection.getSocket_fd();
+        int socketFd = playerConnection.getSocketFd();
         attemptSendMessageToClientSocket(socketFd, "w");
     }
 
@@ -385,7 +381,7 @@ void GameServer::sendQuadrantToClient(int socket_fd, int quadrant) {
 
 
 void GameServer::sendGameStateToPlayer(PlayerConnection &connection) {
-    sendGameStateToPlayer(connection.getSocket_fd());
+    sendGameStateToPlayer(connection.getSocketFd());
 }
 
 void GameServer::sendGameStateToPlayer(int socket_fd) {
@@ -399,7 +395,7 @@ void GameServer::sendGameStateToPlayer(int socket_fd) {
 void GameServer::removeClosedSocketFromSocketLists(int fd) {
     std::vector<PlayerConnection>::iterator iter;
     for (iter = playerConnections.begin(); iter != playerConnections.end(); iter++) {
-        if ((*iter).getSocket_fd() == fd) {
+        if ((*iter).getSocketFd() == fd) {
             playerConnections.erase(iter);
             return;
         }
@@ -426,7 +422,7 @@ void GameServer::attemptSendMessageToClientSocket(int fd, const char *message) {
 bool GameServer::socketIsActive(int fd) {
     // TODO: pas efficace
     for (PlayerConnection &playerConnection: playerConnections) {
-        if (playerConnection.getSocket_fd() == fd) {
+        if (playerConnection.getSocketFd() == fd) {
             return true;
         }
     }
@@ -444,9 +440,10 @@ std::vector<PlayerConnection> &GameServer::getPlayerConnections() {
     return playerConnections;
 }
 
-void GameServer::getAndProcessPlayerInput() {
 
-}
+
+
+
 
 
 
