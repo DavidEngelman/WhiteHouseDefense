@@ -37,6 +37,7 @@ private:
     std::vector<int> supportersSockets;
 
     pthread_t spectatorJoinThread;
+    pthread_t inputThread;
 
 
 
@@ -110,6 +111,14 @@ public:
     bool socketIsActive(int fd);
 
     std::vector<PlayerConnection> &getPlayerConnections();
+
+    void startInputThread();
+
+    void stopInputThread();
+
+    static void *staticInputThread(void * self);
+
+    void getAndProcessPlayerInput();
 };
 
 #endif
