@@ -138,55 +138,57 @@ void GameManager::sendSellRequest(Position towerPos) {
 
 
 void GameManager::run() {
-    gameUI.display(gameState, quadrant);
+    if (isConsole) {
+        gameUI.display(gameState, quadrant);
 
-    if (!isSupporter)
-        gameUI.displayPlayerInfos(gameState, quadrant);
-    else
-        gameUI.displayInfoForSupporter(gameState);
+        if (!isSupporter)
+            gameUI.displayPlayerInfos(gameState, quadrant);
+        else
+            gameUI.displayInfoForSupporter(gameState);
 
-    char server_msg_buff [BUFFER_SIZE];
+        char server_msg_buff[BUFFER_SIZE];
 
-    while(!gameState.getIsGameOver()) {
-        receive_message(server_socket, server_msg_buff);
-        //std::cout << "Message: " << server_msg_buff << std::endl;
-        if (strcmp(server_msg_buff, PLACING_TOWER) == 0) {
+        while (!gameState.getIsGameOver()) {
+            receive_message(server_socket, server_msg_buff);
+            //std::cout << "Message: " << server_msg_buff << std::endl;
+            if (strcmp(server_msg_buff, PLACING_TOWER) == 0) {
 
-            if (is_alive() && !isSupporter ) {
-                inputThread = pthread_create(&thr, NULL, &GameManager::staticInputThread, this);
+                if (is_alive() && !isSupporter) {
+                    inputThread = pthread_create(&thr, NULL, &GameManager::staticInputThread, this);
+                } else {
+                    gameUI.display(gameState, quadrant);
+
+                    if (isSupporter) {
+                        gameUI.displayPlayersPlacingTowersMessage();
+                    } else {
+                        gameUI.display_dead_message();
+                    }
+                }
+            } else if (strcmp(server_msg_buff, WAVE) == 0) {
+                if (!isSupporter) {
+                    inputThread = pthread_cancel(thr);
+                }
             } else {
+                unSerializeGameState(server_msg_buff);
                 gameUI.display(gameState, quadrant);
 
-                if (isSupporter) {
-                    gameUI.displayPlayersPlacingTowersMessage();
-                } else {
-                    gameUI.display_dead_message();
-                }
-            }
-        }else if (strcmp(server_msg_buff, WAVE) == 0){
-            if (!isSupporter) {
-                inputThread = pthread_cancel(thr);
+                if (!isSupporter) {
+                    if (is_alive()) {
+                        gameUI.displayPlayerInfos(gameState, quadrant);
+                    } else {
+                        gameUI.display_dead_message();
+                    }
+                } else
+                    gameUI.displayInfoForSupporter(gameState);
             }
         }
-        else {
-            unSerializeGameState(server_msg_buff);
-            gameUI.display(gameState, quadrant);
+        gameUI.displayGameOver(gameState);
 
-            if (!isSupporter) {
-                if (is_alive()) {
-                    gameUI.displayPlayerInfos(gameState, quadrant);
-                } else {
-                    gameUI.display_dead_message();
-                }
-            } else
-                gameUI.displayInfoForSupporter(gameState);
-        }
+        come_back_to_menu();
+    } else {
+        std::cout << "GUI" << std::endl;
+        come_back_to_menu();
     }
-    gameUI.displayGameOver(gameState);
-
-    // Menu to come back to main menu (or make another game of the same type ?)
-    come_back_to_menu();
-
 }
 
 void GameManager::unSerializeGameState(char* seriarlized_gamestate){

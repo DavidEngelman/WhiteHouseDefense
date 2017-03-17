@@ -58,11 +58,21 @@ void MainGUI::displayGameModesMenu() {
     QDialogButtonBox* dialog = new QDialogButtonBox;
     dialog->setWindowTitle("Select a game mode");
 
-    dialog->addButton("CLASSIC MODE", QDialogButtonBox::AcceptRole);
-    dialog->addButton("TEAM MODE",  QDialogButtonBox::AcceptRole);
-    dialog->addButton("TIMED MODE",  QDialogButtonBox::AcceptRole);
+    classicMode = new QCustomButton(0, "CLASSIC MODE", dialog);
+    teamMode = new QCustomButton(1, "TEAM MODE", dialog);
+    timedMode = new QCustomButton(2, "TEAM MODE", dialog);
+    cancel = new QCustomButton(3, "CANCEL", dialog);
 
-    //TODO: connecter les boutons et gg
+    dialog->addButton(cancel, QDialogButtonBox::DestructiveRole);
+    dialog->addButton(timedMode,  QDialogButtonBox::AcceptRole);
+    dialog->addButton(teamMode,  QDialogButtonBox::AcceptRole);
+    dialog->addButton(classicMode, QDialogButtonBox::AcceptRole);
+
+    connect(classicMode, SIGNAL(clicked(int)), this, SLOT(handleGameModeChoice(int)));
+    connect(teamMode, SIGNAL(clicked(int)), this, SLOT(handleGameModeChoice(int)));
+    connect(timedMode, SIGNAL(clicked(int)), this, SLOT(handleGameModeChoice(int)));
+    connect(cancel, SIGNAL(clicked(int)), this, SLOT(handleGameModeChoice(int)));
+
 
     dialog->move(this->width() /2, this->height()/2);
     dialog->show();

@@ -7,6 +7,7 @@
 #include "global.hpp"
 #include "Profile/ProfileManager.hpp"
 #include "Profile/ProfileGUI.hpp"
+#include "MapGUI.hpp"
 
 static const bool DEBUG = true;
 
@@ -37,12 +38,14 @@ int main(int argc, char *argv[]) {
         QApplication application(argc, argv);
         application.setApplicationName("White house defense");
         App app(argv[1]);
-        std::cout << argv[1] << std::endl;
+
+        //MapGUI mapGUI(0);
+
         return application.exec();
 
+    } else {
+        App app(argv[1]);
     }
-
-//    App app(argv[1]);
 
 
     return 0;

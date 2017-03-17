@@ -19,7 +19,7 @@ protected:
 
 public:
     MapGUI(unsigned int seed);
-    void display() override;
+    void display();
     void display(GameState& gameState, int quadrant);
 };
 
