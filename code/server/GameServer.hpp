@@ -15,8 +15,6 @@
 #include <mutex>
 
 
-
-
 class GameServer : public Server {
 
 private:
@@ -29,21 +27,19 @@ private:
     // Si je l'initialise dans le constructeur, je suis obligé de garder la seed dans un field
     // pour l'envoyer au client (pendant la methode run), ce que je veux éviter
 
-    GameEngine * gameEngine;
+    GameEngine *gameEngine;
     std::vector<PlayerConnection> playerConnections;
 
-private:
-    int client_sockets[4];
     std::vector<int> supportersSockets;
 
     pthread_t spectatorJoinThread;
-    pthread_t inputThread;
-
+    pthread_t receiverThread;
 
 
     void sendGameStateToPlayer(PlayerConnection &connection);
+
     void sendGameStateToPlayer(int socket_fd);
-    void get_and_process_command(int client_socket_fd, char buffer[]);
+
     void addTowerInGameState(TowerCommand &command);
 
 
@@ -51,7 +47,6 @@ public:
 
     GameServer(int port, std::vector<PlayerConnection> &playerConnections, std::string _mode);
 
-    void processClientCommands();
 
     void sendGameStateToPlayers();
 
@@ -60,11 +55,13 @@ public:
     void run();
 
     void sendTowerPhase();
+
     void sendWavePhase();
 
     void createPlayerStates();
 
     int connectToServer(int port);
+
     void updatePlayerStatsOnAccountServer();
 
     void deleteTowerInGameState(TowerCommand command);
@@ -116,9 +113,13 @@ public:
 
     void stopInputThread();
 
-    static void *staticInputThread(void * self);
+    static void *staticInputThread(void *self);
 
     void getAndProcessPlayerInput();
+
+    void getAndProcessUserInput(int clientSocketFd, char buffer[]);
+
+    void sendMessageToOtherPlayers(std::string userMessage, int senderSocketFd);
 };
 
 #endif

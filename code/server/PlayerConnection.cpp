@@ -7,7 +7,7 @@ int PlayerConnection::getPlayer_id() {
     return player_id;
 }
 
-int PlayerConnection::getSocket_fd()  {
+int PlayerConnection::getSocketFd()  {
     return socket_fd;
 }
 

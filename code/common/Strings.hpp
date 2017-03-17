@@ -13,6 +13,8 @@
 static const std::string PLACE_TOWER_COMMAND_STRING =  "PlaceTower";
 static const std::string DELETE_TOWER_COMMAND_STRING  = "DeleteTower";
 static const std::string UPGRADE_TOWER_COMMAND_STRING = "UpgradeTower";
+static const std::string USER_MESSAGE_STRING = "SendUserMessage";
+static const std::string RECEIVE_USER_MESSAGE_STRING = "ReceiveUserMessage";
 
 static const std::string JOIN_GAME_AS_SPECTATOR = "Support";
 static const std::string SUPPORT_PLAYER_STRING = "SupportPlayer";
