@@ -1,7 +1,7 @@
 #ifndef PROJET_UPDATESTATSCOMMAND_H
 #define PROJET_UPDATESTATSCOMMAND_H
 
-#include "Command.hpp"
+#include "../common/Command.hpp"
 #include "../common/Tools.hpp"
 
 

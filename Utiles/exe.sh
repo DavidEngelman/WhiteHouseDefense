@@ -56,7 +56,7 @@ show=""
 delayTyping=100 # In millisecond between every keystroke
 
 #executableDirectory="~/MEGAsync/GitProjects/Group4/cmake-build-debug/code/"
-executableDirectory="~/CLionProjects/Group4/cmake-build-debug/code/"
+executableDirectory="/home/edouard/ClionProjects/Group4/cmake-build-debug/code/"
 
 
 # Set the terminal on FullScreen

@@ -1,55 +1,53 @@
 #include "SpectatorManager.hpp"
 #include "SpectatorGUI.hpp"
+#include "SpectatorConsoleUI.hpp"
+#include "../../common/Constants.h"
 
 SpectatorManager::SpectatorManager(int port, App *master_app) :
-        NetworkedManager(port, master_app), spectatorGUI(new SpectatorGUI(this)) {}
+        NetworkedManager(port, master_app) {
+    if (!isConsole) {
+        spectatorUI = new SpectatorGUI(this);
+    } else {
+        spectatorUI = new SpectatorConsoleUI(this);
+    }
+}
+
+void SpectatorManager::run() {
+    getGamesFromMatchMaker();
+    spectatorUI->displayAndSelectGameAndPlayer(&allGames); // Will call connectToGame once done
+}
 
 void SpectatorManager::getGamesFromMatchMaker() {
     char buffer[5000];
     send_message(server_socket, "games;");
     receive_message(server_socket, buffer); //receive all the games in progress
-    parse_message_from_server(buffer);
 
+    // TODO: REMPLACER CA PAR parse_message_from_server(buffer);
+    parse_message_from_server("5557,classic,bibi,baba,bobo,bubu;5558,classic,lala,lili,lolo,lele;");
 }
 
-void SpectatorManager::run() {
-    getGamesFromMatchMaker();
+void SpectatorManager::connectToGame(GameInfo &game, std::string &playerToSupport) {
+    /* On dit au gameServer qu'on veut etre spectateur */
+    int game_server_socket_fd = init_connection_to_server(master_app->get_ip(), game.getPort());
 
-    if (allGames.size() == 0) {
-        //Si y a pas de game a spectate -> on pleure
-        spectatorUI.displaySorryMessage();
-        MainManager *mng = new MainManager(5555, master_app);
-        master_app->transition(mng);
-    } else {
-        //Selection de la partie et du jouer a support
-        spectatorUI.displaySpectatorUI(allGames);
-        int gameSelected = spectatorUI.gameSelection((int) allGames.size());
-        int gamePort = allGames[gameSelected].getPort();
-        std::string playerToSupport = spectatorUI.playerSelection(allGames[gameSelected]);
+    // Structure of command: "SUPPORT_PLAYER_STRING,bob;"
+    std::string message = SUPPORT_PLAYER_STRING + ","
+                          + playerToSupport + ";";
+    send_message(game_server_socket_fd, message.c_str());
 
-
-        /* On dit au gameServer qu'on veut etre spectateur */
-        int game_server_socket_fd = init_connection_to_server(master_app->get_ip(), gamePort);
-
-        // Structure of command: "SUPPORT_PLAYER_STRING,bob;"
-        std::string message = SUPPORT_PLAYER_STRING + ","
-                              + playerToSupport + ";";
-        send_message(game_server_socket_fd, message.c_str());
-
-        // Puis on lance le GameManager
-        GameManager *gameManager = new GameManager(game_server_socket_fd, true, master_app);
-        master_app->transition(gameManager);
-    }
+    // Puis on lance le GameManager
+    // GameManager *gameManager = new GameManager(game_server_socket_fd, true, master_app);
+    //master_app->transition(gameManager);
 }
 
 void SpectatorManager::parse_message_from_server(const std::string &message) {
-    int i = 0;
-    while (i < message.size()) {
-        i = createGameInfo(message, i);
+    int messageIndex = 0;
+    while (messageIndex < message.size()) {
+        messageIndex = parseGameInfoAndAddToGames(message, messageIndex);
     }
 }
 
-int SpectatorManager::createGameInfo(const std::string &message, int &i) {
+int SpectatorManager::parseGameInfoAndAddToGames(const std::string &message, int &i) {
     std::string str_port, str_mode, str_player;
     GameInfo gameInfo;
 
@@ -80,14 +78,20 @@ int SpectatorManager::createGameInfo(const std::string &message, int &i) {
 
 
     i++;
-//"5557,classic,bibi,baba,bobo,bubu;5558,classic,lala,lili,lolo,lele;"
 
     gameInfo.setPort(stoi(str_port));
     gameInfo.setGameMode(str_mode);
     //gameInfo.players = str_players;
 
     allGames.push_back(gameInfo);
-
     return i;
 }
 
+SpectatorManager::~SpectatorManager() {
+    spectatorUI->destroy();
+}
+
+void SpectatorManager::goToMainMenu() {
+    MainManager *mainManager = new MainManager(ACCOUNT_SERVER_PORT, master_app);
+    master_app->transition(mainManager);
+}

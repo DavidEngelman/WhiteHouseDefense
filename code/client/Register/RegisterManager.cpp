@@ -14,12 +14,12 @@ void RegisterManager::run() {
 
             while (not valid) {
                 valid = true;
-                registerUI.display(); //demande le  username et pswrd
-                toRegister.setUsername(registerUI.get_username_entry());
+                registerUI->display(); //demande le  username et pswrd
+                toRegister.setUsername(registerUI->get_username_entry());
 
-                std::string password_entry = registerUI.get_password_entry();
-                if (registerUI.get_confirm_entry() != password_entry) {
-                    registerUI.displayConfirmError();
+                std::string password_entry = registerUI->get_password_entry();
+                if (registerUI->get_confirm_entry() != password_entry) {
+                    registerUI->displayConfirmError();
                     valid = false;
                 } else {
                     password_entry = crypt(password_entry.c_str(), "g4");
@@ -33,14 +33,14 @@ void RegisterManager::run() {
                 if (valid) {
                     valid = checkCredentialsValidity(toRegister);
                     if (not valid) {
-                        registerUI.displayError();
+                        registerUI->displayError();
                     }
                 }
             }
 
             success = attemptRegister(toRegister);
             if (not success) {
-                registerUI.displayError();
+                registerUI->displayError();
                 valid = false;
             }
         }

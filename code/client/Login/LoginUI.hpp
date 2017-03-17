@@ -3,15 +3,16 @@
 
 #include <string>
 #include "LoginManager.hpp"
+#include "../Abstract/AbstractUI.hpp"
 
 class LoginManager;
 
-class LoginUI {
+class LoginUI: public virtual AbstractUI {
 protected:
     LoginManager *manager;
 public:
     LoginUI(LoginManager * manager): manager(manager) {};
-    // NE PAS ENLEVER. FONDAMENTAL POUR ASSURER DESTRUCTION CORRECTE DES OBJETS;
+    // NE PAS ENLEVER. FONDAMENTAL POUR ASSURER LA DESTRUCTION CORRECTE DES OBJETS;
     virtual ~LoginUI() = default;
     virtual std::string getUsername() = 0;
     virtual std::string getPassword() = 0;

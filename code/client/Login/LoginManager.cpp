@@ -13,7 +13,7 @@ LoginManager::LoginManager(int port, App *my_app) : NetworkedManager(port, my_ap
 }
 
 LoginManager::~LoginManager() {
-    delete(loginUI);
+    loginUI->destroy();
 }
 
 void LoginManager::run() {

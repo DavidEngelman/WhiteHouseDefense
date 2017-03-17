@@ -5,22 +5,27 @@
 
 
 #include "../NetworkedManager.hpp"
-#include "RankingUI.hpp"
 #include "../../common/Networking.h"
 #include "../App.hpp"
+#include "../../common/RankingInfos.h"
+#include "RankingUI.h"
+
+class RankingUI;
 
 class RankingManager : public NetworkedManager  {
 
 private:
-	RankingUI rankingUI;
+	RankingUI *rankingUI;
 
 public:
 	RankingManager(int port, App* my_app);
+	~RankingManager();
 	std::string getRanking();
 	void sendRequest();
-	std::string createRanking(std::string);
+	std::vector<RankingInfos> createRanking(std::string);
 	void run() override;
 
+	void goToMainMenu();
 };
 
 #endif

@@ -1,10 +1,13 @@
 #ifndef PROJET_ABSTRACTUI_HPP
 #define PROJET_ABSTRACTUI_HPP
 
+#include <iostream>
 
 class AbstractUI {
 public:
-    // NE PAS ENLEVER. FONDAMENTAL POUR ASSURER DESTRUCTION CORRECTES DES OBJETS;
+    virtual void destroy() = 0;
+
+    // NE PAS ENLEVER. FONDAMENTAL POUR ASSURER LA DESTRUCTION CORRECTE DES OBJETS;
     virtual ~AbstractUI() = default;
 };
 

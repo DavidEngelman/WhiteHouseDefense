@@ -15,6 +15,72 @@ GameServer::GameServer(int port, std::vector<PlayerConnection> &playerConnection
     }
 }
 
+void GameServer::run() {
+    startSpectatorThread();
+    runGame();
+    stopSpectatorThread();
+    sendFinishedToMatchmaker(); // tell to the matchmaker that the game is finished
+}
+
+void GameServer::runGame() {
+
+    start_socket_listen();
+    sleep(3); // TODO: find better way to avoid network race conditions...
+    gameEngine = new GameEngine(mapSeed, mode);
+
+    // Creer les playerState
+    createPlayerStates();
+
+    if (!DEBUG) {
+        setupGameForPlayers();
+    }
+
+    while (!gameEngine->isGameFinished()) {
+        if (!DEBUG) {
+
+            gameEngine->getTimerSinceGameStart().pause(); // peut etre faire ca juste en mode contre la montre
+            sendTowerPhase();
+            processClientCommands();
+            gameEngine->getTimerSinceGameStart().resume(); // peut etre faire ca juste en mode contre la montre
+            sendWavePhase();
+        }
+        runWave();
+    }
+
+    //gameEngine->declareWinner();
+    updatePlayerStatsOnAccountServer();
+    delete gameEngine;
+
+
+    //handleEndOfGame();
+}
+
+/*
+ * GAME EVOLUTION AND UPDATE; COMMUNICATION WITH CLIENT
+ */
+
+void GameServer::runWave() {
+    Timer timer;
+    timer.start();
+    gameEngine->createWaves();
+    bool isWaveFinished = false;
+    while (!isWaveFinished) {
+        while (!isWaveFinished && timer.elapsedTimeInMiliseconds() < INTERVAL_BETWEEN_SENDS_IN_MS) {
+            isWaveFinished = gameEngine->update();
+            usleep(100); // Pour eviter d'appeller update des tonnes de fois par tick. C'est en microsecondes
+        }
+
+        if (DEBUG) {
+            gameEngine->showMap();
+            // TODO: updateMap()
+        } else {
+            sendGameStateToPlayers();
+        }
+        timer.reset();
+    }
+}
+
+
 void GameServer::sendGameStateToPlayers() {
     for (int i = 0; i < NUM_PLAYERS; i++) {
         sendGameStateToPlayer(playerConnections[i]);
@@ -25,6 +91,10 @@ void GameServer::sendGameStateToPlayers() {
     }
 }
 
+
+/*
+ * RECEIVE AND PROCESS CLIENT COMMANDS (PLACE TOWERS AND SEND MESSAGES°
+ */
 
 void GameServer::processClientCommands() {
     char message_buffer[BUFFER_SIZE];
@@ -37,6 +107,7 @@ void GameServer::processClientCommands() {
         int client_index = getReadableReadableSocket(timeLeft);
         if (client_index < 0 || client_index > 4) return;
 
+        // TODO: this may be a bug source
         int client_socket_fd = client_sockets[client_index];
         get_and_process_command(client_socket_fd, message_buffer);
 
@@ -99,6 +170,7 @@ void GameServer::deleteTowerInGameState(TowerCommand command) {
     gameEngine->deleteTower(position, quadrant);
 }
 
+
 void GameServer::upgradeTowerInGameState(TowerCommand command) {
     Position position = command.getPosition();
     int quadrant = command.getPlayerQuadrant();
@@ -106,71 +178,6 @@ void GameServer::upgradeTowerInGameState(TowerCommand command) {
 
 }
 
-
-void GameServer::runWave() {
-    Timer timer;
-    timer.start();
-    gameEngine->createWaves();
-    bool isWaveFinished = false;
-    while (!isWaveFinished) {
-        while (!isWaveFinished && timer.elapsedTimeInMiliseconds() < INTERVAL_BETWEEN_SENDS_IN_MS) {
-            isWaveFinished = gameEngine->update();
-            usleep(100); // Pour eviter d'appeller update des tonnes de fois par tick. C'est en microsecondes
-        }
-
-        if (DEBUG) {
-            gameEngine->showMap();
-            // TODO: updateMap()
-        } else {
-            sendGameStateToPlayers();
-        }
-        timer.reset();
-    }
-}
-
-
-void GameServer::run() {
-    startSpectatorThread();
-    runGame();
-    stopSpectatorThread();
-    sendFinishedToMatchmaker(); // tell to the matchmaker that the game is finished
-}
-
-void GameServer::startSpectatorThread() {
-    pthread_create(&spectatorJoinThread, NULL, &GameServer::staticJoinSpectatorThread, this);
-}
-
-void GameServer::runGame() {
-    start_socket_listen();
-    sleep(3); // TODO: find better way to avoid network race conditions...
-    gameEngine = new GameEngine(mapSeed, mode);
-
-    // Creer les playerState
-    createPlayerStates();
-
-    if (!DEBUG) {
-        setupGameForPlayers();
-    }
-
-    while (!gameEngine->isGameFinished()) {
-        if (!DEBUG) {
-
-            gameEngine->getTimerSinceGameStart().pause(); // peut etre faire ca juste en mode contre la montre
-            sendTowerPhase();
-            processClientCommands();
-            gameEngine->getTimerSinceGameStart().resume(); // peut etre faire ca juste en mode contre la montre
-            sendWavePhase();
-        }
-        runWave();
-    }
-
-    //gameEngine->declareWinner();
-    updatePlayerStatsOnAccountServer();
-    delete gameEngine;
-
-
-    //handleEndOfGame();
-}
 
 void GameServer::createPlayerStates() {
     if (gameEngine->getGameState().getMode() == TEAM_MODE) {
@@ -186,58 +193,13 @@ void GameServer::createPlayerStates() {
 
 }
 
-void GameServer::sendTowerPhase() {
-    for (PlayerConnection &playerConnection : playerConnections) {
-        int socketFd = playerConnection.getSocket_fd();
-        attemptSendMessageToClientSocket(socketFd, "t");
-    }
 
-    for (int socketFd: supportersSockets) {
-        attemptSendMessageToClientSocket(socketFd, "t");
-    }
-}
+/*
+ * THREAD THAT ADDS SUPPORTERS TO THE GAME
+ */
 
-void GameServer::sendWavePhase() {
-    for (PlayerConnection &playerConnection : playerConnections) {
-        int socketFd = playerConnection.getSocket_fd();
-        attemptSendMessageToClientSocket(socketFd, "w");
-    }
-
-    for (int socketFd: supportersSockets) {
-        attemptSendMessageToClientSocket(socketFd, "w");
-    }
-}
-
-int GameServer::connectToServer(int port) {
-    return init_connection_to_server((char *) "127.0.0.1", port); //Faudrait mettre des constantes :)
-
-}
-
-void GameServer::sendFinishedToMatchmaker() {
-    int matchmaker_server_socket = connectToServer(5556);
-    std::string message = "PopGame," + std::to_string(port) + ";";
-    send_message(matchmaker_server_socket, message.c_str());
-}
-
-void GameServer::updatePlayerStatsOnAccountServer() {
-    int account_server_socket = connectToServer(5555);
-    int p_id, pnj_killed;
-    bool is_winner;
-
-    send_message(account_server_socket, "Update;");
-
-    for (PlayerState &ps : gameEngine->getGameState().getPlayerStates()) {
-        p_id = ps.getPlayer_id();
-        pnj_killed = ps.getPnjKilled();
-        is_winner = ps.getIsWinner();
-
-        std::string message = "Update," + std::to_string(p_id) + "," + std::to_string(pnj_killed) + "," +
-                              bool_to_string(is_winner) + ";";
-
-        send_message(account_server_socket, message.c_str());
-    }
-
-
+void GameServer::startSpectatorThread() {
+    pthread_create(&spectatorJoinThread, NULL, &GameServer::staticJoinSpectatorThread, this);
 }
 
 void GameServer::stopSpectatorThread() {
@@ -328,6 +290,63 @@ void GameServer::setupGameForPlayer(int player_socket_fd, int quadrant) {
     sendQuadrantToClient(player_socket_fd, quadrant);
     sendGameStateToPlayer(player_socket_fd);
 }
+
+/*
+ * COMMUNICATION WITH CLIENT AND OTHER SERVERS
+ */
+
+void GameServer::sendTowerPhase() {
+    for (PlayerConnection &playerConnection : playerConnections) {
+        int socketFd = playerConnection.getSocket_fd();
+        attemptSendMessageToClientSocket(socketFd, "t");
+    }
+
+    for (int socketFd: supportersSockets) {
+        attemptSendMessageToClientSocket(socketFd, "t");
+    }
+}
+
+void GameServer::sendWavePhase() {
+    for (PlayerConnection &playerConnection : playerConnections) {
+        int socketFd = playerConnection.getSocket_fd();
+        attemptSendMessageToClientSocket(socketFd, "w");
+    }
+
+    for (int socketFd: supportersSockets) {
+        attemptSendMessageToClientSocket(socketFd, "w");
+    }
+}
+
+int GameServer::connectToServer(int port) {
+    return init_connection_to_server((char *) "127.0.0.1", port); //Faudrait mettre des constantes :)
+
+}
+
+void GameServer::sendFinishedToMatchmaker() {
+    int matchmaker_server_socket = connectToServer(5556);
+    std::string message = "PopGame," + std::to_string(port) + ";";
+    send_message(matchmaker_server_socket, message.c_str());
+}
+
+void GameServer::updatePlayerStatsOnAccountServer() {
+    int account_server_socket = connectToServer(5555);
+    int p_id, pnj_killed;
+    bool is_winner;
+
+    send_message(account_server_socket, "Update;");
+
+    for (PlayerState &ps : gameEngine->getGameState().getPlayerStates()) {
+        p_id = ps.getPlayer_id();
+        pnj_killed = ps.getPnjKilled();
+        is_winner = ps.getIsWinner();
+
+        std::string message = "Update," + std::to_string(p_id) + "," + std::to_string(pnj_killed) + "," +
+                              bool_to_string(is_winner) + ";";
+
+        send_message(account_server_socket, message.c_str());
+    }
+}
+
 
 void GameServer::sendSetupGameStringToClient(int socket_fd) {
     send_message(socket_fd,

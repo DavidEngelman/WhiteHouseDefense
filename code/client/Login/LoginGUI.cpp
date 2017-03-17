@@ -5,6 +5,7 @@
 #include <QtWidgets/QMessageBox>
 #include <QtCore/QFileInfo>
 #include "LoginGUI.hpp"
+#include "../QHandPointerButton.hpp"
 
 void LoginGUI::loginUser() {
     username = usernameL->text().toStdString();
@@ -14,22 +15,17 @@ void LoginGUI::loginUser() {
 }
 
 void LoginGUI::display() {
-    QFile File("../../qt_ui/americanLogin.qss");
-    File.open(QFile::ReadOnly);
-    QString styleSheet = QLatin1String(File.readAll());
-    this->setStyleSheet(styleSheet);
+    setStylesheetFromPath("../../qt_ui/americanLogin.qss");
 
     this->setFixedHeight(600);
     this->setFixedWidth(750);
-    QPixmap bkgnd("../../qt_ui/game_pictures/backgrounds/americanBg");
-    bkgnd = bkgnd.scaled(this->size(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
-    QPalette palette;
-    palette.setBrush(QPalette::Background, bkgnd);
-    this->setPalette(palette);
+
+    setBackgroundFromPath("../../qt_ui/game_pictures/backgrounds/americanBg");
+
     QFont police("calibri");
 
     QFrame * fields = new QFrame(this);
-    QFormLayout * fieldsLayout = new QFormLayout(this);
+    QFormLayout * fieldsLayout = new QFormLayout(fields);
 
     usernameL = new QLineEdit(fields);
     usernameL->setSelection(0, 10);
@@ -37,34 +33,29 @@ void LoginGUI::display() {
     passwordL = new QLineEdit(fields);
     passwordL->setEchoMode(QLineEdit::Password); // Display bullets instead of char
 
-    QString s1 = "USERNAME";
-    QString s2 = "PASSWORD";
-    QString s3 = "LOGIN";
-    QString s4 = "CANCEL";
+    QLabel *usernameLabel = new QLabel(fields);
+    usernameLabel->setText("USERNAME");
+    usernameLabel->setFont(police);
 
-    QLabel *l1 = new QLabel(fields);
-    l1->setText(s1);
-    l1->setFont(police);
+    QLabel *passwordLabel = new QLabel(fields);
+    passwordLabel->setText("PASSWORD");
+    passwordLabel->setFont(police);
 
-    QLabel *l2 = new QLabel(fields);
-    l2->setText(s2);
-    l2->setFont(police);
+    connect = new QHandPointerButton("LOGIN", 212, 45, fields);
+    cancel = new QHandPointerButton("CANCEL", 212, 45, fields);
 
-    connect = new QPushButton(s3,fields);
-    connect->setFixedSize(QSize(212,45));
 
-    cancel = new QPushButton(s4,fields);
-    cancel->setFixedSize(QSize(212,45));
-
-    QObject::connect(connect, SIGNAL(clicked()), this, SLOT(loginUser()));
     QObject::connect(usernameL, SIGNAL(returnPressed()), passwordL, SLOT(setFocus()));
     QObject::connect(passwordL, SIGNAL(returnPressed()), connect, SIGNAL(clicked()));
+    QObject::connect(connect, SIGNAL(clicked()), this, SLOT(loginUser()));
     QObject::connect(cancel, SIGNAL(clicked()), this, SLOT(cancelLogin()));
 
-    fieldsLayout->addRow(l1, usernameL);
-    fieldsLayout->addRow(l2, passwordL);
+    fieldsLayout->addRow(usernameLabel, usernameL);
+    fieldsLayout->addRow(passwordLabel, passwordL);
     fieldsLayout->addRow(connect);
     fieldsLayout->addRow(cancel);
+    fieldsLayout->setAlignment(connect, Qt::AlignCenter);
+    fieldsLayout->setAlignment(cancel, Qt::AlignCenter);
     fields->setLayout(fieldsLayout);
     fields->move(this->size().width() / 2 - 125, this->size().height() / 2 +105);
 
@@ -89,10 +80,12 @@ void LoginGUI::displayAlreadyConnected() {
 
 LoginGUI::LoginGUI(LoginManager *manager) : LoginUI(manager){}
 
-LoginGUI::~LoginGUI() {
-    close();
-}
+LoginGUI::~LoginGUI() {}
 
 void LoginGUI::cancelLogin() {
     manager->goToWelcome();
 }
+
+//void LoginGUI::destroy() {
+//    AbstractGUI::destroy();
+//}

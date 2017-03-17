@@ -1,13 +1,20 @@
 #include <iostream>
+#include <cstring>
 #include <QtWidgets/QApplication>
+#include <QtWidgets/QPushButton>
+#include <QtWidgets/QMainWindow>
 #include "App.hpp"
 #include "global.hpp"
+#include "Profile/ProfileManager.hpp"
+#include "Profile/ProfileGUI.hpp"
+
+static const bool DEBUG = true;
 
 int main(int argc, char *argv[]) {
-    
+
     isConsole = false;
 
-    if (argc == 1){
+    if (argc == 1) {
         std::cerr << "Don't forget the ip_adress of the server as argument! ;)" << std::endl;
         exit(1);
     } else if (argc == 3) {
@@ -15,6 +22,7 @@ int main(int argc, char *argv[]) {
             isConsole = true;
         }
     }
+
 
     /*if (!isConsole) { // Pour tester Qt
         QApplication application(argc, argv);
@@ -27,24 +35,15 @@ int main(int argc, char *argv[]) {
 
     if (!isConsole) {
         QApplication application(argc, argv);
+        application.setApplicationName("White house defense");
         App app(argv[1]);
-
-        /* Pour tester la MapGUI
-        MapGUI mapGUI(1);
-        int quadrant = 0;
-        GameState gameState = GameState(TEAM_MODE);
-        PlayerState playerState = PlayerState();
-        gameState.addPlayerState(playerState);
-        gameState.addTower(new GunTower(Position(6, 2)), quadrant);
-        gameState.addTower(new SniperTower(Position(7, 2)), quadrant);
-        gameState.addTower(new ShockTower(Position(8, 2)), quadrant);
-        mapGUI.display(gameState, quadrant);
-        */
-
+        std::cout << argv[1] << std::endl;
         return application.exec();
+
     }
 
-    App app(argv[1]);
+//    App app(argv[1]);
+
 
     return 0;
 }

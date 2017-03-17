@@ -1,7 +1,3 @@
-//
-// Created by jepsiko on 09/03/17.
-//
-
 #include <QtCore/QFile>
 #include <QtWidgets/QFormLayout>
 #include <QtWidgets/QLabel>
@@ -13,18 +9,13 @@
 RegisterGUI::RegisterGUI(RegisterManager *manager) : manager(manager) {}
 
 void RegisterGUI::display() {
-    QFile File("../../qt_ui/americanLogin.qss");
-    File.open(QFile::ReadOnly);
-    QString styleSheet = QLatin1String(File.readAll());
-    this->setStyleSheet(styleSheet);
+    setStylesheetFromPath("../../qt_ui/americanLogin.qss");
 
     this->setFixedHeight(600);
     this->setFixedWidth(750);
-    QPixmap bkgnd("../../qt_ui/game_pictures/backgrounds/americanBg");
-    bkgnd = bkgnd.scaled(this->size(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
-    QPalette palette;
-    palette.setBrush(QPalette::Background, bkgnd);
-    this->setPalette(palette);
+
+    setBackgroundFromPath("../../qt_ui/game_pictures/backgrounds/americanBg");
+
     QFont police("calibri");
 
     QFrame * fields = new QFrame(this);
@@ -59,10 +50,14 @@ void RegisterGUI::display() {
 
     connect = new QPushButton(s4,fields);
     connect->setFixedSize(QSize(212,45));
+    connect->setCursor(Qt::PointingHandCursor);
+
 
     cancel = new QPushButton(s5,fields);
     cancel->setFixedSize(QSize(212,45));
-    
+    cancel->setCursor(Qt::PointingHandCursor);
+
+
     QObject::connect(usernameL, SIGNAL(returnPressed()), passwordL, SLOT(setFocus()));
     QObject::connect(passwordL, SIGNAL(returnPressed()), confirmL, SLOT(setFocus()));
     QObject::connect(confirmL, SIGNAL(returnPressed()), connect, SIGNAL(clicked()));

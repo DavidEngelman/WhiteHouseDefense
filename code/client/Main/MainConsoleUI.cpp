@@ -22,6 +22,8 @@ void MainConsoleUI::display() {
         std::cin >> x;
     }
     menuChoice = x;
+
+    manager->handleUserMenuChoice();
 }
 
 void MainConsoleUI::displayMenuChoices() const {
@@ -54,6 +56,7 @@ void MainConsoleUI::displayGameModesMenu() {
         std::cin >> x;
     }
     gameModeChoice = x - 1;
+    manager->handleGameModeChoice();
 }
 
 void MainConsoleUI::displayGameModeChoices() const {
@@ -63,7 +66,7 @@ void MainConsoleUI::displayGameModeChoices() const {
     std::cout << "   |        1. Classic mode             |   " << std::endl;
     std::cout << "   |        2. Timed mode               |   " << std::endl;
     std::cout << "   |        3. Team mode                |   " << std::endl;
-    std::cout << "   |        4. Exit                     |   " << std::endl;
+    std::cout << "   |        4. Cancel                   |   " << std::endl;
     std::cout << "   |                                    |   " << std::endl;
     std::cout << "   ======================================   " << std::endl;
 }
