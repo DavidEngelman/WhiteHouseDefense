@@ -34,8 +34,9 @@ void App::set_username(std::string name) {
 }
 
 App::~App() {
-    int socket = init_connection_to_server(server_ip_address, ACCOUNT_SERVER_PORT);
-    std::string message = "Exit," + std::to_string(player_id);
-    send_message(socket, message.c_str());
-
+    if (username == "") { // Si le joeur est connecté, on envoye un message de deconexion
+        int socket = init_connection_to_server(server_ip_address, ACCOUNT_SERVER_PORT);
+        std::string message = "Exit," + std::to_string(player_id);
+        send_message(socket, message.c_str());
+    }
 }
