@@ -1,30 +1,40 @@
 #ifndef MAP_HPP
 #define MAP_HPP
 
-const int SIZE = 31; //Not > 41 because it's too big for a screen
+const int SIZE = 41;
 
 #define GRASS "◼  "
-#define GREEN_GRASS "\033[32m◼\033[0m  "
-#define PURPLE_GRASS "\033[35m◼\033[0m  "
-
+#define UNKNOWN "?  "
 #define PATH "   "
-#define LIMIT "\033[34m◼\033[0m  "
+#define MUD "☒  "
+#define ROCK "\033[34m⛰\033[0m  "
 #define NPC "\033[33m☪\033[0m  "
 #define BASE "\033[31m✈\033[0m  "
+#define GREEN_BASE "\033[32m✈\033[0m  "
+#define PURPLE_BASE "\033[35m✈\033[0m  "
+#define TREE "\033[32m☘\033[0m  "
+#define PINE "\033[32m△\033[0m  "
+#define PALMER "\033[32m⸙\033[0m  "
+#define WATER "\033[34m~\033[0m  "
 
 #define PATH_INT 0
-#define GRASS_INT -1
-#define LIMIT_INT -2
-
-// Tiles
-#define CROSS 0
-#define UP_DOWN 1
-#define LEFT_RIGHT 2
-#define LEFT_DOWN 3
-#define LEFT_UP 4
-#define UP_RIGHT 5
-#define DOWN_RIGHT 6
-#define CASTLE 7
+#define GRASS_INT 1
+#define BASE_INT 2
+#define GRASS_ROCK_INT 3
+#define TREE_INT 4
+#define PINE_INT 5
+#define SAND_INT 6
+#define PALMER_INT 7
+#define WATER_INT 8
+#define SAND_STONE_INT 9
+#define SAND_ROCK_INT 10
+#define WATER_ROCK_INT 11
+#define LAVA_INT 12
+#define SNOW_INT 13
+#define PINE_SNOW_INT 14
+#define DIRT_INT 15
+#define DIRT_ROCK_INT 16
+#define STONE_INT 17
 
 #include <string>
 #include <vector>
@@ -47,24 +57,24 @@ class GameState;
  */
 
 class Map {
-private:
+protected:
     int matrix[SIZE][SIZE];
-    int tileMatrix[SIZE][SIZE];
 
     void generateRandomMatrix();
     void initMap();
     void generateQuarterMap(Position position);
-    const bool isNextToPath(Position position);
+    bool isNextToPath(Position position);
     void copyQuarter();
-    void generateTiles();
-    int computeTile(Position pos);
+    void initMapFromFile(std::string filename);
+
 
 public:
     Map(unsigned seed);
-    const void display(GameState& gameState, int quadrant) const;
-    const bool isPath(Position pos) const;
-    bool isDelimiter(Position pos) const;
-    static const int computeQuadrant(Position pos);
+    virtual void display(GameState& gameState, int quadrant) const;
+    bool isPath(Position pos) const;
+    bool isObstacle(Position pos) const;
+    static int computeQuadrant(Position pos);
+
 };
 
 #endif

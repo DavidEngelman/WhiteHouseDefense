@@ -35,6 +35,8 @@ public:
 	void display_dead_message();
 
     void displayPlayersPlacingTowersMessage();
+
+    void destroy() {};
 };
 
 #endif

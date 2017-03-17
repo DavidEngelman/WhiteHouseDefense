@@ -70,6 +70,7 @@ set(CLIENT_FILES client/ClientLauncher.cpp
 
         #GAME
         common/Map.cpp
+        client/MapGUI.cpp
         common/AttackTower.cpp
         common/AbstractTower.cpp
         common/GunTower.cpp
@@ -80,9 +81,9 @@ set(CLIENT_FILES client/ClientLauncher.cpp
         common/Wave.cpp
         client/Game/GameUI.cpp
         common/PlayerState.cpp
-        #client/Game/GameLauncher.cpp
-        #client/Game/GameGUI.cpp
-        #client/Game/GameManager.cpp
+        client/Game/GameLauncher.cpp
+        client/Game/GameGUI.cpp
+        client/Game/GameManager.cpp
         common/Position.cpp
 
         #OTHERS
