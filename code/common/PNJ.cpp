@@ -23,6 +23,12 @@ void PNJ::advance(Map &map) {
 
     if (can_go_forward(map)) {
         move = get_forward_direction();
+    } else if (can_go_left(map) && can_go_right(map)) {
+        int rand_mov = rand()%2;
+        if (rand_mov == 0)
+            move = get_left_direction();
+        else
+            move = get_right_direction();
     } else if (can_go_left(map)) {
         move = get_left_direction();
     } else if (can_go_right(map)) {
@@ -215,9 +221,9 @@ bool PNJ::operator!=(const PNJ &rhs) const {
 bool PNJ::isInPlayerBase() {
     return (direction == NORTH && getPosition().getY() == 0)
            ||
-           (direction == EAST && getPosition().getX() == 30)
+           (direction == EAST && getPosition().getX() == SIZE - 1)
            ||
-           (direction == SOUTH && getPosition().getY() == 30)
+           (direction == SOUTH && getPosition().getY() == SIZE - 1)
            ||
            (direction == WEST && getPosition().getX() == 0);
 }
