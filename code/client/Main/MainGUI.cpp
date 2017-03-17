@@ -54,7 +54,6 @@ void MainGUI::display() {
 }
 
 void MainGUI::displayGameModesMenu() {
-
     QDialogButtonBox* dialog = new QDialogButtonBox;
     dialog->setWindowTitle("Select a game mode");
 
@@ -73,53 +72,8 @@ void MainGUI::displayGameModesMenu() {
     connect(timedMode, SIGNAL(clicked(int)), this, SLOT(handleGameModeChoice(int)));
     connect(cancel, SIGNAL(clicked(int)), this, SLOT(handleGameModeChoice(int)));
 
-
     dialog->move(this->width() /2, this->height()/2);
     dialog->show();
-    /*
-    delete newGame;
-    delete spectator;
-    delete profile;
-    delete friendList;
-    delete leaderBoard;
-    delete exit;
-
-    QFrame * fields = new QFrame(this);
-    QFormLayout * fieldsLayout = new QFormLayout(this);
-
-    QString s1 = "CLASSIC MODE";
-    QString s2 = "TIMED MODE";
-    QString s3 = "TEAM MODE";
-    QString s4 = "CANCEL";
-
-    classicMode = new QCustomButton(1, s1,fields);
-    classicMode->setFixedSize(QSize(212,45));
-
-    timedMode = new QCustomButton(2, s2,fields);
-    timedMode->setFixedSize(QSize(212,45));
-
-    teamMode = new QCustomButton(3, s3,fields);
-    teamMode->setFixedSize(QSize(212,45));
-
-    cancel = new QCustomButton(4, s4,fields);
-    cancel->setFixedSize(QSize(212,45));
-
-    QObject::connect(classicMode, SIGNAL(clicked(int)), this, SLOT(handleGameModeChoice(int)));
-    QObject::connect(timedMode, SIGNAL(clicked(int)), this, SLOT(handleGameModeChoice(int)));
-    QObject::connect(teamMode, SIGNAL(clicked(int)), this, SLOT(handleGameModeChoice(int)));
-    QObject::connect(cancel, SIGNAL(clicked(int)), this, SLOT(handleGameModeChoice(int)));
-
-    fieldsLayout->addRow(classicMode);
-    fieldsLayout->addRow(timedMode);
-    fieldsLayout->addRow(teamMode);
-    fieldsLayout->addRow(cancel);
-    fields->setLayout(fieldsLayout);
-    fields->move(this->size().width() / 2 - 125, this->size().height() / 2 +105);
-
-    this->showMaximized();
-    // créer un slot qui fera appel à handleGameModeChoice
-    */
-
 }
 
 void MainGUI::handleMenuChoice(int choice) {

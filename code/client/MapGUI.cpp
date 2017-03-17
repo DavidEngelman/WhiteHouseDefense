@@ -45,7 +45,10 @@ void MapGUI::paintEvent(QPaintEvent *) {
                 }
                 image = QImage("../../qt_ui/game_pictures/tiles/path.png");
                 painter.drawImage(x*TILES_SIZE, y*TILES_SIZE, image);
-                if (has_npc) std::cout << NPC;
+                if (has_npc) {
+                    image = QImage("../../qt_ui/game_pictures/tiles/mexican.png");
+                    painter.drawImage(x*TILES_SIZE, y*TILES_SIZE, image);
+                }
             } else if (cell == GRASS_INT or cell == SAND_INT or cell == SNOW_INT or cell == DIRT_INT or cell == STONE_INT) {
                 if (cell == GRASS_INT) {
                     image = QImage("../../qt_ui/game_pictures/tiles/grass.png");
