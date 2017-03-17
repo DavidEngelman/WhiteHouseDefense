@@ -17,6 +17,18 @@ PNJ::PNJ(Position position, int healthPoints, int movementSpeed, Position last_p
         position(position), healthPoints(healthPoints), movementSpeed(movementSpeed), last_position(last_pos),
         direction(direction) {}
 
+Direction PNJ::get_random_direction(){
+    Direction move;
+    int rand_mov = rand()%2;
+    if (rand_mov == 0)
+        move = get_left_direction();
+    else
+        move = get_right_direction();
+
+    return move;
+
+}
+
 void PNJ::advance(Map &map) {
     Direction move;
     Position current_position = getPosition();
@@ -24,11 +36,7 @@ void PNJ::advance(Map &map) {
     if (can_go_forward(map)) {
         move = get_forward_direction();
     } else if (can_go_left(map) && can_go_right(map)) {
-        int rand_mov = rand()%2;
-        if (rand_mov == 0)
-            move = get_left_direction();
-        else
-            move = get_right_direction();
+        move = get_random_direction();
     } else if (can_go_left(map)) {
         move = get_left_direction();
     } else if (can_go_right(map)) {
@@ -96,9 +104,7 @@ void PNJ::setPosition(Position position) {
 
 bool PNJ::can_go_forward(Map &map) {
     Direction dir = get_forward_direction();
-
     Position forward_pos = Position(getPosition().getX() + dir.x, getPosition().getY() + dir.y);
-
     return map.isPath(forward_pos);
 
 
@@ -106,9 +112,7 @@ bool PNJ::can_go_forward(Map &map) {
 
 bool PNJ::can_go_left(Map &map) {
     Direction dir = get_left_direction();
-
     Position left_pos = Position(getPosition().getX() + dir.x, getPosition().getY() + dir.y);
-
     return map.isPath(left_pos) && left_pos != getLast_position();
 
 

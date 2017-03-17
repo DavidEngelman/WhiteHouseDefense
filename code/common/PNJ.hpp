@@ -77,6 +77,8 @@ public:
     bool operator==(const PNJ &rhs) const;
 
     bool operator!=(const PNJ &rhs) const;
+
+    Direction get_random_direction();
 };
 
 #endif // PROJET_PNJ_H
