@@ -37,9 +37,7 @@ public:
     virtual void display_dead_message() = 0;
 
     virtual void displayPlayersPlacingTowersMessage() = 0;
-    void displayPlayersPlacingTowersMessage();
-
-    void destroy() {};
+    
 };
 
 #endif //PROJET_GAMEUI_H

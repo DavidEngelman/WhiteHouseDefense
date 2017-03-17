@@ -128,7 +128,7 @@ bool GameManager::checkValidity(Position towerPos, GameState& gamestate, std::st
         validity = false;
     } else if (Map::computeQuadrant(towerPos) != quadrant) { // if the position is in the right quadrant
         validity = false;
-    } else if (gameUI.getMap()->isPath(towerPos) || gameUI.getMap()->isObstacle(towerPos)){
+    } else if (gameUI->getMap()->isPath(towerPos) || gameUI->getMap()->isObstacle(towerPos)){
         validity = false;
     }
     return validity;
@@ -178,7 +178,8 @@ void GameManager::run() {
                 if (is_alive() && !isSupporter) {
                     inputThread = pthread_create(&thr, NULL, &GameManager::staticInputThread, this);
                 } else {
-                    gameUI.display(gameState, quadrant);
+                    gameUI->display(gameState, quadrant);
+                }
 
                 if (isSupporter) {
                     gameUI->displayPlayersPlacingTowersMessage();
