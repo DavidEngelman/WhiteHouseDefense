@@ -1,40 +1,42 @@
-#ifndef GAMEUI_HPP
-#define GAMEUI_HPP
 
-#include "../../common/GameState.hpp"
-#include "../../common/Map.hpp"
-#include "../Drawing.hpp"
+
+#ifndef PROJET_GAMEUI_H
+#define PROJET_GAMEUI_H
+
+#include "GameManager.hpp"
 #include "../Abstract/AbstractUI.hpp"
 
+class GameManager;
 
-class GameUI : public AbstractUI {
-private:
+class GameUI : public virtual AbstractUI {
+
+protected:
+
+    GameManager *gameManager;
+
     Map* map;
 
-	bool checkCoord(int x, int y);
-
 public:
-    GameUI(unsigned seed);
+    GameUI(unsigned seed, GameManager *gameManager) : map(new Map(seed)), gameManager(gameManager) {};
 
-	Position getPosBuyingTower();
+    virtual Position getPosBuyingTower() = 0;
 
-	Map *getMap() const;
+    virtual Map *getMap() const { return map ;}
 
-	Position getPosSellingTower();
-	int getChoice();
+    virtual Position getPosSellingTower() = 0;
 
-	void display(GameState& gameState, int quadrant);
-	void displayPosingPhase();
-	void displayTowerShop();
+    virtual void display(GameState& gameState, int quadrant) = 0;
+    virtual void displayPosingPhase() = 0;
+    virtual void displayTowerShop() = 0;
 
-	void displayGameOver(GameState& gamestate);
+    virtual void displayGameOver(GameState& gamestate) = 0;
 
-	void displayPlayerInfos(GameState &gameState, int quadrant);
-	void displayInfoForSupporter(GameState& gameState);
+    virtual void displayPlayerInfos(GameState &gameState, int quadrant) = 0;
+    virtual void displayInfoForSupporter(GameState& gameState) = 0;
 
-	void display_dead_message();
+    virtual void display_dead_message() = 0;
 
-    void displayPlayersPlacingTowersMessage();
+    virtual void displayPlayersPlacingTowersMessage() = 0;
 };
 
-#endif
+#endif //PROJET_GAMEUI_H

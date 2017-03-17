@@ -2,25 +2,42 @@
 
 #include "GameManager.hpp"
 #include "../../server/Server.hpp"
+#include "GameGUI.hpp"
+#include "GameConsoleUI.hpp"
 
 
 GameManager::GameManager(int socket, App *app) :
         AbstractManager(app),
         server_socket(socket),
-        isSupporter(false),
-        gameUI(getMapSeedFromServer()), // L'ordre est important parce qu'on fait des
-        quadrant(getQuadrantFromServer()) // recv. Ne pas changer l'ordre!
+        isSupporter(false)
+        //gameUI(getMapSeedFromServer()), // L'ordre est important parce qu'on fait des
+        //quadrant(getQuadrantFromServer()) // recv. Ne pas changer l'ordre!
 {
+    if (!isConsole) {
+        gameUI = new GameGUI(getMapSeedFromServer(), this);
+    } else {
+        gameUI = new GameConsoleUI(getMapSeedFromServer(),this);
+    }
+
+    quadrant = getQuadrantFromServer();
+
     getInitialGameStateFromServer();
 }
 
 GameManager::GameManager(int socket, bool _isSupporter, App *app) :
         AbstractManager(app),
         server_socket(socket),
-        isSupporter(_isSupporter),
-        gameUI(getMapSeedFromServer()), // L'ordre est important parce qu'on fait des
-        quadrant(getQuadrantFromServer()) // recv. Ne pas changer l'ordre!
+        isSupporter(_isSupporter)
+        //gameUI(getMapSeedFromServer()), // L'ordre est important parce qu'on fait des
+        //quadrant(getQuadrantFromServer()) // recv. Ne pas changer l'ordre!
 {
+    if (!isConsole) {
+        gameUI = new GameGUI(getMapSeedFromServer(), this);
+    } else {
+        gameUI = new GameConsoleUI(getMapSeedFromServer(),this);
+    }
+
+    quadrant = getQuadrantFromServer();
     getInitialGameStateFromServer();
 }
 
@@ -33,16 +50,18 @@ void *GameManager::input_thread() {
     //TODO: diviser cette méthode en plusieurs plus petites pcq la c'est pas très lisible
 
     while (1) {
-        gameUI.displayPosingPhase();
-        int choice = gameUI.getChoice();
-        gameUI.display(gameState, quadrant);
-        gameUI.displayPlayerInfos(gameState, quadrant);
+        gameUI->displayPosingPhase();
+        //int choice = gameUI->getChoice();
+        int choice = 1; //TODO CHANGER
+        gameUI->display(gameState, quadrant);
+        gameUI->displayPlayerInfos(gameState, quadrant);
         if (choice == 1) {
-            gameUI.displayTowerShop();
-            int towerchoice = gameUI.getChoice();
-            gameUI.display(gameState, quadrant);
-            gameUI.displayPlayerInfos(gameState, quadrant);
-            Position towerPos = gameUI.getPosBuyingTower();
+            gameUI->displayTowerShop();
+            //int towerchoice = gameUI->getChoice();
+            int towerchoice = 1;
+            gameUI->display(gameState, quadrant);
+            gameUI->displayPlayerInfos(gameState, quadrant);
+            Position towerPos = gameUI->getPosBuyingTower();
             if (towerchoice == 1) {
                 if (checkValidity(towerPos, gameState, GUN_TOWER_STR)) {
                     gameState.addTower(new GunTower(Position(towerPos.getX(), towerPos.getY())), quadrant);
@@ -60,14 +79,14 @@ void *GameManager::input_thread() {
                 }
             }
         }else if (choice == 2){
-            Position toSell = gameUI.getPosSellingTower();
+            Position toSell = gameUI->getPosSellingTower();
             if (isTowerInPosition(gameState, toSell)){
                 gameState.deleteTower(toSell, quadrant);
                 sendSellRequest(toSell);
             }
         }// else upgrade tower
-        gameUI.display(gameState, quadrant);
-        gameUI.displayPlayerInfos(gameState, quadrant);
+        gameUI->display(gameState, quadrant);
+        gameUI->displayPlayerInfos(gameState, quadrant);
     }
 }
 
@@ -109,7 +128,7 @@ bool GameManager::checkValidity(Position towerPos, GameState& gamestate, std::st
         validity = false;
     } else if (Map::computeQuadrant(towerPos) != quadrant) { // if the position is in the right quadrant
         validity = false;
-    } else if (gameUI.getMap()->isPath(towerPos) || gameUI.getMap()->isDelimiter(towerPos)){
+    } else if (gameUI->getMap()->isPath(towerPos) || gameUI->getMap()->isDelimiter(towerPos)){
         validity = false;
     }
     return validity;
@@ -138,12 +157,12 @@ void GameManager::sendSellRequest(Position towerPos) {
 
 
 void GameManager::run() {
-    gameUI.display(gameState, quadrant);
+    gameUI->display(gameState, quadrant);
 
     if (!isSupporter)
-        gameUI.displayPlayerInfos(gameState, quadrant);
+        gameUI->displayPlayerInfos(gameState, quadrant);
     else
-        gameUI.displayInfoForSupporter(gameState);
+        gameUI->displayInfoForSupporter(gameState);
 
     char server_msg_buff [BUFFER_SIZE];
 
@@ -155,12 +174,12 @@ void GameManager::run() {
             if (is_alive() && !isSupporter ) {
                 inputThread = pthread_create(&thr, NULL, &GameManager::staticInputThread, this);
             } else {
-                gameUI.display(gameState, quadrant);
+                gameUI->display(gameState, quadrant);
 
                 if (isSupporter) {
-                    gameUI.displayPlayersPlacingTowersMessage();
+                    gameUI->displayPlayersPlacingTowersMessage();
                 } else {
-                    gameUI.display_dead_message();
+                    gameUI->display_dead_message();
                 }
             }
         }else if (strcmp(server_msg_buff, WAVE) == 0){
@@ -170,19 +189,19 @@ void GameManager::run() {
         }
         else {
             unSerializeGameState(server_msg_buff);
-            gameUI.display(gameState, quadrant);
+            gameUI->display(gameState, quadrant);
 
             if (!isSupporter) {
                 if (is_alive()) {
-                    gameUI.displayPlayerInfos(gameState, quadrant);
+                    gameUI->displayPlayerInfos(gameState, quadrant);
                 } else {
-                    gameUI.display_dead_message();
+                    gameUI->display_dead_message();
                 }
             } else
-                gameUI.displayInfoForSupporter(gameState);
+                gameUI->displayInfoForSupporter(gameState);
         }
     }
-    gameUI.displayGameOver(gameState);
+    gameUI->displayGameOver(gameState);
 
     // Menu to come back to main menu (or make another game of the same type ?)
     come_back_to_menu();

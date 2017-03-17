@@ -1,11 +1,14 @@
-#include "GameUI.hpp"
-#include <iostream>
+#include "GameConsoleUI.hpp"
+
 #include "../../common/Tools.hpp"
 
 
-GameUI::GameUI(unsigned seed) : map(new Map(seed)) {}
+GameConsoleUI::GameConsoleUI(unsigned seed, GameManager *gameManager) : GameUI(seed,gameManager) {}
 
-Position GameUI::getPosBuyingTower() {
+
+
+
+Position GameConsoleUI::getPosBuyingTower() {
     int x;
     int y;
 
@@ -22,7 +25,7 @@ Position GameUI::getPosBuyingTower() {
     return Position(x, y);
 }
 
-bool GameUI::checkCoord(int x, int y) {
+bool GameConsoleUI::checkCoord(int x, int y) {
     if (0 <= x and x < SIZE and 0 <= y and y < SIZE) {
         return true;
     }
@@ -30,11 +33,11 @@ bool GameUI::checkCoord(int x, int y) {
     return false;
 }
 
-void GameUI::display(GameState& gameState, int quadrant) {
+void GameConsoleUI::display(GameState& gameState, int quadrant) {
     map->display(gameState, quadrant);
 }
 
-Position GameUI::getPosSellingTower() {
+Position GameConsoleUI::getPosSellingTower() {
     int x;
     int y;
 
@@ -51,7 +54,7 @@ Position GameUI::getPosSellingTower() {
     return Position(x, y);
 }
 
-void GameUI::displayPlayerInfos(GameState &gameState, int quadrant) {
+void GameConsoleUI::displayPlayerInfos(GameState &gameState, int quadrant) {
     int gold = gameState.getPlayerStates()[quadrant].getMoney();
     int pnj_killed = gameState.getPlayerStates()[quadrant].getPnjKilled();
     int hp = gameState.getPlayerStates()[quadrant].getHp();
@@ -66,7 +69,7 @@ void GameUI::displayPlayerInfos(GameState &gameState, int quadrant) {
 }
 
 
-void GameUI::displayInfoForSupporter(GameState &gameState) {
+void GameConsoleUI::displayInfoForSupporter(GameState &gameState) {
     std::string infos;
     int i = 0;
     for(PlayerState& ps : gameState.getPlayerStates()) {
@@ -81,7 +84,7 @@ void GameUI::displayInfoForSupporter(GameState &gameState) {
     std::cout << std::endl;
 }
 
-void GameUI::displayPosingPhase() {
+void GameConsoleUI::displayPosingPhase() {
 
     std::cout << "You can: " << std::endl;
     std::cout << "1. Buy tower " << std::endl;
@@ -90,7 +93,7 @@ void GameUI::displayPosingPhase() {
     std::cout << std::endl;
 
 }
-void GameUI::displayTowerShop() {
+void GameConsoleUI::displayTowerShop() {
     std::cout << "You can choose among the following towers: " << std::endl;
     std::cout << "1. GunTower : " << std::to_string(GUN_TOWER_PRICE) << " $ " << std::endl;
     std::cout << "2. SniperTower : " << std::to_string(SNIPER_TOWER_PRICE) << " $ " << std::endl;
@@ -98,7 +101,7 @@ void GameUI::displayTowerShop() {
     std::cout << std::endl;
 }
 
-int GameUI::getChoice() {
+int GameConsoleUI::getChoice() {
     /* Ask at the user his choice */
     int x = -1;
     std::cout << "   Enter your choice: ";
@@ -116,7 +119,7 @@ int GameUI::getChoice() {
     return x;
 }
 
-void GameUI::displayGameOver(GameState &gamestate) {
+void GameConsoleUI::displayGameOver(GameState &gamestate) {
 
     Drawing::drawWhiteHouse("END GAME STATS");
 
@@ -137,15 +140,14 @@ void GameUI::displayGameOver(GameState &gamestate) {
 
 }
 
-Map *GameUI::getMap() const {
-    return map;
-}
 
-void GameUI::display_dead_message() {
+
+void GameConsoleUI::display_dead_message() {
     std::cout << "You are dead. You can now watch the game peacefully" << std::endl;
 }
 
-void GameUI::displayPlayersPlacingTowersMessage() {
+void GameConsoleUI::displayPlayersPlacingTowersMessage() {
     std::cout << "Please wait. The remaining players are placing towers" << std::endl;
 }
+
 

@@ -78,11 +78,12 @@ set(CLIENT_FILES client/ClientLauncher.cpp
         common/PNJ.cpp
         common/GameState.cpp
         common/Wave.cpp
-        client/Game/GameUI.cpp
         common/PlayerState.cpp
-        #client/Game/GameLauncher.cpp
-        #client/Game/GameGUI.cpp
-        #client/Game/GameManager.cpp
+        client/Game/GameLauncher.cpp
+        client/Game/GameConsoleUI.cpp
+        client/Game/GameGUI.cpp
+        client/Game/GameManager.cpp
+        client/Game/GameUI.hpp
         common/Position.cpp
 
         #OTHERS

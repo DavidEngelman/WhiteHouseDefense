@@ -15,6 +15,8 @@
 #include <pthread.h>
 #include <unistd.h>
 
+class GameUI;
+
 class GameManager : public AbstractManager{
 
 private:
@@ -24,7 +26,7 @@ private:
     pthread_t thr;
     int inputThread;
     GameState gameState;
-    GameUI gameUI;
+    GameUI *gameUI;
     int quadrant;
     bool isSupporter;
 
