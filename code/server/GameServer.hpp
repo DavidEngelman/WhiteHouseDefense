@@ -30,11 +30,10 @@ private:
     GameEngine *gameEngine;
     std::vector<PlayerConnection> playerConnections;
 
-private:
     std::vector<int> supportersSockets;
 
     pthread_t spectatorJoinThread;
-    pthread_t inputThread;
+    pthread_t receiverThread;
 
 
     void sendGameStateToPlayer(PlayerConnection &connection);

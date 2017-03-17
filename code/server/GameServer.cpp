@@ -94,11 +94,11 @@ void GameServer::sendGameStateToPlayers() {
  */
 
 void GameServer::startInputThread() {
-    pthread_create(&inputThread, NULL, &GameServer::staticInputThread, this);
+    pthread_create(&receiverThread, NULL, &GameServer::staticInputThread, this);
 }
 
 void GameServer::stopInputThread() {
-    pthread_cancel(inputThread);
+    pthread_cancel(receiverThread);
 }
 
 void *GameServer::staticInputThread(void * self) {
