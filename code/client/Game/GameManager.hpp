@@ -40,9 +40,6 @@ private:
     void unSerializeWave(std::string serialized_wave);
     void unSerializePNJ(std::string serialized_pnj, Wave* wave);
 
-    static void* staticInputThread(void *self);
-    void *input_thread();
-
     void come_back_to_menu();
     bool is_alive();
     bool isTowerInPosition(GameState &gamestate, Position towerPos);
@@ -60,6 +57,18 @@ public:
     GameManager(int socket, bool _isSupporter, App *app);
 
     void run();
+
+    GameState &getGameState();
+
+    int getQuadrant();
+
+    bool placeGunTower(Position towerPos);
+
+    bool placeSniperTower(Position towerPos);
+
+    bool placeShockTower(Position towerPos);
+
+    bool sellTower(Position toSell);
 };
 
 #endif

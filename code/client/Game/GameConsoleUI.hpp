@@ -33,6 +33,18 @@ public:
     void displayPlayersPlacingTowersMessage() override ;
 
 	bool checkCoord(int x, int y);
+
+	void *input_thread();
+
+	static void *staticInputThread(void *self);
+
+	int getTowerTypeChoice();
+
+	Position getPositionOfTowerPlacement();
+
+	void placeTowerAction();
+
+	void sellTowerAction();
 };
 
 #endif

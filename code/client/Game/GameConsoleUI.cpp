@@ -150,4 +150,57 @@ void GameConsoleUI::displayPlayersPlacingTowersMessage() {
     std::cout << "Please wait. The remaining players are placing towers" << std::endl;
 }
 
+int GameConsoleUI::getTowerTypeChoice() {
+    displayTowerShop();
+    return getChoice();
+}
+
+Position GameConsoleUI::getPositionOfTowerPlacement() {
+    display(gameManager->getGameState(), gameManager->getQuadrant());
+    displayPlayerInfos(gameManager->getGameState(), gameManager->getQuadrant());
+    return getPosBuyingTower();
+}
+
+void GameConsoleUI::placeTowerAction() {
+    int towerChoice = getTowerTypeChoice();
+    Position towerPos = getPositionOfTowerPlacement();
+    if (towerChoice == 1) {
+        gameManager->placeGunTower(towerPos);
+    } else if (towerChoice == 2) {
+        gameManager->placeSniperTower(towerPos);
+    } else {
+        gameManager->placeShockTower(towerPos);
+    }
+}
+
+void GameConsoleUI::sellTowerAction() {
+    Position toSell = getPosSellingTower();
+    gameManager->sellTower(toSell);
+}
+
+void *GameConsoleUI::input_thread() {
+
+    while (1) {
+        displayPosingPhase();
+        int choice = getChoice();
+        display(gameManager->getGameState(), gameManager->getQuadrant());
+        displayPlayerInfos(gameManager->getGameState(), gameManager->getQuadrant());
+
+        if (choice == 1) {
+            placeTowerAction();
+
+        }else if (choice == 2){
+            sellTowerAction();
+
+        }// else upgrade tower
+        display(gameManager->getGameState(), gameManager->getQuadrant());
+        displayPlayerInfos(gameManager->getGameState(), gameManager->getQuadrant());
+    }
+}
+
+
+void *GameConsoleUI::staticInputThread(void *self){
+    return static_cast<GameConsoleUI*>(self)->input_thread();
+}
+
 
