@@ -128,7 +128,7 @@ bool GameManager::checkValidity(Position towerPos, GameState& gamestate, std::st
         validity = false;
     } else if (Map::computeQuadrant(towerPos) != quadrant) { // if the position is in the right quadrant
         validity = false;
-    } else if (gameUI->getMap()->isPath(towerPos) || gameUI->getMap()->isDelimiter(towerPos)){
+    } else if (gameUI.getMap()->isPath(towerPos) || gameUI.getMap()->isObstacle(towerPos)){
         validity = false;
     }
     return validity;
@@ -164,17 +164,21 @@ void GameManager::run() {
     else
         gameUI->displayInfoForSupporter(gameState);
 
-    char server_msg_buff [BUFFER_SIZE];
+        char server_msg_buff[BUFFER_SIZE];
 
-    while(!gameState.getIsGameOver()) {
-        receive_message(server_socket, server_msg_buff);
-        //std::cout << "Message: " << server_msg_buff << std::endl;
-        if (strcmp(server_msg_buff, PLACING_TOWER) == 0) {
+        while (!gameState.getIsGameOver()) {
+            receive_message(server_socket, server_msg_buff);
+            //std::cout << "Message: " << server_msg_buff << std::endl;
+            if (strcmp(server_msg_buff, PLACING_TOWER) == 0) {
 
             if (is_alive() && !isSupporter ) {
                 inputThread = pthread_create(&thr, NULL, &GameManager::staticInputThread, this);
             } else {
                 gameUI->display(gameState, quadrant);
+                if (is_alive() && !isSupporter) {
+                    inputThread = pthread_create(&thr, NULL, &GameManager::staticInputThread, this);
+                } else {
+                    gameUI.display(gameState, quadrant);
 
                 if (isSupporter) {
                     gameUI->displayPlayersPlacingTowersMessage();

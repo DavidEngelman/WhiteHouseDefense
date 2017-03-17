@@ -54,62 +54,25 @@ void MainGUI::display() {
 }
 
 void MainGUI::displayGameModesMenu() {
+    dialog_game_mode_choice = new QDialogButtonBox;
+    dialog_game_mode_choice->setWindowTitle("Select a game mode");
+    dialog_game_mode_choice->setWindowModality(Qt::ApplicationModal);
 
-    QDialogButtonBox* dialog = new QDialogButtonBox;
-    dialog->setWindowTitle("Select a game mode");
 
-    dialog->addButton("CLASSIC MODE", QDialogButtonBox::AcceptRole);
-    dialog->addButton("TEAM MODE",  QDialogButtonBox::AcceptRole);
-    dialog->addButton("TIMED MODE",  QDialogButtonBox::AcceptRole);
+    classicMode = new QCustomButton(0, "CLASSIC MODE", dialog_game_mode_choice);
+    teamMode = new QCustomButton(1, "TEAM MODE", dialog_game_mode_choice);
+    timedMode = new QCustomButton(2, "TIMED MODE", dialog_game_mode_choice);
 
-    //TODO: connecter les boutons et gg
+    dialog_game_mode_choice->addButton(timedMode,  QDialogButtonBox::AcceptRole);
+    dialog_game_mode_choice->addButton(teamMode,  QDialogButtonBox::AcceptRole);
+    dialog_game_mode_choice->addButton(classicMode, QDialogButtonBox::AcceptRole);
 
-    dialog->move(this->width() /2, this->height()/2);
-    dialog->show();
-    /*
-    delete newGame;
-    delete spectator;
-    delete profile;
-    delete friendList;
-    delete leaderBoard;
-    delete exit;
+    connect(classicMode, SIGNAL(clicked(int)), this, SLOT(handleGameModeChoice(int)));
+    connect(teamMode, SIGNAL(clicked(int)), this, SLOT(handleGameModeChoice(int)));
+    connect(timedMode, SIGNAL(clicked(int)), this, SLOT(handleGameModeChoice(int)));
 
-    QFrame * fields = new QFrame(this);
-    QFormLayout * fieldsLayout = new QFormLayout(this);
-
-    QString s1 = "CLASSIC MODE";
-    QString s2 = "TIMED MODE";
-    QString s3 = "TEAM MODE";
-    QString s4 = "CANCEL";
-
-    classicMode = new QCustomButton(1, s1,fields);
-    classicMode->setFixedSize(QSize(212,45));
-
-    timedMode = new QCustomButton(2, s2,fields);
-    timedMode->setFixedSize(QSize(212,45));
-
-    teamMode = new QCustomButton(3, s3,fields);
-    teamMode->setFixedSize(QSize(212,45));
-
-    cancel = new QCustomButton(4, s4,fields);
-    cancel->setFixedSize(QSize(212,45));
-
-    QObject::connect(classicMode, SIGNAL(clicked(int)), this, SLOT(handleGameModeChoice(int)));
-    QObject::connect(timedMode, SIGNAL(clicked(int)), this, SLOT(handleGameModeChoice(int)));
-    QObject::connect(teamMode, SIGNAL(clicked(int)), this, SLOT(handleGameModeChoice(int)));
-    QObject::connect(cancel, SIGNAL(clicked(int)), this, SLOT(handleGameModeChoice(int)));
-
-    fieldsLayout->addRow(classicMode);
-    fieldsLayout->addRow(timedMode);
-    fieldsLayout->addRow(teamMode);
-    fieldsLayout->addRow(cancel);
-    fields->setLayout(fieldsLayout);
-    fields->move(this->size().width() / 2 - 125, this->size().height() / 2 +105);
-
-    this->showMaximized();
-    // créer un slot qui fera appel à handleGameModeChoice
-    */
-
+    dialog_game_mode_choice->move(this->width() /2, this->height()/2);
+    dialog_game_mode_choice->show();
 }
 
 void MainGUI::handleMenuChoice(int choice) {
@@ -119,7 +82,8 @@ void MainGUI::handleMenuChoice(int choice) {
 }
 
 void MainGUI::handleGameModeChoice(int choice){
-    // TODO: gameModeChoice = le choix de l'utilisateur;
+    dialog_game_mode_choice->close();
+    dialog_game_mode_choice->deleteLater();
     std::cout << choice << std::endl;
     gameModeChoice = choice;
     manager->handleGameModeChoice();

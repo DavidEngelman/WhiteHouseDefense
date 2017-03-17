@@ -17,8 +17,10 @@ GameServer::GameServer(int port, std::vector<PlayerConnection> &playerConnection
 
 void GameServer::run() {
     startSpectatorThread();
+    startInputThread();
     runGame();
     stopSpectatorThread();
+    stopInputThread();
     sendFinishedToMatchmaker(); // tell to the matchmaker that the game is finished
 }
 
@@ -195,8 +197,28 @@ void GameServer::createPlayerStates() {
 
 
 /*
+ * Thread that processes user input (chat + place towers)
+ */
+
+void GameServer::startInputThread() {
+    pthread_create(&inputThread, NULL, &GameServer::staticInputThread, this);
+}
+
+void GameServer::stopInputThread() {
+    pthread_cancel(inputThread);
+}
+
+void *GameServer::staticInputThread(void * self) {
+    static_cast<GameServer *>(self)->getAndProcessPlayerInput();
+}
+
+
+
+/*
  * THREAD THAT ADDS SUPPORTERS TO THE GAME
  */
+
+
 
 void GameServer::startSpectatorThread() {
     pthread_create(&spectatorJoinThread, NULL, &GameServer::staticJoinSpectatorThread, this);
@@ -421,3 +443,10 @@ bool GameServer::socketIsActive(int fd) {
 std::vector<PlayerConnection> &GameServer::getPlayerConnections() {
     return playerConnections;
 }
+
+void GameServer::getAndProcessPlayerInput() {
+
+}
+
+
+

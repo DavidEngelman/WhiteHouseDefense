@@ -70,6 +70,7 @@ set(CLIENT_FILES client/ClientLauncher.cpp
 
         #GAME
         common/Map.cpp
+        client/MapGUI.cpp
         common/AttackTower.cpp
         common/AbstractTower.cpp
         common/GunTower.cpp
