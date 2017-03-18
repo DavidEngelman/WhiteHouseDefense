@@ -75,6 +75,7 @@ public:
     bool isObstacle(Position pos) const;
     static int computeQuadrant(Position pos);
 
+    virtual Position getHighlighted() const { return Position(-1, -1); }
 };
 
 #endif

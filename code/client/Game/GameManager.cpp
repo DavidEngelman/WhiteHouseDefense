@@ -52,6 +52,7 @@ void GameManager::update_map() {
     if (strcmp(server_msg_buff, PLACING_TOWER) != 0 && strcmp(server_msg_buff, WAVE) != 0)
         unSerializeGameState(server_msg_buff);
     gameUI->display(gameState, quadrant);
+    gameUI->displayPlayerInfos(gameState, quadrant);
 }
 
 bool GameManager::isTowerInPosition(GameState &gameState, Position towerPos){
@@ -180,8 +181,7 @@ void GameManager::run() {
         // Menu to come back to main menu (or make another game of the same type ?)
         come_back_to_menu();
     } else {
-        gameUI->display(gameState, quadrant);
-        gameUI->displayPlayerInfos(gameState, quadrant);
+        update_map();
         gameUI->displayTowerShop();
     }
 }

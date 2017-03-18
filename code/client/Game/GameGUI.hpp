@@ -28,6 +28,7 @@ private:
 
 public slots:
     void update_map();
+    void handleBuyingTower(int typeOfTower);
 
 public:
     GameGUI(unsigned seed, GameManager *manager);
@@ -37,12 +38,11 @@ public:
     Position getPosSellingTower() override ;
     
     void display(GameState& gameState, int quadrant) override ;
-    void displayPosingPhase() override ;
+    void displayPlayerInfos(GameState &gameState, int quadrant) override ;
     void displayTowerShop() override ;
 
     void displayGameOver(GameState& gamestate) override ;
 
-    void displayPlayerInfos(GameState &gameState, int quadrant) override ;
     void displayInfoForSupporter(GameState& gameState) override ;
 
     void display_dead_message() override ;

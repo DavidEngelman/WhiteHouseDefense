@@ -20,13 +20,13 @@ public:
 	int getChoice();
 
 	void display(GameState& gameState, int quadrant) override ;
-	void displayPosingPhase() override ;
+	void displayPlayerInfos(GameState &gameState, int quadrant) override ;
+	void displayInfoForSupporter(GameState& gameState) override ;
 	void displayTowerShop() override ;
 
 	void displayGameOver(GameState& gamestate) override ;
 
-	void displayPlayerInfos(GameState &gameState, int quadrant) override ;
-	void displayInfoForSupporter(GameState& gameState) override ;
+	void displayPosingPhase();
 
 	void display_dead_message() override ;
 

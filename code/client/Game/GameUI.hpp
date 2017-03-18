@@ -26,13 +26,11 @@ public:
     virtual Position getPosSellingTower() = 0;
 
     virtual void display(GameState& gameState, int quadrant) = 0;
-    virtual void displayPosingPhase() = 0;
+    virtual void displayPlayerInfos(GameState &gameState, int quadrant) = 0;
+    virtual void displayInfoForSupporter(GameState& gameState) = 0;
     virtual void displayTowerShop() = 0;
 
     virtual void displayGameOver(GameState& gamestate) = 0;
-
-    virtual void displayPlayerInfos(GameState &gameState, int quadrant) = 0;
-    virtual void displayInfoForSupporter(GameState& gameState) = 0;
 
     virtual void display_dead_message() = 0;
 

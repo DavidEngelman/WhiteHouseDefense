@@ -17,6 +17,22 @@ GameGUI::GameGUI(unsigned seed, GameManager *manager) : GameUI(seed, manager) {
     map = new MapGUI(seed, this, layout);
     layout->addWidget(towerShop, 1);
 
+    QFont font = QFont();
+    font.setBold(true);
+    font.setPointSize(30);
+
+    usernameL = new QLabel(playerInfo);
+    usernameL->setAlignment(Qt::AlignHCenter);
+    usernameL->setFont(font);
+    usernameL->show();
+
+    font.setBold(false);
+    font.setPixelSize(15);
+
+    playerStateL = new QLabel(playerInfo);
+    playerStateL->setFont(font);
+    playerStateL->show();
+
     playerInfo->show();
     towerShop->show();
     this->setLayout(layout);
@@ -41,10 +57,6 @@ Position GameGUI::getPosSellingTower() {
 
 void GameGUI::display(GameState &gameState, int quadrant) {
     map->display(gameState, quadrant);
-}
-
-void GameGUI::displayPosingPhase() {
-
 }
 
 void GameGUI::displayTowerShop() {
@@ -94,7 +106,9 @@ void GameGUI::displayTowerShop() {
     layout->addWidget(shockTowerB);
     layout->addStretch();
 
-    //QObject::connect(gunTowerB, SIGNAL(clicked(int)), this, SLOT(handleBuyingTower(int)));
+    QObject::connect(gunTowerB, SIGNAL(clicked(int)), this, SLOT(handleBuyingTower(int)));
+    QObject::connect(sniperTowerB, SIGNAL(clicked(int)), this, SLOT(handleBuyingTower(int)));
+    QObject::connect(shockTowerB, SIGNAL(clicked(int)), this, SLOT(handleBuyingTower(int)));
 }
 
 void GameGUI::displayGameOver(GameState &gamestate) {
@@ -105,28 +119,14 @@ void GameGUI::displayPlayerInfos(GameState &gameState, int quadrant) {
     PlayerState playerState = gameState.getPlayerStates()[quadrant];
     std::string text = "\t" + playerState.getUsername();
 
-    QFont font = QFont();
-    font.setBold(true);
-    font.setPointSize(30);
-
-    usernameL = new QLabel(playerInfo);
     usernameL->setText(QString::fromStdString(text));
-    usernameL->setAlignment(Qt::AlignHCenter);
-    usernameL->setFont(font);
-    usernameL->show();
-
-    font.setBold(false);
-    font.setPixelSize(15);
 
     text = "\n\n\n\tMoney : " + std::to_string(playerState.getMoney()) + " $";
     text += "\n\tHP : " + std::to_string(playerState.getHp());
     text += "\n\tNPC killed : " + std::to_string(playerState.getPnjKilled());
     text += "\n\tQuadrant : " + QUADRANT_NAMES[quadrant];
 
-    playerStateL = new QLabel(playerInfo);
     playerStateL->setText(QString::fromStdString(text));
-    playerStateL->setFont(font);
-    playerStateL->show();
 }
 
 void GameGUI::displayInfoForSupporter(GameState &gameState) {
@@ -152,4 +152,16 @@ void GameGUI::enableTowerShop() {
     if (playerMoney > GUN_TOWER_PRICE) gunTowerB->setEnabled(true);
     if (playerMoney > SNIPER_TOWER_PRICE) sniperTowerB->setEnabled(true);
     if (playerMoney > SHOCK_TOWER_PRICE) shockTowerB->setEnabled(true);
+}
+
+void GameGUI::handleBuyingTower(int typeOfTower) {
+    switch (typeOfTower) {
+        case 0:
+            manager->placeGunTower(map->getHighlighted());
+        case 1:
+            manager->placeSniperTower(map->getHighlighted());
+        default:
+            manager->placeShockTower(map->getHighlighted());
+    }
+    disableTowerShop();
 }
