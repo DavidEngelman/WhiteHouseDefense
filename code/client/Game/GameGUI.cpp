@@ -19,11 +19,13 @@ GameGUI::GameGUI(unsigned seed, GameManager *manager) : GameUI(seed, manager) {
 
     QString towerShopTitle = QString::fromStdString("Towers Shop");
     towerShop = new QGroupBox(towerShopTitle);
+    displayTowerShop();
     actionLayout->addWidget(towerShop);
 
 
     QString deleteAndUpgradeTitle = QString::fromStdString("On Tower Actions");
-    deleteAndUpgradeBox = new QGroupBox();
+    deleteAndUpgradeBox = new QGroupBox(deleteAndUpgradeTitle);
+    displayDeleteAndUpgradeBox();
     actionLayout->addWidget(deleteAndUpgradeBox);
 
     QString spellBoxTitle = QString::fromStdString("Spells");
@@ -52,9 +54,6 @@ GameGUI::GameGUI(unsigned seed, GameManager *manager) : GameUI(seed, manager) {
 
     playerInfo->setLayout(playerInfoLayout);
 
-
-    displayTowerShop();
-    displayDeleteAndUpgradeBox();
 
 
     QHBoxLayout *Mainlayout = new QHBoxLayout;
@@ -145,7 +144,7 @@ void GameGUI::displayDeleteAndUpgradeBox() {
     upgradeTowerB->setEnabled(false);
 
     QHBoxLayout *layout = new QHBoxLayout;
-    layout->addWidget(deleteAndUpgradeBox);
+    layout->addWidget(deleteTowerB);
     layout->addWidget(upgradeTowerB);
     layout->addStretch();
     deleteAndUpgradeBox->setLayout(layout);

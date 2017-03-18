@@ -10,6 +10,7 @@
 #include "../Abstract/AbstractGUI.hpp"
 #include "GameManager.hpp"
 #include "GameUI.hpp"
+#include "../QCustomButton.h"
 
 class MapGUI;
 
@@ -22,13 +23,13 @@ private:
     QLabel *playerStateL;
 
     QGroupBox *towerShop;
-    QPushButton *gunTowerB;
-    QPushButton *sniperTowerB;
-    QPushButton *shockTowerB;
+    QCustomButton *gunTowerB;
+    QCustomButton *sniperTowerB;
+    QCustomButton *shockTowerB;
 
     QGroupBox *deleteAndUpgradeBox;
-    QPushButton *deleteTowerB;
-    QPushButton *upgradeTowerB;
+    QCustomButton *deleteTowerB;
+    QCustomButton *upgradeTowerB;
 
     QGroupBox *spellBox;
 
