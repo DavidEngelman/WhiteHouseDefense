@@ -10,7 +10,6 @@ MapGUI::MapGUI(unsigned int seed, GameGUI *gameGUI, QHBoxLayout *layout = 0) : M
     else if (seed == 1) this->setStyleSheet("background-image: url(../../maps/map2.png)");
     else if (seed == 2) this->setStyleSheet("background-image: url(../../maps/map3.png)");
 }
-MapGUI::MapGUI(unsigned int seed) : AbstractGUI(nullptr), Map(seed) { display(); }
 
 void MapGUI::display(GameState &gameStateUpdate, int quadrantUpdate) {
     gameState = gameStateUpdate;
