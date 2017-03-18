@@ -133,10 +133,6 @@ void GameGUI::displayInfoForSupporter(GameState &gameState) {
 
 }
 
-void GameGUI::displayDeadMessage() {
-
-}
-
 void GameGUI::update_map() {
     manager->updateMap();
 }
