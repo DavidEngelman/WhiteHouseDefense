@@ -41,6 +41,8 @@ void PNJ::advance(Map &map) {
         move = get_left_direction();
     } else if (can_go_right(map)) {
         move = get_right_direction();
+    } else if (can_go_backward(map)) {
+        move = get_backward_direction();
     }
 
     if (move.x > 1 || move.x < -1 || move.y > 1 || move.y < -1) return;
@@ -120,11 +122,16 @@ bool PNJ::can_go_left(Map &map) {
 
 bool PNJ::can_go_right(Map &map) {
     Direction dir = get_right_direction();
-
     Position right_pos = Position(getPosition().getX() + dir.x, getPosition().getY() + dir.y);
-
     return map.isPath(right_pos) && right_pos != getLast_position();
 
+
+}
+
+bool PNJ::can_go_backward(Map &map) {
+    Direction dir = get_backward_direction();
+    Position back_pos = Position(getPosition().getX() + dir.x, getPosition().getY() + dir.y);
+    return map.isPath(back_pos) && back_pos != getLast_position();
 
 }
 
@@ -205,6 +212,32 @@ Direction PNJ::get_left_direction() {
     }
 }
 
+Direction PNJ::get_backward_direction(){
+    Direction move;
+
+    if (getDirection() == NORTH) {
+        move.x = 0;
+        move.y = +1;
+        return move;
+
+    } else if (getDirection() == EAST) {
+        move.x = -1;
+        move.y = 0;
+        return move;
+
+    } else if (getDirection() == SOUTH) {
+        move.x = 0;
+        move.y = -1;
+        return move;
+
+    } else if (getDirection() == WEST) {
+        move.x = +1;
+        move.y = 0;
+        return move;
+    }
+
+}
+
 std::string PNJ::serialize() {
     std::string serialized_me;
 
@@ -235,3 +268,5 @@ bool PNJ::isInPlayerBase() {
 void PNJ::setHealthPoints(int newHp) {
     healthPoints = newHp;
 }
+
+

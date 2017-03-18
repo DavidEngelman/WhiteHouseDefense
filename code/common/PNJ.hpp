@@ -79,6 +79,10 @@ public:
     bool operator!=(const PNJ &rhs) const;
 
     Direction get_random_direction();
+
+    Direction get_backward_direction();
+
+	bool can_go_backward(Map &map);
 };
 
 #endif // PROJET_PNJ_H
