@@ -29,8 +29,8 @@ private:
     QCustomButton *shockTowerB;
 
     QGroupBox *deleteAndUpgradeBox;
-    QCustomButton *deleteTowerB;
-    QCustomButton *upgradeTowerB;
+    QPushButton *deleteTowerB;
+    QPushButton *upgradeTowerB;
 
     QGroupBox *spellBox;
 
@@ -40,6 +40,8 @@ private:
 public slots:
     void update_map();
     void handleBuyingTower(int typeOfTower);
+    void handleSellingTower();
+    void handleUpgradingTower();
 
 public:
     GameGUI(unsigned seed, GameManager *manager);
@@ -66,6 +68,10 @@ public:
     void displayDeleteAndUpgradeBox();
 
     void addChatMessage(const std::string &message, const std::string &sender) override;
+
+    void disableDeleteAndUpgradeBox();
+
+    void enableDeleteAndUpgradeBox();
 };
 
 

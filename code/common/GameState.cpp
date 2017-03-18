@@ -101,15 +101,23 @@ void GameState::deleteTower(Position& position, int& quadrant){
 
 
 
-void GameState::upgradeTower(Position &position, int &quadrant) {
+bool GameState::upgradeTower(Position &position, int &quadrant) {
     for (AbstractTower *tower : getTowers()){
         if (tower->getPosition() == position){
-            tower->upgrade();
-            float amountSpend = tower->getPrice() * (10/100 * (tower->getLevel() -1));
-            player_states[quadrant].spendMoney((int)amountSpend);
-            break;
+
+            float cost = (float)(tower->getPrice()) * ((50/100) * (float)(tower->getLevel()));
+            std::cout << "t price " << tower->getPrice()  << std::endl;
+            std::cout << "level " << tower->getLevel()  << std::endl;
+            if (player_states[quadrant].getMoney() - cost >= 0) {
+                std::cout << cost << std::endl;
+                tower->upgrade();
+                player_states[quadrant].spendMoney((int) cost);
+                return true;
+            }
         }
     }
+
+    return false;
 }
 
 GameState::~GameState() {

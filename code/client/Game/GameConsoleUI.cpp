@@ -192,8 +192,9 @@ void GameConsoleUI::placeTowerAction() {
 }
 
 void GameConsoleUI::sellTowerAction() {
-    Position toSell = getPosSellingTower();
-    manager->sellTower(toSell);
+        Position toSell = getPosSellingTower();
+        manager->sellTower(toSell);
+
 }
 
 void GameConsoleUI::upgradeTower() {

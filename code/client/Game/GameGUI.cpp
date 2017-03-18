@@ -115,7 +115,6 @@ void GameGUI::displayTowerShop() {
     gunTowerB->setIconSize(size);
     gunTowerB->setToolTip(QString::fromStdString(tooltip));
     gunTowerB->setEnabled(false);
-    gunTowerB->show();
 
     tooltip = "Tower that can attack one npc at the time\nwith a great range but with small damages\n";
     tooltip += "\nPrice : " + std::to_string(SNIPER_TOWER_PRICE) + " $";
@@ -127,7 +126,6 @@ void GameGUI::displayTowerShop() {
     sniperTowerB->setIconSize(size);
     sniperTowerB->setToolTip(QString::fromStdString(tooltip));
     sniperTowerB->setEnabled(false);
-    sniperTowerB->show();
 
     tooltip = "Tower that attack all the npc in it's range\nwith a small range and small damages\n";
     tooltip += "\nPrice : " + std::to_string(SHOCK_TOWER_PRICE) + " $";
@@ -139,7 +137,6 @@ void GameGUI::displayTowerShop() {
     shockTowerB->setIconSize(size);
     shockTowerB->setToolTip(QString::fromStdString(tooltip));
     shockTowerB->setEnabled(false);
-    shockTowerB->show();
 
     QVBoxLayout *layout = new QVBoxLayout;
     layout->addWidget(gunTowerB);
@@ -155,17 +152,29 @@ void GameGUI::displayTowerShop() {
 
 void GameGUI::displayDeleteAndUpgradeBox() {
 
-    deleteTowerB = new QCustomButton(3);
-    deleteTowerB->setEnabled(false);
+    int scl = 10;
+    QSize size = QSize(1400/scl, 1060/scl);
 
-    upgradeTowerB = new QCustomButton(4);
-    upgradeTowerB->setEnabled(false);
+    deleteTowerB = new QPushButton;
+    deleteTowerB->setEnabled(true);
+    deleteTowerB->setIcon(QIcon("../../qt_ui/game_pictures/towers/sell.png"));
+    deleteTowerB->setIconSize(size);
+
+    upgradeTowerB = new QPushButton;
+    upgradeTowerB->setEnabled(true);
+    upgradeTowerB->setIcon(QIcon("../../qt_ui/game_pictures/towers/upgrade.png"));
+    upgradeTowerB->setIconSize(size);
+
 
     QHBoxLayout *layout = new QHBoxLayout;
     layout->addWidget(deleteTowerB);
     layout->addWidget(upgradeTowerB);
     layout->addStretch();
     deleteAndUpgradeBox->setLayout(layout);
+
+
+    QObject::connect(deleteTowerB, SIGNAL(clicked()), this, SLOT(handleSellingTower()));
+    QObject::connect(upgradeTowerB, SIGNAL(clicked()), this, SLOT(handleUpgradingTower()));
 
 
 }
@@ -215,6 +224,8 @@ void GameGUI::enableTowerShop() {
     if (playerMoney > SHOCK_TOWER_PRICE) shockTowerB->setEnabled(true);
 }
 
+
+
 void GameGUI::handleBuyingTower(int typeOfTower) {
     switch (typeOfTower) {
         case 0:
@@ -226,6 +237,17 @@ void GameGUI::handleBuyingTower(int typeOfTower) {
     }
     disableTowerShop();
 }
+
+void GameGUI::handleSellingTower() {
+
+    manager->sellTower(map->getHighlightedPosition());
+}
+
+void GameGUI::handleUpgradingTower() {
+
+    manager->upgradeTower(map->getHighlightedPosition());
+}
+
 
 void GameGUI::addChatMessage(const std::string &message, const std::string &sender) {
     inGameChatWidget->addChatMessage(message, sender);
