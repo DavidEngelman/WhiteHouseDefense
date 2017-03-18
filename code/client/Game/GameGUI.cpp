@@ -134,9 +134,10 @@ void GameGUI::displayGameOver(GameState &gamestate) {
 
 void GameGUI::displayPlayerInfos(GameState &gameState, int quadrant) {
     PlayerState playerState = gameState.getPlayerStates()[quadrant];
-    std::string& text = playerState.getUsername();
+    std::string &text = playerState.getUsername();
 
     usernameL->setText(QString::fromStdString(text));
+    usernameL->show();
 
     text = "Money : " + std::to_string(playerState.getMoney()) + " $";
     text += "\nHP : " + std::to_string(playerState.getHp());
@@ -144,6 +145,7 @@ void GameGUI::displayPlayerInfos(GameState &gameState, int quadrant) {
     text += "\nQuadrant : " + QUADRANT_NAMES[quadrant];
 
     playerStateL->setText(QString::fromStdString(text));
+    playerStateL->show();
 
     // TODO: temporairement ici
     inGameChatWidget->addChatMessage("Je suis une eponge", "Bob");
