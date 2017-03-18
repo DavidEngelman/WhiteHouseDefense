@@ -45,6 +45,8 @@ public:
 
     void displayInfoForSupporter(GameState& gameState) override ;
 
+    void displayDeadMessage() ;
+
     void displayPlayersPlacingTowersMessage() override ;
 
     void disableTowerShop();

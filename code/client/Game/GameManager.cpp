@@ -158,7 +158,7 @@ void GameManager::run() {
                     if (isSupporter) {
                         gameUI->displayPlayersPlacingTowersMessage();
                     } else {
-                        //gameUI->displayDeadMessage(); //Ne marche plus
+                        gameUI->displayDeadMessage();
                     }
                 }
 
@@ -179,7 +179,7 @@ void GameManager::run() {
                     if (is_alive()) {
                         gameUI->displayPlayerInfos(gameState, quadrant);
                     } else {
-                        //gameUI->displayDeadMessage(); //Ne marche plus
+                        gameUI->displayDeadMessage();
                     }
                 } else
                     gameUI->displayInfoForSupporter(gameState);
