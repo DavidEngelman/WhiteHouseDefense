@@ -23,23 +23,22 @@ private:
     QCustomButton *classicMode;
     QCustomButton *timedMode;
     QCustomButton *teamMode;
-    QCustomButton *cancel;
     QWidget* dialog_game_mode_choice;
 
     QHBoxLayout* popup_h_layout;
-    QLabel* inQueueMessage;
+    InQueueWidget* queueWidget;
 
 public:
     MainGUI(MainManager *manager, QWidget* _parent);
     ~MainGUI() { close(); };
     void display() override;
     void displayGameModesMenu() override;
+    void showInQueue();
 
 public slots:
     void handleMenuChoice(int choice);
     void handleGameModeChoice(int choice);
-
-    void showInQueue();
+    void leaveQueue();
 };
 
 

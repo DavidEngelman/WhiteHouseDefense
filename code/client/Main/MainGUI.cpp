@@ -51,6 +51,10 @@ void MainGUI::display() {
     fields->setLayout(fieldsLayout);
     fields->move(this->size().width() / 2 - 125, this->size().height() / 2 -40);
 
+    if (manager->isInQueue()){
+        showInQueue();
+    }
+
     this->show();
 }
 
@@ -75,10 +79,6 @@ void MainGUI::displayGameModesMenu() {
     connect(teamMode, SIGNAL(clicked(int)), this, SLOT(handleGameModeChoice(int)));
     connect(timedMode, SIGNAL(clicked(int)), this, SLOT(handleGameModeChoice(int)));
 
-    inQueueMessage = new QLabel("In Queue...");
-    popup_h_layout->addWidget(inQueueMessage);
-    inQueueMessage->hide();
-
     dialog_game_mode_choice->move(this->width() /2, this->height()/2);
     dialog_game_mode_choice->show();
 
@@ -100,8 +100,17 @@ void MainGUI::handleGameModeChoice(int choice){
 }
 
 void MainGUI::showInQueue(){
-    InQueueWidget* queueWidget = new InQueueWidget(this);
-    queueWidget->move(this->width()-250, 50);
+    newGame->setEnabled(false);
+    queueWidget = new InQueueWidget(this);
+    queueWidget->move(this->width()-200, this->height()-70);
 
+}
+
+void MainGUI::leaveQueue(){
+    newGame->setEnabled(true);
+    queueWidget->hide();
+    queueWidget->deleteLater();
+
+    manager->leaveQueue();
 
 }

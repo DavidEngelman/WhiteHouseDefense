@@ -7,6 +7,7 @@
 
 #include <QtWidgets>
 
+class GameLauncher;
 class AbstractManager;
 
 class App {
@@ -20,16 +21,15 @@ private:
     std::thread* background_task;
 
     QWidget* main_window;
+    GameLauncher* gameLauncher;
+    bool is_in_queue;
 
 public:
 
-    //App() = default;
-
     App(char* server_ip_addr);
-    virtual void transition(AbstractManager *new_manager);
-    virtual void launchBackgroundTask(AbstractManager* manager);
 
-    ~App();
+    virtual void transition(AbstractManager *new_manager);
+    virtual void launchMatchmaking(GameLauncher *manager);
 
     char *get_ip();
     int get_id();
@@ -39,8 +39,13 @@ public:
     void set_username(std::string name);
 
     void runBackgroundTask(AbstractManager *manager);
-
     QWidget *getMainWindow();
+
+    ~App();
+
+    bool isInQueue();
+
+    void leaveQueue();
 };
 
 

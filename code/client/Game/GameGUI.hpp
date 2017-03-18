@@ -34,7 +34,7 @@ public slots:
     void handleBuyingTower(int typeOfTower);
 
 public:
-    GameGUI(unsigned seed, GameManager *manager, QWidget* _parent);
+    GameGUI(unsigned seed, GameManager *manager);
     Position getPosBuyingTower() override ;
 
 

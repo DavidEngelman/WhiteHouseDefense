@@ -8,7 +8,7 @@
 #include "../QCustomButton.h"
 #include "../MapGUI.hpp"
 
-GameGUI::GameGUI(unsigned seed, GameManager *manager) : GameUI(seed, manager) {
+GameGUI::GameGUI(unsigned seed, GameManager *manager) : AbstractGUI(nullptr), GameUI(seed, manager) {
 
     QHBoxLayout *mainLayout = new QHBoxLayout();
     QVBoxLayout* leftPanel = new QVBoxLayout;

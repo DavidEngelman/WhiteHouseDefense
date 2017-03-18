@@ -5,6 +5,10 @@
 GameLauncher::GameLauncher(int port, App* app, std::string _mode) :
         NetworkedManager(port, app), mode(_mode) {}
 
+void GameLauncher::run() {
+    sendJoinRequest();
+}
+
 void GameLauncher::sendJoinRequest() {
 
     /* Partie 1: envoyer demanded pour rejoindre le jeu */
@@ -29,6 +33,8 @@ void GameLauncher::sendJoinRequest() {
     master_app->transition(manager);
 }
 
-void GameLauncher::run() {
-    sendJoinRequest();
+void GameLauncher::leaveQueue() {
+    std::string message = "LEAVEQUEUE,"+ mode + ";";
+    send_message(server_socket, message.c_str());
+
 }
