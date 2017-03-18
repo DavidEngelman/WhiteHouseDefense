@@ -107,7 +107,7 @@ void PNJ::setPosition(Position position) {
 bool PNJ::can_go_forward(Map &map) {
     Direction dir = get_forward_direction();
     Position forward_pos = Position(getPosition().getX() + dir.x, getPosition().getY() + dir.y);
-    return map.isPath(forward_pos);
+    return map.isPath(forward_pos) && forward_pos != getLast_position();
 
 
 }
