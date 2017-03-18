@@ -187,11 +187,4 @@ void GameGUI::handleBuyingTower(int typeOfTower) {
 
 void GameGUI::addChatMessage(const std::string &message, const std::string &sender) {
     inGameChatWidget->addChatMessage(message, sender);
-    // TODO: pour tester, faudra faire la vraie fonction apres
-
-    QString totalMessage(sender.c_str());
-    totalMessage.append(": ");
-    totalMessage.append(message.c_str());
-
-    QMessageBox::critical(this, "New message", totalMessage);
 }
