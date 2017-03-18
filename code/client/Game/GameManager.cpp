@@ -46,7 +46,13 @@ void GameManager::come_back_to_menu() { // À appeler quand la partie est termin
     master_app->transition(menu_manager);
 }
 
-
+void GameManager::update_map() {
+    char server_msg_buff[BUFFER_SIZE];
+    receive_message(server_socket, server_msg_buff);
+    if (strcmp(server_msg_buff, PLACING_TOWER) != 0 && strcmp(server_msg_buff, WAVE) != 0)
+        unSerializeGameState(server_msg_buff);
+    gameUI->display(gameState, quadrant);
+}
 
 bool GameManager::isTowerInPosition(GameState &gameState, Position towerPos){
     bool validity = false;
@@ -112,14 +118,15 @@ void GameManager::sendSellRequest(Position towerPos) {
 
 
 void GameManager::run() {
-    gameUI->display(gameState, quadrant);
+    char server_msg_buff[BUFFER_SIZE];
 
-    if (!isSupporter)
-        gameUI->displayPlayerInfos(gameState, quadrant);
-    else
-        gameUI->displayInfoForSupporter(gameState);
+    if (isConsole) {
+        gameUI->display(gameState, quadrant);
 
-        char server_msg_buff[BUFFER_SIZE];
+        if (!isSupporter)
+            gameUI->displayPlayerInfos(gameState, quadrant);
+        else
+            gameUI->displayInfoForSupporter(gameState);
 
         while (!gameState.getIsGameOver()) {
             receive_message(server_socket, server_msg_buff);
@@ -127,52 +134,56 @@ void GameManager::run() {
             //PHASE ENTRE LES WAVES
             if (strcmp(server_msg_buff, PLACING_TOWER) == 0) {
 
-            if (is_alive() && !isSupporter ) {
-                inputThread = pthread_create(&thr, NULL, &GameConsoleUI::staticInputThread, this);
-            } else {
-                gameUI->display(gameState, quadrant);
                 if (is_alive() && !isSupporter) {
                     inputThread = pthread_create(&thr, NULL, &GameConsoleUI::staticInputThread, this);
                 } else {
                     gameUI->display(gameState, quadrant);
+                    if (is_alive() && !isSupporter) {
+                        inputThread = pthread_create(&thr, NULL, &GameConsoleUI::staticInputThread, this);
+                    } else {
+                        gameUI->display(gameState, quadrant);
+                    }
+
+                    if (isSupporter) {
+                        gameUI->displayPlayersPlacingTowersMessage();
+                    } else {
+                        gameUI->display_dead_message();
+                    }
                 }
 
-                if (isSupporter) {
-                    gameUI->displayPlayersPlacingTowersMessage();
-                } else {
-                    gameUI->display_dead_message();
+
+                //DEBUT D'UNE WAVE
+            } else if (strcmp(server_msg_buff, WAVE) == 0) {
+                if (!isSupporter) {
+                    inputThread = pthread_cancel(thr);
                 }
             }
 
+                //PHASE OU LA WAVE SE DEPLACE
+            else {
+                unSerializeGameState(server_msg_buff);
+                gameUI->display(gameState, quadrant);
 
-        //DEBUT D'UNE WAVE
-        }else if (strcmp(server_msg_buff, WAVE) == 0){
-            if (!isSupporter) {
-                inputThread = pthread_cancel(thr);
+                if (!isSupporter) {
+                    if (is_alive()) {
+                        gameUI->displayPlayerInfos(gameState, quadrant);
+                    } else {
+                        gameUI->display_dead_message();
+                    }
+                } else
+                    gameUI->displayInfoForSupporter(gameState);
             }
         }
 
-        //PHASE OU LA WAVE SE DEPLACE
-        else {
-            unSerializeGameState(server_msg_buff);
-            gameUI->display(gameState, quadrant);
-
-            if (!isSupporter) {
-                if (is_alive()) {
-                    gameUI->displayPlayerInfos(gameState, quadrant);
-                } else {
-                    gameUI->display_dead_message();
-                }
-            } else
-                gameUI->displayInfoForSupporter(gameState);
-        }
+        //FIN DE PARTIE
+        gameUI->displayGameOver(gameState);
+        // Menu to come back to main menu (or make another game of the same type ?)
+        come_back_to_menu();
+    } else {
+        gameUI->display(gameState, quadrant);
+        gameUI->displayPlayerInfos(gameState, quadrant);
+        gameUI->displayTowerShop();
     }
-
-    //FIN DE PARTIE
-    gameUI->displayGameOver(gameState);
-    // Menu to come back to main menu (or make another game of the same type ?)
-    come_back_to_menu();
-
 }
 
 void GameManager::unSerializeGameState(char* seriarlized_gamestate){

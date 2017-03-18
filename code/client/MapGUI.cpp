@@ -2,7 +2,7 @@
 
 #include "MapGUI.hpp"
 
-MapGUI::MapGUI(unsigned int seed) : Map(seed) { display(); }
+MapGUI::MapGUI(unsigned int seed, QWidget *parent = 0) : Map(seed), QWidget(parent) { display(); }
 
 void MapGUI::display(GameState &gameStateUpdate, int quadrantUpdate) {
     gameState = gameStateUpdate;

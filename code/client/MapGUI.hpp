@@ -9,7 +9,7 @@
 #include "../common/Map.hpp"
 #include "Abstract/AbstractGUI.hpp"
 
-class MapGUI : public Map, public AbstractGUI {
+class MapGUI : public Map, public QWidget {
 private:
     GameState gameState;
     int quadrant;
@@ -18,9 +18,9 @@ protected:
     void paintEvent(QPaintEvent *event) override;
 
 public:
-    MapGUI(unsigned int seed);
+    MapGUI(unsigned int seed, QWidget *parent);
     void display();
-    void display(GameState& gameState, int quadrant);
+    void display(GameState& gameState, int quadrant) override;
 };
 
 

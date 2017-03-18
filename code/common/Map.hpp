@@ -70,7 +70,7 @@ protected:
 
 public:
     Map(unsigned seed);
-    virtual void display(GameState& gameState, int quadrant) const;
+    virtual void display(GameState& gameState, int quadrant);
     bool isPath(Position pos) const;
     bool isObstacle(Position pos) const;
     static int computeQuadrant(Position pos);

@@ -69,6 +69,8 @@ public:
     bool placeShockTower(Position towerPos);
 
     bool sellTower(Position toSell);
+
+    void update_map();
 };
 
 #endif

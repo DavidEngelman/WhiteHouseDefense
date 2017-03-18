@@ -4,11 +4,31 @@
 #define PROJET_GAMEGUI_HPP
 
 
+#include <QtWidgets/QLabel>
+#include <QtWidgets/QGroupBox>
+#include <QtWidgets/QPushButton>
 #include "../Abstract/AbstractGUI.hpp"
 #include "GameManager.hpp"
 #include "GameUI.hpp"
+#include "../MapGUI.hpp"
 
 class GameGUI : public AbstractGUI, public GameUI {
+    Q_OBJECT
+
+private:
+    QGroupBox *playerInfo;
+    QLabel *usernameL;
+    QLabel *playerStateL;
+
+    QGroupBox *towerShop;
+    QPushButton *gunTowerB;
+    QPushButton *sniperTowerB;
+    QPushButton *shockTowerB;
+
+    Position position;
+
+public slots:
+    void update_map();
 
 public:
     GameGUI(unsigned seed, GameManager *manager);
@@ -30,6 +50,7 @@ public:
 
     void displayPlayersPlacingTowersMessage() override ;
 
+    Position getPos() { return position; }
 };
 
 

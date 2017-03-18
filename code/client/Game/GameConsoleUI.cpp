@@ -3,7 +3,7 @@
 #include "../../common/Tools.hpp"
 
 
-GameConsoleUI::GameConsoleUI(unsigned seed, GameManager *gameManager) : GameUI(seed,gameManager) {}
+GameConsoleUI::GameConsoleUI(unsigned seed, GameManager *manager) : GameUI(seed,manager) {}
 
 
 
@@ -156,8 +156,8 @@ int GameConsoleUI::getTowerTypeChoice() {
 }
 
 Position GameConsoleUI::getPositionOfTowerPlacement() {
-    display(gameManager->getGameState(), gameManager->getQuadrant());
-    displayPlayerInfos(gameManager->getGameState(), gameManager->getQuadrant());
+    display(manager->getGameState(), manager->getQuadrant());
+    displayPlayerInfos(manager->getGameState(), manager->getQuadrant());
     return getPosBuyingTower();
 }
 
@@ -165,17 +165,17 @@ void GameConsoleUI::placeTowerAction() {
     int towerChoice = getTowerTypeChoice();
     Position towerPos = getPositionOfTowerPlacement();
     if (towerChoice == 1) {
-        gameManager->placeGunTower(towerPos);
+        manager->placeGunTower(towerPos);
     } else if (towerChoice == 2) {
-        gameManager->placeSniperTower(towerPos);
+        manager->placeSniperTower(towerPos);
     } else {
-        gameManager->placeShockTower(towerPos);
+        manager->placeShockTower(towerPos);
     }
 }
 
 void GameConsoleUI::sellTowerAction() {
     Position toSell = getPosSellingTower();
-    gameManager->sellTower(toSell);
+    manager->sellTower(toSell);
 }
 
 void *GameConsoleUI::input_thread() {
@@ -183,8 +183,8 @@ void *GameConsoleUI::input_thread() {
     while (1) {
         displayPosingPhase();
         int choice = getChoice();
-        display(gameManager->getGameState(), gameManager->getQuadrant());
-        displayPlayerInfos(gameManager->getGameState(), gameManager->getQuadrant());
+        display(manager->getGameState(), manager->getQuadrant());
+        displayPlayerInfos(manager->getGameState(), manager->getQuadrant());
 
         if (choice == 1) {
             placeTowerAction();
@@ -193,8 +193,8 @@ void *GameConsoleUI::input_thread() {
             sellTowerAction();
 
         }// else upgrade tower
-        display(gameManager->getGameState(), gameManager->getQuadrant());
-        displayPlayerInfos(gameManager->getGameState(), gameManager->getQuadrant());
+        display(manager->getGameState(), manager->getQuadrant());
+        displayPlayerInfos(manager->getGameState(), manager->getQuadrant());
     }
 }
 

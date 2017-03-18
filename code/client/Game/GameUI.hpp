@@ -12,12 +12,12 @@ class GameUI : public virtual AbstractUI {
 
 protected:
 
-    GameManager *gameManager;
+    GameManager *manager;
 
     Map* map;
 
 public:
-    GameUI(unsigned seed, GameManager *gameManager) : map(new Map(seed)), gameManager(gameManager) {};
+    GameUI(unsigned seed, GameManager *manager) : map(new Map(seed)), manager(manager) {};
 
     virtual Position getPosBuyingTower() = 0;
 

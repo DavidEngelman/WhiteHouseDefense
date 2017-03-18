@@ -12,7 +12,7 @@ void MainGUI::display() {
     this->setFixedHeight(600);
     this->setFixedWidth(1000);
 
-    setStylesheetFromPath("../../qt_ui/americanLogin.qss");
+    setStylesheetFromPath("../../qt_ui/americanMain.qss");
     setBackgroundFromPath("../../qt_ui/game_pictures/backgrounds/whitehouse_bckgrd.png");
     setMusicFromPath("../../qt_ui/game_pictures/sounds/trump_song.mp3");
 
