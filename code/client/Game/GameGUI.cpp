@@ -10,15 +10,11 @@
 
 GameGUI::GameGUI(unsigned seed, GameManager *manager) : GameUI(seed, manager) {
 
-    playerInfo = new QGroupBox(this);
-    QVBoxLayout* playerInfoLayout = new QVBoxLayout;
+    QHBoxLayout *mainLayout = new QHBoxLayout();
+    QVBoxLayout* leftPanel = new QVBoxLayout;
 
-    towerShop = new QGroupBox(this);
-
-    QHBoxLayout *layout = new QHBoxLayout();
-    layout->addWidget(playerInfo, 1);
-    map = new MapGUI(seed, this, layout);
-    layout->addWidget(towerShop, 1);
+    //* LEFT PANEL //*
+    /* Player Info */
 
     QFont font = QFont();
     font.setBold(true);
@@ -33,14 +29,30 @@ GameGUI::GameGUI(unsigned seed, GameManager *manager) : GameUI(seed, manager) {
     playerStateL = new QLabel;
     playerStateL->setFont(font);
 
-    playerInfoLayout->addWidget(usernameL);
-    playerInfoLayout->addWidget(playerStateL);
+    /* In Game Chat UI */
+    inGameChatWidget = new InGameChatWidget(manager);
 
-    playerInfoLayout->setAlignment(usernameL, Qt::AlignCenter|Qt::AlignTop);
-    playerInfoLayout->setAlignment(playerStateL, Qt::AlignCenter|Qt::AlignTop);
+    leftPanel->addWidget(usernameL);
+    leftPanel->addWidget(playerStateL);
+    leftPanel->addWidget(inGameChatWidget);
 
-    playerInfo->setLayout(playerInfoLayout);
-    this->setLayout(layout);
+    leftPanel->setAlignment(usernameL, Qt::AlignCenter|Qt::AlignTop);
+    leftPanel->setAlignment(playerStateL, Qt::AlignCenter|Qt::AlignTop);
+    leftPanel->setAlignment(inGameChatWidget, Qt::AlignCenter|Qt::AlignTop);
+
+    /* Tower shop */
+    towerShop = new QGroupBox(this);
+    // The towers are added in the displayTowerShop() method
+
+
+
+    /* Main Layout */
+    mainLayout->addLayout(leftPanel, 1);
+    map = new MapGUI(seed, this, mainLayout);
+    mainLayout->addWidget(towerShop, 1);
+
+
+    this->setLayout(mainLayout);
     this->showFullScreen();
 
     QTimer *timer = new QTimer();
@@ -134,6 +146,10 @@ void GameGUI::displayPlayerInfos(GameState &gameState, int quadrant) {
 
     playerStateL->setText(QString::fromStdString(text));
     playerStateL->show();
+
+    // TODO: temporairement ici
+    inGameChatWidget->addChatMessage("Je suis une eponge", "Bob");
+    inGameChatWidget->addChatMessage("Je suis un lion", "Simba");
 }
 
 void GameGUI::displayInfoForSupporter(GameState &gameState) {
@@ -174,7 +190,9 @@ void GameGUI::handleBuyingTower(int typeOfTower) {
 }
 
 void GameGUI::addChatMessage(const std::string &message, const std::string &sender) {
+    inGameChatWidget->addChatMessage(message, sender);
     // TODO: pour tester, faudra faire la vraie fonction apres
+
     QString totalMessage(sender.c_str());
     totalMessage.append(": ");
     totalMessage.append(message.c_str());

@@ -72,7 +72,7 @@ public:
 
     void updateMap();
 
-    void sendMessageToPlayers(std::string message);
+    void sendMessageToPlayers(std::string &message);
 
     bool upgradeTower(Position toUpgrade);
 

@@ -10,6 +10,7 @@
 #include "../Abstract/AbstractGUI.hpp"
 #include "GameManager.hpp"
 #include "GameUI.hpp"
+#include "InGameChatWidget.hpp"
 
 class MapGUI;
 
@@ -25,6 +26,8 @@ private:
     QPushButton *gunTowerB;
     QPushButton *sniperTowerB;
     QPushButton *shockTowerB;
+
+    InGameChatWidget * inGameChatWidget;
 
 public slots:
     void update_map();
