@@ -10,6 +10,8 @@
 GameGUI::GameGUI(unsigned seed, GameManager *manager) : GameUI(seed, manager) {
 
     playerInfo = new QGroupBox(this);
+    QVBoxLayout* playerInfoLayout = new QVBoxLayout;
+
     towerShop = new QGroupBox(this);
 
     QHBoxLayout *layout = new QHBoxLayout();
@@ -21,20 +23,22 @@ GameGUI::GameGUI(unsigned seed, GameManager *manager) : GameUI(seed, manager) {
     font.setBold(true);
     font.setPointSize(30);
 
-    usernameL = new QLabel(playerInfo);
-    usernameL->setAlignment(Qt::AlignHCenter);
+    usernameL = new QLabel;
     usernameL->setFont(font);
-    usernameL->show();
 
     font.setBold(false);
     font.setPixelSize(15);
 
-    playerStateL = new QLabel(playerInfo);
+    playerStateL = new QLabel;
     playerStateL->setFont(font);
-    playerStateL->show();
 
-    playerInfo->show();
-    towerShop->show();
+    playerInfoLayout->addWidget(usernameL);
+    playerInfoLayout->addWidget(playerStateL);
+
+    playerInfoLayout->setAlignment(usernameL, Qt::AlignCenter|Qt::AlignTop);
+    playerInfoLayout->setAlignment(playerStateL, Qt::AlignCenter|Qt::AlignTop);
+
+    playerInfo->setLayout(playerInfoLayout);
     this->setLayout(layout);
     this->showFullScreen();
 
