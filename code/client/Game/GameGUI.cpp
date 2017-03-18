@@ -122,7 +122,7 @@ void GameGUI::displayGameOver(GameState &gamestate) {
 
 void GameGUI::displayPlayerInfos(GameState &gameState, int quadrant) {
     PlayerState playerState = gameState.getPlayerStates()[quadrant];
-    std::string text = playerState.getUsername();
+    std::string &text = playerState.getUsername();
 
     usernameL->setText(QString::fromStdString(text));
     usernameL->show();
