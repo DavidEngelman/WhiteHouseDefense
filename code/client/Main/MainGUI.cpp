@@ -56,7 +56,7 @@ void MainGUI::display() {
 
 void MainGUI::displayGameModesMenu() {
 
-    dialog_game_mode_choice = new QWidget(this, Qt::SubWindow);
+    dialog_game_mode_choice = new QWidget;
     dialog_game_mode_choice->setWindowTitle("Select a game mode");
     dialog_game_mode_choice->setWindowModality(Qt::ApplicationModal);
 
@@ -91,18 +91,17 @@ void MainGUI::handleMenuChoice(int choice) {
 
 void MainGUI::handleGameModeChoice(int choice){
     showInQueue();
-    //dialog_game_mode_choice->close();
-    //dialog_game_mode_choice->deleteLater();
+    dialog_game_mode_choice->close();
+    dialog_game_mode_choice->deleteLater();
     gameModeChoice = choice;
     manager->handleGameModeChoice();
+
+
 }
 
 void MainGUI::showInQueue(){
-    classicMode->hide();
-    teamMode->hide();
-    timedMode->hide();
-    inQueueMessage->show();
-
+    InQueueWidget* queueWidget = new InQueueWidget(this);
+    queueWidget->move(this->width()-250, 50);
 
 
 }

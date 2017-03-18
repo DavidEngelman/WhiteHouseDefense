@@ -9,6 +9,7 @@
 #include <QtWidgets/QDialogButtonBox>
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QLabel>
+#include "../InQueueWidget.hpp"
 
 class MainGUI : public AbstractGUI, public MainUI {
     Q_OBJECT

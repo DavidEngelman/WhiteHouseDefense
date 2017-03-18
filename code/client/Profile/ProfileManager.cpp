@@ -8,7 +8,7 @@
 
 ProfileManager::ProfileManager(int port, App *my_app) :
         NetworkedManager(port, my_app), username("Loading..."), victories(-1), npcKilled(-1) {
-    if (false) {
+    if (!isConsole) {
         profileUI = new ProfileGUI(this);
     } else {
         profileUI = new ProfileConsoleUI(this);
