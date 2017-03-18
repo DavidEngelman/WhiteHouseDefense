@@ -5,6 +5,7 @@
 
 
 #include <QtWidgets/QLabel>
+#include <QMessageBox>
 #include <QtWidgets/QGroupBox>
 #include <QtWidgets/QPushButton>
 #include "../Abstract/AbstractGUI.hpp"
@@ -33,6 +34,8 @@ private:
     QPushButton *upgradeTowerB;
 
     QGroupBox *spellBox;
+    QMessageBox msgBox;
+
 
 
     InGameChatWidget * inGameChatWidget;
