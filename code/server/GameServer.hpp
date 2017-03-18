@@ -115,7 +115,7 @@ public:
 
     void getAndProcessUserInput(int clientSocketFd, char buffer[]);
 
-    void sendMessageToOtherPlayers(std::string userMessage, int senderSocketFd);
+    void sendMessageToOtherPlayers(std::string &userMessage, std::string &senderUsername);
 };
 
 #endif

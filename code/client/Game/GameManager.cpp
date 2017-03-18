@@ -4,6 +4,7 @@
 #include "../../server/Server.hpp"
 #include "GameGUI.hpp"
 #include "GameConsoleUI.hpp"
+#include "../../common/Command.hpp"
 
 
 GameManager::GameManager(int socket, App *app) :
@@ -168,6 +169,14 @@ void GameManager::run() {
                 if (!isSupporter) {
                     inputThread = pthread_cancel(thr);
                 }
+            }
+                // RECEVOIR MESSAGE DU CHAT DUN JOUEUR
+            else if (strncmp(server_msg_buff, RECEIVE_MESSAGE_STRING.c_str(), RECEIVE_MESSAGE_STRING.length()) == 0) {
+                Command command;
+                command.parse(server_msg_buff);
+                const std::string& message = command.getNextToken();
+                const std::string& sender = command.getNextToken();
+                gameUI->addChatMessage(message, sender);
             }
 
                 //PHASE OU LA WAVE SE DEPLACE
@@ -513,4 +522,11 @@ bool GameManager::upgradeTower(Position toUpgrade) {
     return false;
 }
 
+/* In-Game Chat */
+
+void GameManager::sendMessageToPlayers(std::string message) {
+    // TODO: si l'utilisateur met des ; dans son message, c'est la merde
+    std::string request = SEND_MESSAGE_STRING + "," + message + "," + master_app->get_username() + ";";
+    send_message(server_socket, request.c_str());
+}
 

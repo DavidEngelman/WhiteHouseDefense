@@ -91,6 +91,7 @@ set(CLIENT_FILES client/ClientLauncher.cpp
         client/Game/GameInfo.cpp
         client/global.cpp
         common/Message.cpp
+        common/Command.cpp
         client/QCustomButton.cpp
         common/Networking.cpp
         common/Credentials.cpp

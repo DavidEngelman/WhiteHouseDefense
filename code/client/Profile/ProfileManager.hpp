@@ -20,6 +20,7 @@ private:
 
     std::string username;
     int victories;
+	int defeats;
     int npcKilled;
 
 public:
@@ -45,6 +46,8 @@ public:
     void parseProfileData(char * profileData);
 
 	~ProfileManager();
+
+	int getDefeats() const;
 };
 
 

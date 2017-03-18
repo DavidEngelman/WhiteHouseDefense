@@ -3,6 +3,7 @@
 #include <QtWidgets/QFrame>
 #include <QtWidgets/QHBoxLayout>
 #include <QtCore/QTimer>
+#include <QtWidgets/QMessageBox>
 #include "GameGUI.hpp"
 #include "../QCustomButton.h"
 #include "../MapGUI.hpp"
@@ -161,11 +162,20 @@ void GameGUI::enableTowerShop() {
 void GameGUI::handleBuyingTower(int typeOfTower) {
     switch (typeOfTower) {
         case 0:
-            manager->placeGunTower(map->getHighlighted());
+            manager->placeGunTower(map->getHighlightedPosition());
         case 1:
-            manager->placeSniperTower(map->getHighlighted());
+            manager->placeSniperTower(map->getHighlightedPosition());
         default:
-            manager->placeShockTower(map->getHighlighted());
+            manager->placeShockTower(map->getHighlightedPosition());
     }
     disableTowerShop();
+}
+
+void GameGUI::addChatMessage(const std::string &message, const std::string &sender) {
+    // TODO: pour tester, faudra faire la vraie fonction apres
+    QString totalMessage(sender.c_str());
+    totalMessage.append(": ");
+    totalMessage.append(message.c_str());
+
+    QMessageBox::critical(this, "New message", totalMessage);
 }

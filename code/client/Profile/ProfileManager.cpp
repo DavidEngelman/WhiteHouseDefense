@@ -8,7 +8,7 @@
 
 ProfileManager::ProfileManager(int port, App *my_app) :
         NetworkedManager(port, my_app), username("Loading..."), victories(-1), npcKilled(-1) {
-    if (!isConsole) {
+    if (false) {
         profileUI = new ProfileGUI(this);
     } else {
         profileUI = new ProfileConsoleUI(this);
@@ -53,6 +53,7 @@ void ProfileManager::parseProfileData(char *profileData) {
 
     if (username != "") { /* If the response isn't empty, the profile exists */
         victories = std::stoi(message.getNextToken());
+        defeats = std::stoi(message.getNextToken());
         npcKilled = std::stoi(message.getNextToken());
         assert(message.hasReachedEnd());
     }
@@ -60,6 +61,10 @@ void ProfileManager::parseProfileData(char *profileData) {
 
 int ProfileManager::getVictories() const {
     return victories;
+}
+
+int ProfileManager::getDefeats() const {
+    return defeats;
 }
 
 int ProfileManager::getNPCKilled() const {

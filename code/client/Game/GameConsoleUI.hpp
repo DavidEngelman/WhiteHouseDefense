@@ -49,6 +49,8 @@ public:
 	Position getPosUpgradeTower();
 
 	void upgradeTower();
+
+	void addChatMessage(const std::string &message, const std::string &sender) override;
 };
 
 #endif
