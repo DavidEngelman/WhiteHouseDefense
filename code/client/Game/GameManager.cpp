@@ -116,6 +116,16 @@ void GameManager::sendSellRequest(Position towerPos) {
     send_message(server_socket, message.c_str());
 }
 
+void GameManager::sendUpgradeRequest(Position towerPos) {
+    std::string type = "NULL";
+    std::string message = UPGRADE_TOWER_COMMAND_STRING
+                          + "," + std::to_string(quadrant)
+                          + "," + type
+                          + "," + std::to_string(towerPos.getX())
+                          + "," + std::to_string(towerPos.getY())+";";
+    send_message(server_socket, message.c_str());
+}
+
 
 
 void GameManager::run() {
@@ -493,4 +503,14 @@ bool GameManager::sellTower(Position toSell) {
     }
     return false;
 }
+
+bool GameManager::upgradeTower(Position toUpgrade) {
+    if (isTowerInPosition(gameState, toUpgrade)){
+        gameState.upgradeTower(toUpgrade, quadrant);
+        sendUpgradeRequest(toUpgrade);
+        return true;
+    }
+    return false;
+}
+
 

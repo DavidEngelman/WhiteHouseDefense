@@ -105,6 +105,9 @@ void GameState::upgradeTower(Position &position, int &quadrant) {
     for (AbstractTower *tower : getTowers()){
         if (tower->getPosition() == position){
             tower->upgrade();
+            float amountSpend = tower->getPrice() * (10/100 * (tower->getLevel() -1));
+            player_states[quadrant].spendMoney((int)amountSpend);
+            break;
         }
     }
 }
