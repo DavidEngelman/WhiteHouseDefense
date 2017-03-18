@@ -54,6 +54,24 @@ Position GameConsoleUI::getPosSellingTower() {
     return Position(x, y);
 }
 
+Position GameConsoleUI::getPosUpgradeTower() {
+    int x;
+    int y;
+
+    do {
+        std::cin.clear();
+        std::cin.ignore();
+        std::cout << "Enter the coordinates of the tower that you want to upgrade" << std::endl;
+        std::cout << "X: ";
+        std::cin >> x;
+        std::cout << "Y: ";
+        std::cin >> y;
+    } while (!checkCoord(x, y));
+
+    return Position(x, y);
+}
+
+
 void GameConsoleUI::displayPlayerInfos(GameState &gameState, int quadrant) {
     int gold = gameState.getPlayerStates()[quadrant].getMoney();
     int pnj_killed = gameState.getPlayerStates()[quadrant].getPnjKilled();
@@ -178,6 +196,11 @@ void GameConsoleUI::sellTowerAction() {
     manager->sellTower(toSell);
 }
 
+void GameConsoleUI::upgradeTower() {
+    Position toUpgrade = getPosUpgradeTower();
+    manager->upgradeTower(toUpgrade);
+}
+
 void *GameConsoleUI::input_thread() {
 
     while (1) {
@@ -192,7 +215,8 @@ void *GameConsoleUI::input_thread() {
         }else if (choice == 2){
             sellTowerAction();
 
-        }// else upgrade tower
+        }else
+            upgradeTower();
         display(manager->getGameState(), manager->getQuadrant());
         displayPlayerInfos(manager->getGameState(), manager->getQuadrant());
     }

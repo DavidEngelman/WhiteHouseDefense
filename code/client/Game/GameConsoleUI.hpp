@@ -45,6 +45,10 @@ public:
 	void placeTowerAction();
 
 	void sellTowerAction();
+
+	Position getPosUpgradeTower();
+
+	void upgradeTower();
 };
 
 #endif
