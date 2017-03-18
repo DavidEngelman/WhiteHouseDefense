@@ -46,48 +46,13 @@ void GameManager::come_back_to_menu() { // À appeler quand la partie est termin
     master_app->transition(menu_manager);
 }
 
-void *GameManager::input_thread() {
-    //TODO: diviser cette méthode en plusieurs plus petites pcq la c'est pas très lisible
-
-    while (1) {
-        gameUI->displayPosingPhase();
-        //int choice = gameUI->getChoice();
-        int choice = 1; //TODO CHANGER
-        gameUI->display(gameState, quadrant);
-        gameUI->displayPlayerInfos(gameState, quadrant);
-        if (choice == 1) {
-            gameUI->displayTowerShop();
-            //int towerchoice = gameUI->getChoice();
-            int towerchoice = 1;
-            gameUI->display(gameState, quadrant);
-            gameUI->displayPlayerInfos(gameState, quadrant);
-            Position towerPos = gameUI->getPosBuyingTower();
-            if (towerchoice == 1) {
-                if (checkValidity(towerPos, gameState, GUN_TOWER_STR)) {
-                    gameState.addTower(new GunTower(Position(towerPos.getX(), towerPos.getY())), quadrant);
-                    sendBuyRequest(towerPos, GUN_TOWER_STR);
-                }
-            } else if (towerchoice == 2) {
-                if (checkValidity(towerPos, gameState, SNIPER_TOWER_STR)) {
-                    gameState.addTower(new SniperTower(Position(towerPos.getX(), towerPos.getY())), quadrant);
-                    sendBuyRequest(towerPos, SNIPER_TOWER_STR);
-                }
-            } else {
-                if (checkValidity(towerPos, gameState, SHOCK_TOWER_STR)) {
-                    gameState.addTower(new ShockTower(Position(towerPos.getX(), towerPos.getY())), quadrant);
-                    sendBuyRequest(towerPos, SHOCK_TOWER_STR);
-                }
-            }
-        }else if (choice == 2){
-            Position toSell = gameUI->getPosSellingTower();
-            if (isTowerInPosition(gameState, toSell)){
-                gameState.deleteTower(toSell, quadrant);
-                sendSellRequest(toSell);
-            }
-        }// else upgrade tower
-        gameUI->display(gameState, quadrant);
-        gameUI->displayPlayerInfos(gameState, quadrant);
-    }
+void GameManager::update_map() {
+    char server_msg_buff[BUFFER_SIZE];
+    receive_message(server_socket, server_msg_buff);
+    if (strcmp(server_msg_buff, PLACING_TOWER) != 0 && strcmp(server_msg_buff, WAVE) != 0)
+        unSerializeGameState(server_msg_buff);
+    gameUI->display(gameState, quadrant);
+    gameUI->displayPlayerInfos(gameState, quadrant);
 }
 
 bool GameManager::isTowerInPosition(GameState &gameState, Position towerPos){
@@ -101,9 +66,6 @@ bool GameManager::isTowerInPosition(GameState &gameState, Position towerPos){
     return validity;
 }
 
-void *GameManager::staticInputThread(void *self){
-    return static_cast<GameManager*>(self)->input_thread();
-}
 
 /*
  * checkValidity(Position towerPos, GameState& gamestate):
@@ -157,60 +119,71 @@ void GameManager::sendSellRequest(Position towerPos) {
 
 
 void GameManager::run() {
-    gameUI->display(gameState, quadrant);
+    char server_msg_buff[BUFFER_SIZE];
 
-    if (!isSupporter)
-        gameUI->displayPlayerInfos(gameState, quadrant);
-    else
-        gameUI->displayInfoForSupporter(gameState);
+    if (isConsole) {
+        gameUI->display(gameState, quadrant);
 
-        char server_msg_buff[BUFFER_SIZE];
+        if (!isSupporter)
+            gameUI->displayPlayerInfos(gameState, quadrant);
+        else
+            gameUI->displayInfoForSupporter(gameState);
 
         while (!gameState.getIsGameOver()) {
             receive_message(server_socket, server_msg_buff);
-            //std::cout << "Message: " << server_msg_buff << std::endl;
+
+            //PHASE ENTRE LES WAVES
             if (strcmp(server_msg_buff, PLACING_TOWER) == 0) {
 
-            if (is_alive() && !isSupporter ) {
-                inputThread = pthread_create(&thr, NULL, &GameManager::staticInputThread, this);
-            } else {
-                gameUI->display(gameState, quadrant);
                 if (is_alive() && !isSupporter) {
-                    inputThread = pthread_create(&thr, NULL, &GameManager::staticInputThread, this);
+                    inputThread = pthread_create(&thr, NULL, &GameConsoleUI::staticInputThread, this);
                 } else {
                     gameUI->display(gameState, quadrant);
+                    if (is_alive() && !isSupporter) {
+                        inputThread = pthread_create(&thr, NULL, &GameConsoleUI::staticInputThread, this);
+                    } else {
+                        gameUI->display(gameState, quadrant);
+                    }
+
+                    if (isSupporter) {
+                        gameUI->displayPlayersPlacingTowersMessage();
+                    } else {
+                        gameUI->display_dead_message();
+                    }
                 }
 
-                if (isSupporter) {
-                    gameUI->displayPlayersPlacingTowersMessage();
-                } else {
-                    gameUI->display_dead_message();
-                }
-            }
-        }else if (strcmp(server_msg_buff, WAVE) == 0){
-            if (!isSupporter) {
-                inputThread = pthread_cancel(thr);
-            }
-        }
-        else {
-            unSerializeGameState(server_msg_buff);
-            gameUI->display(gameState, quadrant);
 
-            if (!isSupporter) {
-                if (is_alive()) {
-                    gameUI->displayPlayerInfos(gameState, quadrant);
-                } else {
-                    gameUI->display_dead_message();
+                //DEBUT D'UNE WAVE
+            } else if (strcmp(server_msg_buff, WAVE) == 0) {
+                if (!isSupporter) {
+                    inputThread = pthread_cancel(thr);
                 }
-            } else
-                gameUI->displayInfoForSupporter(gameState);
+            }
+
+                //PHASE OU LA WAVE SE DEPLACE
+            else {
+                unSerializeGameState(server_msg_buff);
+                gameUI->display(gameState, quadrant);
+
+                if (!isSupporter) {
+                    if (is_alive()) {
+                        gameUI->displayPlayerInfos(gameState, quadrant);
+                    } else {
+                        gameUI->display_dead_message();
+                    }
+                } else
+                    gameUI->displayInfoForSupporter(gameState);
+            }
         }
+
+        //FIN DE PARTIE
+        gameUI->displayGameOver(gameState);
+        // Menu to come back to main menu (or make another game of the same type ?)
+        come_back_to_menu();
+    } else {
+        update_map();
+        gameUI->displayTowerShop();
     }
-    gameUI->displayGameOver(gameState);
-
-    // Menu to come back to main menu (or make another game of the same type ?)
-    come_back_to_menu();
-
 }
 
 void GameManager::unSerializeGameState(char* seriarlized_gamestate){
@@ -472,5 +445,52 @@ void GameManager::getInitialGameStateFromServer() {
     char buffer[BUFFER_SIZE];
     receive_message(server_socket, buffer);
     unSerializeGameState(buffer);
+}
+
+GameState &GameManager::getGameState() {
+    return gameState;
+}
+
+int GameManager::getQuadrant() {
+    return quadrant;
+}
+
+bool GameManager::placeGunTower(Position towerPos) {
+    if (checkValidity(towerPos, gameState, GUN_TOWER_STR)) {
+        gameState.addTower(new GunTower(Position(towerPos.getX(), towerPos.getY())), quadrant);
+        sendBuyRequest(towerPos, GUN_TOWER_STR);
+        return true;
+    }
+    else
+        return false;
+}
+
+bool GameManager::placeSniperTower(Position towerPos) {
+    if (checkValidity(towerPos, gameState, SNIPER_TOWER_STR)) {
+        gameState.addTower(new GunTower(Position(towerPos.getX(), towerPos.getY())), quadrant);
+        sendBuyRequest(towerPos, SNIPER_TOWER_STR);
+        return true;
+    }
+    else
+        return false;
+}
+
+bool GameManager::placeShockTower(Position towerPos) {
+    if (checkValidity(towerPos, gameState, SHOCK_TOWER_STR)) {
+        gameState.addTower(new GunTower(Position(towerPos.getX(), towerPos.getY())), quadrant);
+        sendBuyRequest(towerPos, SHOCK_TOWER_STR);
+        return true;
+    }
+    else
+        return false;
+}
+
+bool GameManager::sellTower(Position toSell) {
+    if (isTowerInPosition(gameState, toSell)){
+        gameState.deleteTower(toSell, quadrant);
+        sendSellRequest(toSell);
+        return true;
+    }
+    return false;
 }
 

@@ -8,7 +8,7 @@ PNJ::PNJ(Position position, int healthPoints, int direction) :
 
 }
 
-PNJ::PNJ(int direction) : position(Position(15, 15)), healthPoints(PNJ_STARTING_HEALTHPOINTS),
+PNJ::PNJ(int direction) : position(Position(SIZE/2, SIZE/2)), healthPoints(PNJ_STARTING_HEALTHPOINTS),
                           movementSpeed(PNJ_STARTING_MOVESPEED), direction(direction),
                           last_position(Position(-1000, -1000)) {}
 
