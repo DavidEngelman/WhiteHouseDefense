@@ -21,12 +21,21 @@ static const int NB_OF_MAPS = 3;
 
 static const int PNJ_STARTING_HEALTHPOINTS = 100;
 static const int PNJ_STARTING_MOVESPEED = 100;
+static const int PNJ_VALUE = 10;
+static const int PNJ_DAMAGE = 5;
+
+static const int PNJ_TANK_STARTING_HEALTHPOINTS = 150;
+static const int PNJ_TANK_STARTING_MOVESPEED = 100;
+static const int PNJ_TANK_VALUE = 15;
+static const int PNJ_TANK_DAMAGE = 3;
+
+static const int PNJ_ASSAULT_STARTING_HEALTHPOINTS = 70;
+static const int PNJ_ASSAULT_STARTING_MOVESPEED = 100;
+static const int PNJ_ASSAULT_VALUE = 5;
+static const int PNJ_ASSAULT_DAMAGE = 10;
 
 static const int PLAYER_STARTING_HP =  100;
 static const int PLAYER_STARTING_MONEY = 200;
-
-static const int PNJ_VALUE = 10;
-static const int PNJ_DAMAGE = 5;
 
 static const char PLACING_TOWER[2] = "t";
 static const char WAVE[2] = "w";
