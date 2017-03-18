@@ -125,6 +125,7 @@ void GameGUI::displayPlayerInfos(GameState &gameState, int quadrant) {
     std::string text = "\t" + playerState.getUsername();
 
     usernameL->setText(QString::fromStdString(text));
+    usernameL->show();
 
     text = "\n\n\n\tMoney : " + std::to_string(playerState.getMoney()) + " $";
     text += "\n\tHP : " + std::to_string(playerState.getHp());
@@ -132,6 +133,7 @@ void GameGUI::displayPlayerInfos(GameState &gameState, int quadrant) {
     text += "\n\tQuadrant : " + QUADRANT_NAMES[quadrant];
 
     playerStateL->setText(QString::fromStdString(text));
+    playerStateL->show();
 }
 
 void GameGUI::displayInfoForSupporter(GameState &gameState) {
