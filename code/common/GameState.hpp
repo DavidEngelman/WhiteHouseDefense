@@ -67,7 +67,7 @@ public:
 
     void deleteTower(Position &position, int &quadrant);
 
-    void upgradeTower(Position &position, int &quadrant);
+    bool upgradeTower(Position &position, int &quadrant);
 };
 
 #endif

@@ -5,12 +5,14 @@
 
 
 #include <QtWidgets/QLabel>
+#include <QMessageBox>
 #include <QtWidgets/QGroupBox>
 #include <QtWidgets/QPushButton>
 #include "../Abstract/AbstractGUI.hpp"
 #include "GameManager.hpp"
 #include "GameUI.hpp"
 #include "InGameChatWidget.hpp"
+#include "../QCustomButton.h"
 
 class MapGUI;
 
@@ -23,15 +25,26 @@ private:
     QLabel *playerStateL;
 
     QGroupBox *towerShop;
-    QPushButton *gunTowerB;
-    QPushButton *sniperTowerB;
-    QPushButton *shockTowerB;
+    QCustomButton *gunTowerB;
+    QCustomButton *sniperTowerB;
+    QCustomButton *shockTowerB;
+
+    QGroupBox *deleteAndUpgradeBox;
+    QPushButton *deleteTowerB;
+    QPushButton *upgradeTowerB;
+
+    QGroupBox *spellBox;
+    QMessageBox msgBox;
+
+
 
     InGameChatWidget * inGameChatWidget;
 
 public slots:
     void update_map();
     void handleBuyingTower(int typeOfTower);
+    void handleSellingTower();
+    void handleUpgradingTower();
 
 public:
     GameGUI(unsigned seed, GameManager *manager);
@@ -55,7 +68,13 @@ public:
     void disableTowerShop();
     void enableTowerShop();
 
+    void displayDeleteAndUpgradeBox();
+
     void addChatMessage(const std::string &message, const std::string &sender) override;
+
+    void disableDeleteAndUpgradeBox();
+
+    void enableDeleteAndUpgradeBox();
 };
 
 

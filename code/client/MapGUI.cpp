@@ -141,7 +141,9 @@ void MapGUI::mousePressEvent(QMouseEvent* event) {
         gameGUI->disableTowerShop();
     } else {
         highlighted = pos;
-        if (isObstacle(pos) or isPath(pos) or isBase(pos)) gameGUI->disableTowerShop();
+        if (isObstacle(pos) or isPath(pos) or isBase(pos)) {
+            gameGUI->disableTowerShop();
+        }
         else gameGUI->enableTowerShop();
     }
 }

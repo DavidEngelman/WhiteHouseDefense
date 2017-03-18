@@ -4,14 +4,38 @@
 #include <QtWidgets/QHBoxLayout>
 #include <QtCore/QTimer>
 #include <QtWidgets/QMessageBox>
+#include <QtWidgets/QGroupBox>
 #include "GameGUI.hpp"
 #include "../QCustomButton.h"
 #include "../MapGUI.hpp"
 
 GameGUI::GameGUI(unsigned seed, GameManager *manager) : AbstractGUI(nullptr), GameUI(seed, manager) {
 
+    playerInfo = new QGroupBox;
+    QVBoxLayout* playerInfoLayout = new QVBoxLayout;
     QHBoxLayout *mainLayout = new QHBoxLayout();
     QVBoxLayout* leftPanel = new QVBoxLayout;
+
+    msgBox.setText("Incorrect action");
+    //* RIGHT PANEL //*
+    /* Player Info */
+
+    QVBoxLayout *actionLayout  = new QVBoxLayout; //tower shop + sell/upgrage + spells
+
+    QString towerShopTitle = QString::fromStdString("Towers Shop");
+    towerShop = new QGroupBox(towerShopTitle);
+    displayTowerShop();
+    actionLayout->addWidget(towerShop);
+
+
+    QString deleteAndUpgradeTitle = QString::fromStdString("On Tower Actions");
+    deleteAndUpgradeBox = new QGroupBox(deleteAndUpgradeTitle);
+    displayDeleteAndUpgradeBox();
+    actionLayout->addWidget(deleteAndUpgradeBox);
+
+    QString spellBoxTitle = QString::fromStdString("Spells");
+    spellBox = new QGroupBox(this);
+    actionLayout->addWidget(spellBox);
 
     //* LEFT PANEL //*
     /* Player Info */
@@ -40,19 +64,18 @@ GameGUI::GameGUI(unsigned seed, GameManager *manager) : AbstractGUI(nullptr), Ga
     leftPanel->setAlignment(playerStateL, Qt::AlignCenter|Qt::AlignTop);
     leftPanel->setAlignment(inGameChatWidget, Qt::AlignCenter|Qt::AlignTop);
 
-    /* Tower shop */
-    towerShop = new QGroupBox(this);
-    // The towers are added in the displayTowerShop() method
-
-
 
     /* Main Layout */
     mainLayout->addLayout(leftPanel, 1);
     map = new MapGUI(seed, this, mainLayout);
-    mainLayout->addWidget(towerShop, 1);
+    mainLayout->addLayout(actionLayout, 1);
 
 
     this->setLayout(mainLayout);
+    playerInfo->setLayout(playerInfoLayout);
+
+
+
     this->showFullScreen();
 
     QTimer *timer = new QTimer();
@@ -91,7 +114,6 @@ void GameGUI::displayTowerShop() {
     gunTowerB->setIconSize(size);
     gunTowerB->setToolTip(QString::fromStdString(tooltip));
     gunTowerB->setEnabled(false);
-    gunTowerB->show();
 
     tooltip = "Tower that can attack one npc at the time\nwith a great range but with small damages\n";
     tooltip += "\nPrice : " + std::to_string(SNIPER_TOWER_PRICE) + " $";
@@ -103,7 +125,6 @@ void GameGUI::displayTowerShop() {
     sniperTowerB->setIconSize(size);
     sniperTowerB->setToolTip(QString::fromStdString(tooltip));
     sniperTowerB->setEnabled(false);
-    sniperTowerB->show();
 
     tooltip = "Tower that attack all the npc in it's range\nwith a small range and small damages\n";
     tooltip += "\nPrice : " + std::to_string(SHOCK_TOWER_PRICE) + " $";
@@ -115,17 +136,46 @@ void GameGUI::displayTowerShop() {
     shockTowerB->setIconSize(size);
     shockTowerB->setToolTip(QString::fromStdString(tooltip));
     shockTowerB->setEnabled(false);
-    shockTowerB->show();
 
-    QVBoxLayout *layout = new QVBoxLayout(towerShop);
+    QVBoxLayout *layout = new QVBoxLayout;
     layout->addWidget(gunTowerB);
     layout->addWidget(sniperTowerB);
     layout->addWidget(shockTowerB);
     layout->addStretch();
+    towerShop->setLayout(layout);
 
     QObject::connect(gunTowerB, SIGNAL(clicked(int)), this, SLOT(handleBuyingTower(int)));
     QObject::connect(sniperTowerB, SIGNAL(clicked(int)), this, SLOT(handleBuyingTower(int)));
     QObject::connect(shockTowerB, SIGNAL(clicked(int)), this, SLOT(handleBuyingTower(int)));
+}
+
+void GameGUI::displayDeleteAndUpgradeBox() {
+
+    int scl = 10;
+    QSize size = QSize(1400/scl, 1060/scl);
+
+    deleteTowerB = new QPushButton;
+    deleteTowerB->setEnabled(true);
+    deleteTowerB->setIcon(QIcon("../../qt_ui/game_pictures/towers/sell.png"));
+    deleteTowerB->setIconSize(size);
+
+    upgradeTowerB = new QPushButton;
+    upgradeTowerB->setEnabled(true);
+    upgradeTowerB->setIcon(QIcon("../../qt_ui/game_pictures/towers/upgrade.png"));
+    upgradeTowerB->setIconSize(size);
+
+
+    QHBoxLayout *layout = new QHBoxLayout;
+    layout->addWidget(deleteTowerB);
+    layout->addWidget(upgradeTowerB);
+    layout->addStretch();
+    deleteAndUpgradeBox->setLayout(layout);
+
+
+    QObject::connect(deleteTowerB, SIGNAL(clicked()), this, SLOT(handleSellingTower()));
+    QObject::connect(upgradeTowerB, SIGNAL(clicked()), this, SLOT(handleUpgradingTower()));
+
+
 }
 
 void GameGUI::displayGameOver(GameState &gamestate) {
@@ -173,17 +223,39 @@ void GameGUI::enableTowerShop() {
     if (playerMoney > SHOCK_TOWER_PRICE) shockTowerB->setEnabled(true);
 }
 
+
+
 void GameGUI::handleBuyingTower(int typeOfTower) {
+
     switch (typeOfTower) {
         case 0:
-            manager->placeGunTower(map->getHighlightedPosition());
+            if (!manager->placeGunTower(map->getHighlightedPosition()))
+                msgBox.show();
+            break;
         case 1:
-            manager->placeSniperTower(map->getHighlightedPosition());
+            if (!manager->placeSniperTower(map->getHighlightedPosition()));
+                msgBox.show();
+            break;
         default:
-            manager->placeShockTower(map->getHighlightedPosition());
+            if (!manager->placeShockTower(map->getHighlightedPosition()))
+                 msgBox.show();
+            break;
     }
     disableTowerShop();
 }
+
+void GameGUI::handleSellingTower() {
+
+   if(!manager->sellTower(map->getHighlightedPosition()))
+       msgBox.show();
+}
+
+void GameGUI::handleUpgradingTower() {
+
+    if(!manager->upgradeTower(map->getHighlightedPosition()))
+        msgBox.show();
+}
+
 
 void GameGUI::addChatMessage(const std::string &message, const std::string &sender) {
     inGameChatWidget->addChatMessage(message, sender);

@@ -77,6 +77,7 @@ public:
     static int computeQuadrant(Position pos);
 
     virtual Position getHighlightedPosition() const { return Position(-1, -1); }
+
 };
 
 #endif

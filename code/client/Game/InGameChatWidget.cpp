@@ -9,8 +9,6 @@ InGameChatWidget::InGameChatWidget(GameManager *gameManager) : gameManager(gameM
 
     /* Message list view */
     messagesListWidget = new QListWidget();
-    messagesListWidget->addItem("Je suis bob l'eponge");
-    messagesListWidget->addItem("J'aime les patates");
 
 
     /* Send message form */
@@ -34,11 +32,15 @@ InGameChatWidget::InGameChatWidget(GameManager *gameManager) : gameManager(gameM
 void InGameChatWidget::sendMessage() {
     std::string message = messageLineEdit->text().toStdString();
     gameManager->sendMessageToPlayers(message);
+    messageLineEdit->setText("");
 }
 
 void InGameChatWidget::addChatMessage(const std::string &message, const std::string &sender) {
     std::string totalMessage = sender + ": " + message;
-    messagesListWidget->addItem(totalMessage.c_str());
+
+    QListWidgetItem *item = new QListWidgetItem(totalMessage.c_str());
+    if (sender == gameManager->getUsername()) item->setForeground(Qt::darkGreen);
+    messagesListWidget->addItem(item);
 }
 
 

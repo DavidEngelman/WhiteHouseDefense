@@ -3,7 +3,7 @@
 #include "AbstractTower.hpp"
 
 AbstractTower::AbstractTower(Position position, int price, float range):
-        position(position), price(price), quadrant(Map::computeQuadrant(position)), range(range), level(0) {
+        position(position), price(price), quadrant(Map::computeQuadrant(position)), range(range), level(1) {
 }
 
 int AbstractTower::getLevel() const { return level; }
@@ -12,7 +12,7 @@ int AbstractTower::getOwner() const { return quadrant; }
 
 void AbstractTower::setOwner(int newOwner) { quadrant = newOwner; }
 
-int AbstractTower::getPrice() const { return level*price/10 + price; }
+int AbstractTower::getPrice() const { return (level -1)*price/10 + price; }
 
 float AbstractTower::getRange() const { return level*range/10 + range; } // +10% de radius par upgrade
 

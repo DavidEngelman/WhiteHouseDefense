@@ -42,7 +42,6 @@ private:
 
     void comeBackToMenu();
     bool is_alive();
-    bool isTowerInPosition(GameState &gamestate, Position towerPos);
     bool checkValidity(Position towerPos, GameState& gamestate, std::string typeOfTower);
 
     void sendBuyRequest(Position towerPos, std::string towerType);
@@ -77,6 +76,10 @@ public:
     bool upgradeTower(Position toUpgrade);
 
     void sendUpgradeRequest(Position towerPos);
+
+    bool isTowerInPosition(GameState &gamestate, Position towerPos);
+
+    std::string &getUsername() { return gameState.getPlayerStates()[quadrant].getUsername(); };
 };
 
 #endif

@@ -209,7 +209,7 @@ void GameManager::run() {
         comeBackToMenu();
     } else {
         updateMap();
-        gameUI->displayTowerShop();
+        //gameUI->displayTowerShop();
     }
 }
 
@@ -513,17 +513,20 @@ bool GameManager::placeShockTower(Position towerPos) {
 }
 
 bool GameManager::sellTower(Position toSell) {
-    if (isTowerInPosition(gameState, toSell)){
+    if (isTowerInPosition(getGameState(), toSell)) {
         gameState.deleteTower(toSell, quadrant);
         sendSellRequest(toSell);
         return true;
     }
+
     return false;
+
 }
 
 bool GameManager::upgradeTower(Position toUpgrade) {
-    if (isTowerInPosition(gameState, toUpgrade)){
-        gameState.upgradeTower(toUpgrade, quadrant);
+    if (isTowerInPosition(getGameState(), toUpgrade)) {
+        if (!gameState.upgradeTower(toUpgrade, quadrant))
+            return false;
         sendUpgradeRequest(toUpgrade);
         return true;
     }
