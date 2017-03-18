@@ -11,6 +11,7 @@
 #include "GameManager.hpp"
 #include "GameUI.hpp"
 #include "InGameChatWidget.hpp"
+#include "../QCustomButton.h"
 
 class MapGUI;
 
@@ -23,9 +24,16 @@ private:
     QLabel *playerStateL;
 
     QGroupBox *towerShop;
-    QPushButton *gunTowerB;
-    QPushButton *sniperTowerB;
-    QPushButton *shockTowerB;
+    QCustomButton *gunTowerB;
+    QCustomButton *sniperTowerB;
+    QCustomButton *shockTowerB;
+
+    QGroupBox *deleteAndUpgradeBox;
+    QCustomButton *deleteTowerB;
+    QCustomButton *upgradeTowerB;
+
+    QGroupBox *spellBox;
+
 
     InGameChatWidget * inGameChatWidget;
 
@@ -54,6 +62,8 @@ public:
 
     void disableTowerShop();
     void enableTowerShop();
+
+    void displayDeleteAndUpgradeBox();
 
     void addChatMessage(const std::string &message, const std::string &sender) override;
 };
