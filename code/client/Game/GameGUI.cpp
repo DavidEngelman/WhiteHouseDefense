@@ -122,15 +122,15 @@ void GameGUI::displayGameOver(GameState &gamestate) {
 
 void GameGUI::displayPlayerInfos(GameState &gameState, int quadrant) {
     PlayerState playerState = gameState.getPlayerStates()[quadrant];
-    std::string text = "\t" + playerState.getUsername();
+    std::string text = playerState.getUsername();
 
     usernameL->setText(QString::fromStdString(text));
     usernameL->show();
 
-    text = "\n\n\n\tMoney : " + std::to_string(playerState.getMoney()) + " $";
-    text += "\n\tHP : " + std::to_string(playerState.getHp());
-    text += "\n\tNPC killed : " + std::to_string(playerState.getPnjKilled());
-    text += "\n\tQuadrant : " + QUADRANT_NAMES[quadrant];
+    text = "Money : " + std::to_string(playerState.getMoney()) + " $";
+    text += "\nHP : " + std::to_string(playerState.getHp());
+    text += "\nNPC killed : " + std::to_string(playerState.getPnjKilled());
+    text += "\nQuadrant : " + QUADRANT_NAMES[quadrant];
 
     playerStateL->setText(QString::fromStdString(text));
     playerStateL->show();
