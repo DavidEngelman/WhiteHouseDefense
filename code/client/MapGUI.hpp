@@ -30,7 +30,7 @@ public:
     void display(GameState& gameState, int quadrant) override;
 
     void mousePressEvent(QMouseEvent *event) override ;
-    Position getHighlighted() const override { return highlighted; }
+    Position getHighlightedPosition() const override { return highlighted; }
 };
 
 

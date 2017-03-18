@@ -157,11 +157,11 @@ void GameGUI::enableTowerShop() {
 void GameGUI::handleBuyingTower(int typeOfTower) {
     switch (typeOfTower) {
         case 0:
-            manager->placeGunTower(map->getHighlighted());
+            manager->placeGunTower(map->getHighlightedPosition());
         case 1:
-            manager->placeSniperTower(map->getHighlighted());
+            manager->placeSniperTower(map->getHighlightedPosition());
         default:
-            manager->placeShockTower(map->getHighlighted());
+            manager->placeShockTower(map->getHighlightedPosition());
     }
     disableTowerShop();
 }

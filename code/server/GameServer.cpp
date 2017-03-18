@@ -133,24 +133,23 @@ void GameServer::getAndProcessUserInput(int clientSocketFd, char *buffer) {
             TowerCommand command;
             command.parse(buffer);
             upgradeTowerInGameState(command);
-        } else if (command_type == USER_MESSAGE_STRING){
+        } else if (command_type == SEND_MESSAGE_STRING){
             Command command;
             command.parse(buffer);
             std::string userMessage = command.getNextToken();
-            sendMessageToOtherPlayers(userMessage, clientSocketFd);
+            std::string senderUsername = command.getNextToken();
+            sendMessageToOtherPlayers(userMessage, senderUsername);
         }
     } else {
         removeClosedSocketFromSocketLists(clientSocketFd);
     }
 }
 
-void GameServer::sendMessageToOtherPlayers(std::string userMessage, int senderSocketFd) {
-    std::string message = RECEIVE_USER_MESSAGE_STRING + "," + userMessage + ";";
+void GameServer::sendMessageToOtherPlayers(std::string &userMessage, std::string &senderUsername) {
+    std::string message = RECEIVE_MESSAGE_STRING + "," + userMessage + "," + senderUsername + ";";
     for (PlayerConnection &playerConnection : playerConnections) {
         int socketFd = playerConnection.getSocketFd();
-        if (socketFd != senderSocketFd) {
-            send_message(socketFd, message.c_str());
-        }
+        send_message(socketFd, message.c_str());
     }
 }
 
