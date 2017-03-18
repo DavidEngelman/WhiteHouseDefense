@@ -70,7 +70,7 @@ public:
 
     bool sellTower(Position toSell);
 
-    void update_map();
+    void updateMap();
 
     bool upgradeTower(Position toUpgrade);
 
