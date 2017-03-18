@@ -50,8 +50,16 @@ void GameManager::comeBackToMenu() { // À appeler quand la partie est terminée
 void GameManager::updateMap() {
     char server_msg_buff[BUFFER_SIZE];
     receive_message(server_socket, server_msg_buff);
-    if (strcmp(server_msg_buff, PLACING_TOWER) != 0 && strcmp(server_msg_buff, WAVE) != 0)
+    if (strncmp(server_msg_buff, RECEIVE_MESSAGE_STRING.c_str(), RECEIVE_MESSAGE_STRING.length()) == 0) {
+        Command command;
+        command.parse(server_msg_buff);
+        const std::string& message = command.getNextToken();
+        const std::string& sender = command.getNextToken();
+        gameUI->addChatMessage(message, sender);
+    }
+    else if (strcmp(server_msg_buff, PLACING_TOWER) != 0 && strcmp(server_msg_buff, WAVE) != 0) {
         unSerializeGameState(server_msg_buff);
+    }
     gameUI->display(gameState, quadrant);
     gameUI->displayPlayerInfos(gameState, quadrant);
 }
@@ -524,7 +532,7 @@ bool GameManager::upgradeTower(Position toUpgrade) {
 
 /* In-Game Chat */
 
-void GameManager::sendMessageToPlayers(std::string message) {
+void GameManager::sendMessageToPlayers(std::string &message) {
     // TODO: si l'utilisateur met des ; dans son message, c'est la merde
     std::string request = SEND_MESSAGE_STRING + "," + message + "," + master_app->get_username() + ";";
     send_message(server_socket, request.c_str());

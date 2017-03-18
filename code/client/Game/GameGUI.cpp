@@ -13,6 +13,8 @@ GameGUI::GameGUI(unsigned seed, GameManager *manager) : GameUI(seed, manager) {
 
     playerInfo = new QGroupBox;
     QVBoxLayout* playerInfoLayout = new QVBoxLayout;
+    QHBoxLayout *mainLayout = new QHBoxLayout();
+    QVBoxLayout* leftPanel = new QVBoxLayout;
 
 
     QVBoxLayout *actionLayout  = new QVBoxLayout; //tower shop + sell/upgrage + spells
@@ -32,6 +34,8 @@ GameGUI::GameGUI(unsigned seed, GameManager *manager) : GameUI(seed, manager) {
     spellBox = new QGroupBox(this);
     actionLayout->addWidget(spellBox);
 
+    //* LEFT PANEL //*
+    /* Player Info */
 
     QFont font = QFont();
     font.setBold(true);
@@ -46,12 +50,30 @@ GameGUI::GameGUI(unsigned seed, GameManager *manager) : GameUI(seed, manager) {
     playerStateL = new QLabel;
     playerStateL->setFont(font);
 
-    playerInfoLayout->addWidget(usernameL);
-    playerInfoLayout->addWidget(playerStateL);
+    /* In Game Chat UI */
+    inGameChatWidget = new InGameChatWidget(manager);
 
-    playerInfoLayout->setAlignment(usernameL, Qt::AlignCenter|Qt::AlignTop);
-    playerInfoLayout->setAlignment(playerStateL, Qt::AlignCenter|Qt::AlignTop);
+    leftPanel->addWidget(usernameL);
+    leftPanel->addWidget(playerStateL);
+    leftPanel->addWidget(inGameChatWidget);
 
+    leftPanel->setAlignment(usernameL, Qt::AlignCenter|Qt::AlignTop);
+    leftPanel->setAlignment(playerStateL, Qt::AlignCenter|Qt::AlignTop);
+    leftPanel->setAlignment(inGameChatWidget, Qt::AlignCenter|Qt::AlignTop);
+
+    /* Tower shop */
+    towerShop = new QGroupBox(this);
+    // The towers are added in the displayTowerShop() method
+
+
+
+    /* Main Layout */
+    mainLayout->addLayout(leftPanel, 1);
+    map = new MapGUI(seed, this, mainLayout);
+    mainLayout->addWidget(towerShop, 1);
+
+
+    this->setLayout(mainLayout);
     playerInfo->setLayout(playerInfoLayout);
 
 
@@ -100,6 +122,7 @@ void GameGUI::displayTowerShop() {
     gunTowerB->setIconSize(size);
     gunTowerB->setToolTip(QString::fromStdString(tooltip));
     gunTowerB->setEnabled(false);
+    gunTowerB->show();
 
     tooltip = "Tower that can attack one npc at the time\nwith a great range but with small damages\n";
     tooltip += "\nPrice : " + std::to_string(SNIPER_TOWER_PRICE) + " $";
@@ -111,6 +134,7 @@ void GameGUI::displayTowerShop() {
     sniperTowerB->setIconSize(size);
     sniperTowerB->setToolTip(QString::fromStdString(tooltip));
     sniperTowerB->setEnabled(false);
+    sniperTowerB->show();
 
     tooltip = "Tower that attack all the npc in it's range\nwith a small range and small damages\n";
     tooltip += "\nPrice : " + std::to_string(SHOCK_TOWER_PRICE) + " $";
@@ -122,6 +146,7 @@ void GameGUI::displayTowerShop() {
     shockTowerB->setIconSize(size);
     shockTowerB->setToolTip(QString::fromStdString(tooltip));
     shockTowerB->setEnabled(false);
+    shockTowerB->show();
 
     QVBoxLayout *layout = new QVBoxLayout;
     layout->addWidget(gunTowerB);
@@ -210,12 +235,5 @@ void GameGUI::handleBuyingTower(int typeOfTower) {
 }
 
 void GameGUI::addChatMessage(const std::string &message, const std::string &sender) {
-    // TODO: pour tester, faudra faire la vraie fonction apres
-    QString totalMessage(sender.c_str());
-    totalMessage.append(": ");
-    totalMessage.append(message.c_str());
-
-    QMessageBox::critical(this, "New message", totalMessage);
+    inGameChatWidget->addChatMessage(message, sender);
 }
-
-

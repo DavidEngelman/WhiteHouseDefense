@@ -10,6 +10,7 @@
 #include "../Abstract/AbstractGUI.hpp"
 #include "GameManager.hpp"
 #include "GameUI.hpp"
+#include "InGameChatWidget.hpp"
 #include "../QCustomButton.h"
 
 class MapGUI;
@@ -33,6 +34,8 @@ private:
 
     QGroupBox *spellBox;
 
+
+    InGameChatWidget * inGameChatWidget;
 
 public slots:
     void update_map();
