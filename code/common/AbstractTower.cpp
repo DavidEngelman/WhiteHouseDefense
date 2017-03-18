@@ -12,7 +12,7 @@ int AbstractTower::getOwner() const { return quadrant; }
 
 void AbstractTower::setOwner(int newOwner) { quadrant = newOwner; }
 
-int AbstractTower::getPrice() const { /*return level*price/10 + price;*/ return price; }
+int AbstractTower::getPrice() const { return level*price/10 + price; }
 
 float AbstractTower::getRange() const { return level*range/10 + range; } // +10% de radius par upgrade
 
@@ -34,7 +34,6 @@ int AbstractTower::getQuadrant() const {
 bool AbstractTower::upgrade() {
     if (level < LEVEL_MAX) {
         level++;
-        // TODO : dépenser de l'argent du joueur
         return true;
     }
     return false;

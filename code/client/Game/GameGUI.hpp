@@ -4,11 +4,34 @@
 #define PROJET_GAMEGUI_HPP
 
 
+#include <QtWidgets/QLabel>
+#include <QtWidgets/QGroupBox>
+#include <QtWidgets/QPushButton>
 #include "../Abstract/AbstractGUI.hpp"
 #include "GameManager.hpp"
 #include "GameUI.hpp"
+#include "InGameChatWidget.hpp"
+
+class MapGUI;
 
 class GameGUI : public AbstractGUI, public GameUI {
+    Q_OBJECT
+
+private:
+    QGroupBox *playerInfo;
+    QLabel *usernameL;
+    QLabel *playerStateL;
+
+    QGroupBox *towerShop;
+    QPushButton *gunTowerB;
+    QPushButton *sniperTowerB;
+    QPushButton *shockTowerB;
+
+    InGameChatWidget * inGameChatWidget;
+
+public slots:
+    void update_map();
+    void handleBuyingTower(int typeOfTower);
 
 public:
     GameGUI(unsigned seed, GameManager *manager, QWidget* _parent);
@@ -18,18 +41,21 @@ public:
     Position getPosSellingTower() override ;
     
     void display(GameState& gameState, int quadrant) override ;
-    void displayPosingPhase() override ;
+    void displayPlayerInfos(GameState &gameState, int quadrant) override ;
     void displayTowerShop() override ;
 
     void displayGameOver(GameState& gamestate) override ;
 
-    void displayPlayerInfos(GameState &gameState, int quadrant) override ;
     void displayInfoForSupporter(GameState& gameState) override ;
 
-    void display_dead_message() override ;
+    void displayDeadMessage() ;
 
     void displayPlayersPlacingTowersMessage() override ;
 
+    void disableTowerShop();
+    void enableTowerShop();
+
+    void addChatMessage(const std::string &message, const std::string &sender) override;
 };
 
 

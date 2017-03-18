@@ -8,19 +8,29 @@
 #include <QtGui/QPainter>
 #include "../common/Map.hpp"
 #include "Abstract/AbstractGUI.hpp"
+#include <QtGui/QMouseEvent>
+#include <QtWidgets/QHBoxLayout>
 
-class MapGUI : public Map, public AbstractGUI {
+class GameGUI;
+
+class MapGUI : public Map, public QWidget {
 private:
     GameState gameState;
     int quadrant;
+    Position highlighted;
+
+    GameGUI *gameGUI;
 
 protected:
     void paintEvent(QPaintEvent *event) override;
 
 public:
-    MapGUI(unsigned int seed);
+    MapGUI(unsigned int seed, GameGUI *gameGUI, QHBoxLayout *layout);
     void display();
-    void display(GameState& gameState, int quadrant);
+    void display(GameState& gameState, int quadrant) override;
+
+    void mousePressEvent(QMouseEvent *event) override ;
+    Position getHighlightedPosition() const override { return highlighted; }
 };
 
 

@@ -20,19 +20,37 @@ public:
 	int getChoice();
 
 	void display(GameState& gameState, int quadrant) override ;
-	void displayPosingPhase() override ;
+	void displayPlayerInfos(GameState &gameState, int quadrant) override ;
+	void displayInfoForSupporter(GameState& gameState) override ;
 	void displayTowerShop() override ;
 
 	void displayGameOver(GameState& gamestate) override ;
 
-	void displayPlayerInfos(GameState &gameState, int quadrant) override ;
-	void displayInfoForSupporter(GameState& gameState) override ;
+	void displayPosingPhase();
 
-	void display_dead_message() override ;
+	void displayDeadMessage() override ;
 
     void displayPlayersPlacingTowersMessage() override ;
 
 	bool checkCoord(int x, int y);
+
+	void *input_thread();
+
+	static void *staticInputThread(void *self);
+
+	int getTowerTypeChoice();
+
+	Position getPositionOfTowerPlacement();
+
+	void placeTowerAction();
+
+	void sellTowerAction();
+
+	Position getPosUpgradeTower();
+
+	void upgradeTower();
+
+	void addChatMessage(const std::string &message, const std::string &sender) override;
 };
 
 #endif

@@ -23,11 +23,7 @@ private:
     std::string mode;
     unsigned int mapSeed;
 
-    // Je l'ai mis comme pointeur, car je veux seulement l'initialiser dans la methode run.
-    // Si je l'initialise dans le constructeur, je suis obligé de garder la seed dans un field
-    // pour l'envoyer au client (pendant la methode run), ce que je veux éviter
-
-    GameEngine *gameEngine;
+    GameEngine *gameEngine; // TODO: vu qu'on garde la mapSeed, ceci n'a plus besoin d'etre un pointeur
     std::vector<PlayerConnection> playerConnections;
 
     std::vector<int> supportersSockets;
@@ -119,7 +115,7 @@ public:
 
     void getAndProcessUserInput(int clientSocketFd, char buffer[]);
 
-    void sendMessageToOtherPlayers(std::string userMessage, int senderSocketFd);
+    void sendMessageToOtherPlayers(std::string &userMessage, std::string &senderUsername);
 };
 
 #endif

@@ -31,7 +31,7 @@ private:
     bool isSupporter;
 
     unsigned int getMapSeedFromServer() const;
-    void unSerializeGameState(char* serialized_gamestate);
+    void unSerializeGameState(char* seriarlizedGamestate);
     void unSerializePlayerStates(std::string serialized_playerstates);
     void unSerializePlayerState(std::string serialized_playerstate);
     void unSerializeTowers(std::string serialized_towers);
@@ -40,10 +40,7 @@ private:
     void unSerializeWave(std::string serialized_wave);
     void unSerializePNJ(std::string serialized_pnj, Wave* wave);
 
-    static void* staticInputThread(void *self);
-    void *input_thread();
-
-    void come_back_to_menu();
+    void comeBackToMenu();
     bool is_alive();
     bool isTowerInPosition(GameState &gamestate, Position towerPos);
     bool checkValidity(Position towerPos, GameState& gamestate, std::string typeOfTower);
@@ -60,6 +57,26 @@ public:
     GameManager(int socket, bool _isSupporter, App *app);
 
     void run();
+
+    GameState &getGameState();
+
+    int getQuadrant();
+
+    bool placeGunTower(Position towerPos);
+
+    bool placeSniperTower(Position towerPos);
+
+    bool placeShockTower(Position towerPos);
+
+    bool sellTower(Position toSell);
+
+    void updateMap();
+
+    void sendMessageToPlayers(std::string &message);
+
+    bool upgradeTower(Position toUpgrade);
+
+    void sendUpgradeRequest(Position towerPos);
 };
 
 #endif

@@ -21,7 +21,7 @@ Map::Map(unsigned seed) {
 /*
  * Display the map on the screen using the gameState for drawing the towers and the pnjs
  */
-void Map::display(GameState &gameState, int quadrant) const {
+void Map::display(GameState &gameState, int quadrant) {
     std::vector<AbstractTower *> &towers = gameState.getTowers();
     std::vector<Wave> &waves = gameState.getWaves();
     std::string &mode = gameState.getMode();
@@ -229,7 +229,7 @@ void Map::copyQuarter() {
 }
 
 bool Map::isPath(Position pos) const {
-    return matrix[pos.getY()][pos.getX()] == PATH_INT;
+    return matrix[pos.getX()][pos.getY()] == PATH_INT;
 }
 
 /*
@@ -254,7 +254,7 @@ int Map::computeQuadrant(Position pos) {
 }
 
 bool Map::isObstacle(Position pos) const {
-    int cell = matrix[pos.getY()][pos.getX()];
+    int cell = matrix[pos.getX()][pos.getY()];
 
     return cell == GRASS_ROCK_INT or cell == TREE_INT or cell == PINE_INT
         or cell == PALMER_INT or cell == WATER_INT or cell == SAND_STONE_INT
@@ -282,5 +282,9 @@ void Map::initMapFromFile(std::string filename) {
             }
         }
     }
+}
+
+bool Map::isBase(Position pos) const {
+    return matrix[pos.getX()][pos.getY()] == BASE_INT;
 }
 

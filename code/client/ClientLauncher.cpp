@@ -8,6 +8,7 @@
 #include "Profile/ProfileManager.hpp"
 #include "Profile/ProfileGUI.hpp"
 #include "MapGUI.hpp"
+#include "Game/GameGUI.hpp"
 
 static const bool DEBUG = true;
 
@@ -38,8 +39,6 @@ int main(int argc, char *argv[]) {
         QApplication application(argc, argv);
         application.setApplicationName("White house defense");
         App app(argv[1]);
-
-        //MapGUI mapGUI(0);
 
         return application.exec();
 

@@ -3,7 +3,7 @@
 #include "../../common/Tools.hpp"
 
 
-GameConsoleUI::GameConsoleUI(unsigned seed, GameManager *gameManager) : GameUI(seed,gameManager) {}
+GameConsoleUI::GameConsoleUI(unsigned seed, GameManager *manager) : GameUI(seed,manager) {}
 
 
 
@@ -53,6 +53,24 @@ Position GameConsoleUI::getPosSellingTower() {
 
     return Position(x, y);
 }
+
+Position GameConsoleUI::getPosUpgradeTower() {
+    int x;
+    int y;
+
+    do {
+        std::cin.clear();
+        std::cin.ignore();
+        std::cout << "Enter the coordinates of the tower that you want to upgrade" << std::endl;
+        std::cout << "X: ";
+        std::cin >> x;
+        std::cout << "Y: ";
+        std::cin >> y;
+    } while (!checkCoord(x, y));
+
+    return Position(x, y);
+}
+
 
 void GameConsoleUI::displayPlayerInfos(GameState &gameState, int quadrant) {
     int gold = gameState.getPlayerStates()[quadrant].getMoney();
@@ -142,12 +160,76 @@ void GameConsoleUI::displayGameOver(GameState &gamestate) {
 
 
 
-void GameConsoleUI::display_dead_message() {
+void GameConsoleUI::displayDeadMessage() {
     std::cout << "You are dead. You can now watch the game peacefully" << std::endl;
 }
 
 void GameConsoleUI::displayPlayersPlacingTowersMessage() {
     std::cout << "Please wait. The remaining players are placing towers" << std::endl;
+}
+
+int GameConsoleUI::getTowerTypeChoice() {
+    displayTowerShop();
+    return getChoice();
+}
+
+Position GameConsoleUI::getPositionOfTowerPlacement() {
+    display(manager->getGameState(), manager->getQuadrant());
+    displayPlayerInfos(manager->getGameState(), manager->getQuadrant());
+    return getPosBuyingTower();
+}
+
+void GameConsoleUI::placeTowerAction() {
+    int towerChoice = getTowerTypeChoice();
+    Position towerPos = getPositionOfTowerPlacement();
+    if (towerChoice == 1) {
+        manager->placeGunTower(towerPos);
+    } else if (towerChoice == 2) {
+        manager->placeSniperTower(towerPos);
+    } else {
+        manager->placeShockTower(towerPos);
+    }
+}
+
+void GameConsoleUI::sellTowerAction() {
+    Position toSell = getPosSellingTower();
+    manager->sellTower(toSell);
+}
+
+void GameConsoleUI::upgradeTower() {
+    Position toUpgrade = getPosUpgradeTower();
+    manager->upgradeTower(toUpgrade);
+}
+
+void *GameConsoleUI::input_thread() {
+
+    while (1) {
+        displayPosingPhase();
+        int choice = getChoice();
+        display(manager->getGameState(), manager->getQuadrant());
+        displayPlayerInfos(manager->getGameState(), manager->getQuadrant());
+
+        if (choice == 1) {
+            placeTowerAction();
+
+        }else if (choice == 2){
+            sellTowerAction();
+
+        }else
+            upgradeTower();
+        display(manager->getGameState(), manager->getQuadrant());
+        displayPlayerInfos(manager->getGameState(), manager->getQuadrant());
+    }
+}
+
+
+void *GameConsoleUI::staticInputThread(void *self){
+    return static_cast<GameConsoleUI*>(self)->input_thread();
+}
+
+void GameConsoleUI::addChatMessage(const std::string &message, const std::string &sender) {
+    // TODO: c'est juste pour tester, faudra faire la vraie fonction apres
+    std::cout << sender << ": " << message << std::endl;
 }
 
 

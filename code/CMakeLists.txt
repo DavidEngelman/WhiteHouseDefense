@@ -87,10 +87,14 @@ set(CLIENT_FILES client/ClientLauncher.cpp
         client/Game/GameUI.hpp
         common/Position.cpp
 
+        client/Game/InGameChatWidget.cpp
+        client/Game/InGameChatWidget.hpp
+
         #OTHERS
         client/Game/GameInfo.cpp
         client/global.cpp
         common/Message.cpp
+        common/Command.cpp
         client/QCustomButton.cpp
         common/Networking.cpp
         common/Credentials.cpp
@@ -99,7 +103,8 @@ set(CLIENT_FILES client/ClientLauncher.cpp
         client/App.cpp
         common/Constants.h common/Tools.hpp
         common/Tools.cpp
-        client/QHandPointerButton.hpp)
+        client/QHandPointerButton.hpp
+        )
 
 
 add_executable(client ${CLIENT_FILES})

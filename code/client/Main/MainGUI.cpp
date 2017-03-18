@@ -12,7 +12,7 @@ void MainGUI::display() {
     this->setFixedHeight(600);
     this->setFixedWidth(1000);
 
-    setStylesheetFromPath("../../qt_ui/americanLogin.qss");
+    setStylesheetFromPath("../../qt_ui/americanMain.qss");
     setBackgroundFromPath("../../qt_ui/game_pictures/backgrounds/whitehouse_bckgrd.png");
     setMusicFromPath("../../qt_ui/game_pictures/sounds/trump_song.mp3");
 
@@ -76,7 +76,6 @@ void MainGUI::displayGameModesMenu() {
 }
 
 void MainGUI::handleMenuChoice(int choice) {
-    std::cout << choice << std::endl;
     menuChoice = choice;
     manager->handleUserMenuChoice();
 }
@@ -84,7 +83,6 @@ void MainGUI::handleMenuChoice(int choice) {
 void MainGUI::handleGameModeChoice(int choice){
     dialog_game_mode_choice->close();
     dialog_game_mode_choice->deleteLater();
-    std::cout << choice << std::endl;
     gameModeChoice = choice;
     manager->handleGameModeChoice();
 }

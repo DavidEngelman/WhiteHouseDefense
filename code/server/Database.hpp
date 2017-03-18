@@ -17,7 +17,7 @@
 
 
 typedef struct PublicAccountInfos  {
-    std::string victories, pnjKilled;
+    std::string victories, pnjKilled, defeats;
     std::string username;
     int ID;
 }PublicAccountInfos;

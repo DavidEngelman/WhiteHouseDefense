@@ -23,7 +23,7 @@ signals:
     void clicked(int number);
 
 public:
-    QCustomButton(int number, QString text, QWidget *parent);
+    QCustomButton(int number, QString text = "", QWidget *parent = 0);
 };
 
 

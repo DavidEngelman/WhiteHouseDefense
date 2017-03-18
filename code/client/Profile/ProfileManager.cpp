@@ -53,6 +53,7 @@ void ProfileManager::parseProfileData(char *profileData) {
 
     if (username != "") { /* If the response isn't empty, the profile exists */
         victories = std::stoi(message.getNextToken());
+        defeats = std::stoi(message.getNextToken());
         npcKilled = std::stoi(message.getNextToken());
         assert(message.hasReachedEnd());
     }
@@ -60,6 +61,10 @@ void ProfileManager::parseProfileData(char *profileData) {
 
 int ProfileManager::getVictories() const {
     return victories;
+}
+
+int ProfileManager::getDefeats() const {
+    return defeats;
 }
 
 int ProfileManager::getNPCKilled() const {

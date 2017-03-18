@@ -234,7 +234,8 @@ PublicAccountInfos AccountServer::getPublicAccountInfos(std::string username){
 
 bool AccountServer::handle_profile(int client_sock_fd, std::string username) {
     PublicAccountInfos profile = getPublicAccountInfos(username);
-    std::string stringProfile = profile.username + "," + profile.victories + "," + profile.pnjKilled + ";";
+    std::string stringProfile = profile.username + "," + profile.victories + ","
+                                + profile.defeats + "," + profile.pnjKilled + ";";
     send_message(client_sock_fd,stringProfile.c_str());
     return true;
 }
