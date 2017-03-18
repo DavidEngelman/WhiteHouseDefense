@@ -76,7 +76,6 @@ void MainGUI::displayGameModesMenu() {
 }
 
 void MainGUI::handleMenuChoice(int choice) {
-    std::cout << choice << std::endl;
     menuChoice = choice;
     manager->handleUserMenuChoice();
 }
@@ -84,7 +83,6 @@ void MainGUI::handleMenuChoice(int choice) {
 void MainGUI::handleGameModeChoice(int choice){
     dialog_game_mode_choice->close();
     dialog_game_mode_choice->deleteLater();
-    std::cout << choice << std::endl;
     gameModeChoice = choice;
     manager->handleGameModeChoice();
 }

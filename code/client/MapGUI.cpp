@@ -3,7 +3,7 @@
 #include "MapGUI.hpp"
 #include "Game/GameGUI.hpp"
 
-MapGUI::MapGUI(unsigned int seed, QWidget *parent = 0, QHBoxLayout *layout = 0) : Map(seed), QWidget(parent) {
+MapGUI::MapGUI(unsigned int seed, GameGUI *gameGUI, QHBoxLayout *layout = 0) : Map(seed), gameGUI(gameGUI) {
     display();
     layout->addWidget(this);
 }
@@ -130,11 +130,13 @@ void MapGUI::paintEvent(QPaintEvent *) {
 }
 
 void MapGUI::mousePressEvent(QMouseEvent* event) {
-    int x = event->x()/TILES_SIZE;
-    int y = event->y()/TILES_SIZE;
-    if (highlighted.getX() == x && highlighted.getY() == y)
+    Position pos = Position(event->x()/TILES_SIZE, event->y()/TILES_SIZE);
+    if (highlighted == pos) {
         highlighted = Position(-1, -1); // Unselect the cell
-
-    else
-        highlighted = Position(x, y);
+        gameGUI->disableTowerShop();
+    } else {
+        highlighted = pos;
+        if (isObstacle(pos) or isPath(pos)) gameGUI->disableTowerShop();
+        else gameGUI->enableTowerShop();
+    }
 }

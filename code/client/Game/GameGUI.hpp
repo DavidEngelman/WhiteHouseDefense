@@ -10,7 +10,8 @@
 #include "../Abstract/AbstractGUI.hpp"
 #include "GameManager.hpp"
 #include "GameUI.hpp"
-#include "../MapGUI.hpp"
+
+class MapGUI;
 
 class GameGUI : public AbstractGUI, public GameUI {
     Q_OBJECT
@@ -24,8 +25,6 @@ private:
     QPushButton *gunTowerB;
     QPushButton *sniperTowerB;
     QPushButton *shockTowerB;
-
-    Position position;
 
 public slots:
     void update_map();
@@ -50,7 +49,8 @@ public:
 
     void displayPlayersPlacingTowersMessage() override ;
 
-    Position getPos() { return position; }
+    void disableTowerShop();
+    void enableTowerShop();
 };
 
 

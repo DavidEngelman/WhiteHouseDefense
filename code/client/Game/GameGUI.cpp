@@ -5,6 +5,7 @@
 #include <QtCore/QTimer>
 #include "GameGUI.hpp"
 #include "../QCustomButton.h"
+#include "../MapGUI.hpp"
 
 GameGUI::GameGUI(unsigned seed, GameManager *manager) : GameUI(seed, manager) {
 
@@ -92,6 +93,8 @@ void GameGUI::displayTowerShop() {
     layout->addWidget(sniperTowerB);
     layout->addWidget(shockTowerB);
     layout->addStretch();
+
+    //QObject::connect(gunTowerB, SIGNAL(clicked(int)), this, SLOT(handleBuyingTower(int)));
 }
 
 void GameGUI::displayGameOver(GameState &gamestate) {
@@ -136,4 +139,17 @@ void GameGUI::display_dead_message() {
 
 void GameGUI::update_map() {
     manager->update_map();
+}
+
+void GameGUI::disableTowerShop() {
+    gunTowerB->setEnabled(false);
+    sniperTowerB->setEnabled(false);
+    shockTowerB->setEnabled(false);
+}
+
+void GameGUI::enableTowerShop() {
+    int playerMoney = manager->getGameState().getPlayerStates()[manager->getQuadrant()].getMoney();
+    if (playerMoney > GUN_TOWER_PRICE) gunTowerB->setEnabled(true);
+    if (playerMoney > SNIPER_TOWER_PRICE) sniperTowerB->setEnabled(true);
+    if (playerMoney > SHOCK_TOWER_PRICE) shockTowerB->setEnabled(true);
 }
