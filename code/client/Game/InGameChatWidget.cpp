@@ -38,8 +38,7 @@ void InGameChatWidget::sendMessage() {
 
 void InGameChatWidget::addChatMessage(const std::string &message, const std::string &sender) {
     std::string totalMessage = sender + ": " + message;
-    // TODO: il y a une segmentation fault quand cette ligne n'est pas commentée :(
-//    messagesListWidget->addItem(totalMessage.c_str());
+    messagesListWidget->addItem(totalMessage.c_str());
 }
 
 

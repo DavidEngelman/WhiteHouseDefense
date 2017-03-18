@@ -146,10 +146,6 @@ void GameGUI::displayPlayerInfos(GameState &gameState, int quadrant) {
 
     playerStateL->setText(QString::fromStdString(text));
     playerStateL->show();
-
-    // TODO: temporairement ici
-    inGameChatWidget->addChatMessage("Je suis une eponge", "Bob");
-    inGameChatWidget->addChatMessage("Je suis un lion", "Simba");
 }
 
 void GameGUI::displayInfoForSupporter(GameState &gameState) {
