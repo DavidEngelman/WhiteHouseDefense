@@ -3,10 +3,6 @@
 #include "InGameChatWidget.hpp"
 
 InGameChatWidget::InGameChatWidget(GameManager *gameManager) : gameManager(gameManager) {
-
-}
-
-void InGameChatWidget::display() {
     QFont police("calibri");
 
     QVBoxLayout *mainLayout = new QVBoxLayout(this);

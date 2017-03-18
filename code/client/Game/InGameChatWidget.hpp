@@ -24,8 +24,6 @@ public:
     InGameChatWidget(GameManager * gameManager);
     virtual ~InGameChatWidget() = default;
 
-    virtual void display();
-
     void addChatMessage(const std::string &message, const std::string &sender);
 };
 
