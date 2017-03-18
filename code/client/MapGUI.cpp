@@ -1,8 +1,12 @@
 
 
 #include "MapGUI.hpp"
+#include "Game/GameGUI.hpp"
 
-MapGUI::MapGUI(unsigned int seed, QWidget *parent = 0) : Map(seed), QWidget(parent) { display(); }
+MapGUI::MapGUI(unsigned int seed, QWidget *parent = 0, QHBoxLayout *layout = 0) : Map(seed), QWidget(parent) {
+    display();
+    layout->addWidget(this);
+}
 
 void MapGUI::display(GameState &gameStateUpdate, int quadrantUpdate) {
     gameState = gameStateUpdate;
@@ -11,6 +15,7 @@ void MapGUI::display(GameState &gameStateUpdate, int quadrantUpdate) {
 }
 
 void MapGUI::display() {
+    highlighted = Position(-1, -1); // Flag value
     this->setFixedSize(TILES_SIZE*SIZE, TILES_SIZE*SIZE);
     this->show();
 }
@@ -114,6 +119,22 @@ void MapGUI::paintEvent(QPaintEvent *) {
                 image = QImage("../../qt_ui/game_pictures/tiles/unknown.png");
             }
             painter.drawImage(x*TILES_SIZE, y*TILES_SIZE, image);
+
+            if (highlighted.getX() == x && highlighted.getY() == y) {
+                QRect rect = QRect(x*TILES_SIZE, y*TILES_SIZE, TILES_SIZE-1, TILES_SIZE-1);
+                painter.setPen(QColor(255, 0, 0));
+                painter.drawRect(rect);
+            }
         }
     }
+}
+
+void MapGUI::mousePressEvent(QMouseEvent* event) {
+    int x = event->x()/TILES_SIZE;
+    int y = event->y()/TILES_SIZE;
+    if (highlighted.getX() == x && highlighted.getY() == y)
+        highlighted = Position(-1, -1); // Unselect the cell
+
+    else
+        highlighted = Position(x, y);
 }

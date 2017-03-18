@@ -4,22 +4,18 @@
 #include <QtWidgets/QHBoxLayout>
 #include <QtCore/QTimer>
 #include "GameGUI.hpp"
+#include "../QCustomButton.h"
 
 GameGUI::GameGUI(unsigned seed, GameManager *manager) : GameUI(seed, manager) {
 
     playerInfo = new QGroupBox(this);
     towerShop = new QGroupBox(this);
-    QWidget *mapWidget = new QWidget(this);
-    map = new MapGUI(seed, mapWidget);
-
 
     QHBoxLayout *layout = new QHBoxLayout();
     layout->addWidget(playerInfo, 1);
-    layout->addWidget(mapWidget);
+    map = new MapGUI(seed, this, layout);
     layout->addWidget(towerShop, 1);
 
-    mapWidget->setFixedSize(SIZE*TILES_SIZE, SIZE*TILES_SIZE);
-    mapWidget->show();
     playerInfo->show();
     towerShop->show();
     this->setLayout(layout);
@@ -27,7 +23,7 @@ GameGUI::GameGUI(unsigned seed, GameManager *manager) : GameUI(seed, manager) {
 
     QTimer *timer = new QTimer();
     QObject::connect(timer, SIGNAL(timeout()), this, SLOT(update_map()));
-    timer->start(100);
+    timer->start(10);
 }
 
 Position GameGUI::getPosBuyingTower() {
@@ -60,7 +56,7 @@ void GameGUI::displayTowerShop() {
     tooltip += "\nDamage : " + std::to_string(GUN_TOWER_DAMAGE);
     tooltip += "\nRange : " + std::to_string(GUN_TOWER_RANGE);
 
-    gunTowerB = new QPushButton(towerShop);
+    gunTowerB = new QCustomButton(0);
     gunTowerB->setIcon(QIcon("../../qt_ui/game_pictures/towers/guntower.png"));
     gunTowerB->setIconSize(size);
     gunTowerB->setToolTip(QString::fromStdString(tooltip));
@@ -72,7 +68,7 @@ void GameGUI::displayTowerShop() {
     tooltip += "\nDamage : " + std::to_string(SNIPER_TOWER_DAMAGE);
     tooltip += "\nRange : " + std::to_string(SNIPER_TOWER_RANGE);
 
-    sniperTowerB = new QPushButton(towerShop);
+    sniperTowerB = new QCustomButton(1);
     sniperTowerB->setIcon(QIcon("../../qt_ui/game_pictures/towers/snipertower.png"));
     sniperTowerB->setIconSize(size);
     sniperTowerB->setToolTip(QString::fromStdString(tooltip));
@@ -84,7 +80,7 @@ void GameGUI::displayTowerShop() {
     tooltip += "\nDamage : " + std::to_string(SHOCK_TOWER_DAMAGE);
     tooltip += "\nRange : " + std::to_string(SHOCK_TOWER_RANGE);
 
-    shockTowerB = new QPushButton(towerShop);
+    shockTowerB = new QCustomButton(2);
     shockTowerB->setIcon(QIcon("../../qt_ui/game_pictures/towers/shocktower.png"));
     shockTowerB->setIconSize(size);
     shockTowerB->setToolTip(QString::fromStdString(tooltip));
