@@ -26,6 +26,13 @@ private:
     QPushButton *sniperTowerB;
     QPushButton *shockTowerB;
 
+    QGroupBox *deleteAndUpgradeBox;
+    QPushButton *deleteTowerB;
+    QPushButton *upgradeTowerB;
+
+    QGroupBox *spellBox;
+
+
 public slots:
     void update_map();
     void handleBuyingTower(int typeOfTower);
@@ -51,6 +58,8 @@ public:
 
     void disableTowerShop();
     void enableTowerShop();
+
+    void displayDeleteAndUpgradeBox();
 
     void addChatMessage(const std::string &message, const std::string &sender) override;
 };

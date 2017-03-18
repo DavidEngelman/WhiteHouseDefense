@@ -4,21 +4,32 @@
 #include <QtWidgets/QHBoxLayout>
 #include <QtCore/QTimer>
 #include <QtWidgets/QMessageBox>
+#include <QtWidgets/QGroupBox>
 #include "GameGUI.hpp"
 #include "../QCustomButton.h"
 #include "../MapGUI.hpp"
 
 GameGUI::GameGUI(unsigned seed, GameManager *manager) : GameUI(seed, manager) {
 
-    playerInfo = new QGroupBox(this);
+    playerInfo = new QGroupBox;
     QVBoxLayout* playerInfoLayout = new QVBoxLayout;
 
-    towerShop = new QGroupBox(this);
 
-    QHBoxLayout *layout = new QHBoxLayout();
-    layout->addWidget(playerInfo, 1);
-    map = new MapGUI(seed, this, layout);
-    layout->addWidget(towerShop, 1);
+    QVBoxLayout *actionLayout  = new QVBoxLayout; //tower shop + sell/upgrage + spells
+
+    QString towerShopTitle = QString::fromStdString("Towers Shop");
+    towerShop = new QGroupBox(towerShopTitle);
+    actionLayout->addWidget(towerShop);
+
+
+    QString deleteAndUpgradeTitle = QString::fromStdString("On Tower Actions");
+    deleteAndUpgradeBox = new QGroupBox();
+    actionLayout->addWidget(deleteAndUpgradeBox);
+
+    QString spellBoxTitle = QString::fromStdString("Spells");
+    spellBox = new QGroupBox(this);
+    actionLayout->addWidget(spellBox);
+
 
     QFont font = QFont();
     font.setBold(true);
@@ -40,7 +51,18 @@ GameGUI::GameGUI(unsigned seed, GameManager *manager) : GameUI(seed, manager) {
     playerInfoLayout->setAlignment(playerStateL, Qt::AlignCenter|Qt::AlignTop);
 
     playerInfo->setLayout(playerInfoLayout);
-    this->setLayout(layout);
+
+
+    displayTowerShop();
+    displayDeleteAndUpgradeBox();
+
+
+    QHBoxLayout *Mainlayout = new QHBoxLayout;
+    Mainlayout->addWidget(playerInfo, 1);
+    map = new MapGUI(seed, this, Mainlayout);
+    Mainlayout->addLayout(actionLayout, 1);
+
+    this->setLayout(Mainlayout);
     this->showFullScreen();
 
     QTimer *timer = new QTimer();
@@ -79,7 +101,6 @@ void GameGUI::displayTowerShop() {
     gunTowerB->setIconSize(size);
     gunTowerB->setToolTip(QString::fromStdString(tooltip));
     gunTowerB->setEnabled(false);
-    gunTowerB->show();
 
     tooltip = "Tower that can attack one npc at the time\nwith a great range but with small damages\n";
     tooltip += "\nPrice : " + std::to_string(SNIPER_TOWER_PRICE) + " $";
@@ -91,7 +112,6 @@ void GameGUI::displayTowerShop() {
     sniperTowerB->setIconSize(size);
     sniperTowerB->setToolTip(QString::fromStdString(tooltip));
     sniperTowerB->setEnabled(false);
-    sniperTowerB->show();
 
     tooltip = "Tower that attack all the npc in it's range\nwith a small range and small damages\n";
     tooltip += "\nPrice : " + std::to_string(SHOCK_TOWER_PRICE) + " $";
@@ -103,17 +123,34 @@ void GameGUI::displayTowerShop() {
     shockTowerB->setIconSize(size);
     shockTowerB->setToolTip(QString::fromStdString(tooltip));
     shockTowerB->setEnabled(false);
-    shockTowerB->show();
 
-    QVBoxLayout *layout = new QVBoxLayout(towerShop);
+    QVBoxLayout *layout = new QVBoxLayout;
     layout->addWidget(gunTowerB);
     layout->addWidget(sniperTowerB);
     layout->addWidget(shockTowerB);
     layout->addStretch();
+    towerShop->setLayout(layout);
 
     QObject::connect(gunTowerB, SIGNAL(clicked(int)), this, SLOT(handleBuyingTower(int)));
     QObject::connect(sniperTowerB, SIGNAL(clicked(int)), this, SLOT(handleBuyingTower(int)));
     QObject::connect(shockTowerB, SIGNAL(clicked(int)), this, SLOT(handleBuyingTower(int)));
+}
+
+void GameGUI::displayDeleteAndUpgradeBox() {
+
+    deleteTowerB = new QCustomButton(3);
+    deleteTowerB->setEnabled(false);
+
+    upgradeTowerB = new QCustomButton(4);
+    upgradeTowerB->setEnabled(false);
+
+    QHBoxLayout *layout = new QHBoxLayout;
+    layout->addWidget(deleteAndUpgradeBox);
+    layout->addWidget(upgradeTowerB);
+    layout->addStretch();
+    deleteAndUpgradeBox->setLayout(layout);
+
+
 }
 
 void GameGUI::displayGameOver(GameState &gamestate) {
@@ -181,3 +218,5 @@ void GameGUI::addChatMessage(const std::string &message, const std::string &send
 
     QMessageBox::critical(this, "New message", totalMessage);
 }
+
+

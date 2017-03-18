@@ -201,7 +201,7 @@ void GameManager::run() {
         comeBackToMenu();
     } else {
         updateMap();
-        gameUI->displayTowerShop();
+        //gameUI->displayTowerShop();
     }
 }
 
