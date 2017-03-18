@@ -5,26 +5,24 @@
 InGameChatWidget::InGameChatWidget(GameManager *gameManager) : gameManager(gameManager) {
     QFont police("calibri");
 
-    QVBoxLayout *mainLayout = new QVBoxLayout(this);
+    QVBoxLayout *mainLayout = new QVBoxLayout();
 
     /* Message list view */
-    messagesListWidget = new QListWidget(this);
+    messagesListWidget = new QListWidget();
+    messagesListWidget->addItem("Je suis bob l'eponge");
+    messagesListWidget->addItem("J'aime les patates");
+
 
     /* Send message form */
     QFrame *fields = new QFrame(this);
     QHBoxLayout *fieldsLayout = new QHBoxLayout(fields);
 
-    QLabel *messageLabel = new QLabel(fields);
-    messageLabel->setText("Message");
-    messageLabel->setFont(police);
-
     messageLineEdit = new QLineEdit(fields);
-    sendButton = new QHandPointerButton(this);
+    sendButton = new QHandPointerButton("SEND", 45, 60, fields);
 
     QObject::connect(messageLineEdit, SIGNAL(returnPressed()), sendButton, SIGNAL(clicked()));
     QObject::connect(sendButton, SIGNAL(clicked()), this, SLOT(sendMessage()));
 
-    fieldsLayout->addWidget(messageLabel);
     fieldsLayout->addWidget(messageLineEdit);
     fieldsLayout->addWidget(sendButton);
 
