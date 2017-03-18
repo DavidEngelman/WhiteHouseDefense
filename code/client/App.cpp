@@ -56,8 +56,8 @@ void App::launchMatchmaking(GameLauncher *manager) {
 void App::runBackgroundTask(AbstractManager* manager){
     is_in_queue = true;
     manager->run();
-
 }
+
 
 QWidget *App::getMainWindow() {
     return main_window;

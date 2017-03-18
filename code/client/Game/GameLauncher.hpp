@@ -19,6 +19,8 @@ public:
     void run() override;
 
     void leaveQueue();
+
+    void launchGame();
 };
 
 #endif

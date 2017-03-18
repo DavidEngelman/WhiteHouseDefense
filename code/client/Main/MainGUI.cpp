@@ -15,7 +15,7 @@ void MainGUI::display() {
 
     setStylesheetFromPath("../../qt_ui/americanMain.qss");
     setBackgroundFromPath("../../qt_ui/game_pictures/backgrounds/whitehouse_bckgrd.png");
-    setMusicFromPath("../../qt_ui/game_pictures/sounds/trump_song.mp3");
+    //setMusicFromPath("../../qt_ui/game_pictures/sounds/trump_song.mp3");
 
     QFont police("calibri");
 

@@ -28,13 +28,19 @@ void GameLauncher::sendJoinRequest() {
     int game_port;
     receive_data(server_socket, &game_port, sizeof(int));
 
-    std::cout << "Game start" << std::endl;
-    GameManager* manager = new GameManager(server_socket, master_app);
-    master_app->transition(manager);
+    launchGame();
+
 }
 
 void GameLauncher::leaveQueue() {
-    std::string message = "LEAVEQUEUE,"+ mode + ";";
+    std::string message = LEAVE_QUEUE_REQUEST + mode + ";";
     send_message(server_socket, message.c_str());
+
+}
+
+void GameLauncher::launchGame() {
+    std::cout << "Game start" << std::endl;
+    GameManager* manager = new GameManager(server_socket, master_app);
+    master_app->transition(manager);
 
 }
