@@ -3,6 +3,7 @@
 #include <QtWidgets/QFormLayout>
 #include <QtMultimedia/QMediaPlayer>
 #include <QtWidgets/QDialogButtonBox>
+#include <QtWidgets/QLabel>
 
 
 MainGUI::MainGUI(MainManager *manager) : MainUI(manager) {}
@@ -54,25 +55,33 @@ void MainGUI::display() {
 }
 
 void MainGUI::displayGameModesMenu() {
-    dialog_game_mode_choice = new QDialogButtonBox;
+
+    dialog_game_mode_choice = new QWidget(this, Qt::SubWindow);
     dialog_game_mode_choice->setWindowTitle("Select a game mode");
     dialog_game_mode_choice->setWindowModality(Qt::ApplicationModal);
 
+    popup_h_layout = new QHBoxLayout;
+    dialog_game_mode_choice->setLayout(popup_h_layout);
 
     classicMode = new QCustomButton(0, "CLASSIC MODE", dialog_game_mode_choice);
     teamMode = new QCustomButton(1, "TEAM MODE", dialog_game_mode_choice);
     timedMode = new QCustomButton(2, "TIMED MODE", dialog_game_mode_choice);
 
-    dialog_game_mode_choice->addButton(timedMode,  QDialogButtonBox::AcceptRole);
-    dialog_game_mode_choice->addButton(teamMode,  QDialogButtonBox::AcceptRole);
-    dialog_game_mode_choice->addButton(classicMode, QDialogButtonBox::AcceptRole);
+    popup_h_layout->addWidget(classicMode);
+    popup_h_layout->addWidget(teamMode);
+    popup_h_layout->addWidget(timedMode);
 
     connect(classicMode, SIGNAL(clicked(int)), this, SLOT(handleGameModeChoice(int)));
     connect(teamMode, SIGNAL(clicked(int)), this, SLOT(handleGameModeChoice(int)));
     connect(timedMode, SIGNAL(clicked(int)), this, SLOT(handleGameModeChoice(int)));
 
+    inQueueMessage = new QLabel("In Queue...");
+    popup_h_layout->addWidget(inQueueMessage);
+    inQueueMessage->hide();
+
     dialog_game_mode_choice->move(this->width() /2, this->height()/2);
     dialog_game_mode_choice->show();
+
 }
 
 void MainGUI::handleMenuChoice(int choice) {
@@ -81,8 +90,19 @@ void MainGUI::handleMenuChoice(int choice) {
 }
 
 void MainGUI::handleGameModeChoice(int choice){
-    dialog_game_mode_choice->close();
-    dialog_game_mode_choice->deleteLater();
+    showInQueue();
+    //dialog_game_mode_choice->close();
+    //dialog_game_mode_choice->deleteLater();
     gameModeChoice = choice;
     manager->handleGameModeChoice();
+}
+
+void MainGUI::showInQueue(){
+    classicMode->hide();
+    teamMode->hide();
+    timedMode->hide();
+    inQueueMessage->show();
+
+
+
 }

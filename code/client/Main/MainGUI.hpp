@@ -7,6 +7,8 @@
 #include <QtWidgets/QLineEdit>
 #include <QtCore/QSignalMapper>
 #include <QtWidgets/QDialogButtonBox>
+#include <QtWidgets/QHBoxLayout>
+#include <QtWidgets/QLabel>
 
 class MainGUI : public AbstractGUI, public MainUI {
     Q_OBJECT
@@ -21,7 +23,10 @@ private:
     QCustomButton *timedMode;
     QCustomButton *teamMode;
     QCustomButton *cancel;
-    QDialogButtonBox* dialog_game_mode_choice;
+    QWidget* dialog_game_mode_choice;
+
+    QHBoxLayout* popup_h_layout;
+    QLabel* inQueueMessage;
 
 public:
     MainGUI(MainManager *manager);
@@ -32,6 +37,8 @@ public:
 public slots:
     void handleMenuChoice(int choice);
     void handleGameModeChoice(int choice);
+
+    void showInQueue();
 };
 
 

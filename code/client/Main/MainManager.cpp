@@ -66,7 +66,8 @@ void MainManager::handleGameModeChoice() {
 
         //TODO: REMETTRE CA QUAND ON AURA BIEN FAIT GAMEMANAGER
         GameLauncher *game = new GameLauncher(MATCHMAKER_SERVER_PORT, master_app, gameMode);
-        master_app->transition(game);
+        master_app->launchBackgroundTask(game);
+
     } else { /* Retour au menu principal */
         // TODO: close previous window
         run();

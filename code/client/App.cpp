@@ -40,3 +40,13 @@ App::~App() {
         send_message(socket, message.c_str());
     }
 }
+
+void App::launchBackgroundTask(AbstractManager *manager) {
+    background_task = new std::thread(& App::runBackgroundTask, this, manager);
+
+}
+
+void App::runBackgroundTask(AbstractManager* manager){
+    manager->run();
+
+}

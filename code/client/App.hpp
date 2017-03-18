@@ -3,6 +3,8 @@
 
 #include <string>
 #include <QtWidgets/QApplication>
+#include <thread>
+
 
 class AbstractManager;
 
@@ -14,6 +16,7 @@ private:
     int player_id;
     std::string username;
     AbstractManager* current_manager;
+    std::thread* background_task;
 
 public:
 
@@ -21,6 +24,7 @@ public:
 
     App(char* server_ip_addr);
     virtual void transition(AbstractManager *new_manager);
+    virtual void launchBackgroundTask(AbstractManager* manager);
 
     ~App();
 
@@ -30,6 +34,8 @@ public:
     
     void set_id(int id);
     void set_username(std::string name);
+
+    void runBackgroundTask(AbstractManager *manager);
 };
 
 
