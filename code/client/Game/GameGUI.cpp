@@ -146,10 +146,6 @@ void GameGUI::displayPlayerInfos(GameState &gameState, int quadrant) {
 
     playerStateL->setText(QString::fromStdString(text));
     playerStateL->show();
-
-    // TODO: temporairement ici
-    inGameChatWidget->addChatMessage("Je suis une eponge", "Bob");
-    inGameChatWidget->addChatMessage("Je suis un lion", "Simba");
 }
 
 void GameGUI::displayInfoForSupporter(GameState &gameState) {
@@ -191,11 +187,4 @@ void GameGUI::handleBuyingTower(int typeOfTower) {
 
 void GameGUI::addChatMessage(const std::string &message, const std::string &sender) {
     inGameChatWidget->addChatMessage(message, sender);
-    // TODO: pour tester, faudra faire la vraie fonction apres
-
-    QString totalMessage(sender.c_str());
-    totalMessage.append(": ");
-    totalMessage.append(message.c_str());
-
-    QMessageBox::critical(this, "New message", totalMessage);
 }
