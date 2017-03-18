@@ -227,4 +227,9 @@ void *GameConsoleUI::staticInputThread(void *self){
     return static_cast<GameConsoleUI*>(self)->input_thread();
 }
 
+void GameConsoleUI::addChatMessage(const std::string &message, const std::string &sender) {
+    // TODO: c'est juste pour tester, faudra faire la vraie fonction apres
+    std::cout << sender << ": " << message << std::endl;
+}
+
 

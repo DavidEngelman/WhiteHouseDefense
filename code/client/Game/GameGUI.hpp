@@ -51,6 +51,8 @@ public:
 
     void disableTowerShop();
     void enableTowerShop();
+
+    void addChatMessage(const std::string &message, const std::string &sender) override;
 };
 
 

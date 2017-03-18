@@ -36,7 +36,7 @@ public:
 
     virtual void displayPlayersPlacingTowersMessage() = 0;
 
-    void addChatMessage(const std::string &message, const std::string &sender) {
+    virtual void addChatMessage(const std::string &message, const std::string &sender) {
         // TODO: implementer dans les sous classes
     }
 };
