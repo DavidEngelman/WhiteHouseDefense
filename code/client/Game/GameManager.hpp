@@ -77,6 +77,8 @@ public:
     bool upgradeTower(Position toUpgrade);
 
     void sendUpgradeRequest(Position towerPos);
+
+    std::string &getUsername() { return gameState.getPlayerStates()[quadrant].getUsername(); };
 };
 
 #endif
