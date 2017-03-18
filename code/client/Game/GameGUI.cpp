@@ -17,6 +17,10 @@ GameGUI::GameGUI(unsigned seed, GameManager *manager) : GameUI(seed, manager) {
     QVBoxLayout* leftPanel = new QVBoxLayout;
 
 
+
+    //* RIGHT PANEL //*
+    /* Player Info */
+
     QVBoxLayout *actionLayout  = new QVBoxLayout; //tower shop + sell/upgrage + spells
 
     QString towerShopTitle = QString::fromStdString("Towers Shop");
@@ -61,16 +65,11 @@ GameGUI::GameGUI(unsigned seed, GameManager *manager) : GameUI(seed, manager) {
     leftPanel->setAlignment(playerStateL, Qt::AlignCenter|Qt::AlignTop);
     leftPanel->setAlignment(inGameChatWidget, Qt::AlignCenter|Qt::AlignTop);
 
-    /* Tower shop */
-    towerShop = new QGroupBox(this);
-    // The towers are added in the displayTowerShop() method
-
-
 
     /* Main Layout */
     mainLayout->addLayout(leftPanel, 1);
     map = new MapGUI(seed, this, mainLayout);
-    mainLayout->addWidget(towerShop, 1);
+    mainLayout->addLayout(actionLayout, 1);
 
 
     this->setLayout(mainLayout);
@@ -78,12 +77,6 @@ GameGUI::GameGUI(unsigned seed, GameManager *manager) : GameUI(seed, manager) {
 
 
 
-    QHBoxLayout *Mainlayout = new QHBoxLayout;
-    Mainlayout->addWidget(playerInfo, 1);
-    map = new MapGUI(seed, this, Mainlayout);
-    Mainlayout->addLayout(actionLayout, 1);
-
-    this->setLayout(Mainlayout);
     this->showFullScreen();
 
     QTimer *timer = new QTimer();
