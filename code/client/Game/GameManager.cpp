@@ -41,12 +41,12 @@ GameManager::GameManager(int socket, bool _isSupporter, App *app) :
     getInitialGameStateFromServer();
 }
 
-void GameManager::come_back_to_menu() { // À appeler quand la partie est terminée
+void GameManager::comeBackToMenu() { // À appeler quand la partie est terminée
     MainManager *menu_manager = new MainManager(5555, master_app);
     master_app->transition(menu_manager);
 }
 
-void GameManager::update_map() {
+void GameManager::updateMap() {
     char server_msg_buff[BUFFER_SIZE];
     receive_message(server_socket, server_msg_buff);
     if (strcmp(server_msg_buff, PLACING_TOWER) != 0 && strcmp(server_msg_buff, WAVE) != 0)
@@ -158,7 +158,7 @@ void GameManager::run() {
                     if (isSupporter) {
                         gameUI->displayPlayersPlacingTowersMessage();
                     } else {
-                        gameUI->display_dead_message();
+                        gameUI->displayDeadMessage();
                     }
                 }
 
@@ -179,7 +179,7 @@ void GameManager::run() {
                     if (is_alive()) {
                         gameUI->displayPlayerInfos(gameState, quadrant);
                     } else {
-                        gameUI->display_dead_message();
+                        gameUI->displayDeadMessage();
                     }
                 } else
                     gameUI->displayInfoForSupporter(gameState);
@@ -189,19 +189,19 @@ void GameManager::run() {
         //FIN DE PARTIE
         gameUI->displayGameOver(gameState);
         // Menu to come back to main menu (or make another game of the same type ?)
-        come_back_to_menu();
+        comeBackToMenu();
     } else {
-        update_map();
+        updateMap();
         gameUI->displayTowerShop();
     }
 }
 
-void GameManager::unSerializeGameState(char* seriarlized_gamestate){
+void GameManager::unSerializeGameState(char* seriarlizedGamestate){
     gameState = GameState();
 
     std::string part = "";
     unsigned count = 0; // count at which part we are
-    for (char* c = seriarlized_gamestate; *c; ++c) {
+    for (char* c = seriarlizedGamestate; *c; ++c) {
         if (*c == '!') {
             switch (count) {
                 case 0: // isGameOver

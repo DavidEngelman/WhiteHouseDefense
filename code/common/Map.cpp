@@ -229,7 +229,7 @@ void Map::copyQuarter() {
 }
 
 bool Map::isPath(Position pos) const {
-    return matrix[pos.getY()][pos.getX()] == PATH_INT;
+    return matrix[pos.getX()][pos.getY()] == PATH_INT;
 }
 
 /*
@@ -254,12 +254,12 @@ int Map::computeQuadrant(Position pos) {
 }
 
 bool Map::isObstacle(Position pos) const {
-    int cell = matrix[pos.getY()][pos.getX()];
+    int cell = matrix[pos.getX()][pos.getY()];
 
     return cell == GRASS_ROCK_INT or cell == TREE_INT or cell == PINE_INT
         or cell == PALMER_INT or cell == WATER_INT or cell == SAND_STONE_INT
         or cell == WATER_ROCK_INT or cell == SAND_ROCK_INT or cell == LAVA_INT
-        or cell == PINE_SNOW_INT or cell == DIRT_ROCK_INT or cell == BASE_INT;
+        or cell == PINE_SNOW_INT or cell == DIRT_ROCK_INT;
 }
 
 void Map::initMapFromFile(std::string filename) {
@@ -282,5 +282,9 @@ void Map::initMapFromFile(std::string filename) {
             }
         }
     }
+}
+
+bool Map::isBase(Position pos) const {
+    return matrix[pos.getX()][pos.getY()] == BASE_INT;
 }
 
