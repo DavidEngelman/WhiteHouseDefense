@@ -14,11 +14,10 @@ InGameChatWidget::InGameChatWidget(GameManager *gameManager) : gameManager(gameM
 
 
     /* Send message form */
-    QFrame *fields = new QFrame(this);
-    QHBoxLayout *fieldsLayout = new QHBoxLayout(fields);
+    QHBoxLayout *fieldsLayout = new QHBoxLayout();
 
-    messageLineEdit = new QLineEdit(fields);
-    sendButton = new QHandPointerButton("SEND", 45, 60, fields);
+    messageLineEdit = new QLineEdit;
+    sendButton = new QHandPointerButton("SEND", 150, 25);
 
     QObject::connect(messageLineEdit, SIGNAL(returnPressed()), sendButton, SIGNAL(clicked()));
     QObject::connect(sendButton, SIGNAL(clicked()), this, SLOT(sendMessage()));
