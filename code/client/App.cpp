@@ -3,7 +3,13 @@
 #include "../common/Constants.h"
 
 App::App(char* server_ip_addr) : server_ip_address(server_ip_addr),
-    player_id(-1), username("\0"), current_manager(new WelcomeManager(this)) {
+    player_id(-1), username("\0"), current_manager(nullptr), main_window(nullptr)
+{
+    if(!isConsole){
+        main_window = new QWidget();
+        main_window->setFixedSize(750,600); // Will be resized for the menu and games;
+    }
+    current_manager = new WelcomeManager(this);
     current_manager->run();
 }
 
@@ -49,4 +55,8 @@ void App::launchBackgroundTask(AbstractManager *manager) {
 void App::runBackgroundTask(AbstractManager* manager){
     manager->run();
 
+}
+
+QWidget *App::getMainWindow() {
+    return main_window;
 }

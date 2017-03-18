@@ -5,6 +5,7 @@
 #include <QtWidgets/QApplication>
 #include <thread>
 
+#include <QtWidgets>
 
 class AbstractManager;
 
@@ -17,6 +18,8 @@ private:
     std::string username;
     AbstractManager* current_manager;
     std::thread* background_task;
+
+    QWidget* main_window;
 
 public:
 
@@ -36,6 +39,8 @@ public:
     void set_username(std::string name);
 
     void runBackgroundTask(AbstractManager *manager);
+
+    QWidget *getMainWindow();
 };
 
 

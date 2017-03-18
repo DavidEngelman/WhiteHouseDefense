@@ -6,7 +6,7 @@
 SpectatorManager::SpectatorManager(int port, App *master_app) :
         NetworkedManager(port, master_app) {
     if (!isConsole) {
-        spectatorUI = new SpectatorGUI(this);
+        spectatorUI = new SpectatorGUI(this, master_app->getMainWindow());
     } else {
         spectatorUI = new SpectatorConsoleUI(this);
     }
