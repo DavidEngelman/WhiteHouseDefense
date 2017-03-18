@@ -524,7 +524,7 @@ bool GameManager::upgradeTower(Position toUpgrade) {
 
 /* In-Game Chat */
 
-void GameManager::sendMessageToPlayers(std::string message) {
+void GameManager::sendMessageToPlayers(std::string &message) {
     // TODO: si l'utilisateur met des ; dans son message, c'est la merde
     std::string request = SEND_MESSAGE_STRING + "," + message + "," + master_app->get_username() + ";";
     send_message(server_socket, request.c_str());
