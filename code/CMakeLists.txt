@@ -147,7 +147,7 @@ set(SERVER_FILES "server/ServerLauncher.cpp"
         server/PlayerConnection.cpp
         common/Networking.cpp
         common/Credentials.cpp
-        common/Message.cpp)
+        common/Message.cpp common/TankPNJ.cpp common/TankPNJ.h)
 
 add_executable(server ${SERVER_FILES})
 
