@@ -34,6 +34,7 @@ InGameChatWidget::InGameChatWidget(GameManager *gameManager) : gameManager(gameM
 void InGameChatWidget::sendMessage() {
     std::string message = messageLineEdit->text().toStdString();
     gameManager->sendMessageToPlayers(message);
+    messageLineEdit->setText("");
 }
 
 void InGameChatWidget::addChatMessage(const std::string &message, const std::string &sender) {
