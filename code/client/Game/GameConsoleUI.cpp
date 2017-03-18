@@ -142,7 +142,7 @@ void GameConsoleUI::displayGameOver(GameState &gamestate) {
 
 
 
-void GameConsoleUI::display_dead_message() {
+void GameConsoleUI::displayDeadMessage() {
     std::cout << "You are dead. You can now watch the game peacefully" << std::endl;
 }
 

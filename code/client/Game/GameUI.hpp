@@ -32,7 +32,7 @@ public:
 
     virtual void displayGameOver(GameState& gamestate) = 0;
 
-    virtual void display_dead_message() = 0;
+    virtual void displayDeadMessage() = 0;
 
     virtual void displayPlayersPlacingTowersMessage() = 0;
     

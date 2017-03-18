@@ -133,12 +133,12 @@ void GameGUI::displayInfoForSupporter(GameState &gameState) {
 
 }
 
-void GameGUI::display_dead_message() {
+void GameGUI::displayDeadMessage() {
 
 }
 
 void GameGUI::update_map() {
-    manager->update_map();
+    manager->updateMap();
 }
 
 void GameGUI::disableTowerShop() {

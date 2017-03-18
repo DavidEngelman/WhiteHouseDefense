@@ -31,7 +31,7 @@ private:
     bool isSupporter;
 
     unsigned int getMapSeedFromServer() const;
-    void unSerializeGameState(char* serialized_gamestate);
+    void unSerializeGameState(char* seriarlizedGamestate);
     void unSerializePlayerStates(std::string serialized_playerstates);
     void unSerializePlayerState(std::string serialized_playerstate);
     void unSerializeTowers(std::string serialized_towers);
@@ -40,7 +40,7 @@ private:
     void unSerializeWave(std::string serialized_wave);
     void unSerializePNJ(std::string serialized_pnj, Wave* wave);
 
-    void come_back_to_menu();
+    void comeBackToMenu();
     bool is_alive();
     bool isTowerInPosition(GameState &gamestate, Position towerPos);
     bool checkValidity(Position towerPos, GameState& gamestate, std::string typeOfTower);
@@ -70,7 +70,7 @@ public:
 
     bool sellTower(Position toSell);
 
-    void update_map();
+    void updateMap();
 };
 
 #endif
