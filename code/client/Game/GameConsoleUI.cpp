@@ -3,7 +3,7 @@
 #include "../../common/Tools.hpp"
 
 
-GameConsoleUI::GameConsoleUI(unsigned seed, GameManager *gameManager) : GameUI(seed,gameManager) {}
+GameConsoleUI::GameConsoleUI(unsigned seed, GameManager *manager) : GameUI(seed,manager) {}
 
 
 
@@ -148,6 +148,59 @@ void GameConsoleUI::display_dead_message() {
 
 void GameConsoleUI::displayPlayersPlacingTowersMessage() {
     std::cout << "Please wait. The remaining players are placing towers" << std::endl;
+}
+
+int GameConsoleUI::getTowerTypeChoice() {
+    displayTowerShop();
+    return getChoice();
+}
+
+Position GameConsoleUI::getPositionOfTowerPlacement() {
+    display(manager->getGameState(), manager->getQuadrant());
+    displayPlayerInfos(manager->getGameState(), manager->getQuadrant());
+    return getPosBuyingTower();
+}
+
+void GameConsoleUI::placeTowerAction() {
+    int towerChoice = getTowerTypeChoice();
+    Position towerPos = getPositionOfTowerPlacement();
+    if (towerChoice == 1) {
+        manager->placeGunTower(towerPos);
+    } else if (towerChoice == 2) {
+        manager->placeSniperTower(towerPos);
+    } else {
+        manager->placeShockTower(towerPos);
+    }
+}
+
+void GameConsoleUI::sellTowerAction() {
+    Position toSell = getPosSellingTower();
+    manager->sellTower(toSell);
+}
+
+void *GameConsoleUI::input_thread() {
+
+    while (1) {
+        displayPosingPhase();
+        int choice = getChoice();
+        display(manager->getGameState(), manager->getQuadrant());
+        displayPlayerInfos(manager->getGameState(), manager->getQuadrant());
+
+        if (choice == 1) {
+            placeTowerAction();
+
+        }else if (choice == 2){
+            sellTowerAction();
+
+        }// else upgrade tower
+        display(manager->getGameState(), manager->getQuadrant());
+        displayPlayerInfos(manager->getGameState(), manager->getQuadrant());
+    }
+}
+
+
+void *GameConsoleUI::staticInputThread(void *self){
+    return static_cast<GameConsoleUI*>(self)->input_thread();
 }
 
 
