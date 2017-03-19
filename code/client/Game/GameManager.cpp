@@ -498,28 +498,28 @@ bool GameManager::placeGunTower(Position towerPos) {
         sendBuyRequest(towerPos, GUN_TOWER_STR);
         return true;
     }
-    else
-        return false;
+
+    return false;
 }
 
 bool GameManager::placeSniperTower(Position towerPos) {
     if (checkValidity(towerPos, gameState, SNIPER_TOWER_STR)) {
-        gameState.addTower(new GunTower(Position(towerPos.getX(), towerPos.getY()),1), quadrant);
+        gameState.addTower(new SniperTower(Position(towerPos.getX(), towerPos.getY()),1), quadrant);
         sendBuyRequest(towerPos, SNIPER_TOWER_STR);
         return true;
     }
-    else
-        return false;
+
+    return false;
 }
 
 bool GameManager::placeShockTower(Position towerPos) {
     if (checkValidity(towerPos, gameState, SHOCK_TOWER_STR)) {
-        gameState.addTower(new GunTower(Position(towerPos.getX(), towerPos.getY()),1), quadrant);
+        gameState.addTower(new ShockTower(Position(towerPos.getX(), towerPos.getY()),1), quadrant);
         sendBuyRequest(towerPos, SHOCK_TOWER_STR);
         return true;
     }
-    else
-        return false;
+
+    return false;
 }
 
 bool GameManager::sellTower(Position toSell) {

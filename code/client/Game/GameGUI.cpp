@@ -101,7 +101,7 @@ void GameGUI::display(GameState &gameState, int quadrant) {
 }
 
 void GameGUI::displayTowerShop() {
-    int scl = 5;
+    int scl = 10;
     QSize size = QSize(1400/scl, 1060/scl);
     std::string tooltip;
 
@@ -138,11 +138,10 @@ void GameGUI::displayTowerShop() {
     shockTowerB->setToolTip(QString::fromStdString(tooltip));
     shockTowerB->setEnabled(false);
 
-    QVBoxLayout *layout = new QVBoxLayout;
-    layout->addWidget(gunTowerB);
-    layout->addWidget(sniperTowerB);
-    layout->addWidget(shockTowerB);
-    layout->addStretch();
+    QGridLayout *layout = new QGridLayout;
+    layout->addWidget(gunTowerB,0,0);
+    layout->addWidget(sniperTowerB,0,1);
+    layout->addWidget(shockTowerB,1,0);
     towerShop->setLayout(layout);
 
     QObject::connect(gunTowerB, SIGNAL(clicked(int)), this, SLOT(handleBuyingTower(int)));
