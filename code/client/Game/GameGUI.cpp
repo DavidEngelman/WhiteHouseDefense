@@ -102,7 +102,7 @@ void GameGUI::display(GameState &gameState, int quadrant) {
 }
 
 void GameGUI::displayTowerShop() {
-    int scl = 5;
+    int scl = 10;
     QSize size = QSize(1400/scl, 1060/scl);
     std::string tooltip;
 
@@ -139,11 +139,10 @@ void GameGUI::displayTowerShop() {
     shockTowerB->setToolTip(QString::fromStdString(tooltip));
     shockTowerB->setEnabled(false);
 
-    QVBoxLayout *layout = new QVBoxLayout;
-    layout->addWidget(gunTowerB);
-    layout->addWidget(sniperTowerB);
-    layout->addWidget(shockTowerB);
-    layout->addStretch();
+    QGridLayout *layout = new QGridLayout;
+    layout->addWidget(gunTowerB, 0, 0);
+    layout->addWidget(sniperTowerB, 0, 1);
+    layout->addWidget(shockTowerB, 1, 0);
     towerShop->setLayout(layout);
 
     QObject::connect(gunTowerB, SIGNAL(clicked(int)), this, SLOT(handleBuyingTower(int)));
@@ -167,10 +166,9 @@ void GameGUI::displayDeleteAndUpgradeBox() {
     upgradeTowerB->setIconSize(size);
 
 
-    QHBoxLayout *layout = new QHBoxLayout;
-    layout->addWidget(deleteTowerB);
-    layout->addWidget(upgradeTowerB);
-    layout->addStretch();
+    QGridLayout *layout = new QGridLayout;
+    layout->addWidget(deleteTowerB, 0, 0);
+    layout->addWidget(upgradeTowerB, 0, 1);
     deleteAndUpgradeBox->setLayout(layout);
 
 
@@ -190,9 +188,8 @@ void GameGUI::displaySpellBox() {
     nukeB->setIcon(QIcon("../../qt_ui/game_pictures/spells/trumpnuclear.png"));
     nukeB->setIconSize(size);
 
-    QHBoxLayout *layout = new QHBoxLayout;
-    layout->addWidget(nukeB);
-    layout->addStretch();
+    QGridLayout *layout = new QGridLayout;
+    layout->addWidget(nukeB, 0, 0);
     spellBox->setLayout(layout);
 
     QObject::connect(nukeB, SIGNAL(clicked()), this, SLOT(handleNukeSpell()));
