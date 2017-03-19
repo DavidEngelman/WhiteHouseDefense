@@ -329,13 +329,17 @@ void GameManager::unSerializeTower(std::string serialized_tower) {
     std::string typeOfTower="";
     int x=0;
     int y=0;
+    int level = 0;
     for (char& c : serialized_tower) {
         if (c == ',') {
             switch (count) {
                 case 0: // Type of Tower
                     typeOfTower = elem;
                     break;
-                case 1: // X
+                case 1: //Level of tower
+                    level = stoi(elem);
+                    break;
+                case 2: // X
                     x = std::stoi(elem);
                     break;
                 default:
@@ -352,9 +356,9 @@ void GameManager::unSerializeTower(std::string serialized_tower) {
     AbstractTower *tower;
     Position pos = Position(x, y);
 
-    if (typeOfTower == "GunTower") tower = new GunTower(pos);
-    else if (typeOfTower == "SniperTower") tower = new SniperTower(pos);
-    else tower = new ShockTower(pos);
+    if (typeOfTower == "GunTower") tower = new GunTower(pos, level);
+    else if (typeOfTower == "SniperTower") tower = new SniperTower(pos, level);
+    else tower = new ShockTower(pos, level);
 
     //TODO: remplacer par gameState.addTower(tower)
     //Pour ne pas utiliser un getter pour modifier la classe, ça n'a aucun sens
@@ -484,7 +488,7 @@ int GameManager::getQuadrant() {
 
 bool GameManager::placeGunTower(Position towerPos) {
     if (checkValidity(towerPos, gameState, GUN_TOWER_STR)) {
-        gameState.addTower(new GunTower(Position(towerPos.getX(), towerPos.getY())), quadrant);
+        gameState.addTower(new GunTower(Position(towerPos.getX(), towerPos.getY()), 1), quadrant);
         sendBuyRequest(towerPos, GUN_TOWER_STR);
         return true;
     }
@@ -494,7 +498,7 @@ bool GameManager::placeGunTower(Position towerPos) {
 
 bool GameManager::placeSniperTower(Position towerPos) {
     if (checkValidity(towerPos, gameState, SNIPER_TOWER_STR)) {
-        gameState.addTower(new GunTower(Position(towerPos.getX(), towerPos.getY())), quadrant);
+        gameState.addTower(new GunTower(Position(towerPos.getX(), towerPos.getY()),1), quadrant);
         sendBuyRequest(towerPos, SNIPER_TOWER_STR);
         return true;
     }
@@ -504,7 +508,7 @@ bool GameManager::placeSniperTower(Position towerPos) {
 
 bool GameManager::placeShockTower(Position towerPos) {
     if (checkValidity(towerPos, gameState, SHOCK_TOWER_STR)) {
-        gameState.addTower(new GunTower(Position(towerPos.getX(), towerPos.getY())), quadrant);
+        gameState.addTower(new GunTower(Position(towerPos.getX(), towerPos.getY()),1), quadrant);
         sendBuyRequest(towerPos, SHOCK_TOWER_STR);
         return true;
     }

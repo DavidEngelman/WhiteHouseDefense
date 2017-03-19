@@ -166,11 +166,11 @@ int GameServer::getReadableReadableSocket(int timeLeft) {
 void GameServer::addTowerInGameState(TowerCommand &command) {
     AbstractTower *tower;
     if (command.getTowerType() == GUN_TOWER_STR) {
-        tower = new GunTower(command.getPosition());
+        tower = new GunTower(command.getPosition(),1);
     } else if (command.getTowerType() == SNIPER_TOWER_STR) {
-        tower = new SniperTower(command.getPosition());
+        tower = new SniperTower(command.getPosition(),1);
     } else {
-        tower = new ShockTower(command.getPosition());
+        tower = new ShockTower(command.getPosition(),1);
     }
 
     int quadrant = command.getPlayerQuadrant();

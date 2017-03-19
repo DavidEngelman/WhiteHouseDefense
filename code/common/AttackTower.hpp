@@ -11,7 +11,7 @@ class AttackTower : public AbstractTower {
 
 public:
 
-    AttackTower(Position position, int damage, int price, float range);
+    AttackTower(Position position, int damage, int price, float range, int level);
 
     ~AttackTower() = default;
 

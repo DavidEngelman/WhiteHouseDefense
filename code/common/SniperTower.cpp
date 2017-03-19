@@ -5,8 +5,8 @@
 #include "SniperTower.hpp"
 #include <cmath>
 
-SniperTower::SniperTower(const Position &position) :
-        AttackTower(position, SNIPER_TOWER_DAMAGE, SNIPER_TOWER_PRICE, SNIPER_TOWER_RANGE) {}
+SniperTower::SniperTower(const Position &position, int level) :
+        AttackTower(position, SNIPER_TOWER_DAMAGE, SNIPER_TOWER_PRICE, SNIPER_TOWER_RANGE, level) {}
 
 int SniperTower::shoot(Wave &wave) {
     PNJ *my_target;
