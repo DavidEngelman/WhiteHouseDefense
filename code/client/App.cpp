@@ -69,7 +69,9 @@ void App::launchMatchmaking(std::string mode, int serverSocket) {
 void App::launchGame(int gameServerSocket) {
     std::cout << "Starting game" << std::endl;
     is_in_queue = false;
-    getMainWindow()->hide();//So we can reuse the window after the game
+    if (!isConsole) {
+        getMainWindow()->hide();//So we can reuse the window after the game
+    }
     GameManager * gameManager = new GameManager(gameServerSocket, this);
     transition(gameManager);
 }
