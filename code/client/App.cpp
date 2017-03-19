@@ -69,5 +69,6 @@ bool App::isInQueue() {
 
 void App::leaveQueue() {
     gameLauncher->leaveQueue();
+    is_in_queue = false;
 
 }

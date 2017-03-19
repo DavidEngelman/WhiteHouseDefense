@@ -2,12 +2,10 @@
 
 #include <QtWidgets/QFrame>
 #include <QtWidgets/QHBoxLayout>
-#include <QtCore/QTimer>
 #include <QtWidgets/QMessageBox>
 #include <QtWidgets/QGroupBox>
 #include "GameGUI.hpp"
-#include "../QCustomButton.h"
-#include "../MapGUI.hpp"
+    #include "../MapGUI.hpp"
 
 GameGUI::GameGUI(unsigned seed, GameManager *manager) : AbstractGUI(nullptr), GameUI(seed, manager) {
 
@@ -75,13 +73,8 @@ GameGUI::GameGUI(unsigned seed, GameManager *manager) : AbstractGUI(nullptr), Ga
     this->setLayout(mainLayout);
     playerInfo->setLayout(playerInfoLayout);
 
-
-
     this->showMaximized();
 
-    QTimer *timer = new QTimer();
-    QObject::connect(timer, SIGNAL(timeout()), this, SLOT(update_map()));
-    timer->start(10);
 }
 
 Position GameGUI::getPosBuyingTower() {

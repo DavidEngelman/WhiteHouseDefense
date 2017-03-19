@@ -28,6 +28,7 @@ void GameLauncher::sendJoinRequest() {
     int game_port;
     receive_data(server_socket, &game_port, sizeof(int));
 
+    master_app->getMainWindow()->hide();//So we can reuse the window after the game
     launchGame();
 
 }
