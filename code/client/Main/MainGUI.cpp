@@ -3,6 +3,7 @@
 #include <QtWidgets/QFormLayout>
 #include <QtMultimedia/QMediaPlayer>
 #include <QtWidgets/QDialogButtonBox>
+#include <QtWidgets/QLabel>
 
 
 MainGUI::MainGUI(MainManager *manager, QWidget* _parent) : AbstractGUI(_parent), MainUI(manager) {}
@@ -14,7 +15,7 @@ void MainGUI::display() {
 
     setStylesheetFromPath("../../qt_ui/americanMain.qss");
     setBackgroundFromPath("../../qt_ui/game_pictures/backgrounds/whitehouse_bckgrd.png");
-    setMusicFromPath("../../qt_ui/game_pictures/sounds/trump_song.mp3");
+    //setMusicFromPath("../../qt_ui/game_pictures/sounds/trump_song.mp3");
 
     QFont police("calibri");
 
@@ -50,22 +51,29 @@ void MainGUI::display() {
     fields->setLayout(fieldsLayout);
     fields->move(this->size().width() / 2 - 125, this->size().height() / 2 -40);
 
+    if (manager->isInQueue()){
+        showInQueue();
+    }
+
     this->show();
 }
 
 void MainGUI::displayGameModesMenu() {
-    dialog_game_mode_choice = new QDialogButtonBox;
+
+    dialog_game_mode_choice = new QWidget;
     dialog_game_mode_choice->setWindowTitle("Select a game mode");
     dialog_game_mode_choice->setWindowModality(Qt::ApplicationModal);
 
+    popup_h_layout = new QHBoxLayout;
+    dialog_game_mode_choice->setLayout(popup_h_layout);
 
     classicMode = new QCustomButton(0, "CLASSIC MODE", dialog_game_mode_choice);
     teamMode = new QCustomButton(1, "TEAM MODE", dialog_game_mode_choice);
     timedMode = new QCustomButton(2, "TIMED MODE", dialog_game_mode_choice);
 
-    dialog_game_mode_choice->addButton(timedMode,  QDialogButtonBox::AcceptRole);
-    dialog_game_mode_choice->addButton(teamMode,  QDialogButtonBox::AcceptRole);
-    dialog_game_mode_choice->addButton(classicMode, QDialogButtonBox::AcceptRole);
+    popup_h_layout->addWidget(classicMode);
+    popup_h_layout->addWidget(teamMode);
+    popup_h_layout->addWidget(timedMode);
 
     connect(classicMode, SIGNAL(clicked(int)), this, SLOT(handleGameModeChoice(int)));
     connect(teamMode, SIGNAL(clicked(int)), this, SLOT(handleGameModeChoice(int)));
@@ -73,6 +81,7 @@ void MainGUI::displayGameModesMenu() {
 
     dialog_game_mode_choice->move(this->width() /2, this->height()/2);
     dialog_game_mode_choice->show();
+
 }
 
 void MainGUI::handleMenuChoice(int choice) {
@@ -81,9 +90,28 @@ void MainGUI::handleMenuChoice(int choice) {
 }
 
 void MainGUI::handleGameModeChoice(int choice){
+    showInQueue();
     dialog_game_mode_choice->close();
     dialog_game_mode_choice->deleteLater();
     AbstractGUI::parent->hide();
     gameModeChoice = choice;
     manager->handleGameModeChoice();
+
+
+}
+
+void MainGUI::showInQueue(){
+    newGame->setEnabled(false);
+    queueWidget = new InQueueWidget(this);
+    queueWidget->move(this->width()-200, this->height()-70);
+
+}
+
+void MainGUI::leaveQueue(){
+    newGame->setEnabled(true);
+    queueWidget->hide();
+    queueWidget->deleteLater();
+
+    manager->leaveQueue();
+
 }

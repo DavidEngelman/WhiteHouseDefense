@@ -6,6 +6,7 @@
 #include "../Abstract/AbstractUI.hpp"
 #include "../App.hpp"
 #include "MainUI.hpp"
+#include "../Game/GameLauncher.hpp"
 
 class MainUI;
 class MainManager : public NetworkedManager {
@@ -20,6 +21,10 @@ public:
 
     void handleUserMenuChoice();
     void handleGameModeChoice();
+
+	bool isInQueue();
+
+	void leaveQueue();
 };
 
 #endif

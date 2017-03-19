@@ -1,3 +1,4 @@
+#include <vector>
 #include "MatchMaker.hpp"
 
 
@@ -10,6 +11,10 @@ MatchMaker::MatchMaker(int port) : Server(port),
     std::cout << "Constructor" << std::endl;
 };
 
+void* MatchMaker::client_handler(int client){
+    get_and_process_command(client);
+
+}
 
 void MatchMaker::run() {
     start_socket_listen();
@@ -18,27 +23,38 @@ void MatchMaker::run() {
     while (1) {
         client_socket_fd = accept_connection();
         std::cout << "New client in the matchmaking" << std::endl;
-
-        get_and_process_command(client_socket_fd);
+        std::thread t1(&MatchMaker::client_handler, this, client_socket_fd);
+        t1.detach();
     }
 }
 
 void MatchMaker::get_and_process_command(int socket_fd) {
     char command_buffer[BUFFER_SIZE];
-    receive_message(socket_fd, command_buffer);
+    bool communication_over = false;
 
-    Command command;
-    command.parse(command_buffer);
+    while (!communication_over) {
+        receive_message(socket_fd, command_buffer);
 
-    if (command.getAction() == GAME_IN_PROGRESS_REQUEST) {
-        handleRequestFromSpectator(socket_fd);
-    } else if (command.getAction() == "PopGame") {
-        removeGameFromGamesInProgress(stoi(command.getNextToken()));
-    } else {
-        MatchmakingCommand matchmakingCommand(socket_fd);
-        matchmakingCommand.parse(command_buffer);
+        Command command;
+        command.parse(command_buffer);
 
-        addPlayerToPendingMatch(matchmakingCommand.getPlayerConnection(), matchmakingCommand.getMode());
+        if (command.getAction() == GAME_IN_PROGRESS_REQUEST) {
+            handleRequestFromSpectator(socket_fd);
+            communication_over = true;
+
+        } else if (command.getAction() == POP_GAME_REQUEST) {
+            removeGameFromGamesInProgress(stoi(command.getNextToken()));
+            communication_over = true;
+
+        } else if(command.getAction() == LEAVE_QUEUE_REQUEST){
+            removePlayerFromQueue(command.getNextToken(), socket_fd);
+            communication_over = true;
+
+        } else {
+            MatchmakingCommand matchmakingCommand(socket_fd);
+            matchmakingCommand.parse(command_buffer);
+            addPlayerToPendingMatch(matchmakingCommand.getPlayerConnection(), matchmakingCommand.getMode());
+        }
     }
 }
 
@@ -117,4 +133,28 @@ void MatchMaker::removeGameFromGamesInProgress(int port) {
         }
     }
 }
+
+void MatchMaker::removePlayerFromQueue(std::string mode, int socket) {
+    if (mode == CLASSIC_MODE){
+        removePlayerFromMatch(classicPendingMatch, socket);
+    } else if (mode == TEAM_MODE){
+        removePlayerFromMatch(teamPendingMatch, socket);
+    } else {
+        removePlayerFromMatch(timedPendingMatch, socket);
+    }
+
+}
+
+void MatchMaker::removePlayerFromMatch(PendingMatch &match, int socket) {
+    for (PlayerConnection& pc : match.getPlayerConnections()){
+        if(pc.getSocketFd() == socket){
+            match.remove_player_from_queue(pc);
+            std::cout << "Removed " << socket << "from match" << std::endl;
+            break;
+        }
+    }
+
+}
+
+
 

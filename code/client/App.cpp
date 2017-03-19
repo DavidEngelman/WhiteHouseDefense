@@ -47,7 +47,27 @@ App::~App() {
     }
 }
 
+void App::launchMatchmaking(GameLauncher *manager) {
+    gameLauncher = manager;
+    background_task = new std::thread(& App::runBackgroundTask, this, manager);
+
+}
+
+void App::runBackgroundTask(AbstractManager* manager){
+    is_in_queue = true;
+    manager->run();
+}
+
+
 QWidget *App::getMainWindow() {
     return main_window;
 }
 
+bool App::isInQueue() {
+    return is_in_queue;
+}
+
+void App::leaveQueue() {
+    gameLauncher->leaveQueue();
+
+}

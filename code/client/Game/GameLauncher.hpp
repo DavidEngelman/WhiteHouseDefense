@@ -17,6 +17,10 @@ public:
     GameLauncher(int port, App* app, std::string _mode);
     void sendJoinRequest();
     void run() override;
+
+    void leaveQueue();
+
+    void launchGame();
 };
 
 #endif

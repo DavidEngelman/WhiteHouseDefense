@@ -9,6 +9,8 @@
 #define TEAM_MODE "TeamMode"
 
 #define GAME_IN_PROGRESS_REQUEST "games"
+#define POP_GAME_REQUEST "PopGame"
+#define LEAVE_QUEUE_REQUEST "LEAVEQUEUE"
 
 static const std::string PLACE_TOWER_COMMAND_STRING =  "PlaceTower";
 static const std::string DELETE_TOWER_COMMAND_STRING  = "DeleteTower";

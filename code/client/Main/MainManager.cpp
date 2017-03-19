@@ -63,14 +63,22 @@ void MainManager::handleGameModeChoice() {
 
     if (choice != 3) { /* Un des 3 modes de jeu */
         std::string gameMode = gameModes[choice];
-
-        //TODO: REMETTRE CA QUAND ON AURA BIEN FAIT GAMEMANAGER
         GameLauncher *game = new GameLauncher(MATCHMAKER_SERVER_PORT, master_app, gameMode);
-        master_app->transition(game);
+        master_app->launchMatchmaking(game);
+
     } else { /* Retour au menu principal */
         // TODO: close previous window
         run();
     }
+}
+
+bool MainManager::isInQueue() {
+    return master_app->isInQueue();
+}
+
+void MainManager::leaveQueue() {
+    master_app->leaveQueue();
+
 }
 
 MainManager::~MainManager() {
