@@ -13,6 +13,7 @@
 #include "GameUI.hpp"
 #include "InGameChatWidget.hpp"
 #include "../QCustomButton.h"
+#include <QProgressBar>
 
 class MapGUI;
 
@@ -40,6 +41,8 @@ private:
     QLabel *playerStateL;
 
     QGroupBox *chatBox;
+
+    QProgressBar *baseHealthBar;
 
     QMessageBox msgBox;
 
@@ -89,6 +92,9 @@ public:
 
     void displaySpellBox();
 
+    void setUpHealthBar();
+
+    void updateHealthBar(int value);
 };
 
 

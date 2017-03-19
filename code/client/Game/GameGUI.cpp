@@ -11,8 +11,6 @@
 
 GameGUI::GameGUI(unsigned seed, GameManager *manager) : GameUI(seed, manager) {
 
-    playerInfo = new QGroupBox;
-    QVBoxLayout* playerInfoLayout = new QVBoxLayout;
     QHBoxLayout *mainLayout = new QHBoxLayout();
     QVBoxLayout* leftPanel = new QVBoxLayout;
 
@@ -80,10 +78,16 @@ GameGUI::GameGUI(unsigned seed, GameManager *manager) : GameUI(seed, manager) {
     leftPanel->setAlignment(playerStateL, Qt::AlignCenter|Qt::AlignTop);
     leftPanel->setAlignment(inGameChatWidget, Qt::AlignCenter|Qt::AlignTop);
 
+    /* Central Layout */
+    QVBoxLayout *centralLayout  = new QVBoxLayout;
+    setUpHealthBar();
+    centralLayout->addWidget(baseHealthBar);
+    map = new MapGUI(seed, this, centralLayout);
+
 
     /* Main Layout */
     mainLayout->addLayout(leftPanel, 1);
-    map = new MapGUI(seed, this, mainLayout);
+    mainLayout->addLayout(centralLayout,1);
     mainLayout->addLayout(actionLayout, 1);
 
 
@@ -105,6 +109,17 @@ Position GameGUI::getPosBuyingTower() {
 
 void GameGUI::displayPlayersPlacingTowersMessage() {
 
+}
+
+void GameGUI::setUpHealthBar() {
+    baseHealthBar = new QProgressBar;
+    baseHealthBar->setStyleSheet(QString("QProgressBar {color: black}"));
+    baseHealthBar->setMaximum(PLAYER_STARTING_HP);
+    baseHealthBar->setMinimum(0);
+    QPalette p = baseHealthBar->palette();
+    p.setColor(QPalette::Highlight, Qt::green);
+    baseHealthBar->setPalette(p);
+    baseHealthBar->setTextVisible(true);
 }
 
 Position GameGUI::getPosSellingTower() {
@@ -227,6 +242,8 @@ void GameGUI::displayPlayerInfos(GameState &gameState, int quadrant) {
 
     playerStateL->setText(QString::fromStdString(text));
     playerStateL->show();
+
+    updateHealthBar(playerState.getHp());
 }
 
 void GameGUI::displayInfoForSupporter(GameState &gameState) {
@@ -302,4 +319,9 @@ void GameGUI::disableNukeSpell() {
 
 void GameGUI::enableNukeSpell() {
     nukeB->setEnabled(true);
+}
+
+void GameGUI::updateHealthBar(int value) {
+    baseHealthBar->setValue(value);
+    baseHealthBar->setFormat("HP : " + QString::number(value) + "/100" );
 }

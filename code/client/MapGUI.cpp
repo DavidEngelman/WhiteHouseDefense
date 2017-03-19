@@ -3,7 +3,7 @@
 #include "MapGUI.hpp"
 #include "Game/GameGUI.hpp"
 
-MapGUI::MapGUI(unsigned int seed, GameGUI *gameGUI, QHBoxLayout *layout = 0) : Map(seed), gameGUI(gameGUI) {
+MapGUI::MapGUI(unsigned int seed, GameGUI *gameGUI, QVBoxLayout *layout = 0) : Map(seed), gameGUI(gameGUI) {
     display();
     layout->addWidget(this);
     if (seed == 0) this->setStyleSheet("background-image: url(../../maps/map1.png)");
