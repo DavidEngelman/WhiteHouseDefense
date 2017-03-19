@@ -22,7 +22,7 @@ class GameGUI : public AbstractGUI, public GameUI {
 private:
     QGroupBox *playerInfo;
     QLabel *usernameL;
-    QLabel *playerStateL;
+
 
     QGroupBox *towerShop;
     QCustomButton *gunTowerB;
@@ -35,6 +35,11 @@ private:
 
     QGroupBox *spellBox;
     QPushButton *nukeB;
+
+    QGroupBox *playerStatsBox;
+    QLabel *playerStateL;
+
+    QGroupBox *chatBox;
 
     QMessageBox msgBox;
 
