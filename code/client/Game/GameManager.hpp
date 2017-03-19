@@ -29,6 +29,7 @@ private:
     GameUI *gameUI;
     int quadrant;
     bool isSupporter;
+    bool nukeSpell = true;
 
     unsigned int getMapSeedFromServer() const;
     void unSerializeGameState(char* seriarlizedGamestate);
@@ -80,6 +81,10 @@ public:
     bool isTowerInPosition(GameState &gamestate, Position towerPos);
 
     std::string &getUsername() { return gameState.getPlayerStates()[quadrant].getUsername(); };
+
+    void nuclearBombSpell();
+
+    void sendNuclearRequest();
 };
 
 #endif

@@ -34,7 +34,8 @@ GameGUI::GameGUI(unsigned seed, GameManager *manager) : GameUI(seed, manager) {
     actionLayout->addWidget(deleteAndUpgradeBox);
 
     QString spellBoxTitle = QString::fromStdString("Spells");
-    spellBox = new QGroupBox(this);
+    spellBox = new QGroupBox(spellBoxTitle);
+    displaySpellBox();
     actionLayout->addWidget(spellBox);
 
     //* LEFT PANEL //*
@@ -178,6 +179,24 @@ void GameGUI::displayDeleteAndUpgradeBox() {
 
 }
 
+
+void GameGUI::displaySpellBox() {
+    int scl = 10;
+    QSize size = QSize(1400/scl, 1060/scl);
+
+    nukeB = new QPushButton;
+    nukeB->setEnabled(false);
+    nukeB->setIcon(QIcon("../../qt_ui/game_pictures/spells/trump-nuclear.jpg"));
+    nukeB->setIconSize(size);
+
+    QHBoxLayout *layout = new QHBoxLayout;
+    layout->addWidget(nukeB);
+    layout->addStretch();
+    spellBox->setLayout(layout);
+
+    QObject::connect(nukeB, SIGNAL(clicked()), this, SLOT(handleNukeSpell()));
+}
+
 void GameGUI::displayGameOver(GameState &gamestate) {
 
 }
@@ -256,7 +275,19 @@ void GameGUI::handleUpgradingTower() {
         msgBox.show();
 }
 
+void GameGUI::handleNukeSpell() {
+    manager->nuclearBombSpell();
+}
+
 
 void GameGUI::addChatMessage(const std::string &message, const std::string &sender) {
     inGameChatWidget->addChatMessage(message, sender);
+}
+
+void GameGUI::disableNukeSpell() {
+    nukeB->setEnabled(false);
+}
+
+void GameGUI::enableNukeSpell() {
+    nukeB->setEnabled(true);
 }

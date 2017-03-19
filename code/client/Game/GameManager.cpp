@@ -57,9 +57,15 @@ void GameManager::updateMap() {
         const std::string& sender = command.getNextToken();
         gameUI->addChatMessage(message, sender);
     }
+    else if (strcmp(server_msg_buff, PLACING_TOWER) == 0) {
+        gameUI->disableNukeSpell();
+    }
+
     else if (strcmp(server_msg_buff, PLACING_TOWER) != 0 && strcmp(server_msg_buff, WAVE) != 0) {
+        if (nukeSpell) gameUI->enableNukeSpell();
         unSerializeGameState(server_msg_buff);
     }
+
     gameUI->display(gameState, quadrant);
     gameUI->displayPlayerInfos(gameState, quadrant);
 }
@@ -537,6 +543,7 @@ bool GameManager::upgradeTower(Position toUpgrade) {
     return false;
 }
 
+
 /* In-Game Chat */
 
 void GameManager::sendMessageToPlayers(std::string &message) {
@@ -545,3 +552,17 @@ void GameManager::sendMessageToPlayers(std::string &message) {
     send_message(server_socket, request.c_str());
 }
 
+
+
+/* Spells */
+void GameManager::nuclearBombSpell() {
+    sendNuclearRequest();
+    nukeSpell = false;
+    gameUI->disableNukeSpell();
+}
+
+void GameManager::sendNuclearRequest() {
+    std::string message = NUCLEAR_BOMB_COMMAND_STRING
+                          + "," + std::to_string(quadrant) + ";";
+    send_message(server_socket, message.c_str());
+}

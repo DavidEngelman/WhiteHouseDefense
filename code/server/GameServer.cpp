@@ -139,6 +139,11 @@ void GameServer::getAndProcessUserInput(int clientSocketFd, char *buffer) {
             std::string userMessage = command.getNextToken();
             std::string senderUsername = command.getNextToken();
             sendMessageToOtherPlayers(userMessage, senderUsername);
+        } else if (command_type == NUCLEAR_BOMB_COMMAND_STRING) {
+            Command command;
+            command.parse(buffer);
+            std::string quadrant = command.getNextToken();
+            gameEngine->killAllNPC(stoi(quadrant));
         }
     } else {
         removeClosedSocketFromSocketLists(clientSocketFd);

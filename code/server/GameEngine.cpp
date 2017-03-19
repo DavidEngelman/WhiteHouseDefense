@@ -285,6 +285,12 @@ Timer &GameEngine::getTimerSinceGameStart() {
     return timerSinceGameStart;
 }
 
+void GameEngine::killAllNPC(int quadrant) {
+    for(PNJ& pnj : gameState.getWaves()[quadrant].getPnjs()) {
+        pnj.setHealthPoints(0);
+    }
+}
+
 
 
 
