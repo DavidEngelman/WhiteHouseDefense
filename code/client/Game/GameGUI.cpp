@@ -234,7 +234,9 @@ void GameGUI::disableTowerShop() {
 }
 
 void GameGUI::enableTowerShop() {
-    int playerMoney = manager->getGameState().getPlayerStates()[manager->getQuadrant()].getMoney();
+    int quadrant = manager->getQuadrant();
+    if (map->computeQuadrant(map->getHighlightedPosition()) != quadrant) { return; }
+    int playerMoney = manager->getGameState().getPlayerStates()[quadrant].getMoney();
     if (playerMoney > GUN_TOWER_PRICE) gunTowerB->setEnabled(true);
     if (playerMoney > SNIPER_TOWER_PRICE) sniperTowerB->setEnabled(true);
     if (playerMoney > SHOCK_TOWER_PRICE) shockTowerB->setEnabled(true);
