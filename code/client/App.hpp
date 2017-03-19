@@ -33,7 +33,6 @@ public:
     App(char* serverIpAddr);
 
     virtual void transition(AbstractManager *new_manager);
-    virtual void launchMatchmaking(GameLauncher *manager);
 
     char *getIp();
     int getId();
@@ -42,7 +41,6 @@ public:
     void setId(int id);
     void setUsername(std::string name);
 
-    void runBackgroundTask(AbstractManager *manager);
     QWidget *getMainWindow();
 
     ~App();
