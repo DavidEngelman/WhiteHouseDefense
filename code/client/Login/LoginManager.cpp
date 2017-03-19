@@ -51,8 +51,8 @@ void LoginManager::login() {
     }
 
     if (valid) {
-        master_app->set_id(stoi(success));
-        master_app->set_username(loginCredentials.getUsername());
+        master_app->setId(stoi(success));
+        master_app->setUsername(loginCredentials.getUsername());
         goToMain();
     }
 }

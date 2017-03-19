@@ -274,7 +274,7 @@ void GameManager::unSerializePlayerState(std::string serialized_playerstate) {
             switch (count) {
                 case 0: // Nothing to do
                     break;
-                case 1: // player_id
+                case 1: // playerId
                     player_id = std::stoi(elem);
                     break;
                 case 2:
@@ -432,7 +432,7 @@ bool GameManager::is_alive() {
 
     bool alive = false;
     for( PlayerState& playerState : gameState.getPlayerStates()){
-        if (playerState.getPlayer_id() == master_app->get_id()){
+        if (playerState.getPlayer_id() == master_app->getId()){
             if (playerState.getHp() > 0){
                 alive = true;
                 break;
@@ -537,7 +537,7 @@ bool GameManager::upgradeTower(Position toUpgrade) {
 
 void GameManager::sendMessageToPlayers(std::string &message) {
     // TODO: si l'utilisateur met des ; dans son message, c'est la merde
-    std::string request = SEND_MESSAGE_STRING + "," + message + "," + master_app->get_username() + ";";
+    std::string request = SEND_MESSAGE_STRING + "," + message + "," + master_app->getUsername() + ";";
     send_message(server_socket, request.c_str());
 }
 

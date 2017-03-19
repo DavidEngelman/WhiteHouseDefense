@@ -10,33 +10,37 @@
 class GameLauncher;
 class AbstractManager;
 
-class App {
+class App: public QObject {
+    Q_OBJECT
 
 private:
 
-    char *server_ip_address;
-    int player_id;
+    char *serverIpAddress;
+    int playerId;
     std::string username;
-    AbstractManager* current_manager;
-    std::thread* background_task;
+    AbstractManager* currentManager;
+    std::thread* backgroundTask;
 
-    QWidget* main_window;
+    QWidget* mainWindow;
     GameLauncher* gameLauncher;
     bool is_in_queue;
 
+public slots:
+    void launchGame(int gameServerSocket);
+
 public:
 
-    App(char* server_ip_addr);
+    App(char* serverIpAddr);
 
     virtual void transition(AbstractManager *new_manager);
     virtual void launchMatchmaking(GameLauncher *manager);
 
-    char *get_ip();
-    int get_id();
-    std::string get_username();
+    char *getIp();
+    int getId();
+    std::string getUsername();
     
-    void set_id(int id);
-    void set_username(std::string name);
+    void setId(int id);
+    void setUsername(std::string name);
 
     void runBackgroundTask(AbstractManager *manager);
     QWidget *getMainWindow();
@@ -47,8 +51,10 @@ public:
 
     void leaveQueue();
 
+//    void setMainWindow(QWidget *pWidget);
 
-    void setMainWindow(QWidget *pWidget);
+
+    void launchMatchmaking(std::string mode, int serverSocket);
 };
 
 
