@@ -48,11 +48,6 @@ App::~App() {
     }
 }
 
-void App::launchMatchmaking(GameLauncher *manager) {
-    gameLauncher = manager;
-    backgroundTask = new std::thread(&App::runBackgroundTask, this, manager);
-}
-
 void App::launchMatchmaking(std::string mode, int serverSocket) {
     is_in_queue = true;
     QMatchMakingThread *matchMakingThread = new QMatchMakingThread(mode, getId(), getIp(), getUsername(), this);
@@ -76,11 +71,6 @@ void App::launchGame(int gameServerSocket) {
     transition(gameManager);
 }
 
-void App::runBackgroundTask(AbstractManager *manager) {
-    is_in_queue = true;
-    manager->run();
-}
-
 
 QWidget *App::getMainWindow() {
     return mainWindow;
@@ -91,7 +81,8 @@ bool App::isInQueue() {
 }
 
 void App::leaveQueue() {
-    gameLauncher->leaveQueue();
+    // TODO: modifier ceci pour que ca tue le thread et
+    // gameLauncher n'existe pas, parce que ce code la est dans le thread
+    gameLauncher->leaveQueue(); // Va causer des bugs si on l'utilise
     is_in_queue = false;
-
 }
