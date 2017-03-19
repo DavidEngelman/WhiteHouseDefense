@@ -20,6 +20,9 @@ private:
     QCustomButton *profile;
     QCustomButton *friendList;
     QCustomButton *leaderBoard;
+    QCustomButton *settings;
+
+
     QCustomButton *classicMode;
     QCustomButton *timedMode;
     QCustomButton *teamMode;

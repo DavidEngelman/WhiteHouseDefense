@@ -7,7 +7,7 @@
 #include "../Main/MainManager.hpp"
 #include "../App.hpp"
 
-class SettingsManager : NetworkedManager{
+class SettingsManager : public NetworkedManager{
 
 private:
 

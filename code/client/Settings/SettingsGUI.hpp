@@ -14,8 +14,13 @@ Q_OBJECT
 private:
 
 public:
+
     SettingsGUI(SettingsManager *manager, QWidget* _parent);
 
+    void display() override;
+    std::string getNewUsername();
+    std::string getNewPassword();
+    std::string getNewIconName();
 };
 
 

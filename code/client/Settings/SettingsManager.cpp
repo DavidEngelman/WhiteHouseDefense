@@ -1,12 +1,14 @@
 #include "SettingsManager.hpp"
 #include "../../common/Constants.h"
+#include "SettingsGUI.hpp"
+#include "SettingsConsoleUI.hpp"
 
 SettingsManager::SettingsManager (int port, App *my_app) :
         NetworkedManager(port, my_app), username("Loading..."), password("Loading..."), iconName("Loading...") {
     if (!isConsole) {
-        settingsUI = new SettingsUI(this, master_app->getMainWindow());
+        settingsUI = new SettingsGUI(this, master_app->getMainWindow());
     } else {
-        settingsUI = new SettingsUI(this);
+        //settingsUI = new SettingsConsoleUI(this);
     }
 
 }

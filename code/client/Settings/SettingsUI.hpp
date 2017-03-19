@@ -14,7 +14,7 @@ protected:
 public:
 
     SettingsUI(SettingsManager *_settingsManager) : settingsManager(_settingsManager) {};
-    virtual std::string display() = 0;
+    virtual void display() = 0;
     virtual std::string getNewUsername() = 0;
     virtual std::string getNewPassword() = 0;
     virtual std::string getNewIconName() = 0;
