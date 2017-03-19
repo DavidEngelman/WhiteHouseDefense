@@ -6,8 +6,10 @@
 #include "WelcomeManager.hpp"
 #include "../QHandPointerButton.hpp"
 
+WelcomeGUI::WelcomeGUI(WelcomeManager *manager, QWidget* _parent) : AbstractGUI(_parent), manager(manager) {}
 
 void WelcomeGUI::display() {
+
     setTheme();
 
     QFrame * fields = new QFrame(this);
@@ -31,6 +33,8 @@ void WelcomeGUI::display() {
     fields->move(this->size().width() / 2 - 125, this->size().height() / 2 +100);
 
     this->show();
+    AbstractGUI::parent->show();
+    // On affiche la fenetre principale qu'à partir du moment ou WelcomeGUI est pret pour que ce soit plus smooth
 }
 
 void WelcomeGUI::openLogin(){
@@ -56,4 +60,3 @@ WelcomeGUI::~WelcomeGUI() {
     close();
 }
 
-WelcomeGUI::WelcomeGUI(WelcomeManager *manager) : manager(manager) {}

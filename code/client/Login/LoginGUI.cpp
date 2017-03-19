@@ -78,7 +78,7 @@ void LoginGUI::displayAlreadyConnected() {
     passwordL->setText("");
 }
 
-LoginGUI::LoginGUI(LoginManager *manager) : LoginUI(manager){}
+LoginGUI::LoginGUI(LoginManager *manager, QWidget* _parent) : AbstractGUI(_parent), LoginUI(manager){}
 
 LoginGUI::~LoginGUI() {}
 

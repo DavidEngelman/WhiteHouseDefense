@@ -23,7 +23,7 @@ private:
     std::string password;
 
 public:
-    LoginGUI(LoginManager *manager);
+    LoginGUI(LoginManager *manager, QWidget* _parent);
     virtual ~LoginGUI();
 
 

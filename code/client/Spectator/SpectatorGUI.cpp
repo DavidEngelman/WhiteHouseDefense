@@ -12,8 +12,8 @@
 #define TABLE_WIDTH_SIZE 870
 
 
-SpectatorGUI::SpectatorGUI(SpectatorManager *manager) : SpectatorUI(manager), layout(new QVBoxLayout),
-                                                        selectPlayerWindow(new QWidget()) {}
+SpectatorGUI::SpectatorGUI(SpectatorManager *manager, QWidget* _parent) : AbstractGUI(_parent), SpectatorUI(manager),
+                                                                          layout(new QVBoxLayout), selectPlayerWindow(new QWidget()) {}
 
 void SpectatorGUI::getGameAndPlayer() {
     setUp();

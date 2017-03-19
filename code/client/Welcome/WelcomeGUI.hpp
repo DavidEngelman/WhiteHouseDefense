@@ -38,7 +38,7 @@ public slots:
     void openRegister();
 
 public:
-    WelcomeGUI(WelcomeManager *manager);
+    WelcomeGUI(WelcomeManager *manager, QWidget* _parent);
     virtual ~WelcomeGUI();
 
     void display();
