@@ -6,7 +6,7 @@
 SpectatorManager::SpectatorManager(int port, App *master_app) :
         NetworkedManager(port, master_app) {
     if (!isConsole) {
-        spectatorUI = new SpectatorGUI(this);
+        spectatorUI = new SpectatorGUI(this, master_app->getMainWindow());
     } else {
         spectatorUI = new SpectatorConsoleUI(this);
     }
@@ -28,7 +28,7 @@ void SpectatorManager::getGamesFromMatchMaker() {
 
 void SpectatorManager::connectToGame(GameInfo &game, std::string &playerToSupport) {
     /* On dit au gameServer qu'on veut etre spectateur */
-    int game_server_socket_fd = init_connection_to_server(master_app->get_ip(), game.getPort());
+    int game_server_socket_fd = init_connection_to_server(master_app->getIp(), game.getPort());
 
     // Structure of command: "SUPPORT_PLAYER_STRING,bob;"
     std::string message = SUPPORT_PLAYER_STRING + ","

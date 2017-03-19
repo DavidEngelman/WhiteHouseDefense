@@ -13,7 +13,7 @@ const static std::string gameModes[3] = {CLASSIC_MODE, TIMED_MODE, TEAM_MODE};
 MainManager::MainManager(int port, App *my_app) :
         NetworkedManager(port, my_app) {
     if (!isConsole) {
-        mainUI = new MainGUI(this);
+        mainUI = new MainGUI(this, master_app->getMainWindow());
     } else {
         mainUI = new MainConsoleUI(this);
     }
@@ -50,7 +50,7 @@ void MainManager::handleUserMenuChoice() {
             break;
         }
         default: {
-            std::string message = "Exit," + std::to_string(master_app->get_id());
+            std::string message = "Exit," + std::to_string(master_app->getId());
             send_message(server_socket, message.c_str());
             break;
         }
@@ -63,14 +63,22 @@ void MainManager::handleGameModeChoice() {
 
     if (choice != 3) { /* Un des 3 modes de jeu */
         std::string gameMode = gameModes[choice];
-
-        //TODO: REMETTRE CA QUAND ON AURA BIEN FAIT GAMEMANAGER
-        GameLauncher *game = new GameLauncher(MATCHMAKER_SERVER_PORT, master_app, gameMode);
-        master_app->transition(game);
+//        GameLauncher *game = new GameLauncher(MATCHMAKER_SERVER_PORT, master_app, gameMode);
+//        master_app->launchMatchmaking(game);
+        master_app->launchMatchmaking(gameMode, server_socket);
     } else { /* Retour au menu principal */
         // TODO: close previous window
         run();
     }
+}
+
+bool MainManager::isInQueue() {
+    return master_app->isInQueue();
+}
+
+void MainManager::leaveQueue() {
+    master_app->leaveQueue();
+
 }
 
 MainManager::~MainManager() {

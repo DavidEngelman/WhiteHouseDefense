@@ -8,8 +8,8 @@
 
 ProfileManager::ProfileManager(int port, App *my_app) :
         NetworkedManager(port, my_app), username("Loading..."), victories(-1), npcKilled(-1) {
-    if (false) {
-        profileUI = new ProfileGUI(this);
+    if (!isConsole) {
+        profileUI = new ProfileGUI(this, master_app->getMainWindow());
     } else {
         profileUI = new ProfileConsoleUI(this);
     }
@@ -22,7 +22,7 @@ void ProfileManager::run() {
 }
 
 void ProfileManager::showMyProfile() {
-    getAndParseProfile(master_app->get_username());
+    getAndParseProfile(master_app->getUsername());
     profileUI->updateProfile();
 }
 

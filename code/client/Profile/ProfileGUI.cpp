@@ -5,7 +5,8 @@
 #include "ProfileGUI.hpp"
 #include "../QHandPointerButton.hpp"
 
-ProfileGUI::ProfileGUI(ProfileManager *manager) : ProfileUI(manager), usernameT(new QString("No Username")), victoriesT(new QString),
+ProfileGUI::ProfileGUI(ProfileManager *manager, QWidget* _parent) : AbstractGUI(_parent), ProfileUI(manager),
+                                                                    usernameT(new QString("No Username")), victoriesT(new QString),
 NPCKilledT(new QString) {}
 
 

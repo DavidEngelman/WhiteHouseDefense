@@ -29,7 +29,7 @@ private:
 
 
 public:
-    RankingGUI(RankingManager *manager);
+    RankingGUI(RankingManager *manager, QWidget* _parent);
     void setUp();
     void fillRanking(std::vector<RankingInfos>& ranking);
     void display(std::vector<RankingInfos>& ranking) override ;

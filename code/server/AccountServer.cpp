@@ -17,7 +17,6 @@ void AccountServer::run() {
 
     while (1) {
         newClient = accept_connection();
-
         std::thread t1(&AccountServer::client_handler, this, newClient);
         t1.detach();
     }

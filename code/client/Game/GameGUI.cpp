@@ -2,14 +2,13 @@
 
 #include <QtWidgets/QFrame>
 #include <QtWidgets/QHBoxLayout>
-#include <QtCore/QTimer>
 #include <QtWidgets/QMessageBox>
 #include <QtWidgets/QGroupBox>
 #include "GameGUI.hpp"
-#include "../QCustomButton.h"
-#include "../MapGUI.hpp"
+    #include "../MapGUI.hpp"
 
-GameGUI::GameGUI(unsigned seed, GameManager *manager) : GameUI(seed, manager) {
+GameGUI::GameGUI(unsigned seed, GameManager *manager) : AbstractGUI(nullptr), GameUI(seed, manager) {
+
 
     playerInfo = new QGroupBox;
     QVBoxLayout* playerInfoLayout = new QVBoxLayout;
@@ -90,10 +89,11 @@ GameGUI::GameGUI(unsigned seed, GameManager *manager) : GameUI(seed, manager) {
     this->setLayout(mainLayout);
     //playerInfo->setLayout(playerInfoLayout);
 
+    this->showMaximized();
 
-
-    this->showFullScreen();
-
+    // TODO: Pour l'instant, c'est la gameGUI qui declenche la fonction updatemap toutes les 10 msec
+    // Je ne suis pas sur que ca devrait etre dans cette classe
+    // Ca devrait probablement etre dans manager
     QTimer *timer = new QTimer();
     QObject::connect(timer, SIGNAL(timeout()), this, SLOT(update_map()));
     timer->start(10);

@@ -2,7 +2,13 @@
 #include <QtMultimedia/QMediaPlaylist>
 #include <QtCore/QFileInfo>
 #include <QtMultimedia/QMediaPlayer>
+#include <QtGui/QWindow>
 #include "AbstractGUI.hpp"
+
+AbstractGUI::AbstractGUI(QWidget* _parent) : parent(_parent) {
+    setParent(parent);
+}
+
 
 void AbstractGUI::setStylesheetFromPath(QString stylesheetPath) {
     QFile File(stylesheetPath);
@@ -16,7 +22,7 @@ void AbstractGUI::setBackgroundFromPath(QString backgroundPath) {
     backgroundImage = backgroundImage.scaled(size(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
     QPalette palette;
     palette.setBrush(QPalette::Background, backgroundImage);
-    setPalette(palette);
+    parent->setPalette(palette);
 }
 
 void AbstractGUI::destroy() {
@@ -36,3 +42,4 @@ void AbstractGUI::setMusicFromPath(QString musicPath) {
     player->play();
 
 }
+

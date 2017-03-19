@@ -10,7 +10,7 @@
 #define TABLE_HEIGHT_SIZE 400
 #define TABLE_WIDTH_SIZE 870
 
-RankingGUI::RankingGUI(RankingManager *manager) : RankingUI(manager){}
+RankingGUI::RankingGUI(RankingManager *manager, QWidget* _parent) : AbstractGUI(_parent), RankingUI(manager){}
 
 void RankingGUI::setUp() {
     this->setFixedHeight(600);

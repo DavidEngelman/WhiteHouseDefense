@@ -39,6 +39,12 @@ public:
     void handleRequestFromSpectator(int socket);
 
     void removeGameFromGamesInProgress(int port);
+
+    void removePlayerFromQueue(std::string basic_string, int socket);
+
+    void removePlayerFromMatch(PendingMatch &match, int socket);
+
+    void *client_handler(int client);
 };
 
 #endif
