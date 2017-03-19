@@ -34,19 +34,21 @@ void MatchMaker::get_and_process_command(int socket_fd) {
 
     while (!communication_over) {
         receive_message(socket_fd, command_buffer);
-
+        std::cout << command_buffer << std::endl;
         Command command;
         command.parse(command_buffer);
+        std::string action = command.getAction();
 
-        if (command.getAction() == GAME_IN_PROGRESS_REQUEST) {
+        if (action == GAME_IN_PROGRESS_REQUEST) {
             handleRequestFromSpectator(socket_fd);
             communication_over = true;
 
-        } else if (command.getAction() == POP_GAME_REQUEST) {
+        } else if (action == POP_GAME_REQUEST) {
             removeGameFromGamesInProgress(stoi(command.getNextToken()));
             communication_over = true;
 
-        } else if(command.getAction() == LEAVE_QUEUE_REQUEST){
+        } else if(action == LEAVE_QUEUE_REQUEST){
+            std::cout <<command.getAction()<<std::endl;
             removePlayerFromQueue(command.getNextToken(), socket_fd);
             communication_over = true;
 
@@ -153,6 +155,7 @@ void MatchMaker::removePlayerFromMatch(PendingMatch &match, int socket) {
             break;
         }
     }
+    send_message(socket,"removed");
 
 }
 

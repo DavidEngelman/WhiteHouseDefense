@@ -22,19 +22,22 @@ void GameLauncher::sendJoinRequest() {
 
     /* Recevoir reponse du server */
     receive_message(server_socket, server_response);
-    assert(strcmp(server_response, GAME_STARTING_STRING) == 0);
 
-    /*Recevoir port du GamesServer auquel se connecter */
-    int game_port;
-    receive_data(server_socket, &game_port, sizeof(int));
+    if (strcmp(server_response, GAME_STARTING_STRING) == 0){
+        /*Recevoir port du GamesServer auquel se connecter */
+        int game_port;
+        receive_data(server_socket, &game_port, sizeof(int));
 
-    master_app->getMainWindow()->hide();//So we can reuse the window after the game
-    launchGame();
+        master_app->getMainWindow()->hide();//So we can reuse the window after the game
+        launchGame();
+    }
+
 
 }
 
 void GameLauncher::leaveQueue() {
-    std::string message = LEAVE_QUEUE_REQUEST + mode + ";";
+    std::string message = LEAVE_QUEUE_REQUEST + ',' + mode + ';';
+    std::cout << message << std::endl;
     send_message(server_socket, message.c_str());
 
 }
