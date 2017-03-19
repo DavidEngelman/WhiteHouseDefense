@@ -50,3 +50,4 @@ App::~App() {
 QWidget *App::getMainWindow() {
     return main_window;
 }
+

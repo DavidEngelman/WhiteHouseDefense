@@ -11,6 +11,7 @@
 
 GameGUI::GameGUI(unsigned seed, GameManager *manager) : AbstractGUI(nullptr), GameUI(seed, manager) {
 
+
     playerInfo = new QGroupBox;
     QVBoxLayout* playerInfoLayout = new QVBoxLayout;
     QHBoxLayout *mainLayout = new QHBoxLayout();
@@ -76,7 +77,7 @@ GameGUI::GameGUI(unsigned seed, GameManager *manager) : AbstractGUI(nullptr), Ga
 
 
 
-    this->showFullScreen();
+    this->showMaximized();
 
     QTimer *timer = new QTimer();
     QObject::connect(timer, SIGNAL(timeout()), this, SLOT(update_map()));

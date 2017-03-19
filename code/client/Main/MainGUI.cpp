@@ -83,6 +83,7 @@ void MainGUI::handleMenuChoice(int choice) {
 void MainGUI::handleGameModeChoice(int choice){
     dialog_game_mode_choice->close();
     dialog_game_mode_choice->deleteLater();
+    AbstractGUI::parent->hide();
     gameModeChoice = choice;
     manager->handleGameModeChoice();
 }

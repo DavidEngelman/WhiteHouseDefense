@@ -35,6 +35,8 @@ public:
     void set_username(std::string name);
 
     QWidget *getMainWindow();
+
+    void setMainWindow(QWidget *pWidget);
 };
 
 

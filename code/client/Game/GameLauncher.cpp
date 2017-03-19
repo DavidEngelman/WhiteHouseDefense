@@ -25,6 +25,7 @@ void GameLauncher::sendJoinRequest() {
     receive_data(server_socket, &game_port, sizeof(int));
 
     std::cout << "Game start" << std::endl;
+
     GameManager* manager = new GameManager(server_socket, master_app);
     master_app->transition(manager);
 }
