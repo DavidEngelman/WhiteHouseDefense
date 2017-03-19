@@ -52,15 +52,29 @@ GameGUI::GameGUI(unsigned seed, GameManager *manager) : GameUI(seed, manager) {
     font.setBold(false);
     font.setPixelSize(15);
 
+    QString playerStatsBoxTitle = QString::fromStdString("Stats");
+    playerStatsBox = new QGroupBox(playerStatsBoxTitle);
+
+    QHBoxLayout *playerStateLayout = new QHBoxLayout;
     playerStateL = new QLabel;
     playerStateL->setFont(font);
+    playerStateLayout->addWidget(playerStateL);
+    playerStatsBox->setLayout(playerStateLayout);
+
+
 
     /* In Game Chat UI */
+    QString chatBoxTitle = QString::fromStdString("Chat");
+    chatBox = new QGroupBox(chatBoxTitle);
     inGameChatWidget = new InGameChatWidget(manager);
 
+    QHBoxLayout *chatLayout = new QHBoxLayout;
+    chatLayout->addWidget(inGameChatWidget);
+    chatBox->setLayout(chatLayout);
+
     leftPanel->addWidget(usernameL);
-    leftPanel->addWidget(playerStateL);
-    leftPanel->addWidget(inGameChatWidget);
+    leftPanel->addWidget(playerStatsBox);
+    leftPanel->addWidget(chatBox);
 
     leftPanel->setAlignment(usernameL, Qt::AlignCenter|Qt::AlignTop);
     leftPanel->setAlignment(playerStateL, Qt::AlignCenter|Qt::AlignTop);
@@ -74,7 +88,7 @@ GameGUI::GameGUI(unsigned seed, GameManager *manager) : GameUI(seed, manager) {
 
 
     this->setLayout(mainLayout);
-    playerInfo->setLayout(playerInfoLayout);
+    //playerInfo->setLayout(playerInfoLayout);
 
 
 
