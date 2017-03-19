@@ -139,6 +139,11 @@ void GameServer::getAndProcessUserInput(int clientSocketFd, char *buffer) {
             std::string userMessage = command.getNextToken();
             std::string senderUsername = command.getNextToken();
             sendMessageToOtherPlayers(userMessage, senderUsername);
+        } else if (command_type == NUCLEAR_BOMB_COMMAND_STRING) {
+            Command command;
+            command.parse(buffer);
+            std::string quadrant = command.getNextToken();
+            gameEngine->killAllNPC(stoi(quadrant));
         }
     } else {
         removeClosedSocketFromSocketLists(clientSocketFd);
@@ -166,11 +171,11 @@ int GameServer::getReadableReadableSocket(int timeLeft) {
 void GameServer::addTowerInGameState(TowerCommand &command) {
     AbstractTower *tower;
     if (command.getTowerType() == GUN_TOWER_STR) {
-        tower = new GunTower(command.getPosition());
+        tower = new GunTower(command.getPosition(),1);
     } else if (command.getTowerType() == SNIPER_TOWER_STR) {
-        tower = new SniperTower(command.getPosition());
+        tower = new SniperTower(command.getPosition(),1);
     } else {
-        tower = new ShockTower(command.getPosition());
+        tower = new ShockTower(command.getPosition(),1);
     }
 
     int quadrant = command.getPlayerQuadrant();

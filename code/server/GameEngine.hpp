@@ -87,6 +87,8 @@ public:
     void declareWinnerInClassicMode();
 
     void declareWinnerInTimedMode();
+
+    void killAllNPC(int quadrant);
 };
 
 

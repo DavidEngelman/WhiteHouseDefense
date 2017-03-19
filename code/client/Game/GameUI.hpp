@@ -37,6 +37,9 @@ public:
     virtual void displayPlayersPlacingTowersMessage() = 0;
 
     virtual void addChatMessage(const std::string &message, const std::string &sender) = 0;
+
+    virtual void disableNukeSpell() = 0;
+    virtual void enableNukeSpell() = 0;
 };
 
 #endif //PROJET_GAMEUI_H
