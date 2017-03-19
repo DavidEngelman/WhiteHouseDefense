@@ -33,6 +33,7 @@ GameGUI::GameGUI(unsigned seed, GameManager *manager) : GameUI(seed, manager) {
     displayDeleteAndUpgradeBox();
     actionLayout->addWidget(deleteAndUpgradeBox);
 
+
     QString spellBoxTitle = QString::fromStdString("Spells");
     spellBox = new QGroupBox(spellBoxTitle);
     displaySpellBox();
@@ -185,7 +186,7 @@ void GameGUI::displaySpellBox() {
 
     nukeB = new QPushButton;
     nukeB->setEnabled(false);
-    nukeB->setIcon(QIcon("../../qt_ui/game_pictures/spells/trump-nuclear.jpg"));
+    nukeB->setIcon(QIcon("../../qt_ui/game_pictures/spells/trumpnuclear.png"));
     nukeB->setIconSize(size);
 
     QHBoxLayout *layout = new QHBoxLayout;
