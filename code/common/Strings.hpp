@@ -21,6 +21,10 @@ static const std::string RECEIVE_MESSAGE_STRING = "ReceiveMessage";
 static const std::string JOIN_GAME_AS_SPECTATOR = "Support";
 static const std::string SUPPORT_PLAYER_STRING = "SupportPlayer";
 
+static const std::string CHANGE_USERNAME = "CHANGEUSERNAME";
+static const std::string CHANGE_PASSWORD = "CHANGEPASSWORD";
+static const std::string CHANGE_ICON = "CHANGEICON";
+
 #define SETUP_GAME "SetupGame"
 #define END_OF_GAME "end"
 
