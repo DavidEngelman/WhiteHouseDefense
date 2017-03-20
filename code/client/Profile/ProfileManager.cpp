@@ -1,5 +1,5 @@
 #include <assert.h>
-#include "../../common/Constants.h"
+#include "../../common/Constants.hpp"
 #include "../../common/Message.hpp"
 #include "ProfileManager.hpp"
 #include "ProfileGUI.hpp"

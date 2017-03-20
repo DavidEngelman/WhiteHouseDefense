@@ -40,7 +40,7 @@ const int SIZE = 41;
 #include <vector>
 #include "Position.hpp"
 #include "GameState.hpp"
-#include "Constants.h"
+#include "Constants.hpp"
 
 class GameState;
 

@@ -4,7 +4,7 @@
 
 #include <QtCore/QThread>
 #include <assert.h>
-#include "../../common/Networking.h"
+#include "../../common/Networking.hpp"
 #include "../../common/Strings.hpp"
 
 class QMatchMakingThread : public QThread {

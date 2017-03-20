@@ -1,4 +1,4 @@
-#include "PendingMatch.h"
+#include "PendingMatch.hpp"
 
 PendingMatch::PendingMatch(std::string modeName) : mode(modeName) {}
 

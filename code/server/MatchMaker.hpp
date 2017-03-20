@@ -2,7 +2,7 @@
 #define MATCHMAKER_HPP
 
 #include "Server.hpp"
-#include "PendingMatch.h"
+#include "PendingMatch.hpp"
 #include "MatchmakingCommand.hpp"
 #include "../common/Strings.hpp"
 #include "PlayerConnection.hpp"

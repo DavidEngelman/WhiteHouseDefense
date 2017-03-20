@@ -4,7 +4,7 @@
 
 #include "AbstractTower.hpp"
 #include "PNJ.hpp"
-#include "../common/Constants.h"
+#include "Constants.hpp"
 
 class AttackTower : public AbstractTower {
     int damage;

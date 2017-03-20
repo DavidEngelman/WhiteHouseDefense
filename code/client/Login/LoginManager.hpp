@@ -3,9 +3,9 @@
 
 #include "../NetworkedManager.hpp"
 #include "LoginUI.hpp"
-#include "../../common/Networking.h"
+#include "../../common/Networking.hpp"
 #include "../Main/MainManager.hpp"
-#include "../../common/Credentials.h"
+#include "../../common/Credentials.hpp"
 #include "../App.hpp"
 
 

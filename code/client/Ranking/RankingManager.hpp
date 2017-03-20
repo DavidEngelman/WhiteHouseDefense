@@ -5,10 +5,10 @@
 
 
 #include "../NetworkedManager.hpp"
-#include "../../common/Networking.h"
+#include "../../common/Networking.hpp"
 #include "../App.hpp"
-#include "../../common/RankingInfos.h"
-#include "RankingUI.h"
+#include "../../common/RankingInfos.hpp"
+#include "RankingUI.hpp"
 
 class RankingUI;
 

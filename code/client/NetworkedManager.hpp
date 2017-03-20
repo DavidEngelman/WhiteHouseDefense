@@ -13,7 +13,7 @@
 #include <netinet/in.h>
 #include <iostream>
 #include "Abstract/AbstractManager.hpp"
-#include "../common/Networking.h"
+#include "../common/Networking.hpp"
 
 
 class NetworkedManager : public AbstractManager {

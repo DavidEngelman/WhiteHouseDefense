@@ -4,9 +4,9 @@
 #define PROJET_PNJ_H
 
 #include "Position.hpp"
-#include "Direction.h"
+#include "Direction.hpp"
 #include "Map.hpp"
-#include "Constants.h"
+#include "Constants.hpp"
 
 class Map;
 
