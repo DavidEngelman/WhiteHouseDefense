@@ -48,6 +48,10 @@ void GameManager::comeBackToMenu() { // À appeler quand la partie est terminée
 }
 
 void GameManager::updateMap() {
+
+    gameUI->display(gameState, quadrant);
+    gameUI->displayPlayerInfos(gameState, quadrant);
+
     while (!gameState.getIsGameOver()) {
         char server_msg_buff[BUFFER_SIZE];
         receive_message(server_socket, server_msg_buff);
