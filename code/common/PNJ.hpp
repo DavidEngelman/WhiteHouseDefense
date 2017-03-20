@@ -12,11 +12,12 @@ class Map;
 
 class PNJ{
 
-private:
+protected:
 
 	int healthPoints;
 	int direction;
-	int movementSpeed;
+    int damage;
+	int value;
 	Position position;
 	Position last_position;
 
@@ -27,7 +28,7 @@ public:
 
     PNJ(Position position, int healthPoints, int direction);
 
-    PNJ(Position position, int healthPoints, int movementSpeed, Position last_pos, int direction);
+    PNJ(Position position, int healthPoints, Position last_pos, int direction);
 
     ~PNJ() = default;
 
@@ -42,12 +43,6 @@ public:
 	void setHealthPoints(int newHp);
 
 	bool isInPlayerBase();
-
-	int getMovementSpeed() const;
-
-	void setMovementSpeed(int newMovementSpeed);
-
-    void receiveMovementPenalty(int speedReduction);
 
 	Position getPosition() const;
 
@@ -73,6 +68,9 @@ public:
 
 	std::string serialize();
 
+    int getDamage();
+
+	int getValue();
 
     bool operator==(const PNJ &rhs) const;
 

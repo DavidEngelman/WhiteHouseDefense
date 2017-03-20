@@ -77,6 +77,8 @@ set(CLIENT_FILES client/ClientLauncher.cpp
         common/ShockTower.cpp
         common/SniperTower.cpp
         common/PNJ.cpp
+        common/CommunistPNJ.cpp
+        common/MuslimPNJ.cpp
         common/GameState.cpp
         common/Wave.cpp
         common/PlayerState.cpp
@@ -95,11 +97,10 @@ set(CLIENT_FILES client/ClientLauncher.cpp
         common/Networking.cpp
         common/Credentials.cpp
         client/Drawing.cpp
-        client/Drawing.hpp
         client/App.cpp
         common/Constants.h common/Tools.hpp
         common/Tools.cpp
-        client/QHandPointerButton.hpp)
+        client/QHandPointerButton.hpp common/MexicanPNJ.cpp common/MexicanPNJ.h)
 
 
 add_executable(client ${CLIENT_FILES})
@@ -118,6 +119,8 @@ set(SERVER_FILES "server/ServerLauncher.cpp"
         common/PlayerState.cpp
         common/Wave.cpp
         common/PNJ.cpp
+        common/CommunistPNJ.cpp
+        common/MuslimPNJ.cpp
         common/Position.cpp
         common/Map.cpp
         server/GameEngine.cpp
@@ -147,7 +150,7 @@ set(SERVER_FILES "server/ServerLauncher.cpp"
         server/PlayerConnection.cpp
         common/Networking.cpp
         common/Credentials.cpp
-        common/Message.cpp common/TankPNJ.cpp common/TankPNJ.h)
+        common/Message.cpp common/MexicanPNJ.cpp common/MexicanPNJ.h)
 
 add_executable(server ${SERVER_FILES})
 

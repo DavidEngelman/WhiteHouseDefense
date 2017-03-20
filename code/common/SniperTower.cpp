@@ -8,9 +8,9 @@
 SniperTower::SniperTower(const Position &position) :
         AttackTower(position, SNIPER_TOWER_DAMAGE, SNIPER_TOWER_PRICE, SNIPER_TOWER_RANGE) {}
 
-int SniperTower::shoot(Wave &wave) {
+const std::vector<PNJ *>& SniperTower::shoot(Wave &wave) {
     PNJ *my_target;
-    int killed = 0;
+    std::vector<PNJ *>& killed;
     my_target = get_closest_pnj(wave);
     if ((my_target != nullptr) && (!my_target->isInPlayerBase()) && (my_target->getHealthPoints() > 0)) {
         dealDamageTo(*my_target);

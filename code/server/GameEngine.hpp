@@ -51,7 +51,7 @@ public:
 
     void dealDamageToBase();
 
-    void giveGold(PlayerState &playerState);
+    void giveGold(PlayerState &playerState, PNJ* pnj);
 
     Wave &getWaveInSameQuadrant(AbstractTower &tower, std::vector<Wave> &waves);
 

@@ -20,19 +20,20 @@ static const int NB_OF_MAPS = 3;
 
 // Constant of the pnj
 static const int PNJ_STARTING_HEALTHPOINTS = 100;
-static const int PNJ_STARTING_MOVESPEED = 100;
 static const int PNJ_VALUE = 10;
 static const int PNJ_DAMAGE = 5;
 
-static const int PNJ_TANK_STARTING_HEALTHPOINTS = 150;
-static const int PNJ_TANK_STARTING_MOVESPEED = 100;
-static const int PNJ_TANK_VALUE = 15;
-static const int PNJ_TANK_DAMAGE = 3;
+static const int PNJ_COMMUNIST_STARTING_HEALTHPOINTS = 150;
+static const int PNJ_COMMUNIST_VALUE = 15;
+static const int PNJ_COMMUNIST_DAMAGE = 3;
 
-static const int PNJ_ASSAULT_STARTING_HEALTHPOINTS = 70;
-static const int PNJ_ASSAULT_STARTING_MOVESPEED = 100;
-static const int PNJ_ASSAULT_VALUE = 5;
-static const int PNJ_ASSAULT_DAMAGE = 10;
+static const int PNJ_MUSLIM_STARTING_HEALTHPOINTS = 70;
+static const int PNJ_MUSLIM_VALUE = 5;
+static const int PNJ_MUSLIM_DAMAGE = 10;
+
+static const int PNJ_MEXICAN_STARTING_HEALTHPOINTS = 100;
+static const int PNJ_MEXICAN_VALUE = 10;
+static const int PNJ_MEXICAN_DAMAGE = 5;
 
 // Constant of the player
 static const int PLAYER_STARTING_HP =  100;
