@@ -228,7 +228,7 @@ std::string PNJ::serialize() {
     std::string serialized_me;
 
     serialized_me += std::to_string(getPosition().getX()) + "," + std::to_string(getPosition().getY()) +
-                     "," + std::to_string(getHealthPoints()) + "|";
+                     "," + std::to_string(getHealthPoints()) + "," + getType() + "|";
 
     return serialized_me;
 }

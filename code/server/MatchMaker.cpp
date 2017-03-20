@@ -101,7 +101,7 @@ void MatchMaker::launchGameServerThread(PendingMatch &match) {
 }
 
 void MatchMaker::announceMatchStart(PlayerConnection playerConnection) {
-    send_message(playerConnection.getSocketFd(), GAME_STARTING_STRING);
+    send_message(playerConnection.getSocketFd(), GAME_STARTING_STRING.c_str());
     send_data(playerConnection.getSocketFd(), (char *) &current_server_port, sizeof(int));
 }
 

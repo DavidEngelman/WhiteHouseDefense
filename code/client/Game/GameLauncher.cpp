@@ -18,7 +18,7 @@ void GameLauncher::sendJoinRequest() {
 
     /* Recevoir reponse du server */
     receive_message(server_socket, server_response);
-    assert(strcmp(server_response, GAME_STARTING_STRING) == 0);
+    assert(strcmp(server_response, GAME_STARTING_STRING.c_str()) == 0);
 
     /*Recevoir port du GamesServer auquel se connecter */
     int game_port;

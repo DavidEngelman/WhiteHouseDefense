@@ -4,6 +4,9 @@
 #include "../../server/Server.hpp"
 #include "GameGUI.hpp"
 #include "GameConsoleUI.hpp"
+#include "../../common/MexicanPNJ.h"
+#include "../../common/CommunistPNJ.h"
+#include "../../common/MuslimPNJ.h"
 
 
 GameManager::GameManager(int socket, App *app) :
@@ -376,6 +379,7 @@ void GameManager::unSerializePNJ(std::string serialized_pnj, Wave *wave) {
     int x=0;
     int y=0;
     int health=0;
+    std::string typeOfPNJ = "";
     for (char& c : serialized_pnj) {
         if (c == ',') {
             switch (count) {
@@ -385,8 +389,11 @@ void GameManager::unSerializePNJ(std::string serialized_pnj, Wave *wave) {
                 case 1:
                     y = std::stoi(elem);
                     break;
-                default:
+                case 2:
                     health = std::stoi(elem);
+                    break;
+                default:
+                    typeOfPNJ = elem;
                     break;
             }
             elem = "";
@@ -395,7 +402,12 @@ void GameManager::unSerializePNJ(std::string serialized_pnj, Wave *wave) {
             elem += c;
         }
     }
-    PNJ *pnj = new PNJ(Position(x, y), health, wave->getQuadrant());
+
+    PNJ *pnj;
+    if (typeOfPNJ == MEXICAN_PNJ_STR) pnj = new MexicanPNJ(Position(x, y), health, wave->getQuadrant());
+    else if (typeOfPNJ == MUSLIM_PNJ_STR) pnj = new MuslimPNJ(Position(x, y), health, wave->getQuadrant());
+    else pnj = new CommunistPNJ(Position(x, y), health, wave->getQuadrant());
+
     wave->addPNJ(*pnj);
 }
 

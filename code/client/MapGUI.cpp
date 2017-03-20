@@ -29,28 +29,36 @@ void MapGUI::paintEvent(QPaintEvent *) {
     std::string &mode = gameState.getMode();
 
     std::string typeOfTower;
-    bool has_npc;
+    std::string typeOfPNJ;
     int cell;
 
     for (int y = 0; y < SIZE; y++) {
         for (int x = 0; x < SIZE; x++) {
             cell = matrix[y][x];
             if (cell == PATH_INT) {
-                has_npc = false;
+                typeOfPNJ = "";
                 for (auto &wave : waves) {
                     std::vector<PNJ*> &pnjs = wave.getPnjs();
                     for (auto &pnj : pnjs) {
                         Position pos = pnj->getPosition();
                         if (x == pos.getX() && y == pos.getY()) {
-                            has_npc = true;
+                            typeOfPNJ = pnj->getType();
                             break;
                         }
                     }
-                    if (has_npc) break;
+                    if (typeOfPNJ != "") break;
                 }
                 image = QImage("../../qt_ui/game_pictures/tiles/path.png");
                 painter.drawImage(x*TILES_SIZE, y*TILES_SIZE, image);
-                if (has_npc) {
+                if (typeOfPNJ == MEXICAN_PNJ_STR) {
+                    image = QImage("../../qt_ui/game_pictures/tiles/mexican.png");
+                    painter.drawImage(x*TILES_SIZE, y*TILES_SIZE, image);
+                } else if (typeOfPNJ == COMMUNIST_PNJ_STR) {
+                    //TODO: communist.png
+                    image = QImage("../../qt_ui/game_pictures/tiles/mexican.png");
+                    painter.drawImage(x*TILES_SIZE, y*TILES_SIZE, image);
+                } else if (typeOfPNJ == MUSLIM_PNJ_STR) {
+                    //TODO: muslim.png
                     image = QImage("../../qt_ui/game_pictures/tiles/mexican.png");
                     painter.drawImage(x*TILES_SIZE, y*TILES_SIZE, image);
                 }

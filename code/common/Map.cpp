@@ -35,7 +35,7 @@ void Map::display(GameState &gameState, int quadrant) {
     std::cout << std::endl;
 
     std::string typeOfTower;
-    bool has_npc;
+    std::string typeOfPNJ;
     for (int y = 0; y < SIZE; y++) {
         std::cout << y << "\t";
         for (int x = 0; x < SIZE; x++) {
@@ -66,31 +66,28 @@ void Map::display(GameState &gameState, int quadrant) {
                             break;
                         }
                     }
-                    if (typeOfTower == GUN_TOWER_STR) {
-                        std::cout << GUN_TOWER_CHAR;
-                    } else if (typeOfTower == SNIPER_TOWER_STR) {
-                        std::cout << SNIPER_TOWER_CHAR;
-                    } else if (typeOfTower == SHOCK_TOWER_STR) {
-                        std::cout << SHOCK_TOWER_CHAR;
-                    } else {
-                        std::cout << GRASS;
-                    }
+                    if (typeOfTower == GUN_TOWER_STR) std::cout << GUN_TOWER_CHAR;
+                    else if (typeOfTower == SNIPER_TOWER_STR) std::cout << SNIPER_TOWER_CHAR;
+                    else if (typeOfTower == SHOCK_TOWER_STR) std::cout << SHOCK_TOWER_CHAR;
+                    else std::cout << GRASS;
                     break;
 
                 case PATH_INT:
-                    has_npc = false;
+                    typeOfPNJ = "";
                     for (auto &wave : waves) {
                         std::vector<PNJ*> &pnjs = wave.getPnjs();
                         for (auto &pnj : pnjs) {
                             Position pos = pnj->getPosition();
                             if (x == pos.getX() && y == pos.getY()) {
-                                has_npc = true;
+                                typeOfPNJ = pnj->getType();
                                 break;
                             }
                         }
-                        if (has_npc) break;
+                        if (typeOfPNJ != "") break;
                     }
-                    if (has_npc) std::cout << NPC;
+                    if (typeOfPNJ == MEXICAN_PNJ_STR) std::cout << MEXICAN_PNJ_CHAR;
+                    else if (typeOfPNJ == COMMUNIST_PNJ_STR) std::cout << COMMUNIST_PNJ_CHAR;
+                    else if (typeOfPNJ == MUSLIM_PNJ_STR) std::cout << MUSLIM_PNJ_CHAR;
                     else std::cout << PATH;
                     break;
 

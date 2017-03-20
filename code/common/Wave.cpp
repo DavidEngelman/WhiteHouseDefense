@@ -78,7 +78,9 @@ void Wave::addPNJ(PNJ &pnj) {
 }
 
 Wave::~Wave() {
+    /*
     for (auto pnj: pnjs) {
         delete pnj;
     }
+     */
 }
