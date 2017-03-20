@@ -17,7 +17,7 @@ GameManager::GameManager(int socket, App *app) :
         //gameUI(getMapSeedFromServer()), // L'ordre est important parce qu'on fait des
         //quadrant(getQuadrantFromServer()) // recv. Ne pas changer l'ordre!
 {
-    if (!isConsole) {
+    if (false && !isConsole) {
         gameUI = new GameGUI(getMapSeedFromServer(), this);
     } else {
         gameUI = new GameConsoleUI(getMapSeedFromServer(),this);
@@ -35,7 +35,7 @@ GameManager::GameManager(int socket, bool _isSupporter, App *app) :
         //gameUI(getMapSeedFromServer()), // L'ordre est important parce qu'on fait des
         //quadrant(getQuadrantFromServer()) // recv. Ne pas changer l'ordre!
 {
-    if (!isConsole) {
+    if (false && !isConsole) {
         gameUI = new GameGUI(getMapSeedFromServer(), this);
     } else {
         gameUI = new GameConsoleUI(getMapSeedFromServer(),this);
@@ -150,7 +150,7 @@ void GameManager::sendUpgradeRequest(Position towerPos) {
 void GameManager::run() {
     char server_msg_buff[BUFFER_SIZE];
 
-    if (isConsole) {
+    if (true || isConsole) {
         gameUI->display(gameState, quadrant);
 
         if (!isSupporter)
@@ -165,11 +165,11 @@ void GameManager::run() {
             if (strcmp(server_msg_buff, PLACING_TOWER) == 0) {
 
                 if (is_alive() && !isSupporter) {
-                    inputThread = pthread_create(&thr, NULL, &GameConsoleUI::staticInputThread, this);
+                    inputThread = pthread_create(&thr, NULL, &GameConsoleUI::staticInputThread, gameUI);
                 } else {
                     gameUI->display(gameState, quadrant);
                     if (is_alive() && !isSupporter) {
-                        inputThread = pthread_create(&thr, NULL, &GameConsoleUI::staticInputThread, this);
+                        inputThread = pthread_create(&thr, NULL, &GameConsoleUI::staticInputThread, gameUI);
                     } else {
                         gameUI->display(gameState, quadrant);
                     }
@@ -278,6 +278,9 @@ void GameManager::unSerializePlayerState(std::string serialized_playerstate) {
     bool isWinner=true;
     int pnjKilled=0;
     int team=0;
+    int nbTowerPlaced=0;
+    int damageDealt=0;
+    int moneySpend=0;
 
     for (char& c : serialized_playerstate) {
         if (c == ',') {
@@ -305,9 +308,17 @@ void GameManager::unSerializePlayerState(std::string serialized_playerstate) {
                 case 7: // pnjKilled
                     pnjKilled = std::stoi(elem);
                     break;
-                default: // team
+                case 8: // team
                     team = std::stoi(elem);
                     break;
+                case 9:
+                    nbTowerPlaced = std::stoi(elem);
+                    break;
+                case 10:
+                    damageDealt = std::stoi(elem);
+                    break;
+                default:
+                    moneySpend = std::stoi(elem);
             }
             elem = "";
             count++;
@@ -315,8 +326,9 @@ void GameManager::unSerializePlayerState(std::string serialized_playerstate) {
             elem += c;
         }
     }
+
     PlayerState* playerState = new PlayerState(player_id, username, money, hp, isSupported, isWinner,
-                                               pnjKilled, team);
+                                               pnjKilled, team, nbTowerPlaced, damageDealt, moneySpend);
     gameState.addPlayerState(*playerState);
 }
 

@@ -67,7 +67,7 @@ void GameEngine::dealDamageToBase() {
 void GameEngine::dealDamage(std::vector<Wave> &waves) {
     for (AbstractTower *tower: gameState.getTowers()) {
         Wave &wave = getWaveInSameQuadrant(*tower, waves);
-        const std::vector<PNJ *>& killedPNJ = tower->shoot(wave);
+        const std::vector<PNJ *>& killedPNJ = tower->shoot(wave, getPlayerStateForWave(wave));
         for (auto &&pnj : killedPNJ) {
             if (DEBUG) break;
             PlayerState &player_state = getPlayerStateForWave(wave);
@@ -172,6 +172,8 @@ void GameEngine::addTower(AbstractTower *tower, int quadrant) {
         if (gameState.getPlayerStates()[quadrant].getMoney() >=
             tower->getPrice()) {
             gameState.addTower(tower, quadrant);
+            getGameState().getPlayerStates()[quadrant].incrNbTowerPlaced();
+            getGameState().getPlayerStates()[quadrant].incrMoneySpend(tower->getPrice());
         }
     } else {
         gameState.addTower(tower, quadrant);
@@ -287,9 +289,12 @@ Timer &GameEngine::getTimerSinceGameStart() {
 }
 
 void GameEngine::killAllNPC(int quadrant) {
+    int damageDealt = 0;
     for(auto pnj : gameState.getWaves()[quadrant].getPnjs()) {
+        damageDealt += pnj.getHealthPoints();
         pnj->setHealthPoints(0);
     }
+    getGameState().getPlayerStates()[quadrant].incrDamageDealt(damageDealt);
 }
 
 

@@ -10,6 +10,7 @@
 
 class Wave;
 class PNJ;
+class PlayerState;
 
 class AbstractTower {
 
@@ -33,7 +34,7 @@ public:
 
     virtual ~AbstractTower() = default;
 
-    virtual const std::vector<PNJ *> shoot(Wave& wave) = 0; // HAS TO BE DEFINED BY INHERITORS
+    virtual const std::vector<PNJ *> shoot(Wave& wave, PlayerState& playerState ) = 0; // HAS TO BE DEFINED BY INHERITORS
     virtual std::string getType() = 0;
 
     int getOwner() const;

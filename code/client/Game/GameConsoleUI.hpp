@@ -17,7 +17,7 @@ public:
 	Position getPosBuyingTower() override ;
 
 	Position getPosSellingTower() override ;
-	int getChoice();
+	int getChoice(int maxValue);
 
 	void display(GameState& gameState, int quadrant) override ;
 	void displayPlayerInfos(GameState &gameState, int quadrant) override ;
@@ -54,6 +54,10 @@ public:
 
     void disableNukeSpell() override ;
 	void enableNukeSpell() override ;
+
+	void sendPredefinedMessage();
+
+	void displayPredefinedMessages();
 };
 
 #endif

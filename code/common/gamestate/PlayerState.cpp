@@ -7,12 +7,14 @@ PlayerState::PlayerState(int id, std::string username) : PlayerState(id, usernam
 
 PlayerState::PlayerState(int id, std::string username, int team)
         : player_id(id), username(username), team(team), isSupported(false),
-          isWinner(false), hp(PLAYER_STARTING_HP), money(PLAYER_STARTING_MONEY), pnjKilled(0) {}
+          isWinner(false), hp(PLAYER_STARTING_HP), money(PLAYER_STARTING_MONEY), pnjKilled(0), nbTowerPlaced(0),
+          damageDealt(0), moneySpend(0) {}
 
 PlayerState::PlayerState(int _player_id, std::string _username, int _money, int _hp, bool _isSupported,
-                         bool _isWinner, int _pnjKilled, int _team)
+                         bool _isWinner, int _pnjKilled, int _team, int _nbTowerPlaced, int _damageDealt, int _moneySpend )
         : player_id(_player_id), username(_username), money(_money), hp(_hp), isSupported(_isSupported),
-          isWinner(_isWinner), pnjKilled(_pnjKilled), team(_team) {}
+          isWinner(_isWinner), pnjKilled(_pnjKilled), team(_team), nbTowerPlaced(_nbTowerPlaced), 
+          damageDealt(_damageDealt), moneySpend(_moneySpend) {}
 
 int PlayerState::getHp() {
     return hp;
@@ -32,7 +34,11 @@ std::string PlayerState::serialize() {
                      + bool_to_string(isSupported) + ","
                      + bool_to_string(isWinner) + ","
                      + std::to_string(pnjKilled) + ","
-                     + std::to_string(team) + ";";
+                     + std::to_string(team) + ","
+                     + std::to_string(nbTowerPlaced) + "," 
+                     + std::to_string(damageDealt) + "," 
+                     + std::to_string(moneySpend) +";";
+    
 
     return serialized_me;
 }
@@ -107,4 +113,16 @@ bool PlayerState::isAlive() {
 
 std::string &PlayerState::getUsername() {
     return username;
+}
+
+void PlayerState::incrNbTowerPlaced() {
+    nbTowerPlaced ++;
+}
+
+void PlayerState::incrDamageDealt(int amount) {
+    PlayerState::damageDealt += amount;
+}
+
+void PlayerState::incrMoneySpend(int amount) {
+    PlayerState::moneySpend += amount;
 }

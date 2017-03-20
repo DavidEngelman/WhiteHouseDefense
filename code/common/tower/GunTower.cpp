@@ -6,12 +6,12 @@
 GunTower::GunTower(const Position &position, int level) :
         AttackTower::AttackTower(position, GUN_TOWER_DAMAGE, GUN_TOWER_PRICE, GUN_TOWER_RANGE, level) {}
 
-const std::vector<PNJ *> GunTower::shoot(Wave &wave) {
+const std::vector<PNJ *> GunTower::shoot(Wave &wave, PlayerState& playerState) {
     PNJ *target;
     std::vector<PNJ *> killed;
     target = get_closest_pnj(wave);
     if ((target != nullptr) && (!target->isInPlayerBase()) && (target->getHealthPoints() > 0)) {
-        dealDamageTo(*target);
+        dealDamageTo(*target, playerState);
         if (target->getHealthPoints() <= 0) {
             killed.push_back(target);
         }
