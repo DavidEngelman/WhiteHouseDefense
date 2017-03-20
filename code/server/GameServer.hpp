@@ -118,6 +118,8 @@ public:
     void sendMessageToOtherPlayers(std::string &userMessage, std::string &senderUsername);
 
     void handleEndOfGame();
+
+    void tellSupportersTheGameIsOver();
 };
 
 #endif

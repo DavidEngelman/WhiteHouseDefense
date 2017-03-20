@@ -16,14 +16,15 @@ void GameServer::run() {
     startSpectatorThread();
     startInputThread();
     runGame();
-    stopSpectatorThread();
-    stopInputThread();
     handleEndOfGame();
 }
 
 void GameServer::handleEndOfGame() {
+    stopSpectatorThread();
+    stopInputThread();
     updatePlayerStatsOnAccountServer();
     sendFinishedToMatchmaker();
+    delete gameEngine;
 }
 
 void GameServer::runGame() {
@@ -39,9 +40,8 @@ void GameServer::runGame() {
         setupGameForPlayers();
     }
 
-    while (!gameEngine->isGameFinished() || playerConnections.empty()) {
+    while (!gameEngine->isGameFinished() && !playerConnections.empty()) {
         if (!DEBUG) {
-
             gameEngine->getTimerSinceGameStart().pause(); // peut etre faire ca juste en mode contre la montre
             sendTowerPhase();
             sleep(NUM_SECONDS_TO_PLACE_TOWER);
@@ -50,10 +50,6 @@ void GameServer::runGame() {
         }
         runWave();
     }
-
-    delete gameEngine;
-
-    handleEndOfGame();
 }
 
 /*
@@ -112,7 +108,7 @@ void *GameServer::staticInputThread(void *self) {
 
 void GameServer::getAndProcessPlayerInput() {
     char messageBuffer[BUFFER_SIZE];
-    while (1) {
+    while (!playerConnections.empty()) {
         // TODO: the 10000 is absurdly high, not sure it's a good idea
         int clientSocketFd = getReadableReadableSocket(10000);
         getAndProcessUserInput(clientSocketFd, messageBuffer);
@@ -234,7 +230,7 @@ void *GameServer::staticJoinSpectatorThread(void *self) {
 }
 
 void GameServer::getAndProcessSpectatorJoinCommand() {
-    while (1) {
+    while (!playerConnections.empty()) {
         int client_socket_fd = accept_connection();
         if (client_socket_fd == -1) {
             continue;
@@ -401,7 +397,10 @@ void GameServer::removeClosedSocketFromSocketLists(int fd) {
     for (iter = playerConnections.begin(); iter != playerConnections.end(); iter++) {
         if ((*iter).getSocketFd() == fd) {
             playerConnections.erase(iter);
-
+            // If there aren't players anymore, it stops the game
+            if (playerConnections.empty()) {
+                tellSupportersTheGameIsOver();
+            }
             return;
         }
     }
@@ -443,6 +442,13 @@ bool GameServer::socketIsActive(int fd) {
 
 std::vector<PlayerConnection> &GameServer::getPlayerConnections() {
     return playerConnections;
+}
+
+void GameServer::tellSupportersTheGameIsOver() {
+    gameEngine->getGameState().setIsGameOver(true);
+    for (int socketFd: supportersSockets) {
+        sendGameStateToPlayer(socketFd);
+    }
 }
 
 
