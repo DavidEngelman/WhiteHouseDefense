@@ -1,7 +1,7 @@
 
-#include "MexicanPNJ.h"
-#include "MuslimPNJ.h"
-#include "CommunistPNJ.h"
+#include "../pnj/MexicanPNJ.h"
+#include "../pnj/MuslimPNJ.h"
+#include "../pnj/CommunistPNJ.h"
 #include "Wave.hpp"
 
 Wave::Wave(int number_of_pnjs, int quadrant) :

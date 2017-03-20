@@ -74,17 +74,17 @@ set(CLIENT_FILES client/ClientLauncher.cpp
         #GAME
         common/Map.cpp
         client/MapGUI.cpp
-        common/AttackTower.cpp
-        common/AbstractTower.cpp
-        common/GunTower.cpp
-        common/ShockTower.cpp
-        common/SniperTower.cpp
-        common/PNJ.cpp
-        common/CommunistPNJ.cpp
-        common/MuslimPNJ.cpp
-        common/GameState.cpp
-        common/Wave.cpp
-        common/PlayerState.cpp
+        common/tower/AttackTower.cpp
+        common/tower/AbstractTower.cpp
+        common/tower/GunTower.cpp
+        common/tower/ShockTower.cpp
+        common/tower/SniperTower.cpp
+        common/pnj/PNJ.cpp
+        common/pnj/CommunistPNJ.cpp
+        common/pnj/MuslimPNJ.cpp
+        common/gamestate/GameState.cpp
+        common/gamestate/Wave.cpp
+        common/gamestate/PlayerState.cpp
         client/Game/GameLauncher.cpp
         client/Game/GameConsoleUI.cpp
         client/Game/GameGUI.cpp
@@ -107,7 +107,7 @@ set(CLIENT_FILES client/ClientLauncher.cpp
         client/App.cpp
         common/Constants.hpp common/Tools.hpp
         common/Tools.cpp
-        client/QHandPointerButton.hpp common/MexicanPNJ.cpp common/MexicanPNJ.h
+        client/QHandPointerButton.hpp common/pnj/MexicanPNJ.cpp common/pnj/MexicanPNJ.h
         client/QHandPointerButton.hpp)
 
 
@@ -119,21 +119,21 @@ set(SERVER_FILES "server/ServerLauncher.cpp"
 
         #GAME
         server/GameServer.cpp
-        common/AbstractTower.cpp
-        common/AttackTower.cpp
-        common/GunTower.cpp
-        common/SniperTower.cpp
-        common/ShockTower.cpp
-        common/PlayerState.cpp
-        common/Wave.cpp
-        common/PNJ.cpp
-        common/CommunistPNJ.cpp
-        common/MuslimPNJ.cpp
+        common/tower/AbstractTower.cpp
+        common/tower/AttackTower.cpp
+        common/tower/GunTower.cpp
+        common/tower/SniperTower.cpp
+        common/tower/ShockTower.cpp
+        common/gamestate/PlayerState.cpp
+        common/gamestate/Wave.cpp
+        common/pnj/PNJ.cpp
+        common/pnj/CommunistPNJ.cpp
+        common/pnj/MuslimPNJ.cpp
         common/Position.cpp
         common/Map.cpp
         server/GameEngine.cpp
         common/Direction.hpp
-        common/GameState.cpp
+        common/gamestate/GameState.cpp
 
         #ACCOUNT
         server/AccountServer.cpp
@@ -158,7 +158,7 @@ set(SERVER_FILES "server/ServerLauncher.cpp"
         server/PlayerConnection.cpp
         common/Networking.cpp
         common/Credentials.cpp
-        common/Message.cpp common/MexicanPNJ.cpp common/MexicanPNJ.h)
+        common/Message.cpp common/pnj/MexicanPNJ.cpp common/pnj/MexicanPNJ.h)
 
 add_executable(server ${SERVER_FILES})
 

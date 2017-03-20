@@ -9,7 +9,7 @@ static const std::string TIMED_MODE = "TimedMode";
 static const std::string TEAM_MODE = "TeamMode";
 
 static const std::string GAME_IN_PROGRESS_REQUEST = "games";
-static const POP_GAME_REQUEST = "PopGame";
+static const std::string POP_GAME_REQUEST = "PopGame";
 static const std::string LEAVE_QUEUE_REQUEST = "LEAVEQUEUE";
 static const std::string GAME_STARTED_STRING = "GameStartedStopListeningMatchmaker";
 

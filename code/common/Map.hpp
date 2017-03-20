@@ -38,7 +38,7 @@ const int SIZE = 41;
 #include <string>
 #include <vector>
 #include "Position.hpp"
-#include "GameState.hpp"
+#include "gamestate/GameState.hpp"
 #include "Constants.hpp"
 
 class GameState;

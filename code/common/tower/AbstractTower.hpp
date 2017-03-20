@@ -1,9 +1,9 @@
 #ifndef PROJET_ABSTRACTTOWER_H
 #define PROJET_ABSTRACTTOWER_H
 
-#include "../common/Position.hpp"
-#include "PNJ.hpp"
-#include "Wave.hpp"
+#include "../Position.hpp"
+#include "../pnj/PNJ.hpp"
+#include "../gamestate/Wave.hpp"
 #include <string>
 
 #define LEVEL_MAX 5
@@ -33,7 +33,7 @@ public:
 
     virtual ~AbstractTower() = default;
 
-    virtual const std::vector<PNJ *>& shoot(Wave& wave) = 0; // HAS TO BE DEFINED BY INHERITORS
+    virtual const std::vector<PNJ *> shoot(Wave& wave) = 0; // HAS TO BE DEFINED BY INHERITORS
     virtual std::string getType() = 0;
 
     int getOwner() const;

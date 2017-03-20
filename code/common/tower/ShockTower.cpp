@@ -9,7 +9,7 @@
 ShockTower::ShockTower(const Position &position, int level) :
         AttackTower(position, SHOCK_TOWER_DAMAGE, SHOCK_TOWER_PRICE, SHOCK_TOWER_RANGE, level) {}
 
-const std::vector<PNJ*>& ShockTower::shoot(Wave &wave) {
+const std::vector<PNJ*> ShockTower::shoot(Wave &wave) {
     std::vector<PNJ*> targets;
     std::vector<PNJ*> killed;
     targets = get_targets(wave);

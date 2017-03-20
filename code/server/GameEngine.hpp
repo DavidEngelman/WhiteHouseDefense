@@ -1,11 +1,11 @@
 #ifndef PROJET_GAMEENGINE_HPP
 #define PROJET_GAMEENGINE_HPP
 
-#include "../common/GameState.hpp"
+#include "../common/gamestate/GameState.hpp"
 #include "Timer.hpp"
 #include "../common/Direction.hpp"
 #include <iostream>
-#include "../common/AttackTower.hpp"
+#include "../common/tower/AttackTower.hpp"
 #include <thread>
 
 class GameEngine {

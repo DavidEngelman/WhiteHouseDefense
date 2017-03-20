@@ -1,8 +1,8 @@
 #include <csignal>
 #include "GameServer.hpp"
-#include "../common/GunTower.hpp"
-#include "../common/SniperTower.hpp"
-#include "../common/ShockTower.hpp"
+#include "../common/tower/GunTower.hpp"
+#include "../common/tower/SniperTower.hpp"
+#include "../common/tower/ShockTower.hpp"
 
 const bool DEBUG = false;
 

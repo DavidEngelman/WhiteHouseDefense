@@ -287,8 +287,8 @@ Timer &GameEngine::getTimerSinceGameStart() {
 }
 
 void GameEngine::killAllNPC(int quadrant) {
-    for(PNJ& pnj : gameState.getWaves()[quadrant].getPnjs()) {
-        pnj.setHealthPoints(0);
+    for(auto pnj : gameState.getWaves()[quadrant].getPnjs()) {
+        pnj->setHealthPoints(0);
     }
 }
 

@@ -38,7 +38,7 @@ public:
 
 
         receive_message(serverSocket, server_response);
-        assert(strcmp(server_response, GAME_STARTING_STRING) == 0);
+        assert(strcmp(server_response, GAME_STARTING_STRING.c_str()) == 0);
 
         // TODO: pour l'instant on recoit le port du gameServer, mais ca ne sert a rien pour l'instant
         // parce qu'on communique au GameServer via le socket qu'on avait avec la Matchmaker

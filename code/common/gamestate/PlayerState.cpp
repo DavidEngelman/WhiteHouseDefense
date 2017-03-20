@@ -1,5 +1,5 @@
 #include "PlayerState.hpp"
-#include "Tools.hpp"
+#include "../Tools.hpp"
 
 PlayerState::PlayerState() : money(PLAYER_STARTING_MONEY), hp(PLAYER_STARTING_HP), isSupported(false), pnjKilled(0) {}
 

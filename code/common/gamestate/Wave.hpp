@@ -2,7 +2,7 @@
 #define PROJET_WAVE_H
 
 #include <vector>
-#include "PNJ.hpp"
+#include "../pnj/PNJ.hpp"
 
 class PNJ;
 

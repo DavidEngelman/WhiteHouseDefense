@@ -1,15 +1,15 @@
 #ifndef GAMEMANAGER_HPP
 #define GAMEMANAGER_HPP
 
-#include "../../common/GameState.hpp"
+#include "../../common/gamestate/GameState.hpp"
 #include "GameUI.hpp"
 #include "../NetworkedManager.hpp"
 #include "GameManager.hpp"
 #include "../../common/Networking.hpp"
 #include "../Main/MainManager.hpp"
-#include "../../common/GunTower.hpp"
-#include "../../common/SniperTower.hpp"
-#include "../../common/ShockTower.hpp"
+#include "../../common/tower/GunTower.hpp"
+#include "../../common/tower/SniperTower.hpp"
+#include "../../common/tower/ShockTower.hpp"
 #include <cstdlib>
 #include <cctype>
 #include <pthread.h>

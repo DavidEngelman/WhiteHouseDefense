@@ -3,7 +3,7 @@
 #define GAMESERVER_HPP
 
 #include "Server.hpp"
-#include "../common/GameState.hpp"
+#include "../common/gamestate/GameState.hpp"
 #include "PendingMatch.hpp"
 #include "PlayerConnection.hpp"
 #include "../common/Strings.hpp"

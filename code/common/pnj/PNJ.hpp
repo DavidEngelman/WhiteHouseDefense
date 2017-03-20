@@ -3,11 +3,11 @@
 #ifndef PROJET_PNJ_H
 #define PROJET_PNJ_H
 
-#include "Position.hpp"
-#include "Direction.hpp"
-#include "Map.hpp"
-#include "Constants.hpp"
-#include "Strings.hpp"
+#include "../Position.hpp"
+#include "../Direction.hpp"
+#include "../Map.hpp"
+#include "../Constants.hpp"
+#include "../Strings.hpp"
 
 class Map;
 

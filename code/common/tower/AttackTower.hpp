@@ -3,8 +3,8 @@
 
 
 #include "AbstractTower.hpp"
-#include "PNJ.hpp"
-#include "Constants.hpp"
+#include "../pnj/PNJ.hpp"
+#include "../Constants.hpp"
 
 class AttackTower : public AbstractTower {
     int damage;

@@ -4,9 +4,9 @@
 #include "../../server/Server.hpp"
 #include "GameGUI.hpp"
 #include "GameConsoleUI.hpp"
-#include "../../common/MexicanPNJ.h"
-#include "../../common/CommunistPNJ.h"
-#include "../../common/MuslimPNJ.h"
+#include "../../common/pnj/MexicanPNJ.h"
+#include "../../common/pnj/CommunistPNJ.h"
+#include "../../common/pnj/MuslimPNJ.h"
 #include "../../common/Command.hpp"
 
 

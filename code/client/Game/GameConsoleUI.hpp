@@ -1,7 +1,7 @@
 #ifndef GAMEUI_HPP
 #define GAMEUI_HPP
 
-#include "../../common/GameState.hpp"
+#include "../../common/gamestate/GameState.hpp"
 #include "../../common/Map.hpp"
 #include "../Drawing.hpp"
 #include "GameUI.hpp"
