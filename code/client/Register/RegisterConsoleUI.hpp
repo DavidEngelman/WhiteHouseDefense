@@ -10,7 +10,7 @@
 class RegisterConsoleUI : public RegisterUI, public AbstractConsoleUI {
 
 public:
-    RegisterConsoleUI(RegisterManager *manager);
+    RegisterConsoleUI(RegisterManager* manager);
 
     void ask_username();
 

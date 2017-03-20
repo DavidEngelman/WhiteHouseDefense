@@ -3,7 +3,6 @@
 #include "RegisterConsoleUI.hpp"
 #include "../Welcome/WelcomeManager.hpp"
 
-//REFACTORED
 RegisterManager::RegisterManager(int port, App *my_app) : NetworkedManager(port, my_app) {
     if (isConsole) {
         registerUI = new RegisterConsoleUI(this);
@@ -12,17 +11,14 @@ RegisterManager::RegisterManager(int port, App *my_app) : NetworkedManager(port,
     }
 }
 
-//REFACTORED
 RegisterManager::~RegisterManager() {
     registerUI->destroy();
 }
 
-//REFACTORED
 void RegisterManager::run() {
     registerUI->display();
 }
 
-//NO CHANGES
 bool RegisterManager::attemptRegister(Credentials credentials) {
     char server_response[10];
     std::string message = "register," + credentials.getUsername() + "," + credentials.getPassword() + ";";
@@ -31,13 +27,11 @@ bool RegisterManager::attemptRegister(Credentials credentials) {
     return server_response[0] == '1';
 }
 
-//NO CHANGES
 bool RegisterManager::checkCredentialsValidity(Credentials credentials) {
     return ((credentials.getUsername().length() != 0) && (credentials.getPassword().length() != 0) &&
             (credentials.getUsername().length() <= 16));
 }
 
-//REFACTORED
 void RegisterManager::registerUser() {
     bool success;
     bool valid = true; // vérifie la validité des données (champs non vides) et si elles peuvent être envoyées au serveur.
@@ -69,14 +63,12 @@ void RegisterManager::registerUser() {
     if (valid) goToLogin();
 }
 
-//REFACTORED
 void RegisterManager::goToLogin() {
     registerUI->displaySuccess();
     LoginManager *loginManager = new LoginManager(port, master_app);
     master_app->transition(loginManager);
 }
 
-//REFACTORED
 void RegisterManager::goToWelcome() {
     WelcomeManager *welcomeManager = new WelcomeManager(master_app);
     master_app->transition(welcomeManager);

@@ -36,9 +36,9 @@ set(CLIENT_FILES client/ClientLauncher.cpp
 
         #REGISTER
         client/Register/RegisterGUI.cpp
-        client/Register/RegisterGUI.hpp
+        client/Register/RegisterUI.hpp
         client/Register/RegisterManager.cpp
-        client/Register/RegisterUI.cpp
+        client/Register/RegisterConsoleUI.cpp
 
         #LOGIN
         client/Login/LoginGUI.cpp
