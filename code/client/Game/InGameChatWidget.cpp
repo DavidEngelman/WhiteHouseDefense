@@ -1,7 +1,7 @@
 #include <QtWidgets/QFormLayout>
 #include <QtWidgets/QLabel>
 #include "InGameChatWidget.hpp"
-#include "../QCustomButton.h"
+#include "../QCustomButton.hpp"
 
 InGameChatWidget::InGameChatWidget(GameManager *gameManager) : gameManager(gameManager) {
     QFont police("calibri");

@@ -2,7 +2,7 @@
 #define PROJET_RANKINGUI_H
 
 #include <vector>
-#include "../../common/RankingInfos.h"
+#include "../../common/RankingInfos.hpp"
 #include "../Abstract/AbstractUI.hpp"
 #include "RankingManager.hpp"
 

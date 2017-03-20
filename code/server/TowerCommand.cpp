@@ -1,4 +1,4 @@
-#include "TowerCommand.h"
+#include "TowerCommand.hpp"
 
 int TowerCommand::getPlayerQuadrant() {
     return player_quadrant;

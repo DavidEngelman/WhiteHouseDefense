@@ -56,7 +56,7 @@ set(CLIENT_FILES client/ClientLauncher.cpp
         client/Ranking/RankingManager.cpp
         client/Ranking/RankingConsoleUI.cpp
         client/Ranking/RankingGUI.cpp
-        client/Ranking/RankingUI.h
+        client/Ranking/RankingUI.hpp
 
         #SUPPORTER
         client/Spectator/SpectatorGUI.cpp
@@ -104,7 +104,7 @@ set(CLIENT_FILES client/ClientLauncher.cpp
         client/Drawing.cpp
         client/Drawing.hpp
         client/App.cpp
-        common/Constants.h common/Tools.hpp
+        common/Constants.hpp common/Tools.hpp
         common/Tools.cpp
         client/QHandPointerButton.hpp
 
@@ -130,7 +130,7 @@ set(SERVER_FILES "server/ServerLauncher.cpp"
         common/Position.cpp
         common/Map.cpp
         server/GameEngine.cpp
-        common/Direction.h
+        common/Direction.hpp
         common/GameState.cpp
 
         #ACCOUNT
@@ -150,7 +150,7 @@ set(SERVER_FILES "server/ServerLauncher.cpp"
         server/PendingMatch.cpp
 
         #TOOLS
-        common/Constants.h
+        common/Constants.hpp
         common/Tools.cpp
         server/Timer.cpp
         server/PlayerConnection.cpp

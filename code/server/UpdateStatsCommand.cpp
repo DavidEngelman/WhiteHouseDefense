@@ -1,5 +1,5 @@
 #include <iostream>
-#include "UpdateStatsCommand.h"
+#include "UpdateStatsCommand.hpp"
 
 int UpdateStatsCommand::getPlayerId() {
     return playerId;

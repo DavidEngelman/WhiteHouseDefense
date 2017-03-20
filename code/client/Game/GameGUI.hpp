@@ -12,7 +12,7 @@
 #include "GameManager.hpp"
 #include "GameUI.hpp"
 #include "InGameChatWidget.hpp"
-#include "../QCustomButton.h"
+#include "../QCustomButton.hpp"
 #include <QProgressBar>
 
 class MapGUI;

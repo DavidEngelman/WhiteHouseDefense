@@ -1,4 +1,4 @@
-#include "FriendListCommand.h"
+#include "FriendListCommand.hpp"
 
 void FriendListCommand::parse(char *data) {
     /*

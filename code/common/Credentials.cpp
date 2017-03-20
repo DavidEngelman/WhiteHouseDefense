@@ -1,4 +1,4 @@
-#include "Credentials.h"
+#include "Credentials.hpp"
 
 Credentials::Credentials(): username("\0"), password("\0"){}
 

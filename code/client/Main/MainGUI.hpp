@@ -3,7 +3,7 @@
 
 #include "../Abstract/AbstractGUI.hpp"
 #include "MainUI.hpp"
-#include "../QCustomButton.h"
+#include "../QCustomButton.hpp"
 #include <QtWidgets/QLineEdit>
 #include <QtCore/QSignalMapper>
 #include <QtWidgets/QDialogButtonBox>

@@ -1,5 +1,5 @@
 #include "GameEngine.hpp"
-#include "../common/Constants.h"
+#include "../common/Constants.hpp"
 
 const bool DEBUG = false;
 
