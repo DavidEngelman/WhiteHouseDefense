@@ -18,6 +18,8 @@ public:
 
     void display() override;
 
+    void displaySuccess() override;
+
     void displayError() override;
 
     void displayConfirmError() override;

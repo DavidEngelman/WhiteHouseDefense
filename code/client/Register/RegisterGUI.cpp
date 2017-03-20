@@ -4,7 +4,6 @@
 #include <QtMultimedia/QMediaPlayer>
 #include <QtWidgets/QMessageBox>
 #include "RegisterGUI.hpp"
-#include "RegisterManager.hpp"
 
 RegisterGUI::RegisterGUI(RegisterManager *manager, QWidget *_parent) : AbstractGUI(_parent), RegisterUI(manager) {}
 

@@ -24,6 +24,7 @@ public:
     virtual std::string getConfirm() { return confirm; };
 
     virtual void display() = 0;
+    virtual void displaySuccess() = 0;
     virtual void displayError() = 0;
     virtual void displayConfirmError() = 0;
 };

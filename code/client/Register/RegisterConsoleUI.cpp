@@ -42,12 +42,17 @@ void RegisterConsoleUI::ask_password() {
 
 void RegisterConsoleUI::displayError() {
     Drawing::drawWhiteHouse("REGISTER SCREEN");
-    std::cout << "   Error : This username is already used or is not valid \n";
+    std::cout << "   Error : This username is already used or is not valid" << std::endl;
+}
+
+void RegisterConsoleUI::displaySuccess() {
+    Drawing::drawWhiteHouse("REGISTER SCREEN");
+    std::cout <<"    Success : Your account has been successfully registered" << std::endl;
 }
 
 void RegisterConsoleUI::displayConfirmError() {
     Drawing::drawWhiteHouse("REGISTER SCREEN");
-    std::cout << "   ERROR : Your password doesn't correspond to the confirmation" << std::endl;
+    std::cout << "   Error : Your password doesn't correspond to the confirmation" << std::endl;
 }
 
 void RegisterConsoleUI::display() {
