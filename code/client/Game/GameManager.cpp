@@ -14,7 +14,7 @@ GameManager::GameManager(int socket, App *app) :
         //gameUI(getMapSeedFromServer()), // L'ordre est important parce qu'on fait des
         //quadrant(getQuadrantFromServer()) // recv. Ne pas changer l'ordre!
 {
-    if (!isConsole) {
+    if (false && !isConsole) {
         gameUI = new GameGUI(getMapSeedFromServer(), this);
     } else {
         gameUI = new GameConsoleUI(getMapSeedFromServer(),this);
@@ -32,7 +32,7 @@ GameManager::GameManager(int socket, bool _isSupporter, App *app) :
         //gameUI(getMapSeedFromServer()), // L'ordre est important parce qu'on fait des
         //quadrant(getQuadrantFromServer()) // recv. Ne pas changer l'ordre!
 {
-    if (!isConsole) {
+    if (false && !isConsole) {
         gameUI = new GameGUI(getMapSeedFromServer(), this);
     } else {
         gameUI = new GameConsoleUI(getMapSeedFromServer(),this);
@@ -147,7 +147,7 @@ void GameManager::sendUpgradeRequest(Position towerPos) {
 void GameManager::run() {
     char server_msg_buff[BUFFER_SIZE];
 
-    if (isConsole) {
+    if (true || isConsole) {
         gameUI->display(gameState, quadrant);
 
         if (!isSupporter)
@@ -162,11 +162,11 @@ void GameManager::run() {
             if (strcmp(server_msg_buff, PLACING_TOWER) == 0) {
 
                 if (is_alive() && !isSupporter) {
-                    inputThread = pthread_create(&thr, NULL, &GameConsoleUI::staticInputThread, this);
+                    inputThread = pthread_create(&thr, NULL, &GameConsoleUI::staticInputThread, gameUI);
                 } else {
                     gameUI->display(gameState, quadrant);
                     if (is_alive() && !isSupporter) {
-                        inputThread = pthread_create(&thr, NULL, &GameConsoleUI::staticInputThread, this);
+                        inputThread = pthread_create(&thr, NULL, &GameConsoleUI::staticInputThread, gameUI);
                     } else {
                         gameUI->display(gameState, quadrant);
                     }
