@@ -403,6 +403,7 @@ void GameServer::removeClosedSocketFromSocketLists(int fd) {
     for (iter = playerConnections.begin(); iter != playerConnections.end(); iter++) {
         if ((*iter).getSocketFd() == fd) {
             playerConnections.erase(iter);
+
             return;
         }
     }

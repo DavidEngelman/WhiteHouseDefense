@@ -50,6 +50,7 @@ void GameManager::comeBackToMenu() { // À appeler quand la partie est terminée
 void GameManager::updateMap() {
     char server_msg_buff[BUFFER_SIZE];
     receive_message(server_socket, server_msg_buff);
+
     if (strncmp(server_msg_buff, RECEIVE_MESSAGE_STRING.c_str(), RECEIVE_MESSAGE_STRING.length()) == 0) {
         Command command;
         command.parse(server_msg_buff);
