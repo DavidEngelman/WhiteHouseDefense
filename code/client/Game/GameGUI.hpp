@@ -14,13 +14,22 @@
 #include "InGameChatWidget.hpp"
 #include "../QCustomButton.hpp"
 #include <QProgressBar>
+#include <QtCharts/QChartView>
+#include <QtCharts/QBarSeries>
+#include <QtCharts/QBarSet>
+#include <QtCharts/QLegend>
+#include <QtCharts/QBarCategoryAxis>
 
+QT_CHARTS_USE_NAMESPACE
 class MapGUI;
 
 class GameGUI : public AbstractGUI, public GameUI {
     Q_OBJECT
 
 private:
+
+    QHBoxLayout *mainLayout;
+
     // Left Panel
     QLabel *usernameL;
     QGroupBox *playerStatsBox;
@@ -48,6 +57,14 @@ private:
     //base health of other players
     QGroupBox *otherPlayerHealthBarBox;
     std::vector<QProgressBar*> otherPlayerHealthBar;
+
+
+    //end of game screen
+    QVBoxLayout *endOfGameLayout;
+    QHBoxLayout *statsLayout;
+    QGroupBox *winnerLoserInfos;
+    QGroupBox *chartBox;
+    QGroupBox *optionBox;
 
 public slots:
     void update_map();
@@ -98,6 +115,18 @@ public:
     void updateOtherPlayerHealthBar(std::vector<PlayerState> &playerState, int quadrant);
 
     void setUpOtherPlayerHealthBar();
+
+    void switchToEndGameDisplay();
+
+    void setUpEndOfGameLayout(GameState &gameState);
+
+    void setUpWinnerLooserBox(GameState &gameState);
+
+    void setUpStatsLayout(GameState &gameState);
+
+    void setUpChartBox(GameState &gameState);
+
+    void setUpOptionBox();
 };
 
 

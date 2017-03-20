@@ -474,7 +474,7 @@ void GameServer::processSpecialCommand(std::string &userMessage, std::string &se
         int teamMateQuadrants[4] = {1, 0, 3, 2};
         int teamMateQuadrant = teamMateQuadrants[quadrant];
         std::string message = makeMessage(userMessage, senderUsername);
-        send_message(playerConnections[teamMateQuadrant].getSocketFd(), message);
+        send_message(playerConnections[teamMateQuadrant].getSocketFd(), message.c_str());
     } else {
         sendMessageToOtherPlayers(userMessage, senderUsername);
     }

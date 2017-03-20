@@ -184,7 +184,15 @@ void GameEngine::deleteTower(Position &position, int &quadrant) {
 }
 
 void GameEngine::upgradeTower(Position &position, int &quadrant) {
-    gameState.upgradeTower(position, quadrant);
+    for (AbstractTower *tower : getGameState().getTowers()) {
+        if (tower->getPosition() == position) {
+            float cost = (float) (tower->getPrice()) * (PERCENTAGE_RECOVERED_MONEY * (float) (tower->getLevel()));
+            if (gameState.getPlayerStates()[quadrant].getMoney() - cost >= 0) {
+                gameState.upgradeTower(position, quadrant);
+                getGameState().getPlayerStates()[quadrant].incrMoneySpend(cost);
+            }
+        }
+    }
 }
 
 
