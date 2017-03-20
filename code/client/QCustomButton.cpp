@@ -2,7 +2,7 @@
 // Created by titi on 12/03/17.
 //
 
-#include "QCustomButton.h"
+#include "QCustomButton.hpp"
 
 
 void QCustomButton::clickedInt() {

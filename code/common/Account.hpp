@@ -1,5 +1,5 @@
 #include <string>
-#include "Credentials.h"
+#include "Credentials.hpp"
 #include "../client/FriendList/FriendList.hpp"
 
 class Account {

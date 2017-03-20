@@ -2,7 +2,7 @@
 #define GAMELAUNCHER_HPP
 
 #include <string>
-#include "../../common/Networking.h"
+#include "../../common/Networking.hpp"
 #include "../NetworkedManager.hpp"
 #include "../../server/MatchMaker.hpp"
 

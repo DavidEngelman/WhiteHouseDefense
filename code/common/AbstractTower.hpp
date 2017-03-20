@@ -3,7 +3,7 @@
 
 #include "../common/Position.hpp"
 #include "PNJ.hpp"
-#include "Wave.h"
+#include "Wave.hpp"
 #include <string>
 
 #define LEVEL_MAX 5

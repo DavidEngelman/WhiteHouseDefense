@@ -5,7 +5,7 @@
 #include "PlayerState.hpp"
 #include "AbstractTower.hpp"
 #include "PNJ.hpp"
-#include "Wave.h"
+#include "Wave.hpp"
 #include "../common/Strings.hpp"
 
 const static std::vector<std::string> validModes = {CLASSIC_MODE, TEAM_MODE, TIMED_MODE};

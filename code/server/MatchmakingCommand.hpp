@@ -3,7 +3,7 @@
 
 
 #include "../common/Command.hpp"
-#include "PendingMatch.h"
+#include "PendingMatch.hpp"
 #include <cstdlib>
 
 class MatchmakingCommand : Command {

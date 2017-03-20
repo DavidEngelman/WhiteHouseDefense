@@ -3,7 +3,7 @@
 
 #include "AttackTower.hpp"
 #include "PNJ.hpp"
-#include "../common/Constants.h"
+#include "Constants.hpp"
 
 class GunTower : public AttackTower {
 

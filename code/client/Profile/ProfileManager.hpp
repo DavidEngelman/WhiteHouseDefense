@@ -4,7 +4,7 @@
 #define MAX_BUFF_SIZE 1000
 
 #include <iostream>
-#include "../../common/Networking.h"
+#include "../../common/Networking.hpp"
 #include "../../common/Strings.hpp"
 #include "../NetworkedManager.hpp"
 #include "../Main/MainManager.hpp"

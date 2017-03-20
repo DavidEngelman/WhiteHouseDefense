@@ -5,7 +5,7 @@
 #include "GameUI.hpp"
 #include "../NetworkedManager.hpp"
 #include "GameManager.hpp"
-#include "../../common/Networking.h"
+#include "../../common/Networking.hpp"
 #include "../Main/MainManager.hpp"
 #include "../../common/GunTower.hpp"
 #include "../../common/SniperTower.hpp"

@@ -1,5 +1,5 @@
 #include <string>
-#include "../common/Constants.h"
+#include "Constants.hpp"
 
 class PlayerState {
 
