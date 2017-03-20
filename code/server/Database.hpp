@@ -63,6 +63,13 @@ public:
     virtual ~Database();
 
 
+    int update_username(int id, std::string newUsername);
+
+    int update_password(int id, std::string newPassword);
+
+    int update_profil_picture(int id, std::string newPassword);
+
+    int update_profile_picture(int id, int newPicture);
 };
 
 
