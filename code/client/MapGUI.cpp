@@ -38,9 +38,9 @@ void MapGUI::paintEvent(QPaintEvent *) {
             if (cell == PATH_INT) {
                 has_npc = false;
                 for (auto &wave : waves) {
-                    std::vector<PNJ> &pnjs = wave.getPnjs();
+                    std::vector<PNJ*> &pnjs = wave.getPnjs();
                     for (auto &pnj : pnjs) {
-                        Position pos = pnj.getPosition();
+                        Position pos = pnj->getPosition();
                         if (x == pos.getX() && y == pos.getY()) {
                             has_npc = true;
                             break;

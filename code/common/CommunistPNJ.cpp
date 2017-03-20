@@ -5,9 +5,10 @@
 #include "CommunistPNJ.h"
 
 CommunistPNJ::CommunistPNJ(int direction) : PNJ(direction) {
-    healthPoints = PNJ_COMMUNIST_STARTING_HEALTHPOINTS;
-    damage = PNJ_COMMUNIST_DAMAGE;
-    value = PNJ_COMMUNIST_VALUE;
+    healthPoints = COMMUNIST_PNJ_STARTING_HEALTHPOINTS;
+    damage = COMMUNIST_PNJ_DAMAGE;
+    value = COMMUNIST_PNJ_VALUE;
+    typeOfPNJ = COMMUNIST_PNJ_STR;
 }
 
 CommunistPNJ::CommunistPNJ(Position position, int healthPoints, int direction)

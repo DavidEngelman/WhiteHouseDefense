@@ -7,6 +7,7 @@
 #include "Direction.h"
 #include "Map.hpp"
 #include "Constants.h"
+#include "Strings.hpp"
 
 class Map;
 
@@ -18,6 +19,7 @@ protected:
 	int direction;
     int damage;
 	int value;
+	std::string typeOfPNJ;
 	Position position;
 	Position last_position;
 
@@ -45,6 +47,8 @@ public:
 	bool isInPlayerBase();
 
 	Position getPosition() const;
+
+    const std::string& getType();
 
 	void setPosition(Position position);
 

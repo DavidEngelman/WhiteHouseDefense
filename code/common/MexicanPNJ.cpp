@@ -5,9 +5,10 @@
 #include "MexicanPNJ.h"
 
 MexicanPNJ::MexicanPNJ(int direction) : PNJ(direction) {
-    healthPoints = PNJ_MEXICAN_STARTING_HEALTHPOINTS;
-    damage = PNJ_MEXICAN_DAMAGE;
-    value = PNJ_MEXICAN_VALUE;
+    healthPoints = MEXICAN_PNJ_STARTING_HEALTHPOINTS;
+    damage = MEXICAN_PNJ_DAMAGE;
+    value = MEXICAN_PNJ_VALUE;
+    typeOfPNJ = MEXICAN_PNJ_STR;
 }
 
 MexicanPNJ::MexicanPNJ(Position position, int healthPoints, int direction)

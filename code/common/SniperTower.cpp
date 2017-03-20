@@ -37,14 +37,14 @@ PNJ *SniperTower::get_closest_pnj(Wave &wave) {
     int dist;
     int best_dist = 1 << 30;
     PNJ *closest_pnj = nullptr;
-    for (PNJ &pnj: wave.getPnjs()) {
-        int distance_x = getPosition().getX() - pnj.getPosition().getX();
-        int distance_y = getPosition().getY() - pnj.getPosition().getY();
+    for (auto pnj: wave.getPnjs()) {
+        int distance_x = getPosition().getX() - pnj->getPosition().getX();
+        int distance_y = getPosition().getY() - pnj->getPosition().getY();
 
         dist = ((distance_x) * (distance_x)) + (distance_y * distance_y);
         if (dist < best_dist) {
             best_dist = dist;
-            closest_pnj = &pnj;
+            closest_pnj = pnj;
         }
     }
     if (sqrt(best_dist) > getRange()) {

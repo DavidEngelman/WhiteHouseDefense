@@ -6,7 +6,7 @@ PNJ::PNJ(Position position, int healthPoints, int direction) :
         direction(direction),damage(-1),value(-1),
         last_position(Position(-1000, -1000)) {}
 
-PNJ::PNJ(int direction) : position(Position(SIZE/2, SIZE/2)), healthPoints(PNJ_STARTING_HEALTHPOINTS),
+PNJ::PNJ(int direction) : position(Position(SIZE/2, SIZE/2)),
                           direction(direction),
                           last_position(Position(-1000, -1000)) {}
 
@@ -139,7 +139,7 @@ Direction PNJ::get_forward_direction() {
         move.y = 1;
         return move;
 
-    } else if (getDirection() == WEST) {
+    } else {
         move.x = -1;
         move.y = 0;
         return move;
@@ -164,7 +164,7 @@ Direction PNJ::get_right_direction() {
         move.y = 0;
         return move;
 
-    } else if (getDirection() == WEST) {
+    } else {
 
         move.x = 0;
         move.y = -1;
@@ -191,7 +191,7 @@ Direction PNJ::get_left_direction() {
         move.y = 0;
         return move;
 
-    } else if (getDirection() == WEST) {
+    } else {
         move.x = 0;
         move.y = 1;
         return move;
@@ -216,7 +216,7 @@ Direction PNJ::get_backward_direction(){
         move.y = -1;
         return move;
 
-    } else if (getDirection() == WEST) {
+    } else {
         move.x = +1;
         move.y = 0;
         return move;
@@ -261,6 +261,10 @@ int PNJ::getDamage() {
 
 int PNJ::getValue() {
     return value;
+}
+
+const std::string &PNJ::getType() {
+    return typeOfPNJ;
 }
 
 

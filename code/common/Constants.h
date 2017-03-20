@@ -19,21 +19,19 @@ const static int PARTNERS[4] = {EAST, NORTH, WEST, SOUTH};
 static const int NB_OF_MAPS = 3;
 
 // Constant of the pnj
-static const int PNJ_STARTING_HEALTHPOINTS = 100;
-static const int PNJ_VALUE = 10;
-static const int PNJ_DAMAGE = 5;
+static const int NB_OF_TYPE_OF_PNJ = 3;
 
-static const int PNJ_COMMUNIST_STARTING_HEALTHPOINTS = 150;
-static const int PNJ_COMMUNIST_VALUE = 15;
-static const int PNJ_COMMUNIST_DAMAGE = 3;
+static const int COMMUNIST_PNJ_STARTING_HEALTHPOINTS = 150;
+static const int COMMUNIST_PNJ_VALUE = 15;
+static const int COMMUNIST_PNJ_DAMAGE = 3;
 
-static const int PNJ_MUSLIM_STARTING_HEALTHPOINTS = 70;
-static const int PNJ_MUSLIM_VALUE = 5;
-static const int PNJ_MUSLIM_DAMAGE = 10;
+static const int MUSLIM_PNJ_STARTING_HEALTHPOINTS = 70;
+static const int MUSLIM_PNJ_VALUE = 5;
+static const int MUSLIM_PNJ_DAMAGE = 10;
 
-static const int PNJ_MEXICAN_STARTING_HEALTHPOINTS = 100;
-static const int PNJ_MEXICAN_VALUE = 10;
-static const int PNJ_MEXICAN_DAMAGE = 5;
+static const int MEXICAN_PNJ_STARTING_HEALTHPOINTS = 100;
+static const int MEXICAN_PNJ_VALUE = 10;
+static const int MEXICAN_PNJ_DAMAGE = 5;
 
 // Constant of the player
 static const int PLAYER_STARTING_HP =  100;

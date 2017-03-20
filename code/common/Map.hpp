@@ -8,7 +8,6 @@ const int SIZE = 41;
 #define PATH "   "
 #define MUD "☒  "
 #define ROCK "\033[34m⛰\033[0m  "
-#define NPC "\033[33m☪\033[0m  "
 #define BASE "\033[31m✈\033[0m  "
 #define GREEN_BASE "\033[32m✈\033[0m  "
 #define PURPLE_BASE "\033[35m✈\033[0m  "

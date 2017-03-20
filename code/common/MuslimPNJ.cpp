@@ -5,9 +5,10 @@
 #include "MuslimPNJ.h"
 
 MuslimPNJ::MuslimPNJ(int direction) : PNJ(direction) {
-    healthPoints = PNJ_MUSLIM_STARTING_HEALTHPOINTS;
-    damage = PNJ_MUSLIM_DAMAGE;
-    value = PNJ_MUSLIM_VALUE;
+    healthPoints = MUSLIM_PNJ_STARTING_HEALTHPOINTS;
+    damage = MUSLIM_PNJ_DAMAGE;
+    value = MUSLIM_PNJ_VALUE;
+    typeOfPNJ = MUSLIM_PNJ_STR;
 }
 MuslimPNJ::MuslimPNJ(Position position, int healthPoints, int direction)
         : PNJ(position, healthPoints, direction) {}

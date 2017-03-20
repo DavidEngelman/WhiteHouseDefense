@@ -53,10 +53,10 @@ void GameEngine::addMoney() {
 void GameEngine::dealDamageToBase() {
     for (Wave &wave : gameState.getWaves()) {
         PlayerState &player_state = getPlayerStateForWave(wave);
-        for (PNJ &pnj : wave.getPnjs()) {
-            if (pnj.isInPlayerBase()) {
-                if (!DEBUG) player_state.decrease_hp(pnj.getDamage());
-                pnj.setHealthPoints(0);
+        for (auto pnj : wave.getPnjs()) {
+            if (pnj->isInPlayerBase()) {
+                if (!DEBUG) player_state.decrease_hp(pnj->getDamage());
+                pnj->setHealthPoints(0);
                 // On enleve pas les PNJ morts dans le vagues maintenant, parce que ça va
                 // être fait dans updateWaves au round suivant
             }
@@ -97,8 +97,8 @@ void GameEngine::movePNJsInWaves(std::vector<Wave> &waves) {
 }
 
 void GameEngine::movePNJsInWave(Wave &wave) {
-    for (PNJ &pnj: wave.getPnjs()) {
-        pnj.advance(map);
+    for (auto pnj: wave.getPnjs()) {
+        pnj->advance(map);
     }
 }
 
@@ -158,8 +158,9 @@ void GameEngine::addPNJS(std::vector<Wave> &waves) {
         int numPNJsToAdd = numPnjsShouldHaveAdded - currentNumOfPnjs;
 
         if (numPNJsToAdd > 0) {
+            srand((unsigned) time(0));
             for (int i = 0; i < numPNJsToAdd; ++i) {
-                wave.addPNJ();
+                wave.addPNJ(rand()%NB_OF_TYPE_OF_PNJ);
             }
         }
     }
