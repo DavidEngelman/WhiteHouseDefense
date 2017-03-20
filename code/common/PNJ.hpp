@@ -35,7 +35,7 @@ public:
 
 	int getHealthPoints() const;
 
-	void receiveDamage(int damageAmount);
+	int receiveDamage(int damageAmount);
 
 	bool isDead();
 

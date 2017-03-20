@@ -17,7 +17,7 @@ public:
 
     int getDamageAmount() const;
 
-    virtual void dealDamageTo(PNJ &pnj);
+    virtual void dealDamageTo(PNJ &pnj, PlayerState& playerState);
 };
 
 #endif //PROJET_ATTACKTOWER_H

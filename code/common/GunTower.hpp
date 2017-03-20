@@ -13,7 +13,7 @@ public:
 
     ~GunTower() = default;
 
-    virtual int shoot(Wave &wave) override;
+    virtual int shoot(Wave &wave, PlayerState& playerState) override;
 
     virtual std::string serialize() override;
     

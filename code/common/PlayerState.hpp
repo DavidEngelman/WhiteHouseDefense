@@ -9,9 +9,20 @@ private:
 	int money;
 	int team;
     bool isSupported;
+public:
+	void incrDamageDealt(int amount);
+
+	void incrMoneySpend(int amount);
+
+private:
 	bool isWinner;
-	int pnjKilled;
 	int player_id;
+
+	/*stats*/
+	int pnjKilled;
+	int nbTowerPlaced;
+	int damageDealt;
+	int moneySpend;
 
     std::string username;
 
@@ -21,7 +32,7 @@ public:
     PlayerState(int id, std::string username, int team);
 
 	PlayerState(int _player_id, std::string _username, int _money, int _hp, bool _isSupported,
-                    bool _isWinner, int _pnjKilled, int _team);
+                    bool _isWinner, int _pnjKilled, int _team, int _nbTowerPlaced, int _damageDealt, int _moneySpend);
 
 	std::string serialize();
 
@@ -62,4 +73,6 @@ public:
 
 	void setTeam(int teamNumber);
 
+
+	void incrNbTowerPlaced();
 };
