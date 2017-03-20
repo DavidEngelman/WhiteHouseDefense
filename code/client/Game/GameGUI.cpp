@@ -185,12 +185,12 @@ void GameGUI::displayDeleteAndUpgradeBox() {
     QSize size = QSize(1400/scl, 1060/scl);
 
     deleteTowerB = new QPushButton;
-    deleteTowerB->setEnabled(true);
+    deleteTowerB->setEnabled(false);
     deleteTowerB->setIcon(QIcon("../../qt_ui/game_pictures/towers/sell.png"));
     deleteTowerB->setIconSize(size);
 
     upgradeTowerB = new QPushButton;
-    upgradeTowerB->setEnabled(true);
+    upgradeTowerB->setEnabled(false);
     upgradeTowerB->setIcon(QIcon("../../qt_ui/game_pictures/towers/upgrade.png"));
     upgradeTowerB->setIconSize(size);
 
