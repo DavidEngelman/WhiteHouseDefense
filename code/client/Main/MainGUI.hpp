@@ -3,10 +3,13 @@
 
 #include "../Abstract/AbstractGUI.hpp"
 #include "MainUI.hpp"
-#include "../QCustomButton.h"
+#include "../QCustomButton.hpp"
 #include <QtWidgets/QLineEdit>
 #include <QtCore/QSignalMapper>
 #include <QtWidgets/QDialogButtonBox>
+#include <QtWidgets/QHBoxLayout>
+#include <QtWidgets/QLabel>
+#include "../InQueueWidget.hpp"
 
 class MainGUI : public AbstractGUI, public MainUI {
     Q_OBJECT
@@ -20,18 +23,22 @@ private:
     QCustomButton *classicMode;
     QCustomButton *timedMode;
     QCustomButton *teamMode;
-    QCustomButton *cancel;
-    QDialogButtonBox* dialog_game_mode_choice;
+    QWidget* dialog_game_mode_choice;
+
+    QHBoxLayout* popup_h_layout;
+    InQueueWidget* queueWidget;
 
 public:
-    MainGUI(MainManager *manager);
+    MainGUI(MainManager *manager, QWidget* _parent);
     ~MainGUI() { close(); };
     void display() override;
     void displayGameModesMenu() override;
+    void showInQueue();
 
 public slots:
     void handleMenuChoice(int choice);
     void handleGameModeChoice(int choice);
+    void leaveQueue();
 };
 
 

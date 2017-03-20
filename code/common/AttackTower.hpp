@@ -4,14 +4,14 @@
 
 #include "AbstractTower.hpp"
 #include "PNJ.hpp"
-#include "../common/Constants.h"
+#include "Constants.hpp"
 
 class AttackTower : public AbstractTower {
     int damage;
 
 public:
 
-    AttackTower(Position position, int damage, int price, float range);
+    AttackTower(Position position, int damage, int price, float range, int level);
 
     ~AttackTower() = default;
 

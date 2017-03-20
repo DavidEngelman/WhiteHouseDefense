@@ -2,8 +2,8 @@
 #define PROJET_GAMEENGINE_HPP
 
 #include "../common/GameState.hpp"
-#include "Timer.h"
-#include "../common/Direction.h"
+#include "Timer.hpp"
+#include "../common/Direction.hpp"
 #include <iostream>
 #include "../common/AttackTower.hpp"
 #include <thread>
@@ -87,6 +87,8 @@ public:
     void declareWinnerInClassicMode();
 
     void declareWinnerInTimedMode();
+
+    void killAllNPC(int quadrant);
 };
 
 

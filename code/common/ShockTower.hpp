@@ -11,7 +11,7 @@
 class ShockTower : public AttackTower {
 
 public:
-    ShockTower(const Position &position);
+    ShockTower(const Position &position, int level);
 
     ~ShockTower() = default;
 

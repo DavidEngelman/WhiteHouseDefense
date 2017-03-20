@@ -6,8 +6,8 @@
 #include <cmath>
 #include <iostream>
 
-ShockTower::ShockTower(const Position &position) :
-        AttackTower(position, SHOCK_TOWER_DAMAGE, SHOCK_TOWER_PRICE, SHOCK_TOWER_RANGE) {}
+ShockTower::ShockTower(const Position &position, int level) :
+        AttackTower(position, SHOCK_TOWER_DAMAGE, SHOCK_TOWER_PRICE, SHOCK_TOWER_RANGE, level) {}
 
 const std::vector<PNJ*>& ShockTower::shoot(Wave &wave) {
     std::vector<PNJ*> targets;

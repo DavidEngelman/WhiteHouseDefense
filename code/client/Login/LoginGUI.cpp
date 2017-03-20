@@ -29,6 +29,7 @@ void LoginGUI::display() {
 
     usernameL = new QLineEdit(fields);
     usernameL->setSelection(0, 10);
+    usernameL->setFocus();
 
     passwordL = new QLineEdit(fields);
     passwordL->setEchoMode(QLineEdit::Password); // Display bullets instead of char
@@ -78,7 +79,7 @@ void LoginGUI::displayAlreadyConnected() {
     passwordL->setText("");
 }
 
-LoginGUI::LoginGUI(LoginManager *manager) : LoginUI(manager){}
+LoginGUI::LoginGUI(LoginManager *manager, QWidget* _parent) : AbstractGUI(_parent), LoginUI(manager){}
 
 LoginGUI::~LoginGUI() {}
 

@@ -54,6 +54,24 @@ Position GameConsoleUI::getPosSellingTower() {
     return Position(x, y);
 }
 
+Position GameConsoleUI::getPosUpgradeTower() {
+    int x;
+    int y;
+
+    do {
+        std::cin.clear();
+        std::cin.ignore();
+        std::cout << "Enter the coordinates of the tower that you want to upgrade" << std::endl;
+        std::cout << "X: ";
+        std::cin >> x;
+        std::cout << "Y: ";
+        std::cin >> y;
+    } while (!checkCoord(x, y));
+
+    return Position(x, y);
+}
+
+
 void GameConsoleUI::displayPlayerInfos(GameState &gameState, int quadrant) {
     int gold = gameState.getPlayerStates()[quadrant].getMoney();
     int pnj_killed = gameState.getPlayerStates()[quadrant].getPnjKilled();
@@ -174,8 +192,14 @@ void GameConsoleUI::placeTowerAction() {
 }
 
 void GameConsoleUI::sellTowerAction() {
-    Position toSell = getPosSellingTower();
-    manager->sellTower(toSell);
+        Position toSell = getPosSellingTower();
+        manager->sellTower(toSell);
+
+}
+
+void GameConsoleUI::upgradeTower() {
+    Position toUpgrade = getPosUpgradeTower();
+    manager->upgradeTower(toUpgrade);
 }
 
 void *GameConsoleUI::input_thread() {
@@ -192,7 +216,8 @@ void *GameConsoleUI::input_thread() {
         }else if (choice == 2){
             sellTowerAction();
 
-        }// else upgrade tower
+        }else
+            upgradeTower();
         display(manager->getGameState(), manager->getQuadrant());
         displayPlayerInfos(manager->getGameState(), manager->getQuadrant());
     }
@@ -202,5 +227,13 @@ void *GameConsoleUI::input_thread() {
 void *GameConsoleUI::staticInputThread(void *self){
     return static_cast<GameConsoleUI*>(self)->input_thread();
 }
+
+void GameConsoleUI::addChatMessage(const std::string &message, const std::string &sender) {
+    // TODO: c'est juste pour tester, faudra faire la vraie fonction apres
+    std::cout << sender << ": " << message << std::endl;
+}
+
+void GameConsoleUI::disableNukeSpell() {};
+void GameConsoleUI::enableNukeSpell() {};
 
 

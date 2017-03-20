@@ -5,7 +5,7 @@
 #include "GameUI.hpp"
 #include "../NetworkedManager.hpp"
 #include "GameManager.hpp"
-#include "../../common/Networking.h"
+#include "../../common/Networking.hpp"
 #include "../Main/MainManager.hpp"
 #include "../../common/GunTower.hpp"
 #include "../../common/SniperTower.hpp"
@@ -29,6 +29,7 @@ private:
     GameUI *gameUI;
     int quadrant;
     bool isSupporter;
+    bool nukeSpell = true;
 
     unsigned int getMapSeedFromServer() const;
     void unSerializeGameState(char* seriarlizedGamestate);
@@ -42,7 +43,6 @@ private:
 
     void comeBackToMenu();
     bool is_alive();
-    bool isTowerInPosition(GameState &gamestate, Position towerPos);
     bool checkValidity(Position towerPos, GameState& gamestate, std::string typeOfTower);
 
     void sendBuyRequest(Position towerPos, std::string towerType);
@@ -71,6 +71,20 @@ public:
     bool sellTower(Position toSell);
 
     void updateMap();
+
+    void sendMessageToPlayers(const std::string &message);
+
+    bool upgradeTower(Position toUpgrade);
+
+    void sendUpgradeRequest(Position towerPos);
+
+    bool isTowerInPosition(GameState &gamestate, Position towerPos);
+
+    std::string &getUsername() { return gameState.getPlayerStates()[quadrant].getUsername(); };
+
+    void nuclearBombSpell();
+
+    void sendNuclearRequest();
 };
 
 #endif

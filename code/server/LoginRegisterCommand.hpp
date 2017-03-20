@@ -2,7 +2,7 @@
 #define PROJET_LOGINREGISTERCOMMAND_HPP
 
 #include "../common/Command.hpp"
-#include "../common/Credentials.h"
+#include "../common/Credentials.hpp"
 
 class LoginRegisterCommand : public Command{
 

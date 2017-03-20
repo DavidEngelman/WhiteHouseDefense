@@ -27,7 +27,6 @@ public:
 
     void setPlayers(const std::vector<std::string> &players);
 
-public:
     void print();
 
     bool isInPlayers(std::string player);

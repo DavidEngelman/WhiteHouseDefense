@@ -5,7 +5,7 @@
 #include "PlayerState.hpp"
 #include "AbstractTower.hpp"
 #include "PNJ.hpp"
-#include "Wave.h"
+#include "Wave.hpp"
 #include "../common/Strings.hpp"
 
 const static std::vector<std::string> validModes = {CLASSIC_MODE, TEAM_MODE, TIMED_MODE};
@@ -13,6 +13,7 @@ const static std::vector<std::string> validModes = {CLASSIC_MODE, TEAM_MODE, TIM
 class AbstractTower; // Ah, les dependences circulaires :(
 
 /*
+ *
  * Represents the changing parts of the game: the towers, the waves and NPCs, the player
  * states (money, life, ...).
  */
@@ -67,7 +68,7 @@ public:
 
     void deleteTower(Position &position, int &quadrant);
 
-    void upgradeTower(Position &position, int &quadrant);
+    bool upgradeTower(Position &position, int &quadrant);
 };
 
 #endif

@@ -2,7 +2,7 @@
 #define GAMELAUNCHER_HPP
 
 #include <string>
-#include "../../common/Networking.h"
+#include "../../common/Networking.hpp"
 #include "../NetworkedManager.hpp"
 #include "../../server/MatchMaker.hpp"
 
@@ -17,6 +17,10 @@ public:
     GameLauncher(int port, App* app, std::string _mode);
     void sendJoinRequest();
     void run() override;
+
+    void leaveQueue();
+
+    void launchGame();
 };
 
 #endif

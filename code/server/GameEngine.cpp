@@ -1,5 +1,5 @@
 #include "GameEngine.hpp"
-#include "../common/Constants.h"
+#include "../common/Constants.hpp"
 
 const bool DEBUG = false;
 
@@ -284,6 +284,12 @@ void GameEngine::addPlayerState(int player_id, std::string username, int team) {
 
 Timer &GameEngine::getTimerSinceGameStart() {
     return timerSinceGameStart;
+}
+
+void GameEngine::killAllNPC(int quadrant) {
+    for(PNJ& pnj : gameState.getWaves()[quadrant].getPnjs()) {
+        pnj.setHealthPoints(0);
+    }
 }
 
 

@@ -3,33 +3,56 @@
 
 #include <string>
 #include <QtWidgets/QApplication>
+#include <thread>
 
+#include <QtWidgets>
+
+class GameLauncher;
 class AbstractManager;
 
-class App {
+class App: public QObject {
+    Q_OBJECT
 
 private:
 
-    char *server_ip_address;
-    int player_id;
+    char *serverIpAddress;
+    int playerId;
     std::string username;
-    AbstractManager* current_manager;
+    AbstractManager* currentManager;
+    std::thread* backgroundTask;
+
+    QWidget* mainWindow;
+    GameLauncher* gameLauncher;
+    bool is_in_queue;
+
+public slots:
+    void launchGame(int gameServerSocket);
 
 public:
 
-    //App() = default;
+    App(char* serverIpAddr);
 
-    App(char* server_ip_addr);
     virtual void transition(AbstractManager *new_manager);
+
+    char *getIp();
+    int getId();
+    std::string getUsername();
+    
+    void setId(int id);
+    void setUsername(std::string name);
+
+    QWidget *getMainWindow();
 
     ~App();
 
-    char *get_ip();
-    int get_id();
-    std::string get_username();
-    
-    void set_id(int id);
-    void set_username(std::string name);
+    bool isInQueue();
+
+    void leaveQueue();
+
+//    void setMainWindow(QWidget *pWidget);
+
+
+    void launchMatchmaking(std::string mode, int serverSocket);
 };
 
 

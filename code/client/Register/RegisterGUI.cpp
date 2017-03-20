@@ -6,7 +6,7 @@
 #include "RegisterGUI.hpp"
 #include "RegisterManager.hpp"
 
-RegisterGUI::RegisterGUI(RegisterManager *manager) : manager(manager) {}
+RegisterGUI::RegisterGUI(RegisterManager *manager, QWidget* _parent) : AbstractGUI(_parent), manager(manager) {}
 
 void RegisterGUI::display() {
     setStylesheetFromPath("../../qt_ui/americanLogin.qss");

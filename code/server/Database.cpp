@@ -48,8 +48,9 @@ int Database::callback_account_usrname(void *ptr, int argc, char **argv, char **
     PublicAccountInfos *infos = reinterpret_cast<PublicAccountInfos *>(ptr);
     infos->username = argv[0];
     infos->victories = argv[1];
-    infos->pnjKilled = argv[2];
-    infos->ID = atoi(argv[3]);
+    infos->defeats = argv[2];
+    infos->pnjKilled = argv[3];
+    infos->ID = atoi(argv[4]);
     return 0;
 }
 
@@ -83,6 +84,47 @@ int Database::insert_account(Credentials credentials) {
     return exec(query, NULL, 0, zErrMsg);
 
 }
+
+int Database::update_username(int id, std::string newUsername) {
+
+    char *zErrMsg = 0;
+
+    std::string command = "";
+    command += "UPDATE Accounts SET username = '" + newUsername + "' WHERE id = " + std::to_string(id);
+
+    char *query = (char *) command.c_str();
+
+    return exec(query, NULL, 0, zErrMsg);
+
+}
+
+int Database::update_password(int id, std::string newPassword) {
+
+    char *zErrMsg = 0;
+
+    std::string command = "";
+    command += "UPDATE Accounts SET password = '" + newPassword + "' WHERE id = " + std::to_string(id);
+
+    char *query = (char *) command.c_str();
+
+    return exec(query, NULL, 0, zErrMsg);
+
+}
+
+int Database::update_profile_picture(int id, int newPicture) {
+
+    char *zErrMsg = 0;
+
+    std::string command = "";
+    command += "UPDATE Accounts SET profilePicture = '" + std::to_string(newPicture) +
+            "' WHERE id = " + std::to_string(id);
+
+    char *query = (char *) command.c_str();
+
+    return exec(query, NULL, 0, zErrMsg);
+
+}
+
 
 int Database::get_nb_entries() {
 
@@ -143,7 +185,7 @@ PublicAccountInfos Database::getUsrInfosByUsrname(std::string username) {
     PublicAccountInfos infos;
     char *zErrMsg = 0;
     std::string command = "";
-    command += "select username, victories, pnjKilled, id from Accounts WHERE username='" + username + "'";
+    command += "select username, victories, defeats, pnjKilled, id from Accounts WHERE username='" + username + "'";
 
     char *query = (char *) command.c_str();
 
@@ -260,11 +302,14 @@ void Database::updateAfterGameStats(int id, int pnjKilled, bool isWinner) {
     char *zErrMsg = 0;
     std::string command = "";
     int victoryIncrement = 0;
+    int defeatIncrement = 1;
     if (isWinner) {
         victoryIncrement = 1;
+        defeatIncrement = 0;
     }
     command += "UPDATE Accounts SET pnjKilled = pnjKilled + " + std::to_string(pnjKilled) + ", victories = victories + "
-               + std::to_string(victoryIncrement) + " WHERE id = " + std::to_string(id) + ";";
+               + std::to_string(victoryIncrement) + ", defeats = defeats + " + std::to_string(defeatIncrement)
+               + " WHERE id = " + std::to_string(id) + ";";
 
     std::cout << "Commande : " << command << std::endl;
     char *query = (char *) command.c_str();

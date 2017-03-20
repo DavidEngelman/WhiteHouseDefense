@@ -3,11 +3,11 @@
 #include "../Main/MainManager.hpp"
 #include "RankingGUI.hpp"
 #include "RankingConsoleUI.hpp"
-#include "../../common/Constants.h"
+#include "../../common/Constants.hpp"
 
 RankingManager::RankingManager(int port, App *my_app) : NetworkedManager(port, my_app) {
     if (!isConsole) {
-        rankingUI = new RankingGUI(this);
+        rankingUI = new RankingGUI(this, master_app->getMainWindow());
     } else {
         rankingUI = new RankingConsoleUI(this);
     }

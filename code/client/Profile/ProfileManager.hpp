@@ -4,7 +4,7 @@
 #define MAX_BUFF_SIZE 1000
 
 #include <iostream>
-#include "../../common/Networking.h"
+#include "../../common/Networking.hpp"
 #include "../../common/Strings.hpp"
 #include "../NetworkedManager.hpp"
 #include "../Main/MainManager.hpp"
@@ -20,6 +20,7 @@ private:
 
     std::string username;
     int victories;
+	int defeats;
     int npcKilled;
 
 public:
@@ -45,6 +46,8 @@ public:
     void parseProfileData(char * profileData);
 
 	~ProfileManager();
+
+	int getDefeats() const;
 };
 
 

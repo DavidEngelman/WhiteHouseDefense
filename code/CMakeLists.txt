@@ -24,6 +24,9 @@ set(CLIENT_FILES client/ClientLauncher.cpp
         client/Main/MainGUI.cpp
         client/Main/MainConsoleUI.cpp
         client/Main/MainUI.hpp
+        client/InQueueWidget.cpp
+        client/InQueueWidget.hpp
+        client/Game/QMatchMakingThread.hpp
 
         #WELCOME
         client/Welcome/WelcomeManager.cpp
@@ -53,7 +56,7 @@ set(CLIENT_FILES client/ClientLauncher.cpp
         client/Ranking/RankingManager.cpp
         client/Ranking/RankingConsoleUI.cpp
         client/Ranking/RankingGUI.cpp
-        client/Ranking/RankingUI.h
+        client/Ranking/RankingUI.hpp
 
         #SUPPORTER
         client/Spectator/SpectatorGUI.cpp
@@ -89,18 +92,23 @@ set(CLIENT_FILES client/ClientLauncher.cpp
         client/Game/GameUI.hpp
         common/Position.cpp
 
+        client/Game/InGameChatWidget.cpp
+        client/Game/InGameChatWidget.hpp
+
         #OTHERS
         client/Game/GameInfo.cpp
         client/global.cpp
         common/Message.cpp
+        common/Command.cpp
         client/QCustomButton.cpp
         common/Networking.cpp
         common/Credentials.cpp
         client/Drawing.cpp
         client/App.cpp
-        common/Constants.h common/Tools.hpp
+        common/Constants.hpp common/Tools.hpp
         common/Tools.cpp
-        client/QHandPointerButton.hpp common/MexicanPNJ.cpp common/MexicanPNJ.h)
+        client/QHandPointerButton.hpp common/MexicanPNJ.cpp common/MexicanPNJ.h
+        client/QHandPointerButton.hpp)
 
 
 add_executable(client ${CLIENT_FILES})
@@ -124,7 +132,7 @@ set(SERVER_FILES "server/ServerLauncher.cpp"
         common/Position.cpp
         common/Map.cpp
         server/GameEngine.cpp
-        common/Direction.h
+        common/Direction.hpp
         common/GameState.cpp
 
         #ACCOUNT
@@ -144,7 +152,7 @@ set(SERVER_FILES "server/ServerLauncher.cpp"
         server/PendingMatch.cpp
 
         #TOOLS
-        common/Constants.h
+        common/Constants.hpp
         common/Tools.cpp
         server/Timer.cpp
         server/PlayerConnection.cpp

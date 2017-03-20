@@ -2,7 +2,7 @@
 #define MATCHMAKER_HPP
 
 #include "Server.hpp"
-#include "PendingMatch.h"
+#include "PendingMatch.hpp"
 #include "MatchmakingCommand.hpp"
 #include "../common/Strings.hpp"
 #include "PlayerConnection.hpp"
@@ -39,6 +39,12 @@ public:
     void handleRequestFromSpectator(int socket);
 
     void removeGameFromGamesInProgress(int port);
+
+    void removePlayerFromQueue(std::string basic_string, int socket);
+
+    void removePlayerFromMatch(PendingMatch &match, int socket);
+
+    void *client_handler(int client);
 };
 
 #endif

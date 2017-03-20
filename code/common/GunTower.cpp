@@ -1,12 +1,10 @@
-//
-// Created by jepsiko on 02/03/17.
-//
+
 
 #include "GunTower.hpp"
 #include <cmath>
 
-GunTower::GunTower(const Position &position) :
-        AttackTower::AttackTower(position, GUN_TOWER_DAMAGE, GUN_TOWER_PRICE, GUN_TOWER_RANGE) {}
+GunTower::GunTower(const Position &position, int level) :
+        AttackTower::AttackTower(position, GUN_TOWER_DAMAGE, GUN_TOWER_PRICE, GUN_TOWER_RANGE, level) {}
 
 const std::vector<PNJ *>& GunTower::shoot(Wave &wave) {
     PNJ *target;

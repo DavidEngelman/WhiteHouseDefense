@@ -45,6 +45,15 @@ public:
 	void placeTowerAction();
 
 	void sellTowerAction();
+
+	Position getPosUpgradeTower();
+
+	void upgradeTower();
+
+	void addChatMessage(const std::string &message, const std::string &sender) override;
+
+    void disableNukeSpell() override ;
+	void enableNukeSpell() override ;
 };
 
 #endif

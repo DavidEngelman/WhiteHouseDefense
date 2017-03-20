@@ -1,5 +1,5 @@
 #include "AccountServer.hpp"
-#include "FriendListCommand.h"
+#include "FriendListCommand.hpp"
 
 AccountServer::AccountServer(int port, const char *databaseName) : Server(port), myDatabase(Database(databaseName)) {}
 
@@ -17,7 +17,6 @@ void AccountServer::run() {
 
     while (1) {
         newClient = accept_connection();
-
         std::thread t1(&AccountServer::client_handler, this, newClient);
         t1.detach();
     }
@@ -234,7 +233,8 @@ PublicAccountInfos AccountServer::getPublicAccountInfos(std::string username){
 
 bool AccountServer::handle_profile(int client_sock_fd, std::string username) {
     PublicAccountInfos profile = getPublicAccountInfos(username);
-    std::string stringProfile = profile.username + "," + profile.victories + "," + profile.pnjKilled + ";";
+    std::string stringProfile = profile.username + "," + profile.victories + ","
+                                + profile.defeats + "," + profile.pnjKilled + ";";
     send_message(client_sock_fd,stringProfile.c_str());
     return true;
 }

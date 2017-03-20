@@ -3,13 +3,13 @@
 
 #include "AttackTower.hpp"
 #include "PNJ.hpp"
-#include "../common/Constants.h"
+#include "Constants.hpp"
 
 class GunTower : public AttackTower {
 
 public:
 
-    GunTower(const Position &position);
+    GunTower(const Position &position, int level);
 
     ~GunTower() = default;
 

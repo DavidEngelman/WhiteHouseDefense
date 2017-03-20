@@ -11,13 +11,13 @@
 #include <iostream>
 #include <sstream>
 #include <string.h>
-#include "../common/Credentials.h"
+#include "../common/Credentials.hpp"
 #include <vector>
-#include "../common/RankingInfos.h"
+#include "../common/RankingInfos.hpp"
 
 
 typedef struct PublicAccountInfos  {
-    std::string victories, pnjKilled;
+    std::string victories, pnjKilled, defeats;
     std::string username;
     int ID;
 }PublicAccountInfos;
@@ -63,6 +63,13 @@ public:
     virtual ~Database();
 
 
+    int update_username(int id, std::string newUsername);
+
+    int update_password(int id, std::string newPassword);
+
+    int update_profil_picture(int id, std::string newPassword);
+
+    int update_profile_picture(int id, int newPicture);
 };
 
 

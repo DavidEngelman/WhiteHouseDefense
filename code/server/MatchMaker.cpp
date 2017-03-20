@@ -1,3 +1,4 @@
+#include <vector>
 #include "MatchMaker.hpp"
 
 
@@ -10,6 +11,10 @@ MatchMaker::MatchMaker(int port) : Server(port),
     std::cout << "Constructor" << std::endl;
 };
 
+void* MatchMaker::client_handler(int client){
+    get_and_process_command(client);
+
+}
 
 void MatchMaker::run() {
     start_socket_listen();
@@ -18,27 +23,44 @@ void MatchMaker::run() {
     while (1) {
         client_socket_fd = accept_connection();
         std::cout << "New client in the matchmaking" << std::endl;
-
-        get_and_process_command(client_socket_fd);
+        std::thread t1(&MatchMaker::client_handler, this, client_socket_fd);
+        t1.detach();
     }
 }
 
 void MatchMaker::get_and_process_command(int socket_fd) {
     char command_buffer[BUFFER_SIZE];
-    receive_message(socket_fd, command_buffer);
+    std::cout << "Received: " << command_buffer << std::endl;
+    bool communication_over = false;
 
-    Command command;
-    command.parse(command_buffer);
+    while (!communication_over) {
+        receive_message(socket_fd, command_buffer);
+        std::cout << command_buffer << std::endl;
+        Command command;
+        command.parse(command_buffer);
+        std::string action = command.getAction();
 
-    if (command.getAction() == GAME_IN_PROGRESS_REQUEST) {
-        handleRequestFromSpectator(socket_fd);
-    } else if (command.getAction() == "PopGame") {
-        removeGameFromGamesInProgress(stoi(command.getNextToken()));
-    } else {
-        MatchmakingCommand matchmakingCommand(socket_fd);
-        matchmakingCommand.parse(command_buffer);
+        if (action == GAME_IN_PROGRESS_REQUEST) {
+            handleRequestFromSpectator(socket_fd);
+            communication_over = true;
 
-        addPlayerToPendingMatch(matchmakingCommand.getPlayerConnection(), matchmakingCommand.getMode());
+        } else if (action == POP_GAME_REQUEST) {
+            const std::string &lol = command.getNextToken();
+            removeGameFromGamesInProgress(stoi(lol));
+            communication_over = true;
+
+        } else if(action == LEAVE_QUEUE_REQUEST){
+            std::cout <<command.getAction()<<std::endl;
+            removePlayerFromQueue(command.getNextToken(), socket_fd);
+            communication_over = true;
+
+        } else if (action == GAME_STARTED_STRING){
+            communication_over = true;
+        } else {
+            MatchmakingCommand matchmakingCommand(socket_fd);
+            matchmakingCommand.parse(command_buffer);
+            addPlayerToPendingMatch(matchmakingCommand.getPlayerConnection(), matchmakingCommand.getMode());
+        }
     }
 }
 
@@ -53,6 +75,7 @@ void MatchMaker::handleRequestFromSpectator(int socket_fd) {
     send_message(socket_fd, stringToSend.c_str());
 }
 
+// Returns True if the match is full and a game is created, False otherwise
 void MatchMaker::addPlayerToPendingMatch(PlayerConnection player_connection, std::string mode) {
     PendingMatch &match = getMatch(mode);
     match.add_player_to_queue(player_connection);
@@ -63,6 +86,7 @@ void MatchMaker::addPlayerToPendingMatch(PlayerConnection player_connection, std
         launchMatch(match); // Ici il faut que ça passe par valeur pour que ça marche
         match.clear();
     }
+    std::cout << "hi" << std::endl;
 }
 
 PendingMatch &MatchMaker::getMatch(std::string mode) {
@@ -117,4 +141,29 @@ void MatchMaker::removeGameFromGamesInProgress(int port) {
         }
     }
 }
+
+void MatchMaker::removePlayerFromQueue(std::string mode, int socket) {
+    if (mode == CLASSIC_MODE){
+        removePlayerFromMatch(classicPendingMatch, socket);
+    } else if (mode == TEAM_MODE){
+        removePlayerFromMatch(teamPendingMatch, socket);
+    } else {
+        removePlayerFromMatch(timedPendingMatch, socket);
+    }
+
+}
+
+void MatchMaker::removePlayerFromMatch(PendingMatch &match, int socket) {
+    for (PlayerConnection& pc : match.getPlayerConnections()){
+        if(pc.getSocketFd() == socket){
+            match.remove_player_from_queue(pc);
+            std::cout << "Removed " << socket << "from match" << std::endl;
+            break;
+        }
+    }
+    send_message(socket,"removed");
+
+}
+
+
 

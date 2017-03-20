@@ -93,7 +93,7 @@ void PNJ::setPosition(Position position) {
 bool PNJ::can_go_forward(Map &map) {
     Direction dir = get_forward_direction();
     Position forward_pos = Position(getPosition().getX() + dir.x, getPosition().getY() + dir.y);
-    return map.isPath(forward_pos) && forward_pos != getLast_position();
+    return ( map.isPath(forward_pos) || map.isBase(forward_pos) ) && forward_pos != getLast_position();
 
 
 }
@@ -101,7 +101,7 @@ bool PNJ::can_go_forward(Map &map) {
 bool PNJ::can_go_left(Map &map) {
     Direction dir = get_left_direction();
     Position left_pos = Position(getPosition().getX() + dir.x, getPosition().getY() + dir.y);
-    return map.isPath(left_pos) && left_pos != getLast_position();
+    return ( map.isPath(left_pos) || map.isBase(left_pos) ) && left_pos != getLast_position();
 
 
 }
@@ -109,7 +109,7 @@ bool PNJ::can_go_left(Map &map) {
 bool PNJ::can_go_right(Map &map) {
     Direction dir = get_right_direction();
     Position right_pos = Position(getPosition().getX() + dir.x, getPosition().getY() + dir.y);
-    return map.isPath(right_pos) && right_pos != getLast_position();
+    return ( map.isPath(right_pos) || map.isBase(right_pos) ) && right_pos != getLast_position();
 
 
 }
@@ -117,7 +117,7 @@ bool PNJ::can_go_right(Map &map) {
 bool PNJ::can_go_backward(Map &map) {
     Direction dir = get_backward_direction();
     Position back_pos = Position(getPosition().getX() + dir.x, getPosition().getY() + dir.y);
-    return map.isPath(back_pos) && back_pos != getLast_position();
+    return ( map.isPath(back_pos) || map.isBase(back_pos) ) && back_pos != getLast_position();
 
 }
 

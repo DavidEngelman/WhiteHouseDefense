@@ -9,18 +9,24 @@ static const std::string TIMED_MODE = "TimedMode";
 static const std::string TEAM_MODE = "TeamMode";
 
 static const std::string GAME_IN_PROGRESS_REQUEST = "games";
+static const POP_GAME_REQUEST = "PopGame";
+static const std::string LEAVE_QUEUE_REQUEST = "LEAVEQUEUE";
+static const std::string GAME_STARTED_STRING = "GameStartedStopListeningMatchmaker";
 
 static const std::string PLACE_TOWER_COMMAND_STRING = "PlaceTower";
 static const std::string DELETE_TOWER_COMMAND_STRING  = "DeleteTower";
 static const std::string UPGRADE_TOWER_COMMAND_STRING = "UpgradeTower";
-static const std::string USER_MESSAGE_STRING = "SendUserMessage";
-static const std::string RECEIVE_USER_MESSAGE_STRING = "ReceiveUserMessage";
+static const std::string SEND_MESSAGE_STRING = "SendMessage";
+static const std::string RECEIVE_MESSAGE_STRING = "ReceiveMessage";
+static const std::string NUCLEAR_BOMB_COMMAND_STRING = "NuclearBomb";
+
 
 static const std::string JOIN_GAME_AS_SPECTATOR = "Support";
 static const std::string SUPPORT_PLAYER_STRING = "SupportPlayer";
 
 static const std::string SETUP_GAME = "SetupGame";
 static const std::string END_OF_GAME = "end";
+static const std::string MESSAGES[3] = {"GG Easy", "Report", "J'aime les patates"};
 
 static const std::string GET_FRIENDLIST = "getFriendList;";
 static const std::string GET_FRIEND_REQUESTS = "getFriendRequests;";

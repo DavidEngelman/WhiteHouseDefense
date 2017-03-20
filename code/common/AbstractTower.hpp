@@ -3,7 +3,7 @@
 
 #include "../common/Position.hpp"
 #include "PNJ.hpp"
-#include "Wave.h"
+#include "Wave.hpp"
 #include <string>
 
 #define LEVEL_MAX 5
@@ -23,7 +23,7 @@ protected:
 
 public:
 
-    AbstractTower(Position position, int price, float range);
+    AbstractTower(Position position, int price, float range, int level);
 
     int getQuadrant() const;
 

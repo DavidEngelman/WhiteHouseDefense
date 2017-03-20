@@ -39,7 +39,7 @@ const int SIZE = 41;
 #include <vector>
 #include "Position.hpp"
 #include "GameState.hpp"
-#include "Constants.h"
+#include "Constants.hpp"
 
 class GameState;
 
@@ -75,7 +75,8 @@ public:
     bool isBase(Position pos) const;
     static int computeQuadrant(Position pos);
 
-    virtual Position getHighlighted() const { return Position(-1, -1); }
+    virtual Position getHighlightedPosition() const { return Position(-1, -1); }
+
 };
 
 #endif

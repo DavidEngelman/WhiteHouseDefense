@@ -1,5 +1,5 @@
 #include <assert.h>
-#include "../../common/Constants.h"
+#include "../../common/Constants.hpp"
 #include "../../common/Message.hpp"
 #include "ProfileManager.hpp"
 #include "ProfileGUI.hpp"
@@ -9,7 +9,7 @@
 ProfileManager::ProfileManager(int port, App *my_app) :
         NetworkedManager(port, my_app), username("Loading..."), victories(-1), npcKilled(-1) {
     if (!isConsole) {
-        profileUI = new ProfileGUI(this);
+        profileUI = new ProfileGUI(this, master_app->getMainWindow());
     } else {
         profileUI = new ProfileConsoleUI(this);
     }
@@ -22,7 +22,7 @@ void ProfileManager::run() {
 }
 
 void ProfileManager::showMyProfile() {
-    getAndParseProfile(master_app->get_username());
+    getAndParseProfile(master_app->getUsername());
     profileUI->updateProfile();
 }
 
@@ -53,6 +53,7 @@ void ProfileManager::parseProfileData(char *profileData) {
 
     if (username != "") { /* If the response isn't empty, the profile exists */
         victories = std::stoi(message.getNextToken());
+        defeats = std::stoi(message.getNextToken());
         npcKilled = std::stoi(message.getNextToken());
         assert(message.hasReachedEnd());
     }
@@ -60,6 +61,10 @@ void ProfileManager::parseProfileData(char *profileData) {
 
 int ProfileManager::getVictories() const {
     return victories;
+}
+
+int ProfileManager::getDefeats() const {
+    return defeats;
 }
 
 int ProfileManager::getNPCKilled() const {
