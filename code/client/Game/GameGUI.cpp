@@ -92,7 +92,6 @@ GameGUI::GameGUI(unsigned seed, GameManager *manager) : AbstractGUI(nullptr), Ga
     this->setLayout(mainLayout);
     //playerInfo->setLayout(playerInfoLayout);
 
-    //this->showMaximized();
     this->showFullScreen();
 
     // TODO: Pour l'instant, c'est la gameGUI qui declenche la fonction updatemap toutes les 10 msec
@@ -203,8 +202,6 @@ void GameGUI::displayDeleteAndUpgradeBox() {
 
     QObject::connect(deleteTowerB, SIGNAL(clicked()), this, SLOT(handleSellingTower()));
     QObject::connect(upgradeTowerB, SIGNAL(clicked()), this, SLOT(handleUpgradingTower()));
-
-
 }
 
 
