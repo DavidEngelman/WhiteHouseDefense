@@ -57,12 +57,10 @@ void MapGUI::paintEvent(QPaintEvent *) {
                     image = QImage("../../qt_ui/game_pictures/tiles/mexican.png");
                     painter.drawImage(x*TILES_SIZE, y*TILES_SIZE, image);
                 } else if (typeOfPNJ == COMMUNIST_PNJ_STR) {
-                    //TODO: communist.png
-                    image = QImage("../../qt_ui/game_pictures/tiles/mexican.png");
+                    image = QImage("../../qt_ui/game_pictures/tiles/communist.png");
                     painter.drawImage(x*TILES_SIZE, y*TILES_SIZE, image);
                 } else if (typeOfPNJ == MUSLIM_PNJ_STR) {
-                    //TODO: muslim.png
-                    image = QImage("../../qt_ui/game_pictures/tiles/mexican.png");
+                    image = QImage("../../qt_ui/game_pictures/tiles/muslim.png");
                     painter.drawImage(x*TILES_SIZE, y*TILES_SIZE, image);
                 }
             } else if (cell == GRASS_INT or cell == SAND_INT or
