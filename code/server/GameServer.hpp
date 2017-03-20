@@ -120,6 +120,10 @@ public:
     void handleEndOfGame();
 
     void tellSupportersTheGameIsOver();
+
+    void processSpecialCommand(std::string &userMessage, std::string &senderUsername);
+
+    std::string makeMessage(const std::string &userMessage, const std::string &senderUsername) const;
 };
 
 #endif
