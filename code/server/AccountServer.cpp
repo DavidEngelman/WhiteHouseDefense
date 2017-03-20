@@ -1,9 +1,9 @@
 #include "AccountServer.hpp"
-#include "FriendListCommand.h"
+//#include "FriendListCommand.h"
 #include "../common/Strings.hpp"
 #include "FriendListCommand.hpp"
 
-AccountServer::AccountServer(int port, const char *databaseName) : Server(port), myDatabase(Database(databaseName)) {}
+AccountServer::AccountServer(int port, const char *databaseName) : Server(port), database(Database(databaseName)) {}
 
 void* AccountServer::client_handler(int client_sock) {
     std::cout << "Handling new client" << std::endl;
@@ -110,7 +110,7 @@ void AccountServer::get_and_process_command(int client, char* message_buffer) {
         } else if (command_type == CHANGE_USERNAME) {
             int id = stoi(command.getNextToken());
             std::string newUsername = command.getNextToken();
-            handle_changeUsername(newUsername, id);
+            handle_changeUsername(newUsername, id, client);
 
         } else if (command_type == CHANGE_PASSWORD) {
             int id = stoi(command.getNextToken());
@@ -129,7 +129,7 @@ void AccountServer::get_and_process_command(int client, char* message_buffer) {
 
 bool AccountServer::insert_account_in_db(Credentials credentials) {
     //Return True si ca c'est bien passé, false sinon
-    return myDatabase.insert_account(credentials) != -1;
+    return database.insert_account(credentials) != -1;
 }
 
 bool AccountServer::attemptCreateAccount(Credentials credentials) {
@@ -177,7 +177,7 @@ void AccountServer::send_already_connected_error(int client_sock) {
     send_message(client_sock, ALREADY_CO);
 }
 bool AccountServer::checkCredentials(Credentials credentials) {
-    return  myDatabase.is_identifiers_valid(credentials);
+    return  database.is_identifiers_valid(credentials);
 }
 
 
@@ -186,7 +186,7 @@ bool AccountServer::handle_login(Credentials credentials, int client_sock_fd) {
     //std::cout << credentials.getUsername() << std::endl;
     //std::cout << credentials.getPassword() << std::endl;
 
-    int player_id = myDatabase.getIDbyUsername(credentials.getUsername()); // Retrieve id of the player
+    int player_id = database.getIDbyUsername(credentials.getUsername()); // Retrieve id of the player
     PlayerConnection player = PlayerConnection(player_id,client_sock_fd);
 
     if (checkCredentials(credentials) && (!is_player_already_connected(player))){
@@ -207,7 +207,7 @@ bool AccountServer::handle_login(Credentials credentials, int client_sock_fd) {
 //Partie Ranking
 
 std::vector<RankingInfos> AccountServer::getRanking() {
-    return myDatabase.getRanking();
+    return database.getRanking();
 }
 
 bool AccountServer::handle_ranking(int client_sock_fd) {
@@ -231,27 +231,27 @@ std::string AccountServer::vectorTostring(std::vector<RankingInfos> vect) {
 
 // partie friendlist /////////////////////////////////////////////////////
 std::vector<std::string> AccountServer::getFriendList(std::string username) {
-    return myDatabase.getFriendList(username);
+    return database.getFriendList(username);
 }
 
 std::vector<std::string> AccountServer::getFriendRequests(std::string username){
-    return myDatabase.getFriendRequests(username);
+    return database.getFriendRequests(username);
 }
 
 bool AccountServer::sendFriendRequest(std::string requester, std::string receiver) {
-    return myDatabase.sendFriendRequest(requester,receiver) != -1 ;
+    return database.sendFriendRequest(requester,receiver) != -1 ;
 }
 bool AccountServer::acceptFriendRequest(std::string requester, std::string receiver) {
-    return myDatabase.acceptFriendRequest(requester,receiver) != -1 ;
+    return database.acceptFriendRequest(requester,receiver) != -1 ;
 }
 bool AccountServer::declineFriendRequest(std::string requester, std::string receiver) {
-    return myDatabase.declineFriendRequest(requester, receiver) != -1 ;
+    return database.declineFriendRequest(requester, receiver) != -1 ;
 }
 bool AccountServer::removeFriend(std::string requester, std::string receiver) {
-    return myDatabase.removeFriend(requester,receiver) != -1 ;
+    return database.removeFriend(requester,receiver) != -1 ;
 }
 std::vector<std::string> AccountServer::getPendingInvitations(std::string username){
-    return myDatabase.getPendingInvitations(username);
+    return database.getPendingInvitations(username);
 }
 
 bool AccountServer::handle_getFriendList(int client_sock_fd, std::string requester) {
@@ -330,7 +330,7 @@ std::string AccountServer::vectorTostring(std::vector<std::string> vect) {
 }
 // partie profil
 PublicAccountInfos AccountServer::getPublicAccountInfos(std::string username){
-    return myDatabase.getUsrInfosByUsrname(username);
+    return database.getUsrInfosByUsrname(username);
 }
 
 bool AccountServer::handle_profile(int client_sock_fd, std::string username) {
@@ -378,21 +378,26 @@ bool AccountServer::handle_accountUpdate(int client_sock_fd) {
         receive_message(client_sock_fd, message);
         UpdateStatsCommand command;
         command.parse(message);
-        myDatabase.updateAfterGameStats(command.getPlayerId(), command.getPnjKilled(), command.getIsWinner());
+        database.updateAfterGameStats(command.getPlayerId(), command.getPnjKilled(), command.getIsWinner());
     }
     return true;
 }
 
-bool AccountServer::handle_changeUsername(std::string username, int id) {
-    return false;
+bool AccountServer::handle_changeUsername(std::string username, int id, int client_socket) {
+    if(database.update_username(id, username) != -1){
+        send_success(client_socket);
+    }
+    else{
+        send_error(client_socket);
+    }
 }
 
 bool AccountServer::handle_changePassword(std::string password, int id) {
-    return false;
+    database.update_password(id, password);
 }
 
 bool AccountServer::handle_changeIcon(int iconName, int id) {
-    return false;
+    database.updateIcon(id, iconName);
 }
 
 

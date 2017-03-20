@@ -32,7 +32,10 @@ public:
 
     void display() override;
 
+public slots:
+
     void updateProfile();
+    void goToMain();
 };
 
 

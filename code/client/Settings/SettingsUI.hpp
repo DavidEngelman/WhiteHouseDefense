@@ -16,6 +16,7 @@ public:
     SettingsUI(SettingsManager *_settingsManager) : settingsManager(_settingsManager) {};
     virtual void display() = 0;
 
+    virtual ~SettingsUI() = default;
 
 };
 

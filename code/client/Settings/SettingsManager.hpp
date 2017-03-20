@@ -23,10 +23,14 @@ public:
 
     void run();
 
-    void changeUsername(std::string newUsername);
-    void changePassword(std::string newPassword);
+    bool changeUsername(std::string newUsername);
+    bool changePassword(std::string newPassword);
     void changePlayerIcon(std::string newIconName);
     void goToMainMenu();
+
+    void comeBackToMainMenu();
+
+    ~SettingsManager();
 };
 
 

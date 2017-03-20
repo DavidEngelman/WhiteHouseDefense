@@ -1,5 +1,4 @@
 #include "SettingsManager.hpp"
-#include "../../common/Constants.h"
 #include "SettingsGUI.hpp"
 #include "SettingsConsoleUI.hpp"
 
@@ -17,19 +16,33 @@ void SettingsManager::run() {
     settingsUI->display();
 }
 
-void SettingsManager::changeUsername(std::string newUsername){
-    std::string message = CHANGE_USERNAME + ',' + std::to_string(master_app->get_id()) + ',' + newUsername + ';';
+bool SettingsManager::changeUsername(std::string newUsername){
+    if (newUsername.size() < 1 || newUsername.size() > 16){
+        std::cout << "oups" << std::endl;
+        return false;
+    }
+    char server_response[10];
+    std::string message = CHANGE_USERNAME + ',' + std::to_string(master_app->getId()) + ',' + newUsername + ';';
     send_message(server_socket, message.c_str());
+    receive_message(server_socket, server_response);
+    std::cout << server_response << std::endl;
+    return server_response[0] == '1';
+
 }
 
-void SettingsManager::changePassword(std::string newPassword){
-    std::string message = CHANGE_PASSWORD + ',' + std::to_string(master_app->get_id()) + ',' + newPassword + ';';
+bool SettingsManager::changePassword(std::string newPassword){
+    if (newPassword.size() > 1){
+        return false;
+    }
+    newPassword = cryptPassword(newPassword);
+    std::string message = CHANGE_PASSWORD + ',' + std::to_string(master_app->getId()) + ',' + newPassword + ';';
     send_message(server_socket, message.c_str());
+    return true;
 
 }
 
 void SettingsManager::changePlayerIcon(std::string newIconName){
-    std::string message = CHANGE_ICON + ',' + std::to_string(master_app->get_id()) + ',' + newIconName + ';';
+    std::string message = CHANGE_ICON + ',' + std::to_string(master_app->getId()) + ',' + newIconName + ';';
     send_message(server_socket, message.c_str());
 
 }
@@ -37,4 +50,14 @@ void SettingsManager::changePlayerIcon(std::string newIconName){
 void SettingsManager::goToMainMenu() {
     MainManager * mainManager = new MainManager(ACCOUNT_SERVER_PORT, master_app);
     master_app->transition(mainManager);
+}
+
+void SettingsManager::comeBackToMainMenu() {
+    MainManager *mainManager = new MainManager(ACCOUNT_SERVER_PORT, master_app);
+    master_app->transition(mainManager);
+
+}
+
+SettingsManager::~SettingsManager() {
+    settingsUI->destroy();
 }
