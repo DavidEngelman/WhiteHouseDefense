@@ -17,19 +17,21 @@ void SettingsManager::run() {
     settingsUI->display();
 }
 
-void SettingsManager::changeUsername(){
-    std::string newUserName = settingsUI->getNewUsername();
-    std::string message = CHANGE_USERNAME + ',' + master_app->get_username() + ',' + newUserName + ';';
+void SettingsManager::changeUsername(std::string newUsername){
+    std::string message = CHANGE_USERNAME + ',' + std::to_string(master_app->get_id()) + ',' + newUsername + ';';
+    send_message(server_socket, message.c_str());
 }
 
-void SettingsManager::changePassword(){
-    std::string newPassword = settingsUI->getNewPassword();
-    std::string message = CHANGE_PASSWORD + ',' + master_app->get_username() + ',' + newPassword + ';';
+void SettingsManager::changePassword(std::string newPassword){
+    std::string message = CHANGE_PASSWORD + ',' + std::to_string(master_app->get_id()) + ',' + newPassword + ';';
+    send_message(server_socket, message.c_str());
+
 }
 
-void SettingsManager::changePlayerIcon(){
-    std::string newIconName = settingsUI->getNewIconName();
-    std::string message = CHANGE_ICON + ',' + master_app->get_username() + ',' + newIconName + ';';
+void SettingsManager::changePlayerIcon(std::string newIconName){
+    std::string message = CHANGE_ICON + ',' + std::to_string(master_app->get_id()) + ',' + newIconName + ';';
+    send_message(server_socket, message.c_str());
+
 }
 
 void SettingsManager::goToMainMenu() {

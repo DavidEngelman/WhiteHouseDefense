@@ -23,9 +23,9 @@ public:
 
     void run();
 
-    void changeUsername();
-    void changePassword();
-    void changePlayerIcon();
+    void changeUsername(std::string newUsername);
+    void changePassword(std::string newPassword);
+    void changePlayerIcon(std::string newIconName);
     void goToMainMenu();
 };
 

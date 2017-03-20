@@ -1,5 +1,6 @@
 #include "AccountServer.hpp"
 #include "FriendListCommand.h"
+#include "../common/Strings.hpp"
 
 AccountServer::AccountServer(int port, const char *databaseName) : Server(port), myDatabase(Database(databaseName)) {}
 
@@ -22,6 +23,106 @@ void AccountServer::run() {
     }
 }
 
+///////////////////////////////////////////////////////////////////////////
+void AccountServer::get_and_process_command(int client, char* message_buffer) {
+    bool ok = false;
+
+    while (!ok) {
+        bool success = receive_message_with_timeout(client, message_buffer, 300);
+        if (!success) {
+            return;
+        }
+
+        Command command;
+        command.parse(message_buffer);
+        std::string command_type = command.getAction();
+
+        if ((command_type == "login") || (command_type == "register")) {
+
+            //Si on est dans le cas ou quelqu'un essaye de se connecter/register
+
+            LoginRegisterCommand command;
+            command.parse(message_buffer);
+            Credentials credentials = command.getCreds();
+
+            if (command.getAction() == "login") {
+                ok = handle_login(credentials, client);
+            } else if (command.getAction() == "register") {
+                ok = handle_register(credentials, client);
+            } else {
+                // Show "unknown command" error
+            }
+        } else if (command_type == "ranking") {
+            ok = handle_ranking(client);
+
+        } else if (command_type == "getProfileByUsername") {
+            FriendListCommand friendListCommand;
+            friendListCommand.parse(message_buffer);
+            handle_profile(client,friendListCommand.getRequester());
+
+        } else if (command_type == "getFriendList" || command_type == "getFriendRequests" ||
+                   command_type == "addFriend" || command_type == "removeFriend" ||
+                   command_type == "acceptFriendRequest" || command_type == "declineFriendRequest" ||
+                   command_type == "getPendingInvitations") {
+
+            FriendListCommand friendListCommand;
+            friendListCommand.parse(message_buffer);
+            std::string action = friendListCommand.getAction();
+
+            if (action == "getFriendList") {
+
+                handle_getFriendList(client, friendListCommand.getRequester());
+
+            } else if (action == "getFriendRequests") {
+
+                handle_getFriendRequests(client, friendListCommand.getRequester());
+
+            } else if (action == "addFriend") {
+                std::cout<<friendListCommand.getRequester() + " added " + friendListCommand.getReceiver();
+
+                handle_sendFriendRequest(client, friendListCommand.getRequester(), friendListCommand.getReceiver());
+
+            }else if (action == "getPendingInvitations") {
+
+                handle_getPendingInvitations(client, friendListCommand.getRequester());
+
+            } else if (action == "removeFriend") {
+
+                handle_removeFriend(client, friendListCommand.getRequester(), friendListCommand.getReceiver());
+
+            } else if (action == "acceptFriendRequest") {
+
+                handle_acceptFriendRequest(client, friendListCommand.getRequester(), friendListCommand.getReceiver());
+
+            } else if (action == "declineFriendRequest") {
+
+                handle_declineFriendRequest(client, friendListCommand.getRequester(), friendListCommand.getReceiver());
+            }
+
+        } else if (command_type == "Update"){
+            ok = handle_accountUpdate(client);
+
+        } else if(command_type == "Exit"){
+            int id = stoi(command.getNextToken());
+            ok = handle_exit(id);
+
+        } else if (command_type == CHANGE_USERNAME) {
+            int id = stoi(command.getNextToken());
+            std::string newUsername = command.getNextToken();
+            handle_changeUsername(newUsername, id);
+
+        } else if (command_type == CHANGE_PASSWORD) {
+            int id = stoi(command.getNextToken());
+            std::string newPassword = command.getNextToken();
+            handle_changePassword(newPassword, id);
+
+        } else if (command_type == CHANGE_ICON) {
+            int id = stoi(command.getNextToken());
+            std::string newIcon = command.getNextToken();
+            handle_changeIcon(stoi(newIcon), id);
+        }
+    }
+}
 
 //Partie Register
 
@@ -239,91 +340,7 @@ bool AccountServer::handle_profile(int client_sock_fd, std::string username) {
     return true;
 }
 
-///////////////////////////////////////////////////////////////////////////
-void AccountServer::get_and_process_command(int client, char* message_buffer) {
-    bool ok = false;
 
-    while (!ok) {
-        bool success = receive_message_with_timeout(client, message_buffer, 300);
-        if (!success) {
-            return;
-        }
-        
-        Command command;
-        command.parse(message_buffer);
-        std::string command_type = command.getAction();
-
-        if ((command_type == "login") || (command_type == "register")) {
-
-            //Si on est dans le cas ou quelqu'un essaye de se connecter/register
-
-            LoginRegisterCommand command;
-            command.parse(message_buffer);
-            Credentials credentials = command.getCreds();
-
-            if (command.getAction() == "login") {
-                ok = handle_login(credentials, client);
-            } else if (command.getAction() == "register") {
-                ok = handle_register(credentials, client);
-            } else {
-                // Show "unknown command" error
-            }
-        } else if (command_type == "ranking") {
-            ok = handle_ranking(client);
-
-        } else if (command_type == "getProfileByUsername") {
-            FriendListCommand friendListCommand;
-            friendListCommand.parse(message_buffer);
-            handle_profile(client,friendListCommand.getRequester());
-
-        } else if (command_type == "getFriendList" || command_type == "getFriendRequests" ||
-                   command_type == "addFriend" || command_type == "removeFriend" ||
-                   command_type == "acceptFriendRequest" || command_type == "declineFriendRequest" ||
-                   command_type == "getPendingInvitations") {
-
-            FriendListCommand friendListCommand;
-            friendListCommand.parse(message_buffer);
-            std::string action = friendListCommand.getAction();
-
-            if (action == "getFriendList") {
-
-                handle_getFriendList(client, friendListCommand.getRequester());
-
-            } else if (action == "getFriendRequests") {
-
-                handle_getFriendRequests(client, friendListCommand.getRequester());
-
-            } else if (action == "addFriend") {
-                std::cout<<friendListCommand.getRequester() + " added " + friendListCommand.getReceiver();
-
-                handle_sendFriendRequest(client, friendListCommand.getRequester(), friendListCommand.getReceiver());
-                
-            }else if (action == "getPendingInvitations") {
-                
-                handle_getPendingInvitations(client, friendListCommand.getRequester());
-                
-            } else if (action == "removeFriend") {
-
-                handle_removeFriend(client, friendListCommand.getRequester(), friendListCommand.getReceiver());
-
-            } else if (action == "acceptFriendRequest") {
-
-                handle_acceptFriendRequest(client, friendListCommand.getRequester(), friendListCommand.getReceiver());
-
-            } else if (action == "declineFriendRequest") {
-
-                handle_declineFriendRequest(client, friendListCommand.getRequester(), friendListCommand.getReceiver());
-            }
-
-        } else if (command_type == "Update"){
-            ok = handle_accountUpdate(client);
-
-        } else if(command_type == "Exit"){
-            int id = stoi(command.getNextToken());
-            ok = handle_exit(id);
-        }
-    }
-}
 
 const std::vector<PlayerConnection> &AccountServer::getConnectedPlayers() const {
     return connectedPlayers;
@@ -363,6 +380,18 @@ bool AccountServer::handle_accountUpdate(int client_sock_fd) {
         myDatabase.updateAfterGameStats(command.getPlayerId(), command.getPnjKilled(), command.getIsWinner());
     }
     return true;
+}
+
+bool AccountServer::handle_changeUsername(std::string username, int id) {
+    return false;
+}
+
+bool AccountServer::handle_changePassword(std::string password, int id) {
+    return false;
+}
+
+bool AccountServer::handle_changeIcon(int iconName, int id) {
+    return false;
 }
 
 

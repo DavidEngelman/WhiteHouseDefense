@@ -7,20 +7,32 @@
 
 #include "../Abstract/AbstractGUI.hpp"
 #include "SettingsUI.hpp"
+#include "../QHandPointerButton.hpp"
 
 class SettingsGUI : public AbstractGUI, public SettingsUI {
 Q_OBJECT
 
 private:
 
+
+    QLineEdit *usernameL;
+    QLineEdit *passwordL;
+    QHandPointerButton *iconB;
+
+    std::string newIconName;
+
+    QHandPointerButton *updateB;
+
+    bool changedIcon;
+
+
 public:
 
     SettingsGUI(SettingsManager *manager, QWidget* _parent);
 
     void display() override;
-    std::string getNewUsername();
-    std::string getNewPassword();
-    std::string getNewIconName();
+
+    void updateProfile();
 };
 
 

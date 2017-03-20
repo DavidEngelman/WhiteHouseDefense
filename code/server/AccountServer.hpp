@@ -78,4 +78,9 @@ public:
     bool handle_accountUpdate(int client_sock_fd);
 
 
+    bool handle_changeUsername(std::string basic_string, int id);
+
+    bool handle_changePassword(std::string basic_string, int id);
+
+    bool handle_changeIcon(int basic_string, int id);
 };
