@@ -335,3 +335,13 @@ void GameGUI::updateHealthBar(int value) {
     baseHealthBar->setValue(value);
     baseHealthBar->setFormat("HP : " + QString::number(value) + "/100" );
 }
+
+void GameGUI::disableDeleteAndUpgradeBox() {
+    upgradeTowerB->setEnabled(false);
+    deleteTowerB->setEnabled(false);
+}
+
+void GameGUI::enableDeleteAndUpgradeBox() {
+    upgradeTowerB->setEnabled(true);
+    deleteTowerB->setEnabled(true);
+}
