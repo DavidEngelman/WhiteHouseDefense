@@ -12,7 +12,7 @@ MexicanPNJ::MexicanPNJ(int direction) : PNJ(direction) {
 }
 
 MexicanPNJ::MexicanPNJ(Position position, int healthPoints, int direction)
-        : PNJ(position, healthPoints, direction) {}
+        : PNJ(position, healthPoints, direction) { typeOfPNJ = MEXICAN_PNJ_STR; }
 
 MexicanPNJ::MexicanPNJ(const Position &position, int healthPoints, const Position &last_pos, int direction)
-        : PNJ(position, healthPoints, last_pos, direction) {}
+        : PNJ(position, healthPoints, last_pos, direction) { typeOfPNJ = MEXICAN_PNJ_STR; }

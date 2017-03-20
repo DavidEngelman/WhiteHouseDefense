@@ -12,7 +12,7 @@ CommunistPNJ::CommunistPNJ(int direction) : PNJ(direction) {
 }
 
 CommunistPNJ::CommunistPNJ(Position position, int healthPoints, int direction)
-        : PNJ(position, healthPoints, direction) {}
+        : PNJ(position, healthPoints, direction) { typeOfPNJ = COMMUNIST_PNJ_STR; }
 
 CommunistPNJ::CommunistPNJ(const Position &position, int healthPoints, const Position &last_pos, int direction)
-        : PNJ(position, healthPoints, last_pos, direction) {}
+        : PNJ(position, healthPoints, last_pos, direction) { typeOfPNJ = COMMUNIST_PNJ_STR; }

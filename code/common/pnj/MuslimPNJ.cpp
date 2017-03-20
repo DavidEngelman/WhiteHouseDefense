@@ -11,10 +11,10 @@ MuslimPNJ::MuslimPNJ(int direction) : PNJ(direction) {
     typeOfPNJ = MUSLIM_PNJ_STR;
 }
 MuslimPNJ::MuslimPNJ(Position position, int healthPoints, int direction)
-        : PNJ(position, healthPoints, direction) {}
+        : PNJ(position, healthPoints, direction) { typeOfPNJ = MUSLIM_PNJ_STR; }
 
 MuslimPNJ::MuslimPNJ(const Position &position, int healthPoints, const Position &last_pos, int direction)
-        : PNJ(position, healthPoints, last_pos, direction) {}
+        : PNJ(position, healthPoints, last_pos, direction) { typeOfPNJ = MUSLIM_PNJ_STR; }
 
 
 
