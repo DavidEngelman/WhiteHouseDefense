@@ -29,6 +29,7 @@ void LoginGUI::display() {
 
     usernameL = new QLineEdit(fields);
     usernameL->setSelection(0, 10);
+    usernameL->setFocus();
 
     passwordL = new QLineEdit(fields);
     passwordL->setEchoMode(QLineEdit::Password); // Display bullets instead of char

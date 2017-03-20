@@ -93,7 +93,8 @@ GameGUI::GameGUI(unsigned seed, GameManager *manager) : AbstractGUI(nullptr), Ga
     this->setLayout(mainLayout);
     //playerInfo->setLayout(playerInfoLayout);
 
-    this->showMaximized();
+    //this->showMaximized();
+    this->showFullScreen();
 
     // TODO: Pour l'instant, c'est la gameGUI qui declenche la fonction updatemap toutes les 10 msec
     // Je ne suis pas sur que ca devrait etre dans cette classe
@@ -266,17 +267,20 @@ void GameGUI::disableTowerShop() {
 
 void GameGUI::enableTowerShop() {
     int quadrant = manager->getQuadrant();
-    if (map->computeQuadrant(map->getHighlightedPosition()) != quadrant) { return; }
-    int playerMoney = manager->getGameState().getPlayerStates()[quadrant].getMoney();
-    if (playerMoney > GUN_TOWER_PRICE) gunTowerB->setEnabled(true);
-    if (playerMoney > SNIPER_TOWER_PRICE) sniperTowerB->setEnabled(true);
-    if (playerMoney > SHOCK_TOWER_PRICE) shockTowerB->setEnabled(true);
+    if (map->computeQuadrant(map->getHighlightedPosition()) != quadrant or
+            manager->isTowerInPosition(manager->getGameState(), map->getHighlightedPosition())) {
+        disableTowerShop();
+    } else {
+        int playerMoney = manager->getGameState().getPlayerStates()[quadrant].getMoney();
+        if (playerMoney > GUN_TOWER_PRICE) gunTowerB->setEnabled(true);
+        if (playerMoney > SNIPER_TOWER_PRICE) sniperTowerB->setEnabled(true);
+        if (playerMoney > SHOCK_TOWER_PRICE) shockTowerB->setEnabled(true);
+    }
 }
 
 
 
 void GameGUI::handleBuyingTower(int typeOfTower) {
-
     switch (typeOfTower) {
         case 0:
             if (!manager->placeGunTower(map->getHighlightedPosition()))
