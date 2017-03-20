@@ -2,7 +2,6 @@
 
 #include <QtWidgets/QFrame>
 #include <QtWidgets/QHBoxLayout>
-#include <QtWidgets/QMessageBox>
 #include <QtWidgets/QGroupBox>
 #include "GameGUI.hpp"
     #include "../MapGUI.hpp"
@@ -13,7 +12,6 @@ GameGUI::GameGUI(unsigned seed, GameManager *manager) : AbstractGUI(nullptr), Ga
     QHBoxLayout *mainLayout = new QHBoxLayout();
     QVBoxLayout* leftPanel = new QVBoxLayout;
 
-    msgBox.setText("Incorrect action");
     //* RIGHT PANEL //*
     /* Player Info */
 
@@ -69,6 +67,7 @@ GameGUI::GameGUI(unsigned seed, GameManager *manager) : AbstractGUI(nullptr), Ga
     chatLayout->addWidget(inGameChatWidget);
     chatBox->setLayout(chatLayout);
 
+    /* Set up left panel layout */
     leftPanel->addWidget(usernameL);
     leftPanel->addWidget(playerStatsBox);
     leftPanel->addWidget(chatBox);
@@ -81,7 +80,13 @@ GameGUI::GameGUI(unsigned seed, GameManager *manager) : AbstractGUI(nullptr), Ga
     QVBoxLayout *centralLayout  = new QVBoxLayout;
     setUpHealthBar();
     centralLayout->addWidget(baseHealthBar);
+    centralLayout->addStretch();
     map = new MapGUI(seed, this, centralLayout);
+    centralLayout->addStretch();
+
+    otherPlayerHealthBarBox = new QGroupBox;
+    setUpOtherPlayerHealthBar();
+    centralLayout->addWidget(otherPlayerHealthBarBox);
 
 
     /* Main Layout */
@@ -121,6 +126,7 @@ void GameGUI::setUpHealthBar() {
     baseHealthBar->setPalette(p);
     baseHealthBar->setTextVisible(true);
 }
+
 
 Position GameGUI::getPosSellingTower() {
     return Position();
@@ -185,12 +191,12 @@ void GameGUI::displayDeleteAndUpgradeBox() {
     QSize size = QSize(1400/scl, 1060/scl);
 
     deleteTowerB = new QPushButton;
-    deleteTowerB->setEnabled(true);
+    deleteTowerB->setEnabled(false);
     deleteTowerB->setIcon(QIcon("../../qt_ui/game_pictures/towers/sell.png"));
     deleteTowerB->setIconSize(size);
 
     upgradeTowerB = new QPushButton;
-    upgradeTowerB->setEnabled(true);
+    upgradeTowerB->setEnabled(false);
     upgradeTowerB->setIcon(QIcon("../../qt_ui/game_pictures/towers/upgrade.png"));
     upgradeTowerB->setIconSize(size);
 
@@ -244,6 +250,7 @@ void GameGUI::displayPlayerInfos(GameState &gameState, int quadrant) {
     playerStateL->show();
 
     updateHealthBar(playerState.getHp());
+    updateOtherPlayerHealthBar(gameState.getPlayerStates(), quadrant);
 }
 
 void GameGUI::displayInfoForSupporter(GameState &gameState) {
@@ -266,44 +273,43 @@ void GameGUI::disableTowerShop() {
 
 void GameGUI::enableTowerShop() {
     int quadrant = manager->getQuadrant();
-    if (map->computeQuadrant(map->getHighlightedPosition()) != quadrant) { return; }
-    int playerMoney = manager->getGameState().getPlayerStates()[quadrant].getMoney();
-    if (playerMoney > GUN_TOWER_PRICE) gunTowerB->setEnabled(true);
-    if (playerMoney > SNIPER_TOWER_PRICE) sniperTowerB->setEnabled(true);
-    if (playerMoney > SHOCK_TOWER_PRICE) shockTowerB->setEnabled(true);
+    if (map->computeQuadrant(map->getHighlightedPosition()) != quadrant) {
+        disableTowerShop();
+        disableDeleteAndUpgradeBox();
+    } else {
+        if (manager->isTowerInPosition(manager->getGameState(), map->getHighlightedPosition())) {
+            disableTowerShop();
+            enableDeleteAndUpgradeBox();
+        } else {
+            int playerMoney = manager->getGameState().getPlayerStates()[quadrant].getMoney();
+            if (playerMoney > GUN_TOWER_PRICE) gunTowerB->setEnabled(true);
+            if (playerMoney > SNIPER_TOWER_PRICE) sniperTowerB->setEnabled(true);
+            if (playerMoney > SHOCK_TOWER_PRICE) shockTowerB->setEnabled(true);
+        }
+    }
 }
 
-
-
 void GameGUI::handleBuyingTower(int typeOfTower) {
-
     switch (typeOfTower) {
         case 0:
-            if (!manager->placeGunTower(map->getHighlightedPosition()))
-                msgBox.show();
+            manager->placeGunTower(map->getHighlightedPosition());
             break;
         case 1:
-            if (!manager->placeSniperTower(map->getHighlightedPosition()));
-                msgBox.show();
+            manager->placeSniperTower(map->getHighlightedPosition());
             break;
         default:
-            if (!manager->placeShockTower(map->getHighlightedPosition()))
-                 msgBox.show();
+            manager->placeShockTower(map->getHighlightedPosition());
             break;
     }
     disableTowerShop();
 }
 
 void GameGUI::handleSellingTower() {
-
-   if(!manager->sellTower(map->getHighlightedPosition()))
-       msgBox.show();
+    manager->sellTower(map->getHighlightedPosition());
 }
 
 void GameGUI::handleUpgradingTower() {
-
-    if(!manager->upgradeTower(map->getHighlightedPosition()))
-        msgBox.show();
+    manager->upgradeTower(map->getHighlightedPosition());
 }
 
 void GameGUI::handleNukeSpell() {
@@ -326,4 +332,45 @@ void GameGUI::enableNukeSpell() {
 void GameGUI::updateHealthBar(int value) {
     baseHealthBar->setValue(value);
     baseHealthBar->setFormat("HP : " + QString::number(value) + "/100" );
+}
+
+void GameGUI::disableDeleteAndUpgradeBox() {
+    upgradeTowerB->setEnabled(false);
+    deleteTowerB->setEnabled(false);
+}
+
+void GameGUI::enableDeleteAndUpgradeBox() {
+    upgradeTowerB->setEnabled(true);
+    deleteTowerB->setEnabled(true);
+}
+
+void GameGUI::setUpOtherPlayerHealthBar() {
+    QHBoxLayout *layout = new QHBoxLayout;
+    for(int i = 0; i < 3; i++) {
+        QProgressBar *healthBar = new QProgressBar;
+        healthBar->setStyleSheet(QString("QProgressBar {color: black}"));
+        healthBar->setMaximum(PLAYER_STARTING_HP);
+        healthBar->setMinimum(0);
+        QPalette p = healthBar->palette();
+        p.setColor(QPalette::Highlight, Qt::green);
+        healthBar->setPalette(p);
+        healthBar->setTextVisible(true);
+        layout->addWidget(healthBar);
+        otherPlayerHealthBar.push_back(healthBar);
+
+    }
+
+    otherPlayerHealthBarBox->setLayout(layout);
+}
+
+void GameGUI::updateOtherPlayerHealthBar(std::vector<PlayerState> &playerState, int quadrant) {
+    int count = 0;
+    for (int i = 0; i != playerState.size(); i++) {
+        if (i != quadrant) {
+            int value = playerState[i].getHp();
+            otherPlayerHealthBar[count]->setValue(value);
+            otherPlayerHealthBar[count]->setFormat(QString::fromStdString(playerState[i].getUsername()) + " :" + QString::number(value) + "/100" );
+            count++;
+        }
+    }
 }

@@ -4,7 +4,7 @@
 
 #include "AbstractTower.hpp"
 #include "PNJ.hpp"
-#include "../common/Constants.h"
+#include "Constants.hpp"
 
 class AttackTower : public AbstractTower {
     int damage;
@@ -17,7 +17,7 @@ public:
 
     int getDamageAmount() const;
 
-    virtual void dealDamageTo(PNJ &pnj);
+    virtual void dealDamageTo(PNJ &pnj, PlayerState& playerState);
 };
 
 #endif //PROJET_ATTACKTOWER_H

@@ -4,9 +4,9 @@
 #define PROJET_PNJ_H
 
 #include "Position.hpp"
-#include "Direction.h"
+#include "Direction.hpp"
 #include "Map.hpp"
-#include "Constants.h"
+#include "Constants.hpp"
 
 class Map;
 
@@ -35,7 +35,7 @@ public:
 
 	int getHealthPoints() const;
 
-	void receiveDamage(int damageAmount);
+	int receiveDamage(int damageAmount);
 
 	bool isDead();
 

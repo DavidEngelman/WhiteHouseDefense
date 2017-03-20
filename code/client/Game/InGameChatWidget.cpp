@@ -1,6 +1,7 @@
 #include <QtWidgets/QFormLayout>
 #include <QtWidgets/QLabel>
 #include "InGameChatWidget.hpp"
+#include "../QCustomButton.hpp"
 
 InGameChatWidget::InGameChatWidget(GameManager *gameManager) : gameManager(gameManager) {
     QFont police("calibri");
@@ -13,6 +14,7 @@ InGameChatWidget::InGameChatWidget(GameManager *gameManager) : gameManager(gameM
 
     /* Send message form */
     QHBoxLayout *fieldsLayout = new QHBoxLayout();
+    QHBoxLayout *buttonLayout = new QHBoxLayout();
 
     messageLineEdit = new QLineEdit;
     sendButton = new QHandPointerButton("SEND", 150, 25);
@@ -23,9 +25,23 @@ InGameChatWidget::InGameChatWidget(GameManager *gameManager) : gameManager(gameM
     fieldsLayout->addWidget(messageLineEdit);
     fieldsLayout->addWidget(sendButton);
 
+    QHBoxLayout * buttonsLayout = new QHBoxLayout();
+    QCustomButton * button1 = new QCustomButton(0, QString::fromStdString(MESSAGES[0]));
+    QCustomButton * button2 = new QCustomButton(1, QString::fromStdString(MESSAGES[1]));
+    QCustomButton * button3 = new QCustomButton(2, QString::fromStdString(MESSAGES[2]));
+
+    connect(button1, SIGNAL(clicked(int)), this, SLOT(handleMessageChoice(int)));
+    connect(button2, SIGNAL(clicked(int)), this, SLOT(handleMessageChoice(int)));
+    connect(button3, SIGNAL(clicked(int)), this, SLOT(handleMessageChoice(int)));
+
+    buttonsLayout->addWidget(button1);
+    buttonsLayout->addWidget(button2);
+    buttonsLayout->addWidget(button3);
+
     /* Bringing it all together */
     mainLayout->addWidget(messagesListWidget);
     mainLayout->addLayout(fieldsLayout);
+    mainLayout->addLayout(buttonsLayout);
     this->setLayout(mainLayout);
 }
 
@@ -33,6 +49,10 @@ void InGameChatWidget::sendMessage() {
     std::string message = messageLineEdit->text().toStdString();
     gameManager->sendMessageToPlayers(message);
     messageLineEdit->setText("");
+}
+
+void InGameChatWidget::handleMessageChoice(int choice){
+    gameManager->sendMessageToPlayers(MESSAGES[choice]);
 }
 
 void InGameChatWidget::addChatMessage(const std::string &message, const std::string &sender) {

@@ -1,7 +1,7 @@
 #include "SpectatorManager.hpp"
 #include "SpectatorGUI.hpp"
 #include "SpectatorConsoleUI.hpp"
-#include "../../common/Constants.h"
+#include "../../common/Constants.hpp"
 
 SpectatorManager::SpectatorManager(int port, App *master_app) :
         NetworkedManager(port, master_app) {
@@ -23,7 +23,7 @@ void SpectatorManager::getGamesFromMatchMaker() {
     receive_message(server_socket, buffer); //receive all the games in progress
 
     // TODO: REMPLACER CA PAR parse_message_from_server(buffer);
-    parse_message_from_server("5557,classic,bibi,baba,bobo,bubu;5558,classic,lala,lili,lolo,lele;");
+    parse_message_from_server(buffer);
 }
 
 void SpectatorManager::connectToGame(GameInfo &game, std::string &playerToSupport) {

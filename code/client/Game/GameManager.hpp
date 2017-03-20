@@ -5,7 +5,7 @@
 #include "GameUI.hpp"
 #include "../NetworkedManager.hpp"
 #include "GameManager.hpp"
-#include "../../common/Networking.h"
+#include "../../common/Networking.hpp"
 #include "../Main/MainManager.hpp"
 #include "../../common/GunTower.hpp"
 #include "../../common/SniperTower.hpp"
@@ -72,7 +72,7 @@ public:
 
     void updateMap();
 
-    void sendMessageToPlayers(std::string &message);
+    void sendMessageToPlayers(const std::string &message);
 
     bool upgradeTower(Position toUpgrade);
 

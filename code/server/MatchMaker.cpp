@@ -30,6 +30,7 @@ void MatchMaker::run() {
 
 void MatchMaker::get_and_process_command(int socket_fd) {
     char command_buffer[BUFFER_SIZE];
+    std::cout << "Received: " << command_buffer << std::endl;
     bool communication_over = false;
 
     while (!communication_over) {
@@ -44,7 +45,8 @@ void MatchMaker::get_and_process_command(int socket_fd) {
             communication_over = true;
 
         } else if (action == POP_GAME_REQUEST) {
-            removeGameFromGamesInProgress(stoi(command.getNextToken()));
+            const std::string &lol = command.getNextToken();
+            removeGameFromGamesInProgress(stoi(lol));
             communication_over = true;
 
         } else if(action == LEAVE_QUEUE_REQUEST){
@@ -52,6 +54,8 @@ void MatchMaker::get_and_process_command(int socket_fd) {
             removePlayerFromQueue(command.getNextToken(), socket_fd);
             communication_over = true;
 
+        } else if (action == GAME_STARTED_STRING){
+            communication_over = true;
         } else {
             MatchmakingCommand matchmakingCommand(socket_fd);
             matchmakingCommand.parse(command_buffer);
@@ -71,6 +75,7 @@ void MatchMaker::handleRequestFromSpectator(int socket_fd) {
     send_message(socket_fd, stringToSend.c_str());
 }
 
+// Returns True if the match is full and a game is created, False otherwise
 void MatchMaker::addPlayerToPendingMatch(PlayerConnection player_connection, std::string mode) {
     PendingMatch &match = getMatch(mode);
     match.add_player_to_queue(player_connection);
@@ -81,6 +86,7 @@ void MatchMaker::addPlayerToPendingMatch(PlayerConnection player_connection, std
         launchMatch(match); // Ici il faut que ça passe par valeur pour que ça marche
         match.clear();
     }
+    std::cout << "hi" << std::endl;
 }
 
 PendingMatch &MatchMaker::getMatch(std::string mode) {

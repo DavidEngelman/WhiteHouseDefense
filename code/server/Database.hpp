@@ -11,9 +11,9 @@
 #include <iostream>
 #include <sstream>
 #include <string.h>
-#include "../common/Credentials.h"
+#include "../common/Credentials.hpp"
 #include <vector>
-#include "../common/RankingInfos.h"
+#include "../common/RankingInfos.hpp"
 
 
 typedef struct PublicAccountInfos  {
@@ -63,6 +63,10 @@ public:
     virtual ~Database();
 
 
+    int update_username(int id, std::string newUsername);
+    int update_password(int id, std::string newPassword);
+    int update_profil_picture(int id, std::string newPassword);
+    int updateIcon(int id, int newPicture);
 };
 
 

@@ -8,12 +8,12 @@
 SniperTower::SniperTower(const Position &position, int level) :
         AttackTower(position, SNIPER_TOWER_DAMAGE, SNIPER_TOWER_PRICE, SNIPER_TOWER_RANGE, level) {}
 
-int SniperTower::shoot(Wave &wave) {
+int SniperTower::shoot(Wave &wave, PlayerState& playerState) {
     PNJ *my_target;
     int killed = 0;
     my_target = get_closest_pnj(wave);
     if ((my_target != nullptr) && (!my_target->isInPlayerBase()) && (my_target->getHealthPoints() > 0)) {
-        dealDamageTo(*my_target);
+        dealDamageTo(*my_target,playerState);
         if (my_target->getHealthPoints() <= 0) {
             killed = 1;
         }

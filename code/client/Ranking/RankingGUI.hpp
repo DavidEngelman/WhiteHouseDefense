@@ -4,13 +4,13 @@
 
 
 #include "../Abstract/AbstractGUI.hpp"
-#include "../../common/RankingInfos.h"
+#include "../../common/RankingInfos.hpp"
 #include "RankingConsoleUI.hpp"
 #include <QTableWidget>
 #include <QtWidgets/QTableWidget>
 
 #include "RankingManager.hpp"
-#include "RankingUI.h"
+#include "RankingUI.hpp"
 
 
 class RankingGUI : public AbstractGUI, public RankingUI {

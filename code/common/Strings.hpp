@@ -11,6 +11,7 @@
 #define GAME_IN_PROGRESS_REQUEST "games"
 #define POP_GAME_REQUEST "PopGame"
 static const std::string LEAVE_QUEUE_REQUEST = "LEAVEQUEUE";
+static const std::string GAME_STARTED_STRING = "GameStartedStopListeningMatchmaker";
 
 static const std::string PLACE_TOWER_COMMAND_STRING =  "PlaceTower";
 static const std::string DELETE_TOWER_COMMAND_STRING  = "DeleteTower";
@@ -22,6 +23,12 @@ static const std::string NUCLEAR_BOMB_COMMAND_STRING = "NuclearBomb";
 
 static const std::string JOIN_GAME_AS_SPECTATOR = "Support";
 static const std::string SUPPORT_PLAYER_STRING = "SupportPlayer";
+
+static const std::string CHANGE_USERNAME = "CHANGEUSERNAME";
+static const std::string CHANGE_PASSWORD = "CHANGEPASSWORD";
+static const std::string CHANGE_ICON = "CHANGEICON";
+
+static const std::string MESSAGES[3] = {"GG Easy", "Report", "J'aime les patates"};
 
 #define SETUP_GAME "SetupGame"
 #define END_OF_GAME "end"

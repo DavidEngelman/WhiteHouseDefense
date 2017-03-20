@@ -38,7 +38,7 @@ set(CLIENT_FILES client/ClientLauncher.cpp
         client/Register/RegisterGUI.cpp
         client/Register/RegisterGUI.hpp
         client/Register/RegisterManager.cpp
-        client/Register/RegisterConsoleUI.cpp
+        client/Register/RegisterUI.cpp
 
         #LOGIN
         client/Login/LoginGUI.cpp
@@ -56,7 +56,7 @@ set(CLIENT_FILES client/ClientLauncher.cpp
         client/Ranking/RankingManager.cpp
         client/Ranking/RankingConsoleUI.cpp
         client/Ranking/RankingGUI.cpp
-        client/Ranking/RankingUI.h
+        client/Ranking/RankingUI.hpp
 
         #SUPPORTER
         client/Spectator/SpectatorGUI.cpp
@@ -104,11 +104,10 @@ set(CLIENT_FILES client/ClientLauncher.cpp
         client/Drawing.cpp
         client/Drawing.hpp
         client/App.cpp
-        common/Constants.h common/Tools.hpp
+        common/Constants.hpp common/Tools.hpp
         common/Tools.cpp
         client/QHandPointerButton.hpp
-
-        client/Register/RegisterUI.hpp)
+        client/InQueueWidget.cpp client/InQueueWidget.hpp client/Settings/SettingsManager.cpp client/Settings/SettingsManager.hpp client/Settings/SettingsGUI.cpp client/Settings/SettingsGUI.hpp client/Settings/SettingsUI.hpp client/Settings/SettingsConsoleUI.cpp client/Settings/SettingsConsoleUI.hpp)
 
 
 add_executable(client ${CLIENT_FILES})
@@ -130,7 +129,7 @@ set(SERVER_FILES "server/ServerLauncher.cpp"
         common/Position.cpp
         common/Map.cpp
         server/GameEngine.cpp
-        common/Direction.h
+        common/Direction.hpp
         common/GameState.cpp
 
         #ACCOUNT
@@ -150,7 +149,7 @@ set(SERVER_FILES "server/ServerLauncher.cpp"
         server/PendingMatch.cpp
 
         #TOOLS
-        common/Constants.h
+        common/Constants.hpp
         common/Tools.cpp
         server/Timer.cpp
         server/PlayerConnection.cpp
@@ -164,6 +163,7 @@ include_directories(/usr/include)
 link_directories(/usr/lib)
 target_link_libraries(server sqlite3)
 target_link_libraries(client crypt)
+target_link_libraries(server crypt)
 target_link_libraries(server Threads::Threads)
 target_link_libraries(client Threads::Threads)
 target_link_libraries(client Qt5::Widgets Qt5::Multimedia)

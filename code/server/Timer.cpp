@@ -1,6 +1,6 @@
 #include <exception>
 #include <stdexcept>
-#include "Timer.h"
+#include "Timer.hpp"
 
 Timer::Timer(): numOfElapsedMilisecondsInPreviousIntervals(0), isPaused(true) {}
 

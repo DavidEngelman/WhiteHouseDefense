@@ -3,8 +3,8 @@
 
 #include "../NetworkedManager.hpp"
 #include "RegisterUI.hpp"
-#include "../../common/Networking.h"
-#include "../../common/Credentials.h"
+#include "../../common/Networking.hpp"
+#include "../../common/Credentials.hpp"
 #include "../Login/LoginManager.hpp"
 #include "../App.hpp"
 

@@ -4,13 +4,13 @@
 
 #include "Server.hpp"
 #include "../common/GameState.hpp"
-#include "PendingMatch.h"
+#include "PendingMatch.hpp"
 #include "PlayerConnection.hpp"
 #include "../common/Strings.hpp"
-#include "TowerCommand.h"
+#include "TowerCommand.hpp"
 #include "GameEngine.hpp"
 #include <time.h>
-#include "../common/Constants.h"
+#include "../common/Constants.hpp"
 #include "../common/Tools.hpp"
 #include <mutex>
 
@@ -116,6 +116,14 @@ public:
     void getAndProcessUserInput(int clientSocketFd, char buffer[]);
 
     void sendMessageToOtherPlayers(std::string &userMessage, std::string &senderUsername);
+
+    void handleEndOfGame();
+
+    void tellSupportersTheGameIsOver();
+
+    void processSpecialCommand(std::string &userMessage, std::string &senderUsername);
+
+    std::string makeMessage(const std::string &userMessage, const std::string &senderUsername) const;
 };
 
 #endif

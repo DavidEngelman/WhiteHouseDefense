@@ -3,7 +3,7 @@
 
 #include "../Abstract/AbstractGUI.hpp"
 #include "MainUI.hpp"
-#include "../QCustomButton.h"
+#include "../QCustomButton.hpp"
 #include <QtWidgets/QLineEdit>
 #include <QtCore/QSignalMapper>
 #include <QtWidgets/QDialogButtonBox>
@@ -20,6 +20,9 @@ private:
     QCustomButton *profile;
     QCustomButton *friendList;
     QCustomButton *leaderBoard;
+    QCustomButton *settings;
+
+
     QCustomButton *classicMode;
     QCustomButton *timedMode;
     QCustomButton *teamMode;

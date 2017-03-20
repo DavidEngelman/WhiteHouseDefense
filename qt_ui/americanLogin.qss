@@ -15,12 +15,3 @@ QPushButton:pressed {
                             background-image : url(../../qt_ui/game_pictures/buttons/connectPressed.png);
 }
 
-QLabel {
-                            color: gold;
-
-}
-
-QLineEdit {
-
-
- }

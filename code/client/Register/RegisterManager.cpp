@@ -49,10 +49,7 @@ void RegisterManager::registerUser() {
         registerUI->displayConfirmError();
         valid = false;
     } else {
-        password_entry = crypt(password_entry.c_str(), "g4");
-        for (unsigned i = 0; i < password_entry.length(); i++) {
-            if (password_entry[i] == ',' || password_entry[i] == ';') password_entry.erase(i);
-        }
+        password_entry = cryptPassword(password_entry);
     }
     registerCredentials.setPassword(password_entry);
 

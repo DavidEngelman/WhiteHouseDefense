@@ -4,6 +4,7 @@
 #include <QtMultimedia/QMediaPlayer>
 #include <QtWidgets/QMessageBox>
 #include "RegisterGUI.hpp"
+#include "RegisterManager.hpp"
 
 RegisterGUI::RegisterGUI(RegisterManager *manager, QWidget *_parent) : AbstractGUI(_parent), RegisterUI(manager) {}
 
@@ -19,8 +20,8 @@ void RegisterGUI::display() {
 
     QFont police("calibri");
 
-    QFrame *fields = new QFrame(this);
-    QFormLayout *fieldsLayout = new QFormLayout;
+    QFrame * fields = new QFrame(this);
+    QFormLayout * fieldsLayout = new QFormLayout;
 
     usernameL = new QLineEdit(fields);
     usernameL->setSelection(0, 10);
@@ -31,31 +32,28 @@ void RegisterGUI::display() {
     confirmL = new QLineEdit(fields);
     confirmL->setEchoMode(QLineEdit::Password); // Display bullets instead of char
 
-    QString s1 = "USERNAME";
-    QString s2 = "PASSWORD";
-    QString s3 = "CONFIRM";
-    QString s4 = "REGISTER";
-    QString s5 = "CANCEL";
-
-    QLabel *l1 = new QLabel();
-    l1->setText(s1);
+    QLabel *l1 = new QLabel("USERNAME");
     l1->setFont(police);
+    l1->setStyleSheet("color : gold;");
 
-    QLabel *l2 = new QLabel();
-    l2->setText(s2);
+
+    QLabel *l2 = new QLabel("PASSWORD");
     l2->setFont(police);
+    l2->setStyleSheet("color : gold;");
 
-    QLabel *l3 = new QLabel();
-    l3->setText(s3);
+
+    QLabel *l3 = new QLabel("CONFIRM");
     l3->setFont(police);
+    l3->setStyleSheet("color : gold;");
 
-    connect = new QPushButton(s4, fields);
-    connect->setFixedSize(QSize(212, 45));
+
+    connect = new QPushButton("REGISTER",fields);
+    connect->setFixedSize(QSize(212,45));
     connect->setCursor(Qt::PointingHandCursor);
 
 
-    cancel = new QPushButton(s5, fields);
-    cancel->setFixedSize(QSize(212, 45));
+    cancel = new QPushButton("CANCEL",fields);
+    cancel->setFixedSize(QSize(212,45));
     cancel->setCursor(Qt::PointingHandCursor);
 
 
@@ -90,8 +88,7 @@ void RegisterGUI::registerUser() {
 }
 
 void RegisterGUI::displaySuccess() {
-    QMessageBox::information(this, "Registered successfully",
-                             "Your account was registered successfully, you can now login normally.");
+    QMessageBox::information(this, "Registered successfully", "Your account was registered successfully, you can now login normally.");
     passwordL->setText("");
     confirmL->setText("");
 }

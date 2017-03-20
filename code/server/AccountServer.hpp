@@ -1,9 +1,9 @@
 #include "Server.hpp"
 #include <string.h>
 #include "Database.hpp"
-#include "../common/Credentials.h"
+#include "../common/Credentials.hpp"
 #include "LoginRegisterCommand.hpp"
-#include "UpdateStatsCommand.h"
+#include "UpdateStatsCommand.hpp"
 #include "../common/Command.hpp"
 #include "PlayerConnection.hpp"
 #include <algorithm>
@@ -15,7 +15,7 @@ class AccountServer : public Server {
 
 private:
 
-    Database myDatabase;
+    Database database;
     std::vector<PlayerConnection> connectedPlayers;
 
 public:
@@ -78,4 +78,9 @@ public:
     bool handle_accountUpdate(int client_sock_fd);
 
 
+    bool handle_changeUsername(std::string basic_string, int id, int client_socket);
+
+    bool handle_changePassword(std::string basic_string, int id);
+
+    bool handle_changeIcon(int basic_string, int id);
 };

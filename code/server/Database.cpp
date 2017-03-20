@@ -85,6 +85,47 @@ int Database::insert_account(Credentials credentials) {
 
 }
 
+int Database::update_username(int id, std::string newUsername) {
+
+    char *zErrMsg = 0;
+
+    std::string command = "";
+    command += "UPDATE Accounts SET username = '" + newUsername + "' WHERE id = " + std::to_string(id);
+
+    char *query = (char *) command.c_str();
+
+    return exec(query, NULL, 0, zErrMsg);
+
+}
+
+int Database::update_password(int id, std::string newPassword) {
+
+    char *zErrMsg = 0;
+
+    std::string command = "";
+    command += "UPDATE Accounts SET password = '" + newPassword + "' WHERE id = " + std::to_string(id);
+
+    char *query = (char *) command.c_str();
+
+    return exec(query, NULL, 0, zErrMsg);
+
+}
+
+int Database::updateIcon(int id, int newPicture) {
+
+    char *zErrMsg = 0;
+
+    std::string command = "";
+    command += "UPDATE Accounts SET profilePicture = '" + std::to_string(newPicture) +
+            "' WHERE id = " + std::to_string(id);
+
+    char *query = (char *) command.c_str();
+
+    return exec(query, NULL, 0, zErrMsg);
+
+}
+
+
 int Database::get_nb_entries() {
 
     /*Utilisé pour obtenir le prochain id disponible lors du rajout d'un compte dans la database*/

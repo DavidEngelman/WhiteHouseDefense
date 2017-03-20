@@ -4,7 +4,7 @@
 
 #include <QtCore/QThread>
 #include <assert.h>
-#include "../../common/Networking.h"
+#include "../../common/Networking.hpp"
 #include "../../common/Strings.hpp"
 
 class QMatchMakingThread : public QThread {
@@ -44,6 +44,11 @@ public:
         // parce qu'on communique au GameServer via le socket qu'on avait avec la Matchmaker
         int game_port;
         receive_data(serverSocket, &game_port, sizeof(int));
+
+        // Envoyer au matchmaker un string pour lui dire de ne plus faire receive sur le socket,
+        // car c'est maintenant le GameServer qui communique via ce socket
+        std::string matchmakerMessage = GAME_STARTED_STRING + ";";
+        send_message(serverSocket, matchmakerMessage.c_str());
 
         emit gameIsReady(serverSocket);
     }
