@@ -45,6 +45,11 @@ public:
         int game_port;
         receive_data(serverSocket, &game_port, sizeof(int));
 
+        // Envoyer au matchmaker un string pour lui dire de ne plus faire receive sur le socket,
+        // car c'est maintenant le GameServer qui communique via ce socket
+        std::string matchmakerMessage = GAME_STARTED_STRING + ";";
+        send_message(serverSocket, matchmakerMessage.c_str());
+
         emit gameIsReady(serverSocket);
     }
 };

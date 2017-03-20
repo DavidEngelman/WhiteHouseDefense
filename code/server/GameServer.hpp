@@ -116,6 +116,8 @@ public:
     void getAndProcessUserInput(int clientSocketFd, char buffer[]);
 
     void sendMessageToOtherPlayers(std::string &userMessage, std::string &senderUsername);
+
+    void handleEndOfGame();
 };
 
 #endif
