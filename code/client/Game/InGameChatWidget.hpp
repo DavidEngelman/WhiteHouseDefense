@@ -19,6 +19,8 @@ private:
 
 public slots:
     void sendMessage();
+    void handleMessageChoice(int);
+
 
 public:
     InGameChatWidget(GameManager * gameManager);
