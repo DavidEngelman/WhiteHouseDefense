@@ -2,7 +2,6 @@
 
 #include <QtWidgets/QFrame>
 #include <QtWidgets/QHBoxLayout>
-#include <QtWidgets/QMessageBox>
 #include <QtWidgets/QGroupBox>
 #include "GameGUI.hpp"
     #include "../MapGUI.hpp"
@@ -267,14 +266,19 @@ void GameGUI::disableTowerShop() {
 
 void GameGUI::enableTowerShop() {
     int quadrant = manager->getQuadrant();
-    if (map->computeQuadrant(map->getHighlightedPosition()) != quadrant or
-            manager->isTowerInPosition(manager->getGameState(), map->getHighlightedPosition())) {
+    if (map->computeQuadrant(map->getHighlightedPosition()) != quadrant) {
         disableTowerShop();
+        disableDeleteAndUpgradeBox();
     } else {
-        int playerMoney = manager->getGameState().getPlayerStates()[quadrant].getMoney();
-        if (playerMoney > GUN_TOWER_PRICE) gunTowerB->setEnabled(true);
-        if (playerMoney > SNIPER_TOWER_PRICE) sniperTowerB->setEnabled(true);
-        if (playerMoney > SHOCK_TOWER_PRICE) shockTowerB->setEnabled(true);
+        if (manager->isTowerInPosition(manager->getGameState(), map->getHighlightedPosition())) {
+            disableTowerShop();
+            enableDeleteAndUpgradeBox();
+        } else {
+            int playerMoney = manager->getGameState().getPlayerStates()[quadrant].getMoney();
+            if (playerMoney > GUN_TOWER_PRICE) gunTowerB->setEnabled(true);
+            if (playerMoney > SNIPER_TOWER_PRICE) sniperTowerB->setEnabled(true);
+            if (playerMoney > SHOCK_TOWER_PRICE) shockTowerB->setEnabled(true);
+        }
     }
 }
 
