@@ -21,10 +21,19 @@ class GameGUI : public AbstractGUI, public GameUI {
     Q_OBJECT
 
 private:
-    QGroupBox *playerInfo;
+    // Left Panel
     QLabel *usernameL;
+    QGroupBox *playerStatsBox;
+    QLabel *playerStateL;
 
+    InGameChatWidget * inGameChatWidget;
+    QGroupBox *chatBox;
+    QMessageBox msgBox;
 
+    // Middle Panel
+    QProgressBar *baseHealthBar;
+
+    // Right Panel
     QGroupBox *towerShop;
     QCustomButton *gunTowerB;
     QCustomButton *sniperTowerB;
@@ -36,19 +45,6 @@ private:
 
     QGroupBox *spellBox;
     QPushButton *nukeB;
-
-    QGroupBox *playerStatsBox;
-    QLabel *playerStateL;
-
-    QGroupBox *chatBox;
-
-    QProgressBar *baseHealthBar;
-
-    QMessageBox msgBox;
-
-
-
-    InGameChatWidget * inGameChatWidget;
 
 public slots:
     void update_map();
