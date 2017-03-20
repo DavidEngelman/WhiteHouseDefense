@@ -46,6 +46,10 @@ private:
     QGroupBox *spellBox;
     QPushButton *nukeB;
 
+    //base health of other players
+    QGroupBox *otherPlayerHealthBarBox;
+    std::vector<QProgressBar*> otherPlayerHealthBar;
+
 public slots:
     void update_map();
     void handleBuyingTower(int typeOfTower);
@@ -91,6 +95,10 @@ public:
     void setUpHealthBar();
 
     void updateHealthBar(int value);
+
+    void updateOtherPlayerHealthBar(std::vector<PlayerState> &playerState, int quadrant);
+
+    void setUpOtherPlayerHealthBar();
 };
 
 
