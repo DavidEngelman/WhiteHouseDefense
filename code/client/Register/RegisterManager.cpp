@@ -22,52 +22,6 @@ void RegisterManager::run() {
     registerUI->display();
 }
 
-//TODO:REFACTOR
-void RegisterManager::run() {
-    if (isConsole) {
-        bool success = false;
-        bool valid = false; // bool qui check si les donnés sont corrects (champs non vide) et peuvent être envoyées au serveur
-
-        while (not success) {
-
-            while (not valid) {
-                valid = true;
-                registerUI->display(); //demande le  username et pswrd
-                toRegister.setUsername(registerUI->getUsername());
-
-                std::string password_entry = registerUI->getPassword();
-                if (registerUI->getConfirm() != password_entry) {
-                    registerUI->displayConfirmError();
-                    valid = false;
-                } else {
-                    password_entry = crypt(password_entry.c_str(), "g4");
-                    for (unsigned i = 0; i < password_entry.length(); i++) {
-                        if (password_entry[i] == ',' || password_entry[i] == ';') password_entry.erase(i);
-                    }
-                }
-                toRegister.setPassword(password_entry);
-
-                if (valid) {
-                    valid = checkCredentialsValidity(toRegister);
-                    if (not valid) {
-                        registerUI->displayError();
-                    }
-                }
-            }
-
-            success = attemptRegister(toRegister);
-            if (not success) {
-                registerUI->displayError();
-                valid = false;
-            }
-        }
-
-        goToLogin();
-    } else {
-        registerGUI->display();
-    }
-}
-
 //NO CHANGES
 bool RegisterManager::attemptRegister(Credentials credentials) {
     char server_response[10];
@@ -83,16 +37,16 @@ bool RegisterManager::checkCredentialsValidity(Credentials credentials) {
             (credentials.getUsername().length() <= 16));
 }
 
-//TODO:REFACTOR
+//REFACTORED
 void RegisterManager::registerUser() {
     bool success;
-    bool valid = true; // bool qui check si les données sont correctes (champs non vide) et peuvent être envoyées au serveur
+    bool valid = true; // vérifie la validité des données (champs non vides) et si elles peuvent être envoyées au serveur.
 
-    toRegister.setUsername(registerGUI->getUsername());
+    registerCredentials.setUsername(registerUI->getUsername());
 
-    std::string password_entry = registerGUI->getPassword();
-    if (registerGUI->getConfirm() != password_entry) {
-        registerGUI->displayConfirmError();
+    std::string password_entry = registerUI->getPassword();
+    if (registerUI->getConfirm() != password_entry) {
+        registerUI->displayConfirmError();
         valid = false;
     } else {
         password_entry = crypt(password_entry.c_str(), "g4");
@@ -100,20 +54,18 @@ void RegisterManager::registerUser() {
             if (password_entry[i] == ',' || password_entry[i] == ';') password_entry.erase(i);
         }
     }
-
-    toRegister.setPassword(password_entry);
+    registerCredentials.setPassword(password_entry);
 
     if (valid) {
-        valid = checkCredentialsValidity(toRegister);
+        valid = checkCredentialsValidity(registerCredentials);
         if (not valid) {
-            registerGUI->displayError();
+            registerUI->displayError();
         }
     }
 
-
-    success = attemptRegister(toRegister);
+    success = attemptRegister(registerCredentials);
     if (not success) {
-        registerGUI->displayError();
+        registerUI->displayError();
         valid = false;
     }
 
