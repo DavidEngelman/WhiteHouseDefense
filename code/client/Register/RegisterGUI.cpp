@@ -6,7 +6,9 @@
 #include "RegisterGUI.hpp"
 #include "RegisterManager.hpp"
 
-RegisterGUI::RegisterGUI(RegisterManager *manager, QWidget* _parent) : AbstractGUI(_parent), manager(manager) {}
+RegisterGUI::RegisterGUI(RegisterManager *manager, QWidget *_parent) : AbstractGUI(_parent), RegisterUI(manager) {}
+
+RegisterGUI::~RegisterGUI() {}
 
 void RegisterGUI::display() {
     setStylesheetFromPath("../../qt_ui/americanLogin.qss");
@@ -18,8 +20,8 @@ void RegisterGUI::display() {
 
     QFont police("calibri");
 
-    QFrame * fields = new QFrame(this);
-    QFormLayout * fieldsLayout = new QFormLayout;
+    QFrame *fields = new QFrame(this);
+    QFormLayout *fieldsLayout = new QFormLayout;
 
     usernameL = new QLineEdit(fields);
     usernameL->setSelection(0, 10);
@@ -48,13 +50,13 @@ void RegisterGUI::display() {
     l3->setText(s3);
     l3->setFont(police);
 
-    connect = new QPushButton(s4,fields);
-    connect->setFixedSize(QSize(212,45));
+    connect = new QPushButton(s4, fields);
+    connect->setFixedSize(QSize(212, 45));
     connect->setCursor(Qt::PointingHandCursor);
 
 
-    cancel = new QPushButton(s5,fields);
-    cancel->setFixedSize(QSize(212,45));
+    cancel = new QPushButton(s5, fields);
+    cancel->setFixedSize(QSize(212, 45));
     cancel->setCursor(Qt::PointingHandCursor);
 
 
@@ -70,7 +72,7 @@ void RegisterGUI::display() {
     fieldsLayout->addRow(connect);
     fieldsLayout->addRow(cancel);
     fields->setLayout(fieldsLayout);
-    fields->move(this->size().width() / 2 - 125, this->size().height() / 2 +105);
+    fields->move(this->size().width() / 2 - 125, this->size().height() / 2 + 105);
 
     QMediaPlayer *player = new QMediaPlayer;
     player->setMedia(QUrl::fromLocalFile("../../qt_ui/game_pictures/sounds/americanAnthem.mp3"));
@@ -89,7 +91,8 @@ void RegisterGUI::registerUser() {
 }
 
 void RegisterGUI::displaySuccess() {
-    QMessageBox::information(this, "Registered successfully", "Your account was registered successfully, you can now login normally.");
+    QMessageBox::information(this, "Registered successfully",
+                             "Your account was registered successfully, you can now login normally.");
     passwordL->setText("");
     confirmL->setText("");
 }

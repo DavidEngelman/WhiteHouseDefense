@@ -1,28 +1,31 @@
-#ifndef __REGISTERUI__
-#define  __REGISTERUI__
+#ifndef PROJET_REGISTER_HPP
+#define PROJET_REGISTER_HPP
 
-#include <iostream>
+#include "RegisterManager.hpp"
 #include <string>
 #include "../Abstract/AbstractUI.hpp"
 
-class RegisterUI : public AbstractUI {
-	std::string username_entry;
-	std::string password_entry;
-	std::string confirm_entry;
+class RegisterManager;
 
+class RegisterUI : public virtual AbstractUI {
+
+protected:
+    RegisterManager *manager;
+    std::string username;
+    std::string password;
+    std::string confirm;
 
 public:
-	RegisterUI();
-	std::string get_username_entry() { return username_entry; };
-	std::string get_password_entry() { return password_entry; };
-	std::string get_confirm_entry() { return confirm_entry; };
+    RegisterUI(RegisterManager *manager) : manager(manager) {};
+    virtual ~RegisterUI() = default;
 
-	void ask_username();
-	void ask_password();
+    virtual std::string getUsername() { return username; };
+    virtual std::string getPassword() { return password; };
+    virtual std::string getConfirm() { return confirm; };
 
-	void display();
-	void displayError();
-    void displayConfirmError();
+    virtual void display() = 0;
+    virtual void displayError() = 0;
+    virtual void displayConfirmError() = 0;
 };
 
-#endif
+#endif //PROJET_REGISTER_HPP

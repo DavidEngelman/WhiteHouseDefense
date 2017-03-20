@@ -1,9 +1,23 @@
 #include "RegisterManager.hpp"
 #include "RegisterGUI.hpp"
+#include "RegisterConsoleUI.hpp"
 #include "../Welcome/WelcomeManager.hpp"
 
-RegisterManager::RegisterManager(int port, App *my_app) :
-        NetworkedManager(port, my_app), registerGUI(new RegisterGUI(this, master_app->getMainWindow())) {};
+RegisterManager::RegisterManager(int port, App *my_app) : NetworkedManager(port, my_app) {
+    if (isConsole) {
+        registerUI = new RegisterConsoleUI(this);
+    } else {
+        registerUI = new RegisterGUI(this, master_app->getMainWindow());
+    }
+}
+
+RegisterManager::~RegisterManager() {
+    registerUI->destroy();
+}
+
+void RegisterManager::newRun() {
+    registerUI->display();
+}
 
 void RegisterManager::run() {
     if (isConsole) {
@@ -15,10 +29,10 @@ void RegisterManager::run() {
             while (not valid) {
                 valid = true;
                 registerUI->display(); //demande le  username et pswrd
-                toRegister.setUsername(registerUI->get_username_entry());
+                toRegister.setUsername(registerUI->getUsername());
 
-                std::string password_entry = registerUI->get_password_entry();
-                if (registerUI->get_confirm_entry() != password_entry) {
+                std::string password_entry = registerUI->getPassword();
+                if (registerUI->getConfirm() != password_entry) {
                     registerUI->displayConfirmError();
                     valid = false;
                 } else {

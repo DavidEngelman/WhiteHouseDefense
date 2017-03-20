@@ -9,13 +9,15 @@
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QPushButton>
 #include "../Abstract/AbstractGUI.hpp"
+#include "RegisterUI.hpp"
 
 class RegisterManager;
 
-class RegisterGUI : public AbstractGUI {
+class RegisterGUI : public AbstractGUI, public RegisterUI {
 Q_OBJECT
 
 public slots:
+
     void registerUser();
     void cancelRegister();
 
@@ -26,21 +28,19 @@ private:
     QLineEdit *confirmL;
     QPushButton *connect;
     QPushButton *cancel;
-    std::string username;
-    std::string password;
-    std::string confirm;
 
 public:
-    RegisterGUI(RegisterManager *manager, QWidget* _parent);
-    void display();
+    RegisterGUI(RegisterManager *manager, QWidget *_parent);
 
-    std::string getUsername() { return username; };
-    std::string getPassword() { return password; };
-    std::string getConfirm() { return confirm; };
+    virtual ~RegisterGUI();
+
+    void display() override;
 
     void displaySuccess();
-    void displayError();
-    void displayConfirmError();
+
+    void displayError() override;
+
+    void displayConfirmError() override;
 };
 
 

@@ -38,7 +38,7 @@ set(CLIENT_FILES client/ClientLauncher.cpp
         client/Register/RegisterGUI.cpp
         client/Register/RegisterGUI.hpp
         client/Register/RegisterManager.cpp
-        client/Register/RegisterUI.cpp
+        client/Register/RegisterConsoleUI.cpp
 
         #LOGIN
         client/Login/LoginGUI.cpp
@@ -108,7 +108,7 @@ set(CLIENT_FILES client/ClientLauncher.cpp
         common/Tools.cpp
         client/QHandPointerButton.hpp
 
-        )
+        client/Register/RegisterUI.hpp)
 
 
 add_executable(client ${CLIENT_FILES})
