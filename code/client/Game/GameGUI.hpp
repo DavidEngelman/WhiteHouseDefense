@@ -95,8 +95,6 @@ public:
     void setUpHealthBar();
 
     void updateHealthBar(int value);
-
-    //void GameGUI::keyPressEvent(QKeyEvent *event);
 };
 
 

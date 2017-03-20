@@ -342,8 +342,3 @@ void GameGUI::enableDeleteAndUpgradeBox() {
     upgradeTowerB->setEnabled(true);
     deleteTowerB->setEnabled(true);
 }
-/*
-void GameGUI::keyPressEvent(QKeyEvent *event) {
-    if (event->key() == Qt::Key_Escape) this->showMaximized();
-}
-*/
