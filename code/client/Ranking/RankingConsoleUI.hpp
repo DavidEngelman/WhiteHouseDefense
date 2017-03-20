@@ -5,8 +5,8 @@
 #include <string>
 #include <iostream>
 #include "../Abstract/AbstractConsoleUI.hpp"
-#include "../../common/RankingInfos.h"
-#include "RankingUI.h"
+#include "../../common/RankingInfos.hpp"
+#include "RankingUI.hpp"
 
 class RankingConsoleUI : public AbstractConsoleUI, public RankingUI {
 

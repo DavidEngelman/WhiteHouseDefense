@@ -28,6 +28,8 @@ static const std::string CHANGE_USERNAME = "CHANGEUSERNAME";
 static const std::string CHANGE_PASSWORD = "CHANGEPASSWORD";
 static const std::string CHANGE_ICON = "CHANGEICON";
 
+static const std::string MESSAGES[3] = {"GG Easy", "Report", "J'aime les patates"};
+
 #define SETUP_GAME "SetupGame"
 #define END_OF_GAME "end"
 

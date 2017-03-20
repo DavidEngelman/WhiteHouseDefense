@@ -3,9 +3,7 @@
 #include "../../common/Tools.hpp"
 
 
-GameConsoleUI::GameConsoleUI(unsigned seed, GameManager *manager) : GameUI(seed,manager) {}
-
-
+GameConsoleUI::GameConsoleUI(unsigned seed, GameManager *manager) : GameUI(seed, manager) {}
 
 
 Position GameConsoleUI::getPosBuyingTower() {
@@ -33,7 +31,7 @@ bool GameConsoleUI::checkCoord(int x, int y) {
     return false;
 }
 
-void GameConsoleUI::display(GameState& gameState, int quadrant) {
+void GameConsoleUI::display(GameState &gameState, int quadrant) {
     map->display(gameState, quadrant);
 }
 
@@ -79,8 +77,8 @@ void GameConsoleUI::displayPlayerInfos(GameState &gameState, int quadrant) {
     bool isSupported = gameState.getPlayerStates()[quadrant].getIsSupported();
 
     std::string infos = "Money: " + std::to_string(gold) + " $ " + "\tNPC killed: " + std::to_string(pnj_killed)
-    +"\nHP: " + std::to_string(hp) + "\tSupported: " + bool_to_string(isSupported) +
-    "\t Quadrant: " + QUADRANT_NAMES[quadrant];
+                        + "\nHP: " + std::to_string(hp) + "\tSupported: " + bool_to_string(isSupported) +
+                        "\t Quadrant: " + QUADRANT_NAMES[quadrant];
 
     std::cout << std::endl << infos << std::endl;
     std::cout << std::endl;
@@ -90,10 +88,10 @@ void GameConsoleUI::displayPlayerInfos(GameState &gameState, int quadrant) {
 void GameConsoleUI::displayInfoForSupporter(GameState &gameState) {
     std::string infos;
     int i = 0;
-    for(PlayerState& ps : gameState.getPlayerStates()) {
+    for (PlayerState &ps : gameState.getPlayerStates()) {
         infos += ps.getUsername() + " - Money : " + std::to_string(ps.getMoney()) + " $ " +
-         "\tNPC killed: " + std::to_string(ps.getPnjKilled()) + "\tHP: " + std::to_string(ps.getHp())
-         + "\t Quadrant: " + QUADRANT_NAMES[i] + "\n";
+                 "\tNPC killed: " + std::to_string(ps.getPnjKilled()) + "\tHP: " + std::to_string(ps.getHp())
+                 + "\t Quadrant: " + QUADRANT_NAMES[i] + "\n";
 
         i++;
     }
@@ -108,9 +106,11 @@ void GameConsoleUI::displayPosingPhase() {
     std::cout << "1. Buy tower " << std::endl;
     std::cout << "2. Sell tower " << std::endl;
     std::cout << "3. Upgrade tower " << std::endl;
+    std::cout << "4. Send a predefined message" << std::endl;
     std::cout << std::endl;
 
 }
+
 void GameConsoleUI::displayTowerShop() {
     std::cout << "You can choose among the following towers: " << std::endl;
     std::cout << "1. GunTower : " << std::to_string(GUN_TOWER_PRICE) << " $ " << std::endl;
@@ -119,15 +119,13 @@ void GameConsoleUI::displayTowerShop() {
     std::cout << std::endl;
 }
 
-int GameConsoleUI::getChoice() {
+int GameConsoleUI::getChoice(int maxValue = 3) {
     /* Ask at the user his choice */
     int x = -1;
     std::cout << "   Enter your choice: ";
-    std::cin.clear();
-    std::cin.ignore();
     std::cin >> x;
-    while(std::cin.fail() or 0>x or x>3){
-        std::cout << "   Error, enter a integer between 1 and 3 " << std::endl;
+    while (std::cin.fail() or x < 1 or x > maxValue) {
+        std::cout << "   Error, enter a integer between 1 and " << maxValue << std::endl;
         std::cout << "   Enter your choice: ";
 
         std::cin.clear();
@@ -141,10 +139,10 @@ void GameConsoleUI::displayGameOver(GameState &gamestate) {
 
     Drawing::drawWhiteHouse("END GAME STATS");
 
-    for (auto& player : gamestate.getPlayerStates()) {
+    for (auto &player : gamestate.getPlayerStates()) {
 
-        std::cout << "   " << "Username : " + player.getUsername() <<" | NPC killed : "
-                  << player.getPnjKilled()<<" ";
+        std::cout << "   " << "Username : " + player.getUsername() << " | NPC killed : "
+                  << player.getPnjKilled() << " ";
 
         std::string winner_or_loser = player.getIsWinner() ? "| WINNER" : "| LOSER";
         std::cout << winner_or_loser << std::endl;
@@ -154,10 +152,9 @@ void GameConsoleUI::displayGameOver(GameState &gamestate) {
     std::cin.clear();
     std::cin.ignore();
     std::cout << "\nEnter something and press Enter to come back in the main menu..." << std::endl;
-    std::cin>>dummy;
+    std::cin >> dummy;
 
 }
-
 
 
 void GameConsoleUI::displayDeadMessage() {
@@ -192,9 +189,8 @@ void GameConsoleUI::placeTowerAction() {
 }
 
 void GameConsoleUI::sellTowerAction() {
-        Position toSell = getPosSellingTower();
-        manager->sellTower(toSell);
-
+    Position toSell = getPosSellingTower();
+    manager->sellTower(toSell);
 }
 
 void GameConsoleUI::upgradeTower() {
@@ -206,34 +202,53 @@ void *GameConsoleUI::input_thread() {
 
     while (1) {
         displayPosingPhase();
-        int choice = getChoice();
+        int choice = getChoice(4);
+        std::cout << "Choice: " << choice << std::endl;
         display(manager->getGameState(), manager->getQuadrant());
+        std::cout << "lele" << std::endl;
         displayPlayerInfos(manager->getGameState(), manager->getQuadrant());
+        std::cout << "lili" << std::endl;
 
         if (choice == 1) {
             placeTowerAction();
-
-        }else if (choice == 2){
+        } else if (choice == 2) {
             sellTowerAction();
-
-        }else
+        } else if (choice == 3){
             upgradeTower();
+        } else {
+            sendPredefinedMessage();
+        }
         display(manager->getGameState(), manager->getQuadrant());
         displayPlayerInfos(manager->getGameState(), manager->getQuadrant());
     }
 }
 
 
-void *GameConsoleUI::staticInputThread(void *self){
-    return static_cast<GameConsoleUI*>(self)->input_thread();
+void *GameConsoleUI::staticInputThread(void *self) {
+    return dynamic_cast<GameConsoleUI *>(static_cast<GameUI *>(self))->input_thread();
 }
 
 void GameConsoleUI::addChatMessage(const std::string &message, const std::string &sender) {
     // TODO: c'est juste pour tester, faudra faire la vraie fonction apres
-    std::cout << sender << ": " << message << std::endl;
+    std::cout << std::endl << sender << ": " << message << std::endl;
 }
 
 void GameConsoleUI::disableNukeSpell() {};
-void GameConsoleUI::enableNukeSpell() {};
+
+void GameConsoleUI::enableNukeSpell() {}
+
+void GameConsoleUI::sendPredefinedMessage() {
+    displayPredefinedMessages();
+    int choice = getChoice(3);
+    manager->sendMessageToPlayers(MESSAGES[choice - 1]);
+}
+
+void GameConsoleUI::displayPredefinedMessages() {
+    std::cout << "Send the messages: " << std::endl;
+    std::cout << "1. " << MESSAGES[0] << std::endl;
+    std::cout << "2. " << MESSAGES[1] << std::endl;
+    std::cout << "3. " << MESSAGES[2] << std::endl;
+    std::cout << std::endl;
+};
 
 

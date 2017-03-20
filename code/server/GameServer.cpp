@@ -16,14 +16,15 @@ void GameServer::run() {
     startSpectatorThread();
     startInputThread();
     runGame();
-    stopSpectatorThread();
-    stopInputThread();
     handleEndOfGame();
 }
 
 void GameServer::handleEndOfGame() {
+    stopSpectatorThread();
+    stopInputThread();
     updatePlayerStatsOnAccountServer();
     sendFinishedToMatchmaker();
+    delete gameEngine;
 }
 
 void GameServer::runGame() {
@@ -39,9 +40,8 @@ void GameServer::runGame() {
         setupGameForPlayers();
     }
 
-    while (!gameEngine->isGameFinished() || playerConnections.empty()) {
+    while (!gameEngine->isGameFinished() && !playerConnections.empty()) {
         if (!DEBUG) {
-
             gameEngine->getTimerSinceGameStart().pause(); // peut etre faire ca juste en mode contre la montre
             sendTowerPhase();
             sleep(NUM_SECONDS_TO_PLACE_TOWER);
@@ -50,10 +50,6 @@ void GameServer::runGame() {
         }
         runWave();
     }
-
-    delete gameEngine;
-
-    handleEndOfGame();
 }
 
 /*
@@ -112,7 +108,7 @@ void *GameServer::staticInputThread(void *self) {
 
 void GameServer::getAndProcessPlayerInput() {
     char messageBuffer[BUFFER_SIZE];
-    while (1) {
+    while (!playerConnections.empty()) {
         // TODO: the 10000 is absurdly high, not sure it's a good idea
         int clientSocketFd = getReadableReadableSocket(10000);
         getAndProcessUserInput(clientSocketFd, messageBuffer);
@@ -140,7 +136,12 @@ void GameServer::getAndProcessUserInput(int clientSocketFd, char *buffer) {
             command.parse(buffer);
             std::string userMessage = command.getNextToken();
             std::string senderUsername = command.getNextToken();
-            sendMessageToOtherPlayers(userMessage, senderUsername);
+
+            if (!userMessage.empty() && userMessage[0] == '/'){
+                processSpecialCommand(userMessage, senderUsername);
+            } else {
+                sendMessageToOtherPlayers(userMessage, senderUsername);
+            }
         } else if (command_type == NUCLEAR_BOMB_COMMAND_STRING) {
             Command command;
             command.parse(buffer);
@@ -153,11 +154,16 @@ void GameServer::getAndProcessUserInput(int clientSocketFd, char *buffer) {
 }
 
 void GameServer::sendMessageToOtherPlayers(std::string &userMessage, std::string &senderUsername) {
-    std::string message = RECEIVE_MESSAGE_STRING + "," + userMessage + "," + senderUsername + ";";
+    std::string message = makeMessage(userMessage, senderUsername);
     for (PlayerConnection &playerConnection : playerConnections) {
         int socketFd = playerConnection.getSocketFd();
         send_message(socketFd, message.c_str());
     }
+}
+
+std::string GameServer::makeMessage(const std::string &userMessage, const std::string &senderUsername) const {
+    std::__cxx11::string message = RECEIVE_MESSAGE_STRING + "," + userMessage + "," + senderUsername + ";";
+    return message;
 }
 
 int GameServer::getReadableReadableSocket(int timeLeft) {
@@ -234,7 +240,7 @@ void *GameServer::staticJoinSpectatorThread(void *self) {
 }
 
 void GameServer::getAndProcessSpectatorJoinCommand() {
-    while (1) {
+    while (!playerConnections.empty()) {
         int client_socket_fd = accept_connection();
         if (client_socket_fd == -1) {
             continue;
@@ -401,7 +407,10 @@ void GameServer::removeClosedSocketFromSocketLists(int fd) {
     for (iter = playerConnections.begin(); iter != playerConnections.end(); iter++) {
         if ((*iter).getSocketFd() == fd) {
             playerConnections.erase(iter);
-
+            // If there aren't players anymore, it stops the game
+            if (playerConnections.empty()) {
+                tellSupportersTheGameIsOver();
+            }
             return;
         }
     }
@@ -445,6 +454,31 @@ std::vector<PlayerConnection> &GameServer::getPlayerConnections() {
     return playerConnections;
 }
 
+void GameServer::tellSupportersTheGameIsOver() {
+    gameEngine->getGameState().setIsGameOver(true);
+    for (int socketFd: supportersSockets) {
+        sendGameStateToPlayer(socketFd);
+    }
+}
+
+void GameServer::processSpecialCommand(std::string &userMessage, std::string &senderUsername) {
+    std::string MESSAGE_COMMAND = "/msg";
+    std::string TEAM_COMMAND = "/team";
+    if (userMessage.compare(0, MESSAGE_COMMAND.size(), MESSAGE_COMMAND) == 0) {
+        // TODO: faire qu'on puisse envoyer à un ami
+//        int quadrant = getQuadrantForPlayer(friendUsername);
+//        std::string message = makeMessage(userMessage, senderUsername);
+//        send_message(playerConnections[quadrant].getSocketFd(), message);
+    } else if (userMessage.compare(0, TEAM_COMMAND.size(), TEAM_COMMAND)) {
+        int quadrant = getQuadrantForPlayer(senderUsername);
+        int teamMateQuadrants[4] = {1, 0, 3, 2};
+        int teamMateQuadrant = teamMateQuadrants[quadrant];
+        std::string message = makeMessage(userMessage, senderUsername);
+        send_message(playerConnections[teamMateQuadrant].getSocketFd(), message.c_str());
+    } else {
+        sendMessageToOtherPlayers(userMessage, senderUsername);
+    }
+}
 
 
 

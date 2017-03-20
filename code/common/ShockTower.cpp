@@ -9,12 +9,12 @@
 ShockTower::ShockTower(const Position &position, int level) :
         AttackTower(position, SHOCK_TOWER_DAMAGE, SHOCK_TOWER_PRICE, SHOCK_TOWER_RANGE, level) {}
 
-int ShockTower::shoot(Wave &wave) {
+int ShockTower::shoot(Wave &wave, PlayerState& playerState) {
     std::vector<PNJ*> targets;
     int killed = 0;
     targets = get_targets(wave);
     for (auto &target : targets) {
-        dealDamageTo(*target);
+        dealDamageTo(*target, playerState);
         if (target->getHealthPoints() <= 0) {
             killed += 1;
         }

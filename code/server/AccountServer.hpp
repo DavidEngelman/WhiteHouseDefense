@@ -1,9 +1,9 @@
 #include "Server.hpp"
 #include <string.h>
 #include "Database.hpp"
-#include "../common/Credentials.h"
+#include "../common/Credentials.hpp"
 #include "LoginRegisterCommand.hpp"
-#include "UpdateStatsCommand.h"
+#include "UpdateStatsCommand.hpp"
 #include "../common/Command.hpp"
 #include "PlayerConnection.hpp"
 #include <algorithm>

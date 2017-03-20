@@ -1,6 +1,7 @@
 #include "AccountServer.hpp"
 #include "FriendListCommand.h"
 #include "../common/Strings.hpp"
+#include "FriendListCommand.hpp"
 
 AccountServer::AccountServer(int port, const char *databaseName) : Server(port), myDatabase(Database(databaseName)) {}
 

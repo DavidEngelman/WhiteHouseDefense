@@ -3,7 +3,7 @@
 
 #include "AttackTower.hpp"
 #include "PNJ.hpp"
-#include "../common/Constants.h"
+#include "Constants.hpp"
 
 class GunTower : public AttackTower {
 
@@ -13,7 +13,7 @@ public:
 
     ~GunTower() = default;
 
-    virtual int shoot(Wave &wave) override;
+    virtual int shoot(Wave &wave, PlayerState& playerState) override;
 
     virtual std::string serialize() override;
     

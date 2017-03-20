@@ -74,9 +74,19 @@ int PNJ::getHealthPoints() const {
     return this->healthPoints;
 }
 
-void PNJ::receiveDamage(int damageAmount) {
-    if (healthPoints < damageAmount) healthPoints = 0;
-    else healthPoints -= damageAmount;
+int PNJ::receiveDamage(int damageAmount) {
+    int receivedDamage = 0;
+    if (healthPoints < damageAmount) {
+        healthPoints = 0;
+        receivedDamage = 0;
+    } else if (healthPoints - damageAmount < 0) {
+        receivedDamage = healthPoints;
+    }
+    else{
+        healthPoints -= damageAmount;
+        receivedDamage = damageAmount;
+    }
+    return receivedDamage;
 }
 
 bool PNJ::isDead() {

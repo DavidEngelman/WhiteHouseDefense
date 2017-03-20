@@ -1,5 +1,5 @@
 
-#include "Wave.h"
+#include "Wave.hpp"
 
 Wave::Wave(int number_of_pnjs, int quadrant) :
         number_of_pnjs(number_of_pnjs),

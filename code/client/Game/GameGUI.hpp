@@ -12,7 +12,7 @@
 #include "GameManager.hpp"
 #include "GameUI.hpp"
 #include "InGameChatWidget.hpp"
-#include "../QCustomButton.h"
+#include "../QCustomButton.hpp"
 #include <QProgressBar>
 
 class MapGUI;
@@ -21,10 +21,18 @@ class GameGUI : public AbstractGUI, public GameUI {
     Q_OBJECT
 
 private:
-    QGroupBox *playerInfo;
+    // Left Panel
     QLabel *usernameL;
+    QGroupBox *playerStatsBox;
+    QLabel *playerStateL;
 
+    InGameChatWidget * inGameChatWidget;
+    QGroupBox *chatBox;
 
+    // Middle Panel
+    QProgressBar *baseHealthBar;
+
+    // Right Panel
     QGroupBox *towerShop;
     QCustomButton *gunTowerB;
     QCustomButton *sniperTowerB;
@@ -37,18 +45,9 @@ private:
     QGroupBox *spellBox;
     QPushButton *nukeB;
 
-    QGroupBox *playerStatsBox;
-    QLabel *playerStateL;
-
-    QGroupBox *chatBox;
-
-    QProgressBar *baseHealthBar;
-
-    QMessageBox msgBox;
-
-
-
-    InGameChatWidget * inGameChatWidget;
+    //base health of other players
+    QGroupBox *otherPlayerHealthBarBox;
+    std::vector<QProgressBar*> otherPlayerHealthBar;
 
 public slots:
     void update_map();
@@ -95,6 +94,10 @@ public:
     void setUpHealthBar();
 
     void updateHealthBar(int value);
+
+    void updateOtherPlayerHealthBar(std::vector<PlayerState> &playerState, int quadrant);
+
+    void setUpOtherPlayerHealthBar();
 };
 
 
