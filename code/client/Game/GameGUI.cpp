@@ -67,6 +67,7 @@ GameGUI::GameGUI(unsigned seed, GameManager *manager) : AbstractGUI(nullptr), Ga
     chatLayout->addWidget(inGameChatWidget);
     chatBox->setLayout(chatLayout);
 
+    /* Set up left panel layout */
     leftPanel->addWidget(usernameL);
     leftPanel->addWidget(playerStatsBox);
     leftPanel->addWidget(chatBox);
