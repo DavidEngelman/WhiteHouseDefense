@@ -24,6 +24,9 @@ set(CLIENT_FILES client/ClientLauncher.cpp
         client/Main/MainGUI.cpp
         client/Main/MainConsoleUI.cpp
         client/Main/MainUI.hpp
+        client/InQueueWidget.cpp
+        client/InQueueWidget.hpp
+        client/Game/QMatchMakingThread.hpp
 
         #WELCOME
         client/Welcome/WelcomeManager.cpp

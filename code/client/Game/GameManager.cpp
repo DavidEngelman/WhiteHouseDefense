@@ -50,6 +50,7 @@ void GameManager::comeBackToMenu() { // À appeler quand la partie est terminée
 void GameManager::updateMap() {
     char server_msg_buff[BUFFER_SIZE];
     receive_message(server_socket, server_msg_buff);
+
     if (strncmp(server_msg_buff, RECEIVE_MESSAGE_STRING.c_str(), RECEIVE_MESSAGE_STRING.length()) == 0) {
         Command command;
         command.parse(server_msg_buff);
@@ -57,9 +58,15 @@ void GameManager::updateMap() {
         const std::string& sender = command.getNextToken();
         gameUI->addChatMessage(message, sender);
     }
+    else if (strcmp(server_msg_buff, PLACING_TOWER) == 0) {
+        gameUI->disableNukeSpell();
+    }
+
     else if (strcmp(server_msg_buff, PLACING_TOWER) != 0 && strcmp(server_msg_buff, WAVE) != 0) {
+        if (nukeSpell) gameUI->enableNukeSpell();
         unSerializeGameState(server_msg_buff);
     }
+
     gameUI->display(gameState, quadrant);
     gameUI->displayPlayerInfos(gameState, quadrant);
 }
@@ -274,7 +281,7 @@ void GameManager::unSerializePlayerState(std::string serialized_playerstate) {
             switch (count) {
                 case 0: // Nothing to do
                     break;
-                case 1: // player_id
+                case 1: // playerId
                     player_id = std::stoi(elem);
                     break;
                 case 2:
@@ -329,13 +336,17 @@ void GameManager::unSerializeTower(std::string serialized_tower) {
     std::string typeOfTower="";
     int x=0;
     int y=0;
+    int level = 0;
     for (char& c : serialized_tower) {
         if (c == ',') {
             switch (count) {
                 case 0: // Type of Tower
                     typeOfTower = elem;
                     break;
-                case 1: // X
+                case 1: //Level of tower
+                    level = stoi(elem);
+                    break;
+                case 2: // X
                     x = std::stoi(elem);
                     break;
                 default:
@@ -352,9 +363,9 @@ void GameManager::unSerializeTower(std::string serialized_tower) {
     AbstractTower *tower;
     Position pos = Position(x, y);
 
-    if (typeOfTower == "GunTower") tower = new GunTower(pos);
-    else if (typeOfTower == "SniperTower") tower = new SniperTower(pos);
-    else tower = new ShockTower(pos);
+    if (typeOfTower == "GunTower") tower = new GunTower(pos, level);
+    else if (typeOfTower == "SniperTower") tower = new SniperTower(pos, level);
+    else tower = new ShockTower(pos, level);
 
     //TODO: remplacer par gameState.addTower(tower)
     //Pour ne pas utiliser un getter pour modifier la classe, ça n'a aucun sens
@@ -432,7 +443,7 @@ bool GameManager::is_alive() {
 
     bool alive = false;
     for( PlayerState& playerState : gameState.getPlayerStates()){
-        if (playerState.getPlayer_id() == master_app->get_id()){
+        if (playerState.getPlayer_id() == master_app->getId()){
             if (playerState.getHp() > 0){
                 alive = true;
                 break;
@@ -484,32 +495,32 @@ int GameManager::getQuadrant() {
 
 bool GameManager::placeGunTower(Position towerPos) {
     if (checkValidity(towerPos, gameState, GUN_TOWER_STR)) {
-        gameState.addTower(new GunTower(Position(towerPos.getX(), towerPos.getY())), quadrant);
+        gameState.addTower(new GunTower(Position(towerPos.getX(), towerPos.getY()), 1), quadrant);
         sendBuyRequest(towerPos, GUN_TOWER_STR);
         return true;
     }
-    else
-        return false;
+
+    return false;
 }
 
 bool GameManager::placeSniperTower(Position towerPos) {
     if (checkValidity(towerPos, gameState, SNIPER_TOWER_STR)) {
-        gameState.addTower(new GunTower(Position(towerPos.getX(), towerPos.getY())), quadrant);
+        gameState.addTower(new SniperTower(Position(towerPos.getX(), towerPos.getY()),1), quadrant);
         sendBuyRequest(towerPos, SNIPER_TOWER_STR);
         return true;
     }
-    else
-        return false;
+
+    return false;
 }
 
 bool GameManager::placeShockTower(Position towerPos) {
     if (checkValidity(towerPos, gameState, SHOCK_TOWER_STR)) {
-        gameState.addTower(new GunTower(Position(towerPos.getX(), towerPos.getY())), quadrant);
+        gameState.addTower(new ShockTower(Position(towerPos.getX(), towerPos.getY()),1), quadrant);
         sendBuyRequest(towerPos, SHOCK_TOWER_STR);
         return true;
     }
-    else
-        return false;
+
+    return false;
 }
 
 bool GameManager::sellTower(Position toSell) {
@@ -533,11 +544,26 @@ bool GameManager::upgradeTower(Position toUpgrade) {
     return false;
 }
 
+
 /* In-Game Chat */
 
 void GameManager::sendMessageToPlayers(std::string &message) {
     // TODO: si l'utilisateur met des ; dans son message, c'est la merde
-    std::string request = SEND_MESSAGE_STRING + "," + message + "," + master_app->get_username() + ";";
+    std::string request = SEND_MESSAGE_STRING + "," + message + "," + master_app->getUsername() + ";";
     send_message(server_socket, request.c_str());
 }
 
+
+
+/* Spells */
+void GameManager::nuclearBombSpell() {
+    sendNuclearRequest();
+    nukeSpell = false;
+    gameUI->disableNukeSpell();
+}
+
+void GameManager::sendNuclearRequest() {
+    std::string message = NUCLEAR_BOMB_COMMAND_STRING
+                          + "," + std::to_string(quadrant) + ";";
+    send_message(server_socket, message.c_str());
+}

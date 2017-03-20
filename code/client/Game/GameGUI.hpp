@@ -13,6 +13,7 @@
 #include "GameUI.hpp"
 #include "InGameChatWidget.hpp"
 #include "../QCustomButton.h"
+#include <QProgressBar>
 
 class MapGUI;
 
@@ -22,7 +23,7 @@ class GameGUI : public AbstractGUI, public GameUI {
 private:
     QGroupBox *playerInfo;
     QLabel *usernameL;
-    QLabel *playerStateL;
+
 
     QGroupBox *towerShop;
     QCustomButton *gunTowerB;
@@ -34,6 +35,15 @@ private:
     QPushButton *upgradeTowerB;
 
     QGroupBox *spellBox;
+    QPushButton *nukeB;
+
+    QGroupBox *playerStatsBox;
+    QLabel *playerStateL;
+
+    QGroupBox *chatBox;
+
+    QProgressBar *baseHealthBar;
+
     QMessageBox msgBox;
 
 
@@ -45,6 +55,7 @@ public slots:
     void handleBuyingTower(int typeOfTower);
     void handleSellingTower();
     void handleUpgradingTower();
+    void handleNukeSpell();
 
 public:
     GameGUI(unsigned seed, GameManager *manager);
@@ -72,9 +83,18 @@ public:
 
     void addChatMessage(const std::string &message, const std::string &sender) override;
 
+    void disableNukeSpell() override ;
+    void enableNukeSpell() override ;
+
     void disableDeleteAndUpgradeBox();
 
     void enableDeleteAndUpgradeBox();
+
+    void displaySpellBox();
+
+    void setUpHealthBar();
+
+    void updateHealthBar(int value);
 };
 
 

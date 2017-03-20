@@ -23,7 +23,7 @@ protected:
 
 public:
 
-    AbstractTower(Position position, int price, float range);
+    AbstractTower(Position position, int price, float range, int level);
 
     int getQuadrant() const;
 

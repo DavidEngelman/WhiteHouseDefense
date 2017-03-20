@@ -233,4 +233,7 @@ void GameConsoleUI::addChatMessage(const std::string &message, const std::string
     std::cout << sender << ": " << message << std::endl;
 }
 
+void GameConsoleUI::disableNukeSpell() {};
+void GameConsoleUI::enableNukeSpell() {};
+
 

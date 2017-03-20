@@ -2,8 +2,8 @@
 #include <iostream>
 #include "AbstractTower.hpp"
 
-AbstractTower::AbstractTower(Position position, int price, float range):
-        position(position), price(price), quadrant(Map::computeQuadrant(position)), range(range), level(1) {
+AbstractTower::AbstractTower(Position position, int price, float range, int level):
+        position(position), price(price), quadrant(Map::computeQuadrant(position)), range(range), level(level) {
 }
 
 int AbstractTower::getLevel() const { return level; }
@@ -22,6 +22,7 @@ std::string AbstractTower::serialize() {
 
     std::string serialized_me;
 
+    serialized_me +=  std::to_string(level) + ",";
     serialized_me +=  position.serialize();
 
     return serialized_me;

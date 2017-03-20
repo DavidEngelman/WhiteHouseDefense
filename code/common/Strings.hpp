@@ -11,12 +11,15 @@
 #define GAME_IN_PROGRESS_REQUEST "games"
 #define POP_GAME_REQUEST "PopGame"
 static const std::string LEAVE_QUEUE_REQUEST = "LEAVEQUEUE";
+static const std::string GAME_STARTED_STRING = "GameStartedStopListeningMatchmaker";
 
 static const std::string PLACE_TOWER_COMMAND_STRING =  "PlaceTower";
 static const std::string DELETE_TOWER_COMMAND_STRING  = "DeleteTower";
 static const std::string UPGRADE_TOWER_COMMAND_STRING = "UpgradeTower";
 static const std::string SEND_MESSAGE_STRING = "SendMessage";
 static const std::string RECEIVE_MESSAGE_STRING = "ReceiveMessage";
+static const std::string NUCLEAR_BOMB_COMMAND_STRING = "NuclearBomb";
+
 
 static const std::string JOIN_GAME_AS_SPECTATOR = "Support";
 static const std::string SUPPORT_PLAYER_STRING = "SupportPlayer";

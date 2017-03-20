@@ -106,11 +106,9 @@ bool GameState::upgradeTower(Position &position, int &quadrant) {
         if (tower->getPosition() == position){
 
             float cost = (float)(tower->getPrice()) * (PERCENTAGE_RECOVERED_MONEY * (float)(tower->getLevel()));
-            std::cout << "t price " << tower->getPrice()  << std::endl;
-            std::cout << "level " << tower->getLevel()  << std::endl;
             if (player_states[quadrant].getMoney() - cost >= 0) {
-                std::cout << cost << std::endl;
-                tower->upgrade();
+                if (!tower->upgrade());
+                    return false;
                 player_states[quadrant].spendMoney((int) cost);
                 return true;
             }

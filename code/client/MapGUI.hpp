@@ -25,7 +25,7 @@ protected:
     void paintEvent(QPaintEvent *event) override;
 
 public:
-    MapGUI(unsigned int seed, GameGUI *gameGUI, QHBoxLayout *layout);
+    MapGUI(unsigned int seed, GameGUI *gameGUI, QVBoxLayout *layout);
     void display();
     void display(GameState& gameState, int quadrant) override;
 

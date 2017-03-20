@@ -22,7 +22,7 @@ void ProfileManager::run() {
 }
 
 void ProfileManager::showMyProfile() {
-    getAndParseProfile(master_app->get_username());
+    getAndParseProfile(master_app->getUsername());
     profileUI->updateProfile();
 }
 

@@ -2,7 +2,6 @@
 
 #include <QtWidgets/QFrame>
 #include <QtWidgets/QHBoxLayout>
-#include <QtWidgets/QMessageBox>
 #include <QtWidgets/QGroupBox>
 #include "GameGUI.hpp"
     #include "../MapGUI.hpp"
@@ -10,8 +9,6 @@
 GameGUI::GameGUI(unsigned seed, GameManager *manager) : AbstractGUI(nullptr), GameUI(seed, manager) {
 
 
-    playerInfo = new QGroupBox;
-    QVBoxLayout* playerInfoLayout = new QVBoxLayout;
     QHBoxLayout *mainLayout = new QHBoxLayout();
     QVBoxLayout* leftPanel = new QVBoxLayout;
 
@@ -32,8 +29,10 @@ GameGUI::GameGUI(unsigned seed, GameManager *manager) : AbstractGUI(nullptr), Ga
     displayDeleteAndUpgradeBox();
     actionLayout->addWidget(deleteAndUpgradeBox);
 
+
     QString spellBoxTitle = QString::fromStdString("Spells");
-    spellBox = new QGroupBox(this);
+    spellBox = new QGroupBox(spellBoxTitle);
+    displaySpellBox();
     actionLayout->addWidget(spellBox);
 
     //* LEFT PANEL //*
@@ -49,32 +48,59 @@ GameGUI::GameGUI(unsigned seed, GameManager *manager) : AbstractGUI(nullptr), Ga
     font.setBold(false);
     font.setPixelSize(15);
 
+    QString playerStatsBoxTitle = QString::fromStdString("Stats");
+    playerStatsBox = new QGroupBox(playerStatsBoxTitle);
+
+    QHBoxLayout *playerStateLayout = new QHBoxLayout;
     playerStateL = new QLabel;
     playerStateL->setFont(font);
+    playerStateLayout->addWidget(playerStateL);
+    playerStatsBox->setLayout(playerStateLayout);
+
+
 
     /* In Game Chat UI */
+    QString chatBoxTitle = QString::fromStdString("Chat");
+    chatBox = new QGroupBox(chatBoxTitle);
     inGameChatWidget = new InGameChatWidget(manager);
 
+    QHBoxLayout *chatLayout = new QHBoxLayout;
+    chatLayout->addWidget(inGameChatWidget);
+    chatBox->setLayout(chatLayout);
+
     leftPanel->addWidget(usernameL);
-    leftPanel->addWidget(playerStateL);
-    leftPanel->addWidget(inGameChatWidget);
+    leftPanel->addWidget(playerStatsBox);
+    leftPanel->addWidget(chatBox);
 
     leftPanel->setAlignment(usernameL, Qt::AlignCenter|Qt::AlignTop);
     leftPanel->setAlignment(playerStateL, Qt::AlignCenter|Qt::AlignTop);
     leftPanel->setAlignment(inGameChatWidget, Qt::AlignCenter|Qt::AlignTop);
 
+    /* Central Layout */
+    QVBoxLayout *centralLayout  = new QVBoxLayout;
+    setUpHealthBar();
+    centralLayout->addWidget(baseHealthBar);
+    map = new MapGUI(seed, this, centralLayout);
+
 
     /* Main Layout */
     mainLayout->addLayout(leftPanel, 1);
-    map = new MapGUI(seed, this, mainLayout);
+    mainLayout->addLayout(centralLayout,1);
     mainLayout->addLayout(actionLayout, 1);
 
 
     this->setLayout(mainLayout);
-    playerInfo->setLayout(playerInfoLayout);
+    //playerInfo->setLayout(playerInfoLayout);
 
-    this->showMaximized();
+    //this->showMaximized();
+    this->showFullScreen();
 
+    // TODO: Pour l'instant, c'est la gameGUI qui declenche la fonction updatemap toutes les 10 msec
+    // Je ne suis pas sur que ca devrait etre dans cette classe
+    // Ca devrait probablement etre dans manager
+    QTimer *timer = new QTimer();
+    QObject::connect(timer, SIGNAL(timeout()), this, SLOT(update_map()));
+    timer->start(10);
 }
 
 Position GameGUI::getPosBuyingTower() {
@@ -83,6 +109,17 @@ Position GameGUI::getPosBuyingTower() {
 
 void GameGUI::displayPlayersPlacingTowersMessage() {
 
+}
+
+void GameGUI::setUpHealthBar() {
+    baseHealthBar = new QProgressBar;
+    baseHealthBar->setStyleSheet(QString("QProgressBar {color: black}"));
+    baseHealthBar->setMaximum(PLAYER_STARTING_HP);
+    baseHealthBar->setMinimum(0);
+    QPalette p = baseHealthBar->palette();
+    p.setColor(QPalette::Highlight, Qt::green);
+    baseHealthBar->setPalette(p);
+    baseHealthBar->setTextVisible(true);
 }
 
 Position GameGUI::getPosSellingTower() {
@@ -94,7 +131,7 @@ void GameGUI::display(GameState &gameState, int quadrant) {
 }
 
 void GameGUI::displayTowerShop() {
-    int scl = 5;
+    int scl = 10;
     QSize size = QSize(1400/scl, 1060/scl);
     std::string tooltip;
 
@@ -131,11 +168,10 @@ void GameGUI::displayTowerShop() {
     shockTowerB->setToolTip(QString::fromStdString(tooltip));
     shockTowerB->setEnabled(false);
 
-    QVBoxLayout *layout = new QVBoxLayout;
-    layout->addWidget(gunTowerB);
-    layout->addWidget(sniperTowerB);
-    layout->addWidget(shockTowerB);
-    layout->addStretch();
+    QGridLayout *layout = new QGridLayout;
+    layout->addWidget(gunTowerB, 0, 0);
+    layout->addWidget(sniperTowerB, 0, 1);
+    layout->addWidget(shockTowerB, 1, 0);
     towerShop->setLayout(layout);
 
     QObject::connect(gunTowerB, SIGNAL(clicked(int)), this, SLOT(handleBuyingTower(int)));
@@ -149,20 +185,19 @@ void GameGUI::displayDeleteAndUpgradeBox() {
     QSize size = QSize(1400/scl, 1060/scl);
 
     deleteTowerB = new QPushButton;
-    deleteTowerB->setEnabled(true);
+    deleteTowerB->setEnabled(false);
     deleteTowerB->setIcon(QIcon("../../qt_ui/game_pictures/towers/sell.png"));
     deleteTowerB->setIconSize(size);
 
     upgradeTowerB = new QPushButton;
-    upgradeTowerB->setEnabled(true);
+    upgradeTowerB->setEnabled(false);
     upgradeTowerB->setIcon(QIcon("../../qt_ui/game_pictures/towers/upgrade.png"));
     upgradeTowerB->setIconSize(size);
 
 
-    QHBoxLayout *layout = new QHBoxLayout;
-    layout->addWidget(deleteTowerB);
-    layout->addWidget(upgradeTowerB);
-    layout->addStretch();
+    QGridLayout *layout = new QGridLayout;
+    layout->addWidget(deleteTowerB, 0, 0);
+    layout->addWidget(upgradeTowerB, 0, 1);
     deleteAndUpgradeBox->setLayout(layout);
 
 
@@ -170,6 +205,23 @@ void GameGUI::displayDeleteAndUpgradeBox() {
     QObject::connect(upgradeTowerB, SIGNAL(clicked()), this, SLOT(handleUpgradingTower()));
 
 
+}
+
+
+void GameGUI::displaySpellBox() {
+    int scl = 10;
+    QSize size = QSize(1400/scl, 1060/scl);
+
+    nukeB = new QPushButton;
+    nukeB->setEnabled(false);
+    nukeB->setIcon(QIcon("../../qt_ui/game_pictures/spells/trumpnuclear.png"));
+    nukeB->setIconSize(size);
+
+    QGridLayout *layout = new QGridLayout;
+    layout->addWidget(nukeB, 0, 0);
+    spellBox->setLayout(layout);
+
+    QObject::connect(nukeB, SIGNAL(clicked()), this, SLOT(handleNukeSpell()));
 }
 
 void GameGUI::displayGameOver(GameState &gamestate) {
@@ -190,6 +242,8 @@ void GameGUI::displayPlayerInfos(GameState &gameState, int quadrant) {
 
     playerStateL->setText(QString::fromStdString(text));
     playerStateL->show();
+
+    updateHealthBar(playerState.getHp());
 }
 
 void GameGUI::displayInfoForSupporter(GameState &gameState) {
@@ -211,16 +265,26 @@ void GameGUI::disableTowerShop() {
 }
 
 void GameGUI::enableTowerShop() {
-    int playerMoney = manager->getGameState().getPlayerStates()[manager->getQuadrant()].getMoney();
-    if (playerMoney > GUN_TOWER_PRICE) gunTowerB->setEnabled(true);
-    if (playerMoney > SNIPER_TOWER_PRICE) sniperTowerB->setEnabled(true);
-    if (playerMoney > SHOCK_TOWER_PRICE) shockTowerB->setEnabled(true);
+    int quadrant = manager->getQuadrant();
+    if (map->computeQuadrant(map->getHighlightedPosition()) != quadrant) {
+        disableTowerShop();
+        disableDeleteAndUpgradeBox();
+    } else {
+        if (manager->isTowerInPosition(manager->getGameState(), map->getHighlightedPosition())) {
+            disableTowerShop();
+            enableDeleteAndUpgradeBox();
+        } else {
+            int playerMoney = manager->getGameState().getPlayerStates()[quadrant].getMoney();
+            if (playerMoney > GUN_TOWER_PRICE) gunTowerB->setEnabled(true);
+            if (playerMoney > SNIPER_TOWER_PRICE) sniperTowerB->setEnabled(true);
+            if (playerMoney > SHOCK_TOWER_PRICE) shockTowerB->setEnabled(true);
+        }
+    }
 }
 
 
 
 void GameGUI::handleBuyingTower(int typeOfTower) {
-
     switch (typeOfTower) {
         case 0:
             if (!manager->placeGunTower(map->getHighlightedPosition()))
@@ -250,7 +314,34 @@ void GameGUI::handleUpgradingTower() {
         msgBox.show();
 }
 
+void GameGUI::handleNukeSpell() {
+    manager->nuclearBombSpell();
+}
+
 
 void GameGUI::addChatMessage(const std::string &message, const std::string &sender) {
     inGameChatWidget->addChatMessage(message, sender);
+}
+
+void GameGUI::disableNukeSpell() {
+    nukeB->setEnabled(false);
+}
+
+void GameGUI::enableNukeSpell() {
+    nukeB->setEnabled(true);
+}
+
+void GameGUI::updateHealthBar(int value) {
+    baseHealthBar->setValue(value);
+    baseHealthBar->setFormat("HP : " + QString::number(value) + "/100" );
+}
+
+void GameGUI::disableDeleteAndUpgradeBox() {
+    upgradeTowerB->setEnabled(false);
+    deleteTowerB->setEnabled(false);
+}
+
+void GameGUI::enableDeleteAndUpgradeBox() {
+    upgradeTowerB->setEnabled(true);
+    deleteTowerB->setEnabled(true);
 }
