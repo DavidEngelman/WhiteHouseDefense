@@ -12,7 +12,6 @@ GameGUI::GameGUI(unsigned seed, GameManager *manager) : AbstractGUI(nullptr), Ga
     QHBoxLayout *mainLayout = new QHBoxLayout();
     QVBoxLayout* leftPanel = new QVBoxLayout;
 
-    msgBox.setText("Incorrect action");
     //* RIGHT PANEL //*
     /* Player Info */
 
@@ -279,36 +278,27 @@ void GameGUI::enableTowerShop() {
     }
 }
 
-
-
 void GameGUI::handleBuyingTower(int typeOfTower) {
     switch (typeOfTower) {
         case 0:
-            if (!manager->placeGunTower(map->getHighlightedPosition()))
-                msgBox.show();
+            manager->placeGunTower(map->getHighlightedPosition());
             break;
         case 1:
-            if (!manager->placeSniperTower(map->getHighlightedPosition()));
-                msgBox.show();
+            manager->placeSniperTower(map->getHighlightedPosition());
             break;
         default:
-            if (!manager->placeShockTower(map->getHighlightedPosition()))
-                 msgBox.show();
+            manager->placeShockTower(map->getHighlightedPosition());
             break;
     }
     disableTowerShop();
 }
 
 void GameGUI::handleSellingTower() {
-
-   if(!manager->sellTower(map->getHighlightedPosition()))
-       msgBox.show();
+    manager->sellTower(map->getHighlightedPosition());
 }
 
 void GameGUI::handleUpgradingTower() {
-
-    if(!manager->upgradeTower(map->getHighlightedPosition()))
-        msgBox.show();
+    manager->upgradeTower(map->getHighlightedPosition());
 }
 
 void GameGUI::handleNukeSpell() {

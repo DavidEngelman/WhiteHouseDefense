@@ -28,7 +28,6 @@ private:
 
     InGameChatWidget * inGameChatWidget;
     QGroupBox *chatBox;
-    QMessageBox msgBox;
 
     // Middle Panel
     QProgressBar *baseHealthBar;
