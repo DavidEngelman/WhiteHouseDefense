@@ -3,22 +3,29 @@
 
 
 #include <QtWidgets/QLabel>
+#include "Settings/IconSelectionWidget.hpp"
 
 class IconLabel : public QLabel{
 
-private:
+Q_OBJECT
 
+private:
     int id;
     QLabel* label;
 
 public:
-    IconLabel(int _id, QString path_to_image);
+    IconLabel(int _id, QString path_to_image, IconSelectionWidget* parentS);
     ~IconLabel();
+
+private slots:
     void clickedInt();
 
-signals:
+public: signals:
+    void clicked();
+    void clicked(int);
 
-    void clicked(int number);
+protected:
+    void mousePressEvent(QMouseEvent* event);
 
 };
 

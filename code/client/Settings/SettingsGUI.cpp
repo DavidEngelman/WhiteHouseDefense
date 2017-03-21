@@ -98,16 +98,19 @@ void SettingsGUI::updateProfile(){
     usernameL->clear();
     passwordL->clear();
 
-
-
 }
 
 void SettingsGUI::openIconSelectionWidget(){
-    IconSelectionWidget* widget = new IconSelectionWidget();
-    
+    IconSelectionWidget* widget = new IconSelectionWidget(this);
+
 }
 
 void SettingsGUI::goToMain() {
     settingsManager->goToMainMenu();
+}
+
+void SettingsGUI::handleIconChange(int icon){
+    newIconName = std::to_string(icon);
+    changedIcon = true;
 }
 

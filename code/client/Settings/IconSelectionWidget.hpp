@@ -3,18 +3,22 @@
 
 
 #include <QtWidgets/QWidget>
+#include "SettingsGUI.hpp"
 
 class IconSelectionWidget : public QWidget{
+    Q_OBJECT
 
 private:
 
-    QWidget* parent;
+    SettingsGUI* parentS;
 
 public:
 
-    IconSelectionWidget(QWidget* _parent);
+    IconSelectionWidget(SettingsGUI* _parent);
 
+public slots:
 
+    void handleIconChoice(int choice);
 };
 
 

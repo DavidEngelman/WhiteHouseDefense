@@ -37,6 +37,8 @@ public slots:
     void updateProfile();
     void goToMain();
     void openIconSelectionWidget();
+
+    void handleIconChange(int icon);
 };
 
 

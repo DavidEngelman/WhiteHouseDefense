@@ -42,6 +42,7 @@ bool SettingsManager::changePassword(std::string newPassword){
 }
 
 void SettingsManager::changePlayerIcon(std::string newIconName){
+    std::cout << "hoy" << std::endl;
     std::string message = CHANGE_ICON + ',' + std::to_string(master_app->getId()) + ',' + newIconName + ';';
     send_message(server_socket, message.c_str());
 
@@ -50,12 +51,6 @@ void SettingsManager::changePlayerIcon(std::string newIconName){
 void SettingsManager::goToMainMenu() {
     MainManager * mainManager = new MainManager(ACCOUNT_SERVER_PORT, master_app);
     master_app->transition(mainManager);
-}
-
-void SettingsManager::comeBackToMainMenu() {
-    MainManager *mainManager = new MainManager(ACCOUNT_SERVER_PORT, master_app);
-    master_app->transition(mainManager);
-
 }
 
 SettingsManager::~SettingsManager() {
