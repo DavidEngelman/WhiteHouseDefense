@@ -59,4 +59,5 @@ void RegisterConsoleUI::display() {
     Drawing::drawWhiteHouse("REGISTER SCREEN");
     ask_username();
     ask_password();
+    manager->registerUser();
 }
