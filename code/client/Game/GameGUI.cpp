@@ -256,7 +256,7 @@ void GameGUI::displayDeadMessage() {
 }
 
 void GameGUI::update_map() {
-    manager->updateMap();
+    //manager->updateMap();
 }
 
 void GameGUI::disableTowerShop() {

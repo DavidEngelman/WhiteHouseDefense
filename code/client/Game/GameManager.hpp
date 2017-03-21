@@ -17,7 +17,9 @@
 
 class GameUI;
 
-class GameManager : public AbstractManager{
+class GameManager : public QObject, public AbstractManager{
+
+    Q_OBJECT
 
 private:
     int counter = 0;
@@ -30,6 +32,9 @@ private:
     int quadrant;
     bool isSupporter;
     bool nukeSpell = true;
+
+    QTimer *timer;
+
 
     unsigned int getMapSeedFromServer() const;
     void unSerializeGameState(char* seriarlizedGamestate);
@@ -70,7 +75,7 @@ public:
 
     bool sellTower(Position toSell);
 
-    void updateMap();
+    //void updateMap();
 
     void sendMessageToPlayers(const std::string &message);
 
@@ -85,6 +90,9 @@ public:
     void nuclearBombSpell();
 
     void sendNuclearRequest();
+
+public slots:
+    void updateMap();
 };
 
 #endif
