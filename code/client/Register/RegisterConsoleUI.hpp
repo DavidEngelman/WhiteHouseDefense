@@ -9,12 +9,13 @@
 
 class RegisterConsoleUI : public RegisterUI, public AbstractConsoleUI {
 
-public:
-    RegisterConsoleUI(RegisterManager* manager);
-
+private:
     void ask_username();
 
     void ask_password();
+
+public:
+    RegisterConsoleUI(RegisterManager *manager);
 
     void display() override;
 

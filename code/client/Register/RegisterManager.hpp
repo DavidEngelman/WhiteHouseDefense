@@ -35,4 +35,4 @@ public:
     void goToWelcome();
 };
 
-#endif //PROJET_REGISTERMANAGER_HPP
+#endif // PROJET_REGISTERMANAGER_HPP
