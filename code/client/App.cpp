@@ -41,7 +41,14 @@ void App::setUsername(std::string name) {
 }
 
 App::~App() {
-    if (username != "") { // Si le joeur est connecté, on envoye un message de deconexion
+    // Si le joeur est connecté, on envoye un message de deconnexion au AccountServer
+    // et si il est dans un queue du matchmaking, on sort de la queue
+
+    if (username != "") {
+        if (matchMakingThread != nullptr){
+            leaveQueue();
+        }
+
         int socket = init_connection_to_server(serverIpAddress, ACCOUNT_SERVER_PORT);
         std::string message = "Exit," + std::to_string(playerId) + ";";
         send_message(socket, message.c_str());
