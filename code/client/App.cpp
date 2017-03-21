@@ -9,6 +9,7 @@ App::App(char *serverIpAddr) : serverIpAddress(serverIpAddr),
     if (!isConsole) {
         mainWindow = new QWidget();
         mainWindow->setFixedSize(750, 600); // Will be resized for the menu and games;
+        mainWindow->move(QApplication::desktop()->screen()->rect().center() - mainWindow->rect().center());
     }
     currentManager = new WelcomeManager(this);
     currentManager->run();

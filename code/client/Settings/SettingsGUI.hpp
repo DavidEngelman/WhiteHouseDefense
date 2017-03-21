@@ -36,6 +36,7 @@ public slots:
 
     void updateProfile();
     void goToMain();
+    void openIconSelectionWidget();
 };
 
 

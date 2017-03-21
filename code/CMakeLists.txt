@@ -107,7 +107,7 @@ set(CLIENT_FILES client/ClientLauncher.cpp
         common/Constants.hpp common/Tools.hpp
         common/Tools.cpp
         client/QHandPointerButton.hpp
-        client/InQueueWidget.cpp client/InQueueWidget.hpp client/Settings/SettingsManager.cpp client/Settings/SettingsManager.hpp client/Settings/SettingsGUI.cpp client/Settings/SettingsGUI.hpp client/Settings/SettingsUI.hpp client/Settings/SettingsConsoleUI.cpp client/Settings/SettingsConsoleUI.hpp)
+        client/InQueueWidget.cpp client/InQueueWidget.hpp client/Settings/SettingsManager.cpp client/Settings/SettingsManager.hpp client/Settings/SettingsGUI.cpp client/Settings/SettingsGUI.hpp client/Settings/SettingsUI.hpp client/Settings/SettingsConsoleUI.cpp client/Settings/SettingsConsoleUI.hpp client/Settings/IconSelectionWidget.cpp client/Settings/IconSelectionWidget.hpp client/IconLabel.cpp client/IconLabel.hpp)
 
 
 add_executable(client ${CLIENT_FILES})

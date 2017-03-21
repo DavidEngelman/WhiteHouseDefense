@@ -1,5 +1,7 @@
 #include "SettingsGUI.hpp"
 #include "SettingsManager.hpp"
+#include "IconSelectionWidget.hpp"
+
 SettingsGUI::SettingsGUI(SettingsManager *manager, QWidget* _parent) : AbstractGUI(_parent), SettingsUI(manager),
                                                                        changedIcon(false) {}
 
@@ -11,6 +13,7 @@ void SettingsGUI::display() {
     /* Set background */
     setBackgroundFromPath("../../qt_ui/game_pictures/backgrounds/trump_background.png");
 
+    /* Layouts */
     QVBoxLayout * boxLayout = new QVBoxLayout;
     QVBoxLayout * fieldsLayout = new QVBoxLayout;
 
@@ -34,8 +37,8 @@ void SettingsGUI::display() {
     updateB = new QHandPointerButton("Update profile",150,25);
 
 
-    QLabel *usernameT = new QLabel("Username: ");
-    QLabel *passwordT = new QLabel("Password: ");
+    QLabel *usernameT = new QLabel("New username: ");
+    QLabel *passwordT = new QLabel("New password: ");
     QLabel *iconT = new QLabel("Icon: ");
     usernameT->setStyleSheet("color : gold;");
     passwordT->setStyleSheet("color : gold; padding-top:30;");
@@ -63,6 +66,8 @@ void SettingsGUI::display() {
     this->show();
 
     QObject::connect(updateB, SIGNAL(clicked()), this, SLOT(updateProfile()));
+    QObject::connect(iconB, SIGNAL(clicked()), this, SLOT(openIconSelectionWidget()));
+
 }
 
 void SettingsGUI::updateProfile(){
@@ -79,7 +84,6 @@ void SettingsGUI::updateProfile(){
         }
 
     } if (passwordLContent != "") {
-
         if(!settingsManager->changePassword(passwordLContent)){
             QMessageBox::critical(this, "Invalid password", "Error: Invalid password");
             success = false;
@@ -87,17 +91,20 @@ void SettingsGUI::updateProfile(){
 
     } if (changedIcon) {
         settingsManager->changePlayerIcon(newIconName);
-    }
-
-
-    if (success){
+    } if (success){
         QMessageBox::information(this, "Success", "Your informations have been updated !");
     }
+
     usernameL->clear();
     passwordL->clear();
 
 
 
+}
+
+void SettingsGUI::openIconSelectionWidget(){
+    IconSelectionWidget* widget = new IconSelectionWidget();
+    
 }
 
 void SettingsGUI::goToMain() {
