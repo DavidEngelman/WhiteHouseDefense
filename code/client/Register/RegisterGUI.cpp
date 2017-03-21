@@ -4,9 +4,10 @@
 #include <QtMultimedia/QMediaPlayer>
 #include <QtWidgets/QMessageBox>
 #include "RegisterGUI.hpp"
-#include "RegisterManager.hpp"
 
-RegisterGUI::RegisterGUI(RegisterManager *manager, QWidget* _parent) : AbstractGUI(_parent), manager(manager) {}
+RegisterGUI::RegisterGUI(RegisterManager *manager, QWidget *_parent) : AbstractGUI(_parent), RegisterUI(manager) {}
+
+RegisterGUI::~RegisterGUI() {}
 
 void RegisterGUI::display() {
     setStylesheetFromPath("../../qt_ui/americanLogin.qss");
@@ -30,30 +31,27 @@ void RegisterGUI::display() {
     confirmL = new QLineEdit(fields);
     confirmL->setEchoMode(QLineEdit::Password); // Display bullets instead of char
 
-    QString s1 = "USERNAME";
-    QString s2 = "PASSWORD";
-    QString s3 = "CONFIRM";
-    QString s4 = "REGISTER";
-    QString s5 = "CANCEL";
-
-    QLabel *l1 = new QLabel();
-    l1->setText(s1);
+    QLabel *l1 = new QLabel("USERNAME");
     l1->setFont(police);
+    l1->setStyleSheet("color : gold;");
 
-    QLabel *l2 = new QLabel();
-    l2->setText(s2);
+
+    QLabel *l2 = new QLabel("PASSWORD");
     l2->setFont(police);
+    l2->setStyleSheet("color : gold;");
 
-    QLabel *l3 = new QLabel();
-    l3->setText(s3);
+
+    QLabel *l3 = new QLabel("CONFIRM");
     l3->setFont(police);
+    l3->setStyleSheet("color : gold;");
 
-    connect = new QPushButton(s4,fields);
+
+    connect = new QPushButton("REGISTER",fields);
     connect->setFixedSize(QSize(212,45));
     connect->setCursor(Qt::PointingHandCursor);
 
 
-    cancel = new QPushButton(s5,fields);
+    cancel = new QPushButton("CANCEL",fields);
     cancel->setFixedSize(QSize(212,45));
     cancel->setCursor(Qt::PointingHandCursor);
 
@@ -70,7 +68,7 @@ void RegisterGUI::display() {
     fieldsLayout->addRow(connect);
     fieldsLayout->addRow(cancel);
     fields->setLayout(fieldsLayout);
-    fields->move(this->size().width() / 2 - 125, this->size().height() / 2 +105);
+    fields->move(this->size().width() / 2 - 125, this->size().height() / 2 + 105);
 
     QMediaPlayer *player = new QMediaPlayer;
     player->setMedia(QUrl::fromLocalFile("../../qt_ui/game_pictures/sounds/americanAnthem.mp3"));

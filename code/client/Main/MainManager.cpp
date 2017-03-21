@@ -7,6 +7,7 @@
 #include "../Spectator/SpectatorManager.hpp"
 #include "MainGUI.hpp"
 #include "MainConsoleUI.hpp"
+#include "../Settings/SettingsManager.hpp"
 
 const static std::string gameModes[3] = {CLASSIC_MODE, TIMED_MODE, TEAM_MODE};
 
@@ -28,28 +29,27 @@ void MainManager::handleUserMenuChoice() {
         case 1: {
             mainUI->displayGameModesMenu();
             break;
-        }
-        case 2: {
+        } case 2: {
             SpectatorManager *spectator = new SpectatorManager(MATCHMAKER_SERVER_PORT, master_app);
             master_app->transition(spectator);
             break;
-        }
-        case 3: {
+        } case 3: {
             ProfileManager *profile = new ProfileManager(ACCOUNT_SERVER_PORT, master_app);
             master_app->transition(profile);
             break;
-        }
-        case 4: {
+        } case 4: {
             //FriendListManager *friendListManager = new FriendListManager(ACCOUNT_SERVER_PORT, master_app);
             //master_app->transition(friendListManager);
             break;
-        }
-        case 5: {
+        } case 5: {
             RankingManager *rankingManager = new RankingManager(ACCOUNT_SERVER_PORT, master_app);
             master_app->transition(rankingManager);
             break;
-        }
-        default: {
+        } case 6: {
+            SettingsManager *settingsManager = new SettingsManager(ACCOUNT_SERVER_PORT, master_app);
+            master_app->transition(settingsManager);
+            break;
+        } default: {
             std::string message = "Exit," + std::to_string(master_app->getId());
             send_message(server_socket, message.c_str());
             break;

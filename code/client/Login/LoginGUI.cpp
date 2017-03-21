@@ -37,10 +37,13 @@ void LoginGUI::display() {
     QLabel *usernameLabel = new QLabel(fields);
     usernameLabel->setText("USERNAME");
     usernameLabel->setFont(police);
+    usernameLabel->setStyleSheet("color : gold;");
 
     QLabel *passwordLabel = new QLabel(fields);
     passwordLabel->setText("PASSWORD");
     passwordLabel->setFont(police);
+    passwordLabel->setStyleSheet("color : gold;");
+
 
     connect = new QHandPointerButton("LOGIN", 212, 45, fields);
     cancel = new QHandPointerButton("CANCEL", 212, 45, fields);

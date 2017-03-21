@@ -37,17 +37,24 @@ void MainGUI::display() {
     leaderBoard = new QCustomButton(5, "LEADERBOARD", fields);
     leaderBoard->setFixedSize(QSize(212,45));
 
+    settings = new QCustomButton(6, "SETTINGS", fields);
+    settings->setFixedSize(QSize(212,45));
+
     QObject::connect(newGame, SIGNAL(clicked(int)), this, SLOT(handleMenuChoice(int)));
     QObject::connect(spectator, SIGNAL(clicked(int)), this, SLOT(handleMenuChoice(int)));
     QObject::connect(profile, SIGNAL(clicked(int)), this, SLOT(handleMenuChoice(int)));
     QObject::connect(friendList, SIGNAL(clicked(int)), this, SLOT(handleMenuChoice(int)));
     QObject::connect(leaderBoard, SIGNAL(clicked(int)), this, SLOT(handleMenuChoice(int)));
+    QObject::connect(settings, SIGNAL(clicked(int)), this, SLOT(handleMenuChoice(int)));
+
 
     fieldsLayout->addRow(newGame);
     fieldsLayout->addRow(spectator);
     fieldsLayout->addRow(profile);
     fieldsLayout->addRow(friendList);
     fieldsLayout->addRow(leaderBoard);
+    fieldsLayout->addRow(settings);
+
     fields->setLayout(fieldsLayout);
     fields->move(this->size().width() / 2 - 125, this->size().height() / 2 -40);
 

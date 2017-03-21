@@ -36,9 +36,9 @@ set(CLIENT_FILES client/ClientLauncher.cpp
 
         #REGISTER
         client/Register/RegisterGUI.cpp
-        client/Register/RegisterGUI.hpp
+        client/Register/RegisterUI.hpp
         client/Register/RegisterManager.cpp
-        client/Register/RegisterUI.cpp
+        client/Register/RegisterConsoleUI.cpp
 
         #LOGIN
         client/Login/LoginGUI.cpp
@@ -107,8 +107,7 @@ set(CLIENT_FILES client/ClientLauncher.cpp
         common/Constants.hpp common/Tools.hpp
         common/Tools.cpp
         client/QHandPointerButton.hpp
-
-        )
+        client/InQueueWidget.cpp client/InQueueWidget.hpp client/Settings/SettingsManager.cpp client/Settings/SettingsManager.hpp client/Settings/SettingsGUI.cpp client/Settings/SettingsGUI.hpp client/Settings/SettingsUI.hpp client/Settings/SettingsConsoleUI.cpp client/Settings/SettingsConsoleUI.hpp)
 
 
 add_executable(client ${CLIENT_FILES})
@@ -164,6 +163,7 @@ include_directories(/usr/include)
 link_directories(/usr/lib)
 target_link_libraries(server sqlite3)
 target_link_libraries(client crypt)
+target_link_libraries(server crypt)
 target_link_libraries(server Threads::Threads)
 target_link_libraries(client Threads::Threads)
 target_link_libraries(client Qt5::Widgets Qt5::Multimedia)

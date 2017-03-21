@@ -1,20 +1,18 @@
-
-
 #include <termios.h>
-#include "RegisterUI.hpp"
+#include "RegisterConsoleUI.hpp"
 #include "../Drawing.hpp"
 #include "unistd.h"
 
-RegisterUI::RegisterUI() {}
+RegisterConsoleUI::RegisterConsoleUI(RegisterManager *manager) : RegisterUI(manager) {}
 
-void RegisterUI::ask_username() {
+void RegisterConsoleUI::ask_username() {
     std::cout << "   Enter a username:     ( 16 characters max. )" << std::endl << "   ";
-    std::cin >> username_entry;
+    std::cin >> username;
     std::cin.clear();
     std::cin.ignore();
 }
 
-void RegisterUI::ask_password() {
+void RegisterConsoleUI::ask_password() {
     std::string confirm;
 
     // Disable the echo when entering the password
@@ -25,7 +23,7 @@ void RegisterUI::ask_password() {
     tcsetattr(STDIN_FILENO, TCSANOW, &newt);
 
     std::cout << "   Enter a password:" << std::endl << "   ";
-    std::cin >> password_entry;
+    std::cin >> password;
     std::cout << std::endl;
 
     std::cin.clear();
@@ -42,18 +40,24 @@ void RegisterUI::ask_password() {
 }
 
 
-void RegisterUI::displayError() {
+void RegisterConsoleUI::displayError() {
     Drawing::drawWhiteHouse("REGISTER SCREEN");
-    std::cout << "   Error : This username is already used or is not valid \n";
+    std::cout << "   Error : This username is already used or is not valid" << std::endl;
 }
 
-void RegisterUI::displayConfirmError() {
+void RegisterConsoleUI::displaySuccess() {
     Drawing::drawWhiteHouse("REGISTER SCREEN");
-    std::cout << "   ERROR : Your password doesn't correspond to the confirmation" << std::endl;
+    std::cout <<"    Success : Your account has been successfully registered" << std::endl;
 }
 
-void RegisterUI::display() {
+void RegisterConsoleUI::displayConfirmError() {
+    Drawing::drawWhiteHouse("REGISTER SCREEN");
+    std::cout << "   Error : Your password doesn't correspond to the confirmation" << std::endl;
+}
+
+void RegisterConsoleUI::display() {
     Drawing::drawWhiteHouse("REGISTER SCREEN");
     ask_username();
     ask_password();
+    manager->registerUser();
 }

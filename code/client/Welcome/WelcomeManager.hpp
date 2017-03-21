@@ -11,15 +11,18 @@ class WelcomeGUI;
 class WelcomeManager : public AbstractManager {
 
 private:
-    WelcomeUI * welcomeUI;
+    WelcomeUI *welcomeUI;
     WelcomeGUI *welcomeGUI;
 
-
 public:
-    WelcomeManager(App* my_app);
+    WelcomeManager(App *my_app);
+
     ~WelcomeManager();
+
     void run() override;
+
     void goToLogin();
+
     void goToRegister();
 
 };
