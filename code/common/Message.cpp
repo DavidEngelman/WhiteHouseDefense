@@ -1,7 +1,7 @@
 #include "Message.hpp"
 
 
-Message::Message(): _hasReachedEnd(false), currentPosInBuffer(0), buffer(nullptr) {
+Message::Message(char delimiter) : delimiter(delimiter), _hasReachedEnd(false), currentPosInBuffer(0), buffer(nullptr) {
 
 }
 
@@ -16,13 +16,15 @@ void Message::setData(char *data) {
  */
 std::string Message::getNextToken() {
     std::string token;
-    while ((buffer[currentPosInBuffer] != ',') && (buffer[currentPosInBuffer] != ';')) {
+    while ((buffer[currentPosInBuffer] != delimiter) &&
+           (buffer[currentPosInBuffer] != ';') &&
+           (buffer[currentPosInBuffer] != '\0')) {
         token += buffer[currentPosInBuffer];
         currentPosInBuffer++;
     }
 
     // We reached the delimiter
-    _hasReachedEnd = (buffer[currentPosInBuffer] == ';');
+    _hasReachedEnd = (buffer[currentPosInBuffer] == ';' or buffer[currentPosInBuffer] == '\0');
 
     currentPosInBuffer++;
     return token;
@@ -30,4 +32,19 @@ std::string Message::getNextToken() {
 
 bool Message::hasReachedEnd() {
     return _hasReachedEnd;
+}
+
+std::string Message::getRemainingContent(){
+    std::string token;
+    while ((buffer[currentPosInBuffer] != ';') &&
+           (buffer[currentPosInBuffer] != '\0')) {
+        token += buffer[currentPosInBuffer];
+        currentPosInBuffer++;
+    }
+
+    // We reached the delimiter
+    _hasReachedEnd = true;
+
+    currentPosInBuffer++;
+    return token;
 }

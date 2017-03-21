@@ -8,11 +8,14 @@
  */
 class Message {
 protected:
+
+
+    char delimiter;
     char *buffer;
     bool _hasReachedEnd;
     int currentPosInBuffer;
 public:
-    Message();
+    Message(char delimiter=',');
 
     virtual std::string getNextToken();
 
@@ -23,6 +26,7 @@ public:
     virtual ~Message() = default;
 
 
+    std::string getRemainingContent();
 };
 
 
