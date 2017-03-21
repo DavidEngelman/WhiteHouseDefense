@@ -7,6 +7,7 @@
 #include "MainGUI.hpp"
 #include "MainConsoleUI.hpp"
 #include "../Settings/SettingsManager.hpp"
+#include "../../common/Constants.hpp"
 
 const static std::string gameModes[3] = {CLASSIC_MODE, TIMED_MODE, TEAM_MODE};
 
