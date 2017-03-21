@@ -17,11 +17,8 @@ public:
     virtual ~ProfileUI() = default;
 
     std::string getUsername() { return username; }
-
     virtual void display() = 0;
-
     virtual void displayNoSuchProfileError() = 0;
-
     virtual void updateProfile() = 0;
 };
 

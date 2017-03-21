@@ -111,7 +111,7 @@ int Database::update_password(int id, std::string newPassword) {
 
 }
 
-int Database::update_profile_picture(int id, int newPicture) {
+int Database::updateIcon(int id, int newPicture) {
 
     char *zErrMsg = 0;
 
