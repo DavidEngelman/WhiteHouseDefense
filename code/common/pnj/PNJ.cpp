@@ -76,11 +76,8 @@ int PNJ::receiveDamage(int damageAmount) {
     int receivedDamage = 0;
     if (healthPoints < damageAmount) {
         healthPoints = 0;
-        receivedDamage = 0;
-    } else if (healthPoints - damageAmount < 0) {
         receivedDamage = healthPoints;
-    }
-    else{
+    } else{
         healthPoints -= damageAmount;
         receivedDamage = damageAmount;
     }

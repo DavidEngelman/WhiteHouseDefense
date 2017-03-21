@@ -56,7 +56,7 @@ void MainGUI::display() {
     fieldsLayout->addRow(settings);
 
     fields->setLayout(fieldsLayout);
-    fields->move(this->size().width() / 2 - 125, this->size().height() / 2 -40);
+    fields->move(this->size().width() / 2 - 125, this->size().height() / 2 -60);
 
     if (manager->isInQueue()){
         showInQueue();

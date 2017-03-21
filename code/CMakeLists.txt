@@ -85,7 +85,6 @@ set(CLIENT_FILES client/ClientLauncher.cpp
         common/gamestate/GameState.cpp
         common/gamestate/Wave.cpp
         common/gamestate/PlayerState.cpp
-        client/Game/GameLauncher.cpp
         client/Game/GameConsoleUI.cpp
         client/Game/GameGUI.cpp
         client/Game/GameManager.cpp
@@ -110,7 +109,7 @@ set(CLIENT_FILES client/ClientLauncher.cpp
         client/QHandPointerButton.hpp common/pnj/MexicanPNJ.cpp common/pnj/MexicanPNJ.h
         client/QHandPointerButton.hpp
         client/QHandPointerButton.hpp
-        client/InQueueWidget.cpp client/InQueueWidget.hpp client/Settings/SettingsManager.cpp client/Settings/SettingsManager.hpp client/Settings/SettingsGUI.cpp client/Settings/SettingsGUI.hpp client/Settings/SettingsUI.hpp client/Settings/SettingsConsoleUI.cpp client/Settings/SettingsConsoleUI.hpp)
+        client/InQueueWidget.cpp client/InQueueWidget.hpp client/Settings/SettingsManager.cpp client/Settings/SettingsManager.hpp client/Settings/SettingsGUI.cpp client/Settings/SettingsGUI.hpp client/Settings/SettingsUI.hpp client/Settings/SettingsConsoleUI.cpp client/Settings/SettingsConsoleUI.hpp client/Settings/IconSelectionWidget.cpp client/Settings/IconSelectionWidget.hpp client/IconLabel.cpp client/IconLabel.hpp)
 
 
 add_executable(client ${CLIENT_FILES})

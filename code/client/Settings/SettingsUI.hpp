@@ -6,7 +6,7 @@
 class SettingsManager;
 
 
-class SettingsUI : public virtual AbstractUI{
+class SettingsUI : public virtual AbstractUI {
 
 protected:
     SettingsManager *settingsManager;
