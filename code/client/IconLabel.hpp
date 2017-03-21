@@ -11,11 +11,10 @@ Q_OBJECT
 
 private:
     int id;
-    QLabel* label;
 
 public:
-    IconLabel(int _id, QString path_to_image, IconSelectionWidget* parentS);
-    ~IconLabel();
+    IconLabel(int _id, QString path_to_image);
+
 
 private slots:
     void clickedInt();

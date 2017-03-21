@@ -10,10 +10,11 @@ IconSelectionWidget::IconSelectionWidget(SettingsGUI* _parent) : parentS(_parent
 
     QGridLayout *gridLayout = new QGridLayout;
 
-    IconLabel* icon1 = new IconLabel(1, "../../qt_ui/game_pictures/icons/1.jpeg", this);
-    IconLabel* icon2 = new IconLabel(2, "../../qt_ui/game_pictures/icons/2.jpg", this);
-    IconLabel* icon3 = new IconLabel(3, "../../qt_ui/game_pictures/icons/5.jpg", this);
-    IconLabel* icon4 = new IconLabel(4, "../../qt_ui/game_pictures/icons/6.jpg", this);
+
+    IconLabel* icon1 = new IconLabel(1, "../../qt_ui/game_pictures/icons/1.jpeg");
+    IconLabel* icon2 = new IconLabel(2, "../../qt_ui/game_pictures/icons/2.jpg");
+    IconLabel* icon3 = new IconLabel(3, "../../qt_ui/game_pictures/icons/5.jpg");
+    IconLabel* icon4 = new IconLabel(4, "../../qt_ui/game_pictures/icons/6.jpg");
 
     gridLayout->addWidget(icon1, 0, 0);
     gridLayout->addWidget(icon2, 0, 1);
