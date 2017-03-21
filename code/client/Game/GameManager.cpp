@@ -6,6 +6,8 @@
 #include "../../common/pnj/MexicanPNJ.h"
 #include "../../common/pnj/CommunistPNJ.h"
 #include "../../common/pnj/MuslimPNJ.h"
+#include "../../server/Server.hpp"
+#include "../../common/Command.hpp"
 
 
 GameManager::GameManager(int socket, App *app) :
