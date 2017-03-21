@@ -1,7 +1,7 @@
 #include "App.hpp"
 #include "Welcome/WelcomeManager.hpp"
-#include "Game/QMatchMakingThread.hpp"
 #include "Game/GameManager.hpp"
+#include "Game/QMatchMakingThread.hpp"
 
 App::App(char *serverIpAddr) : serverIpAddress(serverIpAddr),
                                playerId(-1), username("\0"), is_in_queue(false) ,
@@ -48,9 +48,9 @@ App::~App() {
     }
 }
 
-void App::launchMatchmaking(std::string mode, int serverSocket) {
+void App::launchMatchmaking(std::string mode) {
     is_in_queue = true;
-    QMatchMakingThread *matchMakingThread = new QMatchMakingThread(mode, getId(), getIp(), getUsername(), this);
+    matchMakingThread = new QMatchMakingThread(mode, getId(), getIp(), getUsername(), this);
 
     QObject::connect(matchMakingThread, &QMatchMakingThread::gameIsReady,
                      this, &App::launchGame);
@@ -81,8 +81,9 @@ bool App::isInQueue() {
 }
 
 void App::leaveQueue() {
-    // TODO: modifier ceci pour que ca tue le thread et
-    // gameLauncher n'existe pas, parce que ce code la est dans le thread
-    gameLauncher->leaveQueue(); // Va causer des bugs si on l'utilise
-    is_in_queue = false;
+    if (matchMakingThread != nullptr) {
+        matchMakingThread->quitMatchmaking();
+        matchMakingThread = nullptr;
+        is_in_queue = false;
+    }
 }
