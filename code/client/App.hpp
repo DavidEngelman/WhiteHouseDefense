@@ -7,7 +7,6 @@
 
 
 
-class GameLauncher;
 class AbstractManager;
 class QMatchMakingThread;
 

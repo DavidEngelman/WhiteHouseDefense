@@ -1,6 +1,5 @@
 
 #include "MainManager.hpp"
-#include "../Game/GameLauncher.hpp"
 #include "../Profile/ProfileManager.hpp"
 #include "../Ranking/RankingManager.hpp"
 //#include "../FriendList/FriendListManager.hpp"

@@ -83,7 +83,6 @@ set(CLIENT_FILES client/ClientLauncher.cpp
         common/GameState.cpp
         common/Wave.cpp
         common/PlayerState.cpp
-        client/Game/GameLauncher.cpp
         client/Game/GameConsoleUI.cpp
         client/Game/GameGUI.cpp
         client/Game/GameManager.cpp
