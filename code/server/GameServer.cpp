@@ -162,7 +162,7 @@ void GameServer::sendMessageToOtherPlayers(std::string &userMessage, std::string
 }
 
 std::string GameServer::makeMessage(const std::string &userMessage, const std::string &senderUsername) const {
-    std::__cxx11::string message = RECEIVE_MESSAGE_STRING + "," + userMessage + "," + senderUsername + ";";
+    std::string message = RECEIVE_MESSAGE_STRING + "," + userMessage + "," + senderUsername + ";";
     return message;
 }
 
@@ -280,6 +280,8 @@ PlayerState &GameServer::getPlayerStateWithUsername(std::string username) {
     }
 }
 
+/* Returns the number of the quadrant of the player with that username.
+ * If there is no such player, returns -1 */
 int GameServer::getQuadrantForPlayer(std::string username) {
     int quadrant = 0;
     for (PlayerConnection &playerConnection: playerConnections) {
@@ -288,6 +290,7 @@ int GameServer::getQuadrantForPlayer(std::string username) {
         }
         quadrant++;
     }
+    return -1;
 }
 
 std::string GameServer::getAllPlayers() {
@@ -464,17 +467,32 @@ void GameServer::tellSupportersTheGameIsOver() {
 void GameServer::processSpecialCommand(std::string &userMessage, std::string &senderUsername) {
     std::string MESSAGE_COMMAND = "/msg";
     std::string TEAM_COMMAND = "/team";
-    if (userMessage.compare(0, MESSAGE_COMMAND.size(), MESSAGE_COMMAND) == 0) {
-        // TODO: faire qu'on puisse envoyer à un ami
-//        int quadrant = getQuadrantForPlayer(friendUsername);
-//        std::string message = makeMessage(userMessage, senderUsername);
-//        send_message(playerConnections[quadrant].getSocketFd(), message);
-    } else if (userMessage.compare(0, TEAM_COMMAND.size(), TEAM_COMMAND)) {
-        int quadrant = getQuadrantForPlayer(senderUsername);
+    Message message(' ');
+    message.setData((char *) userMessage.c_str());
+
+    const std::string& firstToken = message.getNextToken();
+    if (firstToken == "/msg"){
+        const std::string& receiverUsername = message.getNextToken();
+        int receiverQuadrant = getQuadrantForPlayer(receiverUsername);
+        if (receiverQuadrant != -1){ // There is a player with that username
+            int senderQuadrant = getQuadrantForPlayer(senderUsername);
+            const std::string& finalMessage = makeMessage(message.getRemainingContent(), senderUsername);
+
+            // Send to myself and to team mate
+            send_message(playerConnections[senderQuadrant].getSocketFd(), finalMessage.c_str());
+            send_message(playerConnections[receiverQuadrant].getSocketFd(), finalMessage.c_str());
+        } else {
+            sendMessageToOtherPlayers(userMessage, senderUsername);
+        }
+    } else if (firstToken == "/team" && mode == TEAM_MODE) {
+        int senderQuadrant = getQuadrantForPlayer(senderUsername);
         int teamMateQuadrants[4] = {1, 0, 3, 2};
-        int teamMateQuadrant = teamMateQuadrants[quadrant];
-        std::string message = makeMessage(userMessage, senderUsername);
-        send_message(playerConnections[teamMateQuadrant].getSocketFd(), message.c_str());
+        int teamMateQuadrant = teamMateQuadrants[senderQuadrant];
+        const std::string& finalMessage = makeMessage(message.getRemainingContent(), senderUsername);
+
+        // Send to myself and to team mate
+        send_message(playerConnections[senderQuadrant].getSocketFd(), finalMessage.c_str());
+        send_message(playerConnections[teamMateQuadrant].getSocketFd(), finalMessage.c_str());
     } else {
         sendMessageToOtherPlayers(userMessage, senderUsername);
     }
