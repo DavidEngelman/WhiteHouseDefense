@@ -6,13 +6,13 @@
 #include "WelcomeManager.hpp"
 #include "../QHandPointerButton.hpp"
 
-WelcomeGUI::WelcomeGUI(WelcomeManager *manager, QWidget* _parent) : AbstractGUI(_parent), manager(manager) {}
+WelcomeGUI::WelcomeGUI(WelcomeManager *manager, QWidget *_parent) : AbstractGUI(_parent), manager(manager) {}
 
 void WelcomeGUI::display() {
 
     setTheme();
 
-    QFrame * fields = new QFrame(this);
+    QFrame *fields = new QFrame(this);
     fieldsLayout = new QFormLayout;
 
     loginButton = new QHandPointerButton("LOGIN", 212, 45, fields);
@@ -23,25 +23,25 @@ void WelcomeGUI::display() {
 
     quitButton = new QHandPointerButton("QUIT", 212, 45, fields);
     connect(quitButton, SIGNAL(clicked()), this, SLOT(close()));
-    
+
 
     fieldsLayout->addRow(loginButton);
     fieldsLayout->addRow(registerButton);
     fieldsLayout->addRow(quitButton);
 
     fields->setLayout(fieldsLayout);
-    fields->move(this->size().width() / 2 - 125, this->size().height() / 2 +100);
+    fields->move(this->size().width() / 2 - 125, this->size().height() / 2 + 100);
 
     this->show();
     AbstractGUI::parent->show();
     // On affiche la fenetre principale qu'à partir du moment ou WelcomeGUI est pret pour que ce soit plus smooth
 }
 
-void WelcomeGUI::openLogin(){
+void WelcomeGUI::openLogin() {
     manager->goToLogin();
 }
 
-void WelcomeGUI::openRegister(){
+void WelcomeGUI::openRegister() {
     manager->goToRegister();
 }
 

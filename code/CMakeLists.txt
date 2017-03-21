@@ -36,9 +36,9 @@ set(CLIENT_FILES client/ClientLauncher.cpp
 
         #REGISTER
         client/Register/RegisterGUI.cpp
-        client/Register/RegisterGUI.hpp
+        client/Register/RegisterUI.hpp
         client/Register/RegisterManager.cpp
-        client/Register/RegisterUI.cpp
+        client/Register/RegisterConsoleUI.cpp
 
         #LOGIN
         client/Login/LoginGUI.cpp
@@ -83,7 +83,6 @@ set(CLIENT_FILES client/ClientLauncher.cpp
         common/GameState.cpp
         common/Wave.cpp
         common/PlayerState.cpp
-        client/Game/GameLauncher.cpp
         client/Game/GameConsoleUI.cpp
         client/Game/GameGUI.cpp
         client/Game/GameManager.cpp

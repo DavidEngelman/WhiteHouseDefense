@@ -4,9 +4,10 @@
 #include <QtMultimedia/QMediaPlayer>
 #include <QtWidgets/QMessageBox>
 #include "RegisterGUI.hpp"
-#include "RegisterManager.hpp"
 
-RegisterGUI::RegisterGUI(RegisterManager *manager, QWidget* _parent) : AbstractGUI(_parent), manager(manager) {}
+RegisterGUI::RegisterGUI(RegisterManager *manager, QWidget *_parent) : AbstractGUI(_parent), RegisterUI(manager) {}
+
+RegisterGUI::~RegisterGUI() {}
 
 void RegisterGUI::display() {
     setStylesheetFromPath("../../qt_ui/americanLogin.qss");
@@ -67,7 +68,7 @@ void RegisterGUI::display() {
     fieldsLayout->addRow(connect);
     fieldsLayout->addRow(cancel);
     fields->setLayout(fieldsLayout);
-    fields->move(this->size().width() / 2 - 125, this->size().height() / 2 +105);
+    fields->move(this->size().width() / 2 - 125, this->size().height() / 2 + 105);
 
     QMediaPlayer *player = new QMediaPlayer;
     player->setMedia(QUrl::fromLocalFile("../../qt_ui/game_pictures/sounds/americanAnthem.mp3"));
