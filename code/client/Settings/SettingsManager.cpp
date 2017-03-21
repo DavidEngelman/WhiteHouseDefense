@@ -3,7 +3,7 @@
 #include "SettingsConsoleUI.hpp"
 
 SettingsManager::SettingsManager (int port, App *my_app) :
-        NetworkedManager(port, my_app), username("Loading..."), password("Loading..."), iconName("Loading...") {
+        NetworkedManager(port, my_app) {
     if (!isConsole) {
         settingsUI = new SettingsGUI(this, master_app->getMainWindow());
     } else {
@@ -31,7 +31,7 @@ bool SettingsManager::changeUsername(std::string newUsername){
 }
 
 bool SettingsManager::changePassword(std::string newPassword){
-    if (newPassword.size() > 1){
+    if (newPassword.size() < 1){
         return false;
     }
     newPassword = cryptPassword(newPassword);

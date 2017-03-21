@@ -18,12 +18,18 @@ private:
     QLineEdit *usernameL;
     QLineEdit *passwordL;
     QHandPointerButton *iconB;
+    QHandPointerButton *usernameB;
+    QHandPointerButton *passwordB;
 
     std::string newIconName;
 
     QHandPointerButton *updateB;
 
     bool changedIcon;
+
+    QVBoxLayout * buttonsLayout;
+    QLineEdit *lineEditU;
+    QLineEdit *lineEditP;
 
 
 public:
@@ -34,11 +40,16 @@ public:
 
 public slots:
 
-    void updateProfile();
     void goToMain();
     void openIconSelectionWidget();
 
     void handleIconChange(int icon);
+    void changeUsername();
+    void changePassword();
+
+    void applyUsernameChange();
+    void applPasswordChange();
+    void applyIconChange(std::string iconName);
 };
 
 

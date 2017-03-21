@@ -5,7 +5,7 @@
 
 IconLabel::IconLabel(int id, QString path_to_image) : id(id) {
 
-    this->setPixmap(QPixmap(QUrl::fromLocalFile(QFileInfo(path_to_image).absoluteFilePath()).toString()));
+    this->setPixmap(QPixmap(path_to_image));
     this->setCursor(Qt::PointingHandCursor);
     QObject::connect(this, SIGNAL(clicked()), this, SLOT(clickedInt()));
 
