@@ -33,7 +33,7 @@ public:
 
     PNJ(Position position, int healthPoints, Position last_pos, int direction);
 
-    virtual ~PNJ() = default;
+    virtual ~PNJ() = 0;
 
 	void freeze();
 

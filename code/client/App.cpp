@@ -11,8 +11,6 @@ App::App(char *serverIpAddr) : serverIpAddress(serverIpAddr),
         mainWindow = new QWidget();
         mainWindow->setFixedSize(750, 600); // Will be resized for the menu and games;
         mainWindow->move(QApplication::desktop()->screen()->rect().center() - mainWindow->rect().center());
-
-        setMusicFromPath("../../qt_ui/game_pictures/sounds/americanAnthem.mp3");
     }
     currentManager = new WelcomeManager(this);
     currentManager->run();
