@@ -84,7 +84,6 @@ GameGUI::GameGUI(unsigned seed, GameManager *manager) : AbstractGUI(nullptr), Ga
     centralLayout->addStretch();
     map = new MapGUI(seed, this, centralLayout);
     centralLayout->addStretch();
-
     otherPlayerHealthBarBox = new QGroupBox;
     setUpOtherPlayerHealthBar();
     centralLayout->addWidget(otherPlayerHealthBarBox);
@@ -329,12 +328,12 @@ void GameGUI::displaySpellBox() {
 
     freezeB = new QPushButton;
     freezeB->setEnabled(false);
-    freezeB->setIcon(QIcon("../../qt_ui/game_pictures/spells/frozen-trump.png"));
+    freezeB->setIcon(QIcon("../../qt_ui/game_pictures/spells/frozentrump.png"));
     freezeB->setIconSize(size);
 
     QGridLayout *layout = new QGridLayout;
     layout->addWidget(nukeB, 0, 0);
-    layout->addWidget(freezeB, 0, 0);
+    layout->addWidget(freezeB, 0, 1);
     spellBox->setLayout(layout);
 
     QObject::connect(nukeB, SIGNAL(clicked()), this, SLOT(handleNukeSpell()));
