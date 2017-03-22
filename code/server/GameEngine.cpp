@@ -297,10 +297,10 @@ Timer &GameEngine::getTimerSinceGameStart() {
 
 void GameEngine::killAllNPC(int quadrant) {
     int damageDealt = 0;
-    std::cout << "hoy" << std::endl;
     for(PNJ& pnj : gameState.getWaves()[quadrant].getPnjs()) {
         damageDealt += pnj.getHealthPoints();
         pnj.setHealthPoints(0);
+        getGameState().getPlayerStates()[quadrant].addOneKill();
     }
     getGameState().getPlayerStates()[quadrant].incrDamageDealt(damageDealt);
 }

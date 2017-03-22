@@ -144,7 +144,6 @@ void GameServer::getAndProcessUserInput(int clientSocketFd, char *buffer) {
                 sendMessageToOtherPlayers(userMessage, senderUsername);
             }
         } else if (command_type == NUCLEAR_BOMB_COMMAND_STRING) {
-            std::cout << "hi" << std::endl;
             Command command;
             command.parse(buffer);
             std::string quadrant = command.getNextToken();

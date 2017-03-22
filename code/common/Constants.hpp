@@ -25,7 +25,7 @@ static const int PNJ_STARTING_MOVESPEED = 100;
 static const int PLAYER_STARTING_HP =  10;
 static const int PLAYER_STARTING_MONEY = 200;
 
-static const int PNJ_VALUE = 10;
+static const int PNJ_VALUE = 100;
 static const int PNJ_DAMAGE = 5;
 
 static const char PLACING_TOWER[2] = "t";

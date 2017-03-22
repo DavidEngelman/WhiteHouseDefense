@@ -5,6 +5,7 @@
 #include <QtWidgets/QGroupBox>
 #include "GameGUI.hpp"
 #include "../MapGUI.hpp"
+#define  CHART_SIZE 600
 
 GameGUI::GameGUI(unsigned seed, GameManager *manager) : AbstractGUI(nullptr), GameUI(seed, manager) {
 
@@ -114,6 +115,7 @@ void GameGUI::displayPlayersPlacingTowersMessage() {
 
 }
 
+///HEALTH BARS
 void GameGUI::setUpHealthBar() {
     baseHealthBar = new QProgressBar;
     baseHealthBar->setStyleSheet(QString("QProgressBar {color: black}"));
@@ -123,6 +125,39 @@ void GameGUI::setUpHealthBar() {
     p.setColor(QPalette::Highlight, Qt::green);
     baseHealthBar->setPalette(p);
     baseHealthBar->setTextVisible(true);
+}
+
+void GameGUI::setUpOtherPlayerHealthBar() {
+    QHBoxLayout *layout = new QHBoxLayout;
+    for(int i = 0; i < 3; i++) {
+        QProgressBar *healthBar = new QProgressBar;
+        healthBar->setStyleSheet(QString("QProgressBar {color: black}"));
+        healthBar->setMaximum(PLAYER_STARTING_HP);
+        healthBar->setMinimum(0);
+        QPalette p = healthBar->palette();
+        p.setColor(QPalette::Highlight, Qt::green);
+        healthBar->setPalette(p);
+        healthBar->setTextVisible(true);
+        layout->addWidget(healthBar);
+        otherPlayerHealthBar.push_back(healthBar);
+
+    }
+
+    otherPlayerHealthBarBox->setLayout(layout);
+}
+
+void GameGUI::updateOtherPlayerHealthBar(std::vector<PlayerState> &playerState, int quadrant) {
+    int count = 0;
+    for (int i = 0; i != playerState.size(); i++) {
+        if (i != quadrant) {
+            int value = playerState[i].getHp();
+            otherPlayerHealthBar[count]->setValue(value);
+            otherPlayerHealthBar[count]->setFormat(QString::fromStdString(playerState[i].getUsername())
+                                                   + " :" + QString::number(value) + "/"
+                                                   + QString::number(PLAYER_STARTING_HP ) );
+            count++;
+        }
+    }
 }
 
 
@@ -211,51 +246,6 @@ void GameGUI::displayDeleteAndUpgradeBox() {
 
 }
 
-
-void GameGUI::displaySpellBox() {
-    int scl = 10;
-    QSize size = QSize(1400/scl, 1060/scl);
-
-    nukeB = new QPushButton;
-    nukeB->setEnabled(false);
-    nukeB->setIcon(QIcon("../../qt_ui/game_pictures/spells/trumpnuclear.png"));
-    nukeB->setIconSize(size);
-
-    QGridLayout *layout = new QGridLayout;
-    layout->addWidget(nukeB, 0, 0);
-    spellBox->setLayout(layout);
-
-    QObject::connect(nukeB, SIGNAL(clicked()), this, SLOT(handleNukeSpell()));
-}
-
-void GameGUI::displayPlayerInfos(GameState &gameState, int quadrant) {
-    PlayerState playerState = gameState.getPlayerStates()[quadrant];
-    std::string &text = playerState.getUsername();
-
-    usernameL->setText(QString::fromStdString(text));
-    usernameL->show();
-
-    text = "Money : " + std::to_string(playerState.getMoney()) + " $";
-    text += "\nHP : " + std::to_string(playerState.getHp());
-    text += "\nNPC killed : " + std::to_string(playerState.getPnjKilled());
-    text += "\nQuadrant : " + QUADRANT_NAMES[quadrant];
-
-    playerStateL->setText(QString::fromStdString(text));
-    playerStateL->show();
-
-    updateHealthBar(playerState.getHp());
-    updateOtherPlayerHealthBar(gameState.getPlayerStates(), quadrant);
-}
-
-void GameGUI::displayInfoForSupporter(GameState &gameState) {
-
-}
-
-void GameGUI::displayDeadMessage() {
-
-}
-
-
 void GameGUI::disableTowerShop() {
     gunTowerB->setEnabled(false);
     sniperTowerB->setEnabled(false);
@@ -303,10 +293,53 @@ void GameGUI::handleUpgradingTower() {
     manager->upgradeTower(map->getHighlightedPosition());
 }
 
+
+void GameGUI::displaySpellBox() {
+    int scl = 10;
+    QSize size = QSize(1400/scl, 1060/scl);
+
+    nukeB = new QPushButton;
+    nukeB->setEnabled(false);
+    nukeB->setIcon(QIcon("../../qt_ui/game_pictures/spells/trumpnuclear.png"));
+    nukeB->setIconSize(size);
+
+    QGridLayout *layout = new QGridLayout;
+    layout->addWidget(nukeB, 0, 0);
+    spellBox->setLayout(layout);
+
+    QObject::connect(nukeB, SIGNAL(clicked()), this, SLOT(handleNukeSpell()));
+}
+
 void GameGUI::handleNukeSpell() {
     manager->nuclearBombSpell();
 }
 
+void GameGUI::displayPlayerInfos(GameState &gameState, int quadrant) {
+    PlayerState playerState = gameState.getPlayerStates()[quadrant];
+    std::string &text = playerState.getUsername();
+
+    usernameL->setText(QString::fromStdString(text));
+    usernameL->show();
+
+    text = "Money : " + std::to_string(playerState.getMoney()) + " $";
+    text += "\nHP : " + std::to_string(playerState.getHp());
+    text += "\nNPC killed : " + std::to_string(playerState.getPnjKilled());
+    text += "\nQuadrant : " + QUADRANT_NAMES[quadrant];
+
+    playerStateL->setText(QString::fromStdString(text));
+    playerStateL->show();
+
+    updateHealthBar(playerState.getHp());
+    updateOtherPlayerHealthBar(gameState.getPlayerStates(), quadrant);
+}
+
+void GameGUI::displayInfoForSupporter(GameState &gameState) {
+
+}
+
+void GameGUI::displayDeadMessage() {
+
+}
 
 void GameGUI::addChatMessage(const std::string &message, const std::string &sender) {
     inGameChatWidget->addChatMessage(message, sender);
@@ -322,7 +355,7 @@ void GameGUI::enableNukeSpell() {
 
 void GameGUI::updateHealthBar(int value) {
     baseHealthBar->setValue(value);
-    baseHealthBar->setFormat("HP : " + QString::number(value) + "/100" );
+    baseHealthBar->setFormat("HP : " + QString::number(value) + "/" + QString::number(PLAYER_STARTING_HP));
 }
 
 void GameGUI::disableDeleteAndUpgradeBox() {
@@ -335,36 +368,6 @@ void GameGUI::enableDeleteAndUpgradeBox() {
     deleteTowerB->setEnabled(true);
 }
 
-void GameGUI::setUpOtherPlayerHealthBar() {
-    QHBoxLayout *layout = new QHBoxLayout;
-    for(int i = 0; i < 3; i++) {
-        QProgressBar *healthBar = new QProgressBar;
-        healthBar->setStyleSheet(QString("QProgressBar {color: black}"));
-        healthBar->setMaximum(PLAYER_STARTING_HP);
-        healthBar->setMinimum(0);
-        QPalette p = healthBar->palette();
-        p.setColor(QPalette::Highlight, Qt::green);
-        healthBar->setPalette(p);
-        healthBar->setTextVisible(true);
-        layout->addWidget(healthBar);
-        otherPlayerHealthBar.push_back(healthBar);
-
-    }
-
-    otherPlayerHealthBarBox->setLayout(layout);
-}
-
-void GameGUI::updateOtherPlayerHealthBar(std::vector<PlayerState> &playerState, int quadrant) {
-    int count = 0;
-    for (int i = 0; i != playerState.size(); i++) {
-        if (i != quadrant) {
-            int value = playerState[i].getHp();
-            otherPlayerHealthBar[count]->setValue(value);
-            otherPlayerHealthBar[count]->setFormat(QString::fromStdString(playerState[i].getUsername()) + " :" + QString::number(value) + "/100" );
-            count++;
-        }
-    }
-}
 
 //////////// END OF GAME SCREEN PART //////////////////////
 
@@ -451,7 +454,7 @@ void GameGUI::setUpChartBox(GameState& gameState) {
 
     chartView1 = new QChartView(chart1);
     chartView1->setRenderHint(QPainter::Antialiasing);
-    chartView1->setFixedWidth(450);
+    chartView1->setFixedWidth(CHART_SIZE);
 
     chartLayout->addWidget(chartView1, 0, 0);
 
@@ -464,6 +467,8 @@ void GameGUI::setUpChartBox(GameState& gameState) {
         nbTowersPlaced->append(player.getNbTowersPlaced());
     }
 
+    nbTowersPlaced->setColor(QColor("green"));
+
     QBarSeries *series2 = new QBarSeries();
     series2->append(nbTowersPlaced);
     chart2 = new QChart();
@@ -474,6 +479,7 @@ void GameGUI::setUpChartBox(GameState& gameState) {
 
     chart2->createDefaultAxes();
     QBarCategoryAxis *axis2 = new QBarCategoryAxis();
+    axis2->append(categories);
     chart2->setAxisX(axis2, series2);
     chart2->legend()->setVisible(true);
     chart2->legend()->setAlignment(Qt::AlignBottom);
@@ -482,7 +488,7 @@ void GameGUI::setUpChartBox(GameState& gameState) {
 
     chartView2 = new QChartView(chart2);
     chartView2->setRenderHint(QPainter::Antialiasing);
-    chartView2->setFixedWidth(450);
+    chartView2->setFixedWidth(CHART_SIZE);
 
     chartLayout->addWidget(chartView2, 0, 1);
 
@@ -491,9 +497,11 @@ void GameGUI::setUpChartBox(GameState& gameState) {
 
     damageDealt = new QBarSet("Damage dealt");
 
-    for (PlayerState player : gameState.getPlayerStates()) {
+   for (PlayerState player : gameState.getPlayerStates()) {
         damageDealt->append(player.getDamageDealt());
     }
+
+    damageDealt->setColor(QColor("red"));
 
     QBarSeries *series3 = new QBarSeries();
     series3->append(damageDealt);
@@ -505,12 +513,13 @@ void GameGUI::setUpChartBox(GameState& gameState) {
 
     chart3->createDefaultAxes();
     QBarCategoryAxis *axis3 = new QBarCategoryAxis();
+    axis3->append(categories);
     chart3->setAxisX(axis3, series3);
     chart3->legend()->setAlignment(Qt::AlignBottom);
 
     chartView3 = new QChartView(chart3);
     chartView3->setRenderHint(QPainter::Antialiasing);
-    //chartView3->setFixedWidth(450);
+    chartView3->setFixedWidth(CHART_SIZE);
 
     chartLayout->addWidget(chartView3, 1, 0);
 
@@ -523,8 +532,10 @@ void GameGUI::setUpChartBox(GameState& gameState) {
         moneySpend->append(player.getMoneySpend());
     }
 
+    moneySpend->setColor(QColor("orange"));
+
     QBarSeries *series4 = new QBarSeries();
-    series4->append(nbTowersPlaced);
+    series4->append(moneySpend);
 
     chart4 = new QChart();
     chart4->addSeries(series4);
@@ -533,12 +544,13 @@ void GameGUI::setUpChartBox(GameState& gameState) {
 
     chart4->createDefaultAxes();
     QBarCategoryAxis *axis4 = new QBarCategoryAxis();
+    axis4->append(categories);
     chart4->setAxisX(axis4, series4);
     chart4->legend()->setAlignment(Qt::AlignBottom);
 
     chartView4 = new QChartView(chart4);
     chartView4->setRenderHint(QPainter::Antialiasing);
-    chartView4->setFixedWidth(450);
+    chartView4->setFixedWidth(CHART_SIZE);
 
     chartLayout->addWidget(chartView4, 1, 1);
 
