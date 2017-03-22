@@ -1,6 +1,7 @@
 
 
 #include <cmath>
+#include <iostream>
 #include "MissileTower.hpp"
 
 
@@ -12,17 +13,19 @@ const std::vector<PNJ*> MissileTower::shoot(Wave &wave, PlayerState& playerState
     std::vector<PNJ*> targets;
     std::vector<PNJ*> killed;
     closestTarget = get_closest_pnj(wave);
-    targets = get_targets(wave, closestTarget);
 
-    dealDamageTo(*closestTarget, playerState);
-    if (closestTarget->getHealthPoints() <= 0) {
-        killed.push_back(closestTarget);
-    }
+    if ((closestTarget != nullptr) && (!closestTarget->isInPlayerBase()) && (closestTarget->getHealthPoints() > 0)) {
+        dealDamageTo(*closestTarget, playerState);
+        if (closestTarget->getHealthPoints() <= 0) {
+            killed.push_back(closestTarget);
+        }
 
-    for (auto &target : targets) {
-        dealDamageToSubTargets(*target, playerState);
-        if (target->getHealthPoints() <= 0) {
-            killed.push_back(target);
+        targets = get_targets(wave, closestTarget);
+        for (auto &target : targets) {
+            dealDamageToSubTargets(*target, playerState);
+            if (target->getHealthPoints() <= 0) {
+                killed.push_back(target);
+            }
         }
     }
 
