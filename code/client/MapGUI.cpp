@@ -51,8 +51,7 @@ void MapGUI::paintEvent(QPaintEvent *) {
                     }
                     if (typeOfPNJ != "") break;
                 }
-                image = QImage("../../qt_ui/game_pictures/tiles/path.png");
-                painter.drawImage(x*TILES_SIZE, y*TILES_SIZE, image);
+
                 if (typeOfPNJ == MEXICAN_PNJ_STR) {
                     image = QImage("../../qt_ui/game_pictures/tiles/mexican.png");
                     painter.drawImage(x*TILES_SIZE, y*TILES_SIZE, image);
