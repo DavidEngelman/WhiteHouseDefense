@@ -30,6 +30,7 @@ Direction PNJ::get_random_direction() {
 void PNJ::advance(Map &map) {
     if (freezeTicksLeft > 0) { // The PNJ doesn't move if it's freezed
         freezeTicksLeft -= 1;
+        return;
     }
 
     Direction move;
