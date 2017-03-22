@@ -27,6 +27,10 @@ public:
 
 
     std::string getRemainingContent();
+
+    int getNextInt();
+
+    std::string getTokenWithSize(int size);
 };
 
 

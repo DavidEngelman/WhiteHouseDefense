@@ -192,7 +192,8 @@ void GameManager::run() {
             else if (strncmp(server_msg_buff, RECEIVE_MESSAGE_STRING.c_str(), RECEIVE_MESSAGE_STRING.length()) == 0) {
                 Command command;
                 command.parse(server_msg_buff);
-                const std::string& message = command.getNextToken();
+                int messageLength = command.getNextInt();
+                const std::string& message = command.getTokenWithSize(messageLength);
                 const std::string& sender = command.getNextToken();
                 gameUI->addChatMessage(message, sender);
             }
@@ -577,7 +578,10 @@ void GameManager::sendMessageToPlayers(const std::string &message) {
     if (isSupporter) {
         username = "[Supporter] " + username;
     }
-    std::string request = SEND_MESSAGE_STRING + "," + message + "," + username + ";";
+    std::string request = SEND_MESSAGE_STRING + ","
+                          + std::to_string(message.size()) + ","
+                          + message + ","
+                          + username + ";";
     send_message(server_socket, request.c_str());
 }
 

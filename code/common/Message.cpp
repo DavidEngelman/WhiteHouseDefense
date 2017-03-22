@@ -30,6 +30,27 @@ std::string Message::getNextToken() {
     return token;
 }
 
+int Message::getNextInt() {
+    const std::string &token = getNextToken();
+    return std::stoi(token);
+}
+
+std::string Message::getTokenWithSize(int size){
+    std::string token;
+    int numRead = 0;
+    while ((buffer[currentPosInBuffer] != '\0') && numRead < size) {
+        token += buffer[currentPosInBuffer];
+        currentPosInBuffer++;
+        numRead += 1;
+    }
+
+    currentPosInBuffer++; // There should be a delimiter next
+    _hasReachedEnd = (buffer[currentPosInBuffer] == ';' or buffer[currentPosInBuffer] == '\0');
+
+    currentPosInBuffer++;
+    return token;
+}
+
 bool Message::hasReachedEnd() {
     return _hasReachedEnd;
 }
