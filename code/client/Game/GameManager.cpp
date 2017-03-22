@@ -617,8 +617,7 @@ void GameManager::nuclearBombSpell() {
 void GameManager::launchFreezeSpell(){
     sendFreezeSpellRequest();
     freezeSpell = false;
-    // TODO:
-//    gameUI->disableFreezeSpell();
+    gameUI->disableFreezeSpell();
 }
 
 void GameManager::sendNuclearRequest() {

@@ -94,6 +94,7 @@ public slots:
     void handleSellingTower();
     void handleUpgradingTower();
     void handleNukeSpell();
+    void handleFreezeSpell();
 
 public:
     GameGUI(unsigned seed, GameManager *manager);
