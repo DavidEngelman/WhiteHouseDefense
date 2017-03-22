@@ -74,3 +74,7 @@ void RegisterManager::goToWelcome() {
     WelcomeManager *welcomeManager = new WelcomeManager(master_app);
     master_app->transition(welcomeManager);
 }
+
+int RegisterManager::getPort() {
+    return port;
+}
