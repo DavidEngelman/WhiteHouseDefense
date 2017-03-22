@@ -1,6 +1,5 @@
 #include <QtWidgets/QFrame>
 #include <QCoreApplication>
-#include <QtCore/QFileInfo>
 #include <QtMultimedia/QMediaPlaylist>
 #include "WelcomeGUI.hpp"
 #include "WelcomeManager.hpp"
@@ -52,8 +51,6 @@ void WelcomeGUI::setTheme() {
 
     setStylesheetFromPath("../../qt_ui/americanMain.qss");
     setBackgroundFromPath("../../qt_ui/game_pictures/backgrounds/americanBg");
-    setMusicFromPath("../../qt_ui/game_pictures/sounds/americanAnthem.mp3");
-
 }
 
 WelcomeGUI::~WelcomeGUI() {

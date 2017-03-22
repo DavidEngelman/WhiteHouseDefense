@@ -3,6 +3,7 @@
 #include "../common/tower/GunTower.hpp"
 #include "../common/tower/SniperTower.hpp"
 #include "../common/tower/ShockTower.hpp"
+#include "../common/tower/MissileTower.hpp"
 
 const bool DEBUG = false;
 
@@ -187,8 +188,10 @@ void GameServer::addTowerInGameState(TowerCommand &command) {
         tower = new GunTower(command.getPosition(), 1);
     } else if (command.getTowerType() == SNIPER_TOWER_STR) {
         tower = new SniperTower(command.getPosition(), 1);
-    } else {
+    } else if (command.getTowerType() == SHOCK_TOWER_STR) {
         tower = new ShockTower(command.getPosition(), 1);
+    } else {
+        tower = new MissileTower(command.getPosition(), 1);
     }
 
     int quadrant = command.getPlayerQuadrant();

@@ -17,6 +17,8 @@ public:
     virtual ~AbstractManager() = default;
 
     virtual void run() = 0;
+
+    void setMusicFromPath(QString path);
 };
 
 

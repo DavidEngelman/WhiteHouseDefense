@@ -78,8 +78,10 @@ void MapGUI::paintEvent(QPaintEvent *) {
                         image = QImage("../../qt_ui/game_pictures/tiles/guntower.png");
                     } else if (typeOfTower == SNIPER_TOWER_STR) {
                         image = QImage("../../qt_ui/game_pictures/tiles/snipertower.png");
-                    } else {
+                    } else if (typeOfTower == SHOCK_TOWER_STR) {
                         image = QImage("../../qt_ui/game_pictures/tiles/shocktower.png");
+                    } else {
+                        image = QImage("../../qt_ui/game_pictures/tiles/missiletower.png");
                     }
                     int offset = image.height() - TILES_SIZE;
                     painter.drawImage(x * TILES_SIZE, y * TILES_SIZE - offset, image);

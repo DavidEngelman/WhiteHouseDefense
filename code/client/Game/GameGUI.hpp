@@ -47,6 +47,7 @@ private:
     QCustomButton *gunTowerB;
     QCustomButton *sniperTowerB;
     QCustomButton *shockTowerB;
+    QCustomButton *missileTowerB;
 
     QGroupBox *deleteAndUpgradeBox;
     QPushButton *deleteTowerB;

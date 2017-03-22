@@ -1,9 +1,7 @@
 #include <QtCore/QFile>
 #include <QtWidgets/QFormLayout>
 #include <QtWidgets/QLabel>
-#include <QtMultimedia/QMediaPlayer>
 #include <QtWidgets/QMessageBox>
-#include <QtCore/QFileInfo>
 #include "LoginGUI.hpp"
 #include "../QHandPointerButton.hpp"
 
@@ -62,12 +60,6 @@ void LoginGUI::display() {
     fieldsLayout->setAlignment(cancel, Qt::AlignCenter);
     fields->setLayout(fieldsLayout);
     fields->move(this->size().width() / 2 - 125, this->size().height() / 2 +105);
-
-    QMediaPlayer *player = new QMediaPlayer(this);
-    // Les path relatifs marchen en utilisant QFileInfo
-    player->setMedia(QUrl::fromLocalFile(QFileInfo("../../qt_ui/game_pictures/sounds/americanAnthem.mp3").absoluteFilePath()));
-    player->setVolume(100);
-    player->play();
 
     this->show();
 }

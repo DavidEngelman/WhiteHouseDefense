@@ -91,6 +91,8 @@ public:
 
     void sendNuclearRequest();
 
+    bool placeMissileTower(Position towerPos);
+
 public slots:
     void updateMap();
 };
