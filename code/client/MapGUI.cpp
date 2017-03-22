@@ -6,9 +6,10 @@
 MapGUI::MapGUI(unsigned int seed, GameGUI *gameGUI, QVBoxLayout *layout = 0) : Map(seed), gameGUI(gameGUI) {
     display();
     layout->addWidget(this);
-    if (seed == 0) this->setStyleSheet("background-image: url(../../maps/map1.png)");
-    else if (seed == 1) this->setStyleSheet("background-image: url(../../maps/map2.png)");
-    else if (seed == 2) this->setStyleSheet("background-image: url(../../maps/map3.png)");
+    if (seed < NB_OF_MAPS) {
+        std::string filename = "background-image: url(../../maps/map" + std::to_string(seed) + ".png)";
+        this->setStyleSheet(QString::fromStdString(filename));
+    }
 }
 
 void MapGUI::display(GameState &gameStateUpdate, int quadrantUpdate) {
