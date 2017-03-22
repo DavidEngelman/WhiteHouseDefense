@@ -24,7 +24,6 @@ public:
     void changePlayerIcon(std::string newIconName);
     void goToMainMenu();
 
-    void comeBackToMainMenu();
 
     ~SettingsManager();
 };

@@ -9,7 +9,8 @@
 MainGUI::MainGUI(MainManager *manager, QWidget* _parent) : AbstractGUI(_parent), MainUI(manager) {}
 
 void MainGUI::display() {
-
+    QElapsedTimer timer;
+    timer.start();
 
     this->setFixedHeight(600);
     this->setFixedWidth(1000);
@@ -63,6 +64,7 @@ void MainGUI::display() {
         showInQueue();
     }
 
+    std::cout << "It took " << timer.nsecsElapsed() / 1000000000.0 << " seconds for MainGUI::display" << std::endl;
     this->show();
     AbstractGUI::parent->setVisible(true);
 
