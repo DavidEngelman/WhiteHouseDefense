@@ -14,13 +14,23 @@
 #include "InGameChatWidget.hpp"
 #include "../QCustomButton.hpp"
 #include <QProgressBar>
+#include <QtCharts/QChartView>
+#include <QtCharts/QBarSeries>
+#include <QtCharts/QBarSet>
+#include <QtCharts/QLegend>
+#include <QtCharts/QBarCategoryAxis>
+#include "../../common/Tools.hpp"
 
+QT_CHARTS_USE_NAMESPACE
 class MapGUI;
 
 class GameGUI : public AbstractGUI, public GameUI {
     Q_OBJECT
 
 private:
+
+    QHBoxLayout *mainLayout;
+
     // Left Panel
     QLabel *usernameL;
     QGroupBox *playerStatsBox;
@@ -49,8 +59,35 @@ private:
     QGroupBox *otherPlayerHealthBarBox;
     std::vector<QProgressBar*> otherPlayerHealthBar;
 
+
+    //end of game screen
+    QWidget *endofGameWidget;
+    QVBoxLayout *endOfGameLayout;
+
+    QGroupBox *winnerLoserInfos;
+
+    QHBoxLayout *statsLayout;
+    QGroupBox *chartBox;
+    QGridLayout *chartLayout;
+
+
+    QChartView *chartView1;
+    QChartView *chartView2;
+    QChartView *chartView3;
+    QChartView *chartView4;
+    QChart *chart1;
+    QChart *chart2;
+    QChart *chart3;
+    QChart *chart4;
+
+    QBarSet *npcKilled;
+    QBarSet *nbTowersPlaced;
+    QBarSet *damageDealt;
+    QBarSet *moneySpend;
+
+    QGroupBox *endGameChatBox;
+
 public slots:
-    void update_map();
     void handleBuyingTower(int typeOfTower);
     void handleSellingTower();
     void handleUpgradingTower();
@@ -98,6 +135,20 @@ public:
     void updateOtherPlayerHealthBar(std::vector<PlayerState> &playerState, int quadrant);
 
     void setUpOtherPlayerHealthBar();
+
+    void switchToEndGameDisplay();
+
+    void setUpEndOfGameLayout(GameState &gameState);
+
+    void setUpWinnerLooserBox(GameState &gameState);
+
+    void setUpStatsLayout(GameState &gameState);
+
+    void setUpChartBox(GameState &gameState);
+
+
+    void setUpEndGameChatBox();
+
 };
 
 

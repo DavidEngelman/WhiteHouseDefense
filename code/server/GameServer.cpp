@@ -9,7 +9,8 @@ const bool DEBUG = false;
 GameServer::GameServer(int port, std::vector<PlayerConnection> &playerConnections, std::string _mode) :
         Server(port), playerConnections(playerConnections), mode(_mode) {
     srand((unsigned) time(0));
-    mapSeed = (unsigned int) rand() % NB_OF_MAPS;
+    //mapSeed = (unsigned int) rand() % NB_OF_MAPS;
+    mapSeed = 0;
 }
 
 void GameServer::run() {

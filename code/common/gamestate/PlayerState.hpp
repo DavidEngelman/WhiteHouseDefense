@@ -19,8 +19,8 @@ private:
 	int player_id;
 
 	/*stats*/
-	int pnjKilled;
-	int nbTowerPlaced;
+	int NPCKilled;
+	int nbTowersPlaced;
 	int damageDealt;
 	int moneySpend;
 
@@ -75,4 +75,12 @@ public:
 
 
 	void incrNbTowerPlaced();
+
+    int getNPCKilled() const;
+
+    int getNbTowersPlaced() const;
+
+    int getDamageDealt() const;
+
+    int getMoneySpend() const;
 };

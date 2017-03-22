@@ -26,6 +26,10 @@ GameManager::GameManager(int socket, App *app) :
     quadrant = getQuadrantFromServer();
 
     getInitialGameStateFromServer();
+
+    timer = new QTimer();
+    QObject::connect(timer, SIGNAL(timeout()), this, SLOT(updateMap()));
+    timer->start(10);
 }
 
 GameManager::GameManager(int socket, bool _isSupporter, App *app) :
@@ -51,27 +55,30 @@ void GameManager::comeBackToMenu() { // À appeler quand la partie est terminée
 }
 
 void GameManager::updateMap() {
-    char server_msg_buff[BUFFER_SIZE];
-    receive_message(server_socket, server_msg_buff);
 
-    if (strncmp(server_msg_buff, RECEIVE_MESSAGE_STRING.c_str(), RECEIVE_MESSAGE_STRING.length()) == 0) {
-        Command command;
-        command.parse(server_msg_buff);
-        const std::string& message = command.getNextToken();
-        const std::string& sender = command.getNextToken();
-        gameUI->addChatMessage(message, sender);
-    }
-    else if (strcmp(server_msg_buff, PLACING_TOWER) == 0) {
-        gameUI->disableNukeSpell();
-    }
+    if (!gameState.getIsGameOver()){
 
-    else if (strcmp(server_msg_buff, PLACING_TOWER) != 0 && strcmp(server_msg_buff, WAVE) != 0) {
-        if (nukeSpell) gameUI->enableNukeSpell();
-        unSerializeGameState(server_msg_buff);
-    }
+        char server_msg_buff[BUFFER_SIZE];
+        receive_message(server_socket, server_msg_buff);
+        if (strncmp(server_msg_buff, RECEIVE_MESSAGE_STRING.c_str(), RECEIVE_MESSAGE_STRING.length()) == 0) {
+            Command command;
+            command.parse(server_msg_buff);
+            const std::string &message = command.getNextToken();
+            const std::string &sender = command.getNextToken();
+            gameUI->addChatMessage(message, sender);
+        } else if (strcmp(server_msg_buff, PLACING_TOWER) == 0) {
+            gameUI->disableNukeSpell();
+        } else if (strcmp(server_msg_buff, PLACING_TOWER) != 0 && strcmp(server_msg_buff, WAVE) != 0) {
+            if (nukeSpell) gameUI->enableNukeSpell();
+            unSerializeGameState(server_msg_buff);
+        }
 
-    gameUI->display(gameState, quadrant);
-    gameUI->displayPlayerInfos(gameState, quadrant);
+        gameUI->display(gameState, quadrant);
+        gameUI->displayPlayerInfos(gameState, quadrant);
+    } else {
+        timer->stop();
+        gameUI->displayGameOver(gameState);
+    }
 }
 
 bool GameManager::isTowerInPosition(GameState &gameState, Position towerPos){
