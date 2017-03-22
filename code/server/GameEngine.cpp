@@ -133,7 +133,7 @@ void GameEngine::createWaves() {
 }
 
 void GameEngine::increaseWaveDifficulty() {
-    numOfPNJsPerWave += 1;
+    numOfPNJsPerWave += NUMBER_OF_PNJS_ADDED_PER_WAVE;
 }
 
 std::string *GameEngine::serializeGameState() {

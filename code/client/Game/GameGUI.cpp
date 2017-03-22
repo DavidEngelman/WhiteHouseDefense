@@ -99,7 +99,8 @@ GameGUI::GameGUI(unsigned seed, GameManager *manager) : AbstractGUI(nullptr), Ga
     this->setLayout(mainLayout);
     //playerInfo->setLayout(playerInfoLayout);
 
-    this->showMaximized();
+    //this->showMaximized();
+    this->showFullScreen();
 
     // TODO: Pour l'instant, c'est la gameGUI qui declenche la fonction updatemap toutes les 10 msec
     // Je ne suis pas sur que ca devrait etre dans cette classe
@@ -207,15 +208,30 @@ void GameGUI::displayTowerShop() {
     shockTowerB->setToolTip(QString::fromStdString(tooltip));
     shockTowerB->setEnabled(false);
 
+    tooltip = "Tower that can attack one npc at the time\nbut deal zone damage around the npc\nwith a middle range and great damages\n";
+    tooltip += "\nPrice : " + std::to_string(MISSILE_TOWER_PRICE) + " $";
+    tooltip += "\nDamage : " + std::to_string(MISSILE_TOWER_DAMAGE);
+    tooltip += "\nRange : " + std::to_string(MISSILE_TOWER_RANGE);
+    tooltip += "\nSub Damage : " + std::to_string(MISSILE_TOWER_SUBDAMAGE);
+    tooltip += "\nSub Range : " + std::to_string(MISSILE_TOWER_SUBRANGE);
+
+    missileTowerB = new QCustomButton(3);
+    missileTowerB->setIcon(QIcon("../../qt_ui/game_pictures/towers/missiletower.png"));
+    missileTowerB->setIconSize(size);
+    missileTowerB->setToolTip(QString::fromStdString(tooltip));
+    missileTowerB->setEnabled(false);
+
     QGridLayout *layout = new QGridLayout;
     layout->addWidget(gunTowerB, 0, 0);
     layout->addWidget(sniperTowerB, 0, 1);
     layout->addWidget(shockTowerB, 1, 0);
+    layout->addWidget(missileTowerB, 1, 1);
     towerShop->setLayout(layout);
 
     QObject::connect(gunTowerB, SIGNAL(clicked(int)), this, SLOT(handleBuyingTower(int)));
     QObject::connect(sniperTowerB, SIGNAL(clicked(int)), this, SLOT(handleBuyingTower(int)));
     QObject::connect(shockTowerB, SIGNAL(clicked(int)), this, SLOT(handleBuyingTower(int)));
+    QObject::connect(missileTowerB, SIGNAL(clicked(int)), this, SLOT(handleBuyingTower(int)));
 }
 
 void GameGUI::displayDeleteAndUpgradeBox() {
@@ -250,6 +266,7 @@ void GameGUI::disableTowerShop() {
     gunTowerB->setEnabled(false);
     sniperTowerB->setEnabled(false);
     shockTowerB->setEnabled(false);
+    missileTowerB->setEnabled(false);
 }
 
 void GameGUI::enableTowerShop() {
@@ -268,6 +285,7 @@ void GameGUI::enableTowerShop() {
             if (playerMoney > GUN_TOWER_PRICE) gunTowerB->setEnabled(true);
             if (playerMoney > SNIPER_TOWER_PRICE) sniperTowerB->setEnabled(true);
             if (playerMoney > SHOCK_TOWER_PRICE) shockTowerB->setEnabled(true);
+            if (playerMoney > MISSILE_TOWER_PRICE) missileTowerB->setEnabled(true);
         }
     }
 }
@@ -280,8 +298,11 @@ void GameGUI::handleBuyingTower(int typeOfTower) {
         case 1:
             manager->placeSniperTower(map->getHighlightedPosition());
             break;
-        default:
+        case 2:
             manager->placeShockTower(map->getHighlightedPosition());
+            break;
+        default:
+            manager->placeMissileTower(map->getHighlightedPosition());
             break;
     }
     disableTowerShop();

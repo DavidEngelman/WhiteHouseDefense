@@ -33,9 +33,7 @@ public:
 
     PNJ(Position position, int healthPoints, Position last_pos, int direction);
 
-    virtual ~PNJ() = default;
-
-	void freeze();
+    virtual ~PNJ() = 0;
 
 	void advance(Map& map);
 
@@ -88,6 +86,8 @@ public:
     Direction get_backward_direction();
 
 	bool can_go_backward(Map &map);
+
+	void freeze();
 };
 
 inline PNJ::~PNJ(){}

@@ -3,14 +3,14 @@
 #include "../common/tower/GunTower.hpp"
 #include "../common/tower/SniperTower.hpp"
 #include "../common/tower/ShockTower.hpp"
+#include "../common/tower/MissileTower.hpp"
 
 const bool DEBUG = false;
 
 GameServer::GameServer(int port, std::vector<PlayerConnection> &playerConnections, std::string _mode) :
         Server(port), playerConnections(playerConnections), mode(_mode) {
     srand((unsigned) time(0));
-    //mapSeed = (unsigned int) rand() % NB_OF_MAPS;
-    mapSeed = 0;
+    mapSeed = (unsigned int) rand() % NB_OF_MAPS;
 }
 
 void GameServer::run() {
@@ -192,8 +192,10 @@ void GameServer::addTowerInGameState(TowerCommand &command) {
         tower = new GunTower(command.getPosition(), 1);
     } else if (command.getTowerType() == SNIPER_TOWER_STR) {
         tower = new SniperTower(command.getPosition(), 1);
-    } else {
+    } else if (command.getTowerType() == SHOCK_TOWER_STR) {
         tower = new ShockTower(command.getPosition(), 1);
+    } else {
+        tower = new MissileTower(command.getPosition(), 1);
     }
 
     int quadrant = command.getPlayerQuadrant();

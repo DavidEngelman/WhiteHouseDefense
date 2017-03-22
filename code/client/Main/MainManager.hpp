@@ -24,6 +24,7 @@ public:
 	bool isInQueue();
 
 	void leaveQueue();
+
 };
 
 #endif

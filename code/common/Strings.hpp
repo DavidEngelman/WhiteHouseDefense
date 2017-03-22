@@ -52,6 +52,9 @@ static const std::string SNIPER_TOWER_CHAR = "\033[31m✛\033[0m  ";
 static const std::string SHOCK_TOWER_STR = "ShockTower";
 static const std::string SHOCK_TOWER_CHAR = "\033[31m⚡\033[0m  ";
 
+static const std::string MISSILE_TOWER_STR = "MissileTower";
+static const std::string MISSILE_TOWER_CHAR = "\033[31m☢\033[0m  ";
+
 // PNJs
 static const std::string MEXICAN_PNJ_STR = "MexicanPnj";
 static const std::string MEXICAN_PNJ_CHAR = "\033[33m♿\033[0m  ";

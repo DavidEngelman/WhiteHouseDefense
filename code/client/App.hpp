@@ -4,7 +4,8 @@
 #include <string>
 #include <QtWidgets/QApplication>
 #include <QtWidgets>
-
+#include <QtMultimedia/QMediaPlayer>
+#include <QtMultimedia/QMediaPlaylist>
 
 
 class AbstractManager;
@@ -20,10 +21,12 @@ private:
     std::string username;
     AbstractManager *currentManager;
 
-    QWidget *mainWindow;
     bool is_in_queue;
-
     QMatchMakingThread *matchMakingThread;
+
+    QWidget *mainWindow;
+    QMediaPlayer *player;
+    //QMediaPlaylist *playlist;
 
 
 public slots:
@@ -56,6 +59,8 @@ public:
     void leaveQueue();
 
     void launchMatchmaking(std::string mode);
+
+    virtual void setMusicFromPath(QString musicPath);
 };
 
 
