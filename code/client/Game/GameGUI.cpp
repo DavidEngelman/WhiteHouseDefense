@@ -57,6 +57,11 @@ GameGUI::GameGUI(bool isSupporter, unsigned seed, GameManager *manager) : Abstra
     centralLayout->addStretch();
     map = new MapGUI(seed, this, centralLayout);
     centralLayout->addStretch();
+
+    // TODO: ads
+//    QImage image = new QImage("../../qt_ui/game_pictures/ads/steaks.jpg");
+
+
     otherPlayerHealthBarBox = new QGroupBox;
     setUpOtherPlayerHealthBar();
     centralLayout->addWidget(otherPlayerHealthBarBox);
