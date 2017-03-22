@@ -84,3 +84,7 @@ void MainManager::leaveQueue() {
 MainManager::~MainManager() {
     mainUI->destroy();
 }
+
+void MainManager::setMusicFromPath(QString path) {
+    master_app->setMusicFromPath(path);
+}

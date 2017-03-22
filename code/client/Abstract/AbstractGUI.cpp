@@ -30,16 +30,3 @@ void AbstractGUI::destroy() {
     deleteLater();
 }
 
-void AbstractGUI::setMusicFromPath(QString musicPath) {
-    QMediaPlayer *player = new QMediaPlayer(this);
-
-    QMediaPlaylist *playlist = new QMediaPlaylist();
-    playlist->addMedia(QUrl::fromLocalFile(QFileInfo(musicPath).absoluteFilePath()));
-    playlist->setPlaybackMode(QMediaPlaylist::Loop);
-
-    player->setVolume(100);
-    player->setPlaylist(playlist);
-    player->play();
-
-}
-
