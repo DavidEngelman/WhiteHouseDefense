@@ -14,6 +14,7 @@ const static std::string gameModes[3] = {CLASSIC_MODE, TIMED_MODE, TEAM_MODE};
 MainManager::MainManager(int port, App *my_app) :
         NetworkedManager(port, my_app) {
     if (!isConsole) {
+        std::cout << "Building GUI" << std::endl;
         mainUI = new MainGUI(this, master_app->getMainWindow());
     } else {
         mainUI = new MainConsoleUI(this);

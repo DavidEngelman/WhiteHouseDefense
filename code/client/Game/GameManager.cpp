@@ -53,6 +53,7 @@ GameManager::GameManager(int socket, bool _isSupporter, App *app) :
 void GameManager::comeBackToMenu() { // À appeler quand la partie est terminée
     MainManager *menu_manager = new MainManager(ACCOUNT_SERVER_PORT, master_app);
     master_app->transition(menu_manager);
+
 }
 
 void GameManager::updateMap() {
@@ -630,4 +631,8 @@ void GameManager::sendFreezeSpellRequest() {
     std::string message = FREEZE_PNJS_COMMAND_STRING + ","
                           + std::to_string(quadrant) + ";";
     send_message(server_socket, message.c_str());
+}
+
+GameManager::~GameManager(){
+    gameUI->destroy();
 }
