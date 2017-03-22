@@ -423,6 +423,24 @@ void GameGUI::enableFreezeSpell() {
     freezeB->setEnabled(true);
 }
 
+void GameGUI::enableSpells() {
+    if (manager->isNukeSpellAvailable()){
+        enableNukeSpell();
+    }
+    if (manager->isFreezeSpellAvailable()){
+        enableFreezeSpell();
+    }
+}
+
+void GameGUI::disableSpells() {
+    if (manager->isNukeSpellAvailable()){
+        disableNukeSpell();
+    }
+    if (manager->isFreezeSpellAvailable()){
+        disableFreezeSpell();
+    }
+}
+
 void GameGUI::disableDeleteAndUpgradeBox() {
     upgradeTowerB->setEnabled(false);
     deleteTowerB->setEnabled(false);

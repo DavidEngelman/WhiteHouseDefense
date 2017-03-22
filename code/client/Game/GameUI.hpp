@@ -43,6 +43,9 @@ public:
 
     virtual void disableFreezeSpell() = 0;
     virtual void enableFreezeSpell() = 0;
+
+    virtual void disableSpells() = 0;
+    virtual void enableSpells() = 0;
 };
 
 #endif //PROJET_GAMEUI_H

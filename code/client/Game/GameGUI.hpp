@@ -161,9 +161,9 @@ public:
 
     void setUpEndGameChatBox();
 
-    void enableFreezeSpell();
+    void enableFreezeSpell() override ;
 
-    void disableFreezeSpell();
+    void disableFreezeSpell() override ;
 
     void setUpTowerShop();
 
@@ -176,6 +176,10 @@ public:
     void updateHealthBarOfSupportedPlayer(int value);
 
     void setUpSpellsBoxForSupporter();
+
+    void enableSpells() override ;
+
+    void disableSpells() override ;
 };
 
 

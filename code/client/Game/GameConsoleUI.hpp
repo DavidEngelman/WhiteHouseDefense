@@ -58,6 +58,9 @@ public:
 	void disableFreezeSpell() override;
 	void enableFreezeSpell() override;
 
+	void disableSpells() override;
+	void enableSpells() override;
+
 	void sendPredefinedMessage();
 
 	void displayPredefinedMessages();

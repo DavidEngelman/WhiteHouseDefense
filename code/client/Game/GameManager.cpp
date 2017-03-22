@@ -69,9 +69,9 @@ void GameManager::updateMap() {
             const std::string &sender = command.getNextToken();
             gameUI->addChatMessage(message, sender);
         } else if (strcmp(server_msg_buff, PLACING_TOWER) == 0) {
-            if (!isSupporter) gameUI->disableNukeSpell();
+            if (!isSupporter) gameUI->disableSpells();
         } else if (strcmp(server_msg_buff, PLACING_TOWER) != 0 && strcmp(server_msg_buff, WAVE) != 0) {
-            if (nukeSpell && !isSupporter) gameUI->enableNukeSpell();
+            if (!isSupporter) gameUI->enableSpells();
             unSerializeGameState(server_msg_buff);
         }
 
@@ -619,13 +619,13 @@ void GameManager::sendMessageToPlayers(const std::string &message) {
 /* Spells */
 void GameManager::nuclearBombSpell() {
     sendNuclearRequest();
-    nukeSpell = false;
+    nukeSpellAvailable = false;
     gameUI->disableNukeSpell();
 }
 
 void GameManager::launchFreezeSpell(){
     sendFreezeSpellRequest();
-    freezeSpell = false;
+    freezeSpellAvailable = false;
     gameUI->disableFreezeSpell();
 }
 
@@ -643,4 +643,12 @@ void GameManager::sendFreezeSpellRequest() {
 
 GameManager::~GameManager(){
     gameUI->destroy();
+}
+
+bool GameManager::isNukeSpellAvailable() const {
+    return nukeSpellAvailable;
+}
+
+bool GameManager::isFreezeSpellAvailable() const {
+    return freezeSpellAvailable;
 }
