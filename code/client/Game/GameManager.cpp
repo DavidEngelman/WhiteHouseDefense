@@ -561,7 +561,11 @@ bool GameManager::upgradeTower(Position toUpgrade) {
 
 void GameManager::sendMessageToPlayers(const std::string &message) {
     // TODO: si l'utilisateur met des ; dans son message, c'est la merde
-    std::string request = SEND_MESSAGE_STRING + "," + message + "," + master_app->getUsername() + ";";
+    std::string username = master_app->getUsername();
+    if (isSupporter) {
+        username = "[Supporter] " + username;
+    }
+    std::string request = SEND_MESSAGE_STRING + "," + message + "," + username + ";";
     send_message(server_socket, request.c_str());
 }
 
