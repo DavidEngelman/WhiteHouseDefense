@@ -40,6 +40,9 @@ public:
 
     virtual void disableNukeSpell() = 0;
     virtual void enableNukeSpell() = 0;
+
+    virtual void disableFreezeSpell() = 0;
+    virtual void enableFreezeSpell() = 0;
 };
 
 #endif //PROJET_GAMEUI_H

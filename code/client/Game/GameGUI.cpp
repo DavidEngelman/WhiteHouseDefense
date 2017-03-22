@@ -306,8 +306,14 @@ void GameGUI::displaySpellBox() {
     nukeB->setIcon(QIcon("../../qt_ui/game_pictures/spells/trumpnuclear.png"));
     nukeB->setIconSize(size);
 
+    nukeB = new QPushButton;
+    nukeB->setEnabled(false);
+    nukeB->setIcon(QIcon("../../qt_ui/game_pictures/spells/frozen-trump.png"));
+    nukeB->setIconSize(size);
+
     QGridLayout *layout = new QGridLayout;
     layout->addWidget(nukeB, 0, 0);
+    layout->addWidget(freezeB, 0, 0);
     spellBox->setLayout(layout);
 
     QObject::connect(nukeB, SIGNAL(clicked()), this, SLOT(handleNukeSpell()));
@@ -354,6 +360,14 @@ void GameGUI::disableNukeSpell() {
 
 void GameGUI::enableNukeSpell() {
     nukeB->setEnabled(true);
+}
+
+void GameGUI::disableFreezeSpell() {
+    freezeB->setEnabled(false);
+}
+
+void GameGUI::enableFreezeSpell() {
+    freezeB->setEnabled(true);
 }
 
 void GameGUI::updateHealthBar(int value) {

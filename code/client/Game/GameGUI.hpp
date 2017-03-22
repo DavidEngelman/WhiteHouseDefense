@@ -54,6 +54,7 @@ private:
 
     QGroupBox *spellBox;
     QPushButton *nukeB;
+    QPushButton *freezeB;
 
     //base health of other players
     QGroupBox *otherPlayerHealthBarBox;
@@ -149,6 +150,9 @@ public:
 
     void setUpEndGameChatBox();
 
+    void enableFreezeSpell();
+
+    void disableFreezeSpell();
 };
 
 
