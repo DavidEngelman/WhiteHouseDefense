@@ -1,3 +1,4 @@
+#include <iostream>
 #include "AttackTower.hpp"
 
 AttackTower::AttackTower(Position position, int damage, int price, float range, int level) :
@@ -6,6 +7,7 @@ AttackTower::AttackTower(Position position, int damage, int price, float range, 
 int AttackTower::getDamageAmount() const { return level*damage/10 + damage; } // +10% d'attaque par upgrade
 
 void AttackTower::dealDamageTo(PNJ &target, PlayerState& playerState) {
-    int damage = target.receiveDamage(this->getDamageAmount());
+    int damage = std::min(target.getHealthPoints(), this->getDamageAmount());
+    target.receiveDamage(damage);
     playerState.incrDamageDealt(damage);
 }

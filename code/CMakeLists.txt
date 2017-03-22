@@ -109,7 +109,7 @@ set(CLIENT_FILES client/ClientLauncher.cpp
         client/QHandPointerButton.hpp common/pnj/MexicanPNJ.cpp common/pnj/MexicanPNJ.h
         client/QHandPointerButton.hpp
         client/QHandPointerButton.hpp
-        client/InQueueWidget.cpp client/InQueueWidget.hpp client/Settings/SettingsManager.cpp client/Settings/SettingsManager.hpp client/Settings/SettingsGUI.cpp client/Settings/SettingsGUI.hpp client/Settings/SettingsUI.hpp client/Settings/SettingsConsoleUI.cpp client/Settings/SettingsConsoleUI.hpp client/Settings/IconSelectionWidget.cpp client/Settings/IconSelectionWidget.hpp client/IconLabel.cpp client/IconLabel.hpp)
+        client/InQueueWidget.cpp client/InQueueWidget.hpp client/Settings/SettingsManager.cpp client/Settings/SettingsManager.hpp client/Settings/SettingsGUI.cpp client/Settings/SettingsGUI.hpp client/Settings/SettingsUI.hpp client/Settings/SettingsConsoleUI.cpp client/Settings/SettingsConsoleUI.hpp client/Settings/IconSelectionWidget.cpp client/Settings/IconSelectionWidget.hpp client/IconLabel.cpp client/IconLabel.hpp common/tower/MissileTower.cpp common/tower/MissileTower.hpp)
 
 
 add_executable(client ${CLIENT_FILES})
@@ -159,7 +159,7 @@ set(SERVER_FILES "server/ServerLauncher.cpp"
         server/PlayerConnection.cpp
         common/Networking.cpp
         common/Credentials.cpp
-        common/Message.cpp common/pnj/MexicanPNJ.cpp common/pnj/MexicanPNJ.h)
+        common/Message.cpp common/pnj/MexicanPNJ.cpp common/pnj/MexicanPNJ.h common/tower/MissileTower.cpp common/tower/MissileTower.hpp)
 
 add_executable(server ${SERVER_FILES})
 

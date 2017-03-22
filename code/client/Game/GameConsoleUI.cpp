@@ -116,10 +116,11 @@ void GameConsoleUI::displayTowerShop() {
     std::cout << "1. GunTower : " << std::to_string(GUN_TOWER_PRICE) << " $ " << std::endl;
     std::cout << "2. SniperTower : " << std::to_string(SNIPER_TOWER_PRICE) << " $ " << std::endl;
     std::cout << "3. ShockTower : " << std::to_string(SHOCK_TOWER_PRICE) << " $ " << std::endl;
+    std::cout << "4. MissileTower : " << std::to_string(MISSILE_TOWER_PRICE) << " $ " << std::endl;
     std::cout << std::endl;
 }
 
-int GameConsoleUI::getChoice(int maxValue = 3) {
+int GameConsoleUI::getChoice(int maxValue) {
     /* Ask at the user his choice */
     int x = -1;
     std::cout << "   Enter your choice: ";
@@ -167,7 +168,7 @@ void GameConsoleUI::displayPlayersPlacingTowersMessage() {
 
 int GameConsoleUI::getTowerTypeChoice() {
     displayTowerShop();
-    return getChoice();
+    return getChoice(NB_OF_TYPE_OF_TOWER);
 }
 
 Position GameConsoleUI::getPositionOfTowerPlacement() {
@@ -183,8 +184,10 @@ void GameConsoleUI::placeTowerAction() {
         manager->placeGunTower(towerPos);
     } else if (towerChoice == 2) {
         manager->placeSniperTower(towerPos);
-    } else {
+    } else if (towerChoice == 3) {
         manager->placeShockTower(towerPos);
+    } else {
+        manager->placeMissileTower(towerPos);
     }
 }
 
@@ -205,9 +208,7 @@ void *GameConsoleUI::input_thread() {
         int choice = getChoice(4);
         std::cout << "Choice: " << choice << std::endl;
         display(manager->getGameState(), manager->getQuadrant());
-        std::cout << "lele" << std::endl;
         displayPlayerInfos(manager->getGameState(), manager->getQuadrant());
-        std::cout << "lili" << std::endl;
 
         if (choice == 1) {
             placeTowerAction();

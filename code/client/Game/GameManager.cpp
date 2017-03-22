@@ -8,6 +8,7 @@
 #include "../../common/pnj/MuslimPNJ.h"
 #include "../../server/Server.hpp"
 #include "../../common/Command.hpp"
+#include "../../common/tower/MissileTower.hpp"
 
 
 GameManager::GameManager(int socket, App *app) :
@@ -99,8 +100,10 @@ bool GameManager::checkValidity(Position towerPos, GameState& gamestate, std::st
         price = GUN_TOWER_PRICE;
     } else if (typeOfTower == SNIPER_TOWER_STR) {
         price = SNIPER_TOWER_PRICE;
-    } else {
+    } else if (typeOfTower == SHOCK_TOWER_STR) {
         price = SHOCK_TOWER_PRICE;
+    } else {
+        price = MISSILE_TOWER_PRICE;
     }
 
     if (gameState.getPlayerStates()[quadrant].getMoney()  < price) { // if player has enough money
@@ -378,9 +381,10 @@ void GameManager::unSerializeTower(std::string serialized_tower) {
     AbstractTower *tower;
     Position pos = Position(x, y);
 
-    if (typeOfTower == "GunTower") tower = new GunTower(pos, level);
-    else if (typeOfTower == "SniperTower") tower = new SniperTower(pos, level);
-    else tower = new ShockTower(pos, level);
+    if (typeOfTower == GUN_TOWER_STR) tower = new GunTower(pos, level);
+    else if (typeOfTower == SNIPER_TOWER_STR) tower = new SniperTower(pos, level);
+    else if (typeOfTower == SHOCK_TOWER_STR) tower = new ShockTower(pos, level);
+    else tower = new MissileTower(pos, level);
 
     //TODO: remplacer par gameState.addTower(tower)
     //Pour ne pas utiliser un getter pour modifier la classe, ça n'a aucun sens
@@ -547,6 +551,16 @@ bool GameManager::placeShockTower(Position towerPos) {
     return false;
 }
 
+bool GameManager::placeMissileTower(Position towerPos) {
+    if (checkValidity(towerPos, gameState, MISSILE_TOWER_STR)) {
+        gameState.addTower(new MissileTower(Position(towerPos.getX(), towerPos.getY()),1), quadrant);
+        sendBuyRequest(towerPos, MISSILE_TOWER_STR);
+        return true;
+    }
+
+    return false;
+}
+
 bool GameManager::sellTower(Position toSell) {
     if (isTowerInPosition(getGameState(), toSell)) {
         gameState.deleteTower(toSell, quadrant);
@@ -576,7 +590,6 @@ void GameManager::sendMessageToPlayers(const std::string &message) {
     std::string request = SEND_MESSAGE_STRING + "," + message + "," + master_app->getUsername() + ";";
     send_message(server_socket, request.c_str());
 }
-
 
 
 /* Spells */

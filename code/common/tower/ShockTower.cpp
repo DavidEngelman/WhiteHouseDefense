@@ -1,6 +1,3 @@
-//
-// Created by jepsiko on 05/03/17.
-//
 
 #include "ShockTower.hpp"
 #include <cmath>

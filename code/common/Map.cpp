@@ -69,6 +69,7 @@ void Map::display(GameState &gameState, int quadrant) {
                     if (typeOfTower == GUN_TOWER_STR) std::cout << GUN_TOWER_CHAR;
                     else if (typeOfTower == SNIPER_TOWER_STR) std::cout << SNIPER_TOWER_CHAR;
                     else if (typeOfTower == SHOCK_TOWER_STR) std::cout << SHOCK_TOWER_CHAR;
+                    else if (typeOfTower == MISSILE_TOWER_STR) std::cout << MISSILE_TOWER_CHAR;
                     else std::cout << GRASS;
                     break;
 

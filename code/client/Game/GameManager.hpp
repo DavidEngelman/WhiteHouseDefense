@@ -85,6 +85,8 @@ public:
     void nuclearBombSpell();
 
     void sendNuclearRequest();
+
+    bool placeMissileTower(Position towerPos);
 };
 
 #endif
