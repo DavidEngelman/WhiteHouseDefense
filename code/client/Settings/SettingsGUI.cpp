@@ -1,5 +1,7 @@
 #include "SettingsGUI.hpp"
 #include "SettingsManager.hpp"
+#include "IconSelectionWidget.hpp"
+
 SettingsGUI::SettingsGUI(SettingsManager *manager, QWidget* _parent) : AbstractGUI(_parent), SettingsUI(manager),
                                                                        changedIcon(false) {}
 
@@ -11,96 +13,130 @@ void SettingsGUI::display() {
     /* Set background */
     setBackgroundFromPath("../../qt_ui/game_pictures/backgrounds/trump_background.png");
 
+    /* Layouts */
+
     QVBoxLayout * boxLayout = new QVBoxLayout;
-    QVBoxLayout * fieldsLayout = new QVBoxLayout;
+    QHBoxLayout * topLayout = new QHBoxLayout;
+    buttonsLayout = new QVBoxLayout;
 
-    QLabel* title = new QLabel("Settings");
-    title->setStyleSheet("color: gold;  font-size: 27pt; font-weight: bold");
 
+    /* Home Button*/
     QHandPointerButton* homeButton = new QHandPointerButton("HOME", 70, 35, this);
+    homeButton->setSizePolicy( QSizePolicy::Maximum, QSizePolicy::Preferred );
     homeButton->setStyleSheet("border-image:url(../../qt_ui/game_pictures/buttons/gold_button_2.svg);");
     QObject::connect(homeButton, SIGNAL(clicked()), this, SLOT(goToMain()));
+    topLayout->addWidget(homeButton);
+    topLayout->addStretch();
 
-    boxLayout->addWidget(homeButton);
-    boxLayout->setAlignment(homeButton, Qt::AlignLeft|Qt::AlignTop);
+    topLayout->setAlignment(homeButton, Qt::AlignLeft);
 
-    usernameL = new QLineEdit();
-    usernameL->setFixedWidth(300);
-    passwordL = new QLineEdit();
-    passwordL->setFixedWidth(300);
+    /* Title */
+    QLabel* title = new QLabel("Settings");
+    title->setSizePolicy( QSizePolicy::Maximum, QSizePolicy::Preferred );
+    title->setStyleSheet("color: gold;  font-size: 27pt;  font-weight: bold");
+    topLayout->addWidget(title);
+    topLayout->addStretch();
 
+    topLayout->setAlignment(title, Qt::AlignLeft);
+
+    /*Menu*/
+    usernameB = new QHandPointerButton("Change Username", 300,40);
+    passwordB = new QHandPointerButton("Change Password", 300,40);
     iconB = new QHandPointerButton("Change icon", 300,40);
+    buttonsLayout->addWidget(usernameB);
+    buttonsLayout->addWidget(passwordB);
+    buttonsLayout->addWidget(iconB);
+    buttonsLayout->setSpacing(30);
 
-    updateB = new QHandPointerButton("Update profile",150,25);
-
-
-    QLabel *usernameT = new QLabel("Username: ");
-    QLabel *passwordT = new QLabel("Password: ");
-    QLabel *iconT = new QLabel("Icon: ");
-    usernameT->setStyleSheet("color : gold;");
-    passwordT->setStyleSheet("color : gold; padding-top:30;");
-    iconT->setStyleSheet("color : gold; padding-top:30;");
-
-
-    fieldsLayout->addWidget(usernameT);
-    fieldsLayout->addWidget(usernameL);
-
-    fieldsLayout->addWidget(passwordT);
-    fieldsLayout->addWidget(passwordL);
-
-    fieldsLayout->addWidget(iconT);
-    fieldsLayout->addWidget(iconB);
-
-    boxLayout->addWidget(title);
-    boxLayout->addLayout(fieldsLayout);
-    boxLayout->addWidget(updateB);
-
-    boxLayout->setAlignment(title, Qt::AlignCenter);
-    boxLayout->setAlignment(updateB, Qt::AlignCenter);
-    boxLayout->setAlignment(fieldsLayout, Qt::AlignCenter);
+    boxLayout->addLayout(topLayout);
+    boxLayout->addStretch();
+    boxLayout->addLayout(buttonsLayout);
+    boxLayout->addStretch();
+    boxLayout->setAlignment(topLayout, Qt::AlignTop);
+    boxLayout->setAlignment(buttonsLayout, Qt::AlignTop|Qt::AlignHCenter);
 
     this->setLayout(boxLayout);
     this->show();
 
-    QObject::connect(updateB, SIGNAL(clicked()), this, SLOT(updateProfile()));
+    QObject::connect(iconB, SIGNAL(clicked()), this, SLOT(openIconSelectionWidget()));
+    QObject::connect(usernameB, SIGNAL(clicked()), this, SLOT(changeUsername()));
+    QObject::connect(passwordB, SIGNAL(clicked()), this, SLOT(changePassword()));
+
 }
 
-void SettingsGUI::updateProfile(){
-    bool success = true;
-
-    std::string usernameLContent= usernameL->text().toStdString();
-    std::string passwordLContent= passwordL->text().toStdString();
-
-    if (usernameLContent != "") {
-        std::cout << usernameLContent << std::endl;
-        if(!settingsManager->changeUsername(usernameLContent)){
-            QMessageBox::critical(this, "Invalid username", "Error: Username invaild or already taken");
-            success = false;
-        }
-
-    } if (passwordLContent != "") {
-
-        if(!settingsManager->changePassword(passwordLContent)){
-            QMessageBox::critical(this, "Invalid password", "Error: Invalid password");
-            success = false;
-        }
-
-    } if (changedIcon) {
-        settingsManager->changePlayerIcon(newIconName);
-    }
 
 
-    if (success){
-        QMessageBox::information(this, "Success", "Your informations have been updated !");
-    }
-    usernameL->clear();
-    passwordL->clear();
-
-
+void SettingsGUI::openIconSelectionWidget(){
+    IconSelectionWidget* widget = new IconSelectionWidget(this);
 
 }
 
 void SettingsGUI::goToMain() {
     settingsManager->goToMainMenu();
 }
+
+void SettingsGUI::handleIconChange(int icon){
+    newIconName = std::to_string(icon);
+    changedIcon = true;
+}
+
+void SettingsGUI::changeUsername(){
+    usernameB->setVisible(false);
+    lineEditU = new QLineEdit();
+    lineEditU->setFixedSize(300,40);
+    QObject::connect(lineEditU, SIGNAL(returnPressed()), this, SLOT(applyUsernameChange()));
+    lineEditU->setPlaceholderText("New username");
+    buttonsLayout->insertWidget(0, lineEditU);
+}
+
+void SettingsGUI::changePassword(){
+    passwordB->setVisible(false);
+    lineEditP = new QLineEdit();
+    lineEditP->setFixedSize(300,40);
+    lineEditP->setPlaceholderText("New Password");
+    QObject::connect(lineEditP, SIGNAL(returnPressed()), this, SLOT(applPasswordChange()));
+
+    buttonsLayout->insertWidget(1, lineEditP);
+}
+
+void SettingsGUI::applyUsernameChange(){
+    std::string lineEditContent = lineEditU->text().toStdString();
+    std::cout << lineEditContent << std::endl;
+
+    if(!settingsManager->changeUsername(lineEditContent)){
+        QMessageBox::critical(this, "Invalid username", "Error: Username invaild or already taken");
+    } else {
+        std::string message = "Your Username has been changed and is now: " +  lineEditContent + " ";
+        QMessageBox::information(this, "Success", QString::fromStdString(message));
+        lineEditU->setVisible(false);
+        usernameB->setVisible(true);
+
+    }
+    lineEditU->clear();
+
+}
+
+void SettingsGUI::applPasswordChange(){
+    std::string lineEditContent = lineEditP->text().toStdString();
+    std::cout << lineEditContent << std::endl;
+    if(!settingsManager->changePassword(lineEditContent)){
+        QMessageBox::critical(this, "Invalid password", "Error: Invalid password");
+    } else {
+        std::string message = "Your password has been changed and is now: " +  lineEditContent + " ";
+        QMessageBox::information(this, "Success", QString::fromStdString(message));
+        lineEditP->setVisible(false);
+        passwordB->setVisible(true);
+
+    }
+    lineEditP->clear();
+}
+
+void SettingsGUI::applyIconChange(std::string iconName){
+    settingsManager->changePlayerIcon(iconName);
+    QMessageBox::information(this, "Success", "Your icon has been changed !");
+
+
+
+}
+
 

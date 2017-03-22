@@ -3,19 +3,17 @@
 
 PNJ::PNJ(Position position, int healthPoints, int direction) :
         position(position), healthPoints(healthPoints),
-        movementSpeed(PNJ_STARTING_MOVESPEED), direction(direction),
-        last_position(Position(-1000, -1000)) {
+        direction(direction),damage(-1),value(-1),
+        last_position(Position(-1000, -1000)) {}
 
-}
-
-PNJ::PNJ(int direction) : position(Position(SIZE/2, SIZE/2)), healthPoints(PNJ_STARTING_HEALTHPOINTS),
-                          movementSpeed(PNJ_STARTING_MOVESPEED), direction(direction),
+PNJ::PNJ(int direction) : position(Position(SIZE/2, SIZE/2)),
+                          direction(direction),
                           last_position(Position(-1000, -1000)) {}
 
 
-PNJ::PNJ(Position position, int healthPoints, int movementSpeed, Position last_pos, int direction) :
-        position(position), healthPoints(healthPoints), movementSpeed(movementSpeed), last_position(last_pos),
-        direction(direction) {}
+PNJ::PNJ(Position position, int healthPoints, Position last_pos, int direction) :
+        position(position), healthPoints(healthPoints), last_position(last_pos),
+        direction(direction),damage(-1),value(-1) {}
 
 Direction PNJ::get_random_direction(){
     Direction move;
@@ -90,18 +88,6 @@ bool PNJ::isDead() {
     return getHealthPoints() <= 0;
 }
 
-int PNJ::getMovementSpeed() const {
-    return this->movementSpeed;
-}
-
-void PNJ::setMovementSpeed(int newMovementSpeed) {
-    this->movementSpeed = newMovementSpeed;
-}
-
-void PNJ::receiveMovementPenalty(int speedReduction) {
-    this->movementSpeed -= speedReduction;
-}
-
 Position PNJ::getPosition() const {
     return this->position;
 }
@@ -160,7 +146,7 @@ Direction PNJ::get_forward_direction() {
         move.y = 1;
         return move;
 
-    } else if (getDirection() == WEST) {
+    } else {
         move.x = -1;
         move.y = 0;
         return move;
@@ -185,7 +171,7 @@ Direction PNJ::get_right_direction() {
         move.y = 0;
         return move;
 
-    } else if (getDirection() == WEST) {
+    } else {
 
         move.x = 0;
         move.y = -1;
@@ -212,7 +198,7 @@ Direction PNJ::get_left_direction() {
         move.y = 0;
         return move;
 
-    } else if (getDirection() == WEST) {
+    } else {
         move.x = 0;
         move.y = 1;
         return move;
@@ -237,7 +223,7 @@ Direction PNJ::get_backward_direction(){
         move.y = -1;
         return move;
 
-    } else if (getDirection() == WEST) {
+    } else {
         move.x = +1;
         move.y = 0;
         return move;
@@ -249,7 +235,7 @@ std::string PNJ::serialize() {
     std::string serialized_me;
 
     serialized_me += std::to_string(getPosition().getX()) + "," + std::to_string(getPosition().getY()) +
-                     "," + std::to_string(getHealthPoints()) + "|";
+                     "," + std::to_string(getHealthPoints()) + "," + getType() + "|";
 
     return serialized_me;
 }
@@ -274,6 +260,18 @@ bool PNJ::isInPlayerBase() {
 
 void PNJ::setHealthPoints(int newHp) {
     healthPoints = newHp;
+}
+
+int PNJ::getDamage() {
+    return damage;
+}
+
+int PNJ::getValue() {
+    return value;
+}
+
+const std::string &PNJ::getType() {
+    return typeOfPNJ;
 }
 
 

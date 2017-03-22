@@ -9,14 +9,14 @@
 ShockTower::ShockTower(const Position &position, int level) :
         AttackTower(position, SHOCK_TOWER_DAMAGE, SHOCK_TOWER_PRICE, SHOCK_TOWER_RANGE, level) {}
 
-int ShockTower::shoot(Wave &wave, PlayerState& playerState) {
+const std::vector<PNJ*> ShockTower::shoot(Wave &wave, PlayerState& playerState) {
     std::vector<PNJ*> targets;
-    int killed = 0;
+    std::vector<PNJ*> killed;
     targets = get_targets(wave);
     for (auto &target : targets) {
         dealDamageTo(*target, playerState);
         if (target->getHealthPoints() <= 0) {
-            killed += 1;
+            killed.push_back(target);
         }
     }
     return killed;
@@ -37,12 +37,12 @@ std::vector<PNJ*> ShockTower::get_targets(Wave &wave) {
     double dist;
     std::vector<PNJ*> targets;
     for (auto &pnj: wave.getPnjs()) {
-        int distance_x = getPosition().getX() - pnj.getPosition().getX();
-        int distance_y = getPosition().getY() - pnj.getPosition().getY();
+        int distance_x = getPosition().getX() - pnj->getPosition().getX();
+        int distance_y = getPosition().getY() - pnj->getPosition().getY();
 
         dist = sqrt(((distance_x) * (distance_x)) + (distance_y * distance_y));
         if (dist < getRange()) {
-            targets.push_back(&pnj);
+            targets.push_back(pnj);
         }
     }
 

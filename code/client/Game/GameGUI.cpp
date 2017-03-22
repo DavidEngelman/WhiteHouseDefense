@@ -253,6 +253,8 @@ void GameGUI::disableTowerShop() {
 }
 
 void GameGUI::enableTowerShop() {
+    if (map->getHighlightedPosition() == Position(-1, -1)) { return; }
+
     int quadrant = manager->getQuadrant();
     if (map->computeQuadrant(map->getHighlightedPosition()) != quadrant) {
         disableTowerShop();
@@ -283,6 +285,7 @@ void GameGUI::handleBuyingTower(int typeOfTower) {
             break;
     }
     disableTowerShop();
+    enableDeleteAndUpgradeBox();
 }
 
 void GameGUI::handleSellingTower() {

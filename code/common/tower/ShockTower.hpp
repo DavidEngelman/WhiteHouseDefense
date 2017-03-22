@@ -15,7 +15,7 @@ public:
 
     ~ShockTower() = default;
 
-    virtual int shoot(Wave &wave, PlayerState& playerState) override;
+    virtual const std::vector<PNJ *> shoot(Wave &wave, PlayerState& playerState) override;
 
     virtual std::string serialize() override;
 

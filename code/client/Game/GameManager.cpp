@@ -1,9 +1,12 @@
 
 
 #include "GameManager.hpp"
-#include "../../server/Server.hpp"
 #include "GameGUI.hpp"
 #include "GameConsoleUI.hpp"
+#include "../../common/pnj/MexicanPNJ.h"
+#include "../../common/pnj/CommunistPNJ.h"
+#include "../../common/pnj/MuslimPNJ.h"
+#include "../../server/Server.hpp"
 #include "../../common/Command.hpp"
 
 
@@ -433,6 +436,7 @@ void GameManager::unSerializePNJ(std::string serialized_pnj, Wave *wave) {
     int x=0;
     int y=0;
     int health=0;
+    std::string typeOfPNJ = "";
     for (char& c : serialized_pnj) {
         if (c == ',') {
             switch (count) {
@@ -442,8 +446,11 @@ void GameManager::unSerializePNJ(std::string serialized_pnj, Wave *wave) {
                 case 1:
                     y = std::stoi(elem);
                     break;
-                default:
+                case 2:
                     health = std::stoi(elem);
+                    break;
+                default:
+                    typeOfPNJ = elem;
                     break;
             }
             elem = "";
@@ -452,7 +459,12 @@ void GameManager::unSerializePNJ(std::string serialized_pnj, Wave *wave) {
             elem += c;
         }
     }
-    PNJ *pnj = new PNJ(Position(x, y), health, wave->getQuadrant());
+
+    PNJ *pnj;
+    if (typeOfPNJ == MEXICAN_PNJ_STR) pnj = new MexicanPNJ(Position(x, y), health, wave->getQuadrant());
+    else if (typeOfPNJ == MUSLIM_PNJ_STR) pnj = new MuslimPNJ(Position(x, y), health, wave->getQuadrant());
+    else pnj = new CommunistPNJ(Position(x, y), health, wave->getQuadrant());
+
     wave->addPNJ(*pnj);
 }
 
@@ -568,7 +580,11 @@ bool GameManager::upgradeTower(Position toUpgrade) {
 
 void GameManager::sendMessageToPlayers(const std::string &message) {
     // TODO: si l'utilisateur met des ; dans son message, c'est la merde
-    std::string request = SEND_MESSAGE_STRING + "," + message + "," + master_app->getUsername() + ";";
+    std::string username = master_app->getUsername();
+    if (isSupporter) {
+        username = "[Supporter] " + username;
+    }
+    std::string request = SEND_MESSAGE_STRING + "," + message + "," + username + ";";
     send_message(server_socket, request.c_str());
 }
 
