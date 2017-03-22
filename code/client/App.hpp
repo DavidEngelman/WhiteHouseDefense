@@ -26,7 +26,7 @@ private:
 
     QWidget *mainWindow;
     QMediaPlayer *player;
-    QMediaPlaylist *playlist;
+    //QMediaPlaylist *playlist;
 
 
 public slots:

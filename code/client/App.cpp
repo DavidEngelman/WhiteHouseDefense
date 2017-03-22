@@ -100,9 +100,11 @@ void App::leaveQueue() {
 }
 
 void App::setMusicFromPath(QString musicPath) {
+
+    if (player->currentMedia() == QMediaContent(QUrl::fromLocalFile(QFileInfo(musicPath).absoluteFilePath()))) return;
     player->stop();
 
-    playlist = new QMediaPlaylist();
+    QMediaPlaylist *playlist = new QMediaPlaylist();
     playlist->addMedia(QUrl::fromLocalFile(QFileInfo(musicPath).absoluteFilePath()));
     playlist->setPlaybackMode(QMediaPlaylist::Loop);
 
