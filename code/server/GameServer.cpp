@@ -45,7 +45,11 @@ void GameServer::runGame() {
         if (!DEBUG) {
             gameEngine->getTimerSinceGameStart().pause(); // peut etre faire ca juste en mode contre la montre
             sendTowerPhase();
-            sleep(NUM_SECONDS_TO_PLACE_TOWER);
+            Timer timer;
+            timer.start();
+            while (timer.elapsedTimeInSeconds() < NUM_SECONDS_TO_PLACE_TOWER) {
+                sendGameStateToPlayers();
+            }
             gameEngine->getTimerSinceGameStart().resume(); // peut etre faire ca juste en mode contre la montre
             sendWavePhase();
         }
