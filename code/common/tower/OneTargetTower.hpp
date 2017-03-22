@@ -4,8 +4,13 @@
 #define PROJET_ONETARGETTOWER_HPP
 
 
-class OneTargetTower {
+#include "AbstractTower.hpp"
 
+class OneTargetTower : public virtual AbstractTower {
+public:
+    OneTargetTower(const Position &position, int price, float range, int level);
+
+    PNJ *getClosestPNJ(Wave &wave);
 };
 
 

@@ -6,7 +6,7 @@
 #include "../pnj/PNJ.hpp"
 #include "../Constants.hpp"
 
-class AttackTower : public AbstractTower {
+class AttackTower : public virtual AbstractTower {
     int damage;
 
 public:

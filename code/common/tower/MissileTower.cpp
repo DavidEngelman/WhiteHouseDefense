@@ -6,7 +6,8 @@
 
 
 MissileTower::MissileTower(const Position &position, int level) :
-        AttackTower(position, MISSILE_TOWER_DAMAGE, MISSILE_TOWER_PRICE, MISSILE_TOWER_RANGE, level) {}
+        AttackTower(position, MISSILE_TOWER_DAMAGE, MISSILE_TOWER_PRICE, MISSILE_TOWER_RANGE, level),
+        OneTargetTower::OneTargetTower(position, GUN_TOWER_PRICE, GUN_TOWER_RANGE, level) {}
 
 const std::vector<PNJ*> MissileTower::shoot(Wave &wave, PlayerState& playerState) {
     PNJ* closestTarget;

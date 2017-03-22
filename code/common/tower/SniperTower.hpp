@@ -3,8 +3,9 @@
 
 
 #include "AttackTower.hpp"
+#include "OneTargetTower.hpp"
 
-class SniperTower : public AttackTower {
+class SniperTower : public virtual AttackTower, public virtual OneTargetTower {
 
 public:
     SniperTower(const Position &position, int level);

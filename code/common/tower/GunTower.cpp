@@ -4,12 +4,13 @@
 #include <cmath>
 
 GunTower::GunTower(const Position &position, int level) :
-        AttackTower::AttackTower(position, GUN_TOWER_DAMAGE, GUN_TOWER_PRICE, GUN_TOWER_RANGE, level) {}
+        AttackTower::AttackTower(position, GUN_TOWER_DAMAGE, GUN_TOWER_PRICE, GUN_TOWER_RANGE, level),
+        OneTargetTower::OneTargetTower(position, GUN_TOWER_PRICE, GUN_TOWER_RANGE, level) {}
 
 const std::vector<PNJ *> GunTower::shoot(Wave &wave, PlayerState& playerState) {
     PNJ *target;
     std::vector<PNJ *> killed;
-    target = get_closest_pnj(wave);
+    target = getClosestPNJ(wave);
     if ((target != nullptr) && (!target->isInPlayerBase()) && (target->getHealthPoints() > 0)) {
         dealDamageTo(*target, playerState);
         if (target->getHealthPoints() <= 0) {
@@ -29,28 +30,6 @@ std::string GunTower::serialize() {
     serialized_me.insert(0, GUN_TOWER_STR);
 
     return serialized_me;
-}
-
-PNJ *GunTower::get_closest_pnj(Wave &wave) {
-    int dist;
-    int best_dist = 1 << 30;
-    PNJ *closest_pnj = nullptr;
-    for (auto pnj: wave.getPnjs()) {
-        int distance_x = getPosition().getX() - pnj->getPosition().getX();
-        int distance_y = getPosition().getY() - pnj->getPosition().getY();
-
-        dist = ((distance_x) * (distance_x)) + (distance_y * distance_y);
-        if (dist < best_dist) {
-            best_dist = dist;
-            closest_pnj = pnj;
-        }
-    }
-    if (sqrt(best_dist) > getRange()) {
-        closest_pnj = nullptr;
-
-    }
-
-    return closest_pnj;
 }
 
 std::string GunTower::getType() {

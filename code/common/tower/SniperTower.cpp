@@ -6,7 +6,8 @@
 #include <cmath>
 
 SniperTower::SniperTower(const Position &position, int level) :
-        AttackTower(position, SNIPER_TOWER_DAMAGE, SNIPER_TOWER_PRICE, SNIPER_TOWER_RANGE, level) {}
+        AttackTower(position, SNIPER_TOWER_DAMAGE, SNIPER_TOWER_PRICE, SNIPER_TOWER_RANGE, level),
+        OneTargetTower::OneTargetTower(position, GUN_TOWER_PRICE, GUN_TOWER_RANGE, level) {}
 
 const std::vector<PNJ *> SniperTower::shoot(Wave &wave, PlayerState& playerState) {
     PNJ *target;

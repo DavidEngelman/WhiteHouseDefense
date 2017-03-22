@@ -4,8 +4,9 @@
 #include "AttackTower.hpp"
 #include "../pnj/PNJ.hpp"
 #include "../Constants.hpp"
+#include "OneTargetTower.hpp"
 
-class GunTower : public AttackTower {
+class GunTower : public AttackTower, public OneTargetTower {
 
 public:
 
@@ -16,8 +17,6 @@ public:
     virtual const std::vector<PNJ *> shoot(Wave &wave, PlayerState& playerState) override;
 
     virtual std::string serialize() override;
-    
-    PNJ* get_closest_pnj(Wave& wave);
 
     std::string getType() override;
 };
