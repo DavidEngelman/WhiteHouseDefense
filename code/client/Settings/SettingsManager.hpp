@@ -13,10 +13,6 @@ private:
 
     SettingsUI * settingsUI;
 
-    std::string username;
-    std::string password;
-    std::string iconName;
-
 public:
 
     SettingsManager(int port, App* my_app);

@@ -3,10 +3,10 @@
 
 #include <vector>
 #include "PlayerState.hpp"
-#include "AbstractTower.hpp"
-#include "PNJ.hpp"
+#include "../tower/AbstractTower.hpp"
+#include "../pnj/PNJ.hpp"
 #include "Wave.hpp"
-#include "../common/Strings.hpp"
+#include "../Strings.hpp"
 
 const static std::vector<std::string> validModes = {CLASSIC_MODE, TEAM_MODE, TIMED_MODE};
 

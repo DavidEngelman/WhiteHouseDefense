@@ -53,10 +53,10 @@ void GameEngine::addMoney() {
 void GameEngine::dealDamageToBase() {
     for (Wave &wave : gameState.getWaves()) {
         PlayerState &player_state = getPlayerStateForWave(wave);
-        for (PNJ &pnj : wave.getPnjs()) {
-            if (pnj.isInPlayerBase()) {
-                if (!DEBUG) player_state.decrease_hp(PNJ_DAMAGE);
-                pnj.setHealthPoints(0);
+        for (auto pnj : wave.getPnjs()) {
+            if (pnj->isInPlayerBase()) {
+                if (!DEBUG) player_state.decrease_hp(pnj->getDamage());
+                pnj->setHealthPoints(0);
                 // On enleve pas les PNJ morts dans le vagues maintenant, parce que ça va
                 // être fait dans updateWaves au round suivant
             }
@@ -67,12 +67,12 @@ void GameEngine::dealDamageToBase() {
 void GameEngine::dealDamage(std::vector<Wave> &waves) {
     for (AbstractTower *tower: gameState.getTowers()) {
         Wave &wave = getWaveInSameQuadrant(*tower, waves);
-        int killedPNJ = tower->shoot(wave, getPlayerStateForWave(wave));
-        for (int i = 0; i < killedPNJ; i++) {
+        const std::vector<PNJ *>& killedPNJ = tower->shoot(wave, getPlayerStateForWave(wave));
+        for (auto &&pnj : killedPNJ) {
             if (DEBUG) break;
             PlayerState &player_state = getPlayerStateForWave(wave);
             addKillToStat(player_state);
-            giveGold(player_state);
+            giveGold(player_state, pnj);
         }
     }
 }
@@ -82,8 +82,8 @@ PlayerState &GameEngine::getPlayerStateForWave(Wave &wave) {
     return gameState.getPlayerStates()[quadrant];
 }
 
-void GameEngine::giveGold(PlayerState &playerState) {
-    playerState.earnMoney(PNJ_VALUE);
+void GameEngine::giveGold(PlayerState &playerState, PNJ* pnj) {
+    playerState.earnMoney(pnj->getValue());
 }
 
 void GameEngine::addKillToStat(PlayerState &playerState) {
@@ -97,8 +97,8 @@ void GameEngine::movePNJsInWaves(std::vector<Wave> &waves) {
 }
 
 void GameEngine::movePNJsInWave(Wave &wave) {
-    for (PNJ &pnj: wave.getPnjs()) {
-        pnj.advance(map);
+    for (auto pnj: wave.getPnjs()) {
+        pnj->advance(map);
     }
 }
 
@@ -158,8 +158,9 @@ void GameEngine::addPNJS(std::vector<Wave> &waves) {
         int numPNJsToAdd = numPnjsShouldHaveAdded - currentNumOfPnjs;
 
         if (numPNJsToAdd > 0) {
+            srand((unsigned) time(0));
             for (int i = 0; i < numPNJsToAdd; ++i) {
-                wave.addPNJ();
+                wave.addPNJ(rand()%NB_OF_TYPE_OF_PNJ);
             }
         }
     }
@@ -289,9 +290,9 @@ Timer &GameEngine::getTimerSinceGameStart() {
 
 void GameEngine::killAllNPC(int quadrant) {
     int damageDealt = 0;
-    for(PNJ& pnj : gameState.getWaves()[quadrant].getPnjs()) {
-        damageDealt += pnj.getHealthPoints();
-        pnj.setHealthPoints(0);
+    for(auto pnj : gameState.getWaves()[quadrant].getPnjs()) {
+        damageDealt += pnj->getHealthPoints();
+        pnj->setHealthPoints(0);
     }
     getGameState().getPlayerStates()[quadrant].incrDamageDealt(damageDealt);
 }

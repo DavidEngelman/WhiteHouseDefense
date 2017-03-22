@@ -2,8 +2,8 @@
 #define PROJET_GUNTOWER_H
 
 #include "AttackTower.hpp"
-#include "PNJ.hpp"
-#include "Constants.hpp"
+#include "../pnj/PNJ.hpp"
+#include "../Constants.hpp"
 
 class GunTower : public AttackTower {
 
@@ -13,7 +13,7 @@ public:
 
     ~GunTower() = default;
 
-    virtual int shoot(Wave &wave, PlayerState& playerState) override;
+    virtual const std::vector<PNJ *> shoot(Wave &wave, PlayerState& playerState) override;
 
     virtual std::string serialize() override;
     

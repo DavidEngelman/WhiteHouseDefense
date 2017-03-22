@@ -1,8 +1,8 @@
 #include <csignal>
 #include "GameServer.hpp"
-#include "../common/GunTower.hpp"
-#include "../common/SniperTower.hpp"
-#include "../common/ShockTower.hpp"
+#include "../common/tower/GunTower.hpp"
+#include "../common/tower/SniperTower.hpp"
+#include "../common/tower/ShockTower.hpp"
 
 const bool DEBUG = false;
 
@@ -380,8 +380,8 @@ void GameServer::updatePlayerStatsOnAccountServer() {
 
 
 void GameServer::sendSetupGameStringToClient(int socket_fd) {
-    send_message(socket_fd,
-                 SETUP_GAME); // Ici j'ai du remettre Send_message pcq sinon quand on envoyait le setupGame a un Spectater, ca ne fonctionnait pas car a ce moment la il n est pas encore dans sockets actifs
+    send_message(socket_fd, SETUP_GAME.c_str());
+    // Ici j'ai du remettre Send_message pcq sinon quand on envoyait le setupGame a un Spectater, ca ne fonctionnait pas car a ce moment la il n est pas encore dans sockets actifs
 }
 
 void GameServer::sendMapSeedToClient(int socket_fd) {

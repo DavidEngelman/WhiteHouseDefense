@@ -3,20 +3,23 @@
 #ifndef PROJET_PNJ_H
 #define PROJET_PNJ_H
 
-#include "Position.hpp"
-#include "Direction.hpp"
-#include "Map.hpp"
-#include "Constants.hpp"
+#include "../Position.hpp"
+#include "../Direction.hpp"
+#include "../Map.hpp"
+#include "../Constants.hpp"
+#include "../Strings.hpp"
 
 class Map;
 
 class PNJ{
 
-private:
+protected:
 
 	int healthPoints;
 	int direction;
-	int movementSpeed;
+    int damage;
+	int value;
+	std::string typeOfPNJ;
 	Position position;
 	Position last_position;
 
@@ -27,9 +30,9 @@ public:
 
     PNJ(Position position, int healthPoints, int direction);
 
-    PNJ(Position position, int healthPoints, int movementSpeed, Position last_pos, int direction);
+    PNJ(Position position, int healthPoints, Position last_pos, int direction);
 
-    ~PNJ() = default;
+    virtual ~PNJ() = 0;
 
 	void advance(Map& map);
 
@@ -43,13 +46,9 @@ public:
 
 	bool isInPlayerBase();
 
-	int getMovementSpeed() const;
-
-	void setMovementSpeed(int newMovementSpeed);
-
-    void receiveMovementPenalty(int speedReduction);
-
 	Position getPosition() const;
+
+    const std::string& getType();
 
 	void setPosition(Position position);
 
@@ -73,6 +72,9 @@ public:
 
 	std::string serialize();
 
+    int getDamage();
+
+	int getValue();
 
     bool operator==(const PNJ &rhs) const;
 
@@ -84,5 +86,7 @@ public:
 
 	bool can_go_backward(Map &map);
 };
+
+inline PNJ::~PNJ(){}
 
 #endif // PROJET_PNJ_H

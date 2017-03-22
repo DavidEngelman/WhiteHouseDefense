@@ -1,9 +1,12 @@
 
 
 #include "GameManager.hpp"
-#include "../../server/Server.hpp"
 #include "GameGUI.hpp"
 #include "GameConsoleUI.hpp"
+#include "../../common/pnj/MexicanPNJ.h"
+#include "../../common/pnj/CommunistPNJ.h"
+#include "../../common/pnj/MuslimPNJ.h"
+#include "../../server/Server.hpp"
 #include "../../common/Command.hpp"
 
 
@@ -14,7 +17,7 @@ GameManager::GameManager(int socket, App *app) :
         //gameUI(getMapSeedFromServer()), // L'ordre est important parce qu'on fait des
         //quadrant(getQuadrantFromServer()) // recv. Ne pas changer l'ordre!
 {
-    if (false && !isConsole) {
+    if (!isConsole) {
         gameUI = new GameGUI(getMapSeedFromServer(), this);
     } else {
         gameUI = new GameConsoleUI(getMapSeedFromServer(),this);
@@ -32,7 +35,7 @@ GameManager::GameManager(int socket, bool _isSupporter, App *app) :
         //gameUI(getMapSeedFromServer()), // L'ordre est important parce qu'on fait des
         //quadrant(getQuadrantFromServer()) // recv. Ne pas changer l'ordre!
 {
-    if (false && !isConsole) {
+    if (!isConsole) {
         gameUI = new GameGUI(getMapSeedFromServer(), this);
     } else {
         gameUI = new GameConsoleUI(getMapSeedFromServer(),this);
@@ -147,7 +150,7 @@ void GameManager::sendUpgradeRequest(Position towerPos) {
 void GameManager::run() {
     char server_msg_buff[BUFFER_SIZE];
 
-    if (true || isConsole) {
+    if (isConsole) {
         gameUI->display(gameState, quadrant);
 
         if (!isSupporter)
@@ -426,6 +429,7 @@ void GameManager::unSerializePNJ(std::string serialized_pnj, Wave *wave) {
     int x=0;
     int y=0;
     int health=0;
+    std::string typeOfPNJ = "";
     for (char& c : serialized_pnj) {
         if (c == ',') {
             switch (count) {
@@ -435,8 +439,11 @@ void GameManager::unSerializePNJ(std::string serialized_pnj, Wave *wave) {
                 case 1:
                     y = std::stoi(elem);
                     break;
-                default:
+                case 2:
                     health = std::stoi(elem);
+                    break;
+                default:
+                    typeOfPNJ = elem;
                     break;
             }
             elem = "";
@@ -445,7 +452,12 @@ void GameManager::unSerializePNJ(std::string serialized_pnj, Wave *wave) {
             elem += c;
         }
     }
-    PNJ *pnj = new PNJ(Position(x, y), health, wave->getQuadrant());
+
+    PNJ *pnj;
+    if (typeOfPNJ == MEXICAN_PNJ_STR) pnj = new MexicanPNJ(Position(x, y), health, wave->getQuadrant());
+    else if (typeOfPNJ == MUSLIM_PNJ_STR) pnj = new MuslimPNJ(Position(x, y), health, wave->getQuadrant());
+    else pnj = new CommunistPNJ(Position(x, y), health, wave->getQuadrant());
+
     wave->addPNJ(*pnj);
 }
 
