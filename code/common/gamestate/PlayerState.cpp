@@ -75,10 +75,6 @@ int PlayerState::getPlayer_id() {
     return player_id;
 }
 
-void PlayerState::setPlayer_id(int newId) {
-    player_id = newId;
-}
-
 void PlayerState::spendMoney(int amount) {
     money -= amount;
 }

@@ -1,7 +1,3 @@
-//
-// Created by jepsiko on 09/03/17.
-//
-
 #ifndef PROJET_REGISTERGUI_HPP
 #define PROJET_REGISTERGUI_HPP
 
@@ -11,18 +7,14 @@
 #include "../Abstract/AbstractGUI.hpp"
 #include "RegisterUI.hpp"
 
-class RegisterManager;
-
 class RegisterGUI : public AbstractGUI, public RegisterUI {
-Q_OBJECT
+    Q_OBJECT
 
 public slots:
-
     void registerUser();
     void cancelRegister();
 
 private:
-    RegisterManager *manager;
     QLineEdit *usernameL;
     QLineEdit *passwordL;
     QLineEdit *confirmL;

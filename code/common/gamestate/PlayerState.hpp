@@ -62,9 +62,7 @@ public:
 
 	int getPlayer_id();
 
-	void setPlayer_id(int newId);
-
-	void spendMoney(int amount);
+    void spendMoney(int amount);
 
 	void decrease_hp(int amount);
     void increase_hp(int amount);

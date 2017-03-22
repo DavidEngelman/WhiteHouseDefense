@@ -24,6 +24,7 @@ void RegisterGUI::display() {
 
     usernameL = new QLineEdit(fields);
     usernameL->setSelection(0, 10);
+    usernameL->setFocus();
 
     passwordL = new QLineEdit(fields);
     passwordL->setEchoMode(QLineEdit::Password); // Display bullets instead of char
@@ -69,11 +70,6 @@ void RegisterGUI::display() {
     fieldsLayout->addRow(cancel);
     fields->setLayout(fieldsLayout);
     fields->move(this->size().width() / 2 - 125, this->size().height() / 2 + 105);
-
-    QMediaPlayer *player = new QMediaPlayer;
-    player->setMedia(QUrl::fromLocalFile("../../qt_ui/game_pictures/sounds/americanAnthem.mp3"));
-    player->setVolume(100);
-    player->play();
 
     this->show();
 }

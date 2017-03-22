@@ -684,6 +684,9 @@ void GameGUI::setUpSpellsBoxForSupporter() {
 
 
 void GameGUI::goToMenu() {
+    endofGameWidget->close();
+    endofGameWidget->deleteLater();
+    std::cout << "Close and DeleteLater of the endGameWidget done" << std::endl;
     manager->comeBackToMenu();
 
 }

@@ -1,6 +1,3 @@
-//
-//
-
 #ifndef PROJET_SETTINGSGUI_HPP
 #define PROJET_SETTINGSGUI_HPP
 
@@ -48,7 +45,7 @@ public slots:
     void changePassword();
 
     void applyUsernameChange();
-    void applPasswordChange();
+    void applyPasswordChange();
     void applyIconChange(std::string iconName);
 };
 
