@@ -51,7 +51,7 @@ GameManager::GameManager(int socket, bool _isSupporter, App *app) :
 }
 
 void GameManager::comeBackToMenu() { // À appeler quand la partie est terminée
-    MainManager *menu_manager = new MainManager(5555, master_app);
+    MainManager *menu_manager = new MainManager(ACCOUNT_SERVER_PORT, master_app);
     master_app->transition(menu_manager);
 }
 

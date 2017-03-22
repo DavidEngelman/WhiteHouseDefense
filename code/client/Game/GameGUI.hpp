@@ -89,11 +89,15 @@ private:
 
     QGroupBox *endGameChatBox;
 
+    QPushButton *backToMenu;
+
 public slots:
     void handleBuyingTower(int typeOfTower);
     void handleSellingTower();
     void handleUpgradingTower();
     void handleNukeSpell();
+    void goToMenu();
+
     void handleFreezeSpell();
 
 public:

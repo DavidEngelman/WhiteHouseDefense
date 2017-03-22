@@ -47,7 +47,6 @@ private:
     void unSerializeWave(std::string serialized_wave);
     void unSerializePNJ(std::string serialized_pnj, Wave* wave);
 
-    void comeBackToMenu();
     bool is_alive();
     bool checkValidity(Position towerPos, GameState& gamestate, std::string typeOfTower);
 
@@ -94,12 +93,15 @@ public:
 
     bool placeMissileTower(Position towerPos);
 
+    void comeBackToMenu();
+
 public slots:
     void updateMap();
 
     void launchFreezeSpell();
 
     void sendFreezeSpellRequest();
+
 
 
 };

@@ -429,6 +429,10 @@ void GameGUI::setUpEndOfGameLayout(GameState &gameState) {
     endOfGameLayout = new QVBoxLayout;
     setUpWinnerLooserBox(gameState);
     setUpStatsLayout(gameState);
+    backToMenu = new QPushButton(QString::fromStdString("Back to menu"));
+    endOfGameLayout->addWidget(backToMenu);
+    endOfGameLayout->setAlignment(backToMenu, Qt::AlignCenter);
+    QObject::connect(backToMenu, SIGNAL(clicked()), this, SLOT(goToMenu()));
     
 }
 
@@ -612,6 +616,12 @@ void GameGUI::setUpEndGameChatBox() {
     chatLayout->addWidget(endGameChatWidget);
     endGameChatBox->setLayout(chatLayout);
     statsLayout->addWidget(endGameChatBox);
+}
+
+
+void GameGUI::goToMenu() {
+    manager->comeBackToMenu();
+
 }
 
 
