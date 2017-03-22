@@ -1,0 +1,12 @@
+
+
+#ifndef PROJET_ONETARGETTOWER_HPP
+#define PROJET_ONETARGETTOWER_HPP
+
+
+class OneTargetTower {
+
+};
+
+
+#endif //PROJET_ONETARGETTOWER_HPP

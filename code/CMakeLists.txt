@@ -74,13 +74,22 @@ set(CLIENT_FILES client/ClientLauncher.cpp
         #client/FriendList/FriendListGUI.cpp
         #client/FriendList/FriendList.cpp
 
+        #SETTINGS
+        client/Settings/SettingsManager.cpp
+        client/Settings/SettingsUI.hpp
+        client/Settings/SettingsGUI.cpp
+        client/Settings/SettingsConsoleUI.cpp
+        client/Settings/IconSelectionWidget.cpp
+        client/IconLabel.cpp
+
         #GAME
         common/Map.cpp
         client/MapGUI.cpp
 
             #TOWER
-        common/tower/AttackTower.cpp
         common/tower/AbstractTower.cpp
+        common/tower/AttackTower.cpp
+        common/tower/OneTargetTower.cpp
         common/tower/GunTower.cpp
         common/tower/SniperTower.cpp
         common/tower/ShockTower.cpp
@@ -114,10 +123,10 @@ set(CLIENT_FILES client/ClientLauncher.cpp
         common/Credentials.cpp
         client/Drawing.cpp
         client/App.cpp
-        common/Constants.hpp common/Tools.hpp
+        common/Constants.hpp
         common/Tools.cpp
         client/QHandPointerButton.hpp
-        client/InQueueWidget.cpp client/InQueueWidget.hpp client/Settings/SettingsManager.cpp client/Settings/SettingsManager.hpp client/Settings/SettingsGUI.cpp client/Settings/SettingsGUI.hpp client/Settings/SettingsUI.hpp client/Settings/SettingsConsoleUI.cpp client/Settings/SettingsConsoleUI.hpp client/Settings/IconSelectionWidget.cpp client/Settings/IconSelectionWidget.hpp client/IconLabel.cpp client/IconLabel.hpp)
+        client/InQueueWidget.cpp)
 
 
 add_executable(client ${CLIENT_FILES})
@@ -132,6 +141,7 @@ set(SERVER_FILES "server/ServerLauncher.cpp"
             #TOWER
         common/tower/AbstractTower.cpp
         common/tower/AttackTower.cpp
+        common/tower/OneTargetTower.cpp
         common/tower/GunTower.cpp
         common/tower/SniperTower.cpp
         common/tower/ShockTower.cpp
