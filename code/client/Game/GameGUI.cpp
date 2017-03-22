@@ -7,56 +7,34 @@
 #include "../MapGUI.hpp"
 #define  CHART_SIZE 600
 
-GameGUI::GameGUI(unsigned seed, GameManager *manager) : AbstractGUI(nullptr), GameUI(seed, manager) {
+GameGUI::GameGUI(bool isSupporter, unsigned seed, GameManager *manager) : AbstractGUI(nullptr), GameUI(seed, manager),
+                                                                          isSupporterMode(isSupporter) {
 
 
     mainLayout = new QHBoxLayout();
-    QVBoxLayout* leftPanel = new QVBoxLayout;
+    leftPanel = new QVBoxLayout;
 
     //* RIGHT PANEL //*
     /* Player Info */
 
-    QVBoxLayout *actionLayout  = new QVBoxLayout; //tower shop + sell/upgrage + spells
+    actionLayout  = new QVBoxLayout; //tower shop + sell/upgrage + spells
 
-    QString towerShopTitle = QString::fromStdString("Towers Shop");
-    towerShop = new QGroupBox(towerShopTitle);
-    displayTowerShop();
-    actionLayout->addWidget(towerShop);
-
-
-    QString deleteAndUpgradeTitle = QString::fromStdString("On Tower Actions");
-    deleteAndUpgradeBox = new QGroupBox(deleteAndUpgradeTitle);
-    displayDeleteAndUpgradeBox();
-    actionLayout->addWidget(deleteAndUpgradeBox);
-
-
-    QString spellBoxTitle = QString::fromStdString("Spells");
-    spellBox = new QGroupBox(spellBoxTitle);
-    displaySpellBox();
-    actionLayout->addWidget(spellBox);
+    if (!isSupporter) {
+        setUpTowerShop();
+        setUpDeleteAndUpgradBox();
+        setUpSpellsBox();
+    } else {
+        setUpSpellsBoxForSupporter();
+    }
 
     //* LEFT PANEL //*
     /* Player Info */
 
-    QFont font = QFont();
-    font.setBold(true);
-    font.setPointSize(30);
-
-    usernameL = new QLabel;
-    usernameL->setFont(font);
-
-    font.setBold(false);
-    font.setPixelSize(15);
-
     QString playerStatsBoxTitle = QString::fromStdString("Stats");
     playerStatsBox = new QGroupBox(playerStatsBoxTitle);
 
-    QHBoxLayout *playerStateLayout = new QHBoxLayout;
-    playerStateL = new QLabel;
-    playerStateL->setFont(font);
-    playerStateLayout->addWidget(playerStateL);
-    playerStatsBox->setLayout(playerStateLayout);
 
+    setUpStatsBox();
 
 
     /* In Game Chat UI */
@@ -68,13 +46,8 @@ GameGUI::GameGUI(unsigned seed, GameManager *manager) : AbstractGUI(nullptr), Ga
     chatLayout->addWidget(inGameChatWidget);
     chatBox->setLayout(chatLayout);
 
-    /* Set up left panel layout */
-    leftPanel->addWidget(usernameL);
-    leftPanel->addWidget(playerStatsBox);
-    leftPanel->addWidget(chatBox);
 
-    leftPanel->setAlignment(usernameL, Qt::AlignCenter|Qt::AlignTop);
-    leftPanel->setAlignment(playerStateL, Qt::AlignCenter|Qt::AlignTop);
+    leftPanel->addWidget(chatBox);
     leftPanel->setAlignment(inGameChatWidget, Qt::AlignCenter|Qt::AlignTop);
 
     /* Central Layout */
@@ -101,11 +74,56 @@ GameGUI::GameGUI(unsigned seed, GameManager *manager) : AbstractGUI(nullptr), Ga
     //this->showMaximized();
     this->showFullScreen();
 
-    // TODO: Pour l'instant, c'est la gameGUI qui declenche la fonction updatemap toutes les 10 msec
-    // Je ne suis pas sur que ca devrait etre dans cette classe
-    // Ca devrait probablement etre dans manager
 
 }
+
+void GameGUI::setUpTowerShop() {
+    QString towerShopTitle = QString::fromStdString("Towers Shop");
+    towerShop = new QGroupBox(towerShopTitle);
+    displayTowerShop();
+    actionLayout->addWidget(towerShop);
+}
+
+
+void GameGUI::setUpDeleteAndUpgradBox() {
+    QString deleteAndUpgradeTitle = QString::fromStdString("On Tower Actions");
+    deleteAndUpgradeBox = new QGroupBox(deleteAndUpgradeTitle);
+    displayDeleteAndUpgradeBox();
+    actionLayout->addWidget(deleteAndUpgradeBox);
+}
+
+void GameGUI::setUpSpellsBox() {
+    QString spellBoxTitle = QString::fromStdString("Spells");
+    spellBox = new QGroupBox(spellBoxTitle);
+    displaySpellBox();
+    actionLayout->addWidget(spellBox);
+}
+
+void GameGUI::setUpStatsBox() {
+    QFont font = QFont();
+    font.setBold(true);
+    font.setPointSize(30);
+
+    usernameL = new QLabel;
+    usernameL->setFont(font);
+
+    font.setBold(false);
+    font.setPixelSize(15);
+
+    QHBoxLayout *playerStateLayout = new QHBoxLayout;
+    playerStateL = new QLabel;
+    playerStateL->setFont(font);
+    playerStateLayout->addWidget(playerStateL);
+    playerStatsBox->setLayout(playerStateLayout);
+
+    leftPanel->addWidget(usernameL);
+    leftPanel->addWidget(playerStatsBox);
+
+    leftPanel->setAlignment(usernameL, Qt::AlignCenter|Qt::AlignTop);
+    leftPanel->setAlignment(playerStateL, Qt::AlignCenter|Qt::AlignTop);
+}
+
+
 
 Position GameGUI::getPosBuyingTower() {
     return Position();
@@ -146,6 +164,16 @@ void GameGUI::setUpOtherPlayerHealthBar() {
     otherPlayerHealthBarBox->setLayout(layout);
 }
 
+void GameGUI::updateHealthBar(int value) {
+    baseHealthBar->setValue(value);
+    baseHealthBar->setFormat("HP : " + QString::number(value) + "/" + QString::number(PLAYER_STARTING_HP));
+}
+
+void GameGUI::updateHealthBarOfSupportedPlayer(int value) {
+    baseHealthBar->setValue(value);
+    baseHealthBar->setFormat("HP of Supported Player : " + QString::number(value) + "/" + QString::number(PLAYER_STARTING_HP));
+}
+
 void GameGUI::updateOtherPlayerHealthBar(std::vector<PlayerState> &playerState, int quadrant) {
     int count = 0;
     for (int i = 0; i != playerState.size(); i++) {
@@ -153,6 +181,7 @@ void GameGUI::updateOtherPlayerHealthBar(std::vector<PlayerState> &playerState, 
             int value = playerState[i].getHp();
             otherPlayerHealthBar[count]->setValue(value);
             otherPlayerHealthBar[count]->setFormat(QString::fromStdString(playerState[i].getUsername())
+                                                   + " (" + QString::fromStdString(QUADRANT_NAMES[i]) + ")"
                                                    + " :" + QString::number(value) + "/"
                                                    + QString::number(PLAYER_STARTING_HP ) );
             count++;
@@ -349,26 +378,25 @@ void GameGUI::handleFreezeSpell() {
 }
 
 void GameGUI::displayPlayerInfos(GameState &gameState, int quadrant) {
-    PlayerState playerState = gameState.getPlayerStates()[quadrant];
-    std::string &text = playerState.getUsername();
+    if (!isSupporterMode) {
+        PlayerState playerState = gameState.getPlayerStates()[quadrant];
+        std::string &text = playerState.getUsername();
 
-    usernameL->setText(QString::fromStdString(text));
-    usernameL->show();
+        usernameL->setText(QString::fromStdString(text));
+        usernameL->show();
 
-    text = "Money : " + std::to_string(playerState.getMoney()) + " $";
-    text += "\nHP : " + std::to_string(playerState.getHp());
-    text += "\nNPC killed : " + std::to_string(playerState.getPnjKilled());
-    text += "\nQuadrant : " + QUADRANT_NAMES[quadrant];
+        text = "Money : " + std::to_string(playerState.getMoney()) + " $";
+        text += "\nHP : " + std::to_string(playerState.getHp());
+        text += "\nNPC killed : " + std::to_string(playerState.getPnjKilled());
+        text += "\nQuadrant : " + QUADRANT_NAMES[quadrant];
 
-    playerStateL->setText(QString::fromStdString(text));
-    playerStateL->show();
+        playerStateL->setText(QString::fromStdString(text));
+        playerStateL->show();
 
-    updateHealthBar(playerState.getHp());
-    updateOtherPlayerHealthBar(gameState.getPlayerStates(), quadrant);
-}
-
-void GameGUI::displayInfoForSupporter(GameState &gameState) {
-
+        updateHealthBar(playerState.getHp());
+        updateOtherPlayerHealthBar(gameState.getPlayerStates(), quadrant);
+    } else
+        displayInfoForSupporter(gameState, quadrant);
 }
 
 void GameGUI::displayDeadMessage() {
@@ -393,11 +421,6 @@ void GameGUI::disableFreezeSpell() {
 
 void GameGUI::enableFreezeSpell() {
     freezeB->setEnabled(true);
-}
-
-void GameGUI::updateHealthBar(int value) {
-    baseHealthBar->setValue(value);
-    baseHealthBar->setFormat("HP : " + QString::number(value) + "/" + QString::number(PLAYER_STARTING_HP));
 }
 
 void GameGUI::disableDeleteAndUpgradeBox() {
@@ -445,10 +468,16 @@ void GameGUI::setUpWinnerLooserBox(GameState &gameState) {
 
     int myQuadrant = manager->getQuadrant();
     std::string info = bool_to_victory_defeat(gameState.getPlayerStates()[myQuadrant].getIsWinner());
-    QLabel *label = new QLabel(QString::fromStdString(info));
+    QLabel *label = new QLabel();
     label->setFont(font);
-    if (info == "Victory") label->setStyleSheet("QLabel { color : green; }");
-    else label->setStyleSheet("QLabel { color : red; }");
+    if (!isSupporterMode) {
+        label->setText(QString::fromStdString(info));
+        if (info == "Victory") label->setStyleSheet("QLabel { color : green; }");
+        else label->setStyleSheet("QLabel { color : red; }");
+    } else {
+        label->setText("Winner: " +QString::fromStdString(manager->getWinner()));
+    }
+
     layout->addWidget(label);
 
     layout->setAlignment(Qt::AlignCenter);
@@ -607,7 +636,6 @@ void GameGUI::setUpChartBox(GameState& gameState) {
 
 }
 
-
 void GameGUI::setUpEndGameChatBox() {
 
     endGameChatBox = new QGroupBox();
@@ -617,6 +645,42 @@ void GameGUI::setUpEndGameChatBox() {
     endGameChatBox->setLayout(chatLayout);
     statsLayout->addWidget(endGameChatBox);
 }
+
+//////////// SUPPORTER UI PART //////////////////////
+
+void GameGUI::displayInfoForSupporter(GameState &gameState, int quadrant) {
+    PlayerState playerSupported = gameState.getPlayerStates()[quadrant];
+    std::string &playerSupportedUsrName = playerSupported.getUsername();
+
+    usernameL->setText("You are Supporting " + QString::fromStdString(playerSupportedUsrName)
+                       + " (" + QString::fromStdString(QUADRANT_NAMES[quadrant]) + ")");
+    usernameL->show();
+
+    std::string text;
+    int i = 0;
+    for (PlayerState &player : gameState.getPlayerStates()) {
+        text += "Player : " + player.getUsername();
+        text += "\nMoney : " + std::to_string(player.getMoney()) + " $";
+        text += "\nHP : " + std::to_string(player.getHp());
+        text += "\nNPC killed : " + std::to_string(player.getPnjKilled());
+        text += "\nQuadrant : " + QUADRANT_NAMES[i] + "\n\n";
+        i++;
+    }
+
+    playerStateL->setText(QString::fromStdString(text));
+    playerStateL->show();
+
+    updateHealthBarOfSupportedPlayer(playerSupported.getHp());
+    updateOtherPlayerHealthBar(gameState.getPlayerStates(), quadrant);
+
+}
+
+void GameGUI::setUpSpellsBoxForSupporter() {
+    supporterActionBox = new QGroupBox();
+    //displaySupporterActionBox();
+    actionLayout->addWidget(supporterActionBox);
+}
+
 
 
 void GameGUI::goToMenu() {

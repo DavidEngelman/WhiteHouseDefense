@@ -85,7 +85,7 @@ void GameConsoleUI::displayPlayerInfos(GameState &gameState, int quadrant) {
 }
 
 
-void GameConsoleUI::displayInfoForSupporter(GameState &gameState) {
+void GameConsoleUI::displayInfoForSupporter(GameState &gameState, int quadrant) {
     std::string infos;
     int i = 0;
     for (PlayerState &ps : gameState.getPlayerStates()) {

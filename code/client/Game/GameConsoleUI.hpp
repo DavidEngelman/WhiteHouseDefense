@@ -21,7 +21,7 @@ public:
 
 	void display(GameState& gameState, int quadrant) override ;
 	void displayPlayerInfos(GameState &gameState, int quadrant) override ;
-	void displayInfoForSupporter(GameState& gameState) override ;
+	void displayInfoForSupporter(GameState &gameState, int quadrant) override ;
 	void displayTowerShop() override ;
 
 	void displayGameOver(GameState& gamestate) override ;

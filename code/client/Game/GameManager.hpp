@@ -103,7 +103,7 @@ public slots:
     void sendFreezeSpellRequest();
 
 
-
+    std::string getWinner();
 };
 
 #endif
