@@ -4,7 +4,7 @@
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QGroupBox>
 #include "GameGUI.hpp"
-    #include "../MapGUI.hpp"
+#include "../MapGUI.hpp"
 
 GameGUI::GameGUI(unsigned seed, GameManager *manager) : AbstractGUI(nullptr), GameUI(seed, manager) {
 
@@ -255,9 +255,6 @@ void GameGUI::displayDeadMessage() {
 
 }
 
-void GameGUI::update_map() {
-    //manager->updateMap();
-}
 
 void GameGUI::disableTowerShop() {
     gunTowerB->setEnabled(false);
@@ -377,28 +374,35 @@ void GameGUI::displayGameOver(GameState &gamestate) {
 }
 
 void GameGUI::switchToEndGameDisplay() {
-    this->setLayout(endOfGameLayout);
+    this->hide();
+    endofGameWidget = new QWidget;
+    endofGameWidget->setLayout(endOfGameLayout);
+    endofGameWidget->showMaximized();
 }
 
 void GameGUI::setUpEndOfGameLayout(GameState &gameState) {
+    endOfGameLayout = new QVBoxLayout;
     setUpWinnerLooserBox(gameState);
     setUpStatsLayout(gameState);
     
 }
 
 void GameGUI::setUpWinnerLooserBox(GameState &gameState) {
+    winnerLoserInfos = new QGroupBox;
     QHBoxLayout *layout = new QHBoxLayout;
     QFont font = QFont();
     font.setBold(true);
     font.setPointSize(30);
 
-    for (PlayerState &player : gameState.getPlayerStates()) {
-        std::string info = player.getUsername() + ": " + bool_to_string(player.getIsWinner());
-        QLabel *label = new QLabel(QString::fromStdString(info));
-        if (player.getIsWinner()) label->setStyleSheet("QLabel { color : green; }");
-        layout->addWidget(label);
-    }
+    int myQuadrant = manager->getQuadrant();
+    std::string info = bool_to_victory_defeat(gameState.getPlayerStates()[myQuadrant].getIsWinner());
+    QLabel *label = new QLabel(QString::fromStdString(info));
+    label->setFont(font);
+    if (info == "Victory") label->setStyleSheet("QLabel { color : green; }");
+    else label->setStyleSheet("QLabel { color : red; }");
+    layout->addWidget(label);
 
+    layout->setAlignment(Qt::AlignCenter);
     winnerLoserInfos->setLayout(layout);
     endOfGameLayout->addWidget(winnerLoserInfos);
 
@@ -407,8 +411,7 @@ void GameGUI::setUpWinnerLooserBox(GameState &gameState) {
 void GameGUI::setUpStatsLayout(GameState &gameState) {
     statsLayout = new QHBoxLayout;
     setUpChartBox(gameState);
-    statsLayout->addStretch();
-    setUpOptionBox();
+    setUpEndGameChatBox();
     endOfGameLayout->addLayout(statsLayout);
 }
 
@@ -416,35 +419,23 @@ void GameGUI::setUpChartBox(GameState& gameState) {
 
     chartBox = new QGroupBox;
 
-    QBarSet *npcKilled = new QBarSet("NPC Killed");
-    QBarSet *nbTowersPlaced = new QBarSet("Towers Placed");
-    QBarSet *damageDealt = new QBarSet("Damage Dealt");
-    QBarSet *moneySpend = new QBarSet("Money Spend");
+    chartLayout = new QGridLayout;
 
-    ///TEST
-    *npcKilled << 1 << 2 << 3 << 4;
-    *nbTowersPlaced << 5 << 10 << 3 << 15;
-    *damageDealt << 3 << 5 << 8 << 13;
-    *moneySpend << 5 << 6 << 7 << 3;
+    /////////CHART 1
 
-    //TODO REMPLACER
-    /*for (PlayerState player : gameState.getPlayerStates()) {
+    npcKilled = new QBarSet("NPC killed");
+
+    for (PlayerState player : gameState.getPlayerStates()) {
         npcKilled->append(player.getNPCKilled());
-        nbTowersPlaced->append(player.getNbTowersPlaced());
-        damageDealt->append(player.getDamageDealt());
-        moneySpend->append(player.getMoneySpend());
-    }*/
+    }
 
     QBarSeries *series = new QBarSeries();
-    series->append(damageDealt);
-    series->append(nbTowersPlaced);
     series->append(npcKilled);
-    series->append(moneySpend);
 
-    QChart *chart = new QChart();
-    chart->addSeries(series);
-    chart->setTitle("Game Stats");
-    chart->setAnimationOptions(QChart::SeriesAnimations);
+    chart1 = new QChart();
+    chart1->addSeries(series);
+    chart1->setTitle("NPC killed");
+    chart1->setAnimationOptions(QChart::SeriesAnimations);
 
     QStringList categories;
     for (PlayerState &player : gameState.getPlayerStates()){
@@ -453,25 +444,123 @@ void GameGUI::setUpChartBox(GameState& gameState) {
 
     QBarCategoryAxis *axis = new QBarCategoryAxis();
     axis->append(categories);
-    chart->createDefaultAxes();
-    chart->setAxisX(axis, series);
-    chart->legend()->setVisible(true);
-    chart->legend()->setAlignment(Qt::AlignBottom);
+    chart1->createDefaultAxes();
+    chart1->setAxisX(axis, series);
+    chart1->legend()->setVisible(true);
+    chart1->legend()->setAlignment(Qt::AlignBottom);
 
-    QChartView *chartView = new QChartView(chart);
-    chartView->setRenderHint(QPainter::Antialiasing);
+    chartView1 = new QChartView(chart1);
+    chartView1->setRenderHint(QPainter::Antialiasing);
+    chartView1->setFixedWidth(450);
 
-    QHBoxLayout *layout = new QHBoxLayout;
-    layout->addWidget(chartView);
-    chartBox->setLayout(layout);
+    chartLayout->addWidget(chartView1, 0, 0);
+
+
+    /////////CHART 2
+
+    nbTowersPlaced = new QBarSet("Towers placed");
+
+    for (PlayerState player : gameState.getPlayerStates()) {
+        nbTowersPlaced->append(player.getNbTowersPlaced());
+    }
+
+    QBarSeries *series2 = new QBarSeries();
+    series2->append(nbTowersPlaced);
+    chart2 = new QChart();
+
+    chart2->addSeries(series2);
+    chart2->setTitle("Towers Placed");
+    chart2->setAnimationOptions(QChart::SeriesAnimations);
+
+    chart2->createDefaultAxes();
+    QBarCategoryAxis *axis2 = new QBarCategoryAxis();
+    chart2->setAxisX(axis2, series2);
+    chart2->legend()->setVisible(true);
+    chart2->legend()->setAlignment(Qt::AlignBottom);
+
+
+
+    chartView2 = new QChartView(chart2);
+    chartView2->setRenderHint(QPainter::Antialiasing);
+    chartView2->setFixedWidth(450);
+
+    chartLayout->addWidget(chartView2, 0, 1);
+
+
+    /////CHART 3
+
+    damageDealt = new QBarSet("Damage dealt");
+
+    for (PlayerState player : gameState.getPlayerStates()) {
+        damageDealt->append(player.getDamageDealt());
+    }
+
+    QBarSeries *series3 = new QBarSeries();
+    series3->append(damageDealt);
+
+    chart3 = new QChart();
+    chart3->addSeries(series3);
+    chart3->setTitle("Damage Dealt");
+    chart3->setAnimationOptions(QChart::SeriesAnimations);
+
+    chart3->createDefaultAxes();
+    QBarCategoryAxis *axis3 = new QBarCategoryAxis();
+    chart3->setAxisX(axis3, series3);
+    chart3->legend()->setAlignment(Qt::AlignBottom);
+
+    chartView3 = new QChartView(chart3);
+    chartView3->setRenderHint(QPainter::Antialiasing);
+    //chartView3->setFixedWidth(450);
+
+    chartLayout->addWidget(chartView3, 1, 0);
+
+
+    /////CHART 4
+
+    moneySpend = new QBarSet("Money spend");
+
+    for (PlayerState player : gameState.getPlayerStates()) {
+        moneySpend->append(player.getMoneySpend());
+    }
+
+    QBarSeries *series4 = new QBarSeries();
+    series4->append(nbTowersPlaced);
+
+    chart4 = new QChart();
+    chart4->addSeries(series4);
+    chart4->setTitle("Money Spend");
+    chart4->setAnimationOptions(QChart::SeriesAnimations);
+
+    chart4->createDefaultAxes();
+    QBarCategoryAxis *axis4 = new QBarCategoryAxis();
+    chart4->setAxisX(axis4, series4);
+    chart4->legend()->setAlignment(Qt::AlignBottom);
+
+    chartView4 = new QChartView(chart4);
+    chartView4->setRenderHint(QPainter::Antialiasing);
+    chartView4->setFixedWidth(450);
+
+    chartLayout->addWidget(chartView4, 1, 1);
+
+
+
+    chartBox->setLayout(chartLayout);
     statsLayout->addWidget(chartBox);
-    
+
 }
 
-void GameGUI::setUpOptionBox() {
-    optionBox = new QGroupBox;
-    statsLayout->addWidget(optionBox);
+
+void GameGUI::setUpEndGameChatBox() {
+
+    endGameChatBox = new QGroupBox();
+    InGameChatWidget *  endGameChatWidget = new InGameChatWidget(manager);
+    QHBoxLayout *chatLayout = new QHBoxLayout;
+    chatLayout->addWidget(endGameChatWidget);
+    endGameChatBox->setLayout(chatLayout);
+    statsLayout->addWidget(endGameChatBox);
 }
+
+
 
 
 

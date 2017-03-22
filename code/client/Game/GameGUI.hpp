@@ -19,6 +19,7 @@
 #include <QtCharts/QBarSet>
 #include <QtCharts/QLegend>
 #include <QtCharts/QBarCategoryAxis>
+#include "../../common/Tools.hpp"
 
 QT_CHARTS_USE_NAMESPACE
 class MapGUI;
@@ -60,14 +61,33 @@ private:
 
 
     //end of game screen
+    QWidget *endofGameWidget;
     QVBoxLayout *endOfGameLayout;
-    QHBoxLayout *statsLayout;
+
     QGroupBox *winnerLoserInfos;
+
+    QHBoxLayout *statsLayout;
     QGroupBox *chartBox;
-    QGroupBox *optionBox;
+    QGridLayout *chartLayout;
+
+
+    QChartView *chartView1;
+    QChartView *chartView2;
+    QChartView *chartView3;
+    QChartView *chartView4;
+    QChart *chart1;
+    QChart *chart2;
+    QChart *chart3;
+    QChart *chart4;
+
+    QBarSet *npcKilled;
+    QBarSet *nbTowersPlaced;
+    QBarSet *damageDealt;
+    QBarSet *moneySpend;
+
+    QGroupBox *endGameChatBox;
 
 public slots:
-    void update_map();
     void handleBuyingTower(int typeOfTower);
     void handleSellingTower();
     void handleUpgradingTower();
@@ -126,7 +146,9 @@ public:
 
     void setUpChartBox(GameState &gameState);
 
-    void setUpOptionBox();
+
+    void setUpEndGameChatBox();
+
 };
 
 

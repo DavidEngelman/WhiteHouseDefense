@@ -22,7 +22,7 @@ static const int NB_OF_MAPS = 3;
 static const int PNJ_STARTING_HEALTHPOINTS = 100;
 static const int PNJ_STARTING_MOVESPEED = 100;
 
-static const int PLAYER_STARTING_HP =  0;
+static const int PLAYER_STARTING_HP =  10;
 static const int PLAYER_STARTING_MONEY = 200;
 
 static const int PNJ_VALUE = 10;

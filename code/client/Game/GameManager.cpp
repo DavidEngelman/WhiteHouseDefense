@@ -23,6 +23,10 @@ GameManager::GameManager(int socket, App *app) :
     quadrant = getQuadrantFromServer();
 
     getInitialGameStateFromServer();
+
+    timer = new QTimer();
+    QObject::connect(timer, SIGNAL(timeout()), this, SLOT(updateMap()));
+    timer->start(10);
 }
 
 GameManager::GameManager(int socket, bool _isSupporter, App *app) :
@@ -48,13 +52,11 @@ void GameManager::comeBackToMenu() { // À appeler quand la partie est terminée
 }
 
 void GameManager::updateMap() {
-    std::cout << "I'm in" << std::endl;
 
     if (!gameState.getIsGameOver()){
 
         char server_msg_buff[BUFFER_SIZE];
         receive_message(server_socket, server_msg_buff);
-        std::cout << server_msg_buff << std::endl;
         if (strncmp(server_msg_buff, RECEIVE_MESSAGE_STRING.c_str(), RECEIVE_MESSAGE_STRING.length()) == 0) {
             Command command;
             command.parse(server_msg_buff);
@@ -220,9 +222,6 @@ void GameManager::run() {
         // Menu to come back to main menu (or make another game of the same type ?)
         comeBackToMenu();
     } else {
-        timer = new QTimer();
-        QObject::connect(timer, SIGNAL(timeout()), this, SLOT(updateMap()));
-        timer->start(10);
         updateMap();
         //gameUI->displayTowerShop();
     }
