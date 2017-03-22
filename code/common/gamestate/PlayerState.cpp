@@ -84,7 +84,11 @@ void PlayerState::spendMoney(int amount) {
 }
 
 void PlayerState::decrease_hp(int amount) {
-    setHp(getHp() - amount);
+    if (getHp() < amount){
+        setHp(0);
+    } else {
+        setHp(getHp() - amount);
+    }
 }
 
 void PlayerState::increase_hp(int amount) {
