@@ -1,8 +1,14 @@
 #include "WelcomeManager.hpp"
 #include "WelcomeGUI.hpp"
+#include "WelcomeConsoleUI.hpp"
 
-WelcomeManager::WelcomeManager(App *my_app) : AbstractManager(my_app),
-                                              welcomeGUI(new WelcomeGUI(this, master_app->getMainWindow())) {}
+WelcomeManager::WelcomeManager(App *my_app) : AbstractManager(my_app) {
+    if (isConsole) {
+        welcomeUI = new WelcomeConsoleUI(this);
+    }else{
+        welcomeUI = new WelcomeGUI(this, master_app->getMainWindow()))
+    }
+}
 
 void WelcomeManager::run() {
     if (isConsole) {

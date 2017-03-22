@@ -30,7 +30,7 @@ set(CLIENT_FILES client/ClientLauncher.cpp
 
         #WELCOME
         client/Welcome/WelcomeManager.cpp
-        client/Welcome/WelcomeUI.cpp
+        client/Welcome/WelcomeConsoleUI.cpp
         client/Welcome/WelcomeGUI.cpp
         client/Welcome/WelcomeGUI.cpp
 

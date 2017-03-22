@@ -1,8 +1,8 @@
 
-#include "WelcomeUI.hpp"
+#include "WelcomeConsoleUI.hpp"
 #include "../Drawing.hpp"
 
-void WelcomeUI::display() {
+void WelcomeConsoleUI::display() {
     /*Show user's menu*/
     Drawing::drawWhiteHouse("LAUNCHER");
     std::cout << "   |       1. Log In                    |   " << std::endl;
@@ -12,7 +12,7 @@ void WelcomeUI::display() {
 
 }
 
-int WelcomeUI::select() {
+int WelcomeConsoleUI::select() {
     /* Ask at the user his choice */
     int choice = -1;
     std::cout << "Enter your choice:  ";
