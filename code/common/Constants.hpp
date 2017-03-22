@@ -98,6 +98,7 @@ static const int MISSILE_TOWER_SUBDAMAGE = 5;
 
 static const int STEP_DURATION_IN_MS = 1000;
 static const int INITIAL_NUMBER_OF_PNJS_PER_WAVE = 4;
+static const int NUMBER_OF_PNJS_ADDED_PER_WAVE = 2;
 static const int TIMED_GAME_DURATION = 120;
 
 static const int NUM_PLAYERS = 4;

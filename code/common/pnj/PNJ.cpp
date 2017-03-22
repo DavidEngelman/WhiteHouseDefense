@@ -6,10 +6,6 @@ PNJ::PNJ(Position position, int healthPoints, int direction) :
         direction(direction), damage(-1), value(-1), freezeTicksLeft(0),
         last_position(Position(-1000, -1000)) {}
 
-void PNJ::freeze() {
-
-}
-
 PNJ::PNJ(int direction) : position(Position(SIZE / 2, SIZE / 2)),
                           direction(direction), freezeTicksLeft(0),
                           last_position(Position(-1000, -1000)) {}
