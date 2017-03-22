@@ -306,6 +306,11 @@ void GameEngine::killAllNPC(int quadrant) {
     getGameState().getPlayerStates()[quadrant].incrDamageDealt(damageDealt);
 }
 
+void GameEngine::freezeWave(int quadrant) {
+    Wave &wave = gameState.getWaves()[quadrant];
+    wave.freeze();
+}
+
 
 
 

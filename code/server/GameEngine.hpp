@@ -89,6 +89,8 @@ public:
     void declareWinnerInTimedMode();
 
     void killAllNPC(int quadrant);
+
+    void freezeWave(int quadrant);
 };
 
 

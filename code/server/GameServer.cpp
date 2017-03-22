@@ -149,6 +149,11 @@ void GameServer::getAndProcessUserInput(int clientSocketFd, char *buffer) {
             command.parse(buffer);
             std::string quadrant = command.getNextToken();
             gameEngine->killAllNPC(stoi(quadrant));
+        } else if (command_type == FREEZE_PNJS_COMMAND_STRING) {
+            Command command;
+            command.parse(buffer);
+            int quadrant = command.getNextInt();
+            gameEngine->freezeWave(quadrant);
         }
     } else {
         removeClosedSocketFromSocketLists(clientSocketFd);
