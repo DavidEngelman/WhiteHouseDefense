@@ -36,6 +36,7 @@ public:
     void addPNJ(PNJ &pnj);
 
     void removeDeadPNJs();
+    void freeze();
 };
 
 
