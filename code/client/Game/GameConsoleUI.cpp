@@ -250,6 +250,14 @@ void GameConsoleUI::displayPredefinedMessages() {
     std::cout << "2. " << MESSAGES[1] << std::endl;
     std::cout << "3. " << MESSAGES[2] << std::endl;
     std::cout << std::endl;
+}
+
+void GameConsoleUI::disableFreezeSpell() {
+
+}
+
+void GameConsoleUI::enableFreezeSpell() {
+
 };
 
 

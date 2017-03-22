@@ -55,9 +55,14 @@ public:
     void disableNukeSpell() override ;
 	void enableNukeSpell() override ;
 
+	void disableFreezeSpell() override;
+	void enableFreezeSpell() override;
+
 	void sendPredefinedMessage();
 
 	void displayPredefinedMessages();
+
+
 };
 
 #endif

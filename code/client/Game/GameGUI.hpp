@@ -55,6 +55,7 @@ private:
 
     QGroupBox *spellBox;
     QPushButton *nukeB;
+    QPushButton *freezeB;
 
     //base health of other players
     QGroupBox *otherPlayerHealthBarBox;
@@ -93,6 +94,7 @@ public slots:
     void handleSellingTower();
     void handleUpgradingTower();
     void handleNukeSpell();
+    void handleFreezeSpell();
 
 public:
     GameGUI(unsigned seed, GameManager *manager);
@@ -150,6 +152,9 @@ public:
 
     void setUpEndGameChatBox();
 
+    void enableFreezeSpell();
+
+    void disableFreezeSpell();
 };
 
 
