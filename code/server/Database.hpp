@@ -17,7 +17,7 @@
 
 
 typedef struct PublicAccountInfos  {
-    std::string victories, pnjKilled, defeats;
+    std::string victories, pnjKilled, defeats, iconID;
     std::string username;
     int ID;
 }PublicAccountInfos;
@@ -65,7 +65,6 @@ public:
 
     int update_username(int id, std::string newUsername);
     int update_password(int id, std::string newPassword);
-    int update_profil_picture(int id, std::string newPassword);
     int updateIcon(int id, int newPicture);
 };
 

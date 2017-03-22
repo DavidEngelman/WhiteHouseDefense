@@ -22,6 +22,7 @@ private:
     int victories;
 	int defeats;
     int npcKilled;
+	int iconID;
 
 public:
 	ProfileManager(int port, App* my_app);
@@ -48,6 +49,8 @@ public:
 	~ProfileManager();
 
 	int getDefeats() const;
+
+	int getIconID() const;
 };
 
 

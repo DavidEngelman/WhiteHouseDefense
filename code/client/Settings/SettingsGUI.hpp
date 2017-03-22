@@ -47,6 +47,8 @@ public slots:
     void applyUsernameChange();
     void applyPasswordChange();
     void applyIconChange(std::string iconName);
+
+    void hideButton();
 };
 
 

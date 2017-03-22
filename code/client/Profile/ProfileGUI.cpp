@@ -79,6 +79,9 @@ void ProfileGUI::display() {
     userNameLabel->setFont(policeUsername);
     userNameLabel->setStyleSheet("padding-top: 115;color : gold;");
 
+    iconLabel = new QLabel(this);
+    iconLabel->setPixmap(QPixmap(*iconT));
+
     ///----------VICTORIES----------
 
     victoriesT = new QString;
@@ -155,6 +158,7 @@ void ProfileGUI::updateProfile() {
     *usernameT = QString::fromStdString(profileManager->getUsername());
     *victoriesT = QString::fromStdString("Victories: " + std::to_string(profileManager->getVictories()));
     *NPCKilledT = QString::fromStdString("NPC killed: " + std::to_string(profileManager->getNPCKilled()));
+    *iconT =  QString::fromStdString("../../qt_ui/game_pictures/icons/" + std::to_string(profileManager->getIconID()) + ".jpg");
 
     userNameLabel->setText(*usernameT);
     victoriesLabel->setText(*victoriesT);

@@ -44,8 +44,14 @@ void SettingsGUI::display() {
 
     /*Menu*/
     usernameB = new QHandPointerButton("Change Username", 300,40);
+    usernameB->setStyleSheet("border-image:url(../../qt_ui/game_pictures/buttons/gold_button_2.svg);");
+
     passwordB = new QHandPointerButton("Change Password", 300,40);
+    passwordB->setStyleSheet("border-image:url(../../qt_ui/game_pictures/buttons/gold_button_2.svg);");
+
     iconB = new QHandPointerButton("Change icon", 300,40);
+    iconB->setStyleSheet("border-image:url(../../qt_ui/game_pictures/buttons/gold_button_2.svg);");
+
     buttonsLayout->addWidget(usernameB);
     buttonsLayout->addWidget(passwordB);
     buttonsLayout->addWidget(iconB);
@@ -141,6 +147,10 @@ void SettingsGUI::applyPasswordChange(){
 void SettingsGUI::applyIconChange(std::string iconName){
     settingsManager->changePlayerIcon(iconName);
     QMessageBox::information(this, "Success", "Your icon has been changed !");
+}
+
+void SettingsGUI::hideButton(){
+    usernameB->setVisible(false);
 }
 
 
