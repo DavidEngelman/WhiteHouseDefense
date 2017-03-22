@@ -57,6 +57,11 @@ GameGUI::GameGUI(bool isSupporter, unsigned seed, GameManager *manager) : Abstra
     centralLayout->addStretch();
     map = new MapGUI(seed, this, centralLayout);
     centralLayout->addStretch();
+
+    // TODO: ads
+//    QImage image = new QImage("../../qt_ui/game_pictures/ads/steaks.jpg");
+
+
     otherPlayerHealthBarBox = new QGroupBox;
     setUpOtherPlayerHealthBar();
     centralLayout->addWidget(otherPlayerHealthBarBox);
@@ -421,6 +426,24 @@ void GameGUI::disableFreezeSpell() {
 
 void GameGUI::enableFreezeSpell() {
     freezeB->setEnabled(true);
+}
+
+void GameGUI::enableSpells() {
+    if (manager->isNukeSpellAvailable()){
+        enableNukeSpell();
+    }
+    if (manager->isFreezeSpellAvailable()){
+        enableFreezeSpell();
+    }
+}
+
+void GameGUI::disableSpells() {
+    if (manager->isNukeSpellAvailable()){
+        disableNukeSpell();
+    }
+    if (manager->isFreezeSpellAvailable()){
+        disableFreezeSpell();
+    }
 }
 
 void GameGUI::disableDeleteAndUpgradeBox() {
