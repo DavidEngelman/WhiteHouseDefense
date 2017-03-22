@@ -25,8 +25,6 @@ public:
 
 	void leaveQueue();
 
-    //TODO mettre dans AbstractManager
-	void setMusicFromPath(QString path);
 };
 
 #endif
