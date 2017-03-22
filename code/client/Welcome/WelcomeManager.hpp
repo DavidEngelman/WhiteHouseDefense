@@ -17,7 +17,7 @@ private:
 public:
     WelcomeManager(App *my_app);
 
-    ~WelcomeManager();
+    virtual ~WelcomeManager();
 
     void run() override;
 

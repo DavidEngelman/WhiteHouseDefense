@@ -9,7 +9,10 @@
 class WelcomeConsoleUI : public WelcomeUI, public AbstractConsoleUI {
 
 public:
+    WelcomeConsoleUI(WelcomeManager *manager);
+
     void display() override;
+
     int select();
 
 };
