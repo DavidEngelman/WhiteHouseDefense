@@ -33,9 +33,6 @@ public:
     void registerUser();
 
     void goToWelcome();
-
-    //TODO : TMP for test
-    int getPort();
 };
 
 #endif // PROJET_REGISTERMANAGER_HPP
