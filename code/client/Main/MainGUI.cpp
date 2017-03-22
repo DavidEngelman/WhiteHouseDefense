@@ -10,6 +10,7 @@ MainGUI::MainGUI(MainManager *manager, QWidget* _parent) : AbstractGUI(_parent),
 
 void MainGUI::display() {
 
+
     this->setFixedHeight(600);
     this->setFixedWidth(1000);
 
@@ -63,6 +64,8 @@ void MainGUI::display() {
     }
 
     this->show();
+    AbstractGUI::parent->setVisible(true);
+
 }
 
 void MainGUI::displayGameModesMenu() {

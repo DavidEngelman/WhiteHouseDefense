@@ -27,12 +27,11 @@ void SpectatorGUI::getGameAndPlayer() {
     layout->setAlignment(backToMenuButton, Qt::AlignHCenter);
     this->setLayout(layout);
 
-
     this->show();
 }
 
 void SpectatorGUI::displaySorryMessage() {
-    //TODO
+    QMessageBox::critical(this, "Sorry :(", "There is no game in progress");
 
 }
 

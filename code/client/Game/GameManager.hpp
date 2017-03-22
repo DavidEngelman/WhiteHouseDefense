@@ -95,6 +95,8 @@ public:
 
     void comeBackToMenu();
 
+    ~GameManager();
+
 public slots:
     void updateMap();
 

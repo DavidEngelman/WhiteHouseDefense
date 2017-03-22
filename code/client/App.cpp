@@ -74,7 +74,7 @@ void App::launchGame(int gameServerSocket) {
     std::cout << "Starting game" << std::endl;
     is_in_queue = false;
     if (!isConsole) {
-        getMainWindow()->hide();//So we can reuse the window after the game
+        getMainWindow()->setVisible(false);//So we can reuse the window after the game
     }
     GameManager * gameManager = new GameManager(gameServerSocket, this);
     transition(gameManager);
