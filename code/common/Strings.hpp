@@ -19,6 +19,7 @@ static const std::string UPGRADE_TOWER_COMMAND_STRING = "UpgradeTower";
 static const std::string SEND_MESSAGE_STRING = "SendMessage";
 static const std::string RECEIVE_MESSAGE_STRING = "ReceiveMessage";
 static const std::string NUCLEAR_BOMB_COMMAND_STRING = "NuclearBomb";
+static const std::string FREEZE_PNJS_COMMAND_STRING = "FreezeSpell";
 
 
 static const std::string JOIN_GAME_AS_SPECTATOR = "Support";

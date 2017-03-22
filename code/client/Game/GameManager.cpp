@@ -614,8 +614,21 @@ void GameManager::nuclearBombSpell() {
     gameUI->disableNukeSpell();
 }
 
+void GameManager::launchFreezeSpell(){
+    sendFreezeSpellRequest();
+    freezeSpell = false;
+    // TODO:
+//    gameUI->disableFreezeSpell();
+}
+
 void GameManager::sendNuclearRequest() {
-    std::string message = NUCLEAR_BOMB_COMMAND_STRING
-                          + "," + std::to_string(quadrant) + ";";
+    std::string message = NUCLEAR_BOMB_COMMAND_STRING + ","
+                          + std::to_string(quadrant) + ";";
+    send_message(server_socket, message.c_str());
+}
+
+void GameManager::sendFreezeSpellRequest() {
+    std::string message = FREEZE_PNJS_COMMAND_STRING + ","
+                          + std::to_string(quadrant) + ";";
     send_message(server_socket, message.c_str());
 }

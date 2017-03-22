@@ -32,6 +32,7 @@ private:
     int quadrant;
     bool isSupporter;
     bool nukeSpell = true;
+    bool freezeSpell = true;
 
     QTimer *timer;
 
@@ -95,6 +96,12 @@ public:
 
 public slots:
     void updateMap();
+
+    void launchFreezeSpell();
+
+    void sendFreezeSpellRequest();
+
+
 };
 
 #endif

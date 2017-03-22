@@ -2,7 +2,6 @@
 #include "../pnj/MexicanPNJ.h"
 #include "../pnj/MuslimPNJ.h"
 #include "../pnj/CommunistPNJ.h"
-#include "Wave.hpp"
 
 Wave::Wave(int number_of_pnjs, int quadrant) :
         number_of_pnjs(number_of_pnjs),
@@ -10,8 +9,7 @@ Wave::Wave(int number_of_pnjs, int quadrant) :
         number_of_added_pnjs(0) {}
 
 
-
-Wave::Wave(int quadrant): Wave(0, quadrant) {}
+Wave::Wave(int quadrant) : Wave(0, quadrant) {}
 
 std::string Wave::serialize() {
     /*
@@ -20,7 +18,7 @@ std::string Wave::serialize() {
 
     std::string serialized_me;
     serialized_me += "Wave," + std::to_string(quadrant) + "|";
-    for (auto pnj: pnjs){
+    for (auto pnj: pnjs) {
 
         std::string serialized_pnj = pnj->serialize();
         serialized_me += serialized_pnj;
@@ -30,7 +28,7 @@ std::string Wave::serialize() {
     return serialized_me;
 }
 
-std::vector<PNJ*> &Wave::getPnjs(){
+std::vector<PNJ *> &Wave::getPnjs() {
     return pnjs;
 }
 
@@ -41,7 +39,7 @@ int Wave::getQuadrant() const {
 bool Wave::isComplete() { return number_of_added_pnjs == number_of_pnjs && pnjs.empty(); }
 
 void Wave::removeDeadPNJs() {
-    std::vector<PNJ*>::iterator it;
+    std::vector<PNJ *>::iterator it;
     for (it = pnjs.begin(); it != pnjs.end();) {
         if ((*it)->isDead()) {
             it = pnjs.erase(it);
@@ -60,7 +58,7 @@ int Wave::getNumber_of_added_pnjs() const {
 }
 
 void Wave::addPNJ(int typeOfPnj) {
-    PNJ* pnj;
+    PNJ *pnj;
     if (typeOfPnj == 0) {
         pnj = new MexicanPNJ(quadrant);
     } else if (typeOfPnj == 1) {
@@ -83,4 +81,10 @@ Wave::~Wave() {
         delete pnj;
     }
      */
+}
+
+void Wave::freeze() {
+    for (auto &&pnj : pnjs) {
+        pnj->freeze();
+    }
 }
