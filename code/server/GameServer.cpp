@@ -135,7 +135,8 @@ void GameServer::getAndProcessUserInput(int clientSocketFd, char *buffer) {
         } else if (command_type == SEND_MESSAGE_STRING) {
             Command command;
             command.parse(buffer);
-            std::string userMessage = command.getNextToken();
+            int messageLength = command.getNextInt();
+            std::string userMessage = command.getTokenWithSize(messageLength);
             std::string senderUsername = command.getNextToken();
 
             if (!userMessage.empty() && userMessage[0] == '/'){
@@ -163,7 +164,10 @@ void GameServer::sendMessageToOtherPlayers(std::string &userMessage, std::string
 }
 
 std::string GameServer::makeMessage(const std::string &userMessage, const std::string &senderUsername) const {
-    std::string message = RECEIVE_MESSAGE_STRING + "," + userMessage + "," + senderUsername + ";";
+    std::string message = RECEIVE_MESSAGE_STRING + ","
+                          + std::to_string(userMessage.size()) + ","
+                          + userMessage + ","
+                          + senderUsername + ";";
     return message;
 }
 
