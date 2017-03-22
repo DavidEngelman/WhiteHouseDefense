@@ -3,21 +3,21 @@
 
 PNJ::PNJ(Position position, int healthPoints, int direction) :
         position(position), healthPoints(healthPoints),
-        direction(direction),damage(-1),value(-1),
+        direction(direction), damage(-1), value(-1), freezeTicksLeft(0),
         last_position(Position(-1000, -1000)) {}
 
-PNJ::PNJ(int direction) : position(Position(SIZE/2, SIZE/2)),
-                          direction(direction),
+PNJ::PNJ(int direction) : position(Position(SIZE / 2, SIZE / 2)),
+                          direction(direction), freezeTicksLeft(0),
                           last_position(Position(-1000, -1000)) {}
 
 
 PNJ::PNJ(Position position, int healthPoints, Position last_pos, int direction) :
         position(position), healthPoints(healthPoints), last_position(last_pos),
-        direction(direction),damage(-1),value(-1) {}
+        direction(direction), damage(-1), value(-1), freezeTicksLeft(0) {}
 
-Direction PNJ::get_random_direction(){
+Direction PNJ::get_random_direction() {
     Direction move;
-    int rand_mov = rand()%2;
+    int rand_mov = rand() % 2;
     if (rand_mov == 0)
         move = get_left_direction();
     else
@@ -28,6 +28,10 @@ Direction PNJ::get_random_direction(){
 }
 
 void PNJ::advance(Map &map) {
+    if (freezeTicksLeft > 0) { // The PNJ doesn't move if it's freezed
+        freezeTicksLeft -= 1;
+    }
+
     Direction move;
     Position current_position = getPosition();
 
@@ -77,7 +81,7 @@ int PNJ::receiveDamage(int damageAmount) {
     if (healthPoints < damageAmount) {
         healthPoints = 0;
         receivedDamage = healthPoints;
-    } else{
+    } else {
         healthPoints -= damageAmount;
         receivedDamage = damageAmount;
     }
@@ -100,7 +104,7 @@ void PNJ::setPosition(Position position) {
 bool PNJ::can_go_forward(Map &map) {
     Direction dir = get_forward_direction();
     Position forward_pos = Position(getPosition().getX() + dir.x, getPosition().getY() + dir.y);
-    return ( map.isPath(forward_pos) || map.isBase(forward_pos) ) && forward_pos != getLast_position();
+    return (map.isPath(forward_pos) || map.isBase(forward_pos)) && forward_pos != getLast_position();
 
 
 }
@@ -108,7 +112,7 @@ bool PNJ::can_go_forward(Map &map) {
 bool PNJ::can_go_left(Map &map) {
     Direction dir = get_left_direction();
     Position left_pos = Position(getPosition().getX() + dir.x, getPosition().getY() + dir.y);
-    return ( map.isPath(left_pos) || map.isBase(left_pos) ) && left_pos != getLast_position();
+    return (map.isPath(left_pos) || map.isBase(left_pos)) && left_pos != getLast_position();
 
 
 }
@@ -116,7 +120,7 @@ bool PNJ::can_go_left(Map &map) {
 bool PNJ::can_go_right(Map &map) {
     Direction dir = get_right_direction();
     Position right_pos = Position(getPosition().getX() + dir.x, getPosition().getY() + dir.y);
-    return ( map.isPath(right_pos) || map.isBase(right_pos) ) && right_pos != getLast_position();
+    return (map.isPath(right_pos) || map.isBase(right_pos)) && right_pos != getLast_position();
 
 
 }
@@ -124,7 +128,7 @@ bool PNJ::can_go_right(Map &map) {
 bool PNJ::can_go_backward(Map &map) {
     Direction dir = get_backward_direction();
     Position back_pos = Position(getPosition().getX() + dir.x, getPosition().getY() + dir.y);
-    return ( map.isPath(back_pos) || map.isBase(back_pos) ) && back_pos != getLast_position();
+    return (map.isPath(back_pos) || map.isBase(back_pos)) && back_pos != getLast_position();
 
 }
 
@@ -205,7 +209,7 @@ Direction PNJ::get_left_direction() {
     }
 }
 
-Direction PNJ::get_backward_direction(){
+Direction PNJ::get_backward_direction() {
     Direction move;
 
     if (getDirection() == NORTH) {
@@ -272,6 +276,10 @@ int PNJ::getValue() {
 
 const std::string &PNJ::getType() {
     return typeOfPNJ;
+}
+
+void PNJ::freeze() {
+    freezeTicksLeft = NUM_FREEZE_TICKS_FOR_PNJ;
 }
 
 

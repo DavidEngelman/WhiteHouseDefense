@@ -19,6 +19,7 @@ protected:
 	int direction;
     int damage;
 	int value;
+    int freezeTicksLeft;
 	std::string typeOfPNJ;
 	Position position;
 	Position last_position;
@@ -32,7 +33,9 @@ public:
 
     PNJ(Position position, int healthPoints, Position last_pos, int direction);
 
-    virtual ~PNJ() = 0;
+    virtual ~PNJ() = default;
+
+	void freeze();
 
 	void advance(Map& map);
 

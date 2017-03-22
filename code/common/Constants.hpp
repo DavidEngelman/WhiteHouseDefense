@@ -45,6 +45,7 @@ static const int STONE_INT = 17;
 // Constant of the pnj
 
 static const int NB_OF_TYPE_OF_PNJ = 3;
+static const int NUM_FREEZE_TICKS_FOR_PNJ = 20;
 
 static const int COMMUNIST_PNJ_STARTING_HEALTHPOINTS = 150;
 static const int COMMUNIST_PNJ_VALUE = 15;
