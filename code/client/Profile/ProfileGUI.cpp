@@ -71,6 +71,7 @@ void ProfileGUI::display() {
     ///----------USERNAME----------
 
     usernameT = new QString;
+    iconT = new QString;
 
     *usernameT = QString::fromStdString("Benjamin"); //profileManager->getUsername()
 
@@ -138,11 +139,14 @@ void ProfileGUI::display() {
 
     mainLayout->addLayout(topLayout);
     mainLayout->addWidget(userNameLabel);
+    mainLayout->addWidget(iconLabel);
     mainLayout->addLayout(statsLayout);
 
 
     mainLayout->setAlignment(topLayout, Qt::AlignTop);
     mainLayout->setAlignment(userNameLabel, Qt::AlignHCenter|Qt::AlignTop);
+    mainLayout->setAlignment(iconLabel, Qt::AlignHCenter|Qt::AlignTop);
+
 
     mainLayout->setStretch(1,1);
 
@@ -160,9 +164,11 @@ void ProfileGUI::updateProfile() {
     *NPCKilledT = QString::fromStdString("NPC killed: " + std::to_string(profileManager->getNPCKilled()));
     *iconT =  QString::fromStdString("../../qt_ui/game_pictures/icons/" + std::to_string(profileManager->getIconID()) + ".jpg");
 
+
     userNameLabel->setText(*usernameT);
     victoriesLabel->setText(*victoriesT);
     NPCKilledLabel->setText(*NPCKilledT);
+    iconLabel->setPixmap(QPixmap(*iconT));
 }
 
 void ProfileGUI::showUser() {

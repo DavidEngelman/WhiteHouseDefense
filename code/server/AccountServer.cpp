@@ -340,6 +340,7 @@ bool AccountServer::handle_profile(int client_sock_fd, std::string username) {
     + profile.defeats + "," + profile.pnjKilled + "," + profile.iconID + ";";
 
     send_message(client_sock_fd,stringProfile.c_str());
+    std::cout << stringProfile << std::endl;
     return true;
 }
 
