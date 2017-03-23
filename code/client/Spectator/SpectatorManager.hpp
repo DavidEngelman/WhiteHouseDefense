@@ -7,7 +7,7 @@
 #include "../../common/Other/Strings.hpp"
 #include "../Game/GameInfo.hpp"
 #include "../Main/MainManager.hpp"
-//#include "../Game/GameManager.hpp"
+#include "../Game/GameManager.hpp"
 #include "SpectatorUI.hpp"
 
 class SpectatorUI;

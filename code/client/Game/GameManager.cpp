@@ -48,6 +48,10 @@ GameManager::GameManager(int socket, bool _isSupporter, App *app) :
 
     quadrant = getQuadrantFromServer();
     getInitialGameStateFromServer();
+
+    timer = new QTimer();
+    QObject::connect(timer, SIGNAL(timeout()), this, SLOT(updateMap()));
+    timer->start(10);
 }
 
 void GameManager::comeBackToMenu() { // À appeler quand la partie est terminée
@@ -533,7 +537,7 @@ int GameManager::getQuadrant() {
 
 bool GameManager::placeGunTower(Position towerPos) {
     if (checkValidity(towerPos, gameState, GUN_TOWER_STR)) {
-        gameState.addTower(new GunTower(Position(towerPos.getX(), towerPos.getY()), 1), quadrant);
+        //gameState.addTower(new GunTower(Position(towerPos.getX(), towerPos.getY()), 1), quadrant);
         sendBuyRequest(towerPos, GUN_TOWER_STR);
         return true;
     }
@@ -543,7 +547,7 @@ bool GameManager::placeGunTower(Position towerPos) {
 
 bool GameManager::placeSniperTower(Position towerPos) {
     if (checkValidity(towerPos, gameState, SNIPER_TOWER_STR)) {
-        gameState.addTower(new SniperTower(Position(towerPos.getX(), towerPos.getY()),1), quadrant);
+        //gameState.addTower(new SniperTower(Position(towerPos.getX(), towerPos.getY()),1), quadrant);
         sendBuyRequest(towerPos, SNIPER_TOWER_STR);
         return true;
     }
@@ -553,7 +557,7 @@ bool GameManager::placeSniperTower(Position towerPos) {
 
 bool GameManager::placeShockTower(Position towerPos) {
     if (checkValidity(towerPos, gameState, SHOCK_TOWER_STR)) {
-        gameState.addTower(new ShockTower(Position(towerPos.getX(), towerPos.getY()),1), quadrant);
+        //gameState.addTower(new ShockTower(Position(towerPos.getX(), towerPos.getY()),1), quadrant);
         sendBuyRequest(towerPos, SHOCK_TOWER_STR);
         return true;
     }
@@ -563,7 +567,7 @@ bool GameManager::placeShockTower(Position towerPos) {
 
 bool GameManager::placeMissileTower(Position towerPos) {
     if (checkValidity(towerPos, gameState, MISSILE_TOWER_STR)) {
-        gameState.addTower(new MissileTower(Position(towerPos.getX(), towerPos.getY()),1), quadrant);
+        //gameState.addTower(new MissileTower(Position(towerPos.getX(), towerPos.getY()),1), quadrant);
         sendBuyRequest(towerPos, MISSILE_TOWER_STR);
         return true;
     }
@@ -573,7 +577,7 @@ bool GameManager::placeMissileTower(Position towerPos) {
 
 bool GameManager::sellTower(Position toSell) {
     if (isTowerInPosition(getGameState(), toSell)) {
-        gameState.deleteTower(toSell, quadrant);
+        //gameState.deleteTower(toSell, quadrant);
         sendSellRequest(toSell);
         return true;
     }

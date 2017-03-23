@@ -45,7 +45,17 @@ void GameServer::runGame() {
         if (!DEBUG) {
             gameEngine->getTimerSinceGameStart().pause(); // peut etre faire ca juste en mode contre la montre
             sendTowerPhase();
-            sleep(NUM_SECONDS_TO_PLACE_TOWER);
+            Timer timer;
+            timer.start();
+            Timer sendTimer;
+            sendTimer.start();
+            while (timer.elapsedTimeInSeconds() < NUM_SECONDS_TO_PLACE_TOWER) {
+                while(sendTimer.elapsedTimeInMiliseconds() < INTERVAL_BETWEEN_SENDS_IN_MS) {
+                    usleep(100);
+                }
+                sendGameStateToPlayers();
+                sendTimer.reset();
+            }
             gameEngine->getTimerSinceGameStart().resume(); // peut etre faire ca juste en mode contre la montre
             sendWavePhase();
         }
@@ -67,13 +77,7 @@ void GameServer::runWave() {
             isWaveFinished = gameEngine->update();
             usleep(100); // Pour eviter d'appeller update des tonnes de fois par tick. C'est en microsecondes
         }
-
-        if (DEBUG) {
-            gameEngine->showMap();
-            // TODO: updateMap()
-        } else {
-            sendGameStateToPlayers();
-        }
+        sendGameStateToPlayers();
         timer.reset();
     }
 }

@@ -91,8 +91,6 @@ private:
 
     QGroupBox *supporterActionBox;
 
-    QGroupBox *endGameChatBox;
-
     QPushButton *backToMenu;
 
     bool isSupporterMode;
@@ -128,6 +126,8 @@ public:
     void disableTowerShop();
     void enableTowerShop();
 
+    bool getIsSupporterMode() const;
+
     void displayDeleteAndUpgradeBox();
 
     void addChatMessage(const std::string &message, const std::string &sender) override;
@@ -158,8 +158,6 @@ public:
     void setUpStatsLayout(GameState &gameState);
 
     void setUpChartBox(GameState &gameState);
-
-    void setUpEndGameChatBox();
 
     void enableFreezeSpell() override ;
 

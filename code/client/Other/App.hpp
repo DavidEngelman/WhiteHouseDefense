@@ -63,6 +63,8 @@ public:
     virtual void setMusicFromPath(QString musicPath);
 
     virtual void centerWindow();
+
+    void launchSupporter(int gameServerSocket);
 };
 
 

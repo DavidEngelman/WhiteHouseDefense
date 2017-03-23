@@ -5,7 +5,6 @@
 #include <QtWidgets/QGroupBox>
 #include "GameGUI.hpp"
 #include "../Other/MapGUI.hpp"
-#define  CHART_SIZE 600
 
 GameGUI::GameGUI(bool isSupporter, unsigned seed, GameManager *manager) : AbstractGUI(nullptr), GameUI(seed, manager),
                                                                           isSupporterMode(isSupporter) {
@@ -516,7 +515,6 @@ void GameGUI::setUpWinnerLooserBox(GameState &gameState) {
 void GameGUI::setUpStatsLayout(GameState &gameState) {
     statsLayout = new QHBoxLayout;
     setUpChartBox(gameState);
-    setUpEndGameChatBox();
     endOfGameLayout->addLayout(statsLayout);
 }
 
@@ -556,7 +554,6 @@ void GameGUI::setUpChartBox(GameState& gameState) {
 
     chartView1 = new QChartView(chart1);
     chartView1->setRenderHint(QPainter::Antialiasing);
-    chartView1->setFixedWidth(CHART_SIZE);
 
     chartLayout->addWidget(chartView1, 0, 0);
 
@@ -590,7 +587,6 @@ void GameGUI::setUpChartBox(GameState& gameState) {
 
     chartView2 = new QChartView(chart2);
     chartView2->setRenderHint(QPainter::Antialiasing);
-    chartView2->setFixedWidth(CHART_SIZE);
 
     chartLayout->addWidget(chartView2, 0, 1);
 
@@ -621,7 +617,6 @@ void GameGUI::setUpChartBox(GameState& gameState) {
 
     chartView3 = new QChartView(chart3);
     chartView3->setRenderHint(QPainter::Antialiasing);
-    chartView3->setFixedWidth(CHART_SIZE);
 
     chartLayout->addWidget(chartView3, 1, 0);
 
@@ -652,7 +647,6 @@ void GameGUI::setUpChartBox(GameState& gameState) {
 
     chartView4 = new QChartView(chart4);
     chartView4->setRenderHint(QPainter::Antialiasing);
-    chartView4->setFixedWidth(CHART_SIZE);
 
     chartLayout->addWidget(chartView4, 1, 1);
 
@@ -663,15 +657,6 @@ void GameGUI::setUpChartBox(GameState& gameState) {
 
 }
 
-void GameGUI::setUpEndGameChatBox() {
-
-    endGameChatBox = new QGroupBox();
-    InGameChatWidget *  endGameChatWidget = new InGameChatWidget(manager);
-    QHBoxLayout *chatLayout = new QHBoxLayout;
-    chatLayout->addWidget(endGameChatWidget);
-    endGameChatBox->setLayout(chatLayout);
-    statsLayout->addWidget(endGameChatBox);
-}
 
 //////////// SUPPORTER UI PART //////////////////////
 
@@ -716,6 +701,10 @@ void GameGUI::goToMenu() {
     std::cout << "Close and DeleteLater of the endGameWidget done" << std::endl;
     manager->comeBackToMenu();
 
+}
+
+bool GameGUI::getIsSupporterMode() const {
+    return isSupporterMode;
 }
 
 
