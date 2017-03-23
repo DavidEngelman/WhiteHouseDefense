@@ -16,8 +16,6 @@ public:
 
     virtual std::string serialize() override;
 
-    PNJ* get_closest_pnj(Wave& wave);
-
     std::string getType() override;
 };
 

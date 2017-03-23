@@ -4,7 +4,8 @@
 #include <iostream>
 
 ShockTower::ShockTower(const Position &position, int level) :
-        AttackTower(position, SHOCK_TOWER_DAMAGE, SHOCK_TOWER_PRICE, SHOCK_TOWER_RANGE, level) {}
+        AttackTower::AttackTower(SHOCK_TOWER_DAMAGE),
+        AbstractTower::AbstractTower(position, SHOCK_TOWER_PRICE, SHOCK_TOWER_RANGE, level) {}
 
 const std::vector<PNJ*> ShockTower::shoot(Wave &wave, PlayerState& playerState) {
     std::vector<PNJ*> targets;

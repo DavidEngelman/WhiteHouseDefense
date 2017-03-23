@@ -28,3 +28,5 @@ PNJ* OneTargetTower::getClosestPNJ(Wave &wave) {
 
     return closest_pnj;
 }
+
+OneTargetTower::OneTargetTower() : AbstractTower(Position(0, 0), 0, 0, 0) {}

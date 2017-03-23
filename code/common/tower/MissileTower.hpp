@@ -21,8 +21,6 @@ public:
 
     std::string getType() override;
 
-    PNJ *get_closest_pnj(Wave &wave);
-
     void dealDamageToSubTargets(PNJ &target, PlayerState &playerState);
 };
 

@@ -11,3 +11,5 @@ void AttackTower::dealDamageTo(PNJ &target, PlayerState& playerState) {
     target.receiveDamage(damage);
     playerState.incrDamageDealt(damage);
 }
+
+AttackTower::AttackTower(int damage) : AbstractTower(Position(0, 0), 0, 0, 0), damage(damage) {}

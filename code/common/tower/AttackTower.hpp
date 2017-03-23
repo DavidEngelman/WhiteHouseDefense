@@ -12,6 +12,7 @@ class AttackTower : public virtual AbstractTower {
 public:
 
     AttackTower(Position position, int damage, int price, float range, int level);
+    AttackTower(int damage);
 
     ~AttackTower() = default;
 

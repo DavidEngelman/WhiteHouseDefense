@@ -4,8 +4,9 @@
 #include <cmath>
 
 GunTower::GunTower(const Position &position, int level) :
-        AttackTower::AttackTower(position, GUN_TOWER_DAMAGE, GUN_TOWER_PRICE, GUN_TOWER_RANGE, level),
-        OneTargetTower::OneTargetTower(position, GUN_TOWER_PRICE, GUN_TOWER_RANGE, level) {}
+        OneTargetTower::OneTargetTower(),
+        AttackTower::AttackTower(GUN_TOWER_DAMAGE),
+        AbstractTower::AbstractTower(position, GUN_TOWER_PRICE, GUN_TOWER_RANGE, level) {}
 
 const std::vector<PNJ *> GunTower::shoot(Wave &wave, PlayerState& playerState) {
     PNJ *target;
