@@ -58,9 +58,13 @@ GameGUI::GameGUI(bool isSupporter, unsigned seed, GameManager *manager) : Abstra
     map = new MapGUI(seed, this, centralLayout);
     centralLayout->addStretch();
 
-    // TODO: ads
-//    QImage image = new QImage("../../qt_ui/game_pictures/ads/steaks.jpg");
-
+    QPixmap * adImage = new QPixmap("../../qt_ui/game_pictures/ads/steaks.jpg");
+    QLabel * imageLabel = new QLabel();
+    // MAYBE: DYNAMIC CAST??
+    imageLabel->setScaledContents(true);
+    imageLabel->setMaximumSize((static_cast<MapGUI*> (map))->width(), 80);
+    imageLabel->setPixmap(*adImage);
+    centralLayout->addWidget(imageLabel);
 
     otherPlayerHealthBarBox = new QGroupBox;
     setUpOtherPlayerHealthBar();
@@ -76,8 +80,8 @@ GameGUI::GameGUI(bool isSupporter, unsigned seed, GameManager *manager) : Abstra
     this->setLayout(mainLayout);
     //playerInfo->setLayout(playerInfoLayout);
 
-    //this->showMaximized();
-    this->showFullScreen();
+    this->showMaximized();
+//    this->showFullScreen();
 
 
 }
