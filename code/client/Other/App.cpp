@@ -42,21 +42,6 @@ void App::setUsername(std::string name) {
     username = name;
 }
 
-App::~App() {
-    // Si le joeur est connecté, on envoye un message de deconnexion au AccountServer
-    // et si il est dans un queue du matchmaking, on sort de la queue
-
-    if (username != "") {
-        if (matchMakingThread != nullptr){
-            leaveQueue();
-        }
-
-        int socket = init_connection_to_server(serverIpAddress, ACCOUNT_SERVER_PORT);
-        std::string message = "Exit," + std::to_string(playerId) + ";";
-        send_message(socket, message.c_str());
-    }
-}
-
 void App::launchMatchmaking(std::string mode) {
     is_in_queue = true;
     matchMakingThread = new QMatchMakingThread(mode, getId(), getIp(), getUsername(), this);
@@ -113,4 +98,20 @@ void App::setMusicFromPath(QString musicPath) {
 
 void App::centerWindow() {
     mainWindow->move(QApplication::desktop()->screen()->rect().center() - mainWindow->rect().center());
+}
+
+App::~App() {
+    // Si le joeur est connecté, on envoye un message de deconnexion au AccountServer
+    // et si il est dans un queue du matchmaking, on sort de la queue
+
+    if (username != "") {
+        if (matchMakingThread != nullptr){
+            leaveQueue();
+        }
+
+        int socket = init_connection_to_server(serverIpAddress, ACCOUNT_SERVER_PORT);
+        std::string message = "Exit," + std::to_string(playerId) + ";";
+        send_message(socket, message.c_str());
+    }
+    std::cout << "App deleted" << std::endl;
 }

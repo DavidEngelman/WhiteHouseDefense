@@ -52,8 +52,6 @@ void MainManager::handleUserMenuChoice() {
             master_app->transition(settingsManager);
             break;
         } default: {
-            std::string message = "Exit," + std::to_string(master_app->getId());
-            send_message(server_socket, message.c_str());
             break;
         }
     }
