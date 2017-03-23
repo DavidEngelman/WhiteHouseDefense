@@ -36,7 +36,7 @@ public:
     ~MainGUI() { close(); };
     void display() override;
     void displayGameModesMenu() override;
-    void showInQueue();
+    void showInQueue() override;
 
 public slots:
     void handleMenuChoice(int choice);

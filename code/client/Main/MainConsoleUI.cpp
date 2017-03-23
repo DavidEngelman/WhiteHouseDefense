@@ -71,6 +71,18 @@ void MainConsoleUI::displayGameModeChoices() const {
     std::cout << "   ======================================   " << std::endl;
 }
 
+void MainConsoleUI::showInQueue() {
+    int dummy;
+    std::cout << "In queue..." << std::endl;
+    std::cout << "Press any letter and enter to leave the queue" << std::endl;
+    std::cin.clear();
+    std::cin.ignore();
+    std::cin>>dummy;
+    manager->leaveQueue();
+    manager->run();
+
+}
+
 
 
 

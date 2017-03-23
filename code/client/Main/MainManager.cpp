@@ -64,6 +64,7 @@ void MainManager::handleGameModeChoice() {
     if (choice != 3) { /* Un des 3 modes de jeu */
         std::string gameMode = gameModes[choice];
         master_app->launchMatchmaking(gameMode);
+        mainUI->showInQueue();
     } else { /* Retour au menu principal */
         // TODO: close previous window
         run();

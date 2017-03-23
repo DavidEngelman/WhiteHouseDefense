@@ -15,6 +15,8 @@ public:
 
     void displayGameModeChoices() const;
     void displayMenuChoices() const;
+
+    void showInQueue() override;
 };
 
 #endif

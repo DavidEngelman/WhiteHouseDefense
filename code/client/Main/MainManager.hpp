@@ -5,7 +5,6 @@
 #include "../Abstract/AbstractManager.hpp"
 #include "../Abstract/AbstractUI.hpp"
 #include "../Other/App.hpp"
-#include "MainUI.hpp"
 
 class MainUI;
 class MainManager : public NetworkedManager {
