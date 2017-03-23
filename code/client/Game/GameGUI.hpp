@@ -91,8 +91,6 @@ private:
 
     QGroupBox *supporterActionBox;
 
-    QGroupBox *endGameChatBox;
-
     QPushButton *backToMenu;
 
     bool isSupporterMode;
@@ -158,8 +156,6 @@ public:
     void setUpStatsLayout(GameState &gameState);
 
     void setUpChartBox(GameState &gameState);
-
-    void setUpEndGameChatBox();
 
     void enableFreezeSpell() override ;
 
