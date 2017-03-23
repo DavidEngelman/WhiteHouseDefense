@@ -274,12 +274,12 @@ void GameGUI::displayDeleteAndUpgradeBox() {
     int scl = 10;
     QSize size = QSize(1400/scl, 1060/scl);
 
-    deleteTowerB = new QPushButton;
+    deleteTowerB = new QHandPointerButton;
     deleteTowerB->setEnabled(false);
     deleteTowerB->setIcon(QIcon("../../qt_ui/game_pictures/towers/sell.png"));
     deleteTowerB->setIconSize(size);
 
-    upgradeTowerB = new QPushButton;
+    upgradeTowerB = new QHandPointerButton;
     upgradeTowerB->setEnabled(false);
     upgradeTowerB->setIcon(QIcon("../../qt_ui/game_pictures/towers/upgrade.png"));
     upgradeTowerB->setIconSize(size);
@@ -357,17 +357,17 @@ void GameGUI::displaySpellBox() {
     int scl = 10;
     QSize size = QSize(1400/scl, 1060/scl);
 
-    nukeB = new QPushButton;
+    nukeB = new QHandPointerButton;
     nukeB->setEnabled(false);
     nukeB->setIcon(QIcon("../../qt_ui/game_pictures/spells/trumpnuclear.png"));
     nukeB->setIconSize(size);
 
-    freezeB = new QPushButton;
+    freezeB = new QHandPointerButton;
     freezeB->setEnabled(false);
     freezeB->setIcon(QIcon("../../qt_ui/game_pictures/spells/frozentrump.png"));
     freezeB->setIconSize(size);
 
-    airStrikeB = new QPushButton;
+    airStrikeB = new QHandPointerButton;
     airStrikeB->setEnabled(false);
     airStrikeB->setIcon(QIcon("../../qt_ui/game_pictures/spells/airStrike.jpg"));
     airStrikeB->setIconSize(size);
@@ -511,7 +511,7 @@ void GameGUI::setUpEndOfGameLayout(GameState &gameState) {
     endOfGameLayout = new QVBoxLayout;
     setUpWinnerLooserBox(gameState);
     setUpStatsLayout(gameState);
-    backToMenu = new QPushButton(QString::fromStdString("Back to menu"));
+    backToMenu = new QHandPointerButton(QString::fromStdString("Back to menu"));
     endOfGameLayout->addWidget(backToMenu);
     endOfGameLayout->setAlignment(backToMenu, Qt::AlignCenter);
     QObject::connect(backToMenu, SIGNAL(clicked()), this, SLOT(goToMenu()));
@@ -730,7 +730,7 @@ void GameGUI::displaySupporterActionBox() {
     int scl = 10;
     QSize size = QSize(1400/scl, 1060/scl);
 
-    adSpellB = new QPushButton;
+    adSpellB = new QHandPointerButton;
     adSpellB->setIcon(QIcon("../../qt_ui/game_pictures/towers/missiletower.png"));
     adSpellB->setIconSize(size);
     adSpellB->setEnabled(true);
