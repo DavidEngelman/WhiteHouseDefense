@@ -1,11 +1,10 @@
 #ifndef MAINMANAGER_HPP
 #define MAINMANAGER_HPP
 
-#include "../NetworkedManager.hpp"
+#include "../Other/NetworkedManager.hpp"
 #include "../Abstract/AbstractManager.hpp"
 #include "../Abstract/AbstractUI.hpp"
-#include "../App.hpp"
-#include "MainUI.hpp"
+#include "../Other/App.hpp"
 
 class MainUI;
 class MainManager : public NetworkedManager {
@@ -24,6 +23,7 @@ public:
 	bool isInQueue();
 
 	void leaveQueue();
+
 };
 
 #endif

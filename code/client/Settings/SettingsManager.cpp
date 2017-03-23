@@ -1,9 +1,12 @@
 #include "SettingsManager.hpp"
 #include "SettingsGUI.hpp"
 #include "SettingsConsoleUI.hpp"
+#include "../../common/Other/Strings.hpp"
+#include "../../common/Other/Tools.hpp"
+#include "../../common/Other/Constants.hpp"
 
 SettingsManager::SettingsManager (int port, App *my_app) :
-        NetworkedManager(port, my_app), username("Loading..."), password("Loading..."), iconName("Loading...") {
+        NetworkedManager(port, my_app) {
     if (!isConsole) {
         settingsUI = new SettingsGUI(this, master_app->getMainWindow());
     } else {
@@ -18,20 +21,19 @@ void SettingsManager::run() {
 
 bool SettingsManager::changeUsername(std::string newUsername){
     if (newUsername.size() < 1 || newUsername.size() > 16){
-        std::cout << "oups" << std::endl;
         return false;
     }
     char server_response[10];
     std::string message = CHANGE_USERNAME + ',' + std::to_string(master_app->getId()) + ',' + newUsername + ';';
     send_message(server_socket, message.c_str());
     receive_message(server_socket, server_response);
-    std::cout << server_response << std::endl;
+    master_app->setUsername(newUsername); //important
     return server_response[0] == '1';
 
 }
 
 bool SettingsManager::changePassword(std::string newPassword){
-    if (newPassword.size() > 1){
+    if (newPassword.size() < 1){
         return false;
     }
     newPassword = cryptPassword(newPassword);
@@ -50,12 +52,6 @@ void SettingsManager::changePlayerIcon(std::string newIconName){
 void SettingsManager::goToMainMenu() {
     MainManager * mainManager = new MainManager(ACCOUNT_SERVER_PORT, master_app);
     master_app->transition(mainManager);
-}
-
-void SettingsManager::comeBackToMainMenu() {
-    MainManager *mainManager = new MainManager(ACCOUNT_SERVER_PORT, master_app);
-    master_app->transition(mainManager);
-
 }
 
 SettingsManager::~SettingsManager() {

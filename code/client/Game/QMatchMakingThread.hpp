@@ -5,9 +5,9 @@
 #include <QtCore/QThread>
 #include <assert.h>
 #include <iostream>
-#include "../../common/Networking.hpp"
-#include "../../common/Strings.hpp"
-#include "../../common/Constants.hpp"
+#include "../../common/Other/Networking.hpp"
+#include "../../common/Other/Strings.hpp"
+#include "../../common/Other/Constants.hpp"
 
 class QMatchMakingThread : public QThread {
 Q_OBJECT
@@ -41,7 +41,7 @@ public:
 
         receive_message(serverSocket, server_response);
         // Si App a appellé quitMatchmaking, le flag abort vaut True et le run sort du receive.
-        // Alors, si le flag abort est True, on doit annuler le matchmaking et quitter le thread.
+        // Alors, on doit annuler le matchmaking et quitter le thread.
         // On fait donc return, pour que le run finisse et le thread soit terminé
         if (abort) return;
 

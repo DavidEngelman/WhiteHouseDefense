@@ -7,13 +7,16 @@
 #include "MainGUI.hpp"
 #include "MainConsoleUI.hpp"
 #include "../Settings/SettingsManager.hpp"
+#include "../../common/Other/Constants.hpp"
 
 const static std::string gameModes[3] = {CLASSIC_MODE, TIMED_MODE, TEAM_MODE};
 
 MainManager::MainManager(int port, App *my_app) :
         NetworkedManager(port, my_app) {
     if (!isConsole) {
+        std::cout << "Building GUI" << std::endl;
         mainUI = new MainGUI(this, master_app->getMainWindow());
+        master_app->getMainWindow()->setFixedSize(1000,600);
     } else {
         mainUI = new MainConsoleUI(this);
     }
@@ -49,8 +52,6 @@ void MainManager::handleUserMenuChoice() {
             master_app->transition(settingsManager);
             break;
         } default: {
-            std::string message = "Exit," + std::to_string(master_app->getId());
-            send_message(server_socket, message.c_str());
             break;
         }
     }
@@ -62,11 +63,9 @@ void MainManager::handleGameModeChoice() {
 
     if (choice != 3) { /* Un des 3 modes de jeu */
         std::string gameMode = gameModes[choice];
-//        GameLauncher *game = new GameLauncher(MATCHMAKER_SERVER_PORT, master_app, gameMode);
-//        master_app->launchMatchmaking(game);
         master_app->launchMatchmaking(gameMode);
+        mainUI->showInQueue();
     } else { /* Retour au menu principal */
-        // TODO: close previous window
         run();
     }
 }

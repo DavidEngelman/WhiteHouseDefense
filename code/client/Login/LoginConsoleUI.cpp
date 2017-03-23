@@ -2,8 +2,7 @@
 
 #include <termios.h>
 #include "LoginConsoleUI.hpp"
-#include "../Drawing.hpp"
-#include "unistd.h"
+#include "../Other/Drawing.hpp"
 
 void LoginConsoleUI::ask_username() {
     std::cout << "   Enter your username:" << std::endl << "   ";

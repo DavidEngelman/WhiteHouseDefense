@@ -1,15 +1,15 @@
 #ifndef GAMEMANAGER_HPP
 #define GAMEMANAGER_HPP
 
-#include "../../common/GameState.hpp"
+#include "../../common/Gamestate/GameState.hpp"
 #include "GameUI.hpp"
-#include "../NetworkedManager.hpp"
+#include "../Other/NetworkedManager.hpp"
 #include "GameManager.hpp"
-#include "../../common/Networking.hpp"
+#include "../../common/Other/Networking.hpp"
 #include "../Main/MainManager.hpp"
-#include "../../common/GunTower.hpp"
-#include "../../common/SniperTower.hpp"
-#include "../../common/ShockTower.hpp"
+#include "../../common/Tower/GunTower.hpp"
+#include "../../common/Tower/SniperTower.hpp"
+#include "../../common/Tower/ShockTower.hpp"
 #include <cstdlib>
 #include <cctype>
 #include <pthread.h>
@@ -17,19 +17,23 @@
 
 class GameUI;
 
-class GameManager : public AbstractManager{
+class GameManager : public QObject, public AbstractManager{
+
+    Q_OBJECT
 
 private:
     int counter = 0;
     int server_socket;
     bool runningThread = false;
-    pthread_t thr;
-    int inputThread;
+    QTimer * timer;
+
     GameState gameState;
     GameUI *gameUI;
     int quadrant;
     bool isSupporter;
-    bool nukeSpell = true;
+    bool nukeSpellAvailable = true;
+    bool freezeSpellAvailable = true;
+
 
     unsigned int getMapSeedFromServer() const;
     void unSerializeGameState(char* seriarlizedGamestate);
@@ -41,8 +45,6 @@ private:
     void unSerializeWave(std::string serialized_wave);
     void unSerializePNJ(std::string serialized_pnj, Wave* wave);
 
-    void comeBackToMenu();
-    bool is_alive();
     bool checkValidity(Position towerPos, GameState& gamestate, std::string typeOfTower);
 
     void sendBuyRequest(Position towerPos, std::string towerType);
@@ -70,7 +72,7 @@ public:
 
     bool sellTower(Position toSell);
 
-    void updateMap();
+    //void updateMap();
 
     void sendMessageToPlayers(const std::string &message);
 
@@ -85,6 +87,32 @@ public:
     void nuclearBombSpell();
 
     void sendNuclearRequest();
+
+    bool placeMissileTower(Position towerPos);
+
+    void comeBackToMenu();
+
+    bool isAlive();
+
+    bool isNukeSpellAvailable() const;
+
+    bool isFreezeSpellAvailable() const;
+
+    ~GameManager();
+
+public slots:
+    void updateMap();
+
+    void launchFreezeSpell();
+
+    void sendFreezeSpellRequest();
+
+
+    std::string getWinner();
+
+    void launchAdSpell();
+
+    void sendAdSpellRequest();
 };
 
 #endif

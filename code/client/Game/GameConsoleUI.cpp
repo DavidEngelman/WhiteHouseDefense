@@ -1,9 +1,9 @@
 #include "GameConsoleUI.hpp"
 
-#include "../../common/Tools.hpp"
+#include "../../common/Other/Tools.hpp"
 
 
-GameConsoleUI::GameConsoleUI(unsigned seed, GameManager *manager) : GameUI(seed, manager) {}
+GameConsoleUI::GameConsoleUI(bool isSupporter, unsigned seed, GameManager *manager) : GameUI(isSupporter, seed, manager) {}
 
 
 Position GameConsoleUI::getPosBuyingTower() {
@@ -71,6 +71,18 @@ Position GameConsoleUI::getPosUpgradeTower() {
 
 
 void GameConsoleUI::displayPlayerInfos(GameState &gameState, int quadrant) {
+    if (!isSupporter()) {
+        if (manager->isAlive()) {
+            displayPlayerInfos(gameState, quadrant);
+        } else {
+            displayDeadMessage();
+        }
+    } else {
+        displayInfoForSupporter(gameState, 0);
+    }
+}
+
+void GameConsoleUI::displayCurrentPlayerInfo(GameState &gameState, int quadrant) {
     int gold = gameState.getPlayerStates()[quadrant].getMoney();
     int pnj_killed = gameState.getPlayerStates()[quadrant].getPnjKilled();
     int hp = gameState.getPlayerStates()[quadrant].getHp();
@@ -85,7 +97,7 @@ void GameConsoleUI::displayPlayerInfos(GameState &gameState, int quadrant) {
 }
 
 
-void GameConsoleUI::displayInfoForSupporter(GameState &gameState) {
+void GameConsoleUI::displayInfoForSupporter(GameState &gameState, int quadrant) {
     std::string infos;
     int i = 0;
     for (PlayerState &ps : gameState.getPlayerStates()) {
@@ -116,10 +128,11 @@ void GameConsoleUI::displayTowerShop() {
     std::cout << "1. GunTower : " << std::to_string(GUN_TOWER_PRICE) << " $ " << std::endl;
     std::cout << "2. SniperTower : " << std::to_string(SNIPER_TOWER_PRICE) << " $ " << std::endl;
     std::cout << "3. ShockTower : " << std::to_string(SHOCK_TOWER_PRICE) << " $ " << std::endl;
+    std::cout << "4. MissileTower : " << std::to_string(MISSILE_TOWER_PRICE) << " $ " << std::endl;
     std::cout << std::endl;
 }
 
-int GameConsoleUI::getChoice(int maxValue = 3) {
+int GameConsoleUI::getChoice(int maxValue) {
     /* Ask at the user his choice */
     int x = -1;
     std::cout << "   Enter your choice: ";
@@ -135,7 +148,7 @@ int GameConsoleUI::getChoice(int maxValue = 3) {
     return x;
 }
 
-void GameConsoleUI::displayGameOver(GameState &gamestate) {
+void GameConsoleUI::displayGameOverAndStats(GameState &gamestate) {
 
     Drawing::drawWhiteHouse("END GAME STATS");
 
@@ -148,12 +161,15 @@ void GameConsoleUI::displayGameOver(GameState &gamestate) {
         std::cout << winner_or_loser << std::endl;
     }
 
+    // TODO: show stats
+
     int dummy;
     std::cin.clear();
     std::cin.ignore();
     std::cout << "\nEnter something and press Enter to come back in the main menu..." << std::endl;
     std::cin >> dummy;
 
+    manager->comeBackToMenu();
 }
 
 
@@ -167,7 +183,7 @@ void GameConsoleUI::displayPlayersPlacingTowersMessage() {
 
 int GameConsoleUI::getTowerTypeChoice() {
     displayTowerShop();
-    return getChoice();
+    return getChoice(NB_OF_TYPE_OF_TOWER);
 }
 
 Position GameConsoleUI::getPositionOfTowerPlacement() {
@@ -183,8 +199,10 @@ void GameConsoleUI::placeTowerAction() {
         manager->placeGunTower(towerPos);
     } else if (towerChoice == 2) {
         manager->placeSniperTower(towerPos);
-    } else {
+    } else if (towerChoice == 3) {
         manager->placeShockTower(towerPos);
+    } else {
+        manager->placeMissileTower(towerPos);
     }
 }
 
@@ -205,9 +223,7 @@ void *GameConsoleUI::input_thread() {
         int choice = getChoice(4);
         std::cout << "Choice: " << choice << std::endl;
         display(manager->getGameState(), manager->getQuadrant());
-        std::cout << "lele" << std::endl;
         displayPlayerInfos(manager->getGameState(), manager->getQuadrant());
-        std::cout << "lili" << std::endl;
 
         if (choice == 1) {
             placeTowerAction();
@@ -249,6 +265,50 @@ void GameConsoleUI::displayPredefinedMessages() {
     std::cout << "2. " << MESSAGES[1] << std::endl;
     std::cout << "3. " << MESSAGES[2] << std::endl;
     std::cout << std::endl;
+}
+
+void GameConsoleUI::disableFreezeSpell() {
+
+}
+
+void GameConsoleUI::enableFreezeSpell() {
+
 };
+
+void GameConsoleUI::enableSpells() {}
+void GameConsoleUI::disableSpells() {}
+
+void GameConsoleUI::handlePlaceTowerPhaseStart() {
+    if (manager->isAlive() && !isSupporter()) {
+        inputThread = pthread_create(&thr, NULL, &GameConsoleUI::staticInputThread, this);
+    } else {
+        // TODO: Decouvrir pourquoi est-ce qu'il y a ce display
+        display(manager->getGameState(), manager->getQuadrant());
+
+        /* WTF??? Je n'arrive pas à trouver pourquoi est-ce qu'on a mis cet if
+        if (is_alive() && !isSupporter) {
+            inputThread = pthread_create(&thr, NULL, &GameConsoleUI::staticInputThread, gameUI);
+        } else {
+            gameUI->display(gameState, quadrant);
+        }
+        */
+
+        if (isSupporter()) {
+            displayPlayersPlacingTowersMessage();
+        } else {
+            displayDeadMessage();
+        }
+    }
+}
+
+void GameConsoleUI::handleWaveStart() {
+    if (!isSupporter()) {
+        inputThread = pthread_cancel(thr);
+    }
+}
+
+
+
+void GameConsoleUI::adPopUp() {}
 
 

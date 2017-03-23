@@ -5,7 +5,7 @@
 #include <QtWidgets/QWidget>
 #include <iostream>
 #include "AbstractUI.hpp"
-#include "../App.hpp"
+#include "../Other/App.hpp"
 
 class AbstractGUI : public QWidget, public virtual AbstractUI {
 
@@ -26,8 +26,6 @@ public:
     virtual void setStylesheetFromPath(QString stylesheetPath);
 
     virtual void setBackgroundFromPath(QString backgroundPath);
-
-    virtual void setMusicFromPath(QString musicPath);
 };
 
 

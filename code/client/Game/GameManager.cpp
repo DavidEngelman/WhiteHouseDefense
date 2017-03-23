@@ -1,75 +1,78 @@
 
 
 #include "GameManager.hpp"
-#include "../../server/Server.hpp"
 #include "GameGUI.hpp"
 #include "GameConsoleUI.hpp"
-#include "../../common/Command.hpp"
+#include "../../common/Npc/MexicanPNJ.h"
+#include "../../common/Npc/CommunistPNJ.h"
+#include "../../common/Npc/MuslimPNJ.h"
+#include "../../server/Other/Server.hpp"
+#include "../../common/Other/Command.hpp"
+#include "../../common/Tower/MissileTower.hpp"
 
 
-GameManager::GameManager(int socket, App *app) :
-        AbstractManager(app),
-        server_socket(socket),
-        isSupporter(false)
-        //gameUI(getMapSeedFromServer()), // L'ordre est important parce qu'on fait des
-        //quadrant(getQuadrantFromServer()) // recv. Ne pas changer l'ordre!
-{
-    if (false && !isConsole) {
-        gameUI = new GameGUI(getMapSeedFromServer(), this);
-    } else {
-        gameUI = new GameConsoleUI(getMapSeedFromServer(),this);
-    }
-
-    quadrant = getQuadrantFromServer();
-
-    getInitialGameStateFromServer();
-}
+GameManager::GameManager(int socket, App *app) : GameManager(socket, false, app) {};
 
 GameManager::GameManager(int socket, bool _isSupporter, App *app) :
         AbstractManager(app),
         server_socket(socket),
         isSupporter(_isSupporter)
-        //gameUI(getMapSeedFromServer()), // L'ordre est important parce qu'on fait des
-        //quadrant(getQuadrantFromServer()) // recv. Ne pas changer l'ordre!
 {
-    if (false && !isConsole) {
-        gameUI = new GameGUI(getMapSeedFromServer(), this);
+    if (!isConsole) {
+        gameUI = new GameGUI(isSupporter, getMapSeedFromServer(), this);
     } else {
-        gameUI = new GameConsoleUI(getMapSeedFromServer(),this);
+        gameUI = new GameConsoleUI(isSupporter, getMapSeedFromServer(),this);
     }
 
     quadrant = getQuadrantFromServer();
     getInitialGameStateFromServer();
 }
 
-void GameManager::comeBackToMenu() { // À appeler quand la partie est terminée
-    MainManager *menu_manager = new MainManager(5555, master_app);
-    master_app->transition(menu_manager);
+void GameManager::run() {
+    QTimer::singleShot(10, this, SLOT(updateMap()));
 }
 
 void GameManager::updateMap() {
     char server_msg_buff[BUFFER_SIZE];
-    receive_message(server_socket, server_msg_buff);
+    if (!gameState.getIsGameOver()) {
+        receive_message(server_socket, server_msg_buff);
+        if (strncmp(server_msg_buff, RECEIVE_MESSAGE_STRING.c_str(), RECEIVE_MESSAGE_STRING.length()) == 0) {
+            Command command;
+            command.parse(server_msg_buff);
+            int messageSize = command.getNextInt();
+            const std::string &message = command.getTokenWithSize(messageSize);
+            const std::string &sender = command.getNextToken();
+            gameUI->addChatMessage(message, sender);
+        }  else if (strcmp(server_msg_buff, AD_POPUP) == 0) {
+            std::cout << server_msg_buff << std::endl;
+            gameUI->adPopUp();
+        } else if (strcmp(server_msg_buff, PLACING_TOWER) == 0) {
+            gameUI->handlePlaceTowerPhaseStart();
+            if (!isSupporter) gameUI->disableSpells();
+        } else if (strcmp(server_msg_buff, WAVE) == 0) {
+            gameUI->handleWaveStart();
+            if (!isSupporter) gameUI->enableSpells();
+        } else {
+            unSerializeGameState(server_msg_buff);
+        }
 
-    if (strncmp(server_msg_buff, RECEIVE_MESSAGE_STRING.c_str(), RECEIVE_MESSAGE_STRING.length()) == 0) {
-        Command command;
-        command.parse(server_msg_buff);
-        const std::string& message = command.getNextToken();
-        const std::string& sender = command.getNextToken();
-        gameUI->addChatMessage(message, sender);
+        // TODO: console mode only this when receiving a game state, make sure it still works
+        // if it does it every time
+        gameUI->display(gameState, quadrant);
+        gameUI->displayPlayerInfos(gameState, quadrant);
+        QTimer::singleShot(10, this, SLOT(updateMap()));
+    } else {
+        // Va declencer un callback vers comeBackToMenu() quand l'utilisateur a fini de voir les stats
+        gameUI->displayGameOverAndStats(gameState);
     }
-    else if (strcmp(server_msg_buff, PLACING_TOWER) == 0) {
-        gameUI->disableNukeSpell();
-    }
-
-    else if (strcmp(server_msg_buff, PLACING_TOWER) != 0 && strcmp(server_msg_buff, WAVE) != 0) {
-        if (nukeSpell) gameUI->enableNukeSpell();
-        unSerializeGameState(server_msg_buff);
-    }
-
-    gameUI->display(gameState, quadrant);
-    gameUI->displayPlayerInfos(gameState, quadrant);
 }
+
+void GameManager::comeBackToMenu() { // À appeler quand la partie est terminée
+    MainManager *menu_manager = new MainManager(ACCOUNT_SERVER_PORT, master_app);
+    master_app->transition(menu_manager);
+}
+
+
 
 bool GameManager::isTowerInPosition(GameState &gameState, Position towerPos){
     bool validity = false;
@@ -96,8 +99,10 @@ bool GameManager::checkValidity(Position towerPos, GameState& gamestate, std::st
         price = GUN_TOWER_PRICE;
     } else if (typeOfTower == SNIPER_TOWER_STR) {
         price = SNIPER_TOWER_PRICE;
-    } else {
+    } else if (typeOfTower == SHOCK_TOWER_STR) {
         price = SHOCK_TOWER_PRICE;
+    } else {
+        price = MISSILE_TOWER_PRICE;
     }
 
     if (gameState.getPlayerStates()[quadrant].getMoney()  < price) { // if player has enough money
@@ -144,81 +149,7 @@ void GameManager::sendUpgradeRequest(Position towerPos) {
 
 
 
-void GameManager::run() {
-    char server_msg_buff[BUFFER_SIZE];
 
-    if (true || isConsole) {
-        gameUI->display(gameState, quadrant);
-
-        if (!isSupporter)
-            gameUI->displayPlayerInfos(gameState, quadrant);
-        else
-            gameUI->displayInfoForSupporter(gameState);
-
-        while (!gameState.getIsGameOver()) {
-            receive_message(server_socket, server_msg_buff);
-
-            //PHASE ENTRE LES WAVES
-            if (strcmp(server_msg_buff, PLACING_TOWER) == 0) {
-
-                if (is_alive() && !isSupporter) {
-                    inputThread = pthread_create(&thr, NULL, &GameConsoleUI::staticInputThread, gameUI);
-                } else {
-                    gameUI->display(gameState, quadrant);
-                    if (is_alive() && !isSupporter) {
-                        inputThread = pthread_create(&thr, NULL, &GameConsoleUI::staticInputThread, gameUI);
-                    } else {
-                        gameUI->display(gameState, quadrant);
-                    }
-
-                    if (isSupporter) {
-                        gameUI->displayPlayersPlacingTowersMessage();
-                    } else {
-                        gameUI->displayDeadMessage();
-                    }
-                }
-
-
-                //DEBUT D'UNE WAVE
-            } else if (strcmp(server_msg_buff, WAVE) == 0) {
-                if (!isSupporter) {
-                    inputThread = pthread_cancel(thr);
-                }
-            }
-                // RECEVOIR MESSAGE DU CHAT DUN JOUEUR
-            else if (strncmp(server_msg_buff, RECEIVE_MESSAGE_STRING.c_str(), RECEIVE_MESSAGE_STRING.length()) == 0) {
-                Command command;
-                command.parse(server_msg_buff);
-                const std::string& message = command.getNextToken();
-                const std::string& sender = command.getNextToken();
-                gameUI->addChatMessage(message, sender);
-            }
-
-                //PHASE OU LA WAVE SE DEPLACE
-            else {
-                unSerializeGameState(server_msg_buff);
-                gameUI->display(gameState, quadrant);
-
-                if (!isSupporter) {
-                    if (is_alive()) {
-                        gameUI->displayPlayerInfos(gameState, quadrant);
-                    } else {
-                        gameUI->displayDeadMessage();
-                    }
-                } else
-                    gameUI->displayInfoForSupporter(gameState);
-            }
-        }
-
-        //FIN DE PARTIE
-        gameUI->displayGameOver(gameState);
-        // Menu to come back to main menu (or make another game of the same type ?)
-        comeBackToMenu();
-    } else {
-        updateMap();
-        //gameUI->displayTowerShop();
-    }
-}
 
 void GameManager::unSerializeGameState(char* seriarlizedGamestate){
     gameState = GameState();
@@ -375,9 +306,10 @@ void GameManager::unSerializeTower(std::string serialized_tower) {
     AbstractTower *tower;
     Position pos = Position(x, y);
 
-    if (typeOfTower == "GunTower") tower = new GunTower(pos, level);
-    else if (typeOfTower == "SniperTower") tower = new SniperTower(pos, level);
-    else tower = new ShockTower(pos, level);
+    if (typeOfTower == GUN_TOWER_STR) tower = new GunTower(pos, level);
+    else if (typeOfTower == SNIPER_TOWER_STR) tower = new SniperTower(pos, level);
+    else if (typeOfTower == SHOCK_TOWER_STR) tower = new ShockTower(pos, level);
+    else tower = new MissileTower(pos, level);
 
     //TODO: remplacer par gameState.addTower(tower)
     //Pour ne pas utiliser un getter pour modifier la classe, ça n'a aucun sens
@@ -426,6 +358,7 @@ void GameManager::unSerializePNJ(std::string serialized_pnj, Wave *wave) {
     int x=0;
     int y=0;
     int health=0;
+    std::string typeOfPNJ = "";
     for (char& c : serialized_pnj) {
         if (c == ',') {
             switch (count) {
@@ -435,8 +368,11 @@ void GameManager::unSerializePNJ(std::string serialized_pnj, Wave *wave) {
                 case 1:
                     y = std::stoi(elem);
                     break;
-                default:
+                case 2:
                     health = std::stoi(elem);
+                    break;
+                default:
+                    typeOfPNJ = elem;
                     break;
             }
             elem = "";
@@ -445,11 +381,16 @@ void GameManager::unSerializePNJ(std::string serialized_pnj, Wave *wave) {
             elem += c;
         }
     }
-    PNJ *pnj = new PNJ(Position(x, y), health, wave->getQuadrant());
+
+    PNJ *pnj;
+    if (typeOfPNJ == MEXICAN_PNJ_STR) pnj = new MexicanPNJ(Position(x, y), health, wave->getQuadrant());
+    else if (typeOfPNJ == MUSLIM_PNJ_STR) pnj = new MuslimPNJ(Position(x, y), health, wave->getQuadrant());
+    else pnj = new CommunistPNJ(Position(x, y), health, wave->getQuadrant());
+
     wave->addPNJ(*pnj);
 }
 
-bool GameManager::is_alive() {
+bool GameManager::isAlive() {
     bool gameNotInitialized = gameState.getPlayerStates().size() == 0;
     if (gameNotInitialized) return true;
 
@@ -507,7 +448,6 @@ int GameManager::getQuadrant() {
 
 bool GameManager::placeGunTower(Position towerPos) {
     if (checkValidity(towerPos, gameState, GUN_TOWER_STR)) {
-        gameState.addTower(new GunTower(Position(towerPos.getX(), towerPos.getY()), 1), quadrant);
         sendBuyRequest(towerPos, GUN_TOWER_STR);
         return true;
     }
@@ -517,7 +457,6 @@ bool GameManager::placeGunTower(Position towerPos) {
 
 bool GameManager::placeSniperTower(Position towerPos) {
     if (checkValidity(towerPos, gameState, SNIPER_TOWER_STR)) {
-        gameState.addTower(new SniperTower(Position(towerPos.getX(), towerPos.getY()),1), quadrant);
         sendBuyRequest(towerPos, SNIPER_TOWER_STR);
         return true;
     }
@@ -527,8 +466,16 @@ bool GameManager::placeSniperTower(Position towerPos) {
 
 bool GameManager::placeShockTower(Position towerPos) {
     if (checkValidity(towerPos, gameState, SHOCK_TOWER_STR)) {
-        gameState.addTower(new ShockTower(Position(towerPos.getX(), towerPos.getY()),1), quadrant);
         sendBuyRequest(towerPos, SHOCK_TOWER_STR);
+        return true;
+    }
+
+    return false;
+}
+
+bool GameManager::placeMissileTower(Position towerPos) {
+    if (checkValidity(towerPos, gameState, MISSILE_TOWER_STR)) {
+        sendBuyRequest(towerPos, MISSILE_TOWER_STR);
         return true;
     }
 
@@ -537,7 +484,6 @@ bool GameManager::placeShockTower(Position towerPos) {
 
 bool GameManager::sellTower(Position toSell) {
     if (isTowerInPosition(getGameState(), toSell)) {
-        gameState.deleteTower(toSell, quadrant);
         sendSellRequest(toSell);
         return true;
     }
@@ -556,26 +502,75 @@ bool GameManager::upgradeTower(Position toUpgrade) {
     return false;
 }
 
+std::string GameManager::getWinner() {
+    for (PlayerState &player : gameState.getPlayerStates()) {
+        if (player.getIsWinner())
+            return player.getUsername();
+    }
+
+    return "No Winner";
+}
 
 /* In-Game Chat */
 
 void GameManager::sendMessageToPlayers(const std::string &message) {
     // TODO: si l'utilisateur met des ; dans son message, c'est la merde
-    std::string request = SEND_MESSAGE_STRING + "," + message + "," + master_app->getUsername() + ";";
+    std::string username = master_app->getUsername();
+    if (isSupporter) {
+        username = "[Supporter] " + username;
+    }
+    std::string request = SEND_MESSAGE_STRING + ","
+                          + std::to_string(message.size()) + ","
+                          + message + ","
+                          + username + ";";
     send_message(server_socket, request.c_str());
 }
-
 
 
 /* Spells */
 void GameManager::nuclearBombSpell() {
     sendNuclearRequest();
-    nukeSpell = false;
+    nukeSpellAvailable = false;
     gameUI->disableNukeSpell();
 }
 
+void GameManager::launchFreezeSpell(){
+    sendFreezeSpellRequest();
+    freezeSpellAvailable = false;
+    gameUI->disableFreezeSpell();
+}
+
+void GameManager::launchAdSpell(){
+    sendAdSpellRequest();
+}
+
 void GameManager::sendNuclearRequest() {
-    std::string message = NUCLEAR_BOMB_COMMAND_STRING
-                          + "," + std::to_string(quadrant) + ";";
+    std::string message = NUCLEAR_BOMB_COMMAND_STRING + ","
+                          + std::to_string(quadrant) + ";";
     send_message(server_socket, message.c_str());
+}
+
+void GameManager::sendFreezeSpellRequest() {
+    std::string message = FREEZE_PNJS_COMMAND_STRING + ","
+                          + std::to_string(quadrant) + ";";
+    send_message(server_socket, message.c_str());
+}
+
+void GameManager::sendAdSpellRequest() {
+    std::string message = AD_SPELL_COMMAND_STRING + ","
+                          + gameState.getPlayerStates()[quadrant].getUsername() + ";";
+    send_message(server_socket, message.c_str());
+    std::cout << message << " sended" << std::endl;
+}
+
+GameManager::~GameManager(){
+    gameUI->destroy();
+}
+
+bool GameManager::isNukeSpellAvailable() const {
+    return nukeSpellAvailable;
+}
+
+bool GameManager::isFreezeSpellAvailable() const {
+    return freezeSpellAvailable;
 }

@@ -4,7 +4,7 @@
 
 
 #include "../Abstract/AbstractGUI.hpp"
-#include "../../common/RankingInfos.hpp"
+#include "../../common/Other/RankingInfos.hpp"
 #include "RankingConsoleUI.hpp"
 #include <QTableWidget>
 #include <QtWidgets/QTableWidget>

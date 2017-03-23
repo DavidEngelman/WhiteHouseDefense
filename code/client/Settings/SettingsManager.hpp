@@ -2,20 +2,16 @@
 #define PROJET_SETTINGSMANAGER_HPP
 
 
-#include "../NetworkedManager.hpp"
+#include "../Other/NetworkedManager.hpp"
 #include "SettingsUI.hpp"
 #include "../Main/MainManager.hpp"
-#include "../App.hpp"
+#include "../Other/App.hpp"
 
 class SettingsManager : public NetworkedManager{
 
 private:
 
     SettingsUI * settingsUI;
-
-    std::string username;
-    std::string password;
-    std::string iconName;
 
 public:
 
@@ -28,7 +24,6 @@ public:
     void changePlayerIcon(std::string newIconName);
     void goToMainMenu();
 
-    void comeBackToMainMenu();
 
     ~SettingsManager();
 };

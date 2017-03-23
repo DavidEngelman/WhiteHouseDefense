@@ -8,7 +8,7 @@
 #include "RegisterUI.hpp"
 
 class RegisterGUI : public AbstractGUI, public RegisterUI {
-Q_OBJECT
+    Q_OBJECT
 
 public slots:
     void registerUser();

@@ -24,6 +24,9 @@ private:
     QString* usernameT;
     QString* victoriesT;
     QString* NPCKilledT;
+    QString* iconT;
+
+    QLabel* iconLabel;
 
 public slots:
     void showUser();

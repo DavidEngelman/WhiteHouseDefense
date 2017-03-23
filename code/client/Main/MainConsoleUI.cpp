@@ -1,6 +1,6 @@
 
 #include "MainConsoleUI.hpp"
-#include "../Drawing.hpp"
+#include "../Other/Drawing.hpp"
 
 MainConsoleUI::MainConsoleUI(MainManager *manager) : MainUI(manager) {}
 
@@ -69,6 +69,18 @@ void MainConsoleUI::displayGameModeChoices() const {
     std::cout << "   |        4. Cancel                   |   " << std::endl;
     std::cout << "   |                                    |   " << std::endl;
     std::cout << "   ======================================   " << std::endl;
+}
+
+void MainConsoleUI::showInQueue() {
+    int dummy;
+    std::cout << "In queue..." << std::endl;
+    std::cout << "Press any letter and enter to leave the queue" << std::endl;
+    std::cin.clear();
+    std::cin.ignore();
+    std::cin>>dummy;
+    manager->leaveQueue();
+    manager->run();
+
 }
 
 

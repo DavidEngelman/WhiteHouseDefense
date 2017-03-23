@@ -1,8 +1,8 @@
 #ifndef PROJET_ABSTRACTMANAGER_H
 #define PROJET_ABSTRACTMANAGER_H
 
-#include "../App.hpp"
-#include "../global.hpp"
+#include "../Other/App.hpp"
+#include "../Other/global.hpp"
 
 class MainManager;
 
@@ -17,6 +17,10 @@ public:
     virtual ~AbstractManager() = default;
 
     virtual void run() = 0;
+
+    void setMusicFromPath(QString path);
+
+    void centerWindow();
 };
 
 

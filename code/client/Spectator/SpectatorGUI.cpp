@@ -1,7 +1,7 @@
 
 
 #include "SpectatorGUI.hpp"
-#include "../QHandPointerButton.hpp"
+#include "../Other/QHandPointerButton.hpp"
 #include <QHeaderView>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QCheckBox>
@@ -27,12 +27,11 @@ void SpectatorGUI::getGameAndPlayer() {
     layout->setAlignment(backToMenuButton, Qt::AlignHCenter);
     this->setLayout(layout);
 
-
     this->show();
 }
 
 void SpectatorGUI::displaySorryMessage() {
-    //TODO
+    QMessageBox::critical(this, "Sorry :(", "There is no game in progress");
 
 }
 
@@ -162,6 +161,8 @@ void SpectatorGUI::addPlayersToList(int game_index) {
 }
 
 void SpectatorGUI::handlePlayerSelection(QListWidgetItem *item) {
+    selectPlayerWindow->close();
+    selectPlayerWindow->deleteLater();
     std::string playerName = item->text().toUtf8().toStdString();
     SpectatorUI::handlePlayerSelection(playerName);
 }
