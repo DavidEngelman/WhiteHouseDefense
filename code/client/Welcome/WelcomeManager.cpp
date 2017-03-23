@@ -1,9 +1,24 @@
 #include "WelcomeManager.hpp"
 #include "WelcomeGUI.hpp"
+#include "WelcomeConsoleUI.hpp"
 
-WelcomeManager::WelcomeManager(App *my_app) : AbstractManager(my_app),
-                                              welcomeGUI(new WelcomeGUI(this, master_app->getMainWindow())) {}
+WelcomeManager::WelcomeManager(App *my_app) : AbstractManager(my_app) {
+    if (isConsole) {
+        welcomeUI = new WelcomeConsoleUI(this);
+    }else{
+        welcomeUI = new WelcomeGUI(this, master_app->getMainWindow());
+    }
+}
 
+void WelcomeManager::run() {
+    welcomeUI->display();
+}
+
+WelcomeManager::~WelcomeManager() {
+    welcomeUI->destroy();
+}
+
+/*
 void WelcomeManager::run() {
     if (isConsole) {
         welcomeUI->display();
@@ -16,19 +31,14 @@ void WelcomeManager::run() {
     }
 }
 
+*/
+
 void WelcomeManager::goToLogin() {
-    if (!isConsole) welcomeGUI->close();
     LoginManager *loginManager = new LoginManager(5555, master_app);
     master_app->transition(loginManager);
 }
 
 void WelcomeManager::goToRegister() {
-    if (!isConsole) welcomeGUI->close();
     RegisterManager *registerManager = new RegisterManager(5555, master_app);
     master_app->transition(registerManager);
-}
-
-WelcomeManager::~WelcomeManager() {
-    // TODO: use better system.
-    if (!isConsole) delete (welcomeGUI);
 }

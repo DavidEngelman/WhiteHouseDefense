@@ -5,7 +5,7 @@
 #include "WelcomeManager.hpp"
 #include "../Other/QHandPointerButton.hpp"
 
-WelcomeGUI::WelcomeGUI(WelcomeManager *manager, QWidget *_parent) : AbstractGUI(_parent), manager(manager) {}
+WelcomeGUI::WelcomeGUI(WelcomeManager *manager, QWidget *_parent) : AbstractGUI(_parent), WelcomeUI(manager) {}
 
 void WelcomeGUI::display() {
 
@@ -54,7 +54,5 @@ void WelcomeGUI::setTheme() {
     setBackgroundFromPath("../../qt_ui/game_pictures/backgrounds/americanBg");
 }
 
-WelcomeGUI::~WelcomeGUI() {
-    close();
-}
+WelcomeGUI::~WelcomeGUI() {}
 

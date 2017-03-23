@@ -1,21 +1,26 @@
-//
-//
+#ifndef PROJET_WELCOMEUI_HPP
+#define PROJET_WELCOMEUI_HPP
 
-#ifndef PROJET_WELCOMEUI_H
-#define PROJET_WELCOMEUI_H
+//TODO: Mettre dans le Cmake !!!
 
 #include <string>
-#include <iostream>
+#include "WelcomeManager.hpp"
 #include "../Abstract/AbstractUI.hpp"
 
+class WelcomeManager;
 
-class WelcomeUI : public AbstractUI {
+class WelcomeUI : public virtual AbstractUI {
+
+protected:
+    WelcomeManager *manager;
 
 public:
-    void display();
-    int select();
+    WelcomeUI(WelcomeManager *manager) : manager(manager) {};
+
+    virtual ~WelcomeUI() = default;
+
+    virtual void display() = 0;
 
 };
 
-
-#endif //PROJET_WELCOMEUI_H
+#endif // PROJET_WELCOMEUI_HPP

@@ -28,7 +28,7 @@ public:
 
     void display() override;
 
-    void displaySuccess();
+    void displaySuccess() override;
 
     void displayError() override;
 

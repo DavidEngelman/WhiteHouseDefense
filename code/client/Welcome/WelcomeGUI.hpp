@@ -1,7 +1,3 @@
-//
-// Created by jepsiko on 09/03/17.
-//
-
 #ifndef PROJET_WELCOMEGUI_HPP
 #define PROJET_WELCOMEGUI_HPP
 
@@ -18,30 +14,32 @@
 #include <QtMultimedia/QMediaPlayer>
 #include <QGraphicsEffect>
 #include "../Abstract/AbstractGUI.hpp"
+#include "WelcomeUI.hpp"
 
-class WelcomeManager;
+class WelcomeGUI : public AbstractGUI, public WelcomeUI {
 
-class WelcomeGUI : public AbstractGUI {
-
-    Q_OBJECT
+Q_OBJECT
 
 private:
-    WelcomeManager *manager;
     QPushButton *loginButton;
     QPushButton *registerButton;
     QPushButton *quitButton;
     QFormLayout *fieldsLayout;
+
     void setTheme();
 
 public slots:
+
     void openLogin();
+
     void openRegister();
 
 public:
-    WelcomeGUI(WelcomeManager *manager, QWidget* _parent);
+    WelcomeGUI(WelcomeManager *manager, QWidget *_parent);
+
     virtual ~WelcomeGUI();
 
-    void display();
+    void display() override;
 };
 
 
