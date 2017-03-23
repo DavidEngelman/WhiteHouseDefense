@@ -11,34 +11,12 @@
 #include "../../common/Tower/MissileTower.hpp"
 
 
-GameManager::GameManager(int socket, App *app) :
-        AbstractManager(app),
-        server_socket(socket),
-        isSupporter(false)
-        //gameUI(getMapSeedFromServer()), // L'ordre est important parce qu'on fait des
-        //quadrant(getQuadrantFromServer()) // recv. Ne pas changer l'ordre!
-{
-    if (!isConsole) {
-        gameUI = new GameGUI(false,getMapSeedFromServer(), this);
-    } else {
-        gameUI = new GameConsoleUI(getMapSeedFromServer(),this);
-    }
-
-    quadrant = getQuadrantFromServer();
-
-    getInitialGameStateFromServer();
-
-    timer = new QTimer();
-    QObject::connect(timer, SIGNAL(timeout()), this, SLOT(updateMap()));
-    timer->start(10);
-}
+GameManager::GameManager(int socket, App *app) : GameManager(socket, false, app) {};
 
 GameManager::GameManager(int socket, bool _isSupporter, App *app) :
         AbstractManager(app),
         server_socket(socket),
         isSupporter(_isSupporter)
-        //gameUI(getMapSeedFromServer()), // L'ordre est important parce qu'on fait des
-        //quadrant(getQuadrantFromServer()) // recv. Ne pas changer l'ordre!
 {
     if (!isConsole) {
         gameUI = new GameGUI(isSupporter,getMapSeedFromServer(), this);
@@ -48,6 +26,7 @@ GameManager::GameManager(int socket, bool _isSupporter, App *app) :
 
     quadrant = getQuadrantFromServer();
     getInitialGameStateFromServer();
+
 }
 
 void GameManager::comeBackToMenu() { // À appeler quand la partie est terminée
@@ -65,7 +44,6 @@ void GameManager::updateMap() {
         if (strncmp(server_msg_buff, RECEIVE_MESSAGE_STRING.c_str(), RECEIVE_MESSAGE_STRING.length()) == 0) {
             Command command;
             command.parse(server_msg_buff);
-            std::cout << server_msg_buff << std::endl;
             int messageSize = command.getNextInt();
             const std::string &message = command.getTokenWithSize(messageSize);
             const std::string &sender = command.getNextToken();
@@ -162,6 +140,9 @@ void GameManager::sendUpgradeRequest(Position towerPos) {
 
 void GameManager::run() {
     char server_msg_buff[BUFFER_SIZE];
+    timer = new QTimer();
+    QObject::connect(timer, SIGNAL(timeout()), this, SLOT(updateMap()));
+    timer->start(10);
 
     if (isConsole) {
         gameUI->display(gameState, quadrant);
@@ -534,7 +515,7 @@ int GameManager::getQuadrant() {
 
 bool GameManager::placeGunTower(Position towerPos) {
     if (checkValidity(towerPos, gameState, GUN_TOWER_STR)) {
-        gameState.addTower(new GunTower(Position(towerPos.getX(), towerPos.getY()), 1), quadrant);
+        //gameState.addTower(new GunTower(Position(towerPos.getX(), towerPos.getY()), 1), quadrant);
         sendBuyRequest(towerPos, GUN_TOWER_STR);
         return true;
     }
@@ -544,7 +525,7 @@ bool GameManager::placeGunTower(Position towerPos) {
 
 bool GameManager::placeSniperTower(Position towerPos) {
     if (checkValidity(towerPos, gameState, SNIPER_TOWER_STR)) {
-        gameState.addTower(new SniperTower(Position(towerPos.getX(), towerPos.getY()),1), quadrant);
+        //gameState.addTower(new SniperTower(Position(towerPos.getX(), towerPos.getY()),1), quadrant);
         sendBuyRequest(towerPos, SNIPER_TOWER_STR);
         return true;
     }
@@ -554,7 +535,7 @@ bool GameManager::placeSniperTower(Position towerPos) {
 
 bool GameManager::placeShockTower(Position towerPos) {
     if (checkValidity(towerPos, gameState, SHOCK_TOWER_STR)) {
-        gameState.addTower(new ShockTower(Position(towerPos.getX(), towerPos.getY()),1), quadrant);
+        //gameState.addTower(new ShockTower(Position(towerPos.getX(), towerPos.getY()),1), quadrant);
         sendBuyRequest(towerPos, SHOCK_TOWER_STR);
         return true;
     }
@@ -564,7 +545,7 @@ bool GameManager::placeShockTower(Position towerPos) {
 
 bool GameManager::placeMissileTower(Position towerPos) {
     if (checkValidity(towerPos, gameState, MISSILE_TOWER_STR)) {
-        gameState.addTower(new MissileTower(Position(towerPos.getX(), towerPos.getY()),1), quadrant);
+        //gameState.addTower(new MissileTower(Position(towerPos.getX(), towerPos.getY()),1), quadrant);
         sendBuyRequest(towerPos, MISSILE_TOWER_STR);
         return true;
     }
@@ -574,7 +555,7 @@ bool GameManager::placeMissileTower(Position towerPos) {
 
 bool GameManager::sellTower(Position toSell) {
     if (isTowerInPosition(getGameState(), toSell)) {
-        gameState.deleteTower(toSell, quadrant);
+        //gameState.deleteTower(toSell, quadrant);
         sendSellRequest(toSell);
         return true;
     }

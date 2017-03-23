@@ -161,6 +161,8 @@ void SpectatorGUI::addPlayersToList(int game_index) {
 }
 
 void SpectatorGUI::handlePlayerSelection(QListWidgetItem *item) {
+    selectPlayerWindow->close();
+    selectPlayerWindow->deleteLater();
     std::string playerName = item->text().toUtf8().toStdString();
     SpectatorUI::handlePlayerSelection(playerName);
 }

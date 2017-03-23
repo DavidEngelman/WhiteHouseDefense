@@ -115,3 +115,13 @@ App::~App() {
     }
     std::cout << "App deleted" << std::endl;
 }
+
+void App::launchSupporter(int gameServerSocket ) {
+    std::cout << "Starting game" << std::endl;
+    if (!isConsole) {
+        getMainWindow()->setVisible(false);//So we can reuse the window after the game
+    }
+    GameManager * gameManager = new GameManager(gameServerSocket,true,this);
+    transition(gameManager);
+}
+
