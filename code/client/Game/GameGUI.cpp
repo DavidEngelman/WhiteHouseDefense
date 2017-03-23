@@ -367,13 +367,22 @@ void GameGUI::displaySpellBox() {
     freezeB->setIcon(QIcon("../../qt_ui/game_pictures/spells/frozentrump.png"));
     freezeB->setIconSize(size);
 
+    airStrikeB = new QPushButton;
+    airStrikeB->setEnabled(false);
+    airStrikeB->setIcon(QIcon("../../qt_ui/game_pictures/spells/airStrike.jpg"));
+    airStrikeB->setIconSize(size);
+
     QGridLayout *layout = new QGridLayout;
     layout->addWidget(nukeB, 0, 0);
     layout->addWidget(freezeB, 0, 1);
+    layout->addWidget(airStrikeB, 1, 0);
+
     spellBox->setLayout(layout);
 
     QObject::connect(nukeB, SIGNAL(clicked()), this, SLOT(handleNukeSpell()));
     QObject::connect(freezeB, SIGNAL(clicked()), this, SLOT(handleFreezeSpell()));
+    QObject::connect(airStrikeB, SIGNAL(clicked()), this, SLOT(handleAirStrike()));
+
 }
 
 void GameGUI::handleNukeSpell() {
@@ -382,6 +391,13 @@ void GameGUI::handleNukeSpell() {
 
 void GameGUI::handleFreezeSpell() {
     manager->launchFreezeSpell();
+}
+
+void GameGUI::handleAirStrike(){
+
+    int targetQuadrant = map->computeQuadrant(map->getHighlightedPosition());
+    manager->launchAirStrike(targetQuadrant);
+
 }
 
 void GameGUI::displayPlayerInfos(GameState &gameState, int quadrant) {
@@ -433,6 +449,19 @@ void GameGUI::disableFreezeSpell() {
 
 void GameGUI::enableFreezeSpell() {
     freezeB->setEnabled(true);
+}
+
+void GameGUI::disableAirStrike() {
+    airStrikeB->setEnabled(false);
+
+}
+
+void GameGUI::enableAirStrike() {
+    if ( (map->isEnnemyBaseInHighlightedPosition(manager->getQuadrant())) && (manager->isAirStikeAvailable()) ) {
+        std::cout << "Enabling air strike" << std::endl;
+        airStrikeB->setEnabled(true);
+    }
+
 }
 
 void GameGUI::enableSpells() {

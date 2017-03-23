@@ -91,6 +91,8 @@ public:
     void killAllNPC(int quadrant);
 
     void freezeWave(int quadrant);
+
+    void launchAirStrike(int i);
 };
 
 

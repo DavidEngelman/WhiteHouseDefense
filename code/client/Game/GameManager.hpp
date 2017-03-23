@@ -25,14 +25,24 @@ private:
     int counter = 0;
     int server_socket;
     bool runningThread = false;
-    QTimer * timer;
 
     GameState gameState;
     GameUI *gameUI;
     int quadrant;
     bool isSupporter;
+
     bool nukeSpellAvailable = true;
     bool freezeSpellAvailable = true;
+    bool airStrikeAvailable = true;
+
+    QTimer *timer;
+
+public:
+    bool isNukeSpellAvailable() const;
+
+    bool isFreezeSpellAvailable() const;
+
+private:
 
 
     unsigned int getMapSeedFromServer() const;
@@ -94,10 +104,6 @@ public:
 
     bool isAlive();
 
-    bool isNukeSpellAvailable() const;
-
-    bool isFreezeSpellAvailable() const;
-
     ~GameManager();
 
 public slots:
@@ -109,6 +115,12 @@ public slots:
 
 
     std::string getWinner();
+
+    void launchAirStrike(int i);
+
+    bool isAirStikeAvailable();
+
+    void sendAirStrikeRequest(int quadrant);
 
     void launchAdSpell();
 

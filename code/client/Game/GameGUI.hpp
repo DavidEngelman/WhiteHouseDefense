@@ -58,6 +58,7 @@ private:
     QGroupBox *spellBox;
     QPushButton *nukeB;
     QPushButton *freezeB;
+    QPushButton *airStrikeB;
 
     //base health of other players
     QGroupBox *otherPlayerHealthBarBox;
@@ -102,6 +103,7 @@ public slots:
     void handleUpgradingTower();
     void handleNukeSpell();
     void handleAdSpell();
+    void handleAirStrike();
     void goToMenu();
 
     void handleFreezeSpell();
@@ -181,6 +183,10 @@ public:
     void enableSpells() override ;
 
     void disableSpells() override ;
+
+    void disableAirStrike() override;
+
+    void enableAirStrike();
 
     void displaySupporterActionBox();
 

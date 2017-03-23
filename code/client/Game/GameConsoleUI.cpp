@@ -275,6 +275,10 @@ void GameConsoleUI::enableFreezeSpell() {
 
 };
 
+void GameConsoleUI::disableAirStrike() {
+
+}
+
 void GameConsoleUI::enableSpells() {}
 void GameConsoleUI::disableSpells() {}
 

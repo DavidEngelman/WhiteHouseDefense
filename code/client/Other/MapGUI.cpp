@@ -6,7 +6,7 @@
 MapGUI::MapGUI(unsigned int seed, GameGUI *gameGUI, QVBoxLayout *layout = 0) : Map(seed), gameGUI(gameGUI) {
     display();
     layout->addWidget(this);
-    setFixedSize(16*31, 16*31);
+    //setFixedSize(16*31, 16*31);
     if (seed < NB_OF_MAPS) {
         std::string filename = "background-image: url(../../maps/map" + std::to_string(seed+1) + ".png)";
         this->setStyleSheet(QString::fromStdString(filename));
@@ -118,6 +118,7 @@ void MapGUI::mousePressEvent(QMouseEvent* event) {
         if (!gameGUI->isSupporter()) {
             gameGUI->disableTowerShop();
             gameGUI->disableDeleteAndUpgradeBox();
+            gameGUI->disableAirStrike();
         }
     } else {
         highlighted = pos;
@@ -125,7 +126,18 @@ void MapGUI::mousePressEvent(QMouseEvent* event) {
             if (isObstacle(pos) or isPath(pos) or isBase(pos)) {
                 gameGUI->disableTowerShop();
                 gameGUI->disableDeleteAndUpgradeBox();
-            } else gameGUI->enableTowerShop();
+                if (isBase(pos)){
+                    std::cout << "here" << std::endl;
+                    gameGUI->enableAirStrike();
+                }
+            } else {
+                gameGUI->enableTowerShop();
+
+            }
         }
     }
+}
+
+bool MapGUI::isEnnemyBaseInHighlightedPosition(int quadrant) {
+    return isBase(highlighted) && computeQuadrant(highlighted)!=quadrant;
 }
