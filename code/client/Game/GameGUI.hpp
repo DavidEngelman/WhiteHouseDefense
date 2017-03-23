@@ -32,6 +32,7 @@ private:
     QHBoxLayout *mainLayout;
 
     // Left Panel
+    QVBoxLayout* leftPanel;
     QLabel *usernameL;
     QGroupBox *playerStatsBox;
     QLabel *playerStateL;
@@ -43,6 +44,7 @@ private:
     QProgressBar *baseHealthBar;
 
     // Right Panel
+    QVBoxLayout *actionLayout;
     QGroupBox *towerShop;
     QCustomButton *gunTowerB;
     QCustomButton *sniperTowerB;
@@ -87,9 +89,13 @@ private:
     QBarSet *damageDealt;
     QBarSet *moneySpend;
 
+    QGroupBox *supporterActionBox;
+
     QGroupBox *endGameChatBox;
 
     QPushButton *backToMenu;
+
+    bool isSupporterMode;
 
 public slots:
     void handleBuyingTower(int typeOfTower);
@@ -101,7 +107,7 @@ public slots:
     void handleFreezeSpell();
 
 public:
-    GameGUI(unsigned seed, GameManager *manager);
+    GameGUI(bool isSupporter,unsigned seed, GameManager *manager);
     Position getPosBuyingTower() override ;
 
 
@@ -113,7 +119,7 @@ public:
 
     void displayGameOver(GameState& gamestate) override ;
 
-    void displayInfoForSupporter(GameState& gameState) override ;
+    void displayInfoForSupporter(GameState& gameState, int quadrant) override ;
 
     void displayDeadMessage() ;
 
@@ -153,12 +159,27 @@ public:
 
     void setUpChartBox(GameState &gameState);
 
-
     void setUpEndGameChatBox();
 
-    void enableFreezeSpell();
+    void enableFreezeSpell() override ;
 
-    void disableFreezeSpell();
+    void disableFreezeSpell() override ;
+
+    void setUpTowerShop();
+
+    void setUpDeleteAndUpgradBox();
+
+    void setUpSpellsBox();
+
+    void setUpStatsBox();
+
+    void updateHealthBarOfSupportedPlayer(int value);
+
+    void setUpSpellsBoxForSupporter();
+
+    void enableSpells() override ;
+
+    void disableSpells() override ;
 };
 
 

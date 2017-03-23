@@ -19,7 +19,7 @@ GameManager::GameManager(int socket, App *app) :
         //quadrant(getQuadrantFromServer()) // recv. Ne pas changer l'ordre!
 {
     if (!isConsole) {
-        gameUI = new GameGUI(getMapSeedFromServer(), this);
+        gameUI = new GameGUI(false,getMapSeedFromServer(), this);
     } else {
         gameUI = new GameConsoleUI(getMapSeedFromServer(),this);
     }
@@ -41,7 +41,7 @@ GameManager::GameManager(int socket, bool _isSupporter, App *app) :
         //quadrant(getQuadrantFromServer()) // recv. Ne pas changer l'ordre!
 {
     if (!isConsole) {
-        gameUI = new GameGUI(getMapSeedFromServer(), this);
+        gameUI = new GameGUI(isSupporter,getMapSeedFromServer(), this);
     } else {
         gameUI = new GameConsoleUI(getMapSeedFromServer(),this);
     }
@@ -69,9 +69,9 @@ void GameManager::updateMap() {
             const std::string &sender = command.getNextToken();
             gameUI->addChatMessage(message, sender);
         } else if (strcmp(server_msg_buff, PLACING_TOWER) == 0) {
-            gameUI->disableNukeSpell();
+            if (!isSupporter) gameUI->disableSpells();
         } else if (strcmp(server_msg_buff, PLACING_TOWER) != 0 && strcmp(server_msg_buff, WAVE) != 0) {
-            if (nukeSpell) gameUI->enableNukeSpell();
+            if (!isSupporter) gameUI->enableSpells();
             unSerializeGameState(server_msg_buff);
         }
 
@@ -167,7 +167,7 @@ void GameManager::run() {
         if (!isSupporter)
             gameUI->displayPlayerInfos(gameState, quadrant);
         else
-            gameUI->displayInfoForSupporter(gameState);
+            gameUI->displayInfoForSupporter(gameState, 0);
 
         while (!gameState.getIsGameOver()) {
             receive_message(server_socket, server_msg_buff);
@@ -221,7 +221,7 @@ void GameManager::run() {
                         gameUI->displayDeadMessage();
                     }
                 } else
-                    gameUI->displayInfoForSupporter(gameState);
+                    gameUI->displayInfoForSupporter(gameState, 0);
             }
         }
 
@@ -591,6 +591,14 @@ bool GameManager::upgradeTower(Position toUpgrade) {
     return false;
 }
 
+std::string GameManager::getWinner() {
+    for (PlayerState &player : gameState.getPlayerStates()) {
+        if (player.getIsWinner())
+            return player.getUsername();
+    }
+
+    return "No Winner";
+}
 
 /* In-Game Chat */
 
@@ -611,13 +619,13 @@ void GameManager::sendMessageToPlayers(const std::string &message) {
 /* Spells */
 void GameManager::nuclearBombSpell() {
     sendNuclearRequest();
-    nukeSpell = false;
+    nukeSpellAvailable = false;
     gameUI->disableNukeSpell();
 }
 
 void GameManager::launchFreezeSpell(){
     sendFreezeSpellRequest();
-    freezeSpell = false;
+    freezeSpellAvailable = false;
     gameUI->disableFreezeSpell();
 }
 
@@ -635,4 +643,12 @@ void GameManager::sendFreezeSpellRequest() {
 
 GameManager::~GameManager(){
     gameUI->destroy();
+}
+
+bool GameManager::isNukeSpellAvailable() const {
+    return nukeSpellAvailable;
+}
+
+bool GameManager::isFreezeSpellAvailable() const {
+    return freezeSpellAvailable;
 }

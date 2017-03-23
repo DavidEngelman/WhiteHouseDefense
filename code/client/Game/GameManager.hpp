@@ -31,10 +31,16 @@ private:
     GameUI *gameUI;
     int quadrant;
     bool isSupporter;
-    bool nukeSpell = true;
-    bool freezeSpell = true;
+    bool nukeSpellAvailable = true;
+    bool freezeSpellAvailable = true;
 
     QTimer *timer;
+public:
+    bool isNukeSpellAvailable() const;
+
+    bool isFreezeSpellAvailable() const;
+
+private:
 
 
     unsigned int getMapSeedFromServer() const;
@@ -105,7 +111,7 @@ public slots:
     void sendFreezeSpellRequest();
 
 
-
+    std::string getWinner();
 };
 
 #endif

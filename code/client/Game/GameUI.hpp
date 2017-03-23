@@ -27,7 +27,7 @@ public:
 
     virtual void display(GameState& gameState, int quadrant) = 0;
     virtual void displayPlayerInfos(GameState &gameState, int quadrant) = 0;
-    virtual void displayInfoForSupporter(GameState& gameState) = 0;
+    virtual void displayInfoForSupporter(GameState &gameState, int quadrant) = 0;
     virtual void displayTowerShop() = 0;
 
     virtual void displayGameOver(GameState& gamestate) = 0;
@@ -43,6 +43,9 @@ public:
 
     virtual void disableFreezeSpell() = 0;
     virtual void enableFreezeSpell() = 0;
+
+    virtual void disableSpells() = 0;
+    virtual void enableSpells() = 0;
 };
 
 #endif //PROJET_GAMEUI_H

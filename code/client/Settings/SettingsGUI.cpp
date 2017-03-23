@@ -6,6 +6,9 @@ SettingsGUI::SettingsGUI(SettingsManager *manager, QWidget* _parent) : AbstractG
                                                                        changedIcon(false) {}
 
 void SettingsGUI::display() {
+    QElapsedTimer timer;
+    timer.start();
+
 
     this->setFixedHeight(600);
     this->setFixedWidth(1000);
@@ -41,8 +44,14 @@ void SettingsGUI::display() {
 
     /*Menu*/
     usernameB = new QHandPointerButton("Change Username", 300,40);
+    usernameB->setStyleSheet("border-image:url(../../qt_ui/game_pictures/buttons/gold_button_2.svg);");
+
     passwordB = new QHandPointerButton("Change Password", 300,40);
+    passwordB->setStyleSheet("border-image:url(../../qt_ui/game_pictures/buttons/gold_button_2.svg);");
+
     iconB = new QHandPointerButton("Change icon", 300,40);
+    iconB->setStyleSheet("border-image:url(../../qt_ui/game_pictures/buttons/gold_button_2.svg);");
+
     buttonsLayout->addWidget(usernameB);
     buttonsLayout->addWidget(passwordB);
     buttonsLayout->addWidget(iconB);
@@ -55,20 +64,21 @@ void SettingsGUI::display() {
     boxLayout->setAlignment(topLayout, Qt::AlignTop);
     boxLayout->setAlignment(buttonsLayout, Qt::AlignTop|Qt::AlignHCenter);
 
-    this->setLayout(boxLayout);
-    this->show();
-
     QObject::connect(iconB, SIGNAL(clicked()), this, SLOT(openIconSelectionWidget()));
     QObject::connect(usernameB, SIGNAL(clicked()), this, SLOT(changeUsername()));
     QObject::connect(passwordB, SIGNAL(clicked()), this, SLOT(changePassword()));
 
+
+    this->setLayout(boxLayout);
+
+    std::cout << "It took " << timer.nsecsElapsed() / 1000000000.0 << " seconds for SettingsGUI::display" << std::endl;
+    this->show();
 }
 
 
 
 void SettingsGUI::openIconSelectionWidget(){
     IconSelectionWidget* widget = new IconSelectionWidget(this);
-
 }
 
 void SettingsGUI::goToMain() {
@@ -90,13 +100,16 @@ void SettingsGUI::changeUsername(){
 }
 
 void SettingsGUI::changePassword(){
+    QElapsedTimer timer;
+    timer.start();
     passwordB->setVisible(false);
     lineEditP = new QLineEdit();
     lineEditP->setFixedSize(300,40);
     lineEditP->setPlaceholderText("New Password");
-    QObject::connect(lineEditP, SIGNAL(returnPressed()), this, SLOT(applPasswordChange()));
+    QObject::connect(lineEditP, SIGNAL(returnPressed()), this, SLOT(applyPasswordChange()));
 
     buttonsLayout->insertWidget(1, lineEditP);
+    std::cout << "It took " << timer.nsecsElapsed() / 1000000000.0 << " seconds for SettingsGUI::changePassword" << std::endl;
 }
 
 void SettingsGUI::applyUsernameChange(){
@@ -116,7 +129,7 @@ void SettingsGUI::applyUsernameChange(){
 
 }
 
-void SettingsGUI::applPasswordChange(){
+void SettingsGUI::applyPasswordChange(){
     std::string lineEditContent = lineEditP->text().toStdString();
     std::cout << lineEditContent << std::endl;
     if(!settingsManager->changePassword(lineEditContent)){
@@ -134,9 +147,10 @@ void SettingsGUI::applPasswordChange(){
 void SettingsGUI::applyIconChange(std::string iconName){
     settingsManager->changePlayerIcon(iconName);
     QMessageBox::information(this, "Success", "Your icon has been changed !");
+}
 
-
-
+void SettingsGUI::hideButton(){
+    usernameB->setVisible(false);
 }
 
 

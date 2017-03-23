@@ -51,6 +51,7 @@ int Database::callback_account_usrname(void *ptr, int argc, char **argv, char **
     infos->defeats = argv[2];
     infos->pnjKilled = argv[3];
     infos->ID = atoi(argv[4]);
+    infos->iconID =argv[5];
     return 0;
 }
 
@@ -185,7 +186,7 @@ PublicAccountInfos Database::getUsrInfosByUsrname(std::string username) {
     PublicAccountInfos infos;
     char *zErrMsg = 0;
     std::string command = "";
-    command += "select username, victories, defeats, pnjKilled, id from Accounts WHERE username='" + username + "'";
+    command += "select username, victories, defeats, pnjKilled, id, profilePicture from Accounts WHERE username='" + username + "'";
 
     char *query = (char *) command.c_str();
 
