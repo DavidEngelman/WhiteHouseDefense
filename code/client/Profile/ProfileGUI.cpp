@@ -34,6 +34,7 @@ void ProfileGUI::display() {
     QHBoxLayout *statsLayout = new QHBoxLayout;
     QVBoxLayout *victoryLayout = new QVBoxLayout;
     QVBoxLayout *NPCLayout = new QVBoxLayout;
+    QHBoxLayout *userLayout = new QHBoxLayout;
 
     ///----------HOME_BUTTON----------
 
@@ -70,6 +71,11 @@ void ProfileGUI::display() {
 
     ///----------USERNAME----------
 
+    QLabel *dummy = new QLabel(this);
+    dummy->setText("                      ");
+    dummy->setStyleSheet("padding-top:85;");
+
+
     usernameT = new QString;
     iconT = new QString;
 
@@ -78,10 +84,26 @@ void ProfileGUI::display() {
     userNameLabel = new QLabel(this);
     userNameLabel->setText(*usernameT);
     userNameLabel->setFont(policeUsername);
-    userNameLabel->setStyleSheet("padding-top: 115;color : gold;");
+    userNameLabel->setStyleSheet("padding-top:85;padding-left:30; color : gold;");
 
     iconLabel = new QLabel(this);
     iconLabel->setPixmap(QPixmap(*iconT));
+    iconLabel->setStyleSheet("padding-top:85; color : gold;");
+
+    //userLayout->setSpacing(100);
+
+    userLayout->addStretch();
+    userLayout->addWidget(dummy);
+    userLayout->addStretch();
+    userLayout->addWidget(userNameLabel);
+    userLayout->addStretch();
+    userLayout->addWidget(iconLabel);
+    userLayout->addStretch();
+
+    userLayout->setAlignment(userNameLabel, Qt::AlignLeft);
+    userLayout->setAlignment(userNameLabel, Qt::AlignHCenter);
+    userLayout->setAlignment(iconLabel, Qt::AlignRight);
+
 
     ///----------VICTORIES----------
 
@@ -136,20 +158,17 @@ void ProfileGUI::display() {
     statsLayout->setAlignment(victoryLayout, Qt::AlignLeft|Qt::AlignBottom);
     statsLayout->setAlignment(NPCLayout, Qt::AlignRight|Qt::AlignBottom);
 
+    mainLayout->setSpacing(10);
 
     mainLayout->addLayout(topLayout);
-    mainLayout->addWidget(userNameLabel);
-    mainLayout->addWidget(iconLabel);
+    mainLayout->addLayout(userLayout);
     mainLayout->addLayout(statsLayout);
 
 
     mainLayout->setAlignment(topLayout, Qt::AlignTop);
-    mainLayout->setAlignment(userNameLabel, Qt::AlignHCenter|Qt::AlignTop);
-    mainLayout->setAlignment(iconLabel, Qt::AlignHCenter|Qt::AlignTop);
-
+    mainLayout->setAlignment(userLayout, Qt::AlignTop|Qt::AlignHCenter);
 
     mainLayout->setStretch(1,1);
-
     this->setLayout(mainLayout);
     this->show();
 }

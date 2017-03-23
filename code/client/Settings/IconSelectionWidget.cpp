@@ -4,7 +4,7 @@
 #include "../Other/IconLabel.hpp"
 
 IconSelectionWidget::IconSelectionWidget(SettingsGUI* _parent) : parentS(_parent) {
-    this->setFixedSize(300,200);
+    this->setFixedSize(350,300);
     this->setWindowTitle("Select a new Icon");
     this->setWindowModality(Qt::ApplicationModal);
 
