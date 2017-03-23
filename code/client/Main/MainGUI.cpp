@@ -102,7 +102,6 @@ void MainGUI::handleMenuChoice(int choice) {
 }
 
 void MainGUI::handleGameModeChoice(int choice){
-    showInQueue();
     dialog_game_mode_choice->close();
     dialog_game_mode_choice->deleteLater();
     gameModeChoice = choice;
