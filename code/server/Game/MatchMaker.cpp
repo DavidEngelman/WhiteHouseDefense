@@ -41,8 +41,8 @@ void MatchMaker::get_and_process_command(int socket_fd) {
         std::string action = command.getAction();
 
         if (action == GAME_IN_PROGRESS_REQUEST) {
+            
             handleRequestFromSpectator(socket_fd);
-            communication_over = true;
 
         } else if (action == POP_GAME_REQUEST) {
             const std::string &lol = command.getNextToken();
@@ -71,7 +71,7 @@ void MatchMaker::handleRequestFromSpectator(int socket_fd) {
         stringToSend += gameServer->getMode() + ",";
         stringToSend += gameServer->getAllPlayers();
     }
-
+    
     send_message(socket_fd, stringToSend.c_str());
 }
 
@@ -162,7 +162,6 @@ void MatchMaker::removePlayerFromMatch(PendingMatch &match, int socket) {
         }
     }
     send_message(socket,"removed");
-
 }
 
 

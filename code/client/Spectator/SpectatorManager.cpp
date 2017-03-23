@@ -3,12 +3,14 @@
 #include "SpectatorConsoleUI.hpp"
 #include "../../common/Other/Constants.hpp"
 
-SpectatorManager::SpectatorManager(int port, App *master_app) :
+SpectatorManager::SpectatorManager(int port, App *master_app, bool fromFriendList) :
         NetworkedManager(port, master_app) {
-    if (!isConsole) {
-        spectatorUI = new SpectatorGUI(this, master_app->getMainWindow());
-    } else {
-        spectatorUI = new SpectatorConsoleUI(this);
+    if(!fromFriendList) {
+        if (!isConsole) {
+            spectatorUI = new SpectatorGUI(this, master_app->getMainWindow());
+        } else {
+            spectatorUI = new SpectatorConsoleUI(this);
+        }
     }
 }
 
@@ -47,6 +49,7 @@ void SpectatorManager::parse_message_from_server(const std::string &message) {
 }
 
 int SpectatorManager::parseGameInfoAndAddToGames(const std::string &message, int &i) {
+
     std::string str_port, str_mode, str_player;
     GameInfo gameInfo;
 
@@ -93,4 +96,9 @@ SpectatorManager::~SpectatorManager() {
 void SpectatorManager::goToMainMenu() {
     MainManager *mainManager = new MainManager(ACCOUNT_SERVER_PORT, master_app);
     master_app->transition(mainManager);
+}
+
+
+std::vector<GameInfo> SpectatorManager::getGames() {
+    return allGames;
 }

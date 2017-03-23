@@ -21,6 +21,8 @@ public:
     void setMusicFromPath(QString path);
 
     void centerWindow();
+    
+    App* getMasterApp();
 };
 
 

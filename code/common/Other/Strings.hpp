@@ -43,6 +43,8 @@ static const std::string REMOVE_FRIEND = "removeFriend;";
 static const std::string ACCEPT_FRIEND_REQUEST = "acceptFriendRequest;";
 static const std::string DECLINE_FRIEND_REQUEST = "declineFriendRequest;";
 static const std::string GET_PROFILE = "getProfileByUsername;";
+static const std::string GET_STATUS = "getStatus;";
+
 
 // Towers
 static const std::string GUN_TOWER_STR = "GunTower";

@@ -74,6 +74,8 @@ public:
     bool handle_removeFriend(int client_sock_fd, std::string requester, std::string toRemove);
     bool handle_acceptFriendRequest(int client_sock_fd, std::string requester,std::string toAccept );
     bool handle_declineFriendRequest(int client_sock_fd, std::string requester, std::string toDecline);
+    bool handle_getStatus(int client_sock_fd, std::string requester);
+
 
     bool handle_accountUpdate(int client_sock_fd);
 

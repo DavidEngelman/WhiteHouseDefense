@@ -6,12 +6,12 @@
 QPushButton {
                             border: 2px solid darkbrown;
                             padding: 0 8px;
-                            background-image : url(../../qt_ui/game_pictures/buttons/connect.png);
-                            font-family:
-                            verdana 14px;
+                            border-image: url(../../qt_ui/game_pictures/buttons/connect.png);
+
+                            font-family: verdana 14px;
 }
 QPushButton:pressed {
+                            border-image:  url(../../qt_ui/game_pictures/buttons/connectPressed.png);
 
-                            background-image : url(../../qt_ui/game_pictures/buttons/connectPressed.png);
 }
 

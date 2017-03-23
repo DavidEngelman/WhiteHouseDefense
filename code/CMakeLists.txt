@@ -70,10 +70,10 @@ set(CLIENT_FILES client/Other/ClientLauncher.cpp
         client/Spectator/SpectatorUI.cpp
 
         #FRIENDLIST
-        #"client/FriendList/FriendListManager.cpp"
-        #"client/FriendList/FriendListUI.cpp"
-        #client/FriendList/FriendListGUI.cpp
-        #client/FriendList/FriendList.cpp
+        client/FriendList/FriendListManager.cpp
+        client/FriendList/FriendListGUI.cpp
+        client/FriendList/FriendList.cpp
+
 
         #SETTINGS
         client/Settings/SettingsManager.cpp
@@ -128,7 +128,7 @@ set(CLIENT_FILES client/Other/ClientLauncher.cpp
         common/Other/Strings.hpp
         common/Other/Tools.cpp
         client/Other/QHandPointerButton.hpp
-        client/Other/InQueueWidget.cpp)
+        client/Other/InQueueWidget.cpp client/FriendList/FriendListConsoleUI.cpp client/FriendList/FriendListConsoleUI.h)
 
 
 add_executable(client ${CLIENT_FILES})
@@ -195,8 +195,7 @@ add_executable(server ${SERVER_FILES})
 include_directories(/usr/include)
 link_directories(/usr/lib)
 target_link_libraries(server sqlite3)
-target_link_libraries(client crypt)
-target_link_libraries(server crypt)
+
 target_link_libraries(server Threads::Threads)
 target_link_libraries(client Threads::Threads)
 target_link_libraries(client Qt5::Widgets Qt5::Multimedia Qt5::Charts)

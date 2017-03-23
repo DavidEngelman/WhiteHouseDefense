@@ -64,7 +64,7 @@ void AccountServer::get_and_process_command(int client, char* message_buffer) {
         } else if (command_type == "getFriendList" || command_type == "getFriendRequests" ||
                    command_type == "addFriend" || command_type == "removeFriend" ||
                    command_type == "acceptFriendRequest" || command_type == "declineFriendRequest" ||
-                   command_type == "getPendingInvitations") {
+                   command_type == "getPendingInvitations" || command_type == "getStatus") {
 
             FriendListCommand friendListCommand;
             friendListCommand.parse(message_buffer);
@@ -98,6 +98,8 @@ void AccountServer::get_and_process_command(int client, char* message_buffer) {
             } else if (action == "declineFriendRequest") {
 
                 handle_declineFriendRequest(client, friendListCommand.getRequester(), friendListCommand.getReceiver());
+            } else if (action == "getStatus") {
+                handle_getStatus(client, friendListCommand.getRequester());
             }
 
         } else if (command_type == "Update"){
@@ -190,6 +192,7 @@ bool AccountServer::handle_login(Credentials credentials, int client_sock_fd) {
     PlayerConnection player = PlayerConnection(player_id,client_sock_fd);
 
     if (checkCredentials(credentials) && (!is_player_already_connected(player))){
+        player.setUsername(credentials.getUsername());
         add_connected_player(player);
         send_success_id(client_sock_fd, player_id);
         success = true;
@@ -316,6 +319,25 @@ bool AccountServer::handle_removeFriend(int client_sock_fd, std::string requeste
     }
     return success;
 }
+
+bool AccountServer::handle_getStatus(int client_sock_fd, std::string username) {
+    bool connected = false;
+    std::cout<<username;
+    for(PlayerConnection player : getConnectedPlayers()){
+        std::cout<<player.getUsername();
+        if (player.getUsername() == username){
+            connected = true;
+            send_message(client_sock_fd,"1");
+            break;
+        }
+    }
+    if (!connected) {
+        send_message(client_sock_fd, "0");
+    }
+
+    return true;
+}
+
 
 
 std::string AccountServer::vectorTostring(std::vector<std::string> vect) {

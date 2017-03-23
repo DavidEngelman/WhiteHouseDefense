@@ -1,0 +1,84 @@
+QPushButton {
+                            padding: 0 8px;
+                            border-image: url(../../qt_ui/game_pictures/buttons/addFriend.png) ;
+
+                            font-family:
+                            verdana 14px;
+}
+QPushButton:pressed {
+                            border-image: url(../../qt_ui/game_pictures/buttons/addfriendPressed.png) ;
+}
+
+QTabWidget::pane { /* The tab widget frame */
+    border-bottom-right-radius : 10px;
+    border-bottom-left-radius : 10px;
+    border-style :solid ;
+    border-color: gold ;
+    border-width: 2px;
+    background-image: url(../../qt_ui/game_pictures/backgrounds/goldBg.png);
+    width : 250px
+}
+
+
+
+/* Style the tab using the tab sub-control. */
+
+QTabBar::tab {
+    background-image: url(../../qt_ui/game_pictures/backgrounds/goldBg.png);
+    border-bottom-color: gold; /* same as the pane color */
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    padding-left: 10px;
+    padding-right:7px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+
+}
+
+
+QTabBar::tab:selected {
+        padding-left: 7px;
+        padding-right:4px;
+        border-width : 2px;
+        border-bottom-width : 0px;
+        border-style :solid ;
+        border-color: gold ;
+}
+
+QTabBar::tab:!selected {
+    margin-top: 2px; /* make non-selected tabs look smaller */
+}
+
+QLineEdit{
+      height : 50 px
+}
+
+QListWidget{
+    background-image: url(../../qt_ui/game_pictures/backgrounds/goldBg.png);
+    border-bottom-right-radius : 10px;
+    border-bottom-left-radius : 10px;
+    border-width : 2px;
+
+    border-style :solid ;
+    border-color: gold ;
+
+
+    border-width: 2px;
+}
+
+QListWidget::item{
+     padding : 20 px
+}
+
+QTableWidget{
+     background-image: url(../../qt_ui/game_pictures/backgrounds/goldBg.png);
+
+}
+QTableWidget::item{
+
+    border-top-width : 1px;
+    border-bottom-width : 1px;
+    border-style :solid ;
+    border-color: gold ;
+}
+

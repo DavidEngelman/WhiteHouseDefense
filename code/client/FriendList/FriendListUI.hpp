@@ -2,15 +2,18 @@
 #define FRIENDLISTUI_HPP
 
 #include <iostream>
-#include "../Abstract/AbstractUI.hpp"
+#include "FriendListManager.hpp"
 
-class FriendListUI : public AbstractUI {
-	
+class FriendListManager;
+
+class FriendListUI : public virtual AbstractUI {
+protected:
+	FriendListManager* manager;
 public:
-	void display();
-	void displayFriendList(std::string friendlist, std::string command);
-    int select();
-	std::string askUsername();
+	FriendListUI(FriendListManager* manager) : manager(manager) {};
+	virtual ~FriendListUI() = default;
+	virtual void display() = 0;
+	virtual void displayError() = 0;
 };
 
 

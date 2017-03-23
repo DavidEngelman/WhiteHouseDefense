@@ -23,3 +23,10 @@ std::vector<std::string> FriendList::getFriendList() {
     return friendlist;
 }
 
+
+
+
+
+
+
+

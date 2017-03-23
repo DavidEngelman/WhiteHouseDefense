@@ -1,4 +1,5 @@
 #include "PNJ.hpp"
+#include <cstdlib>
 
 
 PNJ::PNJ(Position position, int healthPoints, int direction) :

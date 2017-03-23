@@ -2,7 +2,7 @@
 #include "MainManager.hpp"
 #include "../Profile/ProfileManager.hpp"
 #include "../Ranking/RankingManager.hpp"
-//#include "../FriendList/FriendListManager.hpp"
+#include "../FriendList/FriendListManager.hpp"
 #include "../Spectator/SpectatorManager.hpp"
 #include "MainGUI.hpp"
 #include "MainConsoleUI.hpp"
@@ -40,8 +40,8 @@ void MainManager::handleUserMenuChoice() {
             master_app->transition(profile);
             break;
         } case 4: {
-            //FriendListManager *friendListManager = new FriendListManager(ACCOUNT_SERVER_PORT, master_app);
-            //master_app->transition(friendListManager);
+            FriendListManager *friendListManager = new FriendListManager(ACCOUNT_SERVER_PORT, master_app);
+            friendListManager->run();
             break;
         } case 5: {
             RankingManager *rankingManager = new RankingManager(ACCOUNT_SERVER_PORT, master_app);

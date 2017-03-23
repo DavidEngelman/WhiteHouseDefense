@@ -32,7 +32,6 @@ PlayerConnection::~PlayerConnection() {
 //    close(socket_fd);
 }
 
-
 std::string & PlayerConnection::getUsername() {
     return username;
 }

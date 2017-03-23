@@ -9,3 +9,7 @@ void AbstractManager::setMusicFromPath(QString path) {
 void AbstractManager::centerWindow() {
     master_app->centerWindow();
 }
+
+App* AbstractManager::getMasterApp() {
+    return master_app;
+}

@@ -22,7 +22,11 @@ void AbstractGUI::setBackgroundFromPath(QString backgroundPath) {
     backgroundImage = backgroundImage.scaled(size(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
     QPalette palette;
     palette.setBrush(QPalette::Background, backgroundImage);
-    parent->setPalette(palette);
+    if (parent != nullptr) {
+        parent->setPalette(palette);
+    }else{
+        this->setPalette(palette);
+    }
 }
 
 void AbstractGUI::destroy() {

@@ -14,16 +14,14 @@ class SpectatorUI;
 
 class SpectatorManager : public NetworkedManager {
 private:
-
     std::vector<GameInfo> allGames;
     SpectatorUI *spectatorUI;
 
-    void getGamesFromMatchMaker();
 
     void parse_message_from_server(const std::string &message);
 
 public:
-    SpectatorManager(int port, App *master_app);
+    SpectatorManager(int port, App *master_app, bool fromFriendList = false);
 
     ~SpectatorManager();
 
@@ -34,6 +32,11 @@ public:
     void connectToGame(GameInfo &, std::string &);
 
     int parseGameInfoAndAddToGames(const std::string &message, int &i);
+
+    std::vector<GameInfo> getGames();
+
+    void getGamesFromMatchMaker();
+
 };
 
 
