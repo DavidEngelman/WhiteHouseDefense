@@ -11,65 +11,34 @@
 #include "../../common/Tower/MissileTower.hpp"
 
 
-GameManager::GameManager(int socket, App *app) :
-        AbstractManager(app),
-        server_socket(socket),
-        isSupporter(false)
-        //gameUI(getMapSeedFromServer()), // L'ordre est important parce qu'on fait des
-        //quadrant(getQuadrantFromServer()) // recv. Ne pas changer l'ordre!
-{
-    if (!isConsole) {
-        gameUI = new GameGUI(false,getMapSeedFromServer(), this);
-    } else {
-        gameUI = new GameConsoleUI(getMapSeedFromServer(),this);
-    }
-
-    quadrant = getQuadrantFromServer();
-
-    getInitialGameStateFromServer();
-
-    timer = new QTimer();
-    QObject::connect(timer, SIGNAL(timeout()), this, SLOT(updateMap()));
-    timer->start(10);
-}
+GameManager::GameManager(int socket, App *app) : GameManager(socket, false, app) {};
 
 GameManager::GameManager(int socket, bool _isSupporter, App *app) :
         AbstractManager(app),
         server_socket(socket),
         isSupporter(_isSupporter)
-        //gameUI(getMapSeedFromServer()), // L'ordre est important parce qu'on fait des
-        //quadrant(getQuadrantFromServer()) // recv. Ne pas changer l'ordre!
 {
     if (!isConsole) {
-        gameUI = new GameGUI(isSupporter,getMapSeedFromServer(), this);
+        gameUI = new GameGUI(isSupporter, getMapSeedFromServer(), this);
     } else {
-        gameUI = new GameConsoleUI(getMapSeedFromServer(),this);
+        gameUI = new GameConsoleUI(isSupporter, getMapSeedFromServer(),this);
     }
 
     quadrant = getQuadrantFromServer();
     getInitialGameStateFromServer();
-
-    timer = new QTimer();
-    QObject::connect(timer, SIGNAL(timeout()), this, SLOT(updateMap()));
-    timer->start(10);
 }
 
-void GameManager::comeBackToMenu() { // À appeler quand la partie est terminée
-    MainManager *menu_manager = new MainManager(ACCOUNT_SERVER_PORT, master_app);
-    master_app->transition(menu_manager);
-
+void GameManager::run() {
+    QTimer::singleShot(10, this, SLOT(updateMap()));
 }
 
 void GameManager::updateMap() {
-
-    if (!gameState.getIsGameOver()){
-
-        char server_msg_buff[BUFFER_SIZE];
+    char server_msg_buff[BUFFER_SIZE];
+    if (!gameState.getIsGameOver()) {
         receive_message(server_socket, server_msg_buff);
         if (strncmp(server_msg_buff, RECEIVE_MESSAGE_STRING.c_str(), RECEIVE_MESSAGE_STRING.length()) == 0) {
             Command command;
             command.parse(server_msg_buff);
-            std::cout << server_msg_buff << std::endl;
             int messageSize = command.getNextInt();
             const std::string &message = command.getTokenWithSize(messageSize);
             const std::string &sender = command.getNextToken();
@@ -78,18 +47,32 @@ void GameManager::updateMap() {
             std::cout << server_msg_buff << std::endl;
             gameUI->adPopUp();
         } else if (strcmp(server_msg_buff, PLACING_TOWER) == 0) {
+            gameUI->handlePlaceTowerPhaseStart();
             if (!isSupporter) gameUI->disableSpells();
-        } else if (strcmp(server_msg_buff, PLACING_TOWER) != 0 && strcmp(server_msg_buff, WAVE) != 0) {
+        } else if (strcmp(server_msg_buff, WAVE) == 0) {
+            gameUI->handleWaveStart();
             if (!isSupporter) gameUI->enableSpells();
+        } else {
             unSerializeGameState(server_msg_buff);
         }
+
+        // TODO: console mode only this when receiving a game state, make sure it still works
+        // if it does it every time
         gameUI->display(gameState, quadrant);
         gameUI->displayPlayerInfos(gameState, quadrant);
+        QTimer::singleShot(10, this, SLOT(updateMap()));
     } else {
-        timer->stop();
-        gameUI->displayGameOver(gameState);
+        // Va declencer un callback vers comeBackToMenu() quand l'utilisateur a fini de voir les stats
+        gameUI->displayGameOverAndStats(gameState);
     }
 }
+
+void GameManager::comeBackToMenu() { // À appeler quand la partie est terminée
+    MainManager *menu_manager = new MainManager(ACCOUNT_SERVER_PORT, master_app);
+    master_app->transition(menu_manager);
+}
+
+
 
 bool GameManager::isTowerInPosition(GameState &gameState, Position towerPos){
     bool validity = false;
@@ -166,82 +149,7 @@ void GameManager::sendUpgradeRequest(Position towerPos) {
 
 
 
-void GameManager::run() {
-    char server_msg_buff[BUFFER_SIZE];
 
-    if (isConsole) {
-        gameUI->display(gameState, quadrant);
-
-        if (!isSupporter)
-            gameUI->displayPlayerInfos(gameState, quadrant);
-        else
-            gameUI->displayInfoForSupporter(gameState, 0);
-
-        while (!gameState.getIsGameOver()) {
-            receive_message(server_socket, server_msg_buff);
-
-            //PHASE ENTRE LES WAVES
-            if (strcmp(server_msg_buff, PLACING_TOWER) == 0) {
-
-                if (is_alive() && !isSupporter) {
-                    inputThread = pthread_create(&thr, NULL, &GameConsoleUI::staticInputThread, gameUI);
-                } else {
-                    gameUI->display(gameState, quadrant);
-                    if (is_alive() && !isSupporter) {
-                        inputThread = pthread_create(&thr, NULL, &GameConsoleUI::staticInputThread, gameUI);
-                    } else {
-                        gameUI->display(gameState, quadrant);
-                    }
-
-                    if (isSupporter) {
-                        gameUI->displayPlayersPlacingTowersMessage();
-                    } else {
-                        gameUI->displayDeadMessage();
-                    }
-                }
-
-
-                //DEBUT D'UNE WAVE
-            } else if (strcmp(server_msg_buff, WAVE) == 0) {
-                if (!isSupporter) {
-                    inputThread = pthread_cancel(thr);
-                }
-            }
-                // RECEVOIR MESSAGE DU CHAT DUN JOUEUR
-            else if (strncmp(server_msg_buff, RECEIVE_MESSAGE_STRING.c_str(), RECEIVE_MESSAGE_STRING.length()) == 0) {
-                Command command;
-                command.parse(server_msg_buff);
-                int messageLength = command.getNextInt();
-                const std::string& message = command.getTokenWithSize(messageLength);
-                const std::string& sender = command.getNextToken();
-                gameUI->addChatMessage(message, sender);
-            }
-
-                //PHASE OU LA WAVE SE DEPLACE
-            else {
-                unSerializeGameState(server_msg_buff);
-                gameUI->display(gameState, quadrant);
-
-                if (!isSupporter) {
-                    if (is_alive()) {
-                        gameUI->displayPlayerInfos(gameState, quadrant);
-                    } else {
-                        gameUI->displayDeadMessage();
-                    }
-                } else
-                    gameUI->displayInfoForSupporter(gameState, 0);
-            }
-        }
-
-        //FIN DE PARTIE
-        gameUI->displayGameOver(gameState);
-        // Menu to come back to main menu (or make another game of the same type ?)
-        comeBackToMenu();
-    } else {
-        updateMap();
-        //gameUI->displayTowerShop();
-    }
-}
 
 void GameManager::unSerializeGameState(char* seriarlizedGamestate){
     gameState = GameState();
@@ -482,7 +390,7 @@ void GameManager::unSerializePNJ(std::string serialized_pnj, Wave *wave) {
     wave->addPNJ(*pnj);
 }
 
-bool GameManager::is_alive() {
+bool GameManager::isAlive() {
     bool gameNotInitialized = gameState.getPlayerStates().size() == 0;
     if (gameNotInitialized) return true;
 
