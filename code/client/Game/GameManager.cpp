@@ -48,6 +48,10 @@ GameManager::GameManager(int socket, bool _isSupporter, App *app) :
 
     quadrant = getQuadrantFromServer();
     getInitialGameStateFromServer();
+
+    timer = new QTimer();
+    QObject::connect(timer, SIGNAL(timeout()), this, SLOT(updateMap()));
+    timer->start(10);
 }
 
 void GameManager::comeBackToMenu() { // À appeler quand la partie est terminée

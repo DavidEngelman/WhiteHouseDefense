@@ -126,6 +126,8 @@ public:
     void disableTowerShop();
     void enableTowerShop();
 
+    bool getIsSupporterMode() const;
+
     void displayDeleteAndUpgradeBox();
 
     void addChatMessage(const std::string &message, const std::string &sender) override;

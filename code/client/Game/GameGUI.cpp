@@ -703,6 +703,10 @@ void GameGUI::goToMenu() {
 
 }
 
+bool GameGUI::getIsSupporterMode() const {
+    return isSupporterMode;
+}
+
 
 
 

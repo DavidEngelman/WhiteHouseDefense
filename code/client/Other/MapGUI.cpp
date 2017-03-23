@@ -115,14 +115,17 @@ void MapGUI::mousePressEvent(QMouseEvent* event) {
     Position pos = Position(event->x()/TILES_SIZE, event->y()/TILES_SIZE);
     if (highlighted == pos) {
         highlighted = Position(-1, -1); // Unselect the cell
-        gameGUI->disableTowerShop();
-        gameGUI->disableDeleteAndUpgradeBox();
-    } else {
-        highlighted = pos;
-        if (isObstacle(pos) or isPath(pos) or isBase(pos)) {
+        if (!gameGUI->getIsSupporterMode()) {
             gameGUI->disableTowerShop();
             gameGUI->disableDeleteAndUpgradeBox();
         }
-        else gameGUI->enableTowerShop();
+    } else {
+        highlighted = pos;
+        if (!gameGUI->getIsSupporterMode()) {
+            if (isObstacle(pos) or isPath(pos) or isBase(pos)) {
+                gameGUI->disableTowerShop();
+                gameGUI->disableDeleteAndUpgradeBox();
+            } else gameGUI->enableTowerShop();
+        }
     }
 }
