@@ -21,7 +21,7 @@ void WelcomeGUI::display() {
     connect(registerButton, SIGNAL (clicked()), this, SLOT (openRegister()));
 
     quitButton = new QHandPointerButton("QUIT", 212, 45, fields);
-    connect(quitButton, SIGNAL(clicked()), this, SLOT(close()));
+    connect(quitButton, SIGNAL(clicked()), this, SLOT(quit()));
 
 
     fieldsLayout->addRow(loginButton);
@@ -52,6 +52,11 @@ void WelcomeGUI::setTheme() {
 
     setStylesheetFromPath("../../qt_ui/americanMain.qss");
     setBackgroundFromPath("../../qt_ui/game_pictures/backgrounds/americanBg");
+}
+
+void WelcomeGUI::quit(){
+    exit(0);
+
 }
 
 WelcomeGUI::~WelcomeGUI() {}

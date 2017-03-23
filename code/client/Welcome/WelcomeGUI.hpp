@@ -31,8 +31,9 @@ private:
 public slots:
 
     void openLogin();
-
     void openRegister();
+    void quit();
+
 
 public:
     WelcomeGUI(WelcomeManager *manager, QWidget *_parent);
@@ -40,6 +41,7 @@ public:
     virtual ~WelcomeGUI();
 
     void display() override;
+
 };
 
 

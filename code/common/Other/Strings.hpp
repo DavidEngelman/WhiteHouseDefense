@@ -33,7 +33,7 @@ static const std::string CHANGE_USERNAME = "CHANGEUSERNAME";
 static const std::string CHANGE_PASSWORD = "CHANGEPASSWORD";
 static const std::string CHANGE_ICON = "CHANGEICON";
 
-static const std::string MESSAGES[3] = {"GG Easy", "Report", "J'aime les patates"};
+static const std::string MESSAGES[3] = {"GG Easy", "Make America great again", "J'aime les patates"};
 
 static const std::string GET_FRIENDLIST = "getFriendList;";
 static const std::string GET_FRIEND_REQUESTS = "getFriendRequests;";
