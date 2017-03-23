@@ -13,7 +13,7 @@
 #include "QListWidget"
 #include "QFormLayout"
 #include "QPushButton"
-#include "../other/QHandPointerButton.hpp"
+#include "../Other/QHandPointerButton.hpp"
 #include <QScrollArea>
 #include "QLabel"
 #include "QLineEdit"

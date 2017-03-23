@@ -114,7 +114,6 @@ App::~App() {
         std::string message = "Exit," + std::to_string(playerId) + ";";
         send_message(socket, message.c_str());
     }
-    std::cout << "App deleted" << std::endl;
 }
 
 void App::launchSupporter(int gameServerSocket ) {

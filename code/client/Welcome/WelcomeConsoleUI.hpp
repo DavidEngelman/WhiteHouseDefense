@@ -14,6 +14,7 @@ public:
     void display() override;
 
     int select();
+    void handleSelect(int choice);
 
 };
 

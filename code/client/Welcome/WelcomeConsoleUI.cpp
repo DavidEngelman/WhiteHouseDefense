@@ -10,6 +10,7 @@ void WelcomeConsoleUI::display() {
     std::cout << "   |       2. Register                  |   " << std::endl;
     std::cout << "   |       3. Exit                      |   " << std::endl;
     std::cout << "   ======================================   " << std::endl;
+    select();
 }
 
 int WelcomeConsoleUI::select() {
@@ -26,5 +27,16 @@ int WelcomeConsoleUI::select() {
         std::cin.ignore();
         std::cin >> choice;
     }
-    return choice;
+    handleSelect(choice);
+}
+
+void WelcomeConsoleUI::handleSelect(int choice) {
+    if (choice == 1){
+        manager->goToLogin();
+    } else if (choice == 2) {
+        manager->goToRegister();
+    } else {
+        exit(0);
+    }
+
 }

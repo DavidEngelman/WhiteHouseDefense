@@ -195,6 +195,8 @@ add_executable(server ${SERVER_FILES})
 include_directories(/usr/include)
 link_directories(/usr/lib)
 target_link_libraries(server sqlite3)
+target_link_libraries(client crypt)
+target_link_libraries(server crypt)
 
 target_link_libraries(server Threads::Threads)
 target_link_libraries(client Threads::Threads)
