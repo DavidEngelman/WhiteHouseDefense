@@ -503,12 +503,14 @@ bool GameManager::upgradeTower(Position toUpgrade) {
 }
 
 std::string GameManager::getWinner() {
+    std::string winner = "";
     for (PlayerState &player : gameState.getPlayerStates()) {
         if (player.getIsWinner())
-            return player.getUsername();
+            winner += player.getUsername() + " ";
     }
-
-    return "No Winner";
+    if (winner.size() != 0)
+        return winner;
+    else return  "No winner";
 }
 
 /* In-Game Chat */
