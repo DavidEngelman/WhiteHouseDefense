@@ -5,8 +5,7 @@
 FriendListManager::FriendListManager(int port, App *my_master_app) :
         NetworkedManager(port, my_master_app), friendList(getRequestServer(GET_FRIENDLIST, master_app->getUsername())),
         friendRequests(getRequestServer(GET_FRIEND_REQUESTS, master_app->getUsername())),
-        pendingInvitations(getRequestServer(GET_PENDING_INVITATIONS, master_app->getUsername())),
-        username(master_app->getUsername()), server_socketSpectate(init_connection_to_server(master_app->getIp(),MATCHMAKER_SERVER_PORT))
+        pendingInvitations(getRequestServer(GET_PENDING_INVITATIONS, master_app->getUsername()))
 {
     if(false){
         friendListUI = new FriendListConsoleUI(this);
@@ -74,7 +73,7 @@ void FriendListManager::updateFriendLists() {
 }
 
 std::string FriendListManager::getUsername() {
-    return username;
+    return master_app->getUsername();
 }
 
 std::string FriendListManager::getStatus(std::string username) {

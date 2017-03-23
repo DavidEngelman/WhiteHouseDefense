@@ -16,11 +16,9 @@ class FriendListManager: public NetworkedManager {
 
 private:
 	FriendListUI *friendListUI;
-	std::string username;
 	FriendList friendList;
 	FriendList friendRequests;
 	FriendList pendingInvitations;
-	int server_socketSpectate;
 
 
 public:
@@ -35,7 +33,6 @@ public:
 	FriendList getFriendList(){return friendList;};
 	FriendList getFriendRequests(){return friendRequests;};
 	FriendList getPendingInvitations(){return pendingInvitations;};
-	bool isInGame(std::string username);
 
 	void run() override;
 
