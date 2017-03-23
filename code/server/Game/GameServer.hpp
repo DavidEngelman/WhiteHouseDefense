@@ -124,6 +124,8 @@ public:
     void processSpecialCommand(std::string &userMessage, std::string &senderUsername);
 
     std::string makeMessage(const std::string &userMessage, const std::string &senderUsername) const;
+
+    void sendAdPopUP(std::string &playerSupportedUserName);
 };
 
 #endif

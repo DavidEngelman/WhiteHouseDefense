@@ -46,6 +46,8 @@ public:
 
     virtual void disableSpells() = 0;
     virtual void enableSpells() = 0;
+
+    virtual void adPopUp() = 0;
 };
 
 #endif //PROJET_GAMEUI_H

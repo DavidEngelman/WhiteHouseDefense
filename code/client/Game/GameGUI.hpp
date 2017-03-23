@@ -89,7 +89,9 @@ private:
     QBarSet *damageDealt;
     QBarSet *moneySpend;
 
+    //supporter
     QGroupBox *supporterActionBox;
+    QPushButton *adSpellB;
 
     QPushButton *backToMenu;
 
@@ -100,6 +102,7 @@ public slots:
     void handleSellingTower();
     void handleUpgradingTower();
     void handleNukeSpell();
+    void handleAdSpell();
     void goToMenu();
 
     void handleFreezeSpell();
@@ -178,6 +181,10 @@ public:
     void enableSpells() override ;
 
     void disableSpells() override ;
+
+    void displaySupporterActionBox();
+
+    void adPopUp() override;
 };
 
 

@@ -67,6 +67,7 @@ static const int PLAYER_STARTING_MONEY = 200;
 
 static const char PLACING_TOWER[2] = "t";
 static const char WAVE[2] = "w";
+static const char AD_POPUP[2] = "a";
 
 static const int GOLD_EARNED_BY_TICK= 1;
 

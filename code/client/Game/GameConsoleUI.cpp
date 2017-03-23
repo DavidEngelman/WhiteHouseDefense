@@ -263,4 +263,6 @@ void GameConsoleUI::enableFreezeSpell() {
 void GameConsoleUI::enableSpells() {}
 void GameConsoleUI::disableSpells() {}
 
+void GameConsoleUI::adPopUp() {}
+
 

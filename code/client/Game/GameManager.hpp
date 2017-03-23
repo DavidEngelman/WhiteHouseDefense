@@ -112,6 +112,10 @@ public slots:
 
 
     std::string getWinner();
+
+    void launchAdSpell();
+
+    void sendAdSpellRequest();
 };
 
 #endif

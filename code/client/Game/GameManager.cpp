@@ -74,13 +74,15 @@ void GameManager::updateMap() {
             const std::string &message = command.getTokenWithSize(messageSize);
             const std::string &sender = command.getNextToken();
             gameUI->addChatMessage(message, sender);
+        }  else if (strcmp(server_msg_buff, AD_POPUP) == 0) {
+            std::cout << server_msg_buff << std::endl;
+            gameUI->adPopUp();
         } else if (strcmp(server_msg_buff, PLACING_TOWER) == 0) {
             if (!isSupporter) gameUI->disableSpells();
         } else if (strcmp(server_msg_buff, PLACING_TOWER) != 0 && strcmp(server_msg_buff, WAVE) != 0) {
             if (!isSupporter) gameUI->enableSpells();
             unSerializeGameState(server_msg_buff);
         }
-
         gameUI->display(gameState, quadrant);
         gameUI->displayPlayerInfos(gameState, quadrant);
     } else {
@@ -538,7 +540,6 @@ int GameManager::getQuadrant() {
 
 bool GameManager::placeGunTower(Position towerPos) {
     if (checkValidity(towerPos, gameState, GUN_TOWER_STR)) {
-        //gameState.addTower(new GunTower(Position(towerPos.getX(), towerPos.getY()), 1), quadrant);
         sendBuyRequest(towerPos, GUN_TOWER_STR);
         return true;
     }
@@ -548,7 +549,6 @@ bool GameManager::placeGunTower(Position towerPos) {
 
 bool GameManager::placeSniperTower(Position towerPos) {
     if (checkValidity(towerPos, gameState, SNIPER_TOWER_STR)) {
-        //gameState.addTower(new SniperTower(Position(towerPos.getX(), towerPos.getY()),1), quadrant);
         sendBuyRequest(towerPos, SNIPER_TOWER_STR);
         return true;
     }
@@ -558,7 +558,6 @@ bool GameManager::placeSniperTower(Position towerPos) {
 
 bool GameManager::placeShockTower(Position towerPos) {
     if (checkValidity(towerPos, gameState, SHOCK_TOWER_STR)) {
-        //gameState.addTower(new ShockTower(Position(towerPos.getX(), towerPos.getY()),1), quadrant);
         sendBuyRequest(towerPos, SHOCK_TOWER_STR);
         return true;
     }
@@ -568,7 +567,6 @@ bool GameManager::placeShockTower(Position towerPos) {
 
 bool GameManager::placeMissileTower(Position towerPos) {
     if (checkValidity(towerPos, gameState, MISSILE_TOWER_STR)) {
-        //gameState.addTower(new MissileTower(Position(towerPos.getX(), towerPos.getY()),1), quadrant);
         sendBuyRequest(towerPos, MISSILE_TOWER_STR);
         return true;
     }
@@ -578,7 +576,6 @@ bool GameManager::placeMissileTower(Position towerPos) {
 
 bool GameManager::sellTower(Position toSell) {
     if (isTowerInPosition(getGameState(), toSell)) {
-        //gameState.deleteTower(toSell, quadrant);
         sendSellRequest(toSell);
         return true;
     }
@@ -635,6 +632,10 @@ void GameManager::launchFreezeSpell(){
     gameUI->disableFreezeSpell();
 }
 
+void GameManager::launchAdSpell(){
+    sendAdSpellRequest();
+}
+
 void GameManager::sendNuclearRequest() {
     std::string message = NUCLEAR_BOMB_COMMAND_STRING + ","
                           + std::to_string(quadrant) + ";";
@@ -645,6 +646,13 @@ void GameManager::sendFreezeSpellRequest() {
     std::string message = FREEZE_PNJS_COMMAND_STRING + ","
                           + std::to_string(quadrant) + ";";
     send_message(server_socket, message.c_str());
+}
+
+void GameManager::sendAdSpellRequest() {
+    std::string message = AD_SPELL_COMMAND_STRING + ","
+                          + gameState.getPlayerStates()[quadrant].getUsername() + ";";
+    send_message(server_socket, message.c_str());
+    std::cout << message << " sended" << std::endl;
 }
 
 GameManager::~GameManager(){

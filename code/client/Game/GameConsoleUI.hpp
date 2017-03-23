@@ -61,6 +61,8 @@ public:
 	void disableSpells() override;
 	void enableSpells() override;
 
+	void adPopUp() override;
+
 	void sendPredefinedMessage();
 
 	void displayPredefinedMessages();

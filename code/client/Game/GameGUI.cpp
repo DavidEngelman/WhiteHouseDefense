@@ -689,16 +689,47 @@ void GameGUI::displayInfoForSupporter(GameState &gameState, int quadrant) {
 
 void GameGUI::setUpSpellsBoxForSupporter() {
     supporterActionBox = new QGroupBox();
-    //displaySupporterActionBox();
+    displaySupporterActionBox();
     actionLayout->addWidget(supporterActionBox);
 }
 
+void GameGUI::displaySupporterActionBox() {
+    int scl = 10;
+    QSize size = QSize(1400/scl, 1060/scl);
 
+    adSpellB = new QPushButton;
+    adSpellB->setIcon(QIcon("../../qt_ui/game_pictures/towers/missiletower.png"));
+    adSpellB->setIconSize(size);
+    adSpellB->setEnabled(true);
+
+    QGridLayout *layout = new QGridLayout;
+    layout->addWidget(adSpellB, 0, 0);
+
+    supporterActionBox->setLayout(layout);
+
+    QObject::connect(adSpellB, SIGNAL(clicked()), this, SLOT(handleAdSpell()));
+
+}
+
+void GameGUI::handleAdSpell() {
+    manager->launchAdSpell();
+}
+
+void GameGUI::adPopUp() {
+    std::cout << "displaying popUp" << std::endl;
+    QWidget *popUpWindow = new QWidget;
+    popUpWindow->setFixedSize(500,500);
+    QVBoxLayout *adLayout = new QVBoxLayout;
+    QLabel *adPictureLabel = new QLabel;
+    adPictureLabel->setPixmap(QPixmap("../../qt_ui/game_pictures/ads/loreal.jpg"));
+    adLayout->addWidget(adPictureLabel);
+    popUpWindow->setLayout(adLayout);
+    popUpWindow->show();
+}
 
 void GameGUI::goToMenu() {
     endofGameWidget->close();
     endofGameWidget->deleteLater();
-    std::cout << "Close and DeleteLater of the endGameWidget done" << std::endl;
     manager->comeBackToMenu();
 
 }

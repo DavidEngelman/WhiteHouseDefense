@@ -123,7 +123,7 @@ void GameServer::getAndProcessPlayerInput() {
 void GameServer::getAndProcessUserInput(int clientSocketFd, char *buffer) {
     if (receive_message(clientSocketFd, buffer) != -1) {
         std::string command_type = get_command_type(buffer);
-
+        std::cout << command_type << std::endl;
         if (command_type == PLACE_TOWER_COMMAND_STRING) {
             TowerCommand command;
             command.parse(buffer);
@@ -158,6 +158,12 @@ void GameServer::getAndProcessUserInput(int clientSocketFd, char *buffer) {
             command.parse(buffer);
             int quadrant = command.getNextInt();
             gameEngine->freezeWave(quadrant);
+        } else if (command_type == AD_SPELL_COMMAND_STRING){
+            std::cout << "received AD_SPELL_COMMAND" << std::endl;
+            Command command;
+            command.parse(buffer);
+            std::string playerSupportedUserName = command.getNextToken();
+            sendAdPopUP(playerSupportedUserName);
         }
     } else {
         removeClosedSocketFromSocketLists(clientSocketFd);
@@ -169,6 +175,17 @@ void GameServer::sendMessageToOtherPlayers(std::string &userMessage, std::string
     for (PlayerConnection &playerConnection : playerConnections) {
         int socketFd = playerConnection.getSocketFd();
         send_message(socketFd, message.c_str());
+    }
+}
+
+void GameServer::sendAdPopUP(std::string &playerSupportedUserName) {
+    std::string message = AD_POPUP;
+    for (PlayerConnection &playerConnection : playerConnections) {
+        if (playerConnection.getUsername() != playerSupportedUserName){
+            int socketFd = playerConnection.getSocketFd();
+            send_message(socketFd, message.c_str());
+            std::cout << "sended popUp" << std::endl;
+        }
     }
 }
 
@@ -185,6 +202,11 @@ int GameServer::getReadableReadableSocket(int timeLeft) {
     std::vector<int> open_sockets;
     for (PlayerConnection &playerConnection: playerConnections) {
         open_sockets.push_back(playerConnection.getSocketFd());
+    }
+    std::cout <<"just before for loop" << std::endl;
+    for (int &supporter: supportersSockets) {
+        std::cout << "supp socket " << supporter << std::endl;
+        open_sockets.push_back(supporter);
     }
     int socketIndex = get_readable_socket_index_with_timeout(open_sockets.data(), open_sockets.size(), timeLeft);
     return open_sockets[socketIndex];
