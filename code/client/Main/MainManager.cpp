@@ -66,7 +66,6 @@ void MainManager::handleGameModeChoice() {
         master_app->launchMatchmaking(gameMode);
         mainUI->showInQueue();
     } else { /* Retour au menu principal */
-        // TODO: close previous window
         run();
     }
 }
