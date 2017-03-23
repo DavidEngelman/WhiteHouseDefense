@@ -11,34 +11,12 @@
 #include "../../common/Tower/MissileTower.hpp"
 
 
-GameManager::GameManager(int socket, App *app) :
-        AbstractManager(app),
-        server_socket(socket),
-        isSupporter(false)
-        //gameUI(getMapSeedFromServer()), // L'ordre est important parce qu'on fait des
-        //quadrant(getQuadrantFromServer()) // recv. Ne pas changer l'ordre!
-{
-    if (!isConsole) {
-        gameUI = new GameGUI(false,getMapSeedFromServer(), this);
-    } else {
-        gameUI = new GameConsoleUI(getMapSeedFromServer(),this);
-    }
-
-    quadrant = getQuadrantFromServer();
-
-    getInitialGameStateFromServer();
-
-    timer = new QTimer();
-    QObject::connect(timer, SIGNAL(timeout()), this, SLOT(updateMap()));
-    timer->start(10);
-}
+GameManager::GameManager(int socket, App *app) : GameManager(socket, false, app) {};
 
 GameManager::GameManager(int socket, bool _isSupporter, App *app) :
         AbstractManager(app),
         server_socket(socket),
         isSupporter(_isSupporter)
-        //gameUI(getMapSeedFromServer()), // L'ordre est important parce qu'on fait des
-        //quadrant(getQuadrantFromServer()) // recv. Ne pas changer l'ordre!
 {
     if (!isConsole) {
         gameUI = new GameGUI(isSupporter,getMapSeedFromServer(), this);
@@ -49,9 +27,6 @@ GameManager::GameManager(int socket, bool _isSupporter, App *app) :
     quadrant = getQuadrantFromServer();
     getInitialGameStateFromServer();
 
-    timer = new QTimer();
-    QObject::connect(timer, SIGNAL(timeout()), this, SLOT(updateMap()));
-    timer->start(10);
 }
 
 void GameManager::comeBackToMenu() { // À appeler quand la partie est terminée
@@ -165,6 +140,9 @@ void GameManager::sendUpgradeRequest(Position towerPos) {
 
 void GameManager::run() {
     char server_msg_buff[BUFFER_SIZE];
+    timer = new QTimer();
+    QObject::connect(timer, SIGNAL(timeout()), this, SLOT(updateMap()));
+    timer->start(10);
 
     if (isConsole) {
         gameUI->display(gameState, quadrant);
