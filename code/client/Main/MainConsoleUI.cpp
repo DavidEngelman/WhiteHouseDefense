@@ -1,6 +1,6 @@
 
 #include "MainConsoleUI.hpp"
-#include "../Drawing.hpp"
+#include "../Other/Drawing.hpp"
 
 MainConsoleUI::MainConsoleUI(MainManager *manager) : MainUI(manager) {}
 

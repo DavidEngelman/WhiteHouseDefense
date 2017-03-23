@@ -1,12 +1,12 @@
 #ifndef LOGINMANAGER_H
 #define LOGINMANAGER_H
 
-#include "../NetworkedManager.hpp"
+#include "../Other/NetworkedManager.hpp"
 #include "LoginUI.hpp"
-#include "../../common/Networking.hpp"
+#include "../../common/Other/Networking.hpp"
 #include "../Main/MainManager.hpp"
-#include "../../common/Credentials.hpp"
-#include "../App.hpp"
+#include "../../common/Other/Credentials.hpp"
+#include "../Other/App.hpp"
 
 
 class LoginUI;

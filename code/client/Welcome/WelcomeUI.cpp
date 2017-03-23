@@ -1,6 +1,6 @@
 
 #include "WelcomeUI.hpp"
-#include "../Drawing.hpp"
+#include "../Other/Drawing.hpp"
 
 void WelcomeUI::display() {
     /*Show user's menu*/

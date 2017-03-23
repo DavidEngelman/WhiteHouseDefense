@@ -1,9 +1,9 @@
 #include "SettingsManager.hpp"
 #include "SettingsGUI.hpp"
 #include "SettingsConsoleUI.hpp"
-#include "../../common/Strings.hpp"
-#include "../../common/Tools.hpp"
-#include "../../common/Constants.hpp"
+#include "../../common/Other/Strings.hpp"
+#include "../../common/Other/Tools.hpp"
+#include "../../common/Other/Constants.hpp"
 
 SettingsManager::SettingsManager (int port, App *my_app) :
         NetworkedManager(port, my_app) {

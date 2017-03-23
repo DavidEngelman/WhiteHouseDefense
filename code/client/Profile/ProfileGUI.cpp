@@ -3,7 +3,7 @@
 #include <QtWidgets/QFormLayout>
 #include <QtWidgets/QMessageBox>
 #include "ProfileGUI.hpp"
-#include "../QHandPointerButton.hpp"
+#include "../Other/QHandPointerButton.hpp"
 
 ProfileGUI::ProfileGUI(ProfileManager *manager, QWidget* _parent) : AbstractGUI(_parent), ProfileUI(manager),
                                                                     usernameT(new QString("No Username")), victoriesT(new QString),

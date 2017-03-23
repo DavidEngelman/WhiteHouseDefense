@@ -1,6 +1,6 @@
 #include <assert.h>
-#include "../../common/Constants.hpp"
-#include "../../common/Message.hpp"
+#include "../../common/Other/Constants.hpp"
+#include "../../common/Other/Message.hpp"
 #include "ProfileManager.hpp"
 #include "ProfileGUI.hpp"
 #include "ProfileConsoleUI.hpp"

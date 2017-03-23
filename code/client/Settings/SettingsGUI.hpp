@@ -4,7 +4,7 @@
 
 #include "../Abstract/AbstractGUI.hpp"
 #include "SettingsUI.hpp"
-#include "../QHandPointerButton.hpp"
+#include "../Other/QHandPointerButton.hpp"
 
 class SettingsGUI : public AbstractGUI, public SettingsUI {
 Q_OBJECT

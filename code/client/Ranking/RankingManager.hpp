@@ -4,10 +4,10 @@
 #define MAX_BUFF_SIZE 1000
 
 
-#include "../NetworkedManager.hpp"
-#include "../../common/Networking.hpp"
-#include "../App.hpp"
-#include "../../common/RankingInfos.hpp"
+#include "../Other/NetworkedManager.hpp"
+#include "../../common/Other/Networking.hpp"
+#include "../Other/App.hpp"
+#include "../../common/Other/RankingInfos.hpp"
 #include "RankingUI.hpp"
 
 class RankingUI;

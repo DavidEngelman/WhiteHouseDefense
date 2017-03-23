@@ -3,8 +3,8 @@
 
 
 #include <vector>
-#include "../NetworkedManager.hpp"
-#include "../../common/Strings.hpp"
+#include "../Other/NetworkedManager.hpp"
+#include "../../common/Other/Strings.hpp"
 #include "../Game/GameInfo.hpp"
 #include "../Main/MainManager.hpp"
 //#include "../Game/GameManager.hpp"

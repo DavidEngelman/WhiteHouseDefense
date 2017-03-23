@@ -1,7 +1,7 @@
 #include <QtWidgets/QGridLayout>
 #include <QtWidgets/QLabel>
 #include "IconSelectionWidget.hpp"
-#include "../IconLabel.hpp"
+#include "../Other/IconLabel.hpp"
 
 IconSelectionWidget::IconSelectionWidget(SettingsGUI* _parent) : parentS(_parent) {
     this->setFixedSize(300,200);

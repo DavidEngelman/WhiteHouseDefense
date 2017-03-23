@@ -2,10 +2,10 @@
 #define PROJET_SETTINGSMANAGER_HPP
 
 
-#include "../NetworkedManager.hpp"
+#include "../Other/NetworkedManager.hpp"
 #include "SettingsUI.hpp"
 #include "../Main/MainManager.hpp"
-#include "../App.hpp"
+#include "../Other/App.hpp"
 
 class SettingsManager : public NetworkedManager{
 

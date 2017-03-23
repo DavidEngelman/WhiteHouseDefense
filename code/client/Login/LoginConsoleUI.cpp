@@ -2,7 +2,7 @@
 
 #include <termios.h>
 #include "LoginConsoleUI.hpp"
-#include "../Drawing.hpp"
+#include "../Other/Drawing.hpp"
 #include "unistd.h"
 
 void LoginConsoleUI::ask_username() {

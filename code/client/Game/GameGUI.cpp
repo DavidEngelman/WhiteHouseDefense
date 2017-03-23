@@ -4,7 +4,7 @@
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QGroupBox>
 #include "GameGUI.hpp"
-#include "../MapGUI.hpp"
+#include "../Other/MapGUI.hpp"
 #define  CHART_SIZE 600
 
 GameGUI::GameGUI(bool isSupporter, unsigned seed, GameManager *manager) : AbstractGUI(nullptr), GameUI(seed, manager),

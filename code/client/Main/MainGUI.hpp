@@ -3,13 +3,13 @@
 
 #include "../Abstract/AbstractGUI.hpp"
 #include "MainUI.hpp"
-#include "../QCustomButton.hpp"
+#include "../Other/QCustomButton.hpp"
 #include <QtWidgets/QLineEdit>
 #include <QtCore/QSignalMapper>
 #include <QtWidgets/QDialogButtonBox>
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QLabel>
-#include "../InQueueWidget.hpp"
+#include "../Other/InQueueWidget.hpp"
 
 class MainGUI : public AbstractGUI, public MainUI {
     Q_OBJECT

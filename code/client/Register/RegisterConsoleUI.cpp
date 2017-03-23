@@ -1,6 +1,6 @@
 #include <termios.h>
 #include "RegisterConsoleUI.hpp"
-#include "../Drawing.hpp"
+#include "../Other/Drawing.hpp"
 #include "unistd.h"
 
 RegisterConsoleUI::RegisterConsoleUI(RegisterManager *manager) : RegisterUI(manager) {}

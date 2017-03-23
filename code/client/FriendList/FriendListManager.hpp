@@ -2,13 +2,13 @@
 #define FRIENDLISTMANAGER_HPP
 #define MAX_BUFF_SIZE 1000
 
-#include "../NetworkedManager.hpp"
-#include "../../common/Networking.hpp"
+#include "../Other/NetworkedManager.hpp"
+#include "../../common/Other/Networking.hpp"
 #include "FriendListUI.hpp"
 #include "FriendList.hpp"
 #include "../Main/MainManager.hpp"
 #include <iostream>
-#include "../../common/Strings.hpp"
+#include "../../common/Other/Strings.hpp"
 
 class FriendListManager: public NetworkedManager {
 

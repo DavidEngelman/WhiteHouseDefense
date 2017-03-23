@@ -1,7 +1,7 @@
 
 
 #include "SpectatorGUI.hpp"
-#include "../QHandPointerButton.hpp"
+#include "../Other/QHandPointerButton.hpp"
 #include <QHeaderView>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QCheckBox>

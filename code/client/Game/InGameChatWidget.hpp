@@ -5,7 +5,7 @@
 #include <QtWidgets/QWidget>
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QListWidget>
-#include "../QHandPointerButton.hpp"
+#include "../Other/QHandPointerButton.hpp"
 #include "GameManager.hpp"
 
 class InGameChatWidget: public QWidget {

@@ -3,7 +3,7 @@
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QMessageBox>
 #include "LoginGUI.hpp"
-#include "../QHandPointerButton.hpp"
+#include "../Other/QHandPointerButton.hpp"
 
 void LoginGUI::loginUser() {
     username = usernameL->text().toStdString();
