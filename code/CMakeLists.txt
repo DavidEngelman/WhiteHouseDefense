@@ -60,6 +60,7 @@ set(CLIENT_FILES client/ClientLauncher.cpp
         client/Ranking/RankingConsoleUI.cpp
         client/Ranking/RankingGUI.cpp
         client/Ranking/RankingUI.hpp
+        common/RankingInfos.hpp
 
         #SUPPORTER
         client/Spectator/SpectatorGUI.cpp
@@ -124,6 +125,7 @@ set(CLIENT_FILES client/ClientLauncher.cpp
         client/Drawing.cpp
         client/App.cpp
         common/Constants.hpp
+        common/Strings.hpp
         common/Tools.cpp
         client/QHandPointerButton.hpp
         client/InQueueWidget.cpp)
@@ -179,12 +181,14 @@ set(SERVER_FILES "server/ServerLauncher.cpp"
 
         #TOOLS
         common/Constants.hpp
+        common/Strings.hpp
         common/Tools.cpp
         server/Timer.cpp
         server/PlayerConnection.cpp
         common/Networking.cpp
         common/Credentials.cpp
-        common/Message.cpp)
+        common/Message.cpp
+        common/RankingInfos.hpp)
 
 add_executable(server ${SERVER_FILES})
 
