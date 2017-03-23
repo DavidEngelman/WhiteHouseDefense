@@ -4,11 +4,11 @@
 #define MAX_BUFF_SIZE 1000
 
 #include <iostream>
-#include "../../common/Networking.hpp"
-#include "../../common/Strings.hpp"
-#include "../NetworkedManager.hpp"
+#include "../../common/Other/Networking.hpp"
+#include "../../common/Other/Strings.hpp"
+#include "../Other/NetworkedManager.hpp"
 #include "../Main/MainManager.hpp"
-#include "../App.hpp"
+#include "../Other/App.hpp"
 #include "ProfileUI.hpp"
 
 class ProfileUI;
@@ -22,6 +22,7 @@ private:
     int victories;
 	int defeats;
     int npcKilled;
+	int iconID;
 
 public:
 	ProfileManager(int port, App* my_app);
@@ -48,6 +49,8 @@ public:
 	~ProfileManager();
 
 	int getDefeats() const;
+
+	int getIconID() const;
 };
 
 

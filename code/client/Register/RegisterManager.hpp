@@ -1,12 +1,12 @@
 #ifndef PROJET_REGISTERMANAGER_HPP
 #define PROJET_REGISTERMANAGER_HPP
 
-#include "../NetworkedManager.hpp"
+#include "../Other/NetworkedManager.hpp"
 #include "RegisterUI.hpp"
-#include "../../common/Networking.hpp"
-#include "../../common/Credentials.hpp"
+#include "../../common/Other/Networking.hpp"
+#include "../../common/Other/Credentials.hpp"
 #include "../Login/LoginManager.hpp"
-#include "../App.hpp"
+#include "../Other/App.hpp"
 
 class RegisterUI;
 

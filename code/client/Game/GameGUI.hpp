@@ -12,14 +12,14 @@
 #include "GameManager.hpp"
 #include "GameUI.hpp"
 #include "InGameChatWidget.hpp"
-#include "../QCustomButton.hpp"
+#include "../Other/QCustomButton.hpp"
 #include <QProgressBar>
 #include <QtCharts/QChartView>
 #include <QtCharts/QBarSeries>
 #include <QtCharts/QBarSet>
 #include <QtCharts/QLegend>
 #include <QtCharts/QBarCategoryAxis>
-#include "../../common/Tools.hpp"
+#include "../../common/Other/Tools.hpp"
 
 QT_CHARTS_USE_NAMESPACE
 class MapGUI;

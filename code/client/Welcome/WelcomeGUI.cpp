@@ -3,7 +3,7 @@
 #include <QtMultimedia/QMediaPlaylist>
 #include "WelcomeGUI.hpp"
 #include "WelcomeManager.hpp"
-#include "../QHandPointerButton.hpp"
+#include "../Other/QHandPointerButton.hpp"
 
 WelcomeGUI::WelcomeGUI(WelcomeManager *manager, QWidget *_parent) : AbstractGUI(_parent), manager(manager) {}
 

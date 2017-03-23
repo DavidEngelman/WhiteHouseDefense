@@ -5,9 +5,9 @@
 #include <QtCore/QThread>
 #include <assert.h>
 #include <iostream>
-#include "../../common/Networking.hpp"
-#include "../../common/Strings.hpp"
-#include "../../common/Constants.hpp"
+#include "../../common/Other/Networking.hpp"
+#include "../../common/Other/Strings.hpp"
+#include "../../common/Other/Constants.hpp"
 
 class QMatchMakingThread : public QThread {
 Q_OBJECT

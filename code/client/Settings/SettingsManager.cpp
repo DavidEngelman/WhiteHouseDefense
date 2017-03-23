@@ -1,9 +1,9 @@
 #include "SettingsManager.hpp"
 #include "SettingsGUI.hpp"
 #include "SettingsConsoleUI.hpp"
-#include "../../common/Strings.hpp"
-#include "../../common/Tools.hpp"
-#include "../../common/Constants.hpp"
+#include "../../common/Other/Strings.hpp"
+#include "../../common/Other/Tools.hpp"
+#include "../../common/Other/Constants.hpp"
 
 SettingsManager::SettingsManager (int port, App *my_app) :
         NetworkedManager(port, my_app) {
@@ -21,14 +21,13 @@ void SettingsManager::run() {
 
 bool SettingsManager::changeUsername(std::string newUsername){
     if (newUsername.size() < 1 || newUsername.size() > 16){
-        std::cout << "oups" << std::endl;
         return false;
     }
     char server_response[10];
     std::string message = CHANGE_USERNAME + ',' + std::to_string(master_app->getId()) + ',' + newUsername + ';';
     send_message(server_socket, message.c_str());
     receive_message(server_socket, server_response);
-    std::cout << server_response << std::endl;
+    master_app->setUsername(newUsername); //important
     return server_response[0] == '1';
 
 }
@@ -45,7 +44,6 @@ bool SettingsManager::changePassword(std::string newPassword){
 }
 
 void SettingsManager::changePlayerIcon(std::string newIconName){
-    std::cout << "hoy" << std::endl;
     std::string message = CHANGE_ICON + ',' + std::to_string(master_app->getId()) + ',' + newIconName + ';';
     send_message(server_socket, message.c_str());
 

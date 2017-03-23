@@ -5,7 +5,7 @@
 #include <QtWidgets/QWidget>
 #include <iostream>
 #include "AbstractUI.hpp"
-#include "../App.hpp"
+#include "../Other/App.hpp"
 
 class AbstractGUI : public QWidget, public virtual AbstractUI {
 

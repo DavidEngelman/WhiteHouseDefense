@@ -1,6 +1,6 @@
 #include "GameConsoleUI.hpp"
 
-#include "../../common/Tools.hpp"
+#include "../../common/Other/Tools.hpp"
 
 
 GameConsoleUI::GameConsoleUI(unsigned seed, GameManager *manager) : GameUI(seed, manager) {}

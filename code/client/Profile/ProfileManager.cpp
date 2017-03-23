@@ -1,6 +1,6 @@
 #include <assert.h>
-#include "../../common/Constants.hpp"
-#include "../../common/Message.hpp"
+#include "../../common/Other/Constants.hpp"
+#include "../../common/Other/Message.hpp"
 #include "ProfileManager.hpp"
 #include "ProfileGUI.hpp"
 #include "ProfileConsoleUI.hpp"
@@ -55,6 +55,8 @@ void ProfileManager::parseProfileData(char *profileData) {
         victories = std::stoi(message.getNextToken());
         defeats = std::stoi(message.getNextToken());
         npcKilled = std::stoi(message.getNextToken());
+        iconID = std::stoi(message.getNextToken());
+
         assert(message.hasReachedEnd());
     }
 }
@@ -73,6 +75,10 @@ int ProfileManager::getNPCKilled() const {
 
 std::string &ProfileManager::getUsername() {
     return username;
+}
+
+int ProfileManager::getIconID() const {
+    return iconID;
 }
 
 ProfileManager::~ProfileManager() {

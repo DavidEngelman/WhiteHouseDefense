@@ -7,7 +7,7 @@
 #include "MainGUI.hpp"
 #include "MainConsoleUI.hpp"
 #include "../Settings/SettingsManager.hpp"
-#include "../../common/Constants.hpp"
+#include "../../common/Other/Constants.hpp"
 
 const static std::string gameModes[3] = {CLASSIC_MODE, TIMED_MODE, TEAM_MODE};
 
@@ -64,8 +64,6 @@ void MainManager::handleGameModeChoice() {
 
     if (choice != 3) { /* Un des 3 modes de jeu */
         std::string gameMode = gameModes[choice];
-//        GameLauncher *game = new GameLauncher(MATCHMAKER_SERVER_PORT, master_app, gameMode);
-//        master_app->launchMatchmaking(game);
         master_app->launchMatchmaking(gameMode);
     } else { /* Retour au menu principal */
         // TODO: close previous window

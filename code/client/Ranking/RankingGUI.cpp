@@ -1,7 +1,7 @@
 
 
 #include "RankingGUI.hpp"
-#include "../QHandPointerButton.hpp"
+#include "../Other/QHandPointerButton.hpp"
 #include <QHeaderView>
 #include <QtWidgets/QGridLayout>
 #include <QtWidgets/QPushButton>

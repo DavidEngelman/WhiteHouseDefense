@@ -3,12 +3,12 @@
 #include "GameManager.hpp"
 #include "GameGUI.hpp"
 #include "GameConsoleUI.hpp"
-#include "../../common/pnj/MexicanPNJ.h"
-#include "../../common/pnj/CommunistPNJ.h"
-#include "../../common/pnj/MuslimPNJ.h"
-#include "../../server/Server.hpp"
-#include "../../common/Command.hpp"
-#include "../../common/tower/MissileTower.hpp"
+#include "../../common/Npc/MexicanPNJ.h"
+#include "../../common/Npc/CommunistPNJ.h"
+#include "../../common/Npc/MuslimPNJ.h"
+#include "../../server/Other/Server.hpp"
+#include "../../common/Other/Command.hpp"
+#include "../../common/Tower/MissileTower.hpp"
 
 
 GameManager::GameManager(int socket, App *app) :
@@ -65,7 +65,9 @@ void GameManager::updateMap() {
         if (strncmp(server_msg_buff, RECEIVE_MESSAGE_STRING.c_str(), RECEIVE_MESSAGE_STRING.length()) == 0) {
             Command command;
             command.parse(server_msg_buff);
-            const std::string &message = command.getNextToken();
+            std::cout << server_msg_buff << std::endl;
+            int messageSize = command.getNextInt();
+            const std::string &message = command.getTokenWithSize(messageSize);
             const std::string &sender = command.getNextToken();
             gameUI->addChatMessage(message, sender);
         } else if (strcmp(server_msg_buff, PLACING_TOWER) == 0) {

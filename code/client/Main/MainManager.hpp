@@ -1,10 +1,10 @@
 #ifndef MAINMANAGER_HPP
 #define MAINMANAGER_HPP
 
-#include "../NetworkedManager.hpp"
+#include "../Other/NetworkedManager.hpp"
 #include "../Abstract/AbstractManager.hpp"
 #include "../Abstract/AbstractUI.hpp"
-#include "../App.hpp"
+#include "../Other/App.hpp"
 #include "MainUI.hpp"
 
 class MainUI;
