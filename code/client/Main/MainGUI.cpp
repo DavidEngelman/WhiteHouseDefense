@@ -80,8 +80,8 @@ void MainGUI::displayGameModesMenu() {
     dialog_game_mode_choice->setLayout(popup_h_layout);
 
     classicMode = new QCustomButton(0, "CLASSIC MODE", dialog_game_mode_choice);
-    teamMode = new QCustomButton(1, "TEAM MODE", dialog_game_mode_choice);
-    timedMode = new QCustomButton(2, "TIMED MODE", dialog_game_mode_choice);
+    teamMode = new QCustomButton(1, "TIMED MODE", dialog_game_mode_choice);
+    timedMode = new QCustomButton(2, "TEAM MODE", dialog_game_mode_choice);
 
     popup_h_layout->addWidget(classicMode);
     popup_h_layout->addWidget(teamMode);
@@ -107,8 +107,6 @@ void MainGUI::handleGameModeChoice(int choice){
     dialog_game_mode_choice->deleteLater();
     gameModeChoice = choice;
     manager->handleGameModeChoice();
-
-
 }
 
 void MainGUI::showInQueue(){

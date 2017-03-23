@@ -6,6 +6,7 @@
 MapGUI::MapGUI(unsigned int seed, GameGUI *gameGUI, QVBoxLayout *layout = 0) : Map(seed), gameGUI(gameGUI) {
     display();
     layout->addWidget(this);
+    setFixedSize(16*31, 16*31);
     if (seed < NB_OF_MAPS) {
         std::string filename = "background-image: url(../../maps/map" + std::to_string(seed+1) + ".png)";
         this->setStyleSheet(QString::fromStdString(filename));
