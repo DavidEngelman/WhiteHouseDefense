@@ -20,6 +20,7 @@ static const std::string SEND_MESSAGE_STRING = "SendMessage";
 static const std::string RECEIVE_MESSAGE_STRING = "ReceiveMessage";
 static const std::string NUCLEAR_BOMB_COMMAND_STRING = "NuclearBomb";
 static const std::string FREEZE_PNJS_COMMAND_STRING = "FreezeSpell";
+static const std::string AIR_STRIKE_COMMAND_STRING = "AirStrike";
 static const std::string AD_SPELL_COMMAND_STRING = "adSpell";
 
 
@@ -32,7 +33,7 @@ static const std::string CHANGE_USERNAME = "CHANGEUSERNAME";
 static const std::string CHANGE_PASSWORD = "CHANGEPASSWORD";
 static const std::string CHANGE_ICON = "CHANGEICON";
 
-static const std::string MESSAGES[3] = {"GG Easy", "Report", "J'aime les patates"};
+static const std::string MESSAGES[3] = {"GG Easy", "Make America great again", "J'aime les patates"};
 
 static const std::string GET_FRIENDLIST = "getFriendList;";
 static const std::string GET_FRIEND_REQUESTS = "getFriendRequests;";

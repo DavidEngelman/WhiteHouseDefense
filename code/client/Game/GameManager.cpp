@@ -576,3 +576,20 @@ bool GameManager::isNukeSpellAvailable() const {
 bool GameManager::isFreezeSpellAvailable() const {
     return freezeSpellAvailable;
 }
+
+void GameManager::launchAirStrike(int targetQuadrant) {
+    sendAirStrikeRequest(targetQuadrant);
+    airStrikeAvailable = false;
+    gameUI->disableAirStrike();
+}
+
+bool GameManager::isAirStikeAvailable() {
+    return airStrikeAvailable;
+}
+
+void GameManager::sendAirStrikeRequest(int quadrant) {
+    std::string message = AIR_STRIKE_COMMAND_STRING + ","
+                          + std::to_string(quadrant) + ";";
+    send_message(server_socket, message.c_str());
+
+}

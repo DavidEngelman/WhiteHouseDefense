@@ -286,3 +286,4 @@ bool Map::isBase(Position pos) const {
     return matrix[pos.getX()][pos.getY()] == BASE_INT;
 }
 
+

@@ -68,6 +68,8 @@ public:
 
     void enableFreezeSpell() override;
 
+	void disableAirStrike() override;
+
     void disableSpells() override;
 
     void enableSpells() override;

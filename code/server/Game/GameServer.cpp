@@ -153,6 +153,11 @@ void GameServer::getAndProcessUserInput(int clientSocketFd, char *buffer) {
             command.parse(buffer);
             int quadrant = command.getNextInt();
             gameEngine->freezeWave(quadrant);
+        } else if (command_type == AIR_STRIKE_COMMAND_STRING) {
+            Command command;
+            command.parse(buffer);
+            int quadrant = command.getNextInt();
+            gameEngine->launchAirStrike(quadrant);
         } else if (command_type == AD_SPELL_COMMAND_STRING){
             std::cout << "received AD_SPELL_COMMAND" << std::endl;
             Command command;
@@ -160,6 +165,7 @@ void GameServer::getAndProcessUserInput(int clientSocketFd, char *buffer) {
             std::string playerSupportedUserName = command.getNextToken();
             sendAdPopUP(playerSupportedUserName);
         }
+
     } else {
         removeClosedSocketFromSocketLists(clientSocketFd);
     }

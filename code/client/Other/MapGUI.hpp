@@ -29,6 +29,8 @@ public:
 
     void mousePressEvent(QMouseEvent *event) override ;
     Position getHighlightedPosition() const override { return highlighted; }
+
+    bool isEnnemyBaseInHighlightedPosition(int quadrant) override;
 };
 
 

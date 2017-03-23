@@ -53,6 +53,8 @@ public:
 
     virtual void enableFreezeSpell() = 0;
 
+    virtual void disableAirStrike() = 0;
+
     virtual void disableSpells() = 0;
 
     virtual void enableSpells() = 0;

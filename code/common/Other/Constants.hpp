@@ -94,6 +94,11 @@ static const int MISSILE_TOWER_DAMAGE = 15;
 static const int MISSILE_TOWER_SUBRANGE = 3;
 static const int MISSILE_TOWER_SUBDAMAGE = 5;
 
+// Spells
+
+static const int AIR_STRIKE_DAMAGE = 20;
+
+
 
 // Game Settings
 

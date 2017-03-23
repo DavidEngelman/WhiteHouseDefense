@@ -274,12 +274,12 @@ void GameGUI::displayDeleteAndUpgradeBox() {
     int scl = 10;
     QSize size = QSize(1400/scl, 1060/scl);
 
-    deleteTowerB = new QPushButton;
+    deleteTowerB = new QHandPointerButton;
     deleteTowerB->setEnabled(false);
     deleteTowerB->setIcon(QIcon("../../qt_ui/game_pictures/towers/sell.png"));
     deleteTowerB->setIconSize(size);
 
-    upgradeTowerB = new QPushButton;
+    upgradeTowerB = new QHandPointerButton;
     upgradeTowerB->setEnabled(false);
     upgradeTowerB->setIcon(QIcon("../../qt_ui/game_pictures/towers/upgrade.png"));
     upgradeTowerB->setIconSize(size);
@@ -357,23 +357,32 @@ void GameGUI::displaySpellBox() {
     int scl = 10;
     QSize size = QSize(1400/scl, 1060/scl);
 
-    nukeB = new QPushButton;
+    nukeB = new QHandPointerButton;
     nukeB->setEnabled(false);
     nukeB->setIcon(QIcon("../../qt_ui/game_pictures/spells/trumpnuclear.png"));
     nukeB->setIconSize(size);
 
-    freezeB = new QPushButton;
+    freezeB = new QHandPointerButton;
     freezeB->setEnabled(false);
     freezeB->setIcon(QIcon("../../qt_ui/game_pictures/spells/frozentrump.png"));
     freezeB->setIconSize(size);
 
+    airStrikeB = new QHandPointerButton;
+    airStrikeB->setEnabled(false);
+    airStrikeB->setIcon(QIcon("../../qt_ui/game_pictures/spells/airStrike.jpg"));
+    airStrikeB->setIconSize(size);
+
     QGridLayout *layout = new QGridLayout;
     layout->addWidget(nukeB, 0, 0);
     layout->addWidget(freezeB, 0, 1);
+    layout->addWidget(airStrikeB, 1, 0);
+
     spellBox->setLayout(layout);
 
     QObject::connect(nukeB, SIGNAL(clicked()), this, SLOT(handleNukeSpell()));
     QObject::connect(freezeB, SIGNAL(clicked()), this, SLOT(handleFreezeSpell()));
+    QObject::connect(airStrikeB, SIGNAL(clicked()), this, SLOT(handleAirStrike()));
+
 }
 
 void GameGUI::handleNukeSpell() {
@@ -382,6 +391,13 @@ void GameGUI::handleNukeSpell() {
 
 void GameGUI::handleFreezeSpell() {
     manager->launchFreezeSpell();
+}
+
+void GameGUI::handleAirStrike(){
+
+    int targetQuadrant = map->computeQuadrant(map->getHighlightedPosition());
+    manager->launchAirStrike(targetQuadrant);
+
 }
 
 void GameGUI::displayPlayerInfos(GameState &gameState, int quadrant) {
@@ -435,6 +451,19 @@ void GameGUI::enableFreezeSpell() {
     freezeB->setEnabled(true);
 }
 
+void GameGUI::disableAirStrike() {
+    airStrikeB->setEnabled(false);
+
+}
+
+void GameGUI::enableAirStrike() {
+    if ( (map->isEnnemyBaseInHighlightedPosition(manager->getQuadrant())) && (manager->isAirStikeAvailable()) ) {
+        std::cout << "Enabling air strike" << std::endl;
+        airStrikeB->setEnabled(true);
+    }
+
+}
+
 void GameGUI::enableSpells() {
     if (manager->isNukeSpellAvailable()){
         enableNukeSpell();
@@ -482,7 +511,7 @@ void GameGUI::setUpEndOfGameLayout(GameState &gameState) {
     endOfGameLayout = new QVBoxLayout;
     setUpWinnerLooserBox(gameState);
     setUpStatsLayout(gameState);
-    backToMenu = new QPushButton(QString::fromStdString("Back to menu"));
+    backToMenu = new QHandPointerButton(QString::fromStdString("Back to menu"));
     endOfGameLayout->addWidget(backToMenu);
     endOfGameLayout->setAlignment(backToMenu, Qt::AlignCenter);
     QObject::connect(backToMenu, SIGNAL(clicked()), this, SLOT(goToMenu()));
@@ -701,7 +730,7 @@ void GameGUI::displaySupporterActionBox() {
     int scl = 10;
     QSize size = QSize(1400/scl, 1060/scl);
 
-    adSpellB = new QPushButton;
+    adSpellB = new QHandPointerButton;
     adSpellB->setIcon(QIcon("../../qt_ui/game_pictures/towers/missiletower.png"));
     adSpellB->setIconSize(size);
     adSpellB->setEnabled(true);

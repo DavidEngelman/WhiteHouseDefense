@@ -304,6 +304,14 @@ void GameEngine::freezeWave(int quadrant) {
     wave.freeze();
 }
 
+void GameEngine::launchAirStrike(int quadrant) {
+    PlayerState &target = gameState.getPlayerStates()[quadrant];
+    int target_current_hp = target.getHp();
+
+    target.setHp(target_current_hp - min(target_current_hp, AIR_STRIKE_DAMAGE));
+
+}
+
 
 
 
