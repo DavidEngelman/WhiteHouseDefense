@@ -19,6 +19,8 @@ public:
     virtual void run() = 0;
 
     void setMusicFromPath(QString path);
+
+    void centerWindow();
 };
 
 

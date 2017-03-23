@@ -10,7 +10,7 @@ App::App(char *serverIpAddr) : serverIpAddress(serverIpAddr),
     if (!isConsole) {
         mainWindow = new QWidget();
         mainWindow->setFixedSize(750, 600); // Will be resized for the menu and games;
-        mainWindow->move(QApplication::desktop()->screen()->rect().center() - mainWindow->rect().center());
+        centerWindow();
     }
     currentManager = new WelcomeManager(this);
     currentManager->run();
@@ -109,4 +109,8 @@ void App::setMusicFromPath(QString musicPath) {
     player->setVolume(100);
     player->setPlaylist(playlist);
     player->play();
+}
+
+void App::centerWindow() {
+    mainWindow->move(QApplication::desktop()->screen()->rect().center() - mainWindow->rect().center());
 }

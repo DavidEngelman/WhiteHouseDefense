@@ -64,10 +64,10 @@ void MainGUI::display() {
         showInQueue();
     }
 
+    manager->centerWindow();
     std::cout << "It took " << timer.nsecsElapsed() / 1000000000.0 << " seconds for MainGUI::display" << std::endl;
     this->show();
     AbstractGUI::parent->setVisible(true);
-
 }
 
 void MainGUI::displayGameModesMenu() {

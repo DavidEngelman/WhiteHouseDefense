@@ -61,6 +61,8 @@ public:
     void launchMatchmaking(std::string mode);
 
     virtual void setMusicFromPath(QString musicPath);
+
+    virtual void centerWindow();
 };
 
 
