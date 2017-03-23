@@ -65,7 +65,9 @@ void GameManager::updateMap() {
         if (strncmp(server_msg_buff, RECEIVE_MESSAGE_STRING.c_str(), RECEIVE_MESSAGE_STRING.length()) == 0) {
             Command command;
             command.parse(server_msg_buff);
-            const std::string &message = command.getNextToken();
+            std::cout << server_msg_buff << std::endl;
+            int messageSize = command.getNextInt();
+            const std::string &message = command.getTokenWithSize(messageSize);
             const std::string &sender = command.getNextToken();
             gameUI->addChatMessage(message, sender);
         } else if (strcmp(server_msg_buff, PLACING_TOWER) == 0) {

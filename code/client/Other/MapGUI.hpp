@@ -11,7 +11,7 @@
 
 class GameGUI;
 
-class MapGUI : public Map, public QWidget {
+class MapGUI : public QWidget, public Map {
 private:
     GameState gameState;
     int quadrant;
