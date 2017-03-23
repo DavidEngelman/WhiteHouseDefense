@@ -5,7 +5,7 @@
 #include "WelcomeUI.hpp"
 #include "../Login/LoginManager.hpp"
 #include "../Register/RegisterManager.hpp"
-#include "../App.hpp"
+#include "../Other/App.hpp"
 
 class WelcomeUI;
 

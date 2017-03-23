@@ -1,5 +1,5 @@
 #include "WelcomeConsoleUI.hpp"
-#include "../Drawing.hpp"
+#include "../Other/Drawing.hpp"
 
 WelcomeConsoleUI::WelcomeConsoleUI(WelcomeManager *manager) : WelcomeUI(manager) {}
 
