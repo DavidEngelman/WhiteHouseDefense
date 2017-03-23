@@ -114,3 +114,13 @@ void App::setMusicFromPath(QString musicPath) {
 void App::centerWindow() {
     mainWindow->move(QApplication::desktop()->screen()->rect().center() - mainWindow->rect().center());
 }
+
+void App::launchSupporter(int gameServerSocket ) {
+    std::cout << "Starting game" << std::endl;
+    if (!isConsole) {
+        getMainWindow()->setVisible(false);//So we can reuse the window after the game
+    }
+    GameManager * gameManager = new GameManager(gameServerSocket,true,this);
+    transition(gameManager);
+}
+

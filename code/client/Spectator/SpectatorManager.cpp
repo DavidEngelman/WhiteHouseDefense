@@ -35,9 +35,8 @@ void SpectatorManager::connectToGame(GameInfo &game, std::string &playerToSuppor
                           + playerToSupport + ";";
     send_message(game_server_socket_fd, message.c_str());
 
-    // Puis on lance le GameManager
-    // GameManager *gameManager = new GameManager(game_server_socket_fd, true, master_app);
-    //master_app->transition(gameManager);
+    //Puis on lance le GameManager
+    master_app->launchSupporter(game_server_socket_fd);
 }
 
 void SpectatorManager::parse_message_from_server(const std::string &message) {
