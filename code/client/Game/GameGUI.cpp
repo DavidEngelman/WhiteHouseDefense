@@ -6,8 +6,7 @@
 #include "GameGUI.hpp"
 #include "../Other/MapGUI.hpp"
 
-GameGUI::GameGUI(bool isSupporter, unsigned seed, GameManager *manager) : AbstractGUI(nullptr), GameUI(seed, manager),
-                                                                          isSupporterMode(isSupporter) {
+GameGUI::GameGUI(bool isSupporter, unsigned seed, GameManager *manager) : AbstractGUI(nullptr), GameUI(isSupporter, seed, manager) {
 
 
     mainLayout = new QHBoxLayout();
@@ -386,25 +385,30 @@ void GameGUI::handleFreezeSpell() {
 }
 
 void GameGUI::displayPlayerInfos(GameState &gameState, int quadrant) {
-    if (!isSupporterMode) {
-        PlayerState playerState = gameState.getPlayerStates()[quadrant];
-        std::string &text = playerState.getUsername();
-
-        usernameL->setText(QString::fromStdString(text));
-        usernameL->show();
-
-        text = "Money : " + std::to_string(playerState.getMoney()) + " $";
-        text += "\nHP : " + std::to_string(playerState.getHp());
-        text += "\nNPC killed : " + std::to_string(playerState.getPnjKilled());
-        text += "\nQuadrant : " + QUADRANT_NAMES[quadrant];
-
-        playerStateL->setText(QString::fromStdString(text));
-        playerStateL->show();
-
-        updateHealthBar(playerState.getHp());
-        updateOtherPlayerHealthBar(gameState.getPlayerStates(), quadrant);
-    } else
+    if (!isSupporter()) {
+        displayCurrentPlayerInfo(gameState, quadrant);
+    } else {
         displayInfoForSupporter(gameState, quadrant);
+    }
+}
+
+void GameGUI::displayCurrentPlayerInfo(GameState &gameState, int quadrant) {
+    PlayerState playerState = gameState.getPlayerStates()[quadrant];
+    std::string &text = playerState.getUsername();
+
+    usernameL->setText(QString::fromStdString(text));
+    usernameL->show();
+
+    text = "Money : " + std::to_string(playerState.getMoney()) + " $";
+    text += "\nHP : " + std::to_string(playerState.getHp());
+    text += "\nNPC killed : " + std::to_string(playerState.getPnjKilled());
+    text += "\nQuadrant : " + QUADRANT_NAMES[quadrant];
+
+    playerStateL->setText(QString::fromStdString(text));
+    playerStateL->show();
+
+    updateHealthBar(playerState.getHp());
+    updateOtherPlayerHealthBar(gameState.getPlayerStates(), quadrant);
 }
 
 void GameGUI::displayDeadMessage() {
@@ -462,7 +466,7 @@ void GameGUI::enableDeleteAndUpgradeBox() {
 
 //////////// END OF GAME SCREEN PART //////////////////////
 
-void GameGUI::displayGameOver(GameState &gamestate) {
+void GameGUI::displayGameOverAndStats(GameState &gamestate) {
     setUpEndOfGameLayout(gamestate);
     switchToEndGameDisplay();
 }
@@ -496,7 +500,7 @@ void GameGUI::setUpWinnerLooserBox(GameState &gameState) {
     std::string info = bool_to_victory_defeat(gameState.getPlayerStates()[myQuadrant].getIsWinner());
     QLabel *label = new QLabel();
     label->setFont(font);
-    if (!isSupporterMode) {
+    if (!isSupporter()) {
         label->setText(QString::fromStdString(info));
         if (info == "Victory") label->setStyleSheet("QLabel { color : green; }");
         else label->setStyleSheet("QLabel { color : red; }");
@@ -702,14 +706,5 @@ void GameGUI::goToMenu() {
     manager->comeBackToMenu();
 
 }
-
-bool GameGUI::getIsSupporterMode() const {
-    return isSupporterMode;
-}
-
-
-
-
-
 
 

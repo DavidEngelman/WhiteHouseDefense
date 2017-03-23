@@ -3,7 +3,7 @@
 #include "../../common/Other/Tools.hpp"
 
 
-GameConsoleUI::GameConsoleUI(unsigned seed, GameManager *manager) : GameUI(seed, manager) {}
+GameConsoleUI::GameConsoleUI(bool isSupporter, unsigned seed, GameManager *manager) : GameUI(isSupporter, seed, manager) {}
 
 
 Position GameConsoleUI::getPosBuyingTower() {
@@ -71,6 +71,18 @@ Position GameConsoleUI::getPosUpgradeTower() {
 
 
 void GameConsoleUI::displayPlayerInfos(GameState &gameState, int quadrant) {
+    if (!isSupporter()) {
+        if (manager->isAlive()) {
+            displayPlayerInfos(gameState, quadrant);
+        } else {
+            displayDeadMessage();
+        }
+    } else {
+        displayInfoForSupporter(gameState, 0);
+    }
+}
+
+void GameConsoleUI::displayCurrentPlayerInfo(GameState &gameState, int quadrant) {
     int gold = gameState.getPlayerStates()[quadrant].getMoney();
     int pnj_killed = gameState.getPlayerStates()[quadrant].getPnjKilled();
     int hp = gameState.getPlayerStates()[quadrant].getHp();
@@ -136,7 +148,7 @@ int GameConsoleUI::getChoice(int maxValue) {
     return x;
 }
 
-void GameConsoleUI::displayGameOver(GameState &gamestate) {
+void GameConsoleUI::displayGameOverAndStats(GameState &gamestate) {
 
     Drawing::drawWhiteHouse("END GAME STATS");
 
@@ -149,12 +161,15 @@ void GameConsoleUI::displayGameOver(GameState &gamestate) {
         std::cout << winner_or_loser << std::endl;
     }
 
+    // TODO: show stats
+
     int dummy;
     std::cin.clear();
     std::cin.ignore();
     std::cout << "\nEnter something and press Enter to come back in the main menu..." << std::endl;
     std::cin >> dummy;
 
+    manager->comeBackToMenu();
 }
 
 
@@ -262,5 +277,36 @@ void GameConsoleUI::enableFreezeSpell() {
 
 void GameConsoleUI::enableSpells() {}
 void GameConsoleUI::disableSpells() {}
+
+void GameConsoleUI::handlePlaceTowerPhaseStart() {
+    if (manager->isAlive() && !isSupporter()) {
+        inputThread = pthread_create(&thr, NULL, &GameConsoleUI::staticInputThread, this);
+    } else {
+        // TODO: Decouvrir pourquoi est-ce qu'il y a ce display
+        display(manager->getGameState(), manager->getQuadrant());
+
+        /* WTF??? Je n'arrive pas à trouver pourquoi est-ce qu'on a mis cet if
+        if (is_alive() && !isSupporter) {
+            inputThread = pthread_create(&thr, NULL, &GameConsoleUI::staticInputThread, gameUI);
+        } else {
+            gameUI->display(gameState, quadrant);
+        }
+        */
+
+        if (isSupporter()) {
+            displayPlayersPlacingTowersMessage();
+        } else {
+            displayDeadMessage();
+        }
+    }
+}
+
+void GameConsoleUI::handleWaveStart() {
+    if (!isSupporter()) {
+        inputThread = pthread_cancel(thr);
+    }
+}
+
+
 
 

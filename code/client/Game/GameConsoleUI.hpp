@@ -9,63 +9,76 @@
 
 
 class GameConsoleUI : public AbstractConsoleUI, public GameUI {
-
+private:
+    pthread_t thr;
+    int inputThread;
 
 public:
-	GameConsoleUI(unsigned seed, GameManager *gameManager);
+    GameConsoleUI(bool isSupporter, unsigned seed, GameManager *gameManager);
 
-	Position getPosBuyingTower() override ;
+    Position getPosBuyingTower() override;
 
-	Position getPosSellingTower() override ;
-	int getChoice(int maxValue);
+    Position getPosSellingTower() override;
 
-	void display(GameState& gameState, int quadrant) override ;
-	void displayPlayerInfos(GameState &gameState, int quadrant) override ;
-	void displayInfoForSupporter(GameState &gameState, int quadrant) override ;
-	void displayTowerShop() override ;
+    int getChoice(int maxValue);
 
-	void displayGameOver(GameState& gamestate) override ;
+    void display(GameState &gameState, int quadrant) override;
 
-	void displayPosingPhase();
+    void displayPlayerInfos(GameState &gameState, int quadrant) override;
 
-	void displayDeadMessage() override ;
+    void displayCurrentPlayerInfo(GameState &gameState, int quadrant) override;
 
-    void displayPlayersPlacingTowersMessage() override ;
+    void displayInfoForSupporter(GameState &gameState, int quadrant) override;
 
-	bool checkCoord(int x, int y);
+    void displayTowerShop() override;
 
-	void *input_thread();
+    void displayGameOverAndStats(GameState &gamestate) override;
 
-	static void *staticInputThread(void *self);
+    void displayPosingPhase();
 
-	int getTowerTypeChoice();
+    void displayDeadMessage() override;
 
-	Position getPositionOfTowerPlacement();
+    void displayPlayersPlacingTowersMessage() override;
 
-	void placeTowerAction();
+    bool checkCoord(int x, int y);
 
-	void sellTowerAction();
+    void *input_thread();
 
-	Position getPosUpgradeTower();
+    static void *staticInputThread(void *self);
 
-	void upgradeTower();
+    int getTowerTypeChoice();
 
-	void addChatMessage(const std::string &message, const std::string &sender) override;
+    Position getPositionOfTowerPlacement();
 
-    void disableNukeSpell() override ;
-	void enableNukeSpell() override ;
+    void placeTowerAction();
 
-	void disableFreezeSpell() override;
-	void enableFreezeSpell() override;
+    void sellTowerAction();
 
-	void disableSpells() override;
-	void enableSpells() override;
+    Position getPosUpgradeTower();
 
-	void sendPredefinedMessage();
+    void upgradeTower();
 
-	void displayPredefinedMessages();
+    void addChatMessage(const std::string &message, const std::string &sender) override;
 
+    void disableNukeSpell() override;
 
+    void enableNukeSpell() override;
+
+    void disableFreezeSpell() override;
+
+    void enableFreezeSpell() override;
+
+    void disableSpells() override;
+
+    void enableSpells() override;
+
+    void sendPredefinedMessage();
+
+    void displayPredefinedMessages();
+
+    void handleWaveStart() override;
+
+    void handlePlaceTowerPhaseStart() override;
 };
 
 #endif

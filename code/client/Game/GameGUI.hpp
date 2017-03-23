@@ -93,7 +93,6 @@ private:
 
     QPushButton *backToMenu;
 
-    bool isSupporterMode;
 
 public slots:
     void handleBuyingTower(int typeOfTower);
@@ -115,7 +114,9 @@ public:
     void displayPlayerInfos(GameState &gameState, int quadrant) override ;
     void displayTowerShop() override ;
 
-    void displayGameOver(GameState& gamestate) override ;
+    void displayCurrentPlayerInfo(GameState &gameState, int quadrant) override;
+
+    void displayGameOverAndStats(GameState &gamestate) override ;
 
     void displayInfoForSupporter(GameState& gameState, int quadrant) override ;
 
@@ -126,7 +127,6 @@ public:
     void disableTowerShop();
     void enableTowerShop();
 
-    bool getIsSupporterMode() const;
 
     void displayDeleteAndUpgradeBox();
 

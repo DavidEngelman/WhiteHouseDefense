@@ -25,22 +25,14 @@ private:
     int counter = 0;
     int server_socket;
     bool runningThread = false;
-    pthread_t thr;
-    int inputThread;
+    QTimer * timer;
+
     GameState gameState;
     GameUI *gameUI;
     int quadrant;
     bool isSupporter;
     bool nukeSpellAvailable = true;
     bool freezeSpellAvailable = true;
-
-    QTimer *timer;
-public:
-    bool isNukeSpellAvailable() const;
-
-    bool isFreezeSpellAvailable() const;
-
-private:
 
 
     unsigned int getMapSeedFromServer() const;
@@ -53,7 +45,6 @@ private:
     void unSerializeWave(std::string serialized_wave);
     void unSerializePNJ(std::string serialized_pnj, Wave* wave);
 
-    bool is_alive();
     bool checkValidity(Position towerPos, GameState& gamestate, std::string typeOfTower);
 
     void sendBuyRequest(Position towerPos, std::string towerType);
@@ -100,6 +91,12 @@ public:
     bool placeMissileTower(Position towerPos);
 
     void comeBackToMenu();
+
+    bool isAlive();
+
+    bool isNukeSpellAvailable() const;
+
+    bool isFreezeSpellAvailable() const;
 
     ~GameManager();
 
