@@ -44,7 +44,6 @@ std::string Message::getTokenWithSize(int size){
         numRead += 1;
     }
 
-    currentPosInBuffer++; // There should be a delimiter next
     _hasReachedEnd = (buffer[currentPosInBuffer] == ';' or buffer[currentPosInBuffer] == '\0');
 
     currentPosInBuffer++;
