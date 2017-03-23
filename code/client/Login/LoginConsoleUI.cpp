@@ -3,7 +3,6 @@
 #include <termios.h>
 #include "LoginConsoleUI.hpp"
 #include "../Other/Drawing.hpp"
-#include "unistd.h"
 
 void LoginConsoleUI::ask_username() {
     std::cout << "   Enter your username:" << std::endl << "   ";

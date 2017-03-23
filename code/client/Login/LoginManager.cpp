@@ -75,7 +75,6 @@ std::string LoginManager::attemptLogin(Credentials credentials) {
 
 void LoginManager::goToMain() {
     MainManager *mainManager = new MainManager(5555, master_app);
-    master_app->getMainWindow()->setFixedSize(1000,600);
     master_app->transition(mainManager);
 }
 

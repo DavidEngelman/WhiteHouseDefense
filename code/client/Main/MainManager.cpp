@@ -16,6 +16,7 @@ MainManager::MainManager(int port, App *my_app) :
     if (!isConsole) {
         std::cout << "Building GUI" << std::endl;
         mainUI = new MainGUI(this, master_app->getMainWindow());
+        master_app->getMainWindow()->setFixedSize(1000,600);
     } else {
         mainUI = new MainConsoleUI(this);
     }
