@@ -135,7 +135,5 @@ void MainGUI::leaveQueue() {
     newGame->setEnabled(true);
     queueWidget->hide();
     queueWidget->deleteLater();
-
     manager->leaveQueue();
-
 }
