@@ -11,9 +11,7 @@ void RankingConsoleUI::display(std::vector<RankingInfos> &ranking) {
         std::cout << rank << ") " << elem.username << "\t\t\t\t\t" << std::to_string(elem.victories) << " victories\n";
         rank++;
     }
-    std::cout << "\nAppuyez sur une touche pour revenir dans le Menu..." << std::endl;
-    int q;
-    std::cin >>q;
-    std::cin.clear();
-    std::cin.ignore();
+
+    std::cout << "\nPress Enter to come back in the main menu..." << std::endl;
+    std::cin.ignore().get();
 }
