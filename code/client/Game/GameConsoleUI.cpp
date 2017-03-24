@@ -77,7 +77,7 @@ Position GameConsoleUI::getPosUpgradeTower() {
 void GameConsoleUI::displayPlayerInfos(GameState &gameState, int quadrant) {
     if (!isSupporter()) {
         if (manager->isAlive()) {
-            displayPlayerInfos(gameState, quadrant);
+            displayCurrentPlayerInfo(gameState, quadrant);
         } else {
             displayDeadMessage();
         }
