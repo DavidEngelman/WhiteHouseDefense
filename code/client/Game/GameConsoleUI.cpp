@@ -117,7 +117,7 @@ void GameConsoleUI::displayInfoForSupporter(GameState &gameState, int quadrant) 
     std::cout << std::endl;
 }
 
-/*Display the action 
+/*Display the action */
 void GameConsoleUI::displayPosingPhase() {
     std::cout << "You can: " << std::endl;
     std::cout << "1. Buy tower " << std::endl;
