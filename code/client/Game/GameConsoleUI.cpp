@@ -5,7 +5,7 @@
 
 GameConsoleUI::GameConsoleUI(bool isSupporter, unsigned seed, GameManager *manager) : GameUI(isSupporter, seed, manager) {}
 
-
+/* Ask the user the coordinates of the tower to place it*/
 Position GameConsoleUI::getPosBuyingTower() {
     int x;
     int y;
@@ -22,7 +22,7 @@ Position GameConsoleUI::getPosBuyingTower() {
 
     return Position(x, y);
 }
-
+/*Check the coordinates that the user has enter to place, delete or upgrade a tower*/
 bool GameConsoleUI::checkCoord(int x, int y) {
     if (0 <= x and x < SIZE and 0 <= y and y < SIZE) {
         return true;
@@ -31,10 +31,13 @@ bool GameConsoleUI::checkCoord(int x, int y) {
     return false;
 }
 
+/*Display the map*/
 void GameConsoleUI::display(GameState &gameState, int quadrant) {
+
     map->display(gameState, quadrant);
 }
 
+/*Ask the user the coordinates of the tower to sell it*/
 Position GameConsoleUI::getPosSellingTower() {
     int x;
     int y;
@@ -52,6 +55,7 @@ Position GameConsoleUI::getPosSellingTower() {
     return Position(x, y);
 }
 
+/*Ask the user the coordinates of the tower to upgrade it*/
 Position GameConsoleUI::getPosUpgradeTower() {
     int x;
     int y;
@@ -69,7 +73,7 @@ Position GameConsoleUI::getPosUpgradeTower() {
     return Position(x, y);
 }
 
-
+/*Display the player info*/
 void GameConsoleUI::displayPlayerInfos(GameState &gameState, int quadrant) {
     if (!isSupporter()) {
         if (manager->isAlive()) {
@@ -82,6 +86,7 @@ void GameConsoleUI::displayPlayerInfos(GameState &gameState, int quadrant) {
     }
 }
 
+/*Display the current information of a player during the game*/
 void GameConsoleUI::displayCurrentPlayerInfo(GameState &gameState, int quadrant) {
     int gold = gameState.getPlayerStates()[quadrant].getMoney();
     int pnj_killed = gameState.getPlayerStates()[quadrant].getPnjKilled();
@@ -96,7 +101,7 @@ void GameConsoleUI::displayCurrentPlayerInfo(GameState &gameState, int quadrant)
     std::cout << std::endl;
 }
 
-
+/*Display the current information of all players in the supporter mode*/
 void GameConsoleUI::displayInfoForSupporter(GameState &gameState, int quadrant) {
     std::string infos;
     int i = 0;
@@ -112,15 +117,14 @@ void GameConsoleUI::displayInfoForSupporter(GameState &gameState, int quadrant) 
     std::cout << std::endl;
 }
 
+/*Display the action 
 void GameConsoleUI::displayPosingPhase() {
-
     std::cout << "You can: " << std::endl;
     std::cout << "1. Buy tower " << std::endl;
     std::cout << "2. Sell tower " << std::endl;
     std::cout << "3. Upgrade tower " << std::endl;
     std::cout << "4. Send a predefined message" << std::endl;
     std::cout << std::endl;
-
 }
 
 void GameConsoleUI::displayTowerShop() {
@@ -132,8 +136,8 @@ void GameConsoleUI::displayTowerShop() {
     std::cout << std::endl;
 }
 
+/* Ask at the user his choice */
 int GameConsoleUI::getChoice(int maxValue) {
-    /* Ask at the user his choice */
     int x = -1;
     std::cout << "   Enter your choice: ";
     std::cin >> x;
