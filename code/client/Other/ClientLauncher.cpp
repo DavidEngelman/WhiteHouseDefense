@@ -3,6 +3,7 @@
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QMainWindow>
+#include <thread>
 #include "App.hpp"
 #include "global.hpp"
 #include "../Profile/ProfileManager.hpp"
@@ -11,6 +12,12 @@
 #include "../Game/GameGUI.hpp"
 
 static const bool DEBUG = true;
+
+App * app;
+
+void launchApp(char *address){
+    App * app = new App(address);
+}
 
 int main(int argc, char *argv[]) {
 
@@ -25,29 +32,13 @@ int main(int argc, char *argv[]) {
         }
     }
 
-
-    /*if (!isConsole) { // Pour tester Qt
-        QApplication application(argc, argv);
-
-        QPushButton button("TEST");
-        button.show();
-
-        return application.exec();
-    }*/
-
     if (!isConsole) {
         QApplication application(argc, argv);
         application.setApplicationName("White house defense");
         App app(argv[1]);
-
         return application.exec();
-
     } else {
-        // TODO: enlever ca quand on en a plus besoin. Pour l'instant c'est ici parce que certains managers
-        // (comme le WelomeManager) créent de QWidgets meme en mode console.
-        QApplication application(argc, argv);
         App app(argv[1]);
     }
-
-    return 0;
 }
+

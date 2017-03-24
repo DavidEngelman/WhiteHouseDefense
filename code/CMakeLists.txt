@@ -128,7 +128,7 @@ set(CLIENT_FILES client/Other/ClientLauncher.cpp
         common/Other/Strings.hpp
         common/Other/Tools.cpp
         client/Other/QHandPointerButton.hpp
-        client/Other/InQueueWidget.cpp client/FriendList/FriendListConsoleUI.cpp client/FriendList/FriendListConsoleUI.h)
+        client/Other/InQueueWidget.cpp client/FriendList/FriendListConsoleUI.cpp client/FriendList/FriendListConsoleUI.h ../GameLauncher.cpp ../GameLauncher.hpp)
 
 
 add_executable(client ${CLIENT_FILES})

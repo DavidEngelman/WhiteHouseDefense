@@ -29,12 +29,16 @@ GameManager::GameManager(int socket, bool _isSupporter, App *app) :
 }
 
 void GameManager::run() {
-    QTimer::singleShot(10, this, SLOT(updateMap()));
+    if (!isConsole){
+        QTimer::singleShot(10, this, SLOT(updateMap()));
+    } else {
+        updateMap();
+    }
 }
 
 void GameManager::updateMap() {
     char server_msg_buff[BUFFER_SIZE];
-    if (!gameState.getIsGameOver()) {
+    while (!gameState.getIsGameOver()) {
         receive_message(server_socket, server_msg_buff);
         if (strncmp(server_msg_buff, RECEIVE_MESSAGE_STRING.c_str(), RECEIVE_MESSAGE_STRING.length()) == 0) {
             Command command;
@@ -60,11 +64,14 @@ void GameManager::updateMap() {
         // if it does it every time
         gameUI->display(gameState, quadrant);
         gameUI->displayPlayerInfos(gameState, quadrant);
-        QTimer::singleShot(10, this, SLOT(updateMap()));
-    } else {
-        // Va declencer un callback vers comeBackToMenu() quand l'utilisateur a fini de voir les stats
-        gameUI->displayGameOverAndStats(gameState);
+
+        if (!isConsole){
+            QTimer::singleShot(10, this, SLOT(updateMap()));
+            return;
+        }
     }
+    // Va declencer un callback vers comeBackToMenu() quand l'utilisateur a fini de voir les stats
+    gameUI->displayGameOverAndStats(gameState);
 }
 
 void GameManager::comeBackToMenu() { // À appeler quand la partie est terminée
