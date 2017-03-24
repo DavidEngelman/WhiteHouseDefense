@@ -105,6 +105,6 @@ void MapGUI::mousePressEvent(QMouseEvent *event) {
     }
 }
 
-bool MapGUI::isEnnemyBaseInHighlightedPosition(int quadrant) {
+bool MapGUI::isEnemyBaseInHighlightedPosition(int quadrant) {
     return isBase(highlighted) && computeQuadrant(highlighted) != quadrant;
 }

@@ -58,7 +58,7 @@ public:
 
     virtual Position getHighlightedPosition() const { return Position(-1, -1); }
 
-    virtual bool isEnnemyBaseInHighlightedPosition(int quadrant) {return false;}
+    virtual bool isEnemyBaseInHighlightedPosition(int quadrant) {return false;}
 };
 
 #endif

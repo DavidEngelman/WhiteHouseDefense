@@ -458,7 +458,7 @@ void GameGUI::disableAirStrike() {
 }
 
 void GameGUI::enableAirStrike() {
-    if ( (map->isEnnemyBaseInHighlightedPosition(manager->getQuadrant())) && (manager->isAirStikeAvailable()) ) {
+    if ( (map->isEnemyBaseInHighlightedPosition(manager->getQuadrant())) && (manager->isAirStikeAvailable()) ) {
         std::cout << "Enabling air strike" << std::endl;
         airStrikeB->setEnabled(true);
     }
