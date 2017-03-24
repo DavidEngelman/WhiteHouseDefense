@@ -278,7 +278,8 @@ void FriendListGUI::setupPendingInvitations() {
 
 void FriendListGUI::spectate(int index) {
     std::string friendUsername = friendList->item(index,1)->text().toStdString();
-    specManager->connectToGame(getGame(friendUsername),friendUsername );
+    GameInfo gameInfo = getGame(friendUsername);
+    specManager->connectToGame(gameInfo, friendUsername );
 }
 
 void FriendListGUI::acceptFriend(int index) {
@@ -333,7 +334,7 @@ bool FriendListGUI::isInGame(std::string username) {
     return inGame;
 }
 
-GameInfo& FriendListGUI::getGame(std::string username){
+GameInfo FriendListGUI::getGame(std::string username){
     GameInfo friendGame;
     specManager->getGamesFromMatchMaker();
     std::vector<GameInfo> games = specManager->getGames();

@@ -45,7 +45,7 @@ public:
     void setupPendingInvitations();
 
 private:
-    GameInfo& getGame(std::string username);
+    GameInfo getGame(std::string username);
     int getStatus(std::string username);
     bool isInGame(std::string username);
     QTimer *updateTimer;
