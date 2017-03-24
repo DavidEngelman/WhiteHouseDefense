@@ -40,11 +40,11 @@ void MapGUI::paintEvent(QPaintEvent *) {
         for (auto &pnj : pnjs) {
             typeOfPNJ = pnj->getType();
             if (typeOfPNJ == MEXICAN_PNJ_STR) {
-                image = QImage("../../qt_ui/game_pictures/tiles/mexican.png");
+                image = NPC_images[MEXICAN];
             } else if (typeOfPNJ == COMMUNIST_PNJ_STR) {
-                image = QImage("../../qt_ui/game_pictures/tiles/communist.png");
+                image = NPC_images[COMMUNIST];
             } else if (typeOfPNJ == MUSLIM_PNJ_STR) {
-                image = QImage("../../qt_ui/game_pictures/tiles/muslim.png");
+                image = NPC_images[MUSLIM];
             }
 
             pos = pnj->getPosition();
@@ -58,13 +58,13 @@ void MapGUI::paintEvent(QPaintEvent *) {
         typeOfTower = tower->getType();
 
         if (typeOfTower == GUN_TOWER_STR) {
-            image = QImage("../../qt_ui/game_pictures/tiles/guntower.png");
+            image = tower_images[GUN_TOWER];
         } else if (typeOfTower == SNIPER_TOWER_STR) {
-            image = QImage("../../qt_ui/game_pictures/tiles/snipertower.png");
+            image = tower_images[SNIPER_TOWER];
         } else if (typeOfTower == SHOCK_TOWER_STR) {
-            image = QImage("../../qt_ui/game_pictures/tiles/shocktower.png");
+            image = tower_images[SHOCK_TOWER];
         } else {
-            image = QImage("../../qt_ui/game_pictures/tiles/missiletower.png");
+            image = tower_images[MISSILE_TOWER];
         }
 
         pos = tower->getPosition();
@@ -94,7 +94,6 @@ void MapGUI::mousePressEvent(QMouseEvent *event) {
                 gameGUI->disableTowerShop();
                 gameGUI->disableDeleteAndUpgradeBox();
                 if (isBase(pos)) {
-                    std::cout << "here" << std::endl;
                     gameGUI->enableAirStrike();
                 }
             } else {

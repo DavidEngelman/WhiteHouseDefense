@@ -3,7 +3,8 @@
 #include "../../common/Other/Tools.hpp"
 
 
-GameConsoleUI::GameConsoleUI(bool isSupporter, unsigned seed, GameManager *manager) : GameUI(isSupporter, seed, manager) {}
+GameConsoleUI::GameConsoleUI(bool isSupporter, unsigned seed, GameManager *manager) : GameUI(isSupporter, seed,
+                                                                                             manager) {}
 
 /* Ask the user the coordinates of the tower to place it*/
 Position GameConsoleUI::getPosBuyingTower() {
@@ -22,6 +23,7 @@ Position GameConsoleUI::getPosBuyingTower() {
 
     return Position(x, y);
 }
+
 /*Check the coordinates that the user has enter to place, delete or upgrade a tower*/
 bool GameConsoleUI::checkCoord(int x, int y) {
     if (0 <= x and x < SIZE and 0 <= y and y < SIZE) {
@@ -230,7 +232,7 @@ void *GameConsoleUI::input_thread() {
             placeTowerAction();
         } else if (choice == 2) {
             sellTowerAction();
-        } else if (choice == 3){
+        } else if (choice == 3) {
             upgradeTower();
         } else {
             sendPredefinedMessage();
@@ -281,6 +283,7 @@ void GameConsoleUI::disableAirStrike() {
 }
 
 void GameConsoleUI::enableSpells() {}
+
 void GameConsoleUI::disableSpells() {}
 
 void GameConsoleUI::handlePlaceTowerPhaseStart() {
@@ -311,7 +314,6 @@ void GameConsoleUI::handleWaveStart() {
         inputThread = pthread_cancel(thr);
     }
 }
-
 
 
 void GameConsoleUI::adPopUp() {}
