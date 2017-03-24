@@ -7,7 +7,7 @@ MapGUI::MapGUI(unsigned int seed, GameGUI *gameGUI, QVBoxLayout *layout = 0) : M
     display();
     layout->addWidget(this);
     if (seed < NB_OF_MAPS) {
-        std::string filename = "background-image: url(../../maps/map" + std::to_string(seed+1) + ".png)";
+        std::string filename = "background-image: url(../../maps/map" + std::to_string(seed + 1) + ".png)";
         this->setStyleSheet(QString::fromStdString(filename));
     }
 }
@@ -20,7 +20,7 @@ void MapGUI::display(GameState &gameStateUpdate, int quadrantUpdate) {
 
 void MapGUI::display() {
     highlighted = Position(-1, -1); // Flag value
-    this->setFixedSize(TILES_SIZE*SIZE, TILES_SIZE*SIZE);
+    this->setFixedSize(TILES_SIZE * SIZE, TILES_SIZE * SIZE);
     this->show();
 }
 
@@ -72,13 +72,14 @@ void MapGUI::paintEvent(QPaintEvent *) {
         painter.drawImage(pos.getX() * TILES_SIZE, pos.getY() * TILES_SIZE - offset, image);
     }
 
-    QRect rect = QRect(highlighted.getX()*TILES_SIZE, highlighted.getY()*TILES_SIZE, TILES_SIZE-1, TILES_SIZE-1);
+    QRect rect = QRect(highlighted.getX() * TILES_SIZE, highlighted.getY() * TILES_SIZE, TILES_SIZE - 1,
+                       TILES_SIZE - 1);
     painter.setPen(QColor(255, 0, 0));
     painter.drawRect(rect);
 }
 
-void MapGUI::mousePressEvent(QMouseEvent* event) {
-    Position pos = Position(event->x()/TILES_SIZE, event->y()/TILES_SIZE);
+void MapGUI::mousePressEvent(QMouseEvent *event) {
+    Position pos = Position(event->x() / TILES_SIZE, event->y() / TILES_SIZE);
     if (highlighted == pos) {
         highlighted = Position(-1, -1); // Unselect the cell
         if (!gameGUI->isSupporter()) {
@@ -92,7 +93,7 @@ void MapGUI::mousePressEvent(QMouseEvent* event) {
             if (isObstacle(pos) or isPath(pos) or isBase(pos)) {
                 gameGUI->disableTowerShop();
                 gameGUI->disableDeleteAndUpgradeBox();
-                if (isBase(pos)){
+                if (isBase(pos)) {
                     std::cout << "here" << std::endl;
                     gameGUI->enableAirStrike();
                 }
@@ -105,5 +106,5 @@ void MapGUI::mousePressEvent(QMouseEvent* event) {
 }
 
 bool MapGUI::isEnnemyBaseInHighlightedPosition(int quadrant) {
-    return isBase(highlighted) && computeQuadrant(highlighted)!=quadrant;
+    return isBase(highlighted) && computeQuadrant(highlighted) != quadrant;
 }
