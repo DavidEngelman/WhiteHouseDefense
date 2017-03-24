@@ -2,7 +2,7 @@
 #include "../Welcome/WelcomeManager.hpp"
 #include "../Game/GameManager.hpp"
 #include "../Game/QMatchMakingThread.hpp"
-#include "../../../GameLauncher.hpp"
+#include "../Game/GameLauncher.hpp"
 
 App::App(char *serverIpAddr) : serverIpAddress(serverIpAddr),
                                playerId(-1), username("\0"), is_in_queue(false),

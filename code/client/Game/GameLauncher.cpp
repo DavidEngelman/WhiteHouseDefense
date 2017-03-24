@@ -1,5 +1,5 @@
 #include "GameLauncher.hpp"
-#include "code/client/Game/GameManager.hpp"
+#include "GameManager.hpp"
 
 GameLauncher::GameLauncher(int port, App* app, std::string _mode) :
         NetworkedManager(port, app), mode(_mode) {}

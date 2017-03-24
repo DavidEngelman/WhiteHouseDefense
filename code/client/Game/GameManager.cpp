@@ -61,8 +61,8 @@ void GameManager::updateMap() {
 
         // TODO: console mode only this when receiving a game state, make sure it still works
         // if it does it every time
-        gameUI->display(gameState, quadrant);
-        gameUI->displayPlayerInfos(gameState, quadrant);
+        gameUI->display(*gameState, quadrant);
+        gameUI->displayPlayerInfos(*gameState, quadrant);
 
         if (!isConsole){
             QTimer::singleShot(10, this, SLOT(updateMap()));
@@ -70,7 +70,7 @@ void GameManager::updateMap() {
         }
     }
     // Va declencer un callback vers comeBackToMenu() quand l'utilisateur a fini de voir les stats
-    gameUI->displayGameOverAndStats(gameState);
+    gameUI->displayGameOverAndStats(*gameState);
 }
 
 void GameManager::comeBackToMenu() { // À appeler quand la partie est terminée

@@ -2,7 +2,7 @@
 #define GAMELAUNCHER_HPP
 
 #include <string>
-#include "code/client/Other/NetworkedManager.hpp"
+#include "../Other/NetworkedManager.hpp"
 
 class GameLauncher : public NetworkedManager {
 
