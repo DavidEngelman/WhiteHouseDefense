@@ -10,7 +10,7 @@ class OneTargetTower : public virtual AbstractTower {
 public:
     OneTargetTower(const Position &position, int price, float range, int level);
     OneTargetTower();
-
+    virtual ~OneTargetTower() = default;
     PNJ *getClosestPNJ(Wave &wave);
 };
 

@@ -191,6 +191,8 @@ public:
     void displaySupporterActionBox();
 
     void adPopUp() override;
+
+    void playSound(QString soundPath);
 };
 
 

@@ -25,7 +25,7 @@ private:
     QMatchMakingThread *matchMakingThread;
 
     QWidget *mainWindow;
-    QMediaPlayer *player;
+    QMediaPlayer *mediaPlayer;
     //QMediaPlaylist *playlist;
 
 
