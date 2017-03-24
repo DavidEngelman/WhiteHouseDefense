@@ -1,4 +1,5 @@
 #include <csignal>
+#include <regex>
 #include "GameServer.hpp"
 #include "../../common/Tower/GunTower.hpp"
 #include "../../common/Tower/SniperTower.hpp"
@@ -136,6 +137,7 @@ void GameServer::getAndProcessUserInput(int clientSocketFd, char *buffer) {
             command.parse(buffer);
             int messageLength = command.getNextInt();
             std::string userMessage = command.getTokenWithSize(messageLength);
+            changeVulgarityToStar(userMessage);
             std::string senderUsername = command.getNextToken();
 
             if (!userMessage.empty() && userMessage[0] == '/'){
@@ -534,6 +536,18 @@ void GameServer::processSpecialCommand(std::string &userMessage, std::string &se
         send_message(playerConnections[teamMateQuadrant].getSocketFd(), finalMessage.c_str());
     } else {
         sendMessageToOtherPlayers(userMessage, senderUsername);
+    }
+}
+
+void GameServer::changeVulgarityToStar(std::string &userMessage) {
+
+    std::regex pattern {userMessage};
+    std::string target { "fuck" };
+    bool result = std::regex_search(target, pattern);
+    std::cout << std::boolalpha << result << std::endl;
+
+    if (result){
+        userMessage = "VILAIN MOT!!!!!!";
     }
 }
 

@@ -38,6 +38,8 @@ private:
 
     void addTowerInGameState(TowerCommand &command);
 
+    void changeVulgarityToStar(std::string &userMessage);
+
 
 public:
 
