@@ -134,10 +134,9 @@ void AccountServer::get_and_process_command(int client, char* message_buffer) {
     }
 }
 
-//Partie Register
+/*Register part*/
 
 bool AccountServer::insert_account_in_db(Credentials credentials) {
-    //Return True si ca c'est bien passé, false sinon
     return database.insert_account(credentials) != -1;
 }
 
@@ -171,11 +170,11 @@ void AccountServer::send_error(int client_sock_fd){
 
 
 
-//Partie Login
+/*Partie Login*/
 
 void AccountServer::send_success_id(int client_sock_fd, int player_id){
     /*
-     * Renvoi l'id du user qui s'est connecté
+     * Send the id of the user who has just logged in.
      */
 
     std::string string_id = std::to_string(player_id);
@@ -210,7 +209,7 @@ void AccountServer::handle_login(Credentials credentials, int client_sock_fd) {
     }
 }
 
-//Partie Ranking
+/*Ranking part*/
 
 std::vector<RankingInfos> AccountServer::getRanking() {
     return database.getRanking();
@@ -222,7 +221,9 @@ void AccountServer::handle_ranking(int client_sock_fd) {
 
 std::string AccountServer::vectorTostring(std::vector<RankingInfos> vect) {
 
-    /*creation d'un string du type "username,nbVictories|username,nvVictories|*/
+    /*
+     * Creation of a string  "username,nbVictories|username,nvVictories|
+    */
 
     std::string result = "";
     for (int i = 0; i < vect.size(); i++) {
@@ -234,7 +235,8 @@ std::string AccountServer::vectorTostring(std::vector<RankingInfos> vect) {
     return result;
 }
 
-// partie friendlist /////////////////////////////////////////////////////
+/*Friendlist part*/
+
 std::vector<std::string> AccountServer::getFriendList(std::string username) {
     return database.getFriendList(username);
 }
@@ -332,7 +334,7 @@ std::string AccountServer::vectorTostring(std::vector<std::string> vect) {
     }
     return result;
 }
-// partie profil
+/*Profil part*/
 PublicAccountInfos AccountServer::getPublicAccountInfos(std::string username){
     return database.getUsrInfosByUsrname(username);
 }
@@ -379,8 +381,7 @@ void AccountServer::handle_exit(int player_id){
 void AccountServer::handle_accountUpdate(int client_sock_fd) {
     char message[BUFFER_SIZE];
     for (int i = 0; i < 4; ++i) {
-        //Recevoir les infos des 4 joueurs de la game
-        receive_message(client_sock_fd, message);
+        receive_message(client_sock_fd, message); //receive the infos (player_id, npcKilled, isWinner) of the 4 players
         UpdateStatsCommand command;
         command.parse(message);
         database.updateAfterGameStats(command.getPlayerId(), command.getPnjKilled(), command.getIsWinner());
