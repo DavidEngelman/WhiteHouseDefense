@@ -5,13 +5,12 @@
 
 SpectatorManager::SpectatorManager(int port, App *master_app, bool fromFriendList) :
         NetworkedManager(port, master_app) {
-    if(!fromFriendList) {
-        if (!isConsole) {
-            spectatorUI = new SpectatorGUI(this, master_app->getMainWindow());
-        } else {
-            spectatorUI = new SpectatorConsoleUI(this);
-        }
+    if (!isConsole) {
+        spectatorUI = new SpectatorGUI(this, master_app->getMainWindow());
+    } else {
+        spectatorUI = new SpectatorConsoleUI(this);
     }
+    
 }
 
 void SpectatorManager::run() {

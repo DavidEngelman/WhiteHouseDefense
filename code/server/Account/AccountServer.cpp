@@ -322,9 +322,8 @@ bool AccountServer::handle_removeFriend(int client_sock_fd, std::string requeste
 
 bool AccountServer::handle_getStatus(int client_sock_fd, std::string username) {
     bool connected = false;
-    std::cout<<username;
+
     for(PlayerConnection player : getConnectedPlayers()){
-        std::cout<<player.getUsername();
         if (player.getUsername() == username){
             connected = true;
             send_message(client_sock_fd,"1");

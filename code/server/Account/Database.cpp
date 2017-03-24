@@ -5,7 +5,9 @@ Database::Database(const char *filename) : filename(filename) {
 }
 
 int Database::open() {
+
     rc = sqlite3_open(filename, &db);
+
 
     if (rc) {
         fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
@@ -18,6 +20,7 @@ int Database::open() {
 }
 
 int Database::exec(const char *query, int (*callback)(void *, int, char **, char **), void *data, char *ErrMsg) {
+
 
     rc = sqlite3_exec(db, query, callback, data, &ErrMsg);
     if (rc != SQLITE_OK) {
@@ -67,6 +70,20 @@ int Database::callback_FriendList(void *ptr, int argc, char **argv, char **azCol
     list->push_back(currentFriend);
     return 0;
 }
+int Database::callback_FriendRequests(void *ptr, int argc, char **argv, char **azColName) {
+    std::vector<std::string> *list = reinterpret_cast<std::vector<std::string> *>(ptr);
+    std::string currentFriend = argv[0];
+    list->push_back(currentFriend);
+    return 0;
+}
+
+int Database::callback_FriendInvitations(void *ptr, int argc, char **argv, char **azColName) {
+    std::vector<std::string> *list = reinterpret_cast<std::vector<std::string> *>(ptr);
+    std::string currentFriend = argv[0];
+    list->push_back(currentFriend);
+    return 0;
+}
+
 
 
 int Database::insert_account(Credentials credentials) {
@@ -281,7 +298,7 @@ std::vector<std::string> Database::getFriendRequests(std::string username) {
 
     char *query = (char *) command.c_str();
 
-    exec(query, callback_FriendList, &friendRequests, zErrMsg);
+    exec(query, callback_FriendRequests, &friendRequests, zErrMsg);
 
     return friendRequests;
 }
@@ -294,7 +311,7 @@ std::vector<std::string> Database::getPendingInvitations(std::string username) {
 
     char *query = (char *) command.c_str();
 
-    exec(query, callback_FriendList, &friendRequests, zErrMsg);
+    exec(query, callback_FriendInvitations, &friendRequests, zErrMsg);
 
     return friendRequests;
 }

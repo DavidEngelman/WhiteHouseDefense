@@ -37,6 +37,9 @@ public:
     static int callback_account_usrname(void *ptr, int argc, char **argv, char **azColName);
     static int callback_account_id(void *ptr, int argc, char **argv, char **azColName);
     static int callback_FriendList(void *ptr, int argc, char **argv, char **azColName);
+    static int callback_FriendRequests(void *ptr, int argc, char **argv, char **azColName);
+    static int callback_FriendInvitations(void *ptr, int argc, char **argv, char **azColName);
+
 
     int open();
     int exec(const char *query, int (*callback)(void*,int,char**,char**), void * data, char * ErrMsg );

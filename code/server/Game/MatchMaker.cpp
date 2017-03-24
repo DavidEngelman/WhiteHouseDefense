@@ -30,18 +30,18 @@ void MatchMaker::run() {
 
 void MatchMaker::get_and_process_command(int socket_fd) {
     char command_buffer[BUFFER_SIZE];
-    std::cout << "Received: " << command_buffer << std::endl;
     bool communication_over = false;
 
     while (!communication_over) {
         receive_message(socket_fd, command_buffer);
-        std::cout << command_buffer << std::endl;
         Command command;
         command.parse(command_buffer);
         std::string action = command.getAction();
+        std::cout <<"matchmaking : "<< action << std::endl;
+
 
         if (action == GAME_IN_PROGRESS_REQUEST) {
-            
+
             handleRequestFromSpectator(socket_fd);
 
         } else if (action == POP_GAME_REQUEST) {

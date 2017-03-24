@@ -97,9 +97,8 @@ void FriendListGUI::display() {
 
     updateTimer = new QTimer();
     QObject::connect(updateTimer, SIGNAL(timeout()), this, SLOT(refresh()));
-    updateTimer->start(600);
+    updateTimer->start(10000);
 
-    this->move(this->size().width() / 2 +200, this->size().height() / 2 - 200 );
 
     this->show();
 }
@@ -109,9 +108,12 @@ void FriendListGUI::sendFriendRequest() {
     if (error.size() == 0){
         std::cout<<manager->getStatus(toAdd->text().toStdString());
         manager->sendRequestServer(ADD_FRIEND, toAdd->text().toStdString());
+        toAdd->setText("");
         refresh();
     }else{
         QMessageBox::critical(this, "Error", QString::fromStdString(error));
+        toAdd->setText("");
+        refresh();
     }
 }
 
@@ -333,7 +335,6 @@ bool FriendListGUI::isInGame(std::string username) {
 
 GameInfo& FriendListGUI::getGame(std::string username){
     GameInfo friendGame;
-
     specManager->getGamesFromMatchMaker();
     std::vector<GameInfo> games = specManager->getGames();
     for (GameInfo &game : games){
