@@ -16,14 +16,23 @@ class PNJ{
 protected:
 
 	int healthPoints;
-	int direction;
+	int quadrant;
     int damage;
 	int value;
     int freezeTicksLeft;
+    bool inTransition;
+
 	std::string typeOfPNJ;
 	Position position;
 	Position last_position;
 	Position transitionPosition;
+    Direction direction;
+
+    void get_forward_direction();
+    void get_right_direction();
+    void get_left_direction();
+    void get_backward_direction();
+    void get_random_direction();
 
 public:
 
@@ -46,15 +55,19 @@ public:
 
 	void setHealthPoints(int newHp);
 
+    bool isInTransition();
+
 	bool isInPlayerBase();
-
-	Position getPosition() const;
-
-    Position getTransitionPosition() const;
 
     const std::string& getType();
 
-	void setPosition(Position position);
+    const Position& getPosition() const;
+
+    const Position& getTransitionPosition() const;
+
+	void setPosition(Position& position);
+
+    void setTransitionPosition(Position& position);
 
 	bool can_go_forward(Map &map);
 
@@ -62,13 +75,7 @@ public:
 
 	bool can_go_right(Map &map);
 
-	Direction get_forward_direction();
-
-	Direction get_right_direction();
-
-	Direction get_left_direction();
-
-    int getDirection() const;
+    int getQuadrant() const;
 
     const Position &getLast_position() const;
 
@@ -83,10 +90,6 @@ public:
     bool operator==(const PNJ &rhs) const;
 
     bool operator!=(const PNJ &rhs) const;
-
-    Direction get_random_direction();
-
-    Direction get_backward_direction();
 
 	bool can_go_backward(Map &map);
 

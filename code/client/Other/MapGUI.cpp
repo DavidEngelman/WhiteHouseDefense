@@ -48,7 +48,7 @@ void MapGUI::paintEvent(QPaintEvent *) {
             }
 
             pos = pnj->getPosition();
-            painter.drawImage(pos.getX()*TILES_SIZE, pos.getY()*TILES_SIZE, image);
+            painter.drawImage(pos.getX(), pos.getY(), image);
         }
     }
 

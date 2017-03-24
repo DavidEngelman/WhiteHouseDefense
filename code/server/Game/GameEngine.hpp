@@ -20,6 +20,7 @@ private:
     Timer timerSinceWaveStart;
     Timer timerSinceGameStart;
     Timer timerSinceLastShoot;
+    Timer timerSinceGoldEarned;
 
 
     PlayerState &getPlayerStateForWave(Wave &wave);

@@ -1,5 +1,4 @@
 #include "GameEngine.hpp"
-#include "../../common/Other/Constants.hpp"
 
 const bool DEBUG = false;
 
@@ -9,6 +8,7 @@ GameEngine::GameEngine(unsigned int mapSeed, std::string mode) : map(mapSeed),
                                                                  gameState(mode) {
     timerSinceGameStart.start();
     timerSinceLastShoot.start();
+    timerSinceGoldEarned.start();
 }
 
 /*
@@ -19,7 +19,6 @@ GameEngine::GameEngine(unsigned int mapSeed, std::string mode) : map(mapSeed),
 bool GameEngine::update() {
     int numMillisecondsSinceStart = timerSinceWaveStart.elapsedTimeInMiliseconds();
     int numStepsToDo = (numMillisecondsSinceStart / STEP_DURATION_IN_MS) - numStepsDone;
-    std::cout << numStepsToDo << std::endl;
     for (int i = 0; i < numStepsToDo; ++i) {
         shootWaves();
         updateWaves();
@@ -50,12 +49,14 @@ void GameEngine::updatePlayerStates() {
 }
 
 void GameEngine::addMoney() {
+    if (timerSinceGoldEarned.elapsedTimeInMiliseconds() < INTERVAL_BETWEEN_GOLD_EARNED) return;
     for (PlayerState &player_state : gameState.getPlayerStates()) {
         player_state.earnMoney(GOLD_EARNED_BY_TICK);
         if (player_state.getIsSupported()) {
             player_state.earnMoney(GOLD_EARNED_BY_TICK);
         }
     }
+    timerSinceGoldEarned.reset();
 }
 
 void GameEngine::dealDamageToBase() {
