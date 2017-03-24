@@ -45,6 +45,8 @@ static const std::string DECLINE_FRIEND_REQUEST = "declineFriendRequest;";
 static const std::string GET_PROFILE = "getProfileByUsername;";
 static const std::string GET_STATUS = "getStatus;";
 
+static const std::string COMMUNICATION_OVER = "OVER";
+
 
 // Towers
 static const std::string GUN_TOWER_STR = "GunTower";

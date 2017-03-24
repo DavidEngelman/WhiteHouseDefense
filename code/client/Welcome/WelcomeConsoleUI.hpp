@@ -8,14 +8,15 @@
 
 class WelcomeConsoleUI : public WelcomeUI, public AbstractConsoleUI {
 
+private:
+    void select();
+
+    void handleSelect(int choice);
+
 public:
     WelcomeConsoleUI(WelcomeManager *manager);
 
     void display() override;
-
-    int select();
-    void handleSelect(int choice);
-
 };
 
 

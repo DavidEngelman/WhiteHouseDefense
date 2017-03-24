@@ -13,7 +13,7 @@ void WelcomeConsoleUI::display() {
     select();
 }
 
-int WelcomeConsoleUI::select() {
+void WelcomeConsoleUI::select() {
     /* Ask for user's choice */
     int choice = -1;
     std::cout << "Enter your choice:  ";

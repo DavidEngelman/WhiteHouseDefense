@@ -1,10 +1,4 @@
 #include "MainGUI.hpp"
-#include <QtCore/QFile>
-#include <QtWidgets/QFormLayout>
-#include <QtMultimedia/QMediaPlayer>
-#include <QtWidgets/QDialogButtonBox>
-#include <QtWidgets/QLabel>
-
 
 MainGUI::MainGUI(MainManager *manager, QWidget* _parent) : AbstractGUI(_parent), MainUI(manager) {}
 
@@ -75,13 +69,33 @@ void MainGUI::displayGameModesMenu() {
     dialog_game_mode_choice = new QWidget;
     dialog_game_mode_choice->setWindowTitle("Select a game mode");
     dialog_game_mode_choice->setWindowModality(Qt::ApplicationModal);
+    dialog_game_mode_choice->setStyleSheet(".QWidget{background-image: url(../../qt_ui/game_pictures/backgrounds/goldBg.png);}");
+    dialog_game_mode_choice->setFixedSize(650,250);
+
+    dialog_game_mode_choice->setGeometry(
+            QStyle::alignedRect(
+                    Qt::LeftToRight,
+                    Qt::AlignCenter,
+                    dialog_game_mode_choice->size(),
+                    qApp->desktop()->availableGeometry()
+            )
+    );
 
     popup_h_layout = new QHBoxLayout;
     dialog_game_mode_choice->setLayout(popup_h_layout);
 
-    classicMode = new QCustomButton(0, "CLASSIC MODE", dialog_game_mode_choice);
-    teamMode = new QCustomButton(1, "TIMED MODE", dialog_game_mode_choice);
-    timedMode = new QCustomButton(2, "TEAM MODE", dialog_game_mode_choice);
+    classicMode = new QCustomButton(0, "", dialog_game_mode_choice);
+    classicMode->setStyleSheet("QPushButton{ border-image: url(../../qt_ui/game_pictures/icons/classicIcon.png) ; padding : 55px;}QPushButton:pressed{ border-style :solid ;border-color: black ;border-width : 3px;}");
+    classicMode->setFixedSize(150,150);
+
+
+    teamMode = new QCustomButton(1, "", dialog_game_mode_choice);
+    teamMode->setStyleSheet("QPushButton{ border-image: url(../../qt_ui/game_pictures/icons/teamIcon.png) ; padding : 50px;} QPushButton:pressed{ border-style :solid ;border-color: black ;border-width : 3px;}");
+    teamMode->setFixedSize(150,150);
+
+    timedMode = new QCustomButton(2, "", dialog_game_mode_choice);
+    timedMode->setStyleSheet("QPushButton{ border-image: url(../../qt_ui/game_pictures/icons/chrono.png);padding : 50px ;} QPushButton:pressed{ border-style :solid ;border-color: black ;border-width : 3px;}");
+    timedMode->setFixedSize(150,150);
 
     popup_h_layout->addWidget(classicMode);
     popup_h_layout->addWidget(teamMode);
@@ -91,7 +105,6 @@ void MainGUI::displayGameModesMenu() {
     connect(teamMode, SIGNAL(clicked(int)), this, SLOT(handleGameModeChoice(int)));
     connect(timedMode, SIGNAL(clicked(int)), this, SLOT(handleGameModeChoice(int)));
 
-    dialog_game_mode_choice->move(this->width() /2, this->height()/2);
     dialog_game_mode_choice->show();
 
 }

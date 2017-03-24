@@ -16,12 +16,11 @@ GameManager::GameManager(int socket, App *app) : GameManager(socket, false, app)
 GameManager::GameManager(int socket, bool _isSupporter, App *app) :
         AbstractManager(app),
         server_socket(socket),
-        isSupporter(_isSupporter)
-{
+        isSupporter(_isSupporter) {
     if (!isConsole) {
         gameUI = new GameGUI(isSupporter, getMapSeedFromServer(), this);
     } else {
-        gameUI = new GameConsoleUI(isSupporter, getMapSeedFromServer(),this);
+        gameUI = new GameConsoleUI(isSupporter, getMapSeedFromServer(), this);
     }
 
     quadrant = getQuadrantFromServer();
@@ -38,7 +37,7 @@ void GameManager::run() {
 
 void GameManager::updateMap() {
     char server_msg_buff[BUFFER_SIZE];
-    while (!gameState.getIsGameOver()) {
+    while (!gameState->getIsGameOver()) {
         receive_message(server_socket, server_msg_buff);
         if (strncmp(server_msg_buff, RECEIVE_MESSAGE_STRING.c_str(), RECEIVE_MESSAGE_STRING.length()) == 0) {
             Command command;
@@ -47,7 +46,7 @@ void GameManager::updateMap() {
             const std::string &message = command.getTokenWithSize(messageSize);
             const std::string &sender = command.getNextToken();
             gameUI->addChatMessage(message, sender);
-        }  else if (strcmp(server_msg_buff, AD_POPUP) == 0) {
+        } else if (strcmp(server_msg_buff, AD_POPUP) == 0) {
             std::cout << server_msg_buff << std::endl;
             gameUI->adPopUp();
         } else if (strcmp(server_msg_buff, PLACING_TOWER) == 0) {
@@ -80,11 +79,10 @@ void GameManager::comeBackToMenu() { // À appeler quand la partie est terminée
 }
 
 
-
-bool GameManager::isTowerInPosition(GameState &gameState, Position towerPos){
+bool GameManager::isTowerInPosition(GameState &gameState, Position towerPos) {
     bool validity = false;
-    for (auto tower : gameState.getTowers()){
-        if (tower->getQuadrant() == quadrant && tower->getPosition() == towerPos){
+    for (auto tower : gameState.getTowers()) {
+        if (tower->getQuadrant() == quadrant && tower->getPosition() == towerPos) {
             validity = true;
             break;
         }
@@ -98,7 +96,7 @@ bool GameManager::isTowerInPosition(GameState &gameState, Position towerPos){
  * Check if the player has the money to buy a tower and if he placed it in a correct
  * position
  */
-bool GameManager::checkValidity(Position towerPos, GameState& gamestate, std::string typeOfTower) {
+bool GameManager::checkValidity(Position towerPos, GameState &gamestate, std::string typeOfTower) {
     bool validity = true;
     int price;
 
@@ -112,13 +110,13 @@ bool GameManager::checkValidity(Position towerPos, GameState& gamestate, std::st
         price = MISSILE_TOWER_PRICE;
     }
 
-    if (gameState.getPlayerStates()[quadrant].getMoney()  < price) { // if player has enough money
+    if (gameState->getPlayerStates()[quadrant].getMoney() < price) { // if player has enough money
         validity = false;
     } else if (isTowerInPosition(gamestate, towerPos)) { // if a tower isn't already there
         validity = false;
     } else if (Map::computeQuadrant(towerPos) != quadrant) { // if the position is in the right quadrant
         validity = false;
-    } else if (gameUI->getMap()->isPath(towerPos) || gameUI->getMap()->isObstacle(towerPos)){
+    } else if (gameUI->getMap()->isPath(towerPos) || gameUI->getMap()->isObstacle(towerPos)) {
         validity = false;
     }
     return validity;
@@ -130,7 +128,7 @@ void GameManager::sendBuyRequest(Position towerPos, std::string towerType) {
                           + "," + std::to_string(quadrant)
                           + "," + towerType
                           + "," + std::to_string(towerPos.getX())
-                          + "," + std::to_string(towerPos.getY())+";";
+                          + "," + std::to_string(towerPos.getY()) + ";";
     send_message(server_socket, message.c_str());
 }
 
@@ -140,7 +138,7 @@ void GameManager::sendSellRequest(Position towerPos) {
                           + "," + std::to_string(quadrant)
                           + "," + type
                           + "," + std::to_string(towerPos.getX())
-                          + "," + std::to_string(towerPos.getY())+";";
+                          + "," + std::to_string(towerPos.getY()) + ";";
     send_message(server_socket, message.c_str());
 }
 
@@ -150,27 +148,24 @@ void GameManager::sendUpgradeRequest(Position towerPos) {
                           + "," + std::to_string(quadrant)
                           + "," + type
                           + "," + std::to_string(towerPos.getX())
-                          + "," + std::to_string(towerPos.getY())+";";
+                          + "," + std::to_string(towerPos.getY()) + ";";
     send_message(server_socket, message.c_str());
 }
 
 
-
-
-
-void GameManager::unSerializeGameState(char* seriarlizedGamestate){
-    gameState = GameState();
+void GameManager::unSerializeGameState(char *seriarlizedGamestate) {
+    gameState = new GameState();
 
     std::string part = "";
     unsigned count = 0; // count at which part we are
-    for (char* c = seriarlizedGamestate; *c; ++c) {
+    for (char *c = seriarlizedGamestate; *c; ++c) {
         if (*c == '!') {
             switch (count) {
                 case 0: // isGameOver
-                    gameState.setGameMode(part);
+                    gameState->setGameMode(part);
                     break;
                 case 1: // isGameOver
-                    gameState.setIsGameOver(part == "true");
+                    gameState->setIsGameOver(part == "true");
                     break;
                 case 2: // PlayerStates
                     unSerializePlayerStates(part);
@@ -192,7 +187,7 @@ void GameManager::unSerializeGameState(char* seriarlizedGamestate){
 
 void GameManager::unSerializePlayerStates(std::string serialized_playerstates) {
     std::string serialized_playerstate = "";
-    for (char& c : serialized_playerstates) {
+    for (char &c : serialized_playerstates) {
         if (c == ';') {
             unSerializePlayerState(serialized_playerstate + ",");
             serialized_playerstate = "";
@@ -206,18 +201,18 @@ void GameManager::unSerializePlayerState(std::string serialized_playerstate) {
     std::string elem = "";
     unsigned count = 0;
     std::string username;
-    int player_id=0;
-    int money=0;
-    int hp=0;
-    bool isSupported=true;
-    bool isWinner=true;
-    int pnjKilled=0;
-    int team=0;
-    int nbTowerPlaced=0;
-    int damageDealt=0;
-    int moneySpend=0;
+    int player_id = 0;
+    int money = 0;
+    int hp = 0;
+    bool isSupported = true;
+    bool isWinner = true;
+    int pnjKilled = 0;
+    int team = 0;
+    int nbTowerPlaced = 0;
+    int damageDealt = 0;
+    int moneySpend = 0;
 
-    for (char& c : serialized_playerstate) {
+    for (char &c : serialized_playerstate) {
         if (c == ',') {
             switch (count) {
                 case 0: // Nothing to do
@@ -262,14 +257,14 @@ void GameManager::unSerializePlayerState(std::string serialized_playerstate) {
         }
     }
 
-    PlayerState* playerState = new PlayerState(player_id, username, money, hp, isSupported, isWinner,
+    PlayerState *playerState = new PlayerState(player_id, username, money, hp, isSupported, isWinner,
                                                pnjKilled, team, nbTowerPlaced, damageDealt, moneySpend);
-    gameState.addPlayerState(*playerState);
+    gameState->addPlayerState(*playerState);
 }
 
 void GameManager::unSerializeTowers(std::string serialized_towers) {
     std::string serialized_tower = "";
-    for (char& c : serialized_towers) {
+    for (char &c : serialized_towers) {
         if (c == ';') {
             unSerializeTower(serialized_tower + ",");
             serialized_tower = "";
@@ -283,11 +278,11 @@ void GameManager::unSerializeTower(std::string serialized_tower) {
     std::string elem = "";
     unsigned count = 0;
 
-    std::string typeOfTower="";
-    int x=0;
-    int y=0;
+    std::string typeOfTower = "";
+    int x = 0;
+    int y = 0;
     int level = 0;
-    for (char& c : serialized_tower) {
+    for (char &c : serialized_tower) {
         if (c == ',') {
             switch (count) {
                 case 0: // Type of Tower
@@ -320,12 +315,12 @@ void GameManager::unSerializeTower(std::string serialized_tower) {
 
     //TODO: remplacer par gameState.addTower(tower)
     //Pour ne pas utiliser un getter pour modifier la classe, ça n'a aucun sens
-    gameState.getTowers().push_back(tower);
+    gameState->getTowers().push_back(tower);
 }
 
 void GameManager::unSerializeWaves(std::string serialized_waves) {
     std::string serialized_wave = "";
-    for (char& c : serialized_waves) {
+    for (char &c : serialized_waves) {
         if (c == ';') {
             unSerializeWave(serialized_wave);
             serialized_wave = "";
@@ -339,9 +334,9 @@ void GameManager::unSerializeWave(std::string serialized_wave) {
     std::string elem = "";
     bool firstElem = true;
 
-    int quadrant=0;
+    int quadrant = 0;
     Wave *wave = new Wave(quadrant);
-    for (char& c : serialized_wave) {
+    for (char &c : serialized_wave) {
         if (c == '|') {
             if (firstElem) {
                 quadrant = elem.back() - '0';
@@ -355,18 +350,18 @@ void GameManager::unSerializeWave(std::string serialized_wave) {
             elem += c;
         }
     }
-    gameState.addWave(*wave);
+    gameState->addWave(*wave);
 }
 
 void GameManager::unSerializePNJ(std::string serialized_pnj, Wave *wave) {
     std::string elem = "";
     unsigned count = 0;
 
-    int x=0;
-    int y=0;
-    int health=0;
+    int x = 0;
+    int y = 0;
+    int health = 0;
     std::string typeOfPNJ = "";
-    for (char& c : serialized_pnj) {
+    for (char &c : serialized_pnj) {
         if (c == ',') {
             switch (count) {
                 case 0: // X
@@ -398,13 +393,13 @@ void GameManager::unSerializePNJ(std::string serialized_pnj, Wave *wave) {
 }
 
 bool GameManager::isAlive() {
-    bool gameNotInitialized = gameState.getPlayerStates().size() == 0;
+    bool gameNotInitialized = gameState->getPlayerStates().size() == 0;
     if (gameNotInitialized) return true;
 
     bool alive = false;
-    for( PlayerState& playerState : gameState.getPlayerStates()){
-        if (playerState.getPlayer_id() == master_app->getId()){
-            if (playerState.getHp() > 0){
+    for (PlayerState &playerState : gameState->getPlayerStates()) {
+        if (playerState.getPlayer_id() == master_app->getId()) {
+            if (playerState.getHp() > 0) {
                 alive = true;
                 break;
             }
@@ -446,7 +441,7 @@ void GameManager::getInitialGameStateFromServer() {
 }
 
 GameState &GameManager::getGameState() {
-    return gameState;
+    return *gameState;
 }
 
 int GameManager::getQuadrant() {
@@ -454,39 +449,34 @@ int GameManager::getQuadrant() {
 }
 
 bool GameManager::placeGunTower(Position towerPos) {
-    if (checkValidity(towerPos, gameState, GUN_TOWER_STR)) {
+    if (checkValidity(towerPos, *gameState, GUN_TOWER_STR)) {
         sendBuyRequest(towerPos, GUN_TOWER_STR);
         return true;
     }
-
     return false;
 }
 
 bool GameManager::placeSniperTower(Position towerPos) {
-    if (checkValidity(towerPos, gameState, SNIPER_TOWER_STR)) {
+    if (checkValidity(towerPos, *gameState, SNIPER_TOWER_STR)) {
         sendBuyRequest(towerPos, SNIPER_TOWER_STR);
         return true;
     }
-
     return false;
 }
 
 bool GameManager::placeShockTower(Position towerPos) {
-    if (checkValidity(towerPos, gameState, SHOCK_TOWER_STR)) {
+    if (checkValidity(towerPos, *gameState, SHOCK_TOWER_STR)) {
         sendBuyRequest(towerPos, SHOCK_TOWER_STR);
         return true;
     }
-
     return false;
 }
 
 bool GameManager::placeMissileTower(Position towerPos) {
-    if (checkValidity(towerPos, gameState, MISSILE_TOWER_STR)) {
+    if (checkValidity(towerPos, *gameState, MISSILE_TOWER_STR)) {
         sendBuyRequest(towerPos, MISSILE_TOWER_STR);
         return true;
-    }
-
-    return false;
+    }return false;
 }
 
 bool GameManager::sellTower(Position toSell) {
@@ -494,14 +484,12 @@ bool GameManager::sellTower(Position toSell) {
         sendSellRequest(toSell);
         return true;
     }
-
     return false;
-
 }
 
 bool GameManager::upgradeTower(Position toUpgrade) {
     if (isTowerInPosition(getGameState(), toUpgrade)) {
-        if (!gameState.upgradeTower(toUpgrade, quadrant))
+        if (!gameState->upgradeTower(toUpgrade, quadrant))
             return false;
         sendUpgradeRequest(toUpgrade);
         return true;
@@ -511,13 +499,13 @@ bool GameManager::upgradeTower(Position toUpgrade) {
 
 std::string GameManager::getWinner() {
     std::string winner = "";
-    for (PlayerState &player : gameState.getPlayerStates()) {
+    for (PlayerState &player : gameState->getPlayerStates()) {
         if (player.getIsWinner())
             winner += player.getUsername() + " ";
     }
     if (winner.size() != 0)
         return winner;
-    else return  "No winner";
+    else return "No winner";
 }
 
 /* In-Game Chat */
@@ -543,13 +531,13 @@ void GameManager::nuclearBombSpell() {
     gameUI->disableNukeSpell();
 }
 
-void GameManager::launchFreezeSpell(){
+void GameManager::launchFreezeSpell() {
     sendFreezeSpellRequest();
     freezeSpellAvailable = false;
     gameUI->disableFreezeSpell();
 }
 
-void GameManager::launchAdSpell(){
+void GameManager::launchAdSpell() {
     sendAdSpellRequest();
 }
 
@@ -567,12 +555,13 @@ void GameManager::sendFreezeSpellRequest() {
 
 void GameManager::sendAdSpellRequest() {
     std::string message = AD_SPELL_COMMAND_STRING + ","
-                          + gameState.getPlayerStates()[quadrant].getUsername() + ";";
+                          + gameState->getPlayerStates()[quadrant].getUsername() + ";";
     send_message(server_socket, message.c_str());
     std::cout << message << " sended" << std::endl;
 }
 
-GameManager::~GameManager(){
+GameManager::~GameManager() {
+    delete gameState;
     gameUI->destroy();
 }
 
@@ -598,5 +587,4 @@ void GameManager::sendAirStrikeRequest(int quadrant) {
     std::string message = AIR_STRIKE_COMMAND_STRING + ","
                           + std::to_string(quadrant) + ";";
     send_message(server_socket, message.c_str());
-
 }

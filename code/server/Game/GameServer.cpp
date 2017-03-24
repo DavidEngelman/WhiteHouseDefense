@@ -393,13 +393,13 @@ int GameServer::connectToServer(int port) {
 }
 
 void GameServer::sendFinishedToMatchmaker() {
-    int matchmaker_server_socket = connectToServer(5556);
+    int matchmaker_server_socket = connectToServer(MATCHMAKER_SERVER_PORT);
     std::string message = "PopGame," + std::to_string(port) + ";";
     send_message(matchmaker_server_socket, message.c_str());
 }
 
 void GameServer::updatePlayerStatsOnAccountServer() {
-    int account_server_socket = connectToServer(5555);
+    int account_server_socket = connectToServer(ACCOUNT_SERVER_PORT);
     int p_id, pnj_killed;
     bool is_winner;
 

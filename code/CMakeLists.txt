@@ -35,7 +35,7 @@ set(CLIENT_FILES client/Other/ClientLauncher.cpp
         client/Welcome/WelcomeManager.cpp
         client/Welcome/WelcomeConsoleUI.cpp
         client/Welcome/WelcomeGUI.cpp
-        client/Welcome/WelcomeGUI.cpp
+        client/Welcome/WelcomeUI.hpp
 
         #REGISTER
         client/Register/RegisterGUI.cpp

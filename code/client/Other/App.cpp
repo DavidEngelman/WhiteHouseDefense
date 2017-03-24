@@ -63,6 +63,7 @@ void App::launchMatchmaking(std::string mode) {
 }
 
 void App::launchGame(int gameServerSocket) {
+    matchMakingThread = nullptr;
     std::cout << "Starting game" << std::endl;
     is_in_queue = false;
     if (!isConsole) {
@@ -119,6 +120,8 @@ App::~App() {
         int socket = init_connection_to_server(serverIpAddress, ACCOUNT_SERVER_PORT);
         std::string message = "Exit," + std::to_string(playerId) + ";";
         send_message(socket, message.c_str());
+
+        send_message(socket, COMMUNICATION_OVER.c_str());
     }
 }
 
