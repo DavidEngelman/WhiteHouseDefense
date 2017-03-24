@@ -515,7 +515,7 @@ void GameServer::processSpecialCommand(std::string &userMessage, std::string &se
         int receiverQuadrant = getQuadrantForPlayer(receiverUsername);
         if (receiverQuadrant != -1){ // There is a player with that username
             int senderQuadrant = getQuadrantForPlayer(senderUsername);
-            const std::string& finalMessage = makeMessage(message.getRemainingContent(), senderUsername);
+            const std::string& finalMessage = makeMessage(message.getRemainingContent(), "[PRIVATE] " + senderUsername);
 
             // Send to myself and to team mate
             send_message(playerConnections[senderQuadrant].getSocketFd(), finalMessage.c_str());
@@ -527,7 +527,7 @@ void GameServer::processSpecialCommand(std::string &userMessage, std::string &se
         int senderQuadrant = getQuadrantForPlayer(senderUsername);
         int teamMateQuadrants[4] = {1, 0, 3, 2};
         int teamMateQuadrant = teamMateQuadrants[senderQuadrant];
-        const std::string& finalMessage = makeMessage(message.getRemainingContent(), senderUsername);
+        const std::string& finalMessage = makeMessage(message.getRemainingContent(), "[TEAM] " + senderUsername);
 
         // Send to myself and to team mate
         send_message(playerConnections[senderQuadrant].getSocketFd(), finalMessage.c_str());
