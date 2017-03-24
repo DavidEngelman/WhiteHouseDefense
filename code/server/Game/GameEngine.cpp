@@ -8,6 +8,7 @@ GameEngine::GameEngine(unsigned int mapSeed, std::string mode) : map(mapSeed),
                                                                  numOfPNJsPerWave(INITIAL_NUMBER_OF_PNJS_PER_WAVE),
                                                                  gameState(mode) {
     timerSinceGameStart.start();
+    timerSinceLastShoot.start();
 }
 
 /*
@@ -16,9 +17,11 @@ GameEngine::GameEngine(unsigned int mapSeed, std::string mode) : map(mapSeed),
  */
 
 bool GameEngine::update() {
-    int numMilisecondsSinceStart = timerSinceWaveStart.elapsedTimeInMiliseconds();
-    int numStepsToDo = (numMilisecondsSinceStart / STEP_DURATION_IN_MS) - numStepsDone;
+    int numMillisecondsSinceStart = timerSinceWaveStart.elapsedTimeInMiliseconds();
+    int numStepsToDo = (numMillisecondsSinceStart / STEP_DURATION_IN_MS) - numStepsDone;
+    std::cout << numStepsToDo << std::endl;
     for (int i = 0; i < numStepsToDo; ++i) {
+        shootWaves();
         updateWaves();
         updatePlayerStates();
     }
@@ -28,11 +31,16 @@ bool GameEngine::update() {
 
 void GameEngine::updateWaves() {
     std::vector<Wave> &waves = gameState.getWaves();
-    dealDamage(waves);
-    removeDeadPNJsFromWaves();
     movePNJsInWaves(waves);
     addPNJS(waves);
     checkIfGameIsOver();
+}
+
+void GameEngine::shootWaves() {
+    if (timerSinceLastShoot.elapsedTimeInMiliseconds() < INTERVAL_BETWEEN_SHOOTS_IN_MS) return;
+    dealDamage(gameState.getWaves());
+    removeDeadPNJsFromWaves();
+    timerSinceLastShoot.reset();
 }
 
 void GameEngine::updatePlayerStates() {

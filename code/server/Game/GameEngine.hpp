@@ -19,6 +19,7 @@ private:
 
     Timer timerSinceWaveStart;
     Timer timerSinceGameStart;
+    Timer timerSinceLastShoot;
 
 
     PlayerState &getPlayerStateForWave(Wave &wave);
@@ -36,6 +37,8 @@ public:
     void createWaves();
 
     void updateWaves();
+
+    void shootWaves();
 
     void dealDamage(std::vector<Wave> &waves);
 
