@@ -12,7 +12,7 @@
 #include "../Other/InQueueWidget.hpp"
 
 class MainGUI : public AbstractGUI, public MainUI {
-    Q_OBJECT
+Q_OBJECT
 
 private:
     QCustomButton *newGame;
@@ -26,21 +26,28 @@ private:
     QCustomButton *classicMode;
     QCustomButton *timedMode;
     QCustomButton *teamMode;
-    QWidget* dialog_game_mode_choice;
+    QWidget *dialog_game_mode_choice;
 
-    QHBoxLayout* popup_h_layout;
-    InQueueWidget* queueWidget;
+    QHBoxLayout *popup_h_layout;
+    InQueueWidget *queueWidget;
 
 public:
-    MainGUI(MainManager *manager, QWidget* _parent);
+    MainGUI(MainManager *manager, QWidget *_parent);
+
     ~MainGUI() { close(); };
+
     void display() override;
+
     void displayGameModesMenu() override;
+
     void showInQueue() override;
 
 public slots:
+
     void handleMenuChoice(int choice);
+
     void handleGameModeChoice(int choice);
+
     void leaveQueue();
 };
 

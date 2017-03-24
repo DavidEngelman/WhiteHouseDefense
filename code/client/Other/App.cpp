@@ -7,7 +7,7 @@
 App::App(char *serverIpAddr) : serverIpAddress(serverIpAddr),
                                playerId(-1), username("\0"), is_in_queue(false),
                                currentManager(nullptr), mainWindow(nullptr),
-                               player(new QMediaPlayer(this)) {
+                               mediaPlayer(new QMediaPlayer(this)) {
     if (!isConsole) {
         mainWindow = new QWidget();
         mainWindow->setFixedSize(750, 600); // Will be resized for the menu and games;
@@ -69,6 +69,7 @@ void App::launchGame(int gameServerSocket) {
     if (!isConsole) {
         getMainWindow()->setVisible(false);//So we can reuse the window after the game
     }
+    mediaPlayer->stop();
     GameManager *gameManager = new GameManager(gameServerSocket, this);
     transition(gameManager);
 }
@@ -92,16 +93,16 @@ void App::leaveQueue() {
 
 void App::setMusicFromPath(QString musicPath) {
 
-    if (player->currentMedia() == QMediaContent(QUrl::fromLocalFile(QFileInfo(musicPath).absoluteFilePath()))) return;
-    player->stop();
+    if (mediaPlayer->currentMedia() == QMediaContent(QUrl::fromLocalFile(QFileInfo(musicPath).absoluteFilePath()))) return;
+    mediaPlayer->stop();
 
     QMediaPlaylist *playlist = new QMediaPlaylist();
     playlist->addMedia(QUrl::fromLocalFile(QFileInfo(musicPath).absoluteFilePath()));
     playlist->setPlaybackMode(QMediaPlaylist::Loop);
 
-    player->setVolume(100);
-    player->setPlaylist(playlist);
-    player->play();
+    mediaPlayer->setVolume(100);
+    mediaPlayer->setPlaylist(playlist);
+    mediaPlayer->play();
 }
 
 void App::centerWindow() {

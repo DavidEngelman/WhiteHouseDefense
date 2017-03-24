@@ -364,7 +364,7 @@ void GameManager::unSerializePNJ(std::string serialized_pnj, Wave *wave) {
     for (char &c : serialized_pnj) {
         if (c == ',') {
             switch (count) {
-                case 0: // X
+                case 0:
                     x = std::stoi(elem);
                     break;
                 case 1:

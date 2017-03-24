@@ -1,5 +1,4 @@
 #include "GameEngine.hpp"
-#include "../../common/Other/Constants.hpp"
 
 const bool DEBUG = false;
 
@@ -8,6 +7,8 @@ GameEngine::GameEngine(unsigned int mapSeed, std::string mode) : map(mapSeed),
                                                                  numOfPNJsPerWave(INITIAL_NUMBER_OF_PNJS_PER_WAVE),
                                                                  gameState(mode) {
     timerSinceGameStart.start();
+    timerSinceLastShoot.start();
+    timerSinceGoldEarned.start();
 }
 
 /*
@@ -16,9 +17,10 @@ GameEngine::GameEngine(unsigned int mapSeed, std::string mode) : map(mapSeed),
  */
 
 bool GameEngine::update() {
-    int numMilisecondsSinceStart = timerSinceWaveStart.elapsedTimeInMiliseconds();
-    int numStepsToDo = (numMilisecondsSinceStart / STEP_DURATION_IN_MS) - numStepsDone;
+    int numMillisecondsSinceStart = timerSinceWaveStart.elapsedTimeInMiliseconds();
+    int numStepsToDo = (numMillisecondsSinceStart / STEP_DURATION_IN_MS) - numStepsDone;
     for (int i = 0; i < numStepsToDo; ++i) {
+        shootWaves();
         updateWaves();
         updatePlayerStates();
     }
@@ -28,11 +30,16 @@ bool GameEngine::update() {
 
 void GameEngine::updateWaves() {
     std::vector<Wave> &waves = gameState.getWaves();
-    dealDamage(waves);
-    removeDeadPNJsFromWaves();
     movePNJsInWaves(waves);
     addPNJS(waves);
     checkIfGameIsOver();
+}
+
+void GameEngine::shootWaves() {
+    if (timerSinceLastShoot.elapsedTimeInMiliseconds() < INTERVAL_BETWEEN_SHOOTS_IN_MS) return;
+    dealDamage(gameState.getWaves());
+    removeDeadPNJsFromWaves();
+    timerSinceLastShoot.reset();
 }
 
 void GameEngine::updatePlayerStates() {
@@ -42,12 +49,14 @@ void GameEngine::updatePlayerStates() {
 }
 
 void GameEngine::addMoney() {
+    if (timerSinceGoldEarned.elapsedTimeInMiliseconds() < INTERVAL_BETWEEN_GOLD_EARNED) return;
     for (PlayerState &player_state : gameState.getPlayerStates()) {
         player_state.earnMoney(GOLD_EARNED_BY_TICK);
         if (player_state.getIsSupported()) {
             player_state.earnMoney(GOLD_EARNED_BY_TICK);
         }
     }
+    timerSinceGoldEarned.reset();
 }
 
 void GameEngine::dealDamageToBase() {
