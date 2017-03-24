@@ -63,6 +63,7 @@ void App::launchGame(int gameServerSocket) {
     if (!isConsole) {
         getMainWindow()->setVisible(false);//So we can reuse the window after the game
     }
+    mediaPlayer->stop();
     GameManager *gameManager = new GameManager(gameServerSocket, this);
     transition(gameManager);
 }
