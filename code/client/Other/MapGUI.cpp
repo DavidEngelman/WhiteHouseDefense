@@ -6,7 +6,6 @@
 MapGUI::MapGUI(unsigned int seed, GameGUI *gameGUI, QVBoxLayout *layout = 0) : Map(seed), gameGUI(gameGUI) {
     display();
     layout->addWidget(this);
-    //setFixedSize(16*31, 16*31);
     if (seed < NB_OF_MAPS) {
         std::string filename = "background-image: url(../../maps/map" + std::to_string(seed+1) + ".png)";
         this->setStyleSheet(QString::fromStdString(filename));
@@ -33,82 +32,49 @@ void MapGUI::paintEvent(QPaintEvent *) {
     std::vector<Wave> &waves = gameState.getWaves();
     std::string &mode = gameState.getMode();
 
-    std::string typeOfTower;
+    Position pos;
     std::string typeOfPNJ;
-    int cell;
 
-    for (int y = 0; y < SIZE; y++) {
-        for (int x = 0; x < SIZE; x++) {
-            cell = matrix[y][x];
-            if (cell == PATH_INT) {
-                typeOfPNJ = "";
-                for (auto &wave : waves) {
-                    std::vector<PNJ*> &pnjs = wave.getPnjs();
-                    for (auto &pnj : pnjs) {
-                        Position pos = pnj->getPosition();
-                        if (x == pos.getX() && y == pos.getY()) {
-                            typeOfPNJ = pnj->getType();
-                            break;
-                        }
-                    }
-                    if (typeOfPNJ != "") break;
-                }
-
-                if (typeOfPNJ == MEXICAN_PNJ_STR) {
-                    image = QImage("../../qt_ui/game_pictures/tiles/mexican.png");
-                    painter.drawImage(x*TILES_SIZE, y*TILES_SIZE, image);
-                } else if (typeOfPNJ == COMMUNIST_PNJ_STR) {
-                    image = QImage("../../qt_ui/game_pictures/tiles/communist.png");
-                    painter.drawImage(x*TILES_SIZE, y*TILES_SIZE, image);
-                } else if (typeOfPNJ == MUSLIM_PNJ_STR) {
-                    image = QImage("../../qt_ui/game_pictures/tiles/muslim.png");
-                    painter.drawImage(x*TILES_SIZE, y*TILES_SIZE, image);
-                }
-            } else if (cell == GRASS_INT or cell == SAND_INT or
-                    cell == SNOW_INT or cell == DIRT_INT or cell == STONE_INT) {
-
-                typeOfTower = "";
-                for (auto &tower : towers) {
-                    Position pos = tower->getPosition();
-                    if (x == pos.getX() && y == pos.getY()) {
-                        typeOfTower = tower->getType();
-                        break;
-                    }
-                }
-                if (typeOfTower != "") {
-                    if (typeOfTower == GUN_TOWER_STR) {
-                        image = QImage("../../qt_ui/game_pictures/tiles/guntower.png");
-                    } else if (typeOfTower == SNIPER_TOWER_STR) {
-                        image = QImage("../../qt_ui/game_pictures/tiles/snipertower.png");
-                    } else if (typeOfTower == SHOCK_TOWER_STR) {
-                        image = QImage("../../qt_ui/game_pictures/tiles/shocktower.png");
-                    } else {
-                        image = QImage("../../qt_ui/game_pictures/tiles/missiletower.png");
-                    }
-                    int offset = image.height() - TILES_SIZE;
-                    painter.drawImage(x * TILES_SIZE, y * TILES_SIZE - offset, image);
-                }
-            } else if (cell == BASE_INT) {
-                if (computeQuadrant(Position(x, y)) == quadrant) {
-                    image = QImage("../../qt_ui/game_pictures/tiles/greenbase.png");
-                } else {
-
-                    if ((mode == TEAM_MODE) && (PARTNERS[computeQuadrant(Position(x, y))] == quadrant)) {
-                        image = QImage("../../qt_ui/game_pictures/tiles/purplebase.png");
-                    } else {
-                        image = QImage("../../qt_ui/game_pictures/tiles/base.png");
-                    }
-                }
-                painter.drawImage(x*TILES_SIZE, y*TILES_SIZE, image);
+    for (auto &wave : waves) {
+        std::vector<PNJ *> &pnjs = wave.getPnjs();
+        for (auto &pnj : pnjs) {
+            typeOfPNJ = pnj->getType();
+            if (typeOfPNJ == MEXICAN_PNJ_STR) {
+                image = QImage("../../qt_ui/game_pictures/tiles/mexican.png");
+            } else if (typeOfPNJ == COMMUNIST_PNJ_STR) {
+                image = QImage("../../qt_ui/game_pictures/tiles/communist.png");
+            } else if (typeOfPNJ == MUSLIM_PNJ_STR) {
+                image = QImage("../../qt_ui/game_pictures/tiles/muslim.png");
             }
 
-            if (highlighted.getX() == x && highlighted.getY() == y) {
-                QRect rect = QRect(x*TILES_SIZE, y*TILES_SIZE, TILES_SIZE-1, TILES_SIZE-1);
-                painter.setPen(QColor(255, 0, 0));
-                painter.drawRect(rect);
-            }
+            pos = pnj->getPosition();
+            painter.drawImage(pos.getX()*TILES_SIZE, pos.getY()*TILES_SIZE, image);
         }
     }
+
+    std::string typeOfTower;
+
+    for (auto &tower : towers) {
+        typeOfTower = tower->getType();
+
+        if (typeOfTower == GUN_TOWER_STR) {
+            image = QImage("../../qt_ui/game_pictures/tiles/guntower.png");
+        } else if (typeOfTower == SNIPER_TOWER_STR) {
+            image = QImage("../../qt_ui/game_pictures/tiles/snipertower.png");
+        } else if (typeOfTower == SHOCK_TOWER_STR) {
+            image = QImage("../../qt_ui/game_pictures/tiles/shocktower.png");
+        } else {
+            image = QImage("../../qt_ui/game_pictures/tiles/missiletower.png");
+        }
+
+        pos = tower->getPosition();
+        int offset = image.height() - TILES_SIZE;
+        painter.drawImage(pos.getX() * TILES_SIZE, pos.getY() * TILES_SIZE - offset, image);
+    }
+
+    QRect rect = QRect(highlighted.getX()*TILES_SIZE, highlighted.getY()*TILES_SIZE, TILES_SIZE-1, TILES_SIZE-1);
+    painter.setPen(QColor(255, 0, 0));
+    painter.drawRect(rect);
 }
 
 void MapGUI::mousePressEvent(QMouseEvent* event) {

@@ -5,16 +5,19 @@
 PNJ::PNJ(Position position, int healthPoints, int direction) :
         position(position), healthPoints(healthPoints),
         direction(direction), damage(-1), value(-1), freezeTicksLeft(0),
-        last_position(Position(-1000, -1000)) {}
+        last_position(Position(-1000, -1000)),
+        transitionPosition(Position(position.getX()*TILES_SIZE, position.getY()*TILES_SIZE)) {}
 
-PNJ::PNJ(int direction) : position(Position(SIZE / 2, SIZE / 2)),
-                          direction(direction), freezeTicksLeft(0),
-                          last_position(Position(-1000, -1000)) {}
-
+PNJ::PNJ(int direction) :
+        position(Position(SIZE/2, SIZE/2)),
+        direction(direction), freezeTicksLeft(0),
+        last_position(Position(-1000, -1000)),
+        transitionPosition(Position(SIZE*TILES_SIZE/2, SIZE*TILES_SIZE/2)) {}
 
 PNJ::PNJ(Position position, int healthPoints, Position last_pos, int direction) :
         position(position), healthPoints(healthPoints), last_position(last_pos),
-        direction(direction), damage(-1), value(-1), freezeTicksLeft(0) {}
+        direction(direction), damage(-1), value(-1), freezeTicksLeft(0),
+        transitionPosition(Position(position.getX()*TILES_SIZE, position.getY()*TILES_SIZE)) {}
 
 Direction PNJ::get_random_direction() {
     Direction move;
@@ -282,6 +285,10 @@ const std::string &PNJ::getType() {
 
 void PNJ::freeze() {
     freezeTicksLeft = NUM_FREEZE_TICKS_FOR_PNJ;
+}
+
+Position PNJ::getTransitionPosition() const {
+    return Position();
 }
 
 

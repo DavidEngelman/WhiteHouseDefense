@@ -23,6 +23,7 @@ protected:
 	std::string typeOfPNJ;
 	Position position;
 	Position last_position;
+	Position transitionPosition;
 
 public:
 
@@ -48,6 +49,8 @@ public:
 	bool isInPlayerBase();
 
 	Position getPosition() const;
+
+    Position getTransitionPosition() const;
 
     const std::string& getType();
 
