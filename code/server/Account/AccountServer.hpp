@@ -26,7 +26,7 @@ public:
     const std::vector<PlayerConnection> &getConnectedPlayers() const;
     bool is_player_already_connected(PlayerConnection& player);
     void add_connected_player(PlayerConnection& player);
-    bool handle_exit(int player_id);
+    void handle_exit(int player_id);
 
     AccountServer(int port, const char *databaseName);
 
@@ -47,11 +47,11 @@ public:
 
 
 
-    bool handle_login(Credentials credentials, int client_sock_fd);
+    void handle_login(Credentials credentials, int client_sock_fd);
 
     bool handle_register(Credentials credentials, int client_sock_fd);
 
-    bool handle_ranking(int client_sock_fd);
+    void handle_ranking(int client_sock_fd);
     std::vector<RankingInfos> getRanking();
     std::string vectorTostring(std::vector<RankingInfos> vect);
     std::string vectorTostring(std::vector<std::string> vect);
@@ -68,21 +68,21 @@ public:
     bool sendFriendRequest(std::string requester, std::string receiver);
     bool declineFriendRequest(std::string requester, std::string receiver);
     
-    bool handle_getFriendList(int client_sock_fd, std::string requester);
-    bool handle_getFriendRequests(int client_sock_fd, std::string requester);
-    bool handle_getPendingInvitations(int client_sock_fd, std::string requester);
-    bool handle_sendFriendRequest(int client_sock_fd, std::string requester, std::string toAdd);
-    bool handle_removeFriend(int client_sock_fd, std::string requester, std::string toRemove);
-    bool handle_acceptFriendRequest(int client_sock_fd, std::string requester,std::string toAccept );
-    bool handle_declineFriendRequest(int client_sock_fd, std::string requester, std::string toDecline);
-    bool handle_getStatus(int client_sock_fd, std::string requester);
+    void handle_getFriendList(int client_sock_fd, std::string requester);
+    void handle_getFriendRequests(int client_sock_fd, std::string requester);
+    void handle_getPendingInvitations(int client_sock_fd, std::string requester);
+    void handle_sendFriendRequest(int client_sock_fd, std::string requester, std::string toAdd);
+    void handle_removeFriend(int client_sock_fd, std::string requester, std::string toRemove);
+    void handle_acceptFriendRequest(int client_sock_fd, std::string requester, std::string toAccept );
+    void handle_declineFriendRequest(int client_sock_fd, std::string requester, std::string toDecline);
+    void handle_getStatus(int client_sock_fd, std::string requester);
 
 
-    bool handle_accountUpdate(int client_sock_fd);
+    void handle_accountUpdate(int client_sock_fd);
 
-    bool handle_changeUsername(std::string basic_string, int id, int client_socket);
+    void handle_changeUsername(std::string basic_string, int id, int client_socket);
 
-    bool handle_changePassword(std::string basic_string, int id);
+    void handle_changePassword(std::string basic_string, int id);
 
-    bool handle_changeIcon(int basic_string, int id);
+    void handle_changeIcon(int basic_string, int id);
 };
