@@ -57,6 +57,7 @@ void App::launchMatchmaking(std::string mode) {
 }
 
 void App::launchGame(int gameServerSocket) {
+    matchMakingThread = nullptr;
     std::cout << "Starting game" << std::endl;
     is_in_queue = false;
     if (!isConsole) {
