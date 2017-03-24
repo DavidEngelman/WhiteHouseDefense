@@ -33,6 +33,9 @@ void LoginConsoleUI::ask_password() {
 void LoginConsoleUI::displayError() {
     Drawing::drawWhiteHouse("LOGIN SCREEN");
     std::cout << "   Error : username or password incorrect, please try again\n";
+    ask_username();
+    ask_password();
+    manager->login();
 }
 
 void LoginConsoleUI::display() {
@@ -45,6 +48,9 @@ void LoginConsoleUI::display() {
 void LoginConsoleUI::displayAlreadyConnected() {
     Drawing::drawWhiteHouse("LOGIN SCREEN");
     std::cout << "   Error : Someone is already connected on this account :(\n";
+    ask_username();
+    ask_password();
+    manager->login();
 }
 
 std::string LoginConsoleUI::getUsername() {
