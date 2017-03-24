@@ -45,9 +45,9 @@ void RegisterConsoleUI::displayError() {
 
 void RegisterConsoleUI::displaySuccess() {
     Drawing::drawWhiteHouse("REGISTER SCREEN");
-    std::cout <<"    Success : Your account has been successfully registered" << std::endl;
+    std::cout << "   Success : Your account has been successfully registered" << std::endl;
 
-    std::cout << "\nPress Enter to go to the login screen..." << std::endl;
+    std::cout << "\n   Press Enter to go to the login screen..." << std::endl;
     std::cin.ignore().get();
 }
 
