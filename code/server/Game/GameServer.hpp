@@ -13,13 +13,13 @@
 #include "../../common/Other/Constants.hpp"
 #include "../../common/Other/Tools.hpp"
 #include <mutex>
-
+#include <fstream>
 
 class GameServer : public Server {
 
 private:
 
-
+    std::ifstream dico;
     std::string mode;
     unsigned int mapSeed;
 
@@ -40,7 +40,8 @@ private:
 
     void changeVulgarityToStar(std::string &userMessage);
 
-
+    bool chercheMot(std::string &userMessage);
+    
 public:
 
     GameServer(int port, std::vector<PlayerConnection> &playerConnections, std::string _mode);

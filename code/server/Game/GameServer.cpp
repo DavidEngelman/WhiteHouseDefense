@@ -1,5 +1,5 @@
 #include <csignal>
-#include <regex>
+#include <iostream>
 #include "GameServer.hpp"
 #include "../../common/Tower/GunTower.hpp"
 #include "../../common/Tower/SniperTower.hpp"
@@ -12,6 +12,21 @@ GameServer::GameServer(int port, std::vector<PlayerConnection> &playerConnection
         Server(port), playerConnections(playerConnections), mode(_mode) {
     srand((unsigned) time(0));
     mapSeed = (unsigned int) rand() % NB_OF_MAPS;
+    dico = std::ifstream("../../Utiles/Dico.txt");
+//    if(monFlux)
+//    {
+//        std::string ligne;
+//        while(getline(monFlux, ligne)) //Tant qu'on n'est pas à la fin, on lit
+//        {
+//            dico += ligne + " ";
+//        }
+//        std::cout << dico << std::endl;
+//    }
+//    else
+//    {
+//        std::cout << "ERREUR: Impossible d'ouvrir le fichier en lecture." << std::endl;
+//    }
+
 }
 
 void GameServer::run() {
@@ -540,18 +555,65 @@ void GameServer::processSpecialCommand(std::string &userMessage, std::string &se
 }
 
 void GameServer::changeVulgarityToStar(std::string &userMessage) {
+    int count = 0;
+    std::string mot;
+    bool result;
 
-    std::regex pattern {userMessage};
-    std::string target { "fuck" };
-    bool result = std::regex_search(target, pattern);
-    std::cout << std::boolalpha << result << std::endl;
-
-    if (result){
-        userMessage = "VILAIN MOT!!!!!!";
+    for (char& c : userMessage) {
+        std::cout << "char en cour: "<< c << std::endl;
+        if (c == ' ') {
+            if (chercheMot(mot)) {
+                unsigned long taille = mot.size();
+                for (int i = 0; i < taille; i++) {
+                    userMessage[count + i] = '*';
+                }
+                std::cout << "userMessage: " << userMessage << std::endl;
+                mot = "";
+                count += taille + 1;
+            }
+        }
+        else {
+            mot += c;
+            std::cout << "mot en cour: "<< mot << std::endl;
+        }
+    }
+    if (chercheMot(mot)) {
+        unsigned long taille = mot.size();
+        for (int i = 0; i < taille; i++) {
+            userMessage[count + i] = '*';
+        }
     }
 }
 
+bool GameServer::chercheMot(std::string &userMessage)
+{
+    char car = 0;   //Contient temporairement chaque caractère du fichier dico.txt
+    long i = 0;
 
+    while(car != EOF)
+    {
+        dico.get(car);   //On lit un caractère de dico.txt
+
+        if(userMessage[i] == car)   //Si le 1er caractère correspond, on augmente i pour tester le second caractère au tour suivant
+        {
+            i++;
+            dico.get(car);
+            std::cout << car << std::endl;
+            if(userMessage[i] == '0' && car == '\n') //Si cette condition est vraie, c'est que la chaine est déja dans le dico
+            {
+                return true;
+            }
+            dico.seekg(-1, std::ios::cur);   //Si la condition précedente est fausse, on remet la position dans le fichier tel qu'elle était avant cette condition
+        }
+
+        else
+        {
+            i = 0;
+        }
+    }
+
+    return false;   //Si on a rien trouvé, on retourne 0
+}
 
 
 
