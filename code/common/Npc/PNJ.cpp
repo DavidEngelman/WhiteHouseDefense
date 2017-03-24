@@ -1,5 +1,6 @@
 #include "PNJ.hpp"
 #include <cstdlib>
+#include <iostream>
 
 
 PNJ::PNJ(Position position, int healthPoints, int direction) :
@@ -36,9 +37,9 @@ void PNJ::advance(Map &map) {
         return;
     }
 
-    Position current_position = getTransitionPosition();
 
     if (!isInTransition()) {
+        std::cout << "pas en transition" << std::endl;
         if (can_go_forward(map)) {
             get_forward_direction();
         } else if (can_go_left(map) && can_go_right(map)) {
@@ -53,11 +54,13 @@ void PNJ::advance(Map &map) {
 
         if (direction.x > 1 || direction.x < -1 || direction.y > 1 || direction.y < -1) return;
 
-        setLast_position(current_position);
+        setLast_position(getPosition());
         inTransition = true;
     }
 
-    Position new_position = Position(getTransitionPosition().getX() + direction.x, getTransitionPosition().getY() + direction.y);
+    Position current_position = getTransitionPosition();
+
+    Position new_position = Position(current_position.getX() + direction.x, current_position.getY() + direction.y);
     setTransitionPosition(new_position);
 }
 
@@ -171,7 +174,7 @@ void PNJ::get_left_direction() {
         direction.y = 0;
     } else {
         direction.x = 0;
-        direction.y = 0;
+        direction.y = 1;
     }
 }
 
@@ -251,9 +254,11 @@ bool PNJ::isInTransition() {
 
 void PNJ::setTransitionPosition(Position &position) {
     transitionPosition = position;
+
     if (position.getX() % TILES_SIZE == 0 && position.getY() % TILES_SIZE == 0) {
         inTransition = false;
-        setPosition(position);
+        Position currentPos = Position(position.getX()/TILES_SIZE, position.getY()/TILES_SIZE);
+        setPosition(currentPos);
     }
 }
 
