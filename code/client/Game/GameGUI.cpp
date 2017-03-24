@@ -387,6 +387,7 @@ void GameGUI::displaySpellBox() {
 
 void GameGUI::handleNukeSpell() {
     manager->nuclearBombSpell();
+    playSound("../../qt_ui/game_pictures/sounds/explosion.mp3");
 }
 
 void GameGUI::handleFreezeSpell() {
@@ -397,7 +398,7 @@ void GameGUI::handleAirStrike(){
 
     int targetQuadrant = map->computeQuadrant(map->getHighlightedPosition());
     manager->launchAirStrike(targetQuadrant);
-
+    playSound("../../qt_ui/game_pictures/sounds/airstrike.mp3");
 }
 
 void GameGUI::displayPlayerInfos(GameState &gameState, int quadrant) {
@@ -768,3 +769,13 @@ void GameGUI::goToMenu() {
 }
 
 
+void GameGUI::playSound(QString musicPath) {
+
+    QMediaPlayer *mediaPlayer = new QMediaPlayer;
+    QMediaPlaylist *playlist = new QMediaPlaylist();
+    playlist->addMedia(QUrl::fromLocalFile(QFileInfo(musicPath).absoluteFilePath()));
+
+    mediaPlayer->setVolume(100);
+    mediaPlayer->setPlaylist(playlist);
+    mediaPlayer->play();
+}
