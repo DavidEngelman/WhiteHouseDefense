@@ -167,11 +167,8 @@ void GameConsoleUI::displayGameOverAndStats(GameState &gamestate) {
 
     // TODO: show stats
 
-    int dummy;
-    std::cin.clear();
-    std::cin.ignore();
-    std::cout << "\nEnter something and press Enter to come back in the main menu..." << std::endl;
-    std::cin >> dummy;
+    std::cout << "\nPress Enter to come back in the main menu..." << std::endl;
+    std::cin.ignore().get();
 
     manager->comeBackToMenu();
 }

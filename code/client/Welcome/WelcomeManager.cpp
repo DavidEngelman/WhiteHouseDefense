@@ -18,21 +18,6 @@ WelcomeManager::~WelcomeManager() {
     welcomeUI->destroy();
 }
 
-/*
-void WelcomeManager::run() {
-    if (isConsole) {
-        welcomeUI->display();
-        int choice = welcomeUI->select();
-
-        if (choice == 1) goToLogin();
-        else if (choice == 2) goToRegister();
-    } else {
-        welcomeGUI->display();
-    }
-}
-
-*/
-
 void WelcomeManager::goToLogin() {
     LoginManager *loginManager = new LoginManager(5555, master_app);
     master_app->transition(loginManager);

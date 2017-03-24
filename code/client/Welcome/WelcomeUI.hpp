@@ -1,8 +1,6 @@
 #ifndef PROJET_WELCOMEUI_HPP
 #define PROJET_WELCOMEUI_HPP
 
-//TODO: Mettre dans le Cmake !!!
-
 #include <string>
 #include "WelcomeManager.hpp"
 #include "../Abstract/AbstractUI.hpp"
