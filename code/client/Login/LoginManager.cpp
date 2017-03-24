@@ -3,6 +3,7 @@
 #include "LoginGUI.hpp"
 #include "LoginConsoleUI.hpp"
 #include "../Welcome/WelcomeManager.hpp"
+#include "../../common/Other/Strings.hpp"
 
 LoginManager::LoginManager(int port, App *my_app) : NetworkedManager(port, my_app) {
     if (isConsole) {
@@ -51,6 +52,7 @@ void LoginManager::login() {
     }
 
     if (valid) {
+
         master_app->setId(stoi(success));
         master_app->setUsername(loginCredentials.getUsername());
         goToMain();

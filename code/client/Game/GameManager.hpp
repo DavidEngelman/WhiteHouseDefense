@@ -17,16 +17,16 @@
 
 class GameUI;
 
-class GameManager : public QObject, public AbstractManager{
+class GameManager : public QObject, public AbstractManager {
 
-    Q_OBJECT
+Q_OBJECT
 
 private:
     int counter = 0;
     int server_socket;
     bool runningThread = false;
 
-    GameState gameState;
+    GameState *gameState;
     GameUI *gameUI;
     int quadrant;
     bool isSupporter;
@@ -46,26 +46,37 @@ private:
 
 
     unsigned int getMapSeedFromServer() const;
-    void unSerializeGameState(char* seriarlizedGamestate);
-    void unSerializePlayerStates(std::string serialized_playerstates);
-    void unSerializePlayerState(std::string serialized_playerstate);
-    void unSerializeTowers(std::string serialized_towers);
-    void unSerializeTower(std::string serialized_tower);
-    void unSerializeWaves(std::string serialized_waves);
-    void unSerializeWave(std::string serialized_wave);
-    void unSerializePNJ(std::string serialized_pnj, Wave* wave);
 
-    bool checkValidity(Position towerPos, GameState& gamestate, std::string typeOfTower);
+    void unSerializeGameState(char *seriarlizedGamestate);
+
+    void unSerializePlayerStates(std::string serialized_playerstates);
+
+    void unSerializePlayerState(std::string serialized_playerstate);
+
+    void unSerializeTowers(std::string serialized_towers);
+
+    void unSerializeTower(std::string serialized_tower);
+
+    void unSerializeWaves(std::string serialized_waves);
+
+    void unSerializeWave(std::string serialized_wave);
+
+    void unSerializePNJ(std::string serialized_pnj, Wave *wave);
+
+    bool checkValidity(Position towerPos, GameState &gamestate, std::string typeOfTower);
 
     void sendBuyRequest(Position towerPos, std::string towerType);
+
     void sendSellRequest(Position towerPos);
 
     int getQuadrantFromServer();
+
     void getInitialGameStateFromServer();
 
 public:
 
-    GameManager(int socket, App* app);
+    GameManager(int socket, App *app);
+
     GameManager(int socket, bool _isSupporter, App *app);
 
     void run();
@@ -92,7 +103,7 @@ public:
 
     bool isTowerInPosition(GameState &gamestate, Position towerPos);
 
-    std::string &getUsername() { return gameState.getPlayerStates()[quadrant].getUsername(); };
+    std::string &getUsername() { return gameState->getPlayerStates()[quadrant].getUsername(); };
 
     void nuclearBombSpell();
 
@@ -107,6 +118,7 @@ public:
     ~GameManager();
 
 public slots:
+
     void updateMap();
 
     void launchFreezeSpell();

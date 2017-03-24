@@ -4,7 +4,7 @@
 #include "../Game/QMatchMakingThread.hpp"
 
 App::App(char *serverIpAddr) : serverIpAddress(serverIpAddr),
-                               playerId(-1), username("\0"), is_in_queue(false) ,
+                               playerId(-1), username("\0"), is_in_queue(false),
                                currentManager(nullptr), mainWindow(nullptr),
                                player(new QMediaPlayer(this)) {
     if (!isConsole) {
@@ -63,7 +63,7 @@ void App::launchGame(int gameServerSocket) {
     if (!isConsole) {
         getMainWindow()->setVisible(false);//So we can reuse the window after the game
     }
-    GameManager * gameManager = new GameManager(gameServerSocket, this);
+    GameManager *gameManager = new GameManager(gameServerSocket, this);
     transition(gameManager);
 }
 
@@ -107,22 +107,24 @@ App::~App() {
     // et si il est dans un queue du matchmaking, on sort de la queue
 
     if (username != "") {
-        if (matchMakingThread != nullptr){
+        if (matchMakingThread != nullptr) {
             leaveQueue();
         }
 
         int socket = init_connection_to_server(serverIpAddress, ACCOUNT_SERVER_PORT);
         std::string message = "Exit," + std::to_string(playerId) + ";";
         send_message(socket, message.c_str());
+
+        send_message(socket, COMMUNICATION_OVER.c_str());
     }
 }
 
-void App::launchSupporter(int gameServerSocket ) {
+void App::launchSupporter(int gameServerSocket) {
     std::cout << "Starting game" << std::endl;
     if (!isConsole) {
         getMainWindow()->setVisible(false);//So we can reuse the window after the game
     }
-    GameManager * gameManager = new GameManager(gameServerSocket,true,this);
+    GameManager *gameManager = new GameManager(gameServerSocket, true, this);
     transition(gameManager);
 }
 

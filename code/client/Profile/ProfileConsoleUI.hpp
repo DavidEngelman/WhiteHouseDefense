@@ -15,9 +15,7 @@ public:
     ProfileConsoleUI(ProfileManager *profileManager);
 
     void display() override;
-
     void displayNoSuchProfileError() override;
-
     void updateProfile() override;
 };
 

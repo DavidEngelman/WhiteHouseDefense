@@ -1,10 +1,4 @@
 #include "MainGUI.hpp"
-#include <QtCore/QFile>
-#include <QtWidgets/QFormLayout>
-#include <QtMultimedia/QMediaPlayer>
-#include <QtWidgets/QDialogButtonBox>
-#include <QtWidgets/QLabel>
-
 
 MainGUI::MainGUI(MainManager *manager, QWidget* _parent) : AbstractGUI(_parent), MainUI(manager) {}
 
