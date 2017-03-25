@@ -293,14 +293,6 @@ void GameConsoleUI::handlePlaceTowerPhaseStart() {
         // TODO: Decouvrir pourquoi est-ce qu'il y a ce display
         display(manager->getGameState(), manager->getQuadrant());
 
-        /* WTF??? Je n'arrive pas à trouver pourquoi est-ce qu'on a mis cet if
-        if (is_alive() && !isSupporter) {
-            inputThread = pthread_create(&thr, NULL, &GameConsoleUI::staticInputThread, gameUI);
-        } else {
-            gameUI->display(gameState, quadrant);
-        }
-        */
-
         if (isSupporter()) {
             displayPlayersPlacingTowersMessage();
         } else {
