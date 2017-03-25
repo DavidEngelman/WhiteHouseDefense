@@ -19,7 +19,7 @@ GameEngine::GameEngine(unsigned int mapSeed, std::string mode) : map(mapSeed),
 
 bool GameEngine::update() {
     int numMillisecondsSinceStart = timerSinceWaveStart.elapsedTimeInMiliseconds();
-    int numStepsToDo = (numMillisecondsSinceStart / STEP_DURATION_IN_MS) - numStepsDone;
+    int numStepsToDo = (numMillisecondsSinceStart / STEP_TRANSITION_DURATION) - numStepsDone;
     for (int i = 0; i < numStepsToDo; ++i) {
         shootWaves();
         updateWaves();
@@ -61,12 +61,12 @@ void GameEngine::addMoney() {
 }
 
 void GameEngine::dealDamageToBase() {
-    if (timerSinceLastDamageToBase.elapsedTimeInMiliseconds() < STEP_DURATION_IN_MS) return;
+    if (timerSinceLastDamageToBase.elapsedTimeInMiliseconds() < STEP_DURATION) return;
     for (Wave &wave : gameState.getWaves()) {
         PlayerState &player_state = getPlayerStateForWave(wave);
         for (auto pnj : wave.getPnjs()) {
             if (pnj->isInPlayerBase()) {
-                if (!DEBUG) player_state.decrease_hp(pnj->getDamage());
+                player_state.decrease_hp(pnj->getDamage());
                 pnj->setHealthPoints(0);
                 // On enleve pas les PNJ morts dans le vagues maintenant, parce que ça va
                 // être fait dans updateWaves au round suivant

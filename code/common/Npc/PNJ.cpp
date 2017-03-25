@@ -1,5 +1,4 @@
 #include "PNJ.hpp"
-#include <cstdlib>
 #include <iostream>
 
 // Constructor used when unserializing
