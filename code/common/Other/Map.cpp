@@ -10,7 +10,7 @@
  */
 
 Map::Map(unsigned seed) {
-    std::string filename = "../../maps/map" + std::to_string(seed) + ".map";
+    std::string filename = "../../maps/map" + std::to_string(seed+1) + ".map";
     initMapFromFile(filename);
 }
 
