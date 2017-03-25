@@ -2,6 +2,7 @@
 #include <fstream>
 #include <iostream>
 #include <ctime>
+#include <cassert>
 
 /*
  * Constructor used to build the same map for the server and all the clients
@@ -133,6 +134,8 @@ void Map::display(GameState &gameState, int quadrant) {
 }
 
 bool Map::isPath(Position pos) const {
+    assert(0 <= pos.getX() <= SIZE);
+    assert(0 <= pos.getY() <= SIZE);
     return matrix[pos.getX()][pos.getY()] == PATH_INT;
 }
 
@@ -140,6 +143,8 @@ bool Map::isPath(Position pos) const {
  * This function return in which quadrant is the Position pos
  */
 int Map::computeQuadrant(Position pos) {
+    assert(0 <= pos.getX() <= SIZE);
+    assert(0 <= pos.getY() <= SIZE);
     // The origin of the map is in the upper-left corner
     // The growing diagonal is : y = -x + size-1,
     // The decreasing diagonal is : y = x
@@ -158,6 +163,8 @@ int Map::computeQuadrant(Position pos) {
 }
 
 bool Map::isObstacle(Position pos) const {
+    assert(0 <= pos.getX() <= SIZE);
+    assert(0 <= pos.getY() <= SIZE);
     int cell = matrix[pos.getX()][pos.getY()];
 
     return cell == GRASS_ROCK_INT or cell == TREE_INT or cell == PINE_INT
@@ -189,6 +196,8 @@ void Map::initMapFromFile(std::string filename) {
 }
 
 bool Map::isBase(Position pos) const {
+    assert(0 <= pos.getX() <= SIZE);
+    assert(0 <= pos.getY() <= SIZE);
     return matrix[pos.getX()][pos.getY()] == BASE_INT;
 }
 
