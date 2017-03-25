@@ -111,12 +111,16 @@ void GameServer::getAndProcessPlayerInput() {
     while (!playerConnections.empty()) {
         // TODO: the 10000 is absurdly high, not sure it's a good idea
         int clientSocketFd = getReadableReadableSocket(10000);
+        std::cout << "after getReadableReadableSocket" << std::endl;
         getAndProcessUserInput(clientSocketFd, messageBuffer);
     }
 }
 
 void GameServer::getAndProcessUserInput(int clientSocketFd, char *buffer) {
+    std::cout << "Just before receive from: " << clientSocketFd << std::endl;
+
     if (receive_message(clientSocketFd, buffer) != -1) {
+        std::cout << "Received message from: " << clientSocketFd << std::endl;
         std::string command_type = get_command_type(buffer);
         std::cout << command_type << std::endl;
         if (command_type == PLACE_TOWER_COMMAND_STRING) {
@@ -159,7 +163,6 @@ void GameServer::getAndProcessUserInput(int clientSocketFd, char *buffer) {
             int quadrant = command.getNextInt();
             gameEngine->launchAirStrike(quadrant);
         } else if (command_type == AD_SPELL_COMMAND_STRING){
-            std::cout << "received AD_SPELL_COMMAND" << std::endl;
             Command command;
             command.parse(buffer);
             std::string playerSupportedUserName = command.getNextToken();
@@ -210,6 +213,7 @@ int GameServer::getReadableReadableSocket(int timeLeft) {
         open_sockets.push_back(supporter);
     }
     int socketIndex = get_readable_socket_index_with_timeout(open_sockets.data(), open_sockets.size(), timeLeft);
+    std::cout << "Readable socket: " << open_sockets[socketIndex] << std::endl;
     return open_sockets[socketIndex];
 }
 
@@ -262,8 +266,6 @@ void GameServer::createPlayerStates() {
 /*
  * THREAD THAT ADDS SUPPORTERS TO THE GAME
  */
-
-
 
 void GameServer::startSpectatorThread() {
     pthread_create(&spectatorJoinThread, NULL, &GameServer::staticJoinSpectatorThread, this);
@@ -420,7 +422,6 @@ void GameServer::updatePlayerStatsOnAccountServer() {
 
 void GameServer::sendSetupGameStringToClient(int socket_fd) {
     send_message(socket_fd, SETUP_GAME.c_str());
-    // Ici j'ai du remettre Send_message pcq sinon quand on envoyait le setupGame a un Spectater, ca ne fonctionnait pas car a ce moment la il n est pas encore dans sockets actifs
 }
 
 void GameServer::sendMapSeedToClient(int socket_fd) {

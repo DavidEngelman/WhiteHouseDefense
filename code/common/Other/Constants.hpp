@@ -63,7 +63,7 @@ static const int MEXICAN_PNJ_DAMAGE = 5;
 
 // Constant of the player
 
-static const int PLAYER_STARTING_HP = 5;
+static const int PLAYER_STARTING_HP = 100;
 static const int PLAYER_STARTING_MONEY = 200;
 
 static const char PLACING_TOWER[2] = "t";

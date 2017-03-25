@@ -9,6 +9,7 @@ GameEngine::GameEngine(unsigned int mapSeed, std::string mode) : map(mapSeed),
     timerSinceGameStart.start();
     timerSinceLastShoot.start();
     timerSinceGoldEarned.start();
+    timerSinceLastDamageToBase.start();
 }
 
 /*
@@ -60,6 +61,7 @@ void GameEngine::addMoney() {
 }
 
 void GameEngine::dealDamageToBase() {
+    if (timerSinceLastDamageToBase.elapsedTimeInMiliseconds() < STEP_DURATION_IN_MS) return;
     for (Wave &wave : gameState.getWaves()) {
         PlayerState &player_state = getPlayerStateForWave(wave);
         for (auto pnj : wave.getPnjs()) {
@@ -71,12 +73,15 @@ void GameEngine::dealDamageToBase() {
             }
         }
     }
+    timerSinceLastDamageToBase.reset();
+
+
 }
 
 void GameEngine::dealDamage(std::vector<Wave> &waves) {
     for (AbstractTower *tower: gameState.getTowers()) {
         Wave &wave = getWaveInSameQuadrant(*tower, waves);
-        const std::vector<PNJ *>& killedPNJ = tower->shoot(wave, getPlayerStateForWave(wave));
+        const std::vector<PNJ *> &killedPNJ = tower->shoot(wave, getPlayerStateForWave(wave));
         for (auto &&pnj : killedPNJ) {
             if (DEBUG) break;
             PlayerState &player_state = getPlayerStateForWave(wave);
@@ -91,7 +96,7 @@ PlayerState &GameEngine::getPlayerStateForWave(Wave &wave) {
     return gameState.getPlayerStates()[quadrant];
 }
 
-void GameEngine::giveGold(PlayerState &playerState, PNJ* pnj) {
+void GameEngine::giveGold(PlayerState &playerState, PNJ *pnj) {
     playerState.earnMoney(pnj->getValue());
 }
 
@@ -169,7 +174,7 @@ void GameEngine::addPNJS(std::vector<Wave> &waves) {
         if (numPNJsToAdd > 0) {
             srand((unsigned) time(0));
             for (int i = 0; i < numPNJsToAdd; ++i) {
-                wave.addPNJ(rand()%NB_OF_TYPE_OF_PNJ);
+                wave.addPNJ(rand() % NB_OF_TYPE_OF_PNJ);
             }
         }
     }
@@ -300,7 +305,7 @@ Timer &GameEngine::getTimerSinceGameStart() {
 
 void GameEngine::killAllNPC(int quadrant) {
     int damageDealt = 0;
-    for(PNJ* pnj : gameState.getWaves()[quadrant].getPnjs()) {
+    for (PNJ *pnj : gameState.getWaves()[quadrant].getPnjs()) {
         damageDealt += pnj->getHealthPoints();
         pnj->setHealthPoints(0);
         getGameState().getPlayerStates()[quadrant].addOneKill();

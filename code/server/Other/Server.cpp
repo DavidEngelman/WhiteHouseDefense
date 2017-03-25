@@ -131,6 +131,7 @@ int Server::get_readable_socket_index_with_timeout(int *sockets, int num_sockets
     while (!FD_ISSET(sockets[socket_num], &read_socket_fds)) {
         socket_num++;
     }
+    std::cout << "after while"<< std::endl;
     return socket_num;
 }
 
