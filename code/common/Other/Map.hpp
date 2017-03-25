@@ -1,8 +1,6 @@
 #ifndef MAP_HPP
 #define MAP_HPP
 
-const int SIZE = 41;
-
 #define GRASS "◼  "
 #define UNKNOWN "?  "
 #define PATH "   "

@@ -9,13 +9,8 @@
  */
 
 Map::Map(unsigned seed) {
-    if (seed == 0) initMapFromFile("../../maps/map1.map");
-    else if (seed == 1) initMapFromFile("../../maps/map2.map");
-    else if (seed == 2) initMapFromFile("../../maps/map3.map");
-    else {
-        srand(seed);
-        generateRandomMatrix();
-    }
+    std::string filename = "../../maps/map" + std::to_string(seed) + ".map";
+    initMapFromFile(filename);
 }
 
 /*

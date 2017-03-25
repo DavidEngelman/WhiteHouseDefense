@@ -9,6 +9,9 @@ static const int MATCHMAKER_SERVER_PORT = 5556;
 
 // Constant of the map
 
+const int SIZE = 41;
+static const int TILES_SIZE = 16; // Size in pixel
+
 static const int NORTH = 0;
 static const int EAST = 1;
 static const int SOUTH = 2;
@@ -19,8 +22,6 @@ static const std::string QUADRANT_NAMES[4] = {"NORTH", "EAST", "SOUTH", "WEST"};
 const static int PARTNERS[4] = {EAST, NORTH, WEST, SOUTH};
 
 static const int NB_OF_MAPS = 3;
-
-static const int TILES_SIZE = 16; // Size in pixel
 
 static const int PATH_INT = 0;
 static const int GRASS_INT = 1;
