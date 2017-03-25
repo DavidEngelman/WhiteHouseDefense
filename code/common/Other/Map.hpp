@@ -38,11 +38,6 @@ class Map {
 protected:
     int matrix[SIZE][SIZE];
 
-    void generateRandomMatrix();
-    void initMap();
-    void generateQuarterMap(Position position);
-    bool isNextToPath(Position position);
-    void copyQuarter();
     void initMapFromFile(std::string filename);
 
 
