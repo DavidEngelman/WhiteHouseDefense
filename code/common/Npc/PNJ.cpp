@@ -100,6 +100,25 @@ const Position& PNJ::getPosition() const {
     return this->position;
 }
 
+/*
+ * The client only receives the transition positions, which have greater precision.
+ * For example, the transition X position can vary between 0 and SIZE * TILES_SIZE.
+ * This is great for making a smooth path in the GUI.
+ *
+ * On the console, this doesn't make sense however, so we need to find the equivalent position
+ * such that the X and Y coordinate are between 0 and SIZE. This method returns that position.
+ *
+ * Example: in the GUI, there are 600 possible X values, because there are 30 squares and within
+ * those square 20 transition points. Therefore, 0 <= X < 600. On the console, however there
+ * are only square (and no transition points), so 0 <= X < 30. This methods transforms a position
+ * of the first format into the second format.
+ *
+ * Position(62, 100) -> Position(62 // 20, 100 // 20) = Position(3, 5).
+ */
+const Position PNJ::getNormalizedPosition() const  {
+    return Position(position.getX() / TILES_SIZE, position.getY() / TILES_SIZE);
+}
+
 
 void PNJ::setPosition(Position& position) {
     this->position = position;

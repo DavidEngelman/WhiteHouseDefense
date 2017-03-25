@@ -94,6 +94,8 @@ public:
 	bool can_go_backward(Map &map);
 
 	void freeze();
+
+    const Position getNormalizedPosition() const;
 };
 
 inline PNJ::~PNJ(){}
