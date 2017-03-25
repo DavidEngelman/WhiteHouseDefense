@@ -2,26 +2,20 @@
 #include <cstdlib>
 #include <iostream>
 
-
-PNJ::PNJ(Position position, int healthPoints, int direction) :
-        position(position), healthPoints(healthPoints),
+// Constructor used when unserializing
+PNJ::PNJ(Position transitionPosition, int healthPoints, int direction) :
+        position(Position(-1, -1)), transitionPosition(transitionPosition), healthPoints(healthPoints),
         quadrant(direction), damage(-1), value(-1), freezeTicksLeft(0),
         last_position(Position(-1000, -1000)),
-        transitionPosition(Position(-1, -1)),
         inTransition(false) {}
 
 PNJ::PNJ(int direction) :
         position(Position(SIZE / 2, SIZE / 2)),
+        transitionPosition(Position(SIZE / 2 * TILES_SIZE, SIZE / 2 * TILES_SIZE)),
         quadrant(direction), freezeTicksLeft(0),
         last_position(Position(-1000, -1000)),
-        transitionPosition(Position(SIZE / 2 * TILES_SIZE, SIZE / 2 * TILES_SIZE)),
         inTransition(false) {}
 
-PNJ::PNJ(Position position, int healthPoints, Position last_pos, int direction) :
-        position(position), healthPoints(healthPoints), last_position(last_pos),
-        quadrant(direction), damage(-1), value(-1), freezeTicksLeft(0),
-        transitionPosition(Position(-1, -1)),
-        inTransition(false) {}
 
 void PNJ::get_random_direction() {
     int rand_mov = rand() % 2;
@@ -58,7 +52,6 @@ void PNJ::advance(Map &map) {
     }
 
     Position current_position = getTransitionPosition();
-
     Position new_position = Position(current_position.getX() + direction.x, current_position.getY() + direction.y);
     setTransitionPosition(new_position);
 }
@@ -115,7 +108,7 @@ const Position& PNJ::getPosition() const {
  * Position(62, 100) -> Position(62 // 20, 100 // 20) = Position(3, 5).
  */
 const Position PNJ::getNormalizedPosition() const  {
-    return Position(position.getX() / TILES_SIZE, position.getY() / TILES_SIZE);
+    return Position(transitionPosition.getX() / TILES_SIZE, transitionPosition.getY() / TILES_SIZE);
 }
 
 
@@ -275,7 +268,7 @@ void PNJ::setTransitionPosition(Position &position) {
 
     if (position.getX() % TILES_SIZE == 0 && position.getY() % TILES_SIZE == 0) {
         inTransition = false;
-        Position currentPos = Position(position.getX(), position.getY());
+        Position currentPos = Position(position.getX() / TILES_SIZE, position.getY() / TILES_SIZE);
         setPosition(currentPos);
     }
 }

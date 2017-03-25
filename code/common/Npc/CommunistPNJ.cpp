@@ -1,7 +1,3 @@
-//
-// Created by titi on 20/03/17.
-//
-
 #include "CommunistPNJ.h"
 
 CommunistPNJ::CommunistPNJ(int direction) : PNJ(direction) {
@@ -11,8 +7,6 @@ CommunistPNJ::CommunistPNJ(int direction) : PNJ(direction) {
     typeOfPNJ = COMMUNIST_PNJ_STR;
 }
 
-CommunistPNJ::CommunistPNJ(Position position, int healthPoints, int direction)
-        : PNJ(position, healthPoints, direction) { typeOfPNJ = COMMUNIST_PNJ_STR; }
-
-CommunistPNJ::CommunistPNJ(const Position &position, int healthPoints, const Position &last_pos, int direction)
-        : PNJ(position, healthPoints, last_pos, direction) { typeOfPNJ = COMMUNIST_PNJ_STR; }
+// Constructor used when unserializing
+CommunistPNJ::CommunistPNJ(Position transitionPosition, int healthPoints, int direction)
+        : PNJ(transitionPosition, healthPoints, direction) { typeOfPNJ = COMMUNIST_PNJ_STR; }

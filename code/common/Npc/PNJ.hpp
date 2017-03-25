@@ -41,8 +41,6 @@ public:
 
     PNJ(Position position, int healthPoints, int direction);
 
-    PNJ(Position position, int healthPoints, Position last_pos, int direction);
-
     virtual ~PNJ() = 0;
 
 	void advance(Map& map);
@@ -67,7 +65,7 @@ public:
 
 	void setPosition(Position& position);
 
-    void setTransitionPosition(Position& position);
+    void setTransitionPosition(Position &position);
 
 	bool can_go_forward(Map &map);
 
