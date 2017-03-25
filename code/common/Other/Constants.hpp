@@ -103,9 +103,13 @@ static const int AIR_STRIKE_DAMAGE = 20;
 
 // Game Settings
 
+// TODO: explain what TILES_SIZE is doing in this set of constants
 static const int STEP_DURATION_IN_MS = 700/TILES_SIZE;
 static const int INTERVAL_BETWEEN_SHOOTS_IN_MS = STEP_DURATION_IN_MS*TILES_SIZE;
 static const int INTERVAL_BETWEEN_SENDS_IN_MS = STEP_DURATION_IN_MS;
+// No need to send it as often, there are no transition positions, and it makes the console very
+// painful to look at
+static const int INTERVAL_BETWEEN_TOWER_PHASE_SENDS_IN_MS = STEP_DURATION_IN_MS * 4;
 static const int INTERVAL_BETWEEN_PNJS_IN_WAVE_IN_MS = STEP_DURATION_IN_MS*TILES_SIZE;
 static const int INTERVAL_BETWEEN_GOLD_EARNED = STEP_DURATION_IN_MS*TILES_SIZE;
 

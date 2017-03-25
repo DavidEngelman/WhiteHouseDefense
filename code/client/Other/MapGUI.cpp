@@ -47,7 +47,7 @@ void MapGUI::paintEvent(QPaintEvent *) {
                 image = NPC_images[MUSLIM];
             }
 
-            pos = pnj->getPosition();
+            pos = pnj->getTransitionPosition();
             painter.drawImage(pos.getX(), pos.getY(), image);
         }
     }

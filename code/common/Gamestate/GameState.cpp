@@ -82,12 +82,12 @@ bool GameState::isPlayerAlive(const int quadrant) {
     return player_states[quadrant].getHp() > 0;
 }
 
-void GameState::addTower(AbstractTower *tower, int &quadrant) {
+void GameState::addTower(AbstractTower *tower, int quadrant) {
     player_states[quadrant].spendMoney(tower->getPrice());
     towers.push_back(tower);
 }
 
-void GameState::deleteTower(Position& position, int& quadrant){
+void GameState::deleteTower(Position &position, int quadrant){
     std::vector<AbstractTower*>::iterator iter;
     for (iter = getTowers().begin(); iter != getTowers().end(); iter++){
         if ((*iter)->getPosition() == position) {
@@ -101,7 +101,7 @@ void GameState::deleteTower(Position& position, int& quadrant){
 
 
 
-bool GameState::upgradeTower(Position &position, int &quadrant) {
+bool GameState::upgradeTower(Position &position, int quadrant) {
     for (AbstractTower *tower : getTowers()){
         if (tower->getPosition() == position){
             float cost = (float)(tower->getPrice()) * (PERCENTAGE_RECOVERED_MONEY * (float)(tower->getLevel()));

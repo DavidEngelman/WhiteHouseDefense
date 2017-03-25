@@ -74,7 +74,7 @@ void Map::display(GameState &gameState, int quadrant) {
                     for (auto &wave : waves) {
                         std::vector<PNJ*> &pnjs = wave.getPnjs();
                         for (auto &pnj : pnjs) {
-                            Position pos = pnj->getPosition();
+                            Position pos = pnj->getNormalizedPosition();
                             if (x == pos.getX() && y == pos.getY()) {
                                 typeOfPNJ = pnj->getType();
                                 break;

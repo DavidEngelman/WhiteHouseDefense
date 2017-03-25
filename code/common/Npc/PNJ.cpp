@@ -2,26 +2,20 @@
 #include <cstdlib>
 #include <iostream>
 
-
-PNJ::PNJ(Position position, int healthPoints, int direction) :
-        position(position), healthPoints(healthPoints),
+// Constructor used when unserializing
+PNJ::PNJ(Position transitionPosition, int healthPoints, int direction) :
+        position(Position(-1, -1)), transitionPosition(transitionPosition), healthPoints(healthPoints),
         quadrant(direction), damage(-1), value(-1), freezeTicksLeft(0),
         last_position(Position(-1000, -1000)),
-        transitionPosition(Position(-1, -1)),
         inTransition(false) {}
 
 PNJ::PNJ(int direction) :
         position(Position(SIZE / 2, SIZE / 2)),
+        transitionPosition(Position(SIZE / 2 * TILES_SIZE, SIZE / 2 * TILES_SIZE)),
         quadrant(direction), freezeTicksLeft(0),
         last_position(Position(-1000, -1000)),
-        transitionPosition(Position(SIZE / 2 * TILES_SIZE, SIZE / 2 * TILES_SIZE)),
         inTransition(false) {}
 
-PNJ::PNJ(Position position, int healthPoints, Position last_pos, int direction) :
-        position(position), healthPoints(healthPoints), last_position(last_pos),
-        quadrant(direction), damage(-1), value(-1), freezeTicksLeft(0),
-        transitionPosition(Position(-1, -1)),
-        inTransition(false) {}
 
 void PNJ::get_random_direction() {
     int rand_mov = rand() % 2;
@@ -39,7 +33,6 @@ void PNJ::advance(Map &map) {
 
 
     if (!isInTransition()) {
-        std::cout << "pas en transition" << std::endl;
         if (can_go_forward(map)) {
             get_forward_direction();
         } else if (can_go_left(map) && can_go_right(map)) {
@@ -54,17 +47,16 @@ void PNJ::advance(Map &map) {
 
         if (direction.x > 1 || direction.x < -1 || direction.y > 1 || direction.y < -1) return;
 
-        setLast_position(getPosition());
+        setLastPosition(getPosition());
         inTransition = true;
     }
 
     Position current_position = getTransitionPosition();
-
     Position new_position = Position(current_position.getX() + direction.x, current_position.getY() + direction.y);
     setTransitionPosition(new_position);
 }
 
-void PNJ::setLast_position(const Position &last_position) {
+void PNJ::setLastPosition(const Position &last_position) {
     PNJ::last_position = last_position;
 }
 
@@ -98,6 +90,25 @@ bool PNJ::isDead() {
 
 const Position& PNJ::getPosition() const {
     return this->position;
+}
+
+/*
+ * The client only receives the transition positions, which have greater precision.
+ * For example, the transition X position can vary between 0 and SIZE * TILES_SIZE.
+ * This is great for making a smooth path in the GUI.
+ *
+ * On the console, this doesn't make sense however, so we need to find the equivalent position
+ * such that the X and Y coordinate are between 0 and SIZE. This method returns that position.
+ *
+ * Example: in the GUI, there are 600 possible X values, because there are 30 squares and within
+ * those square 20 transition points. Therefore, 0 <= X < 600. On the console, however there
+ * are only square (and no transition points), so 0 <= X < 30. This methods transforms a position
+ * of the first format into the second format.
+ *
+ * Position(62, 100) -> Position(62 // 20, 100 // 20) = Position(3, 5).
+ */
+const Position PNJ::getNormalizedPosition() const  {
+    return Position(transitionPosition.getX() / TILES_SIZE, transitionPosition.getY() / TILES_SIZE);
 }
 
 
@@ -257,7 +268,7 @@ void PNJ::setTransitionPosition(Position &position) {
 
     if (position.getX() % TILES_SIZE == 0 && position.getY() % TILES_SIZE == 0) {
         inTransition = false;
-        Position currentPos = Position(position.getX()/TILES_SIZE, position.getY()/TILES_SIZE);
+        Position currentPos = Position(position.getX() / TILES_SIZE, position.getY() / TILES_SIZE);
         setPosition(currentPos);
     }
 }

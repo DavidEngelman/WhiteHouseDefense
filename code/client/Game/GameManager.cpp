@@ -62,7 +62,7 @@ void GameManager::updateMap() {
         // TODO: console mode only this when receiving a game state, make sure it still works
         // if it does it every time
         gameUI->display(*gameState, quadrant);
-        gameUI->displayPlayerInfos(*gameState, quadrant);
+
 
         if (!isConsole){
             QTimer::singleShot(10, this, SLOT(updateMap()));
@@ -357,18 +357,18 @@ void GameManager::unSerializePNJ(std::string serialized_pnj, Wave *wave) {
     std::string elem = "";
     unsigned count = 0;
 
-    int x = 0;
-    int y = 0;
+    int transitionPointX = 0;
+    int transitionPointY = 0;
     int health = 0;
     std::string typeOfPNJ = "";
     for (char &c : serialized_pnj) {
         if (c == ',') {
             switch (count) {
                 case 0:
-                    x = std::stoi(elem);
+                    transitionPointX = std::stoi(elem);
                     break;
                 case 1:
-                    y = std::stoi(elem);
+                    transitionPointY = std::stoi(elem);
                     break;
                 case 2:
                     health = std::stoi(elem);
@@ -385,9 +385,9 @@ void GameManager::unSerializePNJ(std::string serialized_pnj, Wave *wave) {
     }
 
     PNJ *pnj;
-    if (typeOfPNJ == MEXICAN_PNJ_STR) pnj = new MexicanPNJ(Position(x, y), health, wave->getQuadrant());
-    else if (typeOfPNJ == MUSLIM_PNJ_STR) pnj = new MuslimPNJ(Position(x, y), health, wave->getQuadrant());
-    else pnj = new CommunistPNJ(Position(x, y), health, wave->getQuadrant());
+    if (typeOfPNJ == MEXICAN_PNJ_STR) pnj = new MexicanPNJ(Position(transitionPointX, transitionPointY), health, wave->getQuadrant());
+    else if (typeOfPNJ == MUSLIM_PNJ_STR) pnj = new MuslimPNJ(Position(transitionPointX, transitionPointY), health, wave->getQuadrant());
+    else pnj = new CommunistPNJ(Position(transitionPointX, transitionPointY), health, wave->getQuadrant());
 
     wave->addPNJ(*pnj);
 }

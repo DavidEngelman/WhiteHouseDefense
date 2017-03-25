@@ -12,6 +12,8 @@ class GameConsoleUI : public AbstractConsoleUI, public GameUI {
 private:
     pthread_t thr;
     int inputThread;
+	bool isInTowerPhase;
+    bool isPrintedGameStateOutdated;
 
 public:
     GameConsoleUI(bool isSupporter, unsigned seed, GameManager *gameManager);
@@ -83,6 +85,8 @@ public:
     void handleWaveStart() override;
 
     void handlePlaceTowerPhaseStart() override;
+
+    void displayMap(GameState &gameState, int quadrant);
 };
 
 #endif

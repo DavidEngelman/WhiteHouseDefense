@@ -6,6 +6,15 @@
 #include "../../common/Other/Strings.hpp"
 
 RegisterManager::RegisterManager(int port, App *my_app) : NetworkedManager(port, my_app) {
+    if (server_socket == -1){
+        // Le server n'est pas allumé
+        // TODO: afficher message d'erreur puis quitter l'application
+
+
+        // Temporaire
+        exit(1);
+    }
+
     if (isConsole) {
         registerUI = new RegisterConsoleUI(this);
     } else {
