@@ -48,7 +48,7 @@ void GameServer::runGame() {
             Timer timer;
             timer.start();
             while (timer.elapsedTimeInSeconds() < NUM_SECONDS_TO_PLACE_TOWER) {
-                usleep(INTERVAL_BETWEEN_SENDS_IN_MS * 1000);
+                usleep(INTERVAL_BETWEEN_TOWER_PHASE_SENDS_IN_MS * 1000);
                 sendGameStateToPlayers();
             }
             gameEngine->getTimerSinceGameStart().resume(); // peut etre faire ca juste en mode contre la montre
