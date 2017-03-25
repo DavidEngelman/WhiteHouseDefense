@@ -113,7 +113,9 @@ int init_connection_to_server(char* server_ip_address, int port){
 
     serv_socket = create_socket();
     if (connect_to_server(serv_socket, port, he) == -1) {
-        perror("The connect to the server with port " + std::to_string(port) + "has failed:");
+        const std::string& message = "The connect to the server with port "
+                                     + std::to_string(port) + " has failed:";
+        perror(message.c_str());
         return -1;
     }
     return serv_socket;

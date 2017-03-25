@@ -79,7 +79,7 @@ public:
 
     const Position &getLast_position() const;
 
-    void setLast_position(const Position &last_position);
+    void setLastPosition(const Position &last_position);
 
 	std::string serialize();
 

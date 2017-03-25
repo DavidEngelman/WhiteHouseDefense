@@ -39,7 +39,6 @@ void PNJ::advance(Map &map) {
 
 
     if (!isInTransition()) {
-        std::cout << "pas en transition" << std::endl;
         if (can_go_forward(map)) {
             get_forward_direction();
         } else if (can_go_left(map) && can_go_right(map)) {
@@ -54,7 +53,7 @@ void PNJ::advance(Map &map) {
 
         if (direction.x > 1 || direction.x < -1 || direction.y > 1 || direction.y < -1) return;
 
-        setLast_position(getPosition());
+        setLastPosition(getPosition());
         inTransition = true;
     }
 
@@ -64,7 +63,7 @@ void PNJ::advance(Map &map) {
     setTransitionPosition(new_position);
 }
 
-void PNJ::setLast_position(const Position &last_position) {
+void PNJ::setLastPosition(const Position &last_position) {
     PNJ::last_position = last_position;
 }
 
@@ -276,7 +275,7 @@ void PNJ::setTransitionPosition(Position &position) {
 
     if (position.getX() % TILES_SIZE == 0 && position.getY() % TILES_SIZE == 0) {
         inTransition = false;
-        Position currentPos = Position(position.getX()/TILES_SIZE, position.getY()/TILES_SIZE);
+        Position currentPos = Position(position.getX(), position.getY());
         setPosition(currentPos);
     }
 }

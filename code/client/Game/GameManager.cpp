@@ -62,7 +62,7 @@ void GameManager::updateMap() {
         // TODO: console mode only this when receiving a game state, make sure it still works
         // if it does it every time
         gameUI->display(*gameState, quadrant);
-        gameUI->displayPlayerInfos(*gameState, quadrant);
+
 
         if (!isConsole){
             QTimer::singleShot(10, this, SLOT(updateMap()));
