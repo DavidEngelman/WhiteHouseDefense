@@ -369,7 +369,7 @@ void GameGUI::displaySpellBox() {
 
     airStrikeB = new QHandPointerButton;
     airStrikeB->setEnabled(false);
-    airStrikeB->setIcon(QIcon("../../qt_ui/game_pictures/spells/airStrike.jpg"));
+    airStrikeB->setIcon(QIcon("../../qt_ui/game_pictures/spells/airstrike.png"));
     airStrikeB->setIconSize(size);
 
     QGridLayout *layout = new QGridLayout;
