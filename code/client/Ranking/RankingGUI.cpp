@@ -28,9 +28,9 @@ void RankingGUI::createTable() {
                           "border: 10px solid grey;}"
                           "QPushButton {border: 2px solid darkbrown;"
                           "padding: 0 8px;"
-                          "border-image:url(../../qt_ui/game_pictures/buttons/gold_button_2.svg);"
+                          "border-image:url(../../qt_ui/game_pictures/buttons/mainmenu.png);"
                           "font-family: verdana 14px; }"
-                          "QPushButton:pressed {background-image : url(../../qt_ui/game_pictures/buttons/connectPressed.png);}"
+                          "QPushButton:pressed {border-image:url(../../qt_ui/game_pictures/buttons/connectPressed.png);}"
 
     );
 
@@ -80,7 +80,7 @@ void RankingGUI::fillRanking(std::vector<RankingInfos> &ranking) {
         rank_item->setTextAlignment(Qt::AlignCenter);
 
         QTableWidgetItem *usr_item = new QTableWidgetItem(UsrName);
-        usr_item->setTextAlignment(Qt::AlignLeft);
+        usr_item->setTextAlignment(Qt::AlignVCenter);
         usr_item->setForeground(QColor::fromRgb(244, 215, 66));
 
         QTableWidgetItem *victory_item = new QTableWidgetItem(victories);

@@ -15,7 +15,6 @@ GameGUI::GameGUI(bool isSupporter, unsigned seed, GameManager *manager) : Abstra
 
     //* RIGHT PANEL //*
     /* Player Info */
-
     actionLayout = new QVBoxLayout; //tower shop + sell/upgrage + spells
 
     if (!isSupporter) {
