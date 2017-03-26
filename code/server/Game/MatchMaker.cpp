@@ -76,7 +76,8 @@ void MatchMaker::handleRequestFromSpectator(int socket_fd) {
 void MatchMaker::addPlayerToPendingMatch(PlayerConnection player_connection, std::string mode) {
     PendingMatch &match = getMatch(mode);
     match.add_player_to_queue(player_connection);
-    std::cout << match.getPlayerConnections().size() << std::endl;
+    std::cout << "[MATCHMAKER]" <<
+              "The match now has " << match.getPlayerConnections().size() << " players" << std::endl;
 
     if (match.is_full()) {
         launchMatch(match); // Ici il faut que ça passe par valeur pour que ça marche
