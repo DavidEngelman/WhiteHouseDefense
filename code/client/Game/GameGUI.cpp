@@ -6,7 +6,8 @@
 #include "GameGUI.hpp"
 #include "../Other/MapGUI.hpp"
 
-GameGUI::GameGUI(bool isSupporter, unsigned seed, GameManager *manager) : AbstractGUI(nullptr), GameUI(isSupporter, seed, manager) {
+GameGUI::GameGUI(bool isSupporter, unsigned seed, GameManager *manager) : AbstractGUI(nullptr),
+                                                                          GameUI(isSupporter, seed, manager) {
 
 
     mainLayout = new QHBoxLayout();
@@ -15,7 +16,7 @@ GameGUI::GameGUI(bool isSupporter, unsigned seed, GameManager *manager) : Abstra
     //* RIGHT PANEL //*
     /* Player Info */
 
-    actionLayout  = new QVBoxLayout; //tower shop + sell/upgrage + spells
+    actionLayout = new QVBoxLayout; //tower shop + sell/upgrage + spells
 
     if (!isSupporter) {
         setUpTowerShop();
@@ -46,21 +47,21 @@ GameGUI::GameGUI(bool isSupporter, unsigned seed, GameManager *manager) : Abstra
 
 
     leftPanel->addWidget(chatBox);
-    leftPanel->setAlignment(inGameChatWidget, Qt::AlignCenter|Qt::AlignTop);
+    leftPanel->setAlignment(inGameChatWidget, Qt::AlignCenter | Qt::AlignTop);
 
     /* Central Layout */
-    QVBoxLayout *centralLayout  = new QVBoxLayout;
+    QVBoxLayout *centralLayout = new QVBoxLayout;
     setUpHealthBar();
     centralLayout->addWidget(baseHealthBar);
     centralLayout->addStretch();
     map = new MapGUI(seed, this, centralLayout);
     centralLayout->addStretch();
 
-    QPixmap * adImage = new QPixmap("../../qt_ui/game_pictures/ads/steaks.jpg");
-    QLabel * imageLabel = new QLabel();
+    QPixmap *adImage = new QPixmap("../../qt_ui/game_pictures/ads/steaks.jpg");
+    QLabel *imageLabel = new QLabel();
     // MAYBE: DYNAMIC CAST??
     imageLabel->setScaledContents(true);
-    imageLabel->setMaximumSize((static_cast<MapGUI*> (map))->width(), 80);
+    imageLabel->setMaximumSize((static_cast<MapGUI *> (map))->width(), 80);
     imageLabel->setPixmap(*adImage);
     centralLayout->addWidget(imageLabel);
 
@@ -71,7 +72,7 @@ GameGUI::GameGUI(bool isSupporter, unsigned seed, GameManager *manager) : Abstra
 
     /* Main Layout */
     mainLayout->addLayout(leftPanel, 1);
-    mainLayout->addLayout(centralLayout,1);
+    mainLayout->addLayout(centralLayout, 1);
     mainLayout->addLayout(actionLayout, 1);
 
 
@@ -126,10 +127,9 @@ void GameGUI::setUpStatsBox() {
     leftPanel->addWidget(usernameL);
     leftPanel->addWidget(playerStatsBox);
 
-    leftPanel->setAlignment(usernameL, Qt::AlignCenter|Qt::AlignTop);
-    leftPanel->setAlignment(playerStateL, Qt::AlignCenter|Qt::AlignTop);
+    leftPanel->setAlignment(usernameL, Qt::AlignCenter | Qt::AlignTop);
+    leftPanel->setAlignment(playerStateL, Qt::AlignCenter | Qt::AlignTop);
 }
-
 
 
 Position GameGUI::getPosBuyingTower() {
@@ -154,7 +154,7 @@ void GameGUI::setUpHealthBar() {
 
 void GameGUI::setUpOtherPlayerHealthBar() {
     QHBoxLayout *layout = new QHBoxLayout;
-    for(int i = 0; i < 3; i++) {
+    for (int i = 0; i < 3; i++) {
         QProgressBar *healthBar = new QProgressBar;
         healthBar->setStyleSheet(QString("QProgressBar {color: black}"));
         healthBar->setMaximum(PLAYER_STARTING_HP);
@@ -178,7 +178,8 @@ void GameGUI::updateHealthBar(int value) {
 
 void GameGUI::updateHealthBarOfSupportedPlayer(int value) {
     baseHealthBar->setValue(value);
-    baseHealthBar->setFormat("HP of Supported Player : " + QString::number(value) + "/" + QString::number(PLAYER_STARTING_HP));
+    baseHealthBar->setFormat(
+            "HP of Supported Player : " + QString::number(value) + "/" + QString::number(PLAYER_STARTING_HP));
 }
 
 void GameGUI::updateOtherPlayerHealthBar(std::vector<PlayerState> &playerState, int quadrant) {
@@ -190,7 +191,7 @@ void GameGUI::updateOtherPlayerHealthBar(std::vector<PlayerState> &playerState, 
             otherPlayerHealthBar[count]->setFormat(QString::fromStdString(playerState[i].getUsername())
                                                    + " (" + QString::fromStdString(QUADRANT_NAMES[i]) + ")"
                                                    + " :" + QString::number(value) + "/"
-                                                   + QString::number(PLAYER_STARTING_HP ) );
+                                                   + QString::number(PLAYER_STARTING_HP));
             count++;
         }
     }
@@ -208,7 +209,7 @@ void GameGUI::display(GameState &gameState, int quadrant) {
 
 void GameGUI::displayTowerShop() {
     int scl = 10;
-    QSize size = QSize(1400/scl, 1060/scl);
+    QSize size = QSize(1400 / scl, 1060 / scl);
     std::string tooltip;
 
     tooltip = "Tower that can attack one npc at the time\nwith a small range but with great damages\n";
@@ -273,7 +274,7 @@ void GameGUI::displayTowerShop() {
 void GameGUI::displayDeleteAndUpgradeBox() {
 
     int scl = 10;
-    QSize size = QSize(1400/scl, 1060/scl);
+    QSize size = QSize(1400 / scl, 1060 / scl);
 
     deleteTowerB = new QHandPointerButton;
     deleteTowerB->setEnabled(false);
@@ -356,7 +357,7 @@ void GameGUI::handleUpgradingTower() {
 
 void GameGUI::displaySpellBox() {
     int scl = 10;
-    QSize size = QSize(1400/scl, 1060/scl);
+    QSize size = QSize(1400 / scl, 1060 / scl);
 
     nukeB = new QHandPointerButton;
     nukeB->setEnabled(false);
@@ -395,8 +396,7 @@ void GameGUI::handleFreezeSpell() {
     manager->launchFreezeSpell();
 }
 
-void GameGUI::handleAirStrike(){
-
+void GameGUI::handleAirStrike() {
     int targetQuadrant = map->computeQuadrant(map->getHighlightedPosition());
     manager->launchAirStrike(targetQuadrant);
     playSound("../../qt_ui/game_pictures/sounds/airstrike.mp3");
@@ -459,7 +459,7 @@ void GameGUI::disableAirStrike() {
 }
 
 void GameGUI::enableAirStrike() {
-    if ( (map->isEnemyBaseInHighlightedPosition(manager->getQuadrant())) && (manager->isAirStikeAvailable()) ) {
+    if ((map->isEnemyBaseInHighlightedPosition(manager->getQuadrant())) && (manager->isAirStikeAvailable())) {
         std::cout << "Enabling air strike" << std::endl;
         airStrikeB->setEnabled(true);
     }
@@ -467,19 +467,19 @@ void GameGUI::enableAirStrike() {
 }
 
 void GameGUI::enableSpells() {
-    if (manager->isNukeSpellAvailable()){
+    if (manager->isNukeSpellAvailable()) {
         enableNukeSpell();
     }
-    if (manager->isFreezeSpellAvailable()){
+    if (manager->isFreezeSpellAvailable()) {
         enableFreezeSpell();
     }
 }
 
 void GameGUI::disableSpells() {
-    if (manager->isNukeSpellAvailable()){
+    if (manager->isNukeSpellAvailable()) {
         disableNukeSpell();
     }
-    if (manager->isFreezeSpellAvailable()){
+    if (manager->isFreezeSpellAvailable()) {
         disableFreezeSpell();
     }
 }
@@ -517,7 +517,7 @@ void GameGUI::setUpEndOfGameLayout(GameState &gameState) {
     endOfGameLayout->addWidget(backToMenu);
     endOfGameLayout->setAlignment(backToMenu, Qt::AlignCenter);
     QObject::connect(backToMenu, SIGNAL(clicked()), this, SLOT(goToMenu()));
-    
+
 }
 
 void GameGUI::setUpWinnerLooserBox(GameState &gameState) {
@@ -536,7 +536,7 @@ void GameGUI::setUpWinnerLooserBox(GameState &gameState) {
         if (info == "Victory") label->setStyleSheet("QLabel { color : green; }");
         else label->setStyleSheet("QLabel { color : red; }");
     } else {
-        label->setText("Winner: " +QString::fromStdString(manager->getWinner()));
+        label->setText("Winner: " + QString::fromStdString(manager->getWinner()));
     }
 
     layout->addWidget(label);
@@ -553,7 +553,7 @@ void GameGUI::setUpStatsLayout(GameState &gameState) {
     endOfGameLayout->addLayout(statsLayout);
 }
 
-void GameGUI::setUpChartBox(GameState& gameState) {
+void GameGUI::setUpChartBox(GameState &gameState) {
 
     chartBox = new QGroupBox;
 
@@ -576,7 +576,7 @@ void GameGUI::setUpChartBox(GameState& gameState) {
     chart1->setAnimationOptions(QChart::SeriesAnimations);
 
     QStringList categories;
-    for (PlayerState &player : gameState.getPlayerStates()){
+    for (PlayerState &player : gameState.getPlayerStates()) {
         categories.append(QString::fromStdString(player.getUsername()));
     }
 
@@ -619,7 +619,6 @@ void GameGUI::setUpChartBox(GameState& gameState) {
     chart2->legend()->setAlignment(Qt::AlignBottom);
 
 
-
     chartView2 = new QChartView(chart2);
     chartView2->setRenderHint(QPainter::Antialiasing);
 
@@ -630,7 +629,7 @@ void GameGUI::setUpChartBox(GameState& gameState) {
 
     damageDealt = new QBarSet("Damage dealt");
 
-   for (PlayerState player : gameState.getPlayerStates()) {
+    for (PlayerState player : gameState.getPlayerStates()) {
         damageDealt->append(player.getDamageDealt());
     }
 
@@ -686,7 +685,6 @@ void GameGUI::setUpChartBox(GameState& gameState) {
     chartLayout->addWidget(chartView4, 1, 1);
 
 
-
     chartBox->setLayout(chartLayout);
     statsLayout->addWidget(chartBox);
 
@@ -730,7 +728,7 @@ void GameGUI::setUpSpellsBoxForSupporter() {
 
 void GameGUI::displaySupporterActionBox() {
     int scl = 10;
-    QSize size = QSize(1400/scl, 1060/scl);
+    QSize size = QSize(1400 / scl, 1060 / scl);
 
     adSpellB = new QHandPointerButton;
     //TODO à changer par la bonne image
@@ -754,7 +752,7 @@ void GameGUI::handleAdSpell() {
 void GameGUI::adPopUp() {
     std::cout << "displaying popUp" << std::endl;
     QWidget *popUpWindow = new QWidget;
-    popUpWindow->setFixedSize(500,500);
+    popUpWindow->setFixedSize(500, 500);
     QVBoxLayout *adLayout = new QVBoxLayout;
     QLabel *adPictureLabel = new QLabel;
     adPictureLabel->setPixmap(QPixmap("../../qt_ui/game_pictures/ads/loreal.jpg"));
@@ -769,7 +767,6 @@ void GameGUI::goToMenu() {
     manager->comeBackToMenu();
 
 }
-
 
 void GameGUI::playSound(QString musicPath) {
 
