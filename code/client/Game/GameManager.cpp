@@ -576,8 +576,9 @@ bool GameManager::isAirStikeAvailable() {
     return airStrikeAvailable;
 }
 
-void GameManager::sendAirStrikeRequest(int quadrant) {
+void GameManager::sendAirStrikeRequest(int targetQuadrant) {
     std::string message = AIR_STRIKE_COMMAND_STRING + ","
-                          + std::to_string(quadrant) + ";";
+                          + std::to_string(quadrant) + ","
+                          + std::to_string(targetQuadrant) + ";";
     send_message(server_socket, message.c_str());
 }
