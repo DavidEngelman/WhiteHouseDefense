@@ -393,6 +393,7 @@ void GameGUI::handleNukeSpell() {
 
 void GameGUI::handleFreezeSpell() {
     manager->launchFreezeSpell();
+    playSound("../../qt_ui/game_pictures/sounds/freezeSpell.mp3");
 }
 
 void GameGUI::handleAirStrike() {
