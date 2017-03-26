@@ -2,7 +2,6 @@
 #include "RankingManager.hpp"
 #include "../Main/MainManager.hpp"
 #include "RankingGUI.hpp"
-#include "RankingConsoleUI.hpp"
 #include "../../common/Other/Constants.hpp"
 
 RankingManager::RankingManager(int port, App *my_app) : NetworkedManager(port, my_app) {

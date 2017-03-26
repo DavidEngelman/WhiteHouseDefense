@@ -1,5 +1,4 @@
 #include "PlayerConnection.hpp"
-#include "../../common/Other/Networking.hpp"
 
 PlayerConnection::PlayerConnection(int id, int socket) : player_id(id), socket_fd(socket){}
 

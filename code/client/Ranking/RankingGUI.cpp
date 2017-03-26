@@ -2,9 +2,6 @@
 
 #include "RankingGUI.hpp"
 #include "../Other/QHandPointerButton.hpp"
-#include <QHeaderView>
-#include <QtWidgets/QGridLayout>
-#include <QtWidgets/QPushButton>
 
 
 #define TABLE_HEIGHT_SIZE 400

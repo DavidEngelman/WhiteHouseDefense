@@ -3,7 +3,6 @@
 #include "RegisterConsoleUI.hpp"
 #include "../Welcome/WelcomeManager.hpp"
 #include "../../common/Other/Tools.hpp"
-#include "../../common/Other/Strings.hpp"
 
 RegisterManager::RegisterManager(int port, App *my_app) : NetworkedManager(port, my_app) {
     if (server_socket == -1){

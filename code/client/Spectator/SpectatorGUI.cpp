@@ -2,12 +2,6 @@
 
 #include "SpectatorGUI.hpp"
 #include "../Other/QHandPointerButton.hpp"
-#include <QHeaderView>
-#include <QtWidgets/QPushButton>
-#include <QtWidgets/QCheckBox>
-#include <QtWidgets/QAction>
-#include <QtCore/QSignalMapper>
-#include <QtWidgets/QListWidgetItem>
 
 #define TABLE_WIDTH_SIZE 870
 

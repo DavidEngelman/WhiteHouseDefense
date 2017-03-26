@@ -1,6 +1,5 @@
 #include <QtCore/QFile>
 #include <QtMultimedia/QMediaPlaylist>
-#include <QtCore/QFileInfo>
 #include <QtMultimedia/QMediaPlayer>
 #include <QtGui/QWindow>
 #include "AbstractGUI.hpp"
