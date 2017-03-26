@@ -1,8 +1,5 @@
 #include "GameEngine.hpp"
 
-const bool DEBUG = false;
-
-
 GameEngine::GameEngine(unsigned int mapSeed, std::string mode) : map(mapSeed),
                                                                  numOfPNJsPerWave(INITIAL_NUMBER_OF_PNJS_PER_WAVE),
                                                                  gameState(mode) {
