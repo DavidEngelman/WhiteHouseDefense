@@ -20,11 +20,10 @@ GameServer::GameServer(int port, std::vector<PlayerConnection> &playerConnection
         {
             dico += ligne + " ";
         }
-        std::cout << dico << std::endl;
     }
     else
     {
-        std::cout << "ERREUR: Impossible d'ouvrir le fichier en lecture." << std::endl;
+        std::cout << "ERROR: Impossible to open the file" << std::endl;
     }
 
 }
@@ -560,24 +559,24 @@ void GameServer::changeVulgarityToStar(std::string &userMessage) {
 
     for (char& c : userMessage) {
         if (c == ' ') {
-            unsigned long taille = mot.size();
-            mot = ' ' + mot +' ';
-            if (dico.find(mot) != std::string::npos){
-                for (int i = 0; i < taille; i++) {
-                    userMessage[count + i] = '*';
-                }
-            }
+            findAndChangeToStarVulgarities(mot, count, userMessage);
+            count += mot.size() + 1;
             mot = "";
-            count += taille + 1;
         }
 
         else {
             mot += c;
         }
     }
+    findAndChangeToStarVulgarities(mot, count, userMessage);
+}
+void GameServer::findAndChangeToStarVulgarities(std::string mot, int count, std::string &userMessage){
+    unsigned long taille = mot.size();
+    for(int i = 0; i<taille; i++){
+        mot[i] = tolower(mot[i]);
+    }
     mot = ' ' + mot +' ';
     if (dico.find(mot) != std::string::npos) {
-        unsigned long taille = mot.size();
         for (int i = 0; i < taille; i++) {
             userMessage[count + i] = '*';
         }

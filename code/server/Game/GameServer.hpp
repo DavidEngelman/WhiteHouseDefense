@@ -40,6 +40,8 @@ private:
 
     void changeVulgarityToStar(std::string &userMessage);
     
+    void findAndChangeToStarVulgarities(std::string mot, int count, std::string &userMessage);
+    
 public:
 
     GameServer(int port, std::vector<PlayerConnection> &playerConnections, std::string _mode);
