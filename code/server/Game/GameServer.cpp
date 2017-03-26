@@ -5,8 +5,6 @@
 #include "../../common/Tower/ShockTower.hpp"
 #include "../../common/Tower/MissileTower.hpp"
 
-const bool DEBUG = false;
-
 GameServer::GameServer(int port, std::vector<PlayerConnection> &playerConnections, std::string _mode) :
         Server(port), playerConnections(playerConnections), mode(_mode) {
     srand((unsigned) time(0));
@@ -37,23 +35,19 @@ void GameServer::runGame() {
     // Creer les playerState
     createPlayerStates();
 
-    if (!DEBUG) {
-        setupGameForPlayers();
-    }
+    setupGameForPlayers();
 
     while (!gameEngine->isGameFinished() && !playerConnections.empty()) {
-        if (!DEBUG) {
-            gameEngine->getTimerSinceGameStart().pause(); // peut etre faire ca juste en mode contre la montre
-            sendTowerPhase();
-            Timer timer;
-            timer.start();
-            while (timer.elapsedTimeInSeconds() < NUM_SECONDS_TO_PLACE_TOWER) {
-                usleep(INTERVAL_BETWEEN_TOWER_PHASE_SENDS_IN_MS * 1000);
-                sendGameStateToPlayers();
-            }
-            gameEngine->getTimerSinceGameStart().resume(); // peut etre faire ca juste en mode contre la montre
-            sendWavePhase();
+        gameEngine->getTimerSinceGameStart().pause(); // peut etre faire ca juste en mode contre la montre
+        sendTowerPhase();
+        Timer timer;
+        timer.start();
+        while (timer.elapsedTimeInSeconds() < NUM_SECONDS_TO_PLACE_TOWER) {
+            usleep((__useconds_t) (INTERVAL_BETWEEN_TOWER_PHASE_SENDS_IN_MS * 1000));
+            sendGameStateToPlayers();
         }
+        gameEngine->getTimerSinceGameStart().resume(); // peut etre faire ca juste en mode contre la montre
+        sendWavePhase();
         runWave();
     }
 }
@@ -141,7 +135,7 @@ void GameServer::getAndProcessUserInput(int clientSocketFd, char *buffer) {
             std::string userMessage = command.getTokenWithSize(messageLength);
             std::string senderUsername = command.getNextToken();
 
-            if (!userMessage.empty() && userMessage[0] == '/'){
+            if (!userMessage.empty() && userMessage[0] == '/') {
                 processSpecialCommand(userMessage, senderUsername);
             } else {
                 sendMessageToOtherPlayers(userMessage, senderUsername);
@@ -161,7 +155,7 @@ void GameServer::getAndProcessUserInput(int clientSocketFd, char *buffer) {
             command.parse(buffer);
             int quadrant = command.getNextInt();
             gameEngine->launchAirStrike(quadrant);
-        } else if (command_type == AD_SPELL_COMMAND_STRING){
+        } else if (command_type == AD_SPELL_COMMAND_STRING) {
             Command command;
             command.parse(buffer);
             std::string playerSupportedUserName = command.getNextToken();
@@ -184,7 +178,7 @@ void GameServer::sendMessageToOtherPlayers(std::string &userMessage, std::string
 void GameServer::sendAdPopUP(std::string &playerSupportedUserName) {
     std::string message = AD_POPUP;
     for (PlayerConnection &playerConnection : playerConnections) {
-        if (playerConnection.getUsername() != playerSupportedUserName){
+        if (playerConnection.getUsername() != playerSupportedUserName) {
             int socketFd = playerConnection.getSocketFd();
             send_message(socketFd, message.c_str());
             std::cout << "sended popUp" << std::endl;
@@ -206,12 +200,13 @@ int GameServer::getReadableReadableSocket(int timeLeft) {
     for (PlayerConnection &playerConnection: playerConnections) {
         open_sockets.push_back(playerConnection.getSocketFd());
     }
-    std::cout <<"just before for loop" << std::endl;
+    std::cout << "just before for loop" << std::endl;
     for (int &supporter: supportersSockets) {
         std::cout << "supp socket " << supporter << std::endl;
         open_sockets.push_back(supporter);
     }
-    int socketIndex = get_readable_socket_index_with_timeout(open_sockets.data(), open_sockets.size(), timeLeft);
+    int socketIndex = get_readable_socket_index_with_timeout(open_sockets.data(),
+                                                             (int) open_sockets.size(), timeLeft);
     std::cout << "Readable socket: " << open_sockets[socketIndex] << std::endl;
     return open_sockets[socketIndex];
 }
@@ -509,13 +504,13 @@ void GameServer::processSpecialCommand(std::string &userMessage, std::string &se
     Message message(' ');
     message.setData((char *) userMessage.c_str());
 
-    const std::string& firstToken = message.getNextToken();
-    if (firstToken == "/msg"){
-        const std::string& receiverUsername = message.getNextToken();
+    const std::string &firstToken = message.getNextToken();
+    if (firstToken == "/msg") {
+        const std::string &receiverUsername = message.getNextToken();
         int receiverQuadrant = getQuadrantForPlayer(receiverUsername);
-        if (receiverQuadrant != -1){ // There is a player with that username
+        if (receiverQuadrant != -1) { // There is a player with that username
             int senderQuadrant = getQuadrantForPlayer(senderUsername);
-            const std::string& finalMessage = makeMessage(message.getRemainingContent(), "[PRIVATE] " + senderUsername);
+            const std::string &finalMessage = makeMessage(message.getRemainingContent(), "[PRIVATE] " + senderUsername);
 
             // Send to myself and to team mate
             send_message(playerConnections[senderQuadrant].getSocketFd(), finalMessage.c_str());
@@ -527,7 +522,7 @@ void GameServer::processSpecialCommand(std::string &userMessage, std::string &se
         int senderQuadrant = getQuadrantForPlayer(senderUsername);
         int teamMateQuadrants[4] = {1, 0, 3, 2};
         int teamMateQuadrant = teamMateQuadrants[senderQuadrant];
-        const std::string& finalMessage = makeMessage(message.getRemainingContent(), "[TEAM] " + senderUsername);
+        const std::string &finalMessage = makeMessage(message.getRemainingContent(), "[TEAM] " + senderUsername);
 
         // Send to myself and to team mate
         send_message(playerConnections[senderQuadrant].getSocketFd(), finalMessage.c_str());

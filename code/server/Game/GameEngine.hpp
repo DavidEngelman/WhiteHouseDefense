@@ -69,10 +69,6 @@ public:
 
     void addPNJS(std::vector<Wave> &waves);
 
-    void showMap();
-
-    void giveKill(PlayerState &playerState);
-
     void checkIfGameIsOver();
 
     void declareWinner();

@@ -83,7 +83,6 @@ void GameEngine::dealDamage(std::vector<Wave> &waves) {
         Wave &wave = getWaveInSameQuadrant(*tower, waves);
         const std::vector<PNJ *> &killedPNJ = tower->shoot(wave, getPlayerStateForWave(wave));
         for (auto &&pnj : killedPNJ) {
-            if (DEBUG) break;
             PlayerState &player_state = getPlayerStateForWave(wave);
             addKillToStat(player_state);
             giveGold(player_state, pnj);
@@ -139,7 +138,7 @@ void GameEngine::createWaves() {
     for (const int direction: DIRECTIONS) {
         // Je crée une vague uniquement si le joueur est vivant
         // Ça ne sert à rien de créer une vague vide
-        if (DEBUG || gameState.isPlayerAlive(direction)) {
+        if (gameState.isPlayerAlive(direction)) {
             Wave wave(numOfPNJsPerWave, direction);
             gameState.addWave(wave);
         }
@@ -182,15 +181,11 @@ void GameEngine::addPNJS(std::vector<Wave> &waves) {
 
 
 void GameEngine::addTower(AbstractTower *tower, int quadrant) {
-    if (!DEBUG) {
-        if (gameState.getPlayerStates()[quadrant].getMoney() >=
-            tower->getPrice()) {
-            gameState.addTower(tower, quadrant);
-            getGameState().getPlayerStates()[quadrant].incrNbTowerPlaced();
-            getGameState().getPlayerStates()[quadrant].incrMoneySpend(tower->getPrice());
-        }
-    } else {
+    if (gameState.getPlayerStates()[quadrant].getMoney() >=
+        tower->getPrice()) {
         gameState.addTower(tower, quadrant);
+        getGameState().getPlayerStates()[quadrant].incrNbTowerPlaced();
+        getGameState().getPlayerStates()[quadrant].incrMoneySpend(tower->getPrice());
     }
 }
 
@@ -201,11 +196,6 @@ void GameEngine::deleteTower(Position &position, int &quadrant) {
 void GameEngine::upgradeTower(Position &position, int &quadrant) {
     gameState.upgradeTower(position, quadrant);
 
-}
-
-
-void GameEngine::showMap() {
-//    map.setUp(gameState);
 }
 
 void GameEngine::checkIfGameIsOver() {
