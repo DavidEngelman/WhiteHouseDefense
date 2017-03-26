@@ -1,7 +1,3 @@
-//
-// Created by jepsiko on 05/03/17.
-//
-
 #ifndef PROJET_SHOCKTOWER_HPP
 #define PROJET_SHOCKTOWER_HPP
 
@@ -13,7 +9,7 @@ class ShockTower : public AttackTower {
 public:
     ShockTower(const Position &position, int level);
 
-    ~ShockTower() = default;
+    virtual ~ShockTower() = default;
 
     virtual const std::vector<PNJ *> shoot(Wave &wave, PlayerState& playerState) override;
 

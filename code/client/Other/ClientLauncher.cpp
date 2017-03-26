@@ -1,23 +1,9 @@
 #include <iostream>
 #include <cstring>
 #include <QtWidgets/QApplication>
-#include <QtWidgets/QPushButton>
-#include <QtWidgets/QMainWindow>
 #include <thread>
 #include "App.hpp"
 #include "global.hpp"
-#include "../Profile/ProfileManager.hpp"
-#include "../Profile/ProfileGUI.hpp"
-#include "MapGUI.hpp"
-#include "../Game/GameGUI.hpp"
-
-static const bool DEBUG = true;
-
-App * app;
-
-void launchApp(char *address){
-    App * app = new App(address);
-}
 
 int main(int argc, char *argv[]) {
 

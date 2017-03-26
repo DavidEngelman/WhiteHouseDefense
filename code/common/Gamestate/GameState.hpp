@@ -34,8 +34,6 @@ public:
     GameState();
     GameState(std::string mode);
 
-    ~GameState();
-
     bool getIsGameOver() const;
 
     void setIsGameOver(bool isGameOver);
@@ -69,6 +67,8 @@ public:
     void deleteTower(Position &position, int quadrant);
 
     bool upgradeTower(Position &position, int quadrant);
+
+    void deleteTowersInHeap();
 };
 
 #endif
