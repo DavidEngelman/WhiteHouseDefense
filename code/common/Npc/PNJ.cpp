@@ -1,5 +1,4 @@
 #include "PNJ.hpp"
-#include <iostream>
 
 // Constructor used when unserializing
 PNJ::PNJ(Position transitionPosition, int healthPoints, int direction) :
