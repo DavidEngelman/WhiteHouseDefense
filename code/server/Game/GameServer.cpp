@@ -160,13 +160,7 @@ void GameServer::getAndProcessUserInput(int clientSocketFd, char *buffer) {
             int targetQuadrant = command.getNextInt();
             gameEngine->launchAirStrike(targetQuadrant);
             sendAirstrikeNotification(quadrant, targetQuadrant);
-        } else if (command_type == AD_SPELL_COMMAND_STRING) {
-            Command command;
-            command.parse(buffer);
-            std::string playerSupportedUserName = command.getNextToken();
-            sendAdPopUP(playerSupportedUserName);
         }
-
     } else {
         removeClosedSocketFromSocketLists(clientSocketFd);
     }
@@ -238,11 +232,8 @@ int GameServer::getReadableReadableSocket(int timeLeft) {
     for (PlayerConnection &playerConnection: playerConnections) {
         open_sockets.push_back(playerConnection.getSocketFd());
     }
-    std::cout << "just before for loop" << std::endl;
-    for (int &supporter: supportersSockets) {
-        std::cout << "supp socket " << supporter << std::endl;
-        open_sockets.push_back(supporter);
-    }
+    std::cout << "just after for loop" << std::endl;
+
     int socketIndex = get_readable_socket_index_with_timeout(open_sockets.data(),
                                                              (int) open_sockets.size(), timeLeft);
     std::cout << "Readable socket: " << open_sockets[socketIndex] << std::endl;
@@ -312,6 +303,22 @@ void *GameServer::staticJoinSpectatorThread(void *self) {
     return nullptr;
 }
 
+void GameServer::startSpectatorCommandThread(int _client_socket) {
+    argsForSpectatorCommandThread args;
+    args.gameServer = this;
+    args.client_socket = _client_socket;
+    pthread_create(&spectatorReceiverThread, NULL, staticProcessSpectatorCommandThread, (void*) &args);
+}
+
+void GameServer::stopSpectatorCommandThread() {
+    pthread_cancel(spectatorReceiverThread);
+}
+
+void *GameServer::staticProcessSpectatorCommandThread(void *self) {
+    static_cast<GameServer *>(self)->getAndProcessSpectatorCommand();
+    return nullptr;
+}
+
 void GameServer::getAndProcessSpectatorJoinCommand() {
     while (!playerConnections.empty()) {
         int client_socket_fd = accept_connection();
@@ -337,6 +344,46 @@ void GameServer::getAndProcessSpectatorJoinCommand() {
             // treated in the main loop
             // TODO: peut etre utiliser ici un mutex pour éviter des problemes de coherence
             supportersSockets.push_back(client_socket_fd);
+            startSpectatorCommandThread(client_socket_fd);
+        }
+    }
+}
+
+void GameServer::getAndProcessSpectatorCommand(void *arguments) {
+
+    argsForSpectatorCommandThread args = *(argsForSpectatorCommandThread*)arguments;
+    int supporterSocketFd = args.client_socket;
+
+    char buffer[BUFFER_SIZE];
+    bool online = true;
+    while (online) {
+        if (receive_message(supporterSocketFd, buffer) != -1) {
+            std::cout << "Received message from: " << supporterSocketFd << std::endl;
+            std::string command_type = get_command_type(buffer);
+            std::cout << command_type << std::endl;
+
+            if (command_type == SEND_MESSAGE_STRING) {
+                Command command;
+                command.parse(buffer);
+                int messageLength = command.getNextInt();
+                std::string userMessage = command.getTokenWithSize(messageLength);
+                std::string senderUsername = command.getNextToken();
+
+                if (!userMessage.empty() && userMessage[0] == '/') {
+                    processSpecialCommand(userMessage, senderUsername);
+                } else {
+                    sendMessageToOtherPlayers(userMessage, senderUsername);
+                }
+            } else if (command_type == AD_SPELL_COMMAND_STRING) {
+                Command command;
+                command.parse(buffer);
+                std::string playerSupportedUserName = command.getNextToken();
+                sendAdPopUP(playerSupportedUserName);
+            }
+
+        } else {
+            removeClosedSocketFromSocketLists(supporterSocketFd);
+            online = false;
         }
     }
 }
