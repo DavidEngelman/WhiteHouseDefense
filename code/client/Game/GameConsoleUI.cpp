@@ -141,6 +141,7 @@ void GameConsoleUI::displayPosingPhase() {
     std::cout << std::endl;
 }
 
+/*Display the tower shop*/
 void GameConsoleUI::displayTowerShop() {
     std::cout << "You can choose among the following towers: " << std::endl;
     std::cout << "1. GunTower : " << std::to_string(GUN_TOWER_PRICE) << " $ " << std::endl;
@@ -187,7 +188,7 @@ void GameConsoleUI::displayGameOverAndStats(GameState &gamestate) {
     manager->comeBackToMenu();
 }
 
-
+/*Display the dead message*/
 void GameConsoleUI::displayDeadMessage() {
     std::cout << "You are dead. You can now watch the game peacefully" << std::endl;
 }
@@ -206,6 +207,7 @@ Position GameConsoleUI::getPositionOfTowerPlacement() {
     return getPosBuyingTower();
 }
 
+/*Send to the manager the type of the tower to place*/
 void GameConsoleUI::placeTowerAction() {
     int towerChoice = getTowerTypeChoice();
     Position towerPos = getPositionOfTowerPlacement();
@@ -230,6 +232,7 @@ void GameConsoleUI::upgradeTower() {
     manager->upgradeTower(toUpgrade);
 }
 
+/*Manage the action on the tower during the game*/
 void *GameConsoleUI::input_thread() {
 
     while (1) {
