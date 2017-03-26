@@ -733,6 +733,7 @@ void GameGUI::displaySupporterActionBox() {
     QSize size = QSize(1400/scl, 1060/scl);
 
     adSpellB = new QHandPointerButton;
+    //TODO à changer par la bonne image
     adSpellB->setIcon(QIcon("../../qt_ui/game_pictures/towers/missiletower.png"));
     adSpellB->setIconSize(size);
     adSpellB->setEnabled(true);

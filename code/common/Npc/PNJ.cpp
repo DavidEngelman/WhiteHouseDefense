@@ -30,7 +30,6 @@ void PNJ::advance(Map &map) {
         return;
     }
 
-
     if (!isInTransition()) {
         if (can_go_forward(map)) {
             get_forward_direction();

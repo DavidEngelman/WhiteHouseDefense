@@ -46,7 +46,7 @@ static const int STONE_INT = 17;
 // Constant of the pnj
 
 static const int NB_OF_TYPE_OF_PNJ = 3;
-static const int NUM_FREEZE_TICKS_FOR_PNJ = 20;
+static const int NUM_FREEZE_TICKS_FOR_PNJ = 20 * TILES_SIZE;
 
 static const int COMMUNIST_PNJ_STARTING_HEALTHPOINTS = 150;
 static const int COMMUNIST_PNJ_VALUE = 15;
@@ -103,9 +103,16 @@ static const int AIR_STRIKE_DAMAGE = 20;
 
 // Game Settings
 
-// TODO: explain what TILES_SIZE is doing in this set of constants
+/*
+ * We used the TILES_SIZE constant in the STEP_TRANSITION_DURATION
+ * because the NPCs will move at 1 pixel / STEP_TRANSITION_DURATION
+ * but after all the transition steps, we must reach the STEP_DURATION.
+ *
+ * So we have : STEP_DURATION = STEP_TRANSITION_DURATION * Number of pixels
+ * And the number of pixels for one complete transition is TILES_SIZE
+ */
 static const int STEP_DURATION = 700;
-static const int STEP_TRANSITION_DURATION = STEP_DURATION/TILES_SIZE;
+static const int STEP_TRANSITION_DURATION = STEP_DURATION / TILES_SIZE;
 static const int INTERVAL_BETWEEN_SHOOTS_IN_MS = STEP_DURATION;
 static const int INTERVAL_BETWEEN_PNJS_IN_WAVE_IN_MS = STEP_DURATION;
 static const int INTERVAL_BETWEEN_GOLD_EARNED = STEP_DURATION;

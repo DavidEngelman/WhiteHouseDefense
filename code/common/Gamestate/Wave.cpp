@@ -1,4 +1,5 @@
 
+#include <iostream>
 #include "../Npc/MexicanPNJ.h"
 #include "../Npc/MuslimPNJ.h"
 #include "../Npc/CommunistPNJ.h"

@@ -35,8 +35,8 @@ private:
                                         QImage("../../qt_ui/game_pictures/tiles/missiletower.png")};
 
     std::vector<QImage> NPC_images = {QImage("../../qt_ui/game_pictures/tiles/mexican.png"),
-                                      QImage("../../qt_ui/game_pictures/tiles/communist.png"),
-                                      QImage("../../qt_ui/game_pictures/tiles/muslim.png")};
+                                      QImage("../../qt_ui/game_pictures/tiles/muslim.png"),
+                                      QImage("../../qt_ui/game_pictures/tiles/communist.png")};
 
 
 protected:
