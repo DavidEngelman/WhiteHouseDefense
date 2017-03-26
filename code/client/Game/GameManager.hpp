@@ -2,11 +2,17 @@
 #define GAMEMANAGER_HPP
 
 #include "../../common/Gamestate/GameState.hpp"
-#include "GameUI.hpp"
 #include "../Other/NetworkedManager.hpp"
 #include "GameManager.hpp"
 #include "../../common/Other/Networking.hpp"
 #include "../Main/MainManager.hpp"
+#include "GameConsoleUI.hpp"
+#include "../../common/Npc/MexicanPNJ.h"
+#include "../../common/Npc/CommunistPNJ.h"
+#include "../../common/Npc/MuslimPNJ.h"
+#include "../../server/Other/Server.hpp"
+#include "../../common/Other/Command.hpp"
+#include "../../common/Tower/MissileTower.hpp"
 #include "../../common/Tower/GunTower.hpp"
 #include "../../common/Tower/SniperTower.hpp"
 #include "../../common/Tower/ShockTower.hpp"
@@ -22,9 +28,7 @@ class GameManager : public QObject, public AbstractManager {
 Q_OBJECT
 
 private:
-    int counter = 0;
     int server_socket;
-    bool runningThread = false;
 
     GameState *gameState;
     GameUI *gameUI;
@@ -34,8 +38,6 @@ private:
     bool nukeSpellAvailable = true;
     bool freezeSpellAvailable = true;
     bool airStrikeAvailable = true;
-
-    QTimer *timer;
 
 public:
     bool isNukeSpellAvailable() const;

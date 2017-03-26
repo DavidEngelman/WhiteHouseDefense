@@ -2,13 +2,6 @@
 
 #include "GameManager.hpp"
 #include "GameGUI.hpp"
-#include "GameConsoleUI.hpp"
-#include "../../common/Npc/MexicanPNJ.h"
-#include "../../common/Npc/CommunistPNJ.h"
-#include "../../common/Npc/MuslimPNJ.h"
-#include "../../server/Other/Server.hpp"
-#include "../../common/Other/Command.hpp"
-#include "../../common/Tower/MissileTower.hpp"
 
 
 GameManager::GameManager(int socket, App *app) : GameManager(socket, false, app) {};
@@ -511,7 +504,6 @@ std::string GameManager::getWinner() {
 /* In-Game Chat */
 
 void GameManager::sendMessageToPlayers(const std::string &message) {
-    // TODO: si l'utilisateur met des ; dans son message, c'est la merde
     std::string username = master_app->getUsername();
     if (isSupporter) {
         username = "[Supporter] " + username;
