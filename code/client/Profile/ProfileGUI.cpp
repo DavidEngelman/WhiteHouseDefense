@@ -39,7 +39,7 @@ void ProfileGUI::display() {
     ///----------HOME_BUTTON----------
 
     homeButton = new QHandPointerButton("HOME", 70, 35, this);
-    homeButton->setStyleSheet("border-image:url(../../qt_ui/game_pictures/buttons/gold_button_2.svg);");
+    homeButton->setStyleSheet("QPushButton{ border-image: url(../../qt_ui/game_pictures/buttons/mainmenu.png) ;} QPushButton:pressed{border-image:url(../../qt_ui/game_pictures/buttons/connectPressed.png);}");
     QObject::connect(homeButton, SIGNAL(clicked()), this, SLOT(goToMain()));
 
 
@@ -57,7 +57,7 @@ void ProfileGUI::display() {
     QString searchButtonString = "SEARCH";
 
     searchButton = new QHandPointerButton(searchButtonString, 130, 35, this);
-    searchButton->setStyleSheet("border-image:url(../../qt_ui/game_pictures/buttons/gold_button_2.svg);");
+    searchButton->setStyleSheet("QPushButton{ border-image:url(../../qt_ui/game_pictures/buttons/mainmenu.png);} QPushButton:pressed{border-image:url(../../qt_ui/game_pictures/buttons/connectPressed.png);}");
 
     QObject::connect(searchButton, SIGNAL(clicked()), this, SLOT(showUser()));
     QObject::connect(usernameLineEdit, SIGNAL(returnPressed()), searchButton, SIGNAL(clicked()));
