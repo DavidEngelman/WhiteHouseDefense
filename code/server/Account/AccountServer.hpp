@@ -18,6 +18,7 @@ private:
 
     Database database;
     std::vector<PlayerConnection> connectedPlayers;
+    std::mutex friendListMutex;
 
 public:
 

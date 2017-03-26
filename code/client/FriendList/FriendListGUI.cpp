@@ -97,7 +97,7 @@ void FriendListGUI::display() {
 
     updateTimer = new QTimer();
     QObject::connect(updateTimer, SIGNAL(timeout()), this, SLOT(refresh()));
-    updateTimer->start(10000);
+    updateTimer->start(1000);
 
 
     this->show();

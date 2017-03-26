@@ -69,39 +69,48 @@ void AccountServer::get_and_process_command(int client, char* message_buffer) {
             FriendListCommand friendListCommand;
             friendListCommand.parse(message_buffer);
             std::string action = friendListCommand.getAction();
+            friendListMutex.lock();
 
             if (action == "getFriendList") {
 
                 handle_getFriendList(client, friendListCommand.getRequester());
+                friendListMutex.unlock();
 
             } else if (action == "getFriendRequests") {
 
                 handle_getFriendRequests(client, friendListCommand.getRequester());
+                friendListMutex.unlock();
 
             } else if (action == "addFriend") {
-                std::cout<<friendListCommand.getRequester() + " added " + friendListCommand.getReceiver();
 
                 handle_sendFriendRequest(client, friendListCommand.getRequester(), friendListCommand.getReceiver());
+                friendListMutex.unlock();
 
             } else if (action == "getPendingInvitations") {
 
                 handle_getPendingInvitations(client, friendListCommand.getRequester());
+                friendListMutex.unlock();
 
             } else if (action == "removeFriend") {
 
                 handle_removeFriend(client, friendListCommand.getRequester(), friendListCommand.getReceiver());
+                friendListMutex.unlock();
 
             } else if (action == "acceptFriendRequest") {
 
                 handle_acceptFriendRequest(client, friendListCommand.getRequester(), friendListCommand.getReceiver());
+                friendListMutex.unlock();
 
             } else if (action == "declineFriendRequest") {
 
                 handle_declineFriendRequest(client, friendListCommand.getRequester(), friendListCommand.getReceiver());
+                friendListMutex.unlock();
 
             } else if (action == "getStatus") {
 
                 handle_getStatus(client, friendListCommand.getRequester());
+                friendListMutex.unlock();
+
             }
 
         } else if (action == "Update"){
