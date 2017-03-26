@@ -19,7 +19,7 @@ class GameServer : public Server {
 
 private:
 
-    std::ifstream dico;
+    std::string dico;
     std::string mode;
     unsigned int mapSeed;
 
@@ -39,8 +39,6 @@ private:
     void addTowerInGameState(TowerCommand &command);
 
     void changeVulgarityToStar(std::string &userMessage);
-
-    bool chercheMot(std::string &userMessage);
     
 public:
 
