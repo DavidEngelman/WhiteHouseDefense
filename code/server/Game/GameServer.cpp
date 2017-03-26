@@ -145,16 +145,20 @@ void GameServer::getAndProcessUserInput(int clientSocketFd, char *buffer) {
             command.parse(buffer);
             int quadrant = command.getNextInt();
             gameEngine->killAllNPC(quadrant);
+            sendNotification(quadrant, 0);
         } else if (command_type == FREEZE_PNJS_COMMAND_STRING) {
             Command command;
             command.parse(buffer);
             int quadrant = command.getNextInt();
             gameEngine->freezeWave(quadrant);
+            sendNotification(quadrant, 1);
         } else if (command_type == AIR_STRIKE_COMMAND_STRING) {
             Command command;
             command.parse(buffer);
             int quadrant = command.getNextInt();
-            gameEngine->launchAirStrike(quadrant);
+            int targetQuadrant = command.getNextInt();
+            gameEngine->launchAirStrike(targetQuadrant);
+            sendAirstrikeNotification(quadrant, targetQuadrant);
         } else if (command_type == AD_SPELL_COMMAND_STRING) {
             Command command;
             command.parse(buffer);
@@ -185,6 +189,39 @@ void GameServer::sendAdPopUP(std::string &playerSupportedUserName) {
         }
     }
 }
+
+void GameServer::sendNotification(int quadrant, int notificationID) {
+    std::string &sender = gameEngine->getGameState().getPlayerStates()[quadrant].getUsername();
+    std::string notification;
+    if (notificationID == 0) {
+        notification = sender + " launched a nuclear bomb";
+    } else if (notificationID == 1) {
+        notification = sender + " used the frozen spell";
+    }
+    std::string message = makeMessage(notification, "[SERVER] ");
+    for (PlayerConnection &playerConnection : playerConnections) {
+        int socketFd = playerConnection.getSocketFd();
+        send_message(socketFd, message.c_str());
+    }
+
+}
+
+void GameServer::sendAirstrikeNotification(int quadrant, int targetQuadrant) {
+    std::string &sender = gameEngine->getGameState().getPlayerStates()[quadrant].getUsername();
+    std::string &target= gameEngine->getGameState().getPlayerStates()[targetQuadrant].getUsername();
+    std::string notification;
+
+    notification = sender + " launched an aistrike on " + target + "'s base";
+
+    std::string message = makeMessage(notification, "[SERVER] ");
+    for (PlayerConnection &playerConnection : playerConnections) {
+        int socketFd = playerConnection.getSocketFd();
+        send_message(socketFd, message.c_str());
+    }
+
+}
+
+
 
 std::string GameServer::makeMessage(const std::string &userMessage, const std::string &senderUsername) const {
     std::string message = RECEIVE_MESSAGE_STRING + ","

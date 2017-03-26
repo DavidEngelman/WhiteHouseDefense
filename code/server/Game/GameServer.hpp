@@ -126,6 +126,10 @@ public:
     std::string makeMessage(const std::string &userMessage, const std::string &senderUsername) const;
 
     void sendAdPopUP(std::string &playerSupportedUserName);
+
+    void sendNotification(int quadrant, int notificationID);
+
+    void sendAirstrikeNotification(int quadrant, int target);
 };
 
 #endif
