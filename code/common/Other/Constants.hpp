@@ -21,7 +21,7 @@ static const std::string QUADRANT_NAMES[4] = {"NORTH", "EAST", "SOUTH", "WEST"};
 
 const static int PARTNERS[4] = {EAST, NORTH, WEST, SOUTH};
 
-static const int NB_OF_MAPS = 3;
+static const int NB_OF_MAPS = 4;
 
 static const int PATH_INT = 0;
 static const int GRASS_INT = 1;
