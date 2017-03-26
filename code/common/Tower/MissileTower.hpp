@@ -7,11 +7,11 @@
 #include "AttackTower.hpp"
 #include "OneTargetTower.hpp"
 
-class MissileTower : public virtual AttackTower, public virtual OneTargetTower {
+class MissileTower : public AttackTower, public OneTargetTower {
 public:
     MissileTower(const Position &position, int level);
 
-    ~MissileTower() = default;
+    virtual ~MissileTower() = default;
 
     virtual const std::vector<PNJ *> shoot(Wave &wave, PlayerState& playerState) override;
 

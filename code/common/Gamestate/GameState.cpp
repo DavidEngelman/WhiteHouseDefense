@@ -119,7 +119,14 @@ bool GameState::upgradeTower(Position &position, int quadrant) {
     return false;
 }
 
-GameState::~GameState() {
+/*
+ * This special method is here to prevent segmentation faults.
+ * This is only called in GameManager, because it deletes the towers from the heap.
+ * In GUI mode, the MapGUI has a copy of the gameState, if we put the "delete tower" code in the destructor
+ * the towers would be deleted twice (once in the destruction of the GameState of GameManager and
+ * the second time in the destruction of the GameState of the MapGUI)
+ */
+void GameState::deleteTowersInHeap() {
     for (AbstractTower* tower: towers){
         delete tower;
     }

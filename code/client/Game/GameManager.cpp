@@ -553,6 +553,7 @@ void GameManager::sendAdSpellRequest() {
 }
 
 GameManager::~GameManager() {
+    gameState->deleteTowersInHeap(); // We only do it once here (and not in MapGUI)
     delete gameState;
     gameUI->destroy();
 }
