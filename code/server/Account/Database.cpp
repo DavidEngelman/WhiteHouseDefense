@@ -277,6 +277,20 @@ int Database::declineFriendRequest(std::string username, std::string toDecline) 
     return exec(query, NULL, 0, zErrMsg);
 }
 
+int Database::cancelInvitation(std::string username, std::string toCancel) {
+    char *zErrMsg = 0;
+    std::string command = "";
+
+    command += "DELETE FROM `FriendRequests` WHERE `ReceiverID`='" + toCancel + "' AND `SenderID`='" + username +
+               "' ;" + "DELETE FROM `PendingInvitations` WHERE `RequesterID`='" + username + "' AND `ReceiverID`='" +
+               toCancel + "' ;";
+
+
+    char *query = (char *) command.c_str();
+
+    return exec(query, NULL, 0, zErrMsg);
+}
+
 std::vector<std::string> Database::getFriendList(std::string username) {
     std::vector<std::string> friendList;
     char *zErrMsg = 0;

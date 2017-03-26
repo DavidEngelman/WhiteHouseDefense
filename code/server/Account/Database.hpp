@@ -58,6 +58,7 @@ public:
     int acceptFriendRequest(std::string username, std::string toAccept);
     int removeFriend(std::string username, std::string toRemove);
     int declineFriendRequest(std::string username, std::string toDecline);
+    int cancelInvitation(std::string username, std::string toCancel);
 
     void updateAfterGameStats(int id, int pnjKilled, bool isWinner);
 

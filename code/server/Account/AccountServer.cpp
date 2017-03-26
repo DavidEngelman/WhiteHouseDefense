@@ -64,7 +64,7 @@ void AccountServer::get_and_process_command(int client, char* message_buffer) {
         } else if (action == "getFriendList" || action == "getFriendRequests" ||
                    action == "addFriend" || action == "removeFriend" ||
                    action == "acceptFriendRequest" || action == "declineFriendRequest" ||
-                   action == "getPendingInvitations" || action == "getStatus") {
+                   action == "getPendingInvitations" || action == "getStatus" || action == "cancelInvitation" ) {
 
             FriendListCommand friendListCommand;
             friendListCommand.parse(message_buffer);
@@ -109,6 +109,10 @@ void AccountServer::get_and_process_command(int client, char* message_buffer) {
             } else if (action == "getStatus") {
 
                 handle_getStatus(client, friendListCommand.getRequester());
+                friendListMutex.unlock();
+
+            } else if (action == "cancelInvitation"){
+                handle_cancelInvitation(client, friendListCommand.getRequester(), friendListCommand.getReceiver());
                 friendListMutex.unlock();
 
             }
@@ -266,6 +270,10 @@ bool AccountServer::declineFriendRequest(std::string requester, std::string rece
 bool AccountServer::removeFriend(std::string requester, std::string receiver) {
     return database.removeFriend(requester,receiver) != -1 ;
 }
+
+bool AccountServer::cancelInvitation(std::string requester, std::string receiver) {
+    return database.cancelInvitation(requester, receiver) != -1;
+}
 std::vector<std::string> AccountServer::getPendingInvitations(std::string username){
     return database.getPendingInvitations(username);
 }
@@ -312,6 +320,14 @@ void AccountServer::handle_removeFriend(int client_sock_fd, std::string requeste
     if (removeFriend(requester, toRemove)){
         send_success(client_sock_fd);
     } else {
+        send_error(client_sock_fd);
+    }
+}
+
+void AccountServer::handle_cancelInvitation(int client_sock_fd, std::string requester, std::string toCancel) {
+    if (cancelInvitation(requester, toCancel)){
+        send_success(client_sock_fd);
+    }else{
         send_error(client_sock_fd);
     }
 }

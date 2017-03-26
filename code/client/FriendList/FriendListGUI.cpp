@@ -268,6 +268,12 @@ void FriendListGUI::setupPendingInvitations() {
         buttonBox->setContentsMargins(0, 0, 0, 0);
         buttonWidgets->setLayout(buttonBox);
 
+        QSignalMapper *cancelMapper = new QSignalMapper(this);
+        connect(deleteButton, SIGNAL(clicked()), cancelMapper, SLOT(map()));
+        cancelMapper->setMapping(deleteButton, index);
+        connect(cancelMapper, SIGNAL(mapped(int)), this, SLOT(cancelInvitation(int)));
+
+
         pendingInvitations->setItem(index, 0, friendStatus);
         pendingInvitations->setItem(index, 1, friendItem);
         pendingInvitations->setCellWidget(index, 2, buttonWidgets);
@@ -295,6 +301,11 @@ void FriendListGUI::declineFriend(int index) {
 
 void FriendListGUI::removeFriend(int index) {
     manager->sendRequestServer(REMOVE_FRIEND,friendList->item(index,1)->text().toStdString());
+    refresh();
+}
+
+void FriendListGUI::cancelInvitation(int index) {
+    manager->sendRequestServer(CANCEL_INVITATION,pendingInvitations->item(index,1)->text().toStdString());
     refresh();
 }
 
