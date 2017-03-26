@@ -15,8 +15,8 @@ FriendListGUI::FriendListGUI(FriendListManager *manager, QWidget* _parent) : Abs
 
 void FriendListGUI::display() {
 
-    this->setFixedHeight(500);
-    this->setFixedWidth(300);
+    this->setFixedHeight(480);
+    this->setFixedWidth(280);
     this->setBackgroundFromPath("../../qt_ui/game_pictures/backgrounds/bluebg.png");
     setStylesheetFromPath("../../qt_ui/friendList.qss");
     QFont police("calibri");
@@ -87,9 +87,9 @@ void FriendListGUI::display() {
     setupFriendRequests();
     setupPendingInvitations();
 
-    tabWidget->addTab(friendList,tr("Friends"));
-    tabWidget->addTab(friendRequests,tr("Requests"));
-    tabWidget->addTab(pendingInvitations,tr("My Invitations"));
+    tabWidget->addTab(friendList,tr("  Friends  "));
+    tabWidget->addTab(friendRequests,tr(" Requests "));
+    tabWidget->addTab(pendingInvitations,tr("  My Invitations  "));
 
 
 

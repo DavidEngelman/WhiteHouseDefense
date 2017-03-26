@@ -13,13 +13,13 @@
 #include "../../common/Other/Constants.hpp"
 #include "../../common/Other/Tools.hpp"
 #include <mutex>
-
+#include <fstream>
 
 class GameServer : public Server {
 
 private:
 
-
+    std::string dico;
     std::string mode;
     unsigned int mapSeed;
 
@@ -38,7 +38,10 @@ private:
 
     void addTowerInGameState(TowerCommand &command);
 
-
+    void changeVulgarityToStar(std::string &userMessage);
+    
+    void findAndChangeToStarVulgarities(std::string mot, int count, std::string &userMessage);
+    
 public:
 
     GameServer(int port, std::vector<PlayerConnection> &playerConnections, std::string _mode);
