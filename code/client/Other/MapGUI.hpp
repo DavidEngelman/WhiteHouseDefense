@@ -9,8 +9,8 @@ static const short MISSILE_TOWER = 3;
 static const short MEXICAN = 0;
 static const short MUSLIM = 1;
 static const short COMMUNIST = 2;
-static const short FROZEN_MEXICAN = 5;
-static const short FROZEN_MUSLIM = 4;
+static const short FROZEN_MEXICAN = 4;
+static const short FROZEN_MUSLIM = 5;
 static const short FROZEN_COMMUNIST = 3;
 
 
