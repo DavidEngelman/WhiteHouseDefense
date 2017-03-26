@@ -354,6 +354,7 @@ void GameManager::unSerializePNJ(std::string serialized_pnj, Wave *wave) {
     int transitionPointY = 0;
     int health = 0;
     std::string typeOfPNJ = "";
+    int frozen = 0;
     for (char &c : serialized_pnj) {
         if (c == ',') {
             switch (count) {
@@ -366,9 +367,13 @@ void GameManager::unSerializePNJ(std::string serialized_pnj, Wave *wave) {
                 case 2:
                     health = std::stoi(elem);
                     break;
-                default:
+                case 3:
                     typeOfPNJ = elem;
                     break;
+                default:
+                    frozen = std::stoi(elem);
+                    break;
+
             }
             elem = "";
             count++;
@@ -378,9 +383,9 @@ void GameManager::unSerializePNJ(std::string serialized_pnj, Wave *wave) {
     }
 
     PNJ *pnj;
-    if (typeOfPNJ == MEXICAN_PNJ_STR) pnj = new MexicanPNJ(Position(transitionPointX, transitionPointY), health, wave->getQuadrant());
-    else if (typeOfPNJ == MUSLIM_PNJ_STR) pnj = new MuslimPNJ(Position(transitionPointX, transitionPointY), health, wave->getQuadrant());
-    else pnj = new CommunistPNJ(Position(transitionPointX, transitionPointY), health, wave->getQuadrant());
+    if (typeOfPNJ == MEXICAN_PNJ_STR) pnj = new MexicanPNJ(Position(transitionPointX, transitionPointY), health, wave->getQuadrant(), frozen);
+    else if (typeOfPNJ == MUSLIM_PNJ_STR) pnj = new MuslimPNJ(Position(transitionPointX, transitionPointY), health, wave->getQuadrant(),frozen);
+    else pnj = new CommunistPNJ(Position(transitionPointX, transitionPointY), health, wave->getQuadrant(),frozen);
 
     wave->addPNJ(*pnj);
 }

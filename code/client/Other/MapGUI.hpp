@@ -9,6 +9,11 @@ static const short MISSILE_TOWER = 3;
 static const short MEXICAN = 0;
 static const short MUSLIM = 1;
 static const short COMMUNIST = 2;
+static const short FROZEN_MEXICAN = 5;
+static const short FROZEN_MUSLIM = 4;
+static const short FROZEN_COMMUNIST = 3;
+
+
 
 
 #include <QtGui/QPainter>
@@ -36,7 +41,10 @@ private:
 
     std::vector<QImage> NPC_images = {QImage("../../qt_ui/game_pictures/tiles/mexican.png"),
                                       QImage("../../qt_ui/game_pictures/tiles/muslim.png"),
-                                      QImage("../../qt_ui/game_pictures/tiles/communist.png")};
+                                      QImage("../../qt_ui/game_pictures/tiles/communist.png"),
+                                      QImage("../../qt_ui/game_pictures/tiles/frozenCommunist.png"),
+                                      QImage("../../qt_ui/game_pictures/tiles/frozenMexican.png"),
+                                      QImage("../../qt_ui/game_pictures/tiles/frozenMuslim.png")};
 
 
 protected:

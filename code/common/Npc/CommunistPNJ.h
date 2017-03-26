@@ -7,7 +7,7 @@
 class CommunistPNJ : public PNJ {
 public:
     CommunistPNJ(int direction);
-    CommunistPNJ(Position transitionPosition, int healthPoints, int direction);
+    CommunistPNJ(Position transitionPosition, int healthPoints, int direction, int frozen);
 };
 
 
