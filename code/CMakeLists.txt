@@ -30,6 +30,8 @@ set(CLIENT_FILES client/Other/ClientLauncher.cpp
         client/Other/InQueueWidget.cpp
         client/Other/InQueueWidget.hpp
         client/Game/QMatchMakingThread.hpp
+        client/Game/GameLauncher.cpp
+        client/Game/GameLauncher.hpp
 
         #WELCOME
         client/Welcome/WelcomeManager.cpp
@@ -73,6 +75,8 @@ set(CLIENT_FILES client/Other/ClientLauncher.cpp
         client/FriendList/FriendListManager.cpp
         client/FriendList/FriendListGUI.cpp
         client/FriendList/FriendList.cpp
+        client/FriendList/FriendListConsoleUI.cpp
+        client/FriendList/FriendListConsoleUI.h
 
 
         #SETTINGS
@@ -128,7 +132,9 @@ set(CLIENT_FILES client/Other/ClientLauncher.cpp
         common/Other/Strings.hpp
         common/Other/Tools.cpp
         client/Other/QHandPointerButton.hpp
-        client/Other/InQueueWidget.cpp client/FriendList/FriendListConsoleUI.cpp client/FriendList/FriendListConsoleUI.h)
+        client/Other/InQueueWidget.cpp
+
+        )
 
 
 add_executable(client ${CLIENT_FILES})

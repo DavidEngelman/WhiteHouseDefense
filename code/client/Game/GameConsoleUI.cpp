@@ -3,7 +3,8 @@
 #include "../../common/Other/Tools.hpp"
 
 
-GameConsoleUI::GameConsoleUI(bool isSupporter, unsigned seed, GameManager *manager) : GameUI(isSupporter, seed, manager) {}
+GameConsoleUI::GameConsoleUI(bool isSupporter, unsigned seed, GameManager *manager) :
+        GameUI(isSupporter, seed,manager), isInTowerPhase(false), isPrintedGameStateOutdated(true){}
 
 /* Ask the user the coordinates of the tower to place it*/
 Position GameConsoleUI::getPosBuyingTower() {
@@ -21,20 +22,6 @@ Position GameConsoleUI::getPosBuyingTower() {
     } while (!checkCoord(x, y));
 
     return Position(x, y);
-}
-/*Check the coordinates that the user has enter to place, delete or upgrade a tower*/
-bool GameConsoleUI::checkCoord(int x, int y) {
-    if (0 <= x and x < SIZE and 0 <= y and y < SIZE) {
-        return true;
-    }
-    std::cout << "Enter an X and a Y between 0 and " << SIZE - 1 << std::endl;
-    return false;
-}
-
-/*Display the map*/
-void GameConsoleUI::display(GameState &gameState, int quadrant) {
-
-    map->display(gameState, quadrant);
 }
 
 /*Ask the user the coordinates of the tower to sell it*/
@@ -73,11 +60,38 @@ Position GameConsoleUI::getPosUpgradeTower() {
     return Position(x, y);
 }
 
+/*Check the coordinates that the user has enter to place, delete or upgrade a tower*/
+bool GameConsoleUI::checkCoord(int x, int y) {
+    if (0 <= x and x < SIZE and 0 <= y and y < SIZE) {
+        return true;
+    }
+    std::cout << "Enter an X and a Y between 0 and " << SIZE - 1 << std::endl;
+    return false;
+}
+
+/*Display the map*/
+void GameConsoleUI::display(GameState &gameState, int quadrant) {
+    // We only show a gameState if we're in a wave phase or if the user has done a
+    // command and the server has sent the new game state
+    if (!isInTowerPhase){
+        displayMap(gameState, quadrant);
+        displayPlayerInfos(gameState, quadrant);
+    } else if (isPrintedGameStateOutdated) {
+        displayMap(gameState, quadrant);
+        displayPlayerInfos(gameState, quadrant);
+        isPrintedGameStateOutdated = false;
+    }
+}
+
+void GameConsoleUI::displayMap(GameState &gameState, int quadrant){
+    map->display(gameState, quadrant);
+}
+
 /*Display the player info*/
 void GameConsoleUI::displayPlayerInfos(GameState &gameState, int quadrant) {
     if (!isSupporter()) {
         if (manager->isAlive()) {
-            displayPlayerInfos(gameState, quadrant);
+            displayCurrentPlayerInfo(gameState, quadrant);
         } else {
             displayDeadMessage();
         }
@@ -127,6 +141,7 @@ void GameConsoleUI::displayPosingPhase() {
     std::cout << std::endl;
 }
 
+/*Display the tower shop*/
 void GameConsoleUI::displayTowerShop() {
     std::cout << "You can choose among the following towers: " << std::endl;
     std::cout << "1. GunTower : " << std::to_string(GUN_TOWER_PRICE) << " $ " << std::endl;
@@ -173,7 +188,7 @@ void GameConsoleUI::displayGameOverAndStats(GameState &gamestate) {
     manager->comeBackToMenu();
 }
 
-
+/*Display the dead message*/
 void GameConsoleUI::displayDeadMessage() {
     std::cout << "You are dead. You can now watch the game peacefully" << std::endl;
 }
@@ -189,10 +204,10 @@ int GameConsoleUI::getTowerTypeChoice() {
 
 Position GameConsoleUI::getPositionOfTowerPlacement() {
     display(manager->getGameState(), manager->getQuadrant());
-    displayPlayerInfos(manager->getGameState(), manager->getQuadrant());
     return getPosBuyingTower();
 }
 
+/*Send to the manager the type of the tower to place*/
 void GameConsoleUI::placeTowerAction() {
     int towerChoice = getTowerTypeChoice();
     Position towerPos = getPositionOfTowerPlacement();
@@ -217,32 +232,34 @@ void GameConsoleUI::upgradeTower() {
     manager->upgradeTower(toUpgrade);
 }
 
+/*Manage the action on the tower during the game*/
 void *GameConsoleUI::input_thread() {
 
     while (1) {
+        usleep(500 * 1000); // Sleep for 500ms while the new game state is shown
         displayPosingPhase();
         int choice = getChoice(4);
         std::cout << "Choice: " << choice << std::endl;
-        display(manager->getGameState(), manager->getQuadrant());
-        displayPlayerInfos(manager->getGameState(), manager->getQuadrant());
+        std::cout << "Manager" << manager << std::endl;
+        displayMap(manager->getGameState(), manager->getQuadrant());
 
         if (choice == 1) {
             placeTowerAction();
         } else if (choice == 2) {
             sellTowerAction();
-        } else if (choice == 3){
+        } else if (choice == 3) {
             upgradeTower();
         } else {
             sendPredefinedMessage();
         }
-        display(manager->getGameState(), manager->getQuadrant());
-        displayPlayerInfos(manager->getGameState(), manager->getQuadrant());
+        isPrintedGameStateOutdated = true;
     }
 }
 
 
 void *GameConsoleUI::staticInputThread(void *self) {
-    return dynamic_cast<GameConsoleUI *>(static_cast<GameUI *>(self))->input_thread();
+    GameConsoleUI *consoleUI = static_cast<GameConsoleUI *>(self);
+    return consoleUI->input_thread();
 }
 
 void GameConsoleUI::addChatMessage(const std::string &message, const std::string &sender) {
@@ -281,22 +298,16 @@ void GameConsoleUI::disableAirStrike() {
 }
 
 void GameConsoleUI::enableSpells() {}
+
 void GameConsoleUI::disableSpells() {}
 
 void GameConsoleUI::handlePlaceTowerPhaseStart() {
+    isInTowerPhase = true;
+
     if (manager->isAlive() && !isSupporter()) {
         inputThread = pthread_create(&thr, NULL, &GameConsoleUI::staticInputThread, this);
     } else {
-        // TODO: Decouvrir pourquoi est-ce qu'il y a ce display
-        display(manager->getGameState(), manager->getQuadrant());
-
-        /* WTF??? Je n'arrive pas à trouver pourquoi est-ce qu'on a mis cet if
-        if (is_alive() && !isSupporter) {
-            inputThread = pthread_create(&thr, NULL, &GameConsoleUI::staticInputThread, gameUI);
-        } else {
-            gameUI->display(gameState, quadrant);
-        }
-        */
+        displayMap(manager->getGameState(), manager->getQuadrant());
 
         if (isSupporter()) {
             displayPlayersPlacingTowersMessage();
@@ -307,11 +318,11 @@ void GameConsoleUI::handlePlaceTowerPhaseStart() {
 }
 
 void GameConsoleUI::handleWaveStart() {
+    isInTowerPhase = false;
     if (!isSupporter()) {
         inputThread = pthread_cancel(thr);
     }
 }
-
 
 
 void GameConsoleUI::adPopUp() {}

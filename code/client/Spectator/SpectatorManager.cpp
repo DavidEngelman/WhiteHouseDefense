@@ -1,7 +1,6 @@
 #include "SpectatorManager.hpp"
 #include "SpectatorGUI.hpp"
 #include "SpectatorConsoleUI.hpp"
-#include "../../common/Other/Constants.hpp"
 
 SpectatorManager::SpectatorManager(int port, App *master_app, bool fromFriendList) :
         NetworkedManager(port, master_app) {

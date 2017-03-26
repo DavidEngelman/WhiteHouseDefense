@@ -2,7 +2,6 @@
 #include <QCoreApplication>
 #include <QtMultimedia/QMediaPlaylist>
 #include "WelcomeGUI.hpp"
-#include "WelcomeManager.hpp"
 #include "../Other/QHandPointerButton.hpp"
 
 WelcomeGUI::WelcomeGUI(WelcomeManager *manager, QWidget *_parent) : AbstractGUI(_parent), WelcomeUI(manager) {}

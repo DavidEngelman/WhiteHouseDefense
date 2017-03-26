@@ -1,4 +1,5 @@
 
+#include <iostream>
 #include "../Npc/MexicanPNJ.h"
 #include "../Npc/MuslimPNJ.h"
 #include "../Npc/CommunistPNJ.h"
@@ -11,10 +12,10 @@ Wave::Wave(int number_of_pnjs, int quadrant) :
 
 Wave::Wave(int quadrant) : Wave(0, quadrant) {}
 
+/*
+ * fill a string like this : Wave,quadrant,serialized(PNJ1),serialized(PNJ2),...;
+ */
 std::string Wave::serialize() {
-    /*
-     * fill a string like this : Wave,quadrant,serialized(PNJ1),serialized(PNJ2),...;
-     */
 
     std::string serialized_me;
     serialized_me += "Wave," + std::to_string(quadrant) + "|";
@@ -76,6 +77,7 @@ void Wave::addPNJ(PNJ &pnj) {
 }
 
 Wave::~Wave() {
+    //TODO : voir ce qu'il faut faire ici
     /*
     for (auto pnj: pnjs) {
         delete pnj;

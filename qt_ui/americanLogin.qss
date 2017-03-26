@@ -6,7 +6,7 @@
 QPushButton {
                             border: 2px solid darkbrown;
                             padding: 0 8px;
-                            border-image: url(../../qt_ui/game_pictures/buttons/connect.png);
+                            border-image: url(../../qt_ui/game_pictures/buttons/mainmenu.png) ;
 
                             font-family: verdana 14px;
 }

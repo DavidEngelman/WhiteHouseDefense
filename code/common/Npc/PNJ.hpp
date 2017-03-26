@@ -16,13 +16,23 @@ class PNJ{
 protected:
 
 	int healthPoints;
-	int direction;
+	int quadrant;
     int damage;
 	int value;
     int freezeTicksLeft;
+    bool inTransition;
+
 	std::string typeOfPNJ;
 	Position position;
 	Position last_position;
+	Position transitionPosition;
+    Direction direction;
+
+    void get_forward_direction();
+    void get_right_direction();
+    void get_left_direction();
+    void get_backward_direction();
+    void get_random_direction();
 
 public:
 
@@ -30,8 +40,6 @@ public:
 	PNJ(int direction);
 
     PNJ(Position position, int healthPoints, int direction);
-
-    PNJ(Position position, int healthPoints, Position last_pos, int direction);
 
     virtual ~PNJ() = 0;
 
@@ -45,13 +53,19 @@ public:
 
 	void setHealthPoints(int newHp);
 
-	bool isInPlayerBase();
+    bool isInTransition();
 
-	Position getPosition() const;
+	bool isInPlayerBase();
 
     const std::string& getType();
 
-	void setPosition(Position position);
+    const Position& getPosition() const;
+
+    const Position& getTransitionPosition() const;
+
+	void setPosition(Position& position);
+
+    void setTransitionPosition(Position &position);
 
 	bool can_go_forward(Map &map);
 
@@ -59,17 +73,11 @@ public:
 
 	bool can_go_right(Map &map);
 
-	Direction get_forward_direction();
-
-	Direction get_right_direction();
-
-	Direction get_left_direction();
-
-    int getDirection() const;
+    int getQuadrant() const;
 
     const Position &getLast_position() const;
 
-    void setLast_position(const Position &last_position);
+    void setLastPosition(const Position &last_position);
 
 	std::string serialize();
 
@@ -81,13 +89,11 @@ public:
 
     bool operator!=(const PNJ &rhs) const;
 
-    Direction get_random_direction();
-
-    Direction get_backward_direction();
-
 	bool can_go_backward(Map &map);
 
 	void freeze();
+
+    const Position getNormalizedPosition() const;
 };
 
 inline PNJ::~PNJ(){}

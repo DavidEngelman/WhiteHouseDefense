@@ -27,6 +27,8 @@ public:
     virtual ~InGameChatWidget() = default;
 
     void addChatMessage(const std::string &message, const std::string &sender);
+
+    void playSound(QString musicPath);
 };
 
 

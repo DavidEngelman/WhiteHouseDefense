@@ -34,8 +34,6 @@ public:
     GameState();
     GameState(std::string mode);
 
-    ~GameState();
-
     bool getIsGameOver() const;
 
     void setIsGameOver(bool isGameOver);
@@ -50,7 +48,7 @@ public:
 
     std::vector<AbstractTower *> &getTowers();
 
-    void addTower(AbstractTower *tower, int& quadrant);
+    void addTower(AbstractTower *tower, int quadrant);
 
     std::vector<PlayerState> &getPlayerStates();
 
@@ -66,9 +64,11 @@ public:
 
     void addPlayerState(PlayerState &state);
 
-    void deleteTower(Position &position, int &quadrant);
+    void deleteTower(Position &position, int quadrant);
 
-    bool upgradeTower(Position &position, int &quadrant);
+    bool upgradeTower(Position &position, int quadrant);
+
+    void deleteTowersInHeap();
 };
 
 #endif

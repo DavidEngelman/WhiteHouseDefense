@@ -12,7 +12,7 @@ public:
 
     GunTower(const Position &position, int level);
 
-    ~GunTower() = default;
+    virtual ~GunTower() = default;
 
     virtual const std::vector<PNJ *> shoot(Wave &wave, PlayerState& playerState) override;
 

@@ -2,11 +2,17 @@
 #define GAMEMANAGER_HPP
 
 #include "../../common/Gamestate/GameState.hpp"
-#include "GameUI.hpp"
 #include "../Other/NetworkedManager.hpp"
 #include "GameManager.hpp"
 #include "../../common/Other/Networking.hpp"
 #include "../Main/MainManager.hpp"
+#include "GameConsoleUI.hpp"
+#include "../../common/Npc/MexicanPNJ.h"
+#include "../../common/Npc/CommunistPNJ.h"
+#include "../../common/Npc/MuslimPNJ.h"
+#include "../../server/Other/Server.hpp"
+#include "../../common/Other/Command.hpp"
+#include "../../common/Tower/MissileTower.hpp"
 #include "../../common/Tower/GunTower.hpp"
 #include "../../common/Tower/SniperTower.hpp"
 #include "../../common/Tower/ShockTower.hpp"
@@ -17,16 +23,14 @@
 
 class GameUI;
 
-class GameManager : public QObject, public AbstractManager{
+class GameManager : public QObject, public AbstractManager {
 
-    Q_OBJECT
+Q_OBJECT
 
 private:
-    int counter = 0;
     int server_socket;
-    bool runningThread = false;
 
-    GameState gameState;
+    GameState *gameState;
     GameUI *gameUI;
     int quadrant;
     bool isSupporter;
@@ -34,8 +38,6 @@ private:
     bool nukeSpellAvailable = true;
     bool freezeSpellAvailable = true;
     bool airStrikeAvailable = true;
-
-    QTimer *timer;
 
 public:
     bool isNukeSpellAvailable() const;
@@ -46,26 +48,37 @@ private:
 
 
     unsigned int getMapSeedFromServer() const;
-    void unSerializeGameState(char* seriarlizedGamestate);
-    void unSerializePlayerStates(std::string serialized_playerstates);
-    void unSerializePlayerState(std::string serialized_playerstate);
-    void unSerializeTowers(std::string serialized_towers);
-    void unSerializeTower(std::string serialized_tower);
-    void unSerializeWaves(std::string serialized_waves);
-    void unSerializeWave(std::string serialized_wave);
-    void unSerializePNJ(std::string serialized_pnj, Wave* wave);
 
-    bool checkValidity(Position towerPos, GameState& gamestate, std::string typeOfTower);
+    void unSerializeGameState(char *seriarlizedGamestate);
+
+    void unSerializePlayerStates(std::string serialized_playerstates);
+
+    void unSerializePlayerState(std::string serialized_playerstate);
+
+    void unSerializeTowers(std::string serialized_towers);
+
+    void unSerializeTower(std::string serialized_tower);
+
+    void unSerializeWaves(std::string serialized_waves);
+
+    void unSerializeWave(std::string serialized_wave);
+
+    void unSerializePNJ(std::string serialized_pnj, Wave *wave);
+
+    bool checkValidity(Position towerPos, GameState &gamestate, std::string typeOfTower);
 
     void sendBuyRequest(Position towerPos, std::string towerType);
+
     void sendSellRequest(Position towerPos);
 
     int getQuadrantFromServer();
+
     void getInitialGameStateFromServer();
 
 public:
 
-    GameManager(int socket, App* app);
+    GameManager(int socket, App *app);
+
     GameManager(int socket, bool _isSupporter, App *app);
 
     void run();
@@ -92,7 +105,7 @@ public:
 
     bool isTowerInPosition(GameState &gamestate, Position towerPos);
 
-    std::string &getUsername() { return gameState.getPlayerStates()[quadrant].getUsername(); };
+    std::string &getUsername() { return gameState->getPlayerStates()[quadrant].getUsername(); };
 
     void nuclearBombSpell();
 
@@ -107,6 +120,7 @@ public:
     ~GameManager();
 
 public slots:
+
     void updateMap();
 
     void launchFreezeSpell();

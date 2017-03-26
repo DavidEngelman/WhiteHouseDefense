@@ -19,6 +19,10 @@ private:
 
     Timer timerSinceWaveStart;
     Timer timerSinceGameStart;
+    Timer timerSinceLastShoot;
+    Timer timerSinceGoldEarned;
+    Timer timerSinceLastDamageToBase;
+
 
 
     PlayerState &getPlayerStateForWave(Wave &wave);
@@ -36,6 +40,8 @@ public:
     void createWaves();
 
     void updateWaves();
+
+    void shootWaves();
 
     void dealDamage(std::vector<Wave> &waves);
 
@@ -62,10 +68,6 @@ public:
     void addTower(AbstractTower * tower, int quadrant);
 
     void addPNJS(std::vector<Wave> &waves);
-
-    void showMap();
-
-    void giveKill(PlayerState &playerState);
 
     void checkIfGameIsOver();
 

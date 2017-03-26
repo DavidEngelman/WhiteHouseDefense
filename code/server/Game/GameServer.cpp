@@ -6,8 +6,6 @@
 #include "../../common/Tower/ShockTower.hpp"
 #include "../../common/Tower/MissileTower.hpp"
 
-const bool DEBUG = false;
-
 GameServer::GameServer(int port, std::vector<PlayerConnection> &playerConnections, std::string _mode) :
         Server(port), playerConnections(playerConnections), mode(_mode) {
     srand((unsigned) time(0));
@@ -52,23 +50,19 @@ void GameServer::runGame() {
     // Creer les playerState
     createPlayerStates();
 
-    if (!DEBUG) {
-        setupGameForPlayers();
-    }
+    setupGameForPlayers();
 
     while (!gameEngine->isGameFinished() && !playerConnections.empty()) {
-        if (!DEBUG) {
-            gameEngine->getTimerSinceGameStart().pause(); // peut etre faire ca juste en mode contre la montre
-            sendTowerPhase();
-            Timer timer;
-            timer.start();
-            while (timer.elapsedTimeInSeconds() < NUM_SECONDS_TO_PLACE_TOWER) {
-                usleep(INTERVAL_BETWEEN_SENDS_IN_MS * 1000);
-                sendGameStateToPlayers();
-            }
-            gameEngine->getTimerSinceGameStart().resume(); // peut etre faire ca juste en mode contre la montre
-            sendWavePhase();
+        gameEngine->getTimerSinceGameStart().pause(); // peut etre faire ca juste en mode contre la montre
+        sendTowerPhase();
+        Timer timer;
+        timer.start();
+        while (timer.elapsedTimeInSeconds() < NUM_SECONDS_TO_PLACE_TOWER) {
+            usleep((__useconds_t) (INTERVAL_BETWEEN_TOWER_PHASE_SENDS_IN_MS * 1000));
+            sendGameStateToPlayers();
         }
+        gameEngine->getTimerSinceGameStart().resume(); // peut etre faire ca juste en mode contre la montre
+        sendWavePhase();
         runWave();
     }
 }
@@ -85,7 +79,6 @@ void GameServer::runWave() {
     while (!isWaveFinished && !playerConnections.empty()) {
         while (!isWaveFinished && timer.elapsedTimeInMiliseconds() < INTERVAL_BETWEEN_SENDS_IN_MS) {
             isWaveFinished = gameEngine->update();
-            usleep(100); // Pour eviter d'appeller update des tonnes de fois par tick. C'est en microsecondes
         }
         sendGameStateToPlayers();
         timer.reset();
@@ -126,12 +119,16 @@ void GameServer::getAndProcessPlayerInput() {
     while (!playerConnections.empty()) {
         // TODO: the 10000 is absurdly high, not sure it's a good idea
         int clientSocketFd = getReadableReadableSocket(10000);
+        std::cout << "after getReadableReadableSocket" << std::endl;
         getAndProcessUserInput(clientSocketFd, messageBuffer);
     }
 }
 
 void GameServer::getAndProcessUserInput(int clientSocketFd, char *buffer) {
+    std::cout << "Just before receive from: " << clientSocketFd << std::endl;
+
     if (receive_message(clientSocketFd, buffer) != -1) {
+        std::cout << "Received message from: " << clientSocketFd << std::endl;
         std::string command_type = get_command_type(buffer);
         std::cout << command_type << std::endl;
         if (command_type == PLACE_TOWER_COMMAND_STRING) {
@@ -154,7 +151,7 @@ void GameServer::getAndProcessUserInput(int clientSocketFd, char *buffer) {
             changeVulgarityToStar(userMessage);
             std::string senderUsername = command.getNextToken();
 
-            if (!userMessage.empty() && userMessage[0] == '/'){
+            if (!userMessage.empty() && userMessage[0] == '/') {
                 processSpecialCommand(userMessage, senderUsername);
             } else {
                 sendMessageToOtherPlayers(userMessage, senderUsername);
@@ -164,18 +161,21 @@ void GameServer::getAndProcessUserInput(int clientSocketFd, char *buffer) {
             command.parse(buffer);
             int quadrant = command.getNextInt();
             gameEngine->killAllNPC(quadrant);
+            sendNotification(quadrant, 0);
         } else if (command_type == FREEZE_PNJS_COMMAND_STRING) {
             Command command;
             command.parse(buffer);
             int quadrant = command.getNextInt();
             gameEngine->freezeWave(quadrant);
+            sendNotification(quadrant, 1);
         } else if (command_type == AIR_STRIKE_COMMAND_STRING) {
             Command command;
             command.parse(buffer);
             int quadrant = command.getNextInt();
-            gameEngine->launchAirStrike(quadrant);
-        } else if (command_type == AD_SPELL_COMMAND_STRING){
-            std::cout << "received AD_SPELL_COMMAND" << std::endl;
+            int targetQuadrant = command.getNextInt();
+            gameEngine->launchAirStrike(targetQuadrant);
+            sendAirstrikeNotification(quadrant, targetQuadrant);
+        } else if (command_type == AD_SPELL_COMMAND_STRING) {
             Command command;
             command.parse(buffer);
             std::string playerSupportedUserName = command.getNextToken();
@@ -198,13 +198,46 @@ void GameServer::sendMessageToOtherPlayers(std::string &userMessage, std::string
 void GameServer::sendAdPopUP(std::string &playerSupportedUserName) {
     std::string message = AD_POPUP;
     for (PlayerConnection &playerConnection : playerConnections) {
-        if (playerConnection.getUsername() != playerSupportedUserName){
+        if (playerConnection.getUsername() != playerSupportedUserName) {
             int socketFd = playerConnection.getSocketFd();
             send_message(socketFd, message.c_str());
             std::cout << "sended popUp" << std::endl;
         }
     }
 }
+
+void GameServer::sendNotification(int quadrant, int notificationID) {
+    std::string &sender = gameEngine->getGameState().getPlayerStates()[quadrant].getUsername();
+    std::string notification;
+    if (notificationID == 0) {
+        notification = sender + " launched a nuclear bomb";
+    } else if (notificationID == 1) {
+        notification = sender + " used the frozen spell";
+    }
+    std::string message = makeMessage(notification, "[SERVER] ");
+    for (PlayerConnection &playerConnection : playerConnections) {
+        int socketFd = playerConnection.getSocketFd();
+        send_message(socketFd, message.c_str());
+    }
+
+}
+
+void GameServer::sendAirstrikeNotification(int quadrant, int targetQuadrant) {
+    std::string &sender = gameEngine->getGameState().getPlayerStates()[quadrant].getUsername();
+    std::string &target= gameEngine->getGameState().getPlayerStates()[targetQuadrant].getUsername();
+    std::string notification;
+
+    notification = sender + " launched an aistrike on " + target + "'s base";
+
+    std::string message = makeMessage(notification, "[SERVER] ");
+    for (PlayerConnection &playerConnection : playerConnections) {
+        int socketFd = playerConnection.getSocketFd();
+        send_message(socketFd, message.c_str());
+    }
+
+}
+
+
 
 std::string GameServer::makeMessage(const std::string &userMessage, const std::string &senderUsername) const {
     std::string message = RECEIVE_MESSAGE_STRING + ","
@@ -220,12 +253,14 @@ int GameServer::getReadableReadableSocket(int timeLeft) {
     for (PlayerConnection &playerConnection: playerConnections) {
         open_sockets.push_back(playerConnection.getSocketFd());
     }
-    std::cout <<"just before for loop" << std::endl;
+    std::cout << "just before for loop" << std::endl;
     for (int &supporter: supportersSockets) {
         std::cout << "supp socket " << supporter << std::endl;
         open_sockets.push_back(supporter);
     }
-    int socketIndex = get_readable_socket_index_with_timeout(open_sockets.data(), open_sockets.size(), timeLeft);
+    int socketIndex = get_readable_socket_index_with_timeout(open_sockets.data(),
+                                                             (int) open_sockets.size(), timeLeft);
+    std::cout << "Readable socket: " << open_sockets[socketIndex] << std::endl;
     return open_sockets[socketIndex];
 }
 
@@ -278,8 +313,6 @@ void GameServer::createPlayerStates() {
 /*
  * THREAD THAT ADDS SUPPORTERS TO THE GAME
  */
-
-
 
 void GameServer::startSpectatorThread() {
     pthread_create(&spectatorJoinThread, NULL, &GameServer::staticJoinSpectatorThread, this);
@@ -409,13 +442,13 @@ int GameServer::connectToServer(int port) {
 }
 
 void GameServer::sendFinishedToMatchmaker() {
-    int matchmaker_server_socket = connectToServer(5556);
+    int matchmaker_server_socket = connectToServer(MATCHMAKER_SERVER_PORT);
     std::string message = "PopGame," + std::to_string(port) + ";";
     send_message(matchmaker_server_socket, message.c_str());
 }
 
 void GameServer::updatePlayerStatsOnAccountServer() {
-    int account_server_socket = connectToServer(5555);
+    int account_server_socket = connectToServer(ACCOUNT_SERVER_PORT);
     int p_id, pnj_killed;
     bool is_winner;
 
@@ -436,7 +469,6 @@ void GameServer::updatePlayerStatsOnAccountServer() {
 
 void GameServer::sendSetupGameStringToClient(int socket_fd) {
     send_message(socket_fd, SETUP_GAME.c_str());
-    // Ici j'ai du remettre Send_message pcq sinon quand on envoyait le setupGame a un Spectater, ca ne fonctionnait pas car a ce moment la il n est pas encore dans sockets actifs
 }
 
 void GameServer::sendMapSeedToClient(int socket_fd) {
@@ -525,13 +557,13 @@ void GameServer::processSpecialCommand(std::string &userMessage, std::string &se
     Message message(' ');
     message.setData((char *) userMessage.c_str());
 
-    const std::string& firstToken = message.getNextToken();
-    if (firstToken == "/msg"){
-        const std::string& receiverUsername = message.getNextToken();
+    const std::string &firstToken = message.getNextToken();
+    if (firstToken == "/msg") {
+        const std::string &receiverUsername = message.getNextToken();
         int receiverQuadrant = getQuadrantForPlayer(receiverUsername);
-        if (receiverQuadrant != -1){ // There is a player with that username
+        if (receiverQuadrant != -1) { // There is a player with that username
             int senderQuadrant = getQuadrantForPlayer(senderUsername);
-            const std::string& finalMessage = makeMessage(message.getRemainingContent(), "[PRIVATE] " + senderUsername);
+            const std::string &finalMessage = makeMessage(message.getRemainingContent(), "[PRIVATE] " + senderUsername);
 
             // Send to myself and to team mate
             send_message(playerConnections[senderQuadrant].getSocketFd(), finalMessage.c_str());
@@ -543,7 +575,7 @@ void GameServer::processSpecialCommand(std::string &userMessage, std::string &se
         int senderQuadrant = getQuadrantForPlayer(senderUsername);
         int teamMateQuadrants[4] = {1, 0, 3, 2};
         int teamMateQuadrant = teamMateQuadrants[senderQuadrant];
-        const std::string& finalMessage = makeMessage(message.getRemainingContent(), "[TEAM] " + senderUsername);
+        const std::string &finalMessage = makeMessage(message.getRemainingContent(), "[TEAM] " + senderUsername);
 
         // Send to myself and to team mate
         send_message(playerConnections[senderQuadrant].getSocketFd(), finalMessage.c_str());

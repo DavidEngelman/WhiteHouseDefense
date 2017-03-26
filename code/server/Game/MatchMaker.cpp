@@ -6,12 +6,9 @@ MatchMaker::MatchMaker(int port) : Server(port),
                                    classicPendingMatch(PendingMatch(CLASSIC_MODE)),
                                    timedPendingMatch(PendingMatch(TIMED_MODE)),
                                    teamPendingMatch(PendingMatch(TEAM_MODE)),
-                                   current_server_port(5556) {
+                                   current_server_port(5556) {};
 
-    std::cout << "Constructor" << std::endl;
-};
-
-void* MatchMaker::client_handler(int client){
+void *MatchMaker::client_handler(int client) {
     get_and_process_command(client);
 
 }
@@ -22,7 +19,6 @@ void MatchMaker::run() {
 
     while (1) {
         client_socket_fd = accept_connection();
-        std::cout << "New client in the matchmaking" << std::endl;
         std::thread t1(&MatchMaker::client_handler, this, client_socket_fd);
         t1.detach();
     }
@@ -37,25 +33,26 @@ void MatchMaker::get_and_process_command(int socket_fd) {
         Command command;
         command.parse(command_buffer);
         std::string action = command.getAction();
-        std::cout <<"matchmaking : "<< action << std::endl;
-
 
         if (action == GAME_IN_PROGRESS_REQUEST) {
-
             handleRequestFromSpectator(socket_fd);
 
         } else if (action == POP_GAME_REQUEST) {
-            const std::string &lol = command.getNextToken();
-            removeGameFromGamesInProgress(stoi(lol));
+            const std::string &port = command.getNextToken();
+            removeGameFromGamesInProgress(stoi(port));
             communication_over = true;
 
-        } else if(action == LEAVE_QUEUE_REQUEST){
-            std::cout <<command.getAction()<<std::endl;
+        } else if (action == LEAVE_QUEUE_REQUEST) {
+            std::cout << command.getAction() << std::endl;
             removePlayerFromQueue(command.getNextToken(), socket_fd);
             communication_over = true;
 
-        } else if (action == GAME_STARTED_STRING){
+        } else if (action == GAME_STARTED_STRING) {
             communication_over = true;
+
+        } else if (action == COMMUNICATION_OVER) {
+            communication_over = true;
+
         } else {
             MatchmakingCommand matchmakingCommand(socket_fd);
             matchmakingCommand.parse(command_buffer);
@@ -71,7 +68,7 @@ void MatchMaker::handleRequestFromSpectator(int socket_fd) {
         stringToSend += gameServer->getMode() + ",";
         stringToSend += gameServer->getAllPlayers();
     }
-    
+
     send_message(socket_fd, stringToSend.c_str());
 }
 
@@ -79,14 +76,13 @@ void MatchMaker::handleRequestFromSpectator(int socket_fd) {
 void MatchMaker::addPlayerToPendingMatch(PlayerConnection player_connection, std::string mode) {
     PendingMatch &match = getMatch(mode);
     match.add_player_to_queue(player_connection);
-    std::cout << "player_added" << std::endl;
-    std::cout << match.getPlayerConnections().size() << std::endl;
+    std::cout << "[MATCHMAKER]" <<
+              "The match now has " << match.getPlayerConnections().size() << " players" << std::endl;
 
     if (match.is_full()) {
         launchMatch(match); // Ici il faut que ça passe par valeur pour que ça marche
         match.clear();
     }
-    std::cout << "hi" << std::endl;
 }
 
 PendingMatch &MatchMaker::getMatch(std::string mode) {
@@ -133,7 +129,7 @@ void MatchMaker::removeGameFromGamesInProgress(int port) {
     std::vector<GameServer *>::iterator gameserverIter;
     for (gameserverIter = activeGames.begin(); gameserverIter != activeGames.end(); gameserverIter++) {
         if ((*gameserverIter)->getPort() == port) {
-            for (PlayerConnection& pc : (*gameserverIter)->getPlayerConnections()){
+            for (PlayerConnection &pc : (*gameserverIter)->getPlayerConnections()) {
                 close(pc.getSocketFd());
             }
             activeGames.erase(gameserverIter);
@@ -143,9 +139,9 @@ void MatchMaker::removeGameFromGamesInProgress(int port) {
 }
 
 void MatchMaker::removePlayerFromQueue(std::string mode, int socket) {
-    if (mode == CLASSIC_MODE){
+    if (mode == CLASSIC_MODE) {
         removePlayerFromMatch(classicPendingMatch, socket);
-    } else if (mode == TEAM_MODE){
+    } else if (mode == TEAM_MODE) {
         removePlayerFromMatch(teamPendingMatch, socket);
     } else {
         removePlayerFromMatch(timedPendingMatch, socket);
@@ -154,14 +150,13 @@ void MatchMaker::removePlayerFromQueue(std::string mode, int socket) {
 }
 
 void MatchMaker::removePlayerFromMatch(PendingMatch &match, int socket) {
-    for (PlayerConnection& pc : match.getPlayerConnections()){
-        if(pc.getSocketFd() == socket){
+    for (PlayerConnection &pc : match.getPlayerConnections()) {
+        if (pc.getSocketFd() == socket) {
             match.remove_player_from_queue(pc);
-            std::cout << "Removed " << socket << "from match" << std::endl;
             break;
         }
     }
-    send_message(socket,"removed");
+    send_message(socket, "removed");
 }
 
 

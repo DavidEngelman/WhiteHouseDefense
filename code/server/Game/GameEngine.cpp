@@ -1,13 +1,12 @@
 #include "GameEngine.hpp"
-#include "../../common/Other/Constants.hpp"
-
-const bool DEBUG = false;
-
 
 GameEngine::GameEngine(unsigned int mapSeed, std::string mode) : map(mapSeed),
                                                                  numOfPNJsPerWave(INITIAL_NUMBER_OF_PNJS_PER_WAVE),
                                                                  gameState(mode) {
     timerSinceGameStart.start();
+    timerSinceLastShoot.start();
+    timerSinceGoldEarned.start();
+    timerSinceLastDamageToBase.start();
 }
 
 /*
@@ -16,9 +15,10 @@ GameEngine::GameEngine(unsigned int mapSeed, std::string mode) : map(mapSeed),
  */
 
 bool GameEngine::update() {
-    int numMilisecondsSinceStart = timerSinceWaveStart.elapsedTimeInMiliseconds();
-    int numStepsToDo = (numMilisecondsSinceStart / STEP_DURATION_IN_MS) - numStepsDone;
+    int numMillisecondsSinceStart = timerSinceWaveStart.elapsedTimeInMiliseconds();
+    int numStepsToDo = (numMillisecondsSinceStart / STEP_TRANSITION_DURATION) - numStepsDone;
     for (int i = 0; i < numStepsToDo; ++i) {
+        shootWaves();
         updateWaves();
         updatePlayerStates();
     }
@@ -28,11 +28,16 @@ bool GameEngine::update() {
 
 void GameEngine::updateWaves() {
     std::vector<Wave> &waves = gameState.getWaves();
-    dealDamage(waves);
-    removeDeadPNJsFromWaves();
     movePNJsInWaves(waves);
     addPNJS(waves);
     checkIfGameIsOver();
+}
+
+void GameEngine::shootWaves() {
+    if (timerSinceLastShoot.elapsedTimeInMiliseconds() < INTERVAL_BETWEEN_SHOOTS_IN_MS) return;
+    dealDamage(gameState.getWaves());
+    removeDeadPNJsFromWaves();
+    timerSinceLastShoot.reset();
 }
 
 void GameEngine::updatePlayerStates() {
@@ -42,34 +47,39 @@ void GameEngine::updatePlayerStates() {
 }
 
 void GameEngine::addMoney() {
+    if (timerSinceGoldEarned.elapsedTimeInMiliseconds() < INTERVAL_BETWEEN_GOLD_EARNED) return;
     for (PlayerState &player_state : gameState.getPlayerStates()) {
         player_state.earnMoney(GOLD_EARNED_BY_TICK);
         if (player_state.getIsSupported()) {
             player_state.earnMoney(GOLD_EARNED_BY_TICK);
         }
     }
+    timerSinceGoldEarned.reset();
 }
 
 void GameEngine::dealDamageToBase() {
+    if (timerSinceLastDamageToBase.elapsedTimeInMiliseconds() < STEP_DURATION) return;
     for (Wave &wave : gameState.getWaves()) {
         PlayerState &player_state = getPlayerStateForWave(wave);
         for (auto pnj : wave.getPnjs()) {
             if (pnj->isInPlayerBase()) {
-                if (!DEBUG) player_state.decrease_hp(pnj->getDamage());
+                player_state.decrease_hp(pnj->getDamage());
                 pnj->setHealthPoints(0);
                 // On enleve pas les PNJ morts dans le vagues maintenant, parce que ça va
                 // être fait dans updateWaves au round suivant
             }
         }
     }
+    timerSinceLastDamageToBase.reset();
+
+
 }
 
 void GameEngine::dealDamage(std::vector<Wave> &waves) {
     for (AbstractTower *tower: gameState.getTowers()) {
         Wave &wave = getWaveInSameQuadrant(*tower, waves);
-        const std::vector<PNJ *>& killedPNJ = tower->shoot(wave, getPlayerStateForWave(wave));
+        const std::vector<PNJ *> &killedPNJ = tower->shoot(wave, getPlayerStateForWave(wave));
         for (auto &&pnj : killedPNJ) {
-            if (DEBUG) break;
             PlayerState &player_state = getPlayerStateForWave(wave);
             addKillToStat(player_state);
             giveGold(player_state, pnj);
@@ -82,7 +92,7 @@ PlayerState &GameEngine::getPlayerStateForWave(Wave &wave) {
     return gameState.getPlayerStates()[quadrant];
 }
 
-void GameEngine::giveGold(PlayerState &playerState, PNJ* pnj) {
+void GameEngine::giveGold(PlayerState &playerState, PNJ *pnj) {
     playerState.earnMoney(pnj->getValue());
 }
 
@@ -125,7 +135,7 @@ void GameEngine::createWaves() {
     for (const int direction: DIRECTIONS) {
         // Je crée une vague uniquement si le joueur est vivant
         // Ça ne sert à rien de créer une vague vide
-        if (DEBUG || gameState.isPlayerAlive(direction)) {
+        if (gameState.isPlayerAlive(direction)) {
             Wave wave(numOfPNJsPerWave, direction);
             gameState.addWave(wave);
         }
@@ -160,7 +170,7 @@ void GameEngine::addPNJS(std::vector<Wave> &waves) {
         if (numPNJsToAdd > 0) {
             srand((unsigned) time(0));
             for (int i = 0; i < numPNJsToAdd; ++i) {
-                wave.addPNJ(rand()%NB_OF_TYPE_OF_PNJ);
+                wave.addPNJ(rand() % NB_OF_TYPE_OF_PNJ);
             }
         }
     }
@@ -168,15 +178,11 @@ void GameEngine::addPNJS(std::vector<Wave> &waves) {
 
 
 void GameEngine::addTower(AbstractTower *tower, int quadrant) {
-    if (!DEBUG) {
-        if (gameState.getPlayerStates()[quadrant].getMoney() >=
-            tower->getPrice()) {
-            gameState.addTower(tower, quadrant);
-            getGameState().getPlayerStates()[quadrant].incrNbTowerPlaced();
-            getGameState().getPlayerStates()[quadrant].incrMoneySpend(tower->getPrice());
-        }
-    } else {
+    if (gameState.getPlayerStates()[quadrant].getMoney() >=
+        tower->getPrice()) {
         gameState.addTower(tower, quadrant);
+        getGameState().getPlayerStates()[quadrant].incrNbTowerPlaced();
+        getGameState().getPlayerStates()[quadrant].incrMoneySpend(tower->getPrice());
     }
 }
 
@@ -187,11 +193,6 @@ void GameEngine::deleteTower(Position &position, int &quadrant) {
 void GameEngine::upgradeTower(Position &position, int &quadrant) {
     gameState.upgradeTower(position, quadrant);
 
-}
-
-
-void GameEngine::showMap() {
-//    map.setUp(gameState);
 }
 
 void GameEngine::checkIfGameIsOver() {
@@ -291,7 +292,7 @@ Timer &GameEngine::getTimerSinceGameStart() {
 
 void GameEngine::killAllNPC(int quadrant) {
     int damageDealt = 0;
-    for(PNJ* pnj : gameState.getWaves()[quadrant].getPnjs()) {
+    for (PNJ *pnj : gameState.getWaves()[quadrant].getPnjs()) {
         damageDealt += pnj->getHealthPoints();
         pnj->setHealthPoints(0);
         getGameState().getPlayerStates()[quadrant].addOneKill();

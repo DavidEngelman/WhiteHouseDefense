@@ -9,14 +9,14 @@
 #include <QtWidgets/QLabel>
 #include "QHandPointerButton.hpp"
 
-class InQueueWidget : public QWidget{
+class InQueueWidget : public QLabel {
 
-    QLabel* inQueueText;
-    QHandPointerButton* leaveQueuButton;
+    QLabel *inQueueText;
+    QHandPointerButton *leaveQueuButton;
 
 public:
 
-    InQueueWidget(QWidget* parent);
+    InQueueWidget(QWidget *parent);
 
 };
 

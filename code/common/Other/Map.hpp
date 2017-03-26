@@ -1,8 +1,6 @@
 #ifndef MAP_HPP
 #define MAP_HPP
 
-const int SIZE = 41;
-
 #define GRASS "◼  "
 #define UNKNOWN "?  "
 #define PATH "   "
@@ -40,11 +38,6 @@ class Map {
 protected:
     int matrix[SIZE][SIZE];
 
-    void generateRandomMatrix();
-    void initMap();
-    void generateQuarterMap(Position position);
-    bool isNextToPath(Position position);
-    void copyQuarter();
     void initMapFromFile(std::string filename);
 
 
@@ -58,7 +51,7 @@ public:
 
     virtual Position getHighlightedPosition() const { return Position(-1, -1); }
 
-    virtual bool isEnnemyBaseInHighlightedPosition(int quadrant) {return false;}
+    virtual bool isEnemyBaseInHighlightedPosition(int quadrant) {return false;}
 };
 
 #endif

@@ -33,6 +33,7 @@ public slots:
     void acceptFriend(int index);
     void declineFriend(int index);
     void removeFriend(int index);
+    void cancelInvitation(int index);
     void refresh();
 
 public:
@@ -45,7 +46,7 @@ public:
     void setupPendingInvitations();
 
 private:
-    GameInfo& getGame(std::string username);
+    GameInfo getGame(std::string username);
     int getStatus(std::string username);
     bool isInGame(std::string username);
     QTimer *updateTimer;

@@ -9,6 +9,9 @@ static const int MATCHMAKER_SERVER_PORT = 5556;
 
 // Constant of the map
 
+const int SIZE = 41;
+static const int TILES_SIZE = 16; // Size in pixel
+
 static const int NORTH = 0;
 static const int EAST = 1;
 static const int SOUTH = 2;
@@ -18,9 +21,7 @@ static const std::string QUADRANT_NAMES[4] = {"NORTH", "EAST", "SOUTH", "WEST"};
 
 const static int PARTNERS[4] = {EAST, NORTH, WEST, SOUTH};
 
-static const int NB_OF_MAPS = 3;
-
-static const int TILES_SIZE = 16; // Size in pixel
+static const int NB_OF_MAPS = 4;
 
 static const int PATH_INT = 0;
 static const int GRASS_INT = 1;
@@ -45,7 +46,7 @@ static const int STONE_INT = 17;
 // Constant of the pnj
 
 static const int NB_OF_TYPE_OF_PNJ = 3;
-static const int NUM_FREEZE_TICKS_FOR_PNJ = 20;
+static const int NUM_FREEZE_TICKS_FOR_PNJ = 20 * TILES_SIZE;
 
 static const int COMMUNIST_PNJ_STARTING_HEALTHPOINTS = 150;
 static const int COMMUNIST_PNJ_VALUE = 15;
@@ -102,14 +103,28 @@ static const int AIR_STRIKE_DAMAGE = 20;
 
 // Game Settings
 
-static const int STEP_DURATION_IN_MS = 1000;
+/*
+ * We used the TILES_SIZE constant in the STEP_TRANSITION_DURATION
+ * because the NPCs will move at 1 pixel / STEP_TRANSITION_DURATION
+ * but after all the transition steps, we must reach the STEP_DURATION.
+ *
+ * So we have : STEP_DURATION = STEP_TRANSITION_DURATION * Number of pixels
+ * And the number of pixels for one complete transition is TILES_SIZE
+ */
+static const int STEP_DURATION = 700;
+static const int STEP_TRANSITION_DURATION = STEP_DURATION / TILES_SIZE;
+static const int INTERVAL_BETWEEN_SHOOTS_IN_MS = STEP_DURATION;
+static const int INTERVAL_BETWEEN_PNJS_IN_WAVE_IN_MS = STEP_DURATION;
+static const int INTERVAL_BETWEEN_GOLD_EARNED = STEP_DURATION;
+static const int INTERVAL_BETWEEN_SENDS_IN_MS = STEP_TRANSITION_DURATION;
+static const int INTERVAL_BETWEEN_TOWER_PHASE_SENDS_IN_MS = STEP_DURATION;
+
+
 static const int INITIAL_NUMBER_OF_PNJS_PER_WAVE = 4;
 static const int NUMBER_OF_PNJS_ADDED_PER_WAVE = 2;
 static const int TIMED_GAME_DURATION = 120;
 
 static const int NUM_PLAYERS = 4;
 static const int NUM_SECONDS_TO_PLACE_TOWER = 10; //For the test
-static const int INTERVAL_BETWEEN_SENDS_IN_MS = 200;
-static const int INTERVAL_BETWEEN_PNJS_IN_WAVE_IN_MS = 1000;
 
 #endif //PROJET_CONSTANTS_H

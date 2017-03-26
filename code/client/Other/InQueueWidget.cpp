@@ -1,26 +1,26 @@
-//
-//
-
 #include <QtWidgets/QVBoxLayout>
+#include <QMovie>
 #include "InQueueWidget.hpp"
 
-InQueueWidget::InQueueWidget(QWidget* parent) {
+InQueueWidget::InQueueWidget(QWidget *parent) {
 
-    QFont font("calibri",12);
+    QFont font("calibri", 12);
     this->setParent(parent);
-    this->setFixedSize(180,60);
+    this->setFixedSize(250, 70);
+    this->setStyleSheet("border: 2px solid white;");
 
-    QPalette pal = palette();
-    pal.setColor(QPalette::Background, Qt::blue);
-    this->setAutoFillBackground(true);
-    this->setPalette(pal);
-    this->show();
+    QVBoxLayout *Vlayout = new QVBoxLayout;
+    QMovie *movie = new QMovie("../../qt_ui/game_pictures/backgrounds/particles_gold_bg.gif");
+    this->setMovie(movie);
+    movie->start();
 
-    QVBoxLayout* Vlayout = new QVBoxLayout;
 
-    leaveQueuButton = new QHandPointerButton("LEAVE QUEUE", 160,25);
+    leaveQueuButton = new QHandPointerButton("LEAVE QUEUE");
+    leaveQueuButton->setFixedSize(160, 25);
+    leaveQueuButton->setStyleSheet(
+            "background-color: rgba(0, 0, 0, 0); border-image:url(); color: black; border:1px solid white;");
     inQueueText = new QLabel("In Queue...");
-    inQueueText->setStyleSheet("color : white;");
+    inQueueText->setStyleSheet("color : black; border: 0px solid white;");
 
     inQueueText->setFont(font);
 
@@ -33,4 +33,8 @@ InQueueWidget::InQueueWidget(QWidget* parent) {
 
     connect(leaveQueuButton, SIGNAL(clicked()), this->parentWidget(), SLOT(leaveQueue()));
 
+    this->show();
+
 }
+
+

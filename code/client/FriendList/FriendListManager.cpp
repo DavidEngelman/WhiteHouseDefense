@@ -58,6 +58,10 @@ std::string FriendListManager::request_validity(std::string request, std::string
         if (!friendRequests.is_present(receiver)) {
             return "You have no invitation with that username";
         }
+    } else if (request == CANCEL_INVITATION){
+        if (!pendingInvitations.is_present(receiver)){
+            return "No request was sent to that user";
+        }
     } else if (request == REMOVE_FRIEND) {
         if (!friendList.is_present(receiver)) {
             return "You have no Friend with that username";

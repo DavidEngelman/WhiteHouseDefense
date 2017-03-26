@@ -33,7 +33,7 @@ static const std::string CHANGE_USERNAME = "CHANGEUSERNAME";
 static const std::string CHANGE_PASSWORD = "CHANGEPASSWORD";
 static const std::string CHANGE_ICON = "CHANGEICON";
 
-static const std::string MESSAGES[3] = {"GG Easy", "Make America great again", "J'aime les patates"};
+static const std::string MESSAGES[3] = {"GG Easy", "Make America\n great again", "I will build \na great wall"};
 
 static const std::string GET_FRIENDLIST = "getFriendList;";
 static const std::string GET_FRIEND_REQUESTS = "getFriendRequests;";
@@ -44,6 +44,10 @@ static const std::string ACCEPT_FRIEND_REQUEST = "acceptFriendRequest;";
 static const std::string DECLINE_FRIEND_REQUEST = "declineFriendRequest;";
 static const std::string GET_PROFILE = "getProfileByUsername;";
 static const std::string GET_STATUS = "getStatus;";
+static const std::string CANCEL_INVITATION = "cancelInvitation;";
+
+
+static const std::string COMMUNICATION_OVER = "OVER";
 
 
 // Towers
