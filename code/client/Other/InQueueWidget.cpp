@@ -18,7 +18,8 @@ InQueueWidget::InQueueWidget(QWidget *parent) {
     leaveQueuButton = new QHandPointerButton("LEAVE QUEUE");
     leaveQueuButton->setFixedSize(160, 25);
     leaveQueuButton->setStyleSheet(
-            "background-color: rgba(0, 0, 0, 0); border-image:url(); color: black; border:1px solid white;");
+            "background-color: rgba(0, 0, 0, 0); border-image:url(../../qt_ui/game_pictures/buttons/mainmenu.png);"
+                    "color: black; border:1px solid white;");
     inQueueText = new QLabel("In Queue...");
     inQueueText->setStyleSheet("color : black; border: 0px solid white;");
 
