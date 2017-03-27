@@ -8,7 +8,7 @@
 #include "MainConsoleUI.hpp"
 #include "../Settings/SettingsManager.hpp"
 
-const static std::string gameModes[3] = {CLASSIC_MODE, TIMED_MODE, TEAM_MODE};
+const static std::string gameModes[3] = {CLASSIC_MODE, TEAM_MODE, TIMED_MODE};
 
 MainManager::MainManager(int port, App *my_app) :
         NetworkedManager(port, my_app) {

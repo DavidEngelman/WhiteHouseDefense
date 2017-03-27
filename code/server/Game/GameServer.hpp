@@ -13,6 +13,12 @@
 #include "../../common/Other/Constants.hpp"
 #include "../../common/Other/Tools.hpp"
 #include <mutex>
+
+class GameServer;
+typedef struct argsForSpectatorCommandThread {
+    int client_socket;
+    GameServer *gameServer;
+} argsForSpectatorCommandThread;
 #include <fstream>
 
 class GameServer : public Server {
@@ -30,7 +36,7 @@ private:
 
     pthread_t spectatorJoinThread;
     pthread_t receiverThread;
-
+    std::vector <pthread_t> spectatorReceiverThreads;
 
     void sendGameStateToPlayer(PlayerConnection &connection);
 
@@ -39,9 +45,9 @@ private:
     void addTowerInGameState(TowerCommand &command);
 
     void changeVulgarityToStar(std::string &userMessage);
-    
+
     void findAndChangeToStarVulgarities(std::string mot, int count, std::string &userMessage);
-    
+
 public:
 
     GameServer(int port, std::vector<PlayerConnection> &playerConnections, std::string _mode);
@@ -133,6 +139,14 @@ public:
     void sendNotification(int quadrant, int notificationID);
 
     void sendAirstrikeNotification(int quadrant, int target);
+
+    void getAndProcessSpectatorCommand(int supporterSocketFd);
+
+    static void *staticProcessSpectatorCommandThread(void *self);
+
+    void startSpectatorCommandThread(int _client_socket);
+
+    void stopSpectatorCommandThreads();
 };
 
 #endif

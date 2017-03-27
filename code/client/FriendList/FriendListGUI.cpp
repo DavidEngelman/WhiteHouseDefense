@@ -7,6 +7,7 @@
 
 FriendListGUI::FriendListGUI(FriendListManager *manager, QWidget* _parent) : AbstractGUI(_parent), FriendListUI(manager) {
     specManager = new SpectatorManager(MATCHMAKER_SERVER_PORT, manager->getMasterApp(), true);
+    this->setWindowFlags(Qt::Window);
     iconsArray[0] = QIcon("../../qt_ui/game_pictures/icons/inGameIcon.png");
     iconsArray[1] = QIcon("../../qt_ui/game_pictures/icons/onlineIcon.png");
     iconsArray[2] = QIcon("../../qt_ui/game_pictures/icons/offlineIcon.png");
@@ -17,7 +18,7 @@ void FriendListGUI::display() {
 
     this->setFixedHeight(480);
     this->setFixedWidth(280);
-    this->setBackgroundFromPath("../../qt_ui/game_pictures/backgrounds/bluebg.png");
+    this->setBackgroundFromPath("../../qt_ui/game_pictures/backgrounds/bluebg.png", 1);
     setStylesheetFromPath("../../qt_ui/friendList.qss");
     QFont police("calibri");
 
