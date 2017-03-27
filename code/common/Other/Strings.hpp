@@ -24,11 +24,9 @@ static const std::string AIR_STRIKE_COMMAND_STRING = "AirStrike";
 static const std::string AD_SPELL_COMMAND_STRING = "adSpell";
 
 
-static const std::string JOIN_GAME_AS_SPECTATOR = "Support";
 static const std::string SUPPORT_PLAYER_STRING = "SupportPlayer";
 
 static const std::string SETUP_GAME = "SetupGame";
-static const std::string END_OF_GAME = "end";
 static const std::string CHANGE_USERNAME = "CHANGEUSERNAME";
 static const std::string CHANGE_PASSWORD = "CHANGEPASSWORD";
 static const std::string CHANGE_ICON = "CHANGEICON";

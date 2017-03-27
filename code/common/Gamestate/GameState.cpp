@@ -126,9 +126,13 @@ bool GameState::upgradeTower(Position &position, int quadrant) {
  * the towers would be deleted twice (once in the destruction of the GameState of GameManager and
  * the second time in the destruction of the GameState of the MapGUI)
  */
-void GameState::deleteTowersInHeap() {
+void GameState::clearThingsInHeap() {
     for (AbstractTower* tower: towers){
         delete tower;
+    }
+
+    for (Wave &wave: waves) {
+        wave.destroy();
     }
 }
 

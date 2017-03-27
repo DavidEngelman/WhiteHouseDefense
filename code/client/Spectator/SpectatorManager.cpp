@@ -22,7 +22,6 @@ void SpectatorManager::getGamesFromMatchMaker() {
     send_message(server_socket, "games;");
     receive_message(server_socket, buffer); //receive all the games in progress
 
-    // TODO: REMPLACER CA PAR parse_message_from_server(buffer);
     parse_message_from_server(buffer);
 }
 

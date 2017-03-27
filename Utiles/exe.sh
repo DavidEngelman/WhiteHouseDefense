@@ -43,7 +43,7 @@ function forAllClients {
         done
         xdotool key ctrl+Page_Down # Jump over the server tab
     else
-        xdotool key alt+g  # TODO: Cette ligne ne marche pas sur Ubuntu. Ca active l'UI de ubuntu
+        xdotool key alt+g
         xdotool type --delay ${delayTyping} "$1"
         xdotool key "Return"
         xdotool key alt+o

@@ -182,6 +182,8 @@ void GameConsoleUI::displayGameOverAndStats(GameState &gamestate) {
 
     // TODO: show stats
 
+    // END TODO
+
     std::cout << "\nPress Enter to come back in the main menu..." << std::endl;
     std::cin.ignore().get();
 
@@ -263,7 +265,6 @@ void *GameConsoleUI::staticInputThread(void *self) {
 }
 
 void GameConsoleUI::addChatMessage(const std::string &message, const std::string &sender) {
-    // TODO: c'est juste pour tester, faudra faire la vraie fonction apres
     std::cout << std::endl << sender << ": " << message << std::endl;
 }
 
