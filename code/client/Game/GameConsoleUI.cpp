@@ -306,7 +306,7 @@ void GameConsoleUI::handlePlaceTowerPhaseStart() {
     isInTowerPhase = true;
 
     if (manager->isAlive() && !isSupporter()) {
-        inputThread = pthread_create(&thr, NULL, &GameConsoleUI::staticInputThread, this);
+        pthread_create(&thr, NULL, &GameConsoleUI::staticInputThread, this);
     } else {
         displayMap(manager->getGameState(), manager->getQuadrant());
 
@@ -321,7 +321,7 @@ void GameConsoleUI::handlePlaceTowerPhaseStart() {
 void GameConsoleUI::handleWaveStart() {
     isInTowerPhase = false;
     if (!isSupporter()) {
-        inputThread = pthread_cancel(thr);
+        pthread_cancel(thr);
     }
 }
 

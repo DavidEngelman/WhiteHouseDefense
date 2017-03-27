@@ -11,7 +11,6 @@
 class GameConsoleUI : public AbstractConsoleUI, public GameUI {
 private:
     pthread_t thr;
-    int inputThread;
 	bool isInTowerPhase;
     bool isPrintedGameStateOutdated;
 
