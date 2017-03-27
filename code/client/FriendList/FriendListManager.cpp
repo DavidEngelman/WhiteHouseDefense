@@ -10,7 +10,7 @@ FriendListManager::FriendListManager(int port, App *my_master_app) :
     if(false){
         friendListUI = new FriendListConsoleUI(this);
     }else{
-        friendListUI = new FriendListGUI(this, nullptr);
+        friendListUI = new FriendListGUI(this, master_app->getMainWindow());
     }
 }
 
@@ -57,6 +57,10 @@ std::string FriendListManager::request_validity(std::string request, std::string
     } else if (request == ACCEPT_FRIEND_REQUEST || request == DECLINE_FRIEND_REQUEST) {
         if (!friendRequests.is_present(receiver)) {
             return "You have no invitation with that username";
+        }
+    } else if (request == CANCEL_INVITATION){
+        if (!pendingInvitations.is_present(receiver)){
+            return "No request was sent to that user";
         }
     } else if (request == REMOVE_FRIEND) {
         if (!friendList.is_present(receiver)) {

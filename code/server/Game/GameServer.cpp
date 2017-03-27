@@ -1,4 +1,5 @@
 #include <csignal>
+#include <iostream>
 #include "GameServer.hpp"
 #include "../../common/Tower/GunTower.hpp"
 #include "../../common/Tower/SniperTower.hpp"
@@ -8,8 +9,22 @@
 GameServer::GameServer(int port, std::vector<PlayerConnection> &playerConnections, std::string _mode) :
         Server(port), playerConnections(playerConnections), mode(_mode) {
     srand((unsigned) time(0));
-    //mapSeed = (unsigned int) rand() % NB_OF_MAPS;
-    mapSeed = 3;
+    mapSeed = (unsigned int) rand() % NB_OF_MAPS;
+    std::ifstream Fichier("../../Utiles/Dico.txt");
+    if(Fichier)
+    {
+        std::string ligne;
+        dico = " ";
+        while(getline(Fichier, ligne)) //Tant qu'on n'est pas à la fin, on lit
+        {
+            dico += ligne + " ";
+        }
+    }
+    else
+    {
+        std::cout << "ERROR: Impossible to open the file" << std::endl;
+    }
+
 }
 
 void GameServer::run() {
@@ -135,6 +150,7 @@ void GameServer::getAndProcessUserInput(int clientSocketFd, char *buffer) {
             command.parse(buffer);
             int messageLength = command.getNextInt();
             std::string userMessage = command.getTokenWithSize(messageLength);
+            changeVulgarityToStar(userMessage);
             std::string senderUsername = command.getNextToken();
 
             if (!userMessage.empty() && userMessage[0] == '/') {
@@ -622,9 +638,32 @@ void GameServer::processSpecialCommand(std::string &userMessage, std::string &se
     }
 }
 
+void GameServer::changeVulgarityToStar(std::string &userMessage) {
+    int count = 0;
+    std::string mot;
 
+    for (char& c : userMessage) {
+        if (c == ' ') {
+            findAndChangeToStarVulgarities(mot, count, userMessage);
+            count += mot.size() + 1;
+            mot = "";
+        }
 
-
-
-
-
+        else {
+            mot += c;
+        }
+    }
+    findAndChangeToStarVulgarities(mot, count, userMessage);
+}
+void GameServer::findAndChangeToStarVulgarities(std::string mot, int count, std::string &userMessage){
+    unsigned long taille = mot.size();
+    for(int i = 0; i<taille; i++){
+        mot[i] = (char) tolower(mot[i]);
+    }
+    mot = ' ' + mot +' ';
+    if (dico.find(mot) != std::string::npos) {
+        for (int i = 0; i < taille; i++) {
+            userMessage[count + i] = '*';
+        }
+    }
+}

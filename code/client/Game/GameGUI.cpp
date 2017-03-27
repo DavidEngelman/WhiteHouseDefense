@@ -15,7 +15,6 @@ GameGUI::GameGUI(bool isSupporter, unsigned seed, GameManager *manager) : Abstra
 
     //* RIGHT PANEL //*
     /* Player Info */
-
     actionLayout = new QVBoxLayout; //tower shop + sell/upgrage + spells
 
     if (!isSupporter) {
@@ -394,6 +393,7 @@ void GameGUI::handleNukeSpell() {
 
 void GameGUI::handleFreezeSpell() {
     manager->launchFreezeSpell();
+    playSound("../../qt_ui/game_pictures/sounds/freezeSpell.mp3");
 }
 
 void GameGUI::handleAirStrike() {

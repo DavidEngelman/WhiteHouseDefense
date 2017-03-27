@@ -111,6 +111,7 @@ static const int AIR_STRIKE_DAMAGE = 20;
  * So we have : STEP_DURATION = STEP_TRANSITION_DURATION * Number of pixels
  * And the number of pixels for one complete transition is TILES_SIZE
  */
+
 static const int STEP_DURATION = 700;
 static const int STEP_TRANSITION_DURATION = STEP_DURATION / TILES_SIZE;
 static const int INTERVAL_BETWEEN_SHOOTS_IN_MS = STEP_DURATION;

@@ -18,6 +18,7 @@ private:
 
     Database database;
     std::vector<PlayerConnection> connectedPlayers;
+    std::mutex friendListMutex;
 
 public:
 
@@ -67,6 +68,7 @@ public:
     bool acceptFriendRequest(std::string requester, std::string receiver);
     bool sendFriendRequest(std::string requester, std::string receiver);
     bool declineFriendRequest(std::string requester, std::string receiver);
+    bool cancelInvitation(std::string requester, std::string receiver);
     
     void handle_getFriendList(int client_sock_fd, std::string requester);
     void handle_getFriendRequests(int client_sock_fd, std::string requester);
@@ -76,6 +78,7 @@ public:
     void handle_acceptFriendRequest(int client_sock_fd, std::string requester, std::string toAccept );
     void handle_declineFriendRequest(int client_sock_fd, std::string requester, std::string toDecline);
     void handle_getStatus(int client_sock_fd, std::string requester);
+    void handle_cancelInvitation(int client_sock_fd, std::string requester,std::string toCancel );
 
 
     void handle_accountUpdate(int client_sock_fd);

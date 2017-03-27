@@ -8,5 +8,5 @@ CommunistPNJ::CommunistPNJ(int direction) : PNJ(direction) {
 }
 
 // Constructor used when unserializing
-CommunistPNJ::CommunistPNJ(Position transitionPosition, int healthPoints, int direction)
-        : PNJ(transitionPosition, healthPoints, direction) { typeOfPNJ = COMMUNIST_PNJ_STR; }
+CommunistPNJ::CommunistPNJ(Position transitionPosition, int healthPoints, int direction, int isFrozen)
+        : PNJ(transitionPosition, healthPoints, direction, isFrozen) { typeOfPNJ = COMMUNIST_PNJ_STR; }

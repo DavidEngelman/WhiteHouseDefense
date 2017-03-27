@@ -26,7 +26,7 @@ void SettingsGUI::display() {
     /* Home Button*/
     QHandPointerButton* homeButton = new QHandPointerButton("HOME", 70, 35, this);
     homeButton->setSizePolicy( QSizePolicy::Maximum, QSizePolicy::Preferred );
-    homeButton->setStyleSheet("border-image:url(../../qt_ui/game_pictures/buttons/gold_button_2.svg);");
+    homeButton->setStyleSheet("border-image:url(../../qt_ui/game_pictures/buttons/mainmenu.png);");
     QObject::connect(homeButton, SIGNAL(clicked()), this, SLOT(goToMain()));
     topLayout->addWidget(homeButton);
     topLayout->addStretch();
@@ -44,13 +44,13 @@ void SettingsGUI::display() {
 
     /*Menu*/
     usernameB = new QHandPointerButton("Change Username", 300,40);
-    usernameB->setStyleSheet("border-image:url(../../qt_ui/game_pictures/buttons/gold_button_2.svg);");
+    usernameB->setStyleSheet("border-image:url(../../qt_ui/game_pictures/buttons/mainmenu.png);");
 
     passwordB = new QHandPointerButton("Change Password", 300,40);
-    passwordB->setStyleSheet("border-image:url(../../qt_ui/game_pictures/buttons/gold_button_2.svg);");
+    passwordB->setStyleSheet("border-image:url(../../qt_ui/game_pictures/buttons/mainmenu.png);");
 
     iconB = new QHandPointerButton("Change icon", 300,40);
-    iconB->setStyleSheet("border-image:url(../../qt_ui/game_pictures/buttons/gold_button_2.svg);");
+    iconB->setStyleSheet("border-image:url(../../qt_ui/game_pictures/buttons/mainmenu.png);");
 
     buttonsLayout->addWidget(usernameB);
     buttonsLayout->addWidget(passwordB);

@@ -1,6 +1,5 @@
 #include "SettingsManager.hpp"
 #include "SettingsGUI.hpp"
-#include "SettingsConsoleUI.hpp"
 #include "../../common/Other/Strings.hpp"
 #include "../../common/Other/Tools.hpp"
 #include "../../common/Other/Constants.hpp"

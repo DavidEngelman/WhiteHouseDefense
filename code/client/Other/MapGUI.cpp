@@ -34,17 +34,32 @@ void MapGUI::paintEvent(QPaintEvent *) {
 
     Position pos;
     std::string typeOfPNJ;
+    int frozen;
 
     for (auto &wave : waves) {
         std::vector<PNJ *> &pnjs = wave.getPnjs();
         for (auto &pnj : pnjs) {
             typeOfPNJ = pnj->getType();
+            frozen = pnj->isFrozen();
+
             if (typeOfPNJ == MEXICAN_PNJ_STR) {
-                image = NPC_images[MEXICAN];
+                if (frozen  == 0){
+                    image = NPC_images[MEXICAN];
+                }else {
+                    image = NPC_images[FROZEN_MEXICAN];
+                }
             } else if (typeOfPNJ == COMMUNIST_PNJ_STR) {
-                image = NPC_images[COMMUNIST];
-            } else if (typeOfPNJ == MUSLIM_PNJ_STR) {
-                image = NPC_images[MUSLIM];
+                if (frozen == 0 ) {
+                    image = NPC_images[COMMUNIST];
+                }else {
+                    image = NPC_images[FROZEN_COMMUNIST];
+                }
+            } else if (typeOfPNJ == MUSLIM_PNJ_STR ) {
+                if (frozen == 0 ) {
+                    image = NPC_images[MUSLIM];
+                }else {
+                    image = NPC_images[FROZEN_MUSLIM];
+                }
             }
 
             pos = pnj->getTransitionPosition();

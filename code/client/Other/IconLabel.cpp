@@ -1,5 +1,4 @@
 #include <QtCore/QFileInfo>
-#include <QtCore/QUrl>
 #include <QtWidgets/QVBoxLayout>
 #include "IconLabel.hpp"
 

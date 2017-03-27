@@ -19,12 +19,13 @@ typedef struct argsForSpectatorCommandThread {
     int client_socket;
     GameServer *gameServer;
 } argsForSpectatorCommandThread;
+#include <fstream>
 
 class GameServer : public Server {
 
 private:
 
-
+    std::string dico;
     std::string mode;
     unsigned int mapSeed;
 
@@ -43,6 +44,9 @@ private:
 
     void addTowerInGameState(TowerCommand &command);
 
+    void changeVulgarityToStar(std::string &userMessage);
+
+    void findAndChangeToStarVulgarities(std::string mot, int count, std::string &userMessage);
 
 public:
 

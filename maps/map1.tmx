@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" renderorder="right-down" width="41" height="41" tilewidth="16" tileheight="16" nextobjectid="1">
- <tileset firstgid="1" name="Map" tilewidth="16" tileheight="16" tilecount="31" columns="0">
+ <tileset firstgid="1" name="Map" tilewidth="16" tileheight="16" tilecount="26" columns="0">
   <tile id="0">
    <image width="16" height="16" source="../qt_ui/game_pictures/tiles/base.png"/>
   </tile>
@@ -25,12 +25,6 @@
   <tile id="7">
    <image width="16" height="16" source="../qt_ui/game_pictures/tiles/grassrock.png"/>
   </tile>
-  <tile id="8">
-   <image width="16" height="16" source="../qt_ui/game_pictures/tiles/greenbase.png"/>
-  </tile>
-  <tile id="9">
-   <image width="16" height="16" source="../qt_ui/game_pictures/tiles/guntower.png"/>
-  </tile>
   <tile id="10">
    <image width="16" height="16" source="../qt_ui/game_pictures/tiles/lava.png"/>
   </tile>
@@ -52,9 +46,6 @@
   <tile id="16">
    <image width="16" height="16" source="../qt_ui/game_pictures/tiles/pinesnow.png"/>
   </tile>
-  <tile id="17">
-   <image width="16" height="16" source="../qt_ui/game_pictures/tiles/purplebase.png"/>
-  </tile>
   <tile id="18">
    <image width="16" height="16" source="../qt_ui/game_pictures/tiles/sand.png"/>
   </tile>
@@ -63,12 +54,6 @@
   </tile>
   <tile id="20">
    <image width="16" height="16" source="../qt_ui/game_pictures/tiles/sandstone.png"/>
-  </tile>
-  <tile id="21">
-   <image width="16" height="16" source="../qt_ui/game_pictures/tiles/shocktower.png"/>
-  </tile>
-  <tile id="22">
-   <image width="16" height="16" source="../qt_ui/game_pictures/tiles/snipertower.png"/>
   </tile>
   <tile id="23">
    <image width="16" height="16" source="../qt_ui/game_pictures/tiles/snow.png"/>

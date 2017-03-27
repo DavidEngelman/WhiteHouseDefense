@@ -1,11 +1,10 @@
 #include <QtCore/QFile>
 #include <QtMultimedia/QMediaPlaylist>
-#include <QtCore/QFileInfo>
 #include <QtMultimedia/QMediaPlayer>
 #include <QtGui/QWindow>
 #include "AbstractGUI.hpp"
 
-AbstractGUI::AbstractGUI(QWidget* _parent) : parent(_parent) {
+AbstractGUI::AbstractGUI(QWidget *_parent) : parent(_parent) {
     setParent(parent);
 }
 
@@ -17,16 +16,17 @@ void AbstractGUI::setStylesheetFromPath(QString stylesheetPath) {
     setStyleSheet(styleSheet);
 }
 
-void AbstractGUI::setBackgroundFromPath(QString backgroundPath) {
+void AbstractGUI::setBackgroundFromPath(QString backgroundPath, int flag) {
     QPixmap backgroundImage(backgroundPath);
     backgroundImage = backgroundImage.scaled(size(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
     QPalette palette;
     palette.setBrush(QPalette::Background, backgroundImage);
-    if (parent != nullptr) {
+    if (flag == 0) {
         parent->setPalette(palette);
-    }else{
+    } else {
         this->setPalette(palette);
     }
+
 }
 
 void AbstractGUI::destroy() {

@@ -21,6 +21,7 @@ protected:
 	int value;
     int freezeTicksLeft;
     bool inTransition;
+	int frozen;
 
 	std::string typeOfPNJ;
 	Position position;
@@ -39,7 +40,7 @@ public:
 
 	PNJ(int direction);
 
-    PNJ(Position position, int healthPoints, int direction);
+    PNJ(Position position, int healthPoints, int direction, int frozen);
 
     virtual ~PNJ() = 0;
 
@@ -50,6 +51,8 @@ public:
 	int receiveDamage(int damageAmount);
 
 	bool isDead();
+
+	int isFrozen(){return frozen;}
 
 	void setHealthPoints(int newHp);
 

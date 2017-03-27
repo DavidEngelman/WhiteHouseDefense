@@ -6,7 +6,7 @@
 class MuslimPNJ : public PNJ  {
 public:
     MuslimPNJ(int direction);
-    MuslimPNJ(Position transitionPosition, int healthPoints, int direction);
+    MuslimPNJ(Position transitionPosition, int healthPoints, int direction, int isFrozen);
 };
 
 

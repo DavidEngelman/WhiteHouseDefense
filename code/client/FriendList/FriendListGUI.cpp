@@ -7,6 +7,7 @@
 
 FriendListGUI::FriendListGUI(FriendListManager *manager, QWidget* _parent) : AbstractGUI(_parent), FriendListUI(manager) {
     specManager = new SpectatorManager(MATCHMAKER_SERVER_PORT, manager->getMasterApp(), true);
+    this->setWindowFlags(Qt::Window);
     iconsArray[0] = QIcon("../../qt_ui/game_pictures/icons/inGameIcon.png");
     iconsArray[1] = QIcon("../../qt_ui/game_pictures/icons/onlineIcon.png");
     iconsArray[2] = QIcon("../../qt_ui/game_pictures/icons/offlineIcon.png");
@@ -15,9 +16,9 @@ FriendListGUI::FriendListGUI(FriendListManager *manager, QWidget* _parent) : Abs
 
 void FriendListGUI::display() {
 
-    this->setFixedHeight(500);
-    this->setFixedWidth(300);
-    this->setBackgroundFromPath("../../qt_ui/game_pictures/backgrounds/bluebg.png");
+    this->setFixedHeight(480);
+    this->setFixedWidth(280);
+    this->setBackgroundFromPath("../../qt_ui/game_pictures/backgrounds/bluebg.png", 1);
     setStylesheetFromPath("../../qt_ui/friendList.qss");
     QFont police("calibri");
 
@@ -87,9 +88,9 @@ void FriendListGUI::display() {
     setupFriendRequests();
     setupPendingInvitations();
 
-    tabWidget->addTab(friendList,tr("Friends"));
-    tabWidget->addTab(friendRequests,tr("Requests"));
-    tabWidget->addTab(pendingInvitations,tr("My Invitations"));
+    tabWidget->addTab(friendList,tr("  Friends  "));
+    tabWidget->addTab(friendRequests,tr(" Requests "));
+    tabWidget->addTab(pendingInvitations,tr("  My Invitations  "));
 
 
 
@@ -97,7 +98,7 @@ void FriendListGUI::display() {
 
     updateTimer = new QTimer();
     QObject::connect(updateTimer, SIGNAL(timeout()), this, SLOT(refresh()));
-    updateTimer->start(10000);
+    updateTimer->start(1000);
 
 
     this->show();
@@ -268,6 +269,12 @@ void FriendListGUI::setupPendingInvitations() {
         buttonBox->setContentsMargins(0, 0, 0, 0);
         buttonWidgets->setLayout(buttonBox);
 
+        QSignalMapper *cancelMapper = new QSignalMapper(this);
+        connect(deleteButton, SIGNAL(clicked()), cancelMapper, SLOT(map()));
+        cancelMapper->setMapping(deleteButton, index);
+        connect(cancelMapper, SIGNAL(mapped(int)), this, SLOT(cancelInvitation(int)));
+
+
         pendingInvitations->setItem(index, 0, friendStatus);
         pendingInvitations->setItem(index, 1, friendItem);
         pendingInvitations->setCellWidget(index, 2, buttonWidgets);
@@ -295,6 +302,11 @@ void FriendListGUI::declineFriend(int index) {
 
 void FriendListGUI::removeFriend(int index) {
     manager->sendRequestServer(REMOVE_FRIEND,friendList->item(index,1)->text().toStdString());
+    refresh();
+}
+
+void FriendListGUI::cancelInvitation(int index) {
+    manager->sendRequestServer(CANCEL_INVITATION,pendingInvitations->item(index,1)->text().toStdString());
     refresh();
 }
 

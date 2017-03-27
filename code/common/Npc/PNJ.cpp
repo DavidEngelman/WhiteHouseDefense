@@ -1,18 +1,18 @@
 #include "PNJ.hpp"
 
 // Constructor used when unserializing
-PNJ::PNJ(Position transitionPosition, int healthPoints, int direction) :
+PNJ::PNJ(Position transitionPosition, int healthPoints, int direction, int frozen) :
         position(Position(-1, -1)), transitionPosition(transitionPosition), healthPoints(healthPoints),
         quadrant(direction), damage(-1), value(-1), freezeTicksLeft(0),
         last_position(Position(-1000, -1000)),
-        inTransition(false) {}
+        inTransition(false), frozen(frozen)  {}
 
 PNJ::PNJ(int direction) :
         position(Position(SIZE / 2, SIZE / 2)),
         transitionPosition(Position(SIZE / 2 * TILES_SIZE, SIZE / 2 * TILES_SIZE)),
         quadrant(direction), freezeTicksLeft(0),
         last_position(Position(-1000, -1000)),
-        inTransition(false) {}
+        inTransition(false), frozen(0) {}
 
 
 void PNJ::get_random_direction() {
@@ -26,6 +26,9 @@ void PNJ::get_random_direction() {
 void PNJ::advance(Map &map) {
     if (freezeTicksLeft > 0) { // The PNJ doesn't move if it's freezed
         freezeTicksLeft -= 1;
+        if (freezeTicksLeft == 0){
+            frozen = 0;
+        }
         return;
     }
 
@@ -209,7 +212,7 @@ std::string PNJ::serialize() {
             std::to_string(getTransitionPosition().getX()) + "," +
             std::to_string(getTransitionPosition().getY()) + "," +
             std::to_string(getHealthPoints()) + "," +
-            getType() + "|";
+            getType() + "," + std::to_string(frozen) +  "|";
 
     return serialized_me;
 }
@@ -249,6 +252,7 @@ const std::string &PNJ::getType() {
 }
 
 void PNJ::freeze() {
+    frozen = 1;
     freezeTicksLeft = NUM_FREEZE_TICKS_FOR_PNJ;
 }
 
