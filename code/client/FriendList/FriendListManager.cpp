@@ -10,7 +10,7 @@ FriendListManager::FriendListManager(int port, App *my_master_app) :
     if(false){
         friendListUI = new FriendListConsoleUI(this);
     }else{
-        friendListUI = new FriendListGUI(this, nullptr);
+        friendListUI = new FriendListGUI(this, master_app->getMainWindow());
     }
 }
 

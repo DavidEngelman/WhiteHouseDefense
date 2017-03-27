@@ -25,7 +25,7 @@ public:
 
     virtual void setStylesheetFromPath(QString stylesheetPath);
 
-    virtual void setBackgroundFromPath(QString backgroundPath);
+    virtual void setBackgroundFromPath(QString backgroundPath, int flag=0);
 };
 
 
