@@ -173,8 +173,11 @@ void GameConsoleUI::displayGameOverAndStats(GameState &gamestate) {
 
     for (auto &player : gamestate.getPlayerStates()) {
 
-        std::cout << "   " << "Username : " + player.getUsername() << " | NPC killed : "
-                  << player.getPnjKilled() << " ";
+        std::cout << "   " << "Username : " + player.getUsername()
+                  << " | NPC killed : " << player.getPnjKilled() << " "
+                  << " | Damage dealt : " << player.getDamageDealt() << " "
+                  << " | Money spend : " << player.getMoneySpend() << " "
+                  << " | Tower Placed: " << player.getNbTowersPlaced()  ;
 
         std::string winner_or_loser = player.getIsWinner() ? "| WINNER" : "| LOSER";
         std::cout << winner_or_loser << std::endl;
