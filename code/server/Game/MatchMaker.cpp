@@ -29,37 +29,37 @@ void MatchMaker::get_and_process_command(int socket_fd) {
     bool communication_over = false;
 
     while (!communication_over) {
-        receive_message(socket_fd, command_buffer);
-        Command command;
-        command.parse(command_buffer);
-        std::string action = command.getAction();
+        if (receive_message(socket_fd, command_buffer) != -1) {
+            Command command;
+            command.parse(command_buffer);
+            std::string action = command.getAction();
 
-        if (action == GAME_IN_PROGRESS_REQUEST) {
-            handleRequestFromSpectator(socket_fd);
+            if (action == GAME_IN_PROGRESS_REQUEST) {
+                handleRequestFromSpectator(socket_fd);
 
-        } else if (action == POP_GAME_REQUEST) {
-            const std::string &port = command.getNextToken();
-            removeGameFromGamesInProgress(stoi(port));
+            } else if (action == POP_GAME_REQUEST) {
+                const std::string &port = command.getNextToken();
+                removeGameFromGamesInProgress(stoi(port));
+                communication_over = true;
+
+            } else if (action == LEAVE_QUEUE_REQUEST) {
+                std::cout << command.getAction() << std::endl;
+                removePlayerFromQueue(command.getNextToken(), socket_fd);
+                communication_over = true;
+
+            } else if (action == GAME_STARTED_STRING) {
+                communication_over = true;
+
+            } else if (action == COMMUNICATION_OVER) {
+                communication_over = true;
+
+            } else {
+                MatchmakingCommand matchmakingCommand(socket_fd);
+                matchmakingCommand.parse(command_buffer);
+                addPlayerToPendingMatch(matchmakingCommand.getPlayerConnection(), matchmakingCommand.getMode());
+            }
+        }else {
             communication_over = true;
-
-        } else if (action == LEAVE_QUEUE_REQUEST) {
-            std::cout << command.getAction() << std::endl;
-            removePlayerFromQueue(command.getNextToken(), socket_fd);
-            communication_over = true;
-
-        } else if (action == GAME_STARTED_STRING) {
-            communication_over = true;
-
-        } else if (action == COMMUNICATION_OVER) {
-            communication_over = true;
-
-        } else if (action == EMPTY_REQUEST){
-            communication_over = true;
-        }
-        else {
-            MatchmakingCommand matchmakingCommand(socket_fd);
-            matchmakingCommand.parse(command_buffer);
-            addPlayerToPendingMatch(matchmakingCommand.getPlayerConnection(), matchmakingCommand.getMode());
         }
     }
 }
