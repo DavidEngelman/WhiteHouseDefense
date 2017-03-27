@@ -557,8 +557,6 @@ void GameServer::sendGameStateToPlayer(PlayerConnection &connection) {
 }
 
 void GameServer::sendGameStateToPlayer(int socket_fd) {
-    // TODO: une autre approche serait de passer une reference de string vers
-    // serializeGameState, dans lequel on ferait append. À considerer
     const std::string *serialized_game_state = gameEngine->serializeGameState();
     send_message(socket_fd, (*serialized_game_state).c_str());
     delete serialized_game_state;

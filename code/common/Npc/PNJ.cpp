@@ -45,8 +45,6 @@ void PNJ::advance(Map &map) {
             get_backward_direction();
         }
 
-        if (direction.x > 1 || direction.x < -1 || direction.y > 1 || direction.y < -1) return;
-
         setLastPosition(getPosition());
         inTransition = true;
     }

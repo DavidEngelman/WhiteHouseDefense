@@ -12,8 +12,6 @@ std::string &TowerCommand::getTowerType() {
     return tower_type;
 }
 
-// TODO: ça serait mieux que toutes les methodes parse renvoient un booleen qui indiquent si le
-// parse a été successful.
 void TowerCommand::parse(char *data) {
     // parse une une chaine de caractere de la forme "PlaceTower,player_quadrant,tower_type,10,14;"
 

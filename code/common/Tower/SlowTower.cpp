@@ -10,7 +10,7 @@ bool SlowTower::shoot(Wave& wave) {
     PNJ* my_target;
     my_target = get_closest_pnj(wave);
     if (my_target != nullptr){
-        reduceMovementSpeedOf(*my_target)
+        reduceMovementSpeedOf(*my_target);
     }
 }
 

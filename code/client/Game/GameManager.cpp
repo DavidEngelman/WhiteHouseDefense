@@ -52,8 +52,6 @@ void GameManager::updateMap() {
             unSerializeGameState(server_msg_buff);
         }
 
-        // TODO: console mode only this when receiving a game state, make sure it still works
-        // if it does it every time
         gameUI->display(*gameState, quadrant);
 
 
@@ -306,8 +304,6 @@ void GameManager::unSerializeTower(std::string serialized_tower) {
     else if (typeOfTower == SHOCK_TOWER_STR) tower = new ShockTower(pos, level);
     else tower = new MissileTower(pos, level);
 
-    //TODO: remplacer par gameState.addTower(tower)
-    //Pour ne pas utiliser un getter pour modifier la classe, ça n'a aucun sens
     gameState->getTowers().push_back(tower);
 }
 
@@ -558,7 +554,7 @@ void GameManager::sendAdSpellRequest() {
 }
 
 GameManager::~GameManager() {
-    gameState->deleteTowersInHeap(); // We only do it once here (and not in MapGUI)
+    gameState->clearThingsInHeap(); // We only do it once here (and not in MapGUI)
     delete gameState;
     gameUI->destroy();
 }

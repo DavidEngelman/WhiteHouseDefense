@@ -14,15 +14,11 @@ private:
     GameState gameState; // The changing parts of the game
     Map map;  // The background
 
-    int numStepsDone;
+    int currentTickNumber;
     int numOfPNJsPerWave;
 
     Timer timerSinceWaveStart;
     Timer timerSinceGameStart;
-    Timer timerSinceLastShoot;
-    Timer timerSinceGoldEarned;
-    Timer timerSinceLastDamageToBase;
-
 
 
     PlayerState &getPlayerStateForWave(Wave &wave);
@@ -57,7 +53,7 @@ public:
 
     void dealDamageToBase();
 
-    void giveGold(PlayerState &playerState, PNJ* pnj);
+    void giveGold(PlayerState &playerState, PNJ *pnj);
 
     Wave &getWaveInSameQuadrant(AbstractTower &tower, std::vector<Wave> &waves);
 
@@ -65,7 +61,7 @@ public:
 
     std::string *serializeGameState();
 
-    void addTower(AbstractTower * tower, int quadrant);
+    void addTower(AbstractTower *tower, int quadrant);
 
     void addPNJS(std::vector<Wave> &waves);
 
@@ -80,9 +76,10 @@ public:
     void addKillToStat(PlayerState &playerState);
 
     void addPlayerState(int player_id, std::string username);
+
     void addPlayerState(int player_id, std::string username, int team);
 
-    void deleteTower(Position& position, int& quadrant);
+    void deleteTower(Position &position, int &quadrant);
 
     void upgradeTower(Position &position, int &quadrant);
 

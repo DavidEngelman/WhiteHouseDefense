@@ -2,14 +2,14 @@
 #include "SpectatorGUI.hpp"
 #include "SpectatorConsoleUI.hpp"
 
-SpectatorManager::SpectatorManager(int port, App *master_app, bool fromFriendList) :
+SpectatorManager::SpectatorManager(int port, App *master_app) :
         NetworkedManager(port, master_app) {
     if (!isConsole) {
         spectatorUI = new SpectatorGUI(this, master_app->getMainWindow());
     } else {
         spectatorUI = new SpectatorConsoleUI(this);
     }
-    
+
 }
 
 void SpectatorManager::run() {
@@ -22,7 +22,6 @@ void SpectatorManager::getGamesFromMatchMaker() {
     send_message(server_socket, "games;");
     receive_message(server_socket, buffer); //receive all the games in progress
 
-    // TODO: REMPLACER CA PAR parse_message_from_server(buffer);
     parse_message_from_server(buffer);
 }
 

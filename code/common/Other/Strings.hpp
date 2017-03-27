@@ -24,16 +24,15 @@ static const std::string AIR_STRIKE_COMMAND_STRING = "AirStrike";
 static const std::string AD_SPELL_COMMAND_STRING = "adSpell";
 
 
-static const std::string JOIN_GAME_AS_SPECTATOR = "Support";
 static const std::string SUPPORT_PLAYER_STRING = "SupportPlayer";
 
 static const std::string SETUP_GAME = "SetupGame";
-static const std::string END_OF_GAME = "end";
 static const std::string CHANGE_USERNAME = "CHANGEUSERNAME";
 static const std::string CHANGE_PASSWORD = "CHANGEPASSWORD";
 static const std::string CHANGE_ICON = "CHANGEICON";
 
-static const std::string MESSAGES[3] = {"GG Easy", "Make America\n great again", "I will build \na great wall"};
+static const std::string MESSAGES_BUTTONS[3] = {"GG Easy", "Make America\n great again", "I will build \na great wall"};
+static const std::string MESSAGES_CONTENT[3] = {"GG Easy", "Make America great again", "I will build a great wall"};
 
 static const std::string GET_FRIENDLIST = "getFriendList;";
 static const std::string GET_FRIEND_REQUESTS = "getFriendRequests;";
