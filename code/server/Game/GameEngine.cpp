@@ -2,11 +2,10 @@
 
 GameEngine::GameEngine(unsigned int mapSeed, std::string mode) : map(mapSeed),
                                                                  numOfPNJsPerWave(INITIAL_NUMBER_OF_PNJS_PER_WAVE),
-                                                                 gameState(mode) {
+                                                                 gameState(mode)
+{
+    timerSinceWaveStart.start();
     timerSinceGameStart.start();
-    timerSinceLastShoot.start();
-    timerSinceGoldEarned.start();
-    timerSinceLastDamageToBase.start();
 }
 
 /*
@@ -16,13 +15,13 @@ GameEngine::GameEngine(unsigned int mapSeed, std::string mode) : map(mapSeed),
 
 bool GameEngine::update() {
     int numMillisecondsSinceStart = timerSinceWaveStart.elapsedTimeInMiliseconds();
-    int numStepsToDo = (numMillisecondsSinceStart / STEP_TRANSITION_DURATION) - numStepsDone;
+    int numStepsToDo = (numMillisecondsSinceStart / STEP_TRANSITION_DURATION) - currentTickNumber;
     for (int i = 0; i < numStepsToDo; ++i) {
         shootWaves();
         updateWaves();
         updatePlayerStates();
+        currentTickNumber += 1;
     }
-    numStepsDone += numStepsToDo;
     return gameState.getIsGameOver() || gameState.isRoundFinished();
 }
 
@@ -34,10 +33,9 @@ void GameEngine::updateWaves() {
 }
 
 void GameEngine::shootWaves() {
-    if (timerSinceLastShoot.elapsedTimeInMiliseconds() < INTERVAL_BETWEEN_SHOOTS_IN_MS) return;
-    dealDamage(gameState.getWaves());
     removeDeadPNJsFromWaves();
-    timerSinceLastShoot.reset();
+    if (currentTickNumber % NUM_TICKS_BETWEEN_SHOOTS_IN_MS != 0) return;
+    dealDamage(gameState.getWaves());
 }
 
 void GameEngine::updatePlayerStates() {
@@ -47,32 +45,32 @@ void GameEngine::updatePlayerStates() {
 }
 
 void GameEngine::addMoney() {
-    if (timerSinceGoldEarned.elapsedTimeInMiliseconds() < INTERVAL_BETWEEN_GOLD_EARNED) return;
+    if (currentTickNumber % NUM_TICKS_BETWEEN_GOLD_EARNED != 0) return;
     for (PlayerState &player_state : gameState.getPlayerStates()) {
         player_state.earnMoney(GOLD_EARNED_BY_TICK);
         if (player_state.getIsSupported()) {
             player_state.earnMoney(GOLD_EARNED_BY_TICK);
         }
     }
-    timerSinceGoldEarned.reset();
 }
 
 void GameEngine::dealDamageToBase() {
-    if (timerSinceLastDamageToBase.elapsedTimeInMiliseconds() < STEP_DURATION) return;
+    // Don't do anything during transition steps
+    if (currentTickNumber % TRANSITIONS_TICKS_PER_STEP != 0) return;
+
     for (Wave &wave : gameState.getWaves()) {
         PlayerState &player_state = getPlayerStateForWave(wave);
         for (auto pnj : wave.getPnjs()) {
             if (pnj->isInPlayerBase()) {
                 player_state.decrease_hp(pnj->getDamage());
                 pnj->setHealthPoints(0);
+                std::cout << "Killed a PNJ in (" << pnj->getPosition().getX() << ","
+                                                 << pnj->getPosition().getY() << ")" << std::endl;
                 // On enleve pas les PNJ morts dans le vagues maintenant, parce que ça va
                 // être fait dans updateWaves au round suivant
             }
         }
     }
-    timerSinceLastDamageToBase.reset();
-
-
 }
 
 void GameEngine::dealDamage(std::vector<Wave> &waves) {
@@ -129,7 +127,7 @@ void GameEngine::removeDeadPNJsFromWaves() {
 
 void GameEngine::createWaves() {
     gameState.clearWaves();
-    numStepsDone = 0;
+    currentTickNumber = 0;
     timerSinceWaveStart.reset();
     increaseWaveDifficulty();
     for (const int direction: DIRECTIONS) {
