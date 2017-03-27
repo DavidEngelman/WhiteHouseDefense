@@ -53,7 +53,10 @@ void MatchMaker::get_and_process_command(int socket_fd) {
         } else if (action == COMMUNICATION_OVER) {
             communication_over = true;
 
-        } else {
+        } else if (action == EMPTY_REQUEST){
+            communication_over = true;
+        }
+        else {
             MatchmakingCommand matchmakingCommand(socket_fd);
             matchmakingCommand.parse(command_buffer);
             addPlayerToPendingMatch(matchmakingCommand.getPlayerConnection(), matchmakingCommand.getMode());

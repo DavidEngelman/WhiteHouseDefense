@@ -43,8 +43,8 @@ static const std::string ACCEPT_FRIEND_REQUEST = "acceptFriendRequest;";
 static const std::string DECLINE_FRIEND_REQUEST = "declineFriendRequest;";
 static const std::string GET_PROFILE = "getProfileByUsername;";
 static const std::string GET_STATUS = "getStatus;";
-static const std::string CANCEL_INVITATION = "cancelInvitation;";
-
+static const std::string EMPTY_REQUEST = "";
+static const std::string CANCEL_INVITATION = "cancelInvitation";
 
 static const std::string COMMUNICATION_OVER = "OVER";
 
