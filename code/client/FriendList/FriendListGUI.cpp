@@ -54,6 +54,8 @@ void FriendListGUI::display() {
     friendList->setColumnWidth(2,50);
     friendList->setShowGrid(false);
     friendList->setDragEnabled(false);
+    friendList->setEditTriggers(QAbstractItemView::NoEditTriggers);
+
 
     friendRequests = new QTableWidget();
     QHeaderView *horizontalHeader2 = friendRequests->horizontalHeader();
@@ -67,6 +69,8 @@ void FriendListGUI::display() {
     friendRequests->setColumnWidth(2,50);
     friendRequests->setShowGrid(false);
     friendRequests->setDragEnabled(false);
+    friendRequests->setEditTriggers(QAbstractItemView::NoEditTriggers);
+
 
     pendingInvitations = new QTableWidget();
     QHeaderView *horizontalHeader3 = pendingInvitations->horizontalHeader();
@@ -80,6 +84,8 @@ void FriendListGUI::display() {
     pendingInvitations->setColumnWidth(2,50);
     pendingInvitations->setShowGrid(false);
     pendingInvitations->setDragEnabled(false);
+    pendingInvitations->setEditTriggers(QAbstractItemView::NoEditTriggers);
+
 
     setupFriendList();
     setupFriendRequests();
@@ -303,7 +309,7 @@ void FriendListGUI::removeFriend(int index) {
 }
 
 void FriendListGUI::cancelInvitation(int index) {
-    manager->sendRequestServer(CANCEL_INVITATION,pendingInvitations->item(index,1)->text().toStdString());
+    manager->sendRequestServer("cancelInvitation;",pendingInvitations->item(index,1)->text().toStdString());
     refresh();
 }
 
