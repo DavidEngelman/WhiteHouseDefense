@@ -56,12 +56,15 @@ GameGUI::GameGUI(bool isSupporter, unsigned seed, GameManager *manager) : Abstra
     map = new MapGUI(seed, this, centralLayout);
     centralLayout->addStretch();
 
-    QPixmap *adImage = new QPixmap("../../qt_ui/game_pictures/ads/steaks.jpg");
+
+    QVBoxLayout *Vlayout = new QVBoxLayout;
+    QMovie *adImage = new QMovie("../../qt_ui/game_pictures/ads/kenoAd.gif");
     QLabel *imageLabel = new QLabel();
     // MAYBE: DYNAMIC CAST??
     imageLabel->setScaledContents(true);
-    imageLabel->setMaximumSize((static_cast<MapGUI *> (map))->width(), 80);
-    imageLabel->setPixmap(*adImage);
+    imageLabel->setMaximumSize((static_cast<MapGUI *> (map))->width(), 250);
+    imageLabel->setMovie(adImage);
+    adImage->start();
     centralLayout->addWidget(imageLabel);
 
     otherPlayerHealthBarBox = new QGroupBox;
@@ -702,7 +705,6 @@ void GameGUI::handleAdSpell() {
 }
 
 void GameGUI::adPopUp() {
-    std::cout << "displaying popUp" << std::endl;
     QWidget *popUpWindow = new QWidget;
     popUpWindow->setFixedSize(500, 500);
     QVBoxLayout *adLayout = new QVBoxLayout;
@@ -715,6 +717,8 @@ void GameGUI::adPopUp() {
 
     adLayout->addWidget(adPictureLabel);
     popUpWindow->setLayout(adLayout);
+    popUpWindow->move(QApplication::desktop()->screen()->rect().center() - popUpWindow->rect().center());
+    popUpWindow->setWindowModality(Qt::ApplicationModal);
     popUpWindow->show();
 }
 
