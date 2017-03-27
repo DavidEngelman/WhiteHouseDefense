@@ -7,7 +7,7 @@ FriendListManager::FriendListManager(int port, App *my_master_app) :
         friendRequests(getRequestServer(GET_FRIEND_REQUESTS, master_app->getUsername())),
         pendingInvitations(getRequestServer(GET_PENDING_INVITATIONS, master_app->getUsername()))
 {
-    if(false){
+    if(isConsole){
         friendListUI = new FriendListConsoleUI(this);
     }else{
         friendListUI = new FriendListGUI(this, master_app->getMainWindow());
