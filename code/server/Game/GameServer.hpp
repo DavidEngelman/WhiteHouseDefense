@@ -14,6 +14,7 @@
 #include "../../common/Other/Tools.hpp"
 #include <mutex>
 
+class GameServer;
 typedef struct argsForSpectatorCommandThread {
     int client_socket;
     GameServer *gameServer;
@@ -34,7 +35,7 @@ private:
 
     pthread_t spectatorJoinThread;
     pthread_t receiverThread;
-    pthread_t spectatorReceiverThread;
+    std::vector <pthread_t> spectatorReceiverThreads;
 
     void sendGameStateToPlayer(PlayerConnection &connection);
 
@@ -137,11 +138,11 @@ public:
 
     void getAndProcessSpectatorCommand(int supporterSocketFd);
 
-    void *staticProcessSpectatorCommandThread(void *self);
+    static void *staticProcessSpectatorCommandThread(void *self);
 
     void startSpectatorCommandThread(int _client_socket);
 
-    void stopSpectatorCommandThread();
+    void stopSpectatorCommandThreads();
 };
 
 #endif

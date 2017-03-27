@@ -21,6 +21,7 @@ void GameServer::run() {
 
 void GameServer::handleEndOfGame() {
     stopSpectatorThread();
+    stopSpectatorCommandThreads();
     stopInputThread();
     updatePlayerStatsOnAccountServer();
     sendFinishedToMatchmaker();
@@ -304,18 +305,26 @@ void *GameServer::staticJoinSpectatorThread(void *self) {
 }
 
 void GameServer::startSpectatorCommandThread(int _client_socket) {
-    argsForSpectatorCommandThread args;
-    args.gameServer = this;
-    args.client_socket = _client_socket;
-    pthread_create(&spectatorReceiverThread, NULL, staticProcessSpectatorCommandThread, (void*) &args);
+    pthread_t spectatorReceiverThread;
+    argsForSpectatorCommandThread *args = new argsForSpectatorCommandThread;
+    args->gameServer = this;
+    args->client_socket = _client_socket;
+    pthread_create(&spectatorReceiverThread, NULL, staticProcessSpectatorCommandThread, (void*) args);
+    spectatorReceiverThreads.push_back(spectatorReceiverThread);
 }
 
-void GameServer::stopSpectatorCommandThread() {
-    pthread_cancel(spectatorReceiverThread);
+void GameServer::stopSpectatorCommandThreads() {
+    for (auto &thread : spectatorReceiverThreads) {
+        pthread_cancel(thread);
+    }
 }
 
-void *GameServer::staticProcessSpectatorCommandThread(void *self) {
-    static_cast<GameServer *>(self)->getAndProcessSpectatorCommand();
+void *GameServer::staticProcessSpectatorCommandThread(void *arguments) {
+    argsForSpectatorCommandThread args = *(argsForSpectatorCommandThread*)arguments;
+    int supporterSocketFd = args.client_socket;
+    GameServer* self = args.gameServer;
+    self->getAndProcessSpectatorCommand(supporterSocketFd);
+    delete arguments;
     return nullptr;
 }
 
@@ -349,11 +358,7 @@ void GameServer::getAndProcessSpectatorJoinCommand() {
     }
 }
 
-void GameServer::getAndProcessSpectatorCommand(void *arguments) {
-
-    argsForSpectatorCommandThread args = *(argsForSpectatorCommandThread*)arguments;
-    int supporterSocketFd = args.client_socket;
-
+void GameServer::getAndProcessSpectatorCommand(int supporterSocketFd) {
     char buffer[BUFFER_SIZE];
     bool online = true;
     while (online) {
