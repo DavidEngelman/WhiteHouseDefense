@@ -191,6 +191,7 @@ set(SERVER_FILES "server/Other/ServerLauncher.cpp"
         common/Other/Tools.cpp
         server/Other/Timer.cpp
         server/Other/PlayerConnection.cpp
+        server/Other/SupporterConnection.cpp
         common/Other/Networking.cpp
         common/Other/Credentials.cpp
         common/Other/Message.cpp

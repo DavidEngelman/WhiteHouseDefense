@@ -93,8 +93,8 @@ void GameServer::sendGameStateToPlayers() {
         sendGameStateToPlayer(playerConnections[i]);
     }
 
-    for (int socketFd: supportersSockets) {
-        sendGameStateToPlayer(socketFd);
+    for (SupporterConnection &supporterConnection: supporterConnections) {
+        sendGameStateToPlayer(supporterConnection.getSupporterSocket());
     }
 }
 
@@ -129,7 +129,7 @@ void GameServer::getAndProcessPlayerInput() {
 void GameServer::getAndProcessUserInput(int clientSocketFd, char *buffer) {
     std::cout << "Just before receive from: " << clientSocketFd << std::endl;
 
-    if (receive_message(clientSocketFd, buffer) != -1) {
+    if (receive_message(clientSocketFd, buffer) > 0) {
         std::cout << "Received message from: " << clientSocketFd << std::endl;
         std::string command_type = get_command_type(buffer);
         std::cout << command_type << std::endl;
@@ -340,8 +340,17 @@ void *GameServer::staticProcessSpectatorCommandThread(void *arguments) {
     int supporterSocketFd = args.client_socket;
     GameServer* self = args.gameServer;
     self->getAndProcessSpectatorCommand(supporterSocketFd);
+
     delete arguments;
     return nullptr;
+}
+
+SupporterConnection GameServer::getSupporterConnection(int socket) {
+    for (auto &connection : supporterConnections) {
+        if (connection.getSupporterSocket() == socket) {
+            return connection;
+        }
+    }
 }
 
 void GameServer::getAndProcessSpectatorJoinCommand() {
@@ -368,7 +377,11 @@ void GameServer::getAndProcessSpectatorJoinCommand() {
             // It's after the setup, because the supporter must first receive the game info before getting
             // treated in the main loop
             // TODO: peut etre utiliser ici un mutex pour éviter des problemes de coherence
-            supportersSockets.push_back(client_socket_fd);
+            SupporterConnection connection;
+            connection.setSupporterSocket(client_socket_fd);
+            connection.setPlayerSupported(username);
+
+            supporterConnections.push_back(connection);
             startSpectatorCommandThread(client_socket_fd);
         }
     }
@@ -378,7 +391,7 @@ void GameServer::getAndProcessSpectatorCommand(int supporterSocketFd) {
     char buffer[BUFFER_SIZE];
     bool online = true;
     while (online) {
-        if (receive_message(supporterSocketFd, buffer) != -1) {
+        if (receive_message(supporterSocketFd, buffer) > 0) {
             std::cout << "Received message from: " << supporterSocketFd << std::endl;
             std::string command_type = get_command_type(buffer);
             std::cout << command_type << std::endl;
@@ -403,6 +416,10 @@ void GameServer::getAndProcessSpectatorCommand(int supporterSocketFd) {
             }
 
         } else {
+            SupporterConnection connection = getSupporterConnection(supporterSocketFd);
+
+            PlayerState &playerState = getPlayerStateWithUsername(connection.getPlayerSupported());
+            playerState.setIsSupported(false);
             removeClosedSocketFromSocketLists(supporterSocketFd);
             online = false;
         }
@@ -473,7 +490,8 @@ void GameServer::sendTowerPhase() {
         attemptSendMessageToClientSocket(socketFd, "t");
     }
 
-    for (int socketFd: supportersSockets) {
+    for (SupporterConnection &supporterConnection : supporterConnections) {
+        int socketFd = supporterConnection.getSupporterSocket();
         attemptSendMessageToClientSocket(socketFd, "t");
     }
 }
@@ -484,8 +502,9 @@ void GameServer::sendWavePhase() {
         attemptSendMessageToClientSocket(socketFd, "w");
     }
 
-    for (int socketFd: supportersSockets) {
-        attemptSendMessageToClientSocket(socketFd, "w");
+    for (SupporterConnection &supporterConnection : supporterConnections) {
+        int socketFd = supporterConnection.getSupporterSocket();
+        attemptSendMessageToClientSocket(socketFd, "t");
     }
 }
 
@@ -558,9 +577,9 @@ void GameServer::removeClosedSocketFromSocketLists(int fd) {
         }
     }
 
-    for (auto iter2 = supportersSockets.begin(); iter2 != supportersSockets.end(); iter2++) {
-        if ((*iter2) == fd) {
-            supportersSockets.erase(iter2);
+    for (auto iter2 = supporterConnections.begin(); iter2 != supporterConnections.end(); iter2++) {
+        if ((*iter2).getSupporterSocket() == fd) {
+            supporterConnections.erase(iter2);
             return;
         }
     }
@@ -584,8 +603,8 @@ bool GameServer::socketIsActive(int fd) {
         }
     }
 
-    for (int socket: supportersSockets) {
-        if (socket == fd) {
+    for (SupporterConnection &supporterConnection: supporterConnections) {
+        if (supporterConnection.getSupporterSocket()) {
             return true;
         }
     }
@@ -599,8 +618,8 @@ std::vector<PlayerConnection> &GameServer::getPlayerConnections() {
 
 void GameServer::tellSupportersTheGameIsOver() {
     gameEngine->getGameState().setIsGameOver(true);
-    for (int socketFd: supportersSockets) {
-        sendGameStateToPlayer(socketFd);
+    for (SupporterConnection &supporterConnection : supporterConnections) {
+        sendGameStateToPlayer(supporterConnection.getSupporterSocket());
     }
 }
 
