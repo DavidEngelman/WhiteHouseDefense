@@ -6,7 +6,6 @@ file(GLOB code database.db)
 
 find_package(Qt5Widgets REQUIRED)
 find_package(Qt5Multimedia REQUIRED)
-find_package(Qt5Charts REQUIRED)
 
 find_package(Threads)
 
@@ -207,4 +206,4 @@ target_link_libraries(server crypt)
 
 target_link_libraries(server Threads::Threads)
 target_link_libraries(client Threads::Threads)
-target_link_libraries(client Qt5::Widgets Qt5::Multimedia Qt5::Charts)
+target_link_libraries(client Qt5::Widgets Qt5::Multimedia)

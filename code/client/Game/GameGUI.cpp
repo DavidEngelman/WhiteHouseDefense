@@ -548,145 +548,98 @@ void GameGUI::setUpWinnerLooserBox(GameState &gameState) {
 }
 
 void GameGUI::setUpStatsLayout(GameState &gameState) {
-    statsLayout = new QHBoxLayout;
-    setUpChartBox(gameState);
-    endOfGameLayout->addLayout(statsLayout);
+    setUpstatBox(gameState);
+    endOfGameLayout->addWidget(statBox);
 }
 
-void GameGUI::setUpChartBox(GameState &gameState) {
+void GameGUI::setUpstatBox(GameState &gameState) {
 
-    chartBox = new QGroupBox;
+    QFont font = QFont();
+    font.setBold(true);
+    font.setPointSize(30);
 
-    chartLayout = new QGridLayout;
+    statBox = new QGroupBox;
 
-    /////////CHART 1
-
-    npcKilled = new QBarSet("NPC killed");
-
-    for (PlayerState player : gameState.getPlayerStates()) {
-        npcKilled->append(player.getNPCKilled());
-    }
-
-    QBarSeries *series = new QBarSeries();
-    series->append(npcKilled);
-
-    chart1 = new QChart();
-    chart1->addSeries(series);
-    chart1->setTitle("NPC killed");
-    chart1->setAnimationOptions(QChart::SeriesAnimations);
-
-    QStringList categories;
-    for (PlayerState &player : gameState.getPlayerStates()) {
-        categories.append(QString::fromStdString(player.getUsername()));
-    }
-
-    QBarCategoryAxis *axis = new QBarCategoryAxis();
-    axis->append(categories);
-    chart1->createDefaultAxes();
-    chart1->setAxisX(axis, series);
-    chart1->legend()->setVisible(true);
-    chart1->legend()->setAlignment(Qt::AlignBottom);
-
-    chartView1 = new QChartView(chart1);
-    chartView1->setRenderHint(QPainter::Antialiasing);
-
-    chartLayout->addWidget(chartView1, 0, 0);
+    statsLayout = new QGridLayout;
 
 
-    /////////CHART 2
+    /////////PLAYER 1
 
-    nbTowersPlaced = new QBarSet("Towers placed");
+    int index = 0;
+    QString statString1 = "Username : " + QString::fromStdString(gameState.getPlayerStates()[index].getUsername()) + "\n"
+                          + "NPC killed : " + QString::number(gameState.getPlayerStates()[index].getNPCKilled()) + "\n"
+                          + "Damagage dealt : " + QString::number(gameState.getPlayerStates()[index].getDamageDealt()) + "\n"
+                          + "Money spend : " + QString::number(gameState.getPlayerStates()[index].getMoneySpend()) + "\n"
+                          + "Towers placed : " + QString::number(gameState.getPlayerStates()[index].getNbTowersPlaced());
 
-    for (PlayerState player : gameState.getPlayerStates()) {
-        nbTowersPlaced->append(player.getNbTowersPlaced());
-    }
-
-    nbTowersPlaced->setColor(QColor("green"));
-
-    QBarSeries *series2 = new QBarSeries();
-    series2->append(nbTowersPlaced);
-    chart2 = new QChart();
-
-    chart2->addSeries(series2);
-    chart2->setTitle("Towers Placed");
-    chart2->setAnimationOptions(QChart::SeriesAnimations);
-
-    chart2->createDefaultAxes();
-    QBarCategoryAxis *axis2 = new QBarCategoryAxis();
-    axis2->append(categories);
-    chart2->setAxisX(axis2, series2);
-    chart2->legend()->setVisible(true);
-    chart2->legend()->setAlignment(Qt::AlignBottom);
+    statViewP1 = new QLabel;
+    statViewP1->setFont(font);
+    statViewP1->setText(statString1);
+    QVBoxLayout *statViewP1Layout = new QVBoxLayout();
+    statViewP1Layout->addWidget(statViewP1);
+    QGroupBox *box1 = new QGroupBox();
+    box1->setLayout(statViewP1Layout);
+    statsLayout->addWidget(box1, 0, 0);
 
 
-    chartView2 = new QChartView(chart2);
-    chartView2->setRenderHint(QPainter::Antialiasing);
+    /////////PLAYER 2
 
-    chartLayout->addWidget(chartView2, 0, 1);
+    index = 1;
+    QString statString2 = "Username : " + QString::fromStdString(gameState.getPlayerStates()[index].getUsername()) + "\n"
+                          + "NPC killed : " + QString::number(gameState.getPlayerStates()[index].getNPCKilled()) + "\n"
+                          + "Damagage dealt : " + QString::number(gameState.getPlayerStates()[index].getDamageDealt()) + "\n"
+                          + "Money spend : " + QString::number(gameState.getPlayerStates()[index].getMoneySpend()) + "\n"
+                          + "Towers placed : " + QString::number(gameState.getPlayerStates()[index].getNbTowersPlaced());
 
-
-    /////CHART 3
-
-    damageDealt = new QBarSet("Damage dealt");
-
-    for (PlayerState player : gameState.getPlayerStates()) {
-        damageDealt->append(player.getDamageDealt());
-    }
-
-    damageDealt->setColor(QColor("red"));
-
-    QBarSeries *series3 = new QBarSeries();
-    series3->append(damageDealt);
-
-    chart3 = new QChart();
-    chart3->addSeries(series3);
-    chart3->setTitle("Damage Dealt");
-    chart3->setAnimationOptions(QChart::SeriesAnimations);
-
-    chart3->createDefaultAxes();
-    QBarCategoryAxis *axis3 = new QBarCategoryAxis();
-    axis3->append(categories);
-    chart3->setAxisX(axis3, series3);
-    chart3->legend()->setAlignment(Qt::AlignBottom);
-
-    chartView3 = new QChartView(chart3);
-    chartView3->setRenderHint(QPainter::Antialiasing);
-
-    chartLayout->addWidget(chartView3, 1, 0);
+    statViewP2 = new QLabel;
+    statViewP2->setText(statString2);
+    statViewP2->setFont(font);
+    QVBoxLayout *statViewP2Layout = new QVBoxLayout();
+    statViewP2Layout->addWidget(statViewP2);
+    QGroupBox *box2 = new QGroupBox();
+    box2->setLayout(statViewP2Layout);
+    statsLayout->addWidget(box2, 0, 1);
 
 
-    /////CHART 4
+    /////PLAYER 3
 
-    moneySpend = new QBarSet("Money spend");
+    index = 2;
+    QString statString3 = "Username : " + QString::fromStdString(gameState.getPlayerStates()[index].getUsername()) + "\n"
+                          + "NPC killed : " + QString::number(gameState.getPlayerStates()[index].getNPCKilled()) + "\n"
+                          + "Damagage dealt : " + QString::number(gameState.getPlayerStates()[index].getDamageDealt()) + "\n"
+                          + "Money spend : " + QString::number(gameState.getPlayerStates()[index].getMoneySpend()) + "\n"
+                          + "Towers placed : " + QString::number(gameState.getPlayerStates()[index].getNbTowersPlaced());
 
-    for (PlayerState player : gameState.getPlayerStates()) {
-        moneySpend->append(player.getMoneySpend());
-    }
+    statViewP3 = new QLabel;
+    statViewP3->setText(statString3);
+    statViewP3->setFont(font);
+    QVBoxLayout *statViewP3Layout = new QVBoxLayout();
+    statViewP3Layout->addWidget(statViewP3);
+    QGroupBox *box3 = new QGroupBox();
+    box3->setLayout(statViewP3Layout);
+    statsLayout->addWidget(box3, 1, 0);
 
-    moneySpend->setColor(QColor("orange"));
+    /////PLAYER 4
 
-    QBarSeries *series4 = new QBarSeries();
-    series4->append(moneySpend);
+    index = 3;
+    QString statString4 = "Username : " + QString::fromStdString(gameState.getPlayerStates()[index].getUsername()) + "\n"
+                          + "NPC killed : " + QString::number(gameState.getPlayerStates()[index].getNPCKilled()) + "\n"
+                          + "Damagage dealt : " + QString::number(gameState.getPlayerStates()[index].getDamageDealt()) + "\n"
+                          + "Money spend : " + QString::number(gameState.getPlayerStates()[index].getMoneySpend()) + "\n"
+                          + "Towers placed : " + QString::number(gameState.getPlayerStates()[index].getNbTowersPlaced());
 
-    chart4 = new QChart();
-    chart4->addSeries(series4);
-    chart4->setTitle("Money Spend");
-    chart4->setAnimationOptions(QChart::SeriesAnimations);
+    statViewP4 = new QLabel;
+    statViewP4->setText(statString4);
+    statViewP4->setFont(font);
+    QVBoxLayout *statViewP4Layout = new QVBoxLayout();
+    statViewP4Layout->addWidget(statViewP4);
+    QGroupBox *box4 = new QGroupBox();
+    box4->setLayout(statViewP4Layout);
+    statsLayout->addWidget(box4, 1, 1);
 
-    chart4->createDefaultAxes();
-    QBarCategoryAxis *axis4 = new QBarCategoryAxis();
-    axis4->append(categories);
-    chart4->setAxisX(axis4, series4);
-    chart4->legend()->setAlignment(Qt::AlignBottom);
+    statsLayout->setAlignment(Qt::AlignCenter);
 
-    chartView4 = new QChartView(chart4);
-    chartView4->setRenderHint(QPainter::Antialiasing);
-
-    chartLayout->addWidget(chartView4, 1, 1);
-
-
-    chartBox->setLayout(chartLayout);
-    statsLayout->addWidget(chartBox);
+    statBox->setLayout(statsLayout);
 
 }
 

@@ -14,14 +14,9 @@
 #include "InGameChatWidget.hpp"
 #include "../Other/QCustomButton.hpp"
 #include <QProgressBar>
-#include <QtCharts/QChartView>
-#include <QtCharts/QBarSeries>
-#include <QtCharts/QBarSet>
-#include <QtCharts/QLegend>
-#include <QtCharts/QBarCategoryAxis>
 #include "../../common/Other/Tools.hpp"
 
-QT_CHARTS_USE_NAMESPACE
+
 class MapGUI;
 
 class GameGUI : public AbstractGUI, public GameUI {
@@ -71,24 +66,14 @@ private:
 
     QGroupBox *winnerLoserInfos;
 
-    QHBoxLayout *statsLayout;
-    QGroupBox *chartBox;
-    QGridLayout *chartLayout;
+    QGridLayout *statsLayout;
+    QGroupBox *statBox;
 
+    QLabel *statViewP1;
+    QLabel *statViewP2;
+    QLabel *statViewP3;
+    QLabel *statViewP4;
 
-    QChartView *chartView1;
-    QChartView *chartView2;
-    QChartView *chartView3;
-    QChartView *chartView4;
-    QChart *chart1;
-    QChart *chart2;
-    QChart *chart3;
-    QChart *chart4;
-
-    QBarSet *npcKilled;
-    QBarSet *nbTowersPlaced;
-    QBarSet *damageDealt;
-    QBarSet *moneySpend;
 
     //supporter
     QGroupBox *supporterActionBox;
@@ -162,7 +147,7 @@ public:
 
     void setUpStatsLayout(GameState &gameState);
 
-    void setUpChartBox(GameState &gameState);
+    void setUpstatBox(GameState &gameState);
 
     void enableFreezeSpell() override ;
 
