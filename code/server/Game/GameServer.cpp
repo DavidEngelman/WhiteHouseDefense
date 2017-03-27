@@ -14,6 +14,7 @@ GameServer::GameServer(int port, std::vector<PlayerConnection> &playerConnection
     if(Fichier)
     {
         std::string ligne;
+        dico = " ";
         while(getline(Fichier, ligne)) //Tant qu'on n'est pas à la fin, on lit
         {
             dico += ligne + " ";
@@ -605,7 +606,7 @@ void GameServer::changeVulgarityToStar(std::string &userMessage) {
 void GameServer::findAndChangeToStarVulgarities(std::string mot, int count, std::string &userMessage){
     unsigned long taille = mot.size();
     for(int i = 0; i<taille; i++){
-        mot[i] = tolower(mot[i]);
+        mot[i] = (char) tolower(mot[i]);
     }
     mot = ' ' + mot +' ';
     if (dico.find(mot) != std::string::npos) {
