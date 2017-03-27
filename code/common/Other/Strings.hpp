@@ -31,7 +31,8 @@ static const std::string CHANGE_USERNAME = "CHANGEUSERNAME";
 static const std::string CHANGE_PASSWORD = "CHANGEPASSWORD";
 static const std::string CHANGE_ICON = "CHANGEICON";
 
-static const std::string MESSAGES[3] = {"GG Easy", "Make America\n great again", "I will build \na great wall"};
+static const std::string MESSAGES_BUTTONS[3] = {"GG Easy", "Make America\n great again", "I will build \na great wall"};
+static const std::string MESSAGES_CONTENT[3] = {"GG Easy", "Make America great again", "I will build a great wall"};
 
 static const std::string GET_FRIENDLIST = "getFriendList;";
 static const std::string GET_FRIEND_REQUESTS = "getFriendRequests;";

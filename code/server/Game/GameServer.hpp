@@ -6,6 +6,7 @@
 #include "../../common/Gamestate/GameState.hpp"
 #include "PendingMatch.hpp"
 #include "../Other/PlayerConnection.hpp"
+#include "../Other/SupporterConnection.hpp"
 #include "../../common/Other/Strings.hpp"
 #include "../Commands/TowerCommand.hpp"
 #include "GameEngine.hpp"
@@ -32,7 +33,8 @@ private:
     GameEngine *gameEngine;
     std::vector<PlayerConnection> playerConnections;
 
-    std::vector<int> supportersSockets;
+    std::vector<SupporterConnection> supporterConnections;
+
 
     pthread_t spectatorJoinThread;
     pthread_t receiverThread;
@@ -147,6 +149,8 @@ public:
     void startSpectatorCommandThread(int _client_socket);
 
     void stopSpectatorCommandThreads();
+
+    SupporterConnection getSupporterConnection(int socket);
 };
 
 #endif

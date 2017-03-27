@@ -275,14 +275,14 @@ void GameConsoleUI::enableNukeSpell() {}
 void GameConsoleUI::sendPredefinedMessage() {
     displayPredefinedMessages();
     int choice = getChoice(3);
-    manager->sendMessageToPlayers(MESSAGES[choice - 1]);
+    manager->sendMessageToPlayers(MESSAGES_CONTENT[choice - 1]);
 }
 
 void GameConsoleUI::displayPredefinedMessages() {
     std::cout << "Send the messages: " << std::endl;
-    std::cout << "1. " << MESSAGES[0] << std::endl;
-    std::cout << "2. " << MESSAGES[1] << std::endl;
-    std::cout << "3. " << MESSAGES[2] << std::endl;
+    std::cout << "1. " << MESSAGES_CONTENT[0] << std::endl;
+    std::cout << "2. " << MESSAGES_CONTENT[1] << std::endl;
+    std::cout << "3. " << MESSAGES_CONTENT[2] << std::endl;
     std::cout << std::endl;
 }
 

@@ -21,7 +21,7 @@ private:
     void parse_message_from_server(const std::string &message);
 
 public:
-    SpectatorManager(int port, App *master_app, bool fromFriendList = false);
+    SpectatorManager(int port, App *master_app);
 
     ~SpectatorManager();
 

@@ -26,9 +26,9 @@ InGameChatWidget::InGameChatWidget(GameManager *gameManager) : gameManager(gameM
     fieldsLayout->addWidget(sendButton);
 
     QHBoxLayout *buttonsLayout = new QHBoxLayout();
-    QCustomButton *button1 = new QCustomButton(0, QString::fromStdString(MESSAGES[0]));
-    QCustomButton *button2 = new QCustomButton(1, QString::fromStdString(MESSAGES[1]));
-    QCustomButton *button3 = new QCustomButton(2, QString::fromStdString(MESSAGES[2]));
+    QCustomButton *button1 = new QCustomButton(0, QString::fromStdString(MESSAGES_BUTTONS[0]));
+    QCustomButton *button2 = new QCustomButton(1, QString::fromStdString(MESSAGES_BUTTONS[1]));
+    QCustomButton *button3 = new QCustomButton(2, QString::fromStdString(MESSAGES_BUTTONS[2]));
 
     connect(button1, SIGNAL(clicked(int)), this, SLOT(handleMessageChoice(int)));
     connect(button2, SIGNAL(clicked(int)), this, SLOT(handleMessageChoice(int)));
@@ -52,7 +52,7 @@ void InGameChatWidget::sendMessage() {
 }
 
 void InGameChatWidget::handleMessageChoice(int choice) {
-    gameManager->sendMessageToPlayers(MESSAGES[choice]);
+    gameManager->sendMessageToPlayers(MESSAGES_CONTENT[choice]);
 }
 
 void InGameChatWidget::addChatMessage(const std::string &message, const std::string &sender) {
@@ -60,7 +60,7 @@ void InGameChatWidget::addChatMessage(const std::string &message, const std::str
 
     QListWidgetItem *item = new QListWidgetItem(totalMessage.c_str());
     if (sender == gameManager->getUsername()) item->setForeground(Qt::darkGreen);
-    if (message == MESSAGES[1]) playSound("../../qt_ui/game_pictures/sounds/america_great_again.mp3");
+    if (message == MESSAGES_CONTENT[1]) playSound("../../qt_ui/game_pictures/sounds/america_great_again.mp3");
 
     messagesListWidget->addItem(item);
 }
