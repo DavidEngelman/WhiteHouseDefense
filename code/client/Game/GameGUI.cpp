@@ -754,7 +754,12 @@ void GameGUI::adPopUp() {
     popUpWindow->setFixedSize(500, 500);
     QVBoxLayout *adLayout = new QVBoxLayout;
     QLabel *adPictureLabel = new QLabel;
-    adPictureLabel->setPixmap(QPixmap("../../qt_ui/game_pictures/ads/loreal.jpg"));
+    if (rand() % 2 == 0){
+        adPictureLabel->setPixmap(QPixmap("../../qt_ui/game_pictures/ads/loreal.jpg"));
+    } else {
+        adPictureLabel->setPixmap(QPixmap("../../qt_ui/game_pictures/ads/Trump-Lego-Box.png"));
+    }
+
     adLayout->addWidget(adPictureLabel);
     popUpWindow->setLayout(adLayout);
     popUpWindow->show();

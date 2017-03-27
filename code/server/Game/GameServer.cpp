@@ -46,7 +46,10 @@ void GameServer::handleEndOfGame() {
 void GameServer::runGame() {
 
     start_socket_listen();
-    sleep(3); // TODO: find better way to avoid network race conditions...
+    // TODO: find better way to avoid network race conditions...
+    // Ideally, we'd only launch the server when the matchmaker has received the 4 confirmations from
+    // the players, but that's quite a bit of work and little reward
+    sleep(2);
     gameEngine = new GameEngine(mapSeed, mode);
 
     // Creer les playerState
@@ -197,7 +200,7 @@ void GameServer::sendAdPopUP(std::string &playerSupportedUserName) {
         if (playerConnection.getUsername() != playerSupportedUserName) {
             int socketFd = playerConnection.getSocketFd();
             send_message(socketFd, message.c_str());
-            std::cout << "sended popUp" << std::endl;
+            std::cout << "sent popUp" << std::endl;
         }
     }
 }
