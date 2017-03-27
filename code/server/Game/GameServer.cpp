@@ -200,7 +200,7 @@ void GameServer::sendAdPopUP(std::string &playerSupportedUserName) {
         if (playerConnection.getUsername() != playerSupportedUserName) {
             int socketFd = playerConnection.getSocketFd();
             send_message(socketFd, message.c_str());
-            std::cout << "sended popUp" << std::endl;
+            std::cout << "sent popUp" << std::endl;
         }
     }
 }
