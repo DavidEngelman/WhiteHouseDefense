@@ -8,8 +8,6 @@
 #include "Wave.hpp"
 #include "../Other/Strings.hpp"
 
-const static std::vector<std::string> validModes = {CLASSIC_MODE, TEAM_MODE, TIMED_MODE};
-
 class AbstractTower; // Ah, les dependences circulaires :(
 
 /*
@@ -68,7 +66,7 @@ public:
 
     bool upgradeTower(Position &position, int quadrant);
 
-    void deleteTowersInHeap();
+    void clearThingsInHeap();
 };
 
 #endif

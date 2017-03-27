@@ -29,7 +29,7 @@ private:
     std::string mode;
     unsigned int mapSeed;
 
-    GameEngine *gameEngine; // TODO: vu qu'on garde la mapSeed, ceci n'a plus besoin d'etre un pointeur
+    GameEngine *gameEngine;
     std::vector<PlayerConnection> playerConnections;
 
     std::vector<int> supportersSockets;

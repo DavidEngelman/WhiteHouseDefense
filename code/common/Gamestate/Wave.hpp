@@ -37,6 +37,8 @@ public:
 
     void removeDeadPNJs();
     void freeze();
+
+    void destroy();
 };
 
 

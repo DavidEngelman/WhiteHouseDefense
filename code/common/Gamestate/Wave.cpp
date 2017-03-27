@@ -76,14 +76,13 @@ void Wave::addPNJ(PNJ &pnj) {
     number_of_added_pnjs += 1;
 }
 
-Wave::~Wave() {
-    //TODO : voir ce qu'il faut faire ici
-    /*
+void Wave::destroy() {
     for (auto pnj: pnjs) {
         delete pnj;
     }
-     */
 }
+
+Wave::~Wave() {}
 
 void Wave::freeze() {
     for (auto &&pnj : pnjs) {
