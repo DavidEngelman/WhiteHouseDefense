@@ -54,6 +54,7 @@ private:
     QPushButton *nukeB;
     QPushButton *freezeB;
     QPushButton *airStrikeB;
+    QPushButton* healTeamB;
 
     //base health of other players
     QGroupBox *otherPlayerHealthBarBox;
@@ -89,6 +90,7 @@ public slots:
     void handleNukeSpell();
     void handleAdSpell();
     void handleAirStrike();
+    void handleHealTeam();
     void goToMenu();
 
     void handleFreezeSpell();
@@ -176,6 +178,8 @@ public:
     void displaySupporterActionBox();
 
     void adPopUp() override;
+
+    void disableHealTeam() override;
 
     void playSound(QString soundPath);
 };

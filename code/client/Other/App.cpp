@@ -19,7 +19,6 @@ App::App(char *serverIpAddr) : serverIpAddress(serverIpAddr),
 }
 
 void App::transition(AbstractManager *new_manager) {
-
     delete (currentManager);
     currentManager = new_manager;
     currentManager->run();

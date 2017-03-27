@@ -98,6 +98,7 @@ static const int MISSILE_TOWER_SUBDAMAGE = 5;
 // Spells
 
 static const int AIR_STRIKE_DAMAGE = 20;
+static const int HEAL_AMOUNT = 20;
 
 
 

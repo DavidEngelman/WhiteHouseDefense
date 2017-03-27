@@ -360,6 +360,7 @@ void GameGUI::handleUpgradingTower() {
 void GameGUI::displaySpellBox() {
     int scl = 10;
     QSize size = QSize(1400 / scl, 1060 / scl);
+    QGridLayout *layout = new QGridLayout;
 
     nukeB = new QHandPointerButton;
     nukeB->setEnabled(false);
@@ -375,8 +376,15 @@ void GameGUI::displaySpellBox() {
     airStrikeB->setEnabled(false);
     airStrikeB->setIcon(QIcon("../../qt_ui/game_pictures/spells/airstrike.png"));
     airStrikeB->setIconSize(size);
+    if (manager->getMode() == TEAM_MODE) {
+        healTeamB = new QHandPointerButton;
+        healTeamB->setIcon(QIcon("../../qt_ui/game_pictures/spells/heal.png"));
+        healTeamB->setIconSize(size);
+        QObject::connect(healTeamB, SIGNAL(clicked()), this, SLOT(handleHealTeam()));
+        layout->addWidget(healTeamB, 1,1);
 
-    QGridLayout *layout = new QGridLayout;
+    }
+
     layout->addWidget(nukeB, 0, 0);
     layout->addWidget(freezeB, 0, 1);
     layout->addWidget(airStrikeB, 1, 0);
@@ -386,6 +394,7 @@ void GameGUI::displaySpellBox() {
     QObject::connect(nukeB, SIGNAL(clicked()), this, SLOT(handleNukeSpell()));
     QObject::connect(freezeB, SIGNAL(clicked()), this, SLOT(handleFreezeSpell()));
     QObject::connect(airStrikeB, SIGNAL(clicked()), this, SLOT(handleAirStrike()));
+
 
 }
 
@@ -403,6 +412,11 @@ void GameGUI::handleAirStrike() {
     int targetQuadrant = map->computeQuadrant(map->getHighlightedPosition());
     manager->launchAirStrike(targetQuadrant);
     playSound("../../qt_ui/game_pictures/sounds/airstrike.mp3");
+}
+
+void GameGUI::handleHealTeam() {
+    manager->launchHealTeam();
+    //TODO: rajouter un son
 }
 
 void GameGUI::displayPlayerInfos(GameState &gameState, int quadrant) {
@@ -467,6 +481,10 @@ void GameGUI::enableAirStrike() {
         airStrikeB->setEnabled(true);
     }
 
+}
+
+void GameGUI::disableHealTeam() {
+    healTeamB->setEnabled(false);
 }
 
 void GameGUI::enableSpells() {
@@ -739,3 +757,5 @@ void GameGUI::playSound(QString musicPath) {
     mediaPlayer->setPlaylist(playlist);
     mediaPlayer->play();
 }
+
+

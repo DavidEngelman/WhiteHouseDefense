@@ -68,6 +68,8 @@ public:
     virtual void handlePlaceTowerPhaseStart() {};
 
     virtual void handleWaveStart() {};
+
+    virtual void disableHealTeam() = 0;
 };
 
 #endif //PROJET_GAMEUI_H

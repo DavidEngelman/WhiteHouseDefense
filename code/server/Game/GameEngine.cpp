@@ -311,6 +311,14 @@ void GameEngine::launchAirStrike(int quadrant) {
 
 }
 
+void GameEngine::healTeam(int quadrant) {
+    PlayerState& teammate = gameState.getPlayerStates()[PARTNERS[quadrant]];
+    int teammate_cuurent_hp = teammate.getHp();
+
+    teammate.setHp(teammate_cuurent_hp + min(PLAYER_STARTING_HP - teammate_cuurent_hp, HEAL_AMOUNT));
+
+}
+
 
 
 

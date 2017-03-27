@@ -180,6 +180,12 @@ void GameServer::getAndProcessUserInput(int clientSocketFd, char *buffer) {
             int targetQuadrant = command.getNextInt();
             gameEngine->launchAirStrike(targetQuadrant);
             sendAirstrikeNotification(quadrant, targetQuadrant);
+        } else if (command_type == HEAL_TEAM_COMMAND_STRING) {
+            Command command;
+            command.parse(buffer);
+            int quadrant = command.getNextInt();
+            gameEngine->healTeam(quadrant);
+
         }
     } else {
         removeClosedSocketFromSocketLists(clientSocketFd);
@@ -344,7 +350,7 @@ void *GameServer::staticProcessSpectatorCommandThread(void *arguments) {
     GameServer* self = args.gameServer;
     self->getAndProcessSpectatorCommand(supporterSocketFd);
 
-    delete arguments;
+    delete (argsForSpectatorCommandThread*)arguments;
     return nullptr;
 }
 
