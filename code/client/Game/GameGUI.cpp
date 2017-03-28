@@ -397,23 +397,26 @@ void GameGUI::displaySpellBox() {
     nukeB->setIconSize(size);
     nukeB->setToolTip(QString::fromStdString(tooltip));
 
-    tooltip = "Frozes npcs within your side of the map,\nunabling them to move for a short time.\n";
+    tooltip = "Frozes npcs within your side of the map,\nimmobilizing them for a short time.\n";
     freezeB = new QHandPointerButton;
     freezeB->setEnabled(false);
     freezeB->setIcon(QIcon("../../qt_ui/game_pictures/spells/frozentrump.png"));
     freezeB->setIconSize(size);
     freezeB->setToolTip(QString::fromStdString(tooltip));
 
-    tooltip = "Launch an airstrike on your opponents to\ndeal damage to their base or aim on your\nally to heal their base.\n";
+    tooltip = "Launch an airstrike on your opponents to\ndeal 20 damage to their base.\n";
     airStrikeB = new QHandPointerButton;
     airStrikeB->setEnabled(false);
     airStrikeB->setIcon(QIcon("../../qt_ui/game_pictures/spells/airstrike.png"));
     airStrikeB->setIconSize(size);
     airStrikeB->setToolTip(QString::fromStdString(tooltip));
+
     if (manager->getMode() == TEAM_MODE) {
+        tooltip = "Give your teammate 20 health points back.\n";
         teamHealB = new QHandPointerButton;
         teamHealB->setIcon(QIcon("../../qt_ui/game_pictures/spells/heal.png"));
         teamHealB->setIconSize(size);
+        teamHealB->setToolTip(QString::fromStdString(tooltip));
         QObject::connect(teamHealB, SIGNAL(clicked()), this, SLOT(handleTeamHeal()));
         layout->addWidget(teamHealB, 1, 1);
 
