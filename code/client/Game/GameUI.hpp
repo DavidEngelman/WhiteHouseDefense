@@ -69,7 +69,7 @@ public:
 
     virtual void handleWaveStart() {};
 
-    virtual void disableHealTeam() = 0;
+    virtual void disableTeamHeal() = 0;
 };
 
 #endif //PROJET_GAMEUI_H

@@ -116,7 +116,7 @@ public:
 
     void launchAdSpell();
 
-    void launchHealTeam();
+    void launchTeamHeal();
 
     void sendFreezeSpellRequest();
 
@@ -141,7 +141,7 @@ public slots:
     void updateMap();
 
 
-    void sendHealTeamRequest(int quadrant);
+    void sendTeamHealRequest(int quadrant);
 };
 
 #endif

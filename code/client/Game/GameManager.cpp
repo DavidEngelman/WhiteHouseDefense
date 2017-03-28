@@ -592,13 +592,13 @@ const std::string GameManager::getMode() {
     return gameState->getMode();
 }
 
-void GameManager::launchHealTeam() {
-    sendHealTeamRequest(quadrant);
-    gameUI->disableHealTeam();
+void GameManager::launchTeamHeal() {
+    sendTeamHealRequest(quadrant);
+    gameUI->disableTeamHeal();
 
 }
 
-void GameManager::sendHealTeamRequest(int quadrant) {
+void GameManager::sendTeamHealRequest(int quadrant) {
     std::string message = HEAL_TEAM_COMMAND_STRING + ","
                           + std::to_string(quadrant) + ";";
     send_message(server_socket, message.c_str());

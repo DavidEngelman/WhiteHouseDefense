@@ -43,21 +43,21 @@ void MapGUI::paintEvent(QPaintEvent *) {
             frozen = pnj->isFrozen();
 
             if (typeOfPNJ == MEXICAN_PNJ_STR) {
-                if (frozen  == 0){
+                if (frozen == 0) {
                     image = NPC_images[MEXICAN];
-                }else {
+                } else {
                     image = NPC_images[FROZEN_MEXICAN];
                 }
             } else if (typeOfPNJ == COMMUNIST_PNJ_STR) {
-                if (frozen == 0 ) {
+                if (frozen == 0) {
                     image = NPC_images[COMMUNIST];
-                }else {
+                } else {
                     image = NPC_images[FROZEN_COMMUNIST];
                 }
-            } else if (typeOfPNJ == MUSLIM_PNJ_STR ) {
-                if (frozen == 0 ) {
+            } else if (typeOfPNJ == MUSLIM_PNJ_STR) {
+                if (frozen == 0) {
                     image = NPC_images[MUSLIM];
-                }else {
+                } else {
                     image = NPC_images[FROZEN_MUSLIM];
                 }
             }
@@ -108,8 +108,10 @@ void MapGUI::mousePressEvent(QMouseEvent *event) {
             if (isObstacle(pos) or isPath(pos) or isBase(pos)) {
                 gameGUI->disableTowerShop();
                 gameGUI->disableDeleteAndUpgradeBox();
-                if (isBase(pos)) {
+                if (gameGUI->isAirStrikeActivable()) {
                     gameGUI->enableAirStrike();
+                } else {
+                    gameGUI->disableAirStrike();
                 }
             } else {
                 gameGUI->enableTowerShop();
