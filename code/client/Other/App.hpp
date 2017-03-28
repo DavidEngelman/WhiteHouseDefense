@@ -9,6 +9,7 @@
 
 
 class AbstractManager;
+
 class QMatchMakingThread;
 
 class App : public QObject {
@@ -26,7 +27,8 @@ private:
 
     QWidget *mainWindow;
     QMediaPlayer *mediaPlayer;
-    //QMediaPlaylist *playlist;
+
+    bool friendListActive = false;
 
 
 public slots:
@@ -52,8 +54,6 @@ public:
 
     QWidget *getMainWindow();
 
-    ~App();
-
     bool isInQueue();
 
     void leaveQueue();
@@ -65,6 +65,12 @@ public:
     virtual void centerWindow();
 
     void launchSupporter(int gameServerSocket);
+
+    void setFriendListActive(bool isFriendListActive);
+
+    bool isFriendListActive() const;
+
+    ~App();
 };
 
 

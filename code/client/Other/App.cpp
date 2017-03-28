@@ -138,3 +138,11 @@ App::~App() {
     }
 }
 
+void App::setFriendListActive(bool isFriendListActive) {
+    App::friendListActive = isFriendListActive;
+}
+
+bool App::isFriendListActive() const {
+    return friendListActive;
+}
+

@@ -214,7 +214,7 @@ void GameGUI::displayTowerShop() {
     QSize size = QSize(1400 / scl, 1060 / scl);
     std::string tooltip;
 
-    tooltip = "Tower that can attack one npc at the time\nwith a small range but with great damages\n";
+    tooltip = "Tower that can attack one npc at the time\nwith a small range but with great damages.\n";
     tooltip += "\nPrice : " + std::to_string(GUN_TOWER_PRICE) + " $";
     tooltip += "\nDamage : " + std::to_string(GUN_TOWER_DAMAGE);
     tooltip += "\nRange : " + std::to_string(GUN_TOWER_RANGE);
@@ -225,7 +225,7 @@ void GameGUI::displayTowerShop() {
     gunTowerB->setToolTip(QString::fromStdString(tooltip));
     gunTowerB->setEnabled(false);
 
-    tooltip = "Tower that can attack one npc at the time\nwith a great range but with small damages\n";
+    tooltip = "Tower that can attack one npc at the time\nwith a great range but with small damages.\n";
     tooltip += "\nPrice : " + std::to_string(SNIPER_TOWER_PRICE) + " $";
     tooltip += "\nDamage : " + std::to_string(SNIPER_TOWER_DAMAGE);
     tooltip += "\nRange : " + std::to_string(SNIPER_TOWER_RANGE);
@@ -236,7 +236,7 @@ void GameGUI::displayTowerShop() {
     sniperTowerB->setToolTip(QString::fromStdString(tooltip));
     sniperTowerB->setEnabled(false);
 
-    tooltip = "Tower that attack all the npc in it's range\nwith a small range and small damages\n";
+    tooltip = "Tower that attack all the npc in it's range\nwith a small range and small damages.\n";
     tooltip += "\nPrice : " + std::to_string(SHOCK_TOWER_PRICE) + " $";
     tooltip += "\nDamage : " + std::to_string(SHOCK_TOWER_DAMAGE);
     tooltip += "\nRange : " + std::to_string(SHOCK_TOWER_RANGE);
@@ -247,7 +247,7 @@ void GameGUI::displayTowerShop() {
     shockTowerB->setToolTip(QString::fromStdString(tooltip));
     shockTowerB->setEnabled(false);
 
-    tooltip = "Tower that can attack one npc at the time\nbut deal zone damage around the npc\nwith a middle range and great damages\n";
+    tooltip = "Tower that can attack one npc at the time\nbut deal zone damage around the npc\nwith a middle range and great damages.\n";
     tooltip += "\nPrice : " + std::to_string(MISSILE_TOWER_PRICE) + " $";
     tooltip += "\nDamage : " + std::to_string(MISSILE_TOWER_DAMAGE);
     tooltip += "\nRange : " + std::to_string(MISSILE_TOWER_RANGE);
@@ -277,17 +277,43 @@ void GameGUI::displayDeleteAndUpgradeBox() {
 
     int scl = 10;
     QSize size = QSize(1400 / scl, 1060 / scl);
+    std::string tooltip;
+
+    tooltip = "Selling a tower will grant you\na percentage of its original price.\n";
+    tooltip += "\nGunTower : " + std::to_string((int)(GUN_TOWER_PRICE * PERCENTAGE_RECOVERED_MONEY)) + " $";
+    tooltip += "\nSniperTower : " + std::to_string((int)(SNIPER_TOWER_PRICE * PERCENTAGE_RECOVERED_MONEY)) + " $";
+    tooltip += "\nShockTower : " + std::to_string((int)(SHOCK_TOWER_PRICE * PERCENTAGE_RECOVERED_MONEY)) + " $";
+    tooltip += "\nMissileTower : " + std::to_string((int)(MISSILE_TOWER_PRICE * PERCENTAGE_RECOVERED_MONEY)) + " $";
 
     deleteTowerB = new QHandPointerButton;
     deleteTowerB->setEnabled(false);
     deleteTowerB->setIcon(QIcon("../../qt_ui/game_pictures/towers/sell.png"));
     deleteTowerB->setIconSize(size);
+    deleteTowerB->setToolTip(QString::fromStdString(tooltip));
+
+    tooltip = "Upgrading a tower will enhance its\nabilities, with its price raising for\neach upgrade.\n";
+    tooltip += "\nGunTower : " + std::to_string((int)(GUN_TOWER_PRICE * PERCENTAGE_RECOVERED_MONEY)) + " / "
+               + std::to_string((int)(GUN_TOWER_PRICE * 2 * PERCENTAGE_RECOVERED_MONEY)) + " / "
+               + std::to_string((int)(GUN_TOWER_PRICE * 3 * PERCENTAGE_RECOVERED_MONEY)) + " / "
+               + std::to_string((int)(GUN_TOWER_PRICE * (LEVEL_MAX - 1) * PERCENTAGE_RECOVERED_MONEY)) + " $";
+    tooltip += "\nSniperTower : " + std::to_string((int)(SNIPER_TOWER_PRICE * PERCENTAGE_RECOVERED_MONEY)) + " / "
+               + std::to_string((int)(SNIPER_TOWER_PRICE * 2 * PERCENTAGE_RECOVERED_MONEY)) + " / "
+               + std::to_string((int)(SNIPER_TOWER_PRICE * 3 * PERCENTAGE_RECOVERED_MONEY)) + " / "
+               + std::to_string((int)(SNIPER_TOWER_PRICE * (LEVEL_MAX - 1) * PERCENTAGE_RECOVERED_MONEY)) + " $";
+    tooltip += "\nShockTower : " + std::to_string((int)(SHOCK_TOWER_PRICE * PERCENTAGE_RECOVERED_MONEY)) + " / "
+               + std::to_string((int)(SHOCK_TOWER_PRICE * 2 * PERCENTAGE_RECOVERED_MONEY)) + " / "
+               + std::to_string((int)(SHOCK_TOWER_PRICE * 3 * PERCENTAGE_RECOVERED_MONEY)) + " / "
+               + std::to_string((int)(SHOCK_TOWER_PRICE * (LEVEL_MAX - 1) * PERCENTAGE_RECOVERED_MONEY)) + " $";
+    tooltip += "\nMissileTower : " + std::to_string((int)(MISSILE_TOWER_PRICE * PERCENTAGE_RECOVERED_MONEY)) + " / "
+               + std::to_string((int)(MISSILE_TOWER_PRICE * 2 * PERCENTAGE_RECOVERED_MONEY)) + " / "
+               + std::to_string((int)(MISSILE_TOWER_PRICE * 3 * PERCENTAGE_RECOVERED_MONEY)) + " / "
+               + std::to_string((int)(MISSILE_TOWER_PRICE * (LEVEL_MAX - 1) * PERCENTAGE_RECOVERED_MONEY)) + " $";
 
     upgradeTowerB = new QHandPointerButton;
     upgradeTowerB->setEnabled(false);
     upgradeTowerB->setIcon(QIcon("../../qt_ui/game_pictures/towers/upgrade.png"));
     upgradeTowerB->setIconSize(size);
-
+    upgradeTowerB->setToolTip(QString::fromStdString(tooltip));
 
     QGridLayout *layout = new QGridLayout;
     layout->addWidget(deleteTowerB, 0, 0);
@@ -350,6 +376,7 @@ void GameGUI::handleBuyingTower(int typeOfTower) {
 
 void GameGUI::handleSellingTower() {
     manager->sellTower(map->getHighlightedPosition());
+
 }
 
 void GameGUI::handleUpgradingTower() {
@@ -360,22 +387,29 @@ void GameGUI::handleUpgradingTower() {
 void GameGUI::displaySpellBox() {
     int scl = 10;
     QSize size = QSize(1400 / scl, 1060 / scl);
+    std::string tooltip;
     QGridLayout *layout = new QGridLayout;
 
+    tooltip = "A nuclear bomb kills all npcs within your side of the map.\n";
     nukeB = new QHandPointerButton;
     nukeB->setEnabled(false);
     nukeB->setIcon(QIcon("../../qt_ui/game_pictures/spells/trumpnuclear.png"));
     nukeB->setIconSize(size);
+    nukeB->setToolTip(QString::fromStdString(tooltip));
 
+    tooltip = "Frozes npcs within your side of the map,\nunabling them to move for a short time.\n";
     freezeB = new QHandPointerButton;
     freezeB->setEnabled(false);
     freezeB->setIcon(QIcon("../../qt_ui/game_pictures/spells/frozentrump.png"));
     freezeB->setIconSize(size);
+    freezeB->setToolTip(QString::fromStdString(tooltip));
 
+    tooltip = "Launch an airstrike on your opponents to\ndeal damage to their base or aim on your\nally to heal their base.\n";
     airStrikeB = new QHandPointerButton;
     airStrikeB->setEnabled(false);
     airStrikeB->setIcon(QIcon("../../qt_ui/game_pictures/spells/airstrike.png"));
     airStrikeB->setIconSize(size);
+    airStrikeB->setToolTip(QString::fromStdString(tooltip));
     if (manager->getMode() == TEAM_MODE) {
         healTeamB = new QHandPointerButton;
         healTeamB->setIcon(QIcon("../../qt_ui/game_pictures/spells/heal.png"));

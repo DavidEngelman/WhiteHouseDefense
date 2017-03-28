@@ -140,7 +140,6 @@ void AccountServer::get_and_process_command(int client, char* message_buffer) {
             handle_changeIcon(stoi(newIcon), id);
 
         } else if (action == COMMUNICATION_OVER){
-            std::cout  << "Ending communication with " << client << std::endl;
             end_communication = true;
 
         }
