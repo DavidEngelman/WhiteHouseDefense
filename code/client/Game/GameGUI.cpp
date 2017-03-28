@@ -747,7 +747,7 @@ void GameGUI::displaySupporterActionBox() {
     QSize size = QSize(1400 / scl, 1060 / scl);
 
     adSpellB = new QHandPointerButton;
-    adSpellB->setIcon(QIcon("../../qt_ui/game_pictures/towers/missiletower.png"));
+    adSpellB->setIcon(QIcon("../../qt_ui/game_pictures/spells/adSpell.jpg"));
     adSpellB->setIconSize(size);
     adSpellB->setEnabled(true);
 
