@@ -512,7 +512,7 @@ void GameGUI::disableAirStrike() {
 
 }
 
-bool GameGUI::isAirStrikeActivable () {
+bool GameGUI::isAirStrikeActivable() {
     return ((map->isEnemyBaseInHighlightedPosition(manager->getQuadrant())) &&
             (map->computeQuadrant(map->getHighlightedPosition()) != PARTNERS[manager->getQuadrant()]) &&
             (manager->isAirStikeAvailable()));
