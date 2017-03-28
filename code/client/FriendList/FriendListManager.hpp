@@ -39,6 +39,7 @@ public:
 	~FriendListManager();
 
 
+	void goBackToMainMenu();
 };
 
 #endif

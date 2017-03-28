@@ -90,3 +90,9 @@ FriendListManager::~FriendListManager() {
     friendListUI->destroy();
 }
 
+void FriendListManager::goBackToMainMenu() {
+    MainManager* mainManager = new MainManager(ACCOUNT_SERVER_PORT,master_app);
+    master_app->transition(mainManager);
+
+}
+
