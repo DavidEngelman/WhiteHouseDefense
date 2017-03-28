@@ -89,16 +89,13 @@ int Database::callback_FriendInvitations(void *ptr, int argc, char **argv, char 
 int Database::insert_account(Credentials credentials) {
 
     char *zErrMsg = 0;
-    int id = get_nb_entries() + 1;
-
     std::string command = "";
-    command += "insert into Accounts(id,username,password) values(" + std::to_string(id) + ",'" +
-               credentials.getUsername() + "','"
+    command += "insert into Accounts(username,password) values('"
+               + credentials.getUsername() + "','"
                + credentials.getPassword() + "')";
 
 
     char *query = (char *) command.c_str();
-
     return exec(query, NULL, 0, zErrMsg);
 
 }
@@ -140,22 +137,6 @@ int Database::updateIcon(int id, int newPicture) {
     char *query = (char *) command.c_str();
 
     return exec(query, NULL, 0, zErrMsg);
-
-}
-
-
-int Database::get_nb_entries() {
-
-    /*Utilisé pour obtenir le prochain id disponible lors du rajout d'un compte dans la database*/
-
-    char *zErrMsg = 0;
-    char *query = (char *) "select Count(*) from Accounts";
-    int count = 1;
-
-    exec(query, callback_counter, &count, zErrMsg);
-
-
-    return count;
 
 }
 

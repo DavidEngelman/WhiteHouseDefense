@@ -44,7 +44,6 @@ public:
     int open();
     int exec(const char *query, int (*callback)(void*,int,char**,char**), void * data, char * ErrMsg );
     int insert_account(Credentials credentials);
-    int get_nb_entries();
     bool is_identifiers_valid(Credentials credentials);
     std::vector<RankingInfos> getRanking();
     PublicAccountInfos getUsrInfosByUsrname(std::string);
