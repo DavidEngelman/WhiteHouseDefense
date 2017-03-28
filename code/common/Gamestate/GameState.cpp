@@ -2,23 +2,24 @@
 #include "GameState.hpp"
 #include "../Other/Tools.hpp"
 
-GameState::GameState() : isGameOver(false){}
+GameState::GameState() : isGameOver(false) {}
+
 GameState::GameState(std::string mode) : mode(mode), isGameOver(false) {}
 
-std::string* GameState::serialize() {
-    std::string * serialized_me = new std::string();
+std::string *GameState::serialize() {
+    std::string *serialized_me = new std::string();
 
     *serialized_me += mode + "!";
 
     *serialized_me += bool_to_string(isGameOver) + "!";
 
-    for (PlayerState & pstate: player_states) {
+    for (PlayerState &pstate: player_states) {
         *serialized_me += pstate.serialize();
     }
 
     *serialized_me += "!";
 
-    for (AbstractTower * tower: towers) {
+    for (AbstractTower *tower: towers) {
         *serialized_me += (*tower).serialize();
     }
 
@@ -47,7 +48,7 @@ int GameState::numPlayersAlive() {
 
 bool GameState::isRoundFinished() {
     for (Wave &wave: waves) {
-        if ( !wave.isComplete()) {
+        if (!wave.isComplete()) {
             return false;
         }
     }
@@ -58,7 +59,7 @@ std::vector<Wave> &GameState::getWaves() {
     return waves;
 }
 
-std::vector<AbstractTower*> &GameState::getTowers() {
+std::vector<AbstractTower *> &GameState::getTowers() {
     return towers;
 }
 
@@ -87,9 +88,9 @@ void GameState::addTower(AbstractTower *tower, int quadrant) {
     towers.push_back(tower);
 }
 
-void GameState::deleteTower(Position &position, int quadrant){
-    std::vector<AbstractTower*>::iterator iter;
-    for (iter = getTowers().begin(); iter != getTowers().end(); iter++){
+void GameState::deleteTower(Position &position, int quadrant) {
+    std::vector<AbstractTower *>::iterator iter;
+    for (iter = getTowers().begin(); iter != getTowers().end(); iter++) {
         if ((*iter)->getPosition() == position) {
             float amountPaidBack = (*iter)->getPrice() * PERCENTAGE_RECOVERED_MONEY;
             getPlayerStates()[quadrant].earnMoney((int) amountPaidBack);
@@ -100,11 +101,10 @@ void GameState::deleteTower(Position &position, int quadrant){
 }
 
 
-
 bool GameState::upgradeTower(Position &position, int quadrant) {
-    for (AbstractTower *tower : getTowers()){
-        if (tower->getPosition() == position){
-            float cost = (float)(tower->getPrice()) * (PERCENTAGE_RECOVERED_MONEY * (float)(tower->getLevel()));
+    for (AbstractTower *tower : getTowers()) {
+        if (tower->getPosition() == position) {
+            float cost = (float) (tower->getPrice()) * (PERCENTAGE_RECOVERED_MONEY * (float) (tower->getLevel()));
             if (player_states[quadrant].getMoney() - cost >= 0) {
                 if (!tower->upgrade())
                     return false;
@@ -127,7 +127,7 @@ bool GameState::upgradeTower(Position &position, int quadrant) {
  * the second time in the destruction of the GameState of the MapGUI)
  */
 void GameState::clearThingsInHeap() {
-    for (AbstractTower* tower: towers){
+    for (AbstractTower *tower: towers) {
         delete tower;
     }
 
@@ -144,7 +144,7 @@ std::string &GameState::getMode() {
     return mode;
 }
 
-void GameState::addPlayerState(PlayerState& state) {
+void GameState::addPlayerState(PlayerState &state) {
     player_states.push_back(state);
 }
 
