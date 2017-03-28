@@ -35,6 +35,7 @@ void FriendListGUI::display() {
     toAdd->setStyleSheet("QLineEdit,QLineEdit:hover{border-radius : 10px;border-style :solid ;border-color: gold ;border-width: 2px;background-image: url(../../qt_ui/game_pictures/backgrounds/goldBg.png);}");
 
     addFriend = new QHandPointerButton("", 50, 42);
+    addFriend->setStyleSheet("QPushButton {padding: 0 8px;border-image: url(../../qt_ui/game_pictures/buttons/addFriend.png) ;font-family:verdana 14px;} QPushButton:pressed {border-image: url(../../qt_ui/game_pictures/buttons/addfriendPressed.png);}");
     QObject::connect(addFriend, SIGNAL(clicked()), this, SLOT(sendFriendRequest()));
 
     fieldsLayout->addRow(tabWidget);
@@ -362,11 +363,8 @@ GameInfo FriendListGUI::getGame(std::string username){
     return friendGame;
 }
 
-void FriendListGUI::displayError() {
-
-}
+void FriendListGUI::displayError() {}
 
 void FriendListGUI::closeEvent(QCloseEvent *event) {
     delete manager;
-
 }
