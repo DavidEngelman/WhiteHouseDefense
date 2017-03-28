@@ -38,12 +38,12 @@ public slots:
 
 public:
     FriendListGUI(FriendListManager* manager, QWidget* _parent);
-    virtual ~FriendListGUI();
     void display();
     void displayError();
     void setupFriendList();
     void setupFriendRequests();
     void setupPendingInvitations();
+    void closeEvent(QCloseEvent *event) override;
 
 private:
     GameInfo getGame(std::string username);
@@ -58,6 +58,7 @@ private:
     QTableWidget* friendRequests;
     QTableWidget* pendingInvitations;
     SpectatorManager *specManager;
+
 
 };
 

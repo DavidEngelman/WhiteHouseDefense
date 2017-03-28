@@ -36,6 +36,8 @@ public:
 
 	void run() override;
 
+	~FriendListManager();
+
 
 };
 

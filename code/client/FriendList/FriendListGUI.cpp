@@ -366,8 +366,7 @@ void FriendListGUI::displayError() {
 
 }
 
-FriendListGUI::~FriendListGUI(){
+void FriendListGUI::closeEvent(QCloseEvent *event) {
+    delete manager;
 
-    close();
-
-};
+}
