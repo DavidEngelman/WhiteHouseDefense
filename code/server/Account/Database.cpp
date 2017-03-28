@@ -202,8 +202,8 @@ int Database::sendFriendRequest(std::string username, std::string toAdd) {
 
     char *zErrMsg = 0;
     std::string command = "";
-    command += "insert into FriendRequests(ReceiverID, SenderID) values('" + toAdd + "','" + username + "') ;"
-               + "insert into PendingInvitations(RequesterID, ReceiverID) values('" + username + "','" + toAdd + "') ;";
+    command += "insert into FriendRequests(Receiver, Sender) values('" + toAdd + "','" + username + "') ;"
+               + "insert into PendingInvitations(Requester, Receiver) values('" + username + "','" + toAdd + "') ;";
 
     char *query = (char *) command.c_str();
 
@@ -217,9 +217,9 @@ int Database::acceptFriendRequest(std::string username, std::string toAccept) {
     // Friendrequests && pendingInvitations are accordingly updated too
     char *zErrMsg = 0;
     std::string command = "";
-    command += "insert into FriendList(ID1, ID2) values('" + username + "','" + toAccept + "') ;" +
-               "DELETE FROM `FriendRequests` WHERE `ReceiverID`='" + username + "' AND `SenderID`='" + toAccept +
-               "' ;" + "DELETE FROM `PendingInvitations` WHERE `RequesterID`='" + toAccept + "' AND `ReceiverID`='" +
+    command += "insert into FriendList(USERNAME1, USERNAME2) values('" + username + "','" + toAccept + "') ;" +
+               "DELETE FROM `FriendRequests` WHERE `Receiver`='" + username + "' AND `Sender`='" + toAccept +
+               "' ;" + "DELETE FROM `PendingInvitations` WHERE `Requester`='" + toAccept + "' AND `Receiver`='" +
                username + "' ;";
 
 
@@ -232,8 +232,8 @@ int Database::removeFriend(std::string username, std::string toRemove) {
 
     char *zErrMsg = 0;
     std::string command = "";
-    command += "DELETE FROM `FriendList` WHERE `ID1`='" + username + "' AND `ID2`='" + toRemove + "' ;" +
-               "DELETE FROM `FriendList` WHERE `ID1`='" + toRemove + "' AND `ID2`='" + username + "' ;";
+    command += "DELETE FROM `FriendList` WHERE `USERNAME1`='" + username + "' AND `USERNAME2`='" + toRemove + "' ;" +
+               "DELETE FROM `FriendList` WHERE `USERNAME1`='" + toRemove + "' AND `USERNAME2`='" + username + "' ;";
 
     char *query = (char *) command.c_str();
 
@@ -243,13 +243,11 @@ int Database::removeFriend(std::string username, std::string toRemove) {
 int Database::declineFriendRequest(std::string username, std::string toDecline) {
     // The user who got the request accepts it and he is added to the requester friend's list and vice versa
     // Friendrequests && pendingInvitations are accordingly updated too
-    int id1 = getUsrInfosByUsrname(username).ID;
-    int id2 = getUsrInfosByUsrname(toDecline).ID;
 
     char *zErrMsg = 0;
     std::string command = "";
-    command += "DELETE FROM `FriendRequests` WHERE `ReceiverID`='" + username + "' AND `SenderID`='" + toDecline +
-               "' ;" + "DELETE FROM `PendingInvitations` WHERE `RequesterID`='" + toDecline + "' AND `ReceiverID`='" +
+    command += "DELETE FROM `FriendRequests` WHERE `Receiver`='" + username + "' AND `Sender`='" + toDecline +
+               "' ;" + "DELETE FROM `PendingInvitations` WHERE `Requester`='" + toDecline + "' AND `Receiver`='" +
                username + "' ;";
 
 
@@ -262,8 +260,8 @@ int Database::cancelInvitation(std::string username, std::string toCancel) {
     char *zErrMsg = 0;
     std::string command = "";
 
-    command += "DELETE FROM `FriendRequests` WHERE `ReceiverID`='" + toCancel + "' AND `SenderID`='" + username +
-               "' ;" + "DELETE FROM `PendingInvitations` WHERE `RequesterID`='" + username + "' AND `ReceiverID`='" +
+    command += "DELETE FROM `FriendRequests` WHERE `Receiver`='" + toCancel + "' AND `Sender`='" + username +
+               "' ;" + "DELETE FROM `PendingInvitations` WHERE `Requester`='" + username + "' AND `Receiver`='" +
                toCancel + "' ;";
 
 
@@ -276,7 +274,7 @@ std::vector<std::string> Database::getFriendList(std::string username) {
     std::vector<std::string> friendList;
     char *zErrMsg = 0;
     std::string command = "";
-    command += "select ID2 from FriendList WHERE ID1 ='" + username + "';" + "select ID1 from FriendList WHERE ID2 ='" +
+    command += "select USERNAME2 from FriendList WHERE USERNAME1 ='" + username + "';" + "select USERNAME1 from FriendList WHERE USERNAME2 ='" +
                username + "';";
 
     char *query = (char *) command.c_str();
@@ -289,7 +287,7 @@ std::vector<std::string> Database::getFriendRequests(std::string username) {
     std::vector<std::string> friendRequests;
     char *zErrMsg = 0;
     std::string command = "";
-    command += "select SenderID from FriendRequests WHERE ReceiverID ='" + username + "'";
+    command += "select Sender from FriendRequests WHERE Receiver ='" + username + "'";
 
     char *query = (char *) command.c_str();
 
@@ -302,7 +300,7 @@ std::vector<std::string> Database::getPendingInvitations(std::string username) {
     std::vector<std::string> friendRequests;
     char *zErrMsg = 0;
     std::string command = "";
-    command += "select ReceiverID from PendingInvitations WHERE RequesterID ='" + username + "'";
+    command += "select Receiver from PendingInvitations WHERE Requester ='" + username + "'";
 
     char *query = (char *) command.c_str();
 

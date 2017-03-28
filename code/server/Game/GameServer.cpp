@@ -184,7 +184,7 @@ void GameServer::getAndProcessUserInput(int clientSocketFd, char *buffer) {
             Command command;
             command.parse(buffer);
             int quadrant = command.getNextInt();
-            gameEngine->healTeam(quadrant);
+            gameEngine->teamHeal(quadrant);
 
         }
     } else {

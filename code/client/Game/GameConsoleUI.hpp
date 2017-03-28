@@ -77,7 +77,7 @@ public:
 
 	void adPopUp() override;
 
-	void disableHealTeam() override;
+	void disableTeamHeal() override;
 
 	void sendPredefinedMessage();
 

@@ -93,7 +93,7 @@ public:
 
     void launchAirStrike(int i);
 
-    void healTeam(int i);
+    void teamHeal(int quadrant);
 };
 
 

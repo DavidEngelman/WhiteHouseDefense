@@ -12,6 +12,11 @@ class AbstractManager;
 
 class QMatchMakingThread;
 
+/***
+ * The App class handles the transitions between the managers,
+ * and the queue when a player want to join a game.
+ *
+ */
 class App : public QObject {
 Q_OBJECT
 
