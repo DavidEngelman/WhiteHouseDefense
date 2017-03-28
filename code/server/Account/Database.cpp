@@ -58,11 +58,13 @@ int Database::callback_account_usrname(void *ptr, int argc, char **argv, char **
     return 0;
 }
 
-int Database::callback_account_id(void *ptr, int argc, char **argv, char **azColName) {
+int Database::callback_username(void *ptr, int argc, char **argv, char **azColName) {
     std::string *c = (std::string *) ptr;
     *c = argv[0];
     return 0;
 }
+
+
 
 int Database::callback_FriendList(void *ptr, int argc, char **argv, char **azColName) {
     std::vector<std::string> *list = reinterpret_cast<std::vector<std::string> *>(ptr);
@@ -102,10 +104,19 @@ int Database::insert_account(Credentials credentials) {
 
 int Database::update_username(int id, std::string newUsername) {
 
+    std::string oldUsername = getUsernameByID(id);
+    std::cout<<oldUsername;
     char *zErrMsg = 0;
 
     std::string command = "";
-    command += "UPDATE Accounts SET username = '" + newUsername + "' WHERE id = " + std::to_string(id);
+
+    command += "UPDATE Accounts SET username = '" + newUsername + "' WHERE id = " + std::to_string(id) + ";"
+               + "UPDATE FriendList SET USERNAME1 = '" + newUsername + "' WHERE USERNAME1 = '" + oldUsername + "';"
+               + "UPDATE FriendList SET USERNAME2 = '" + newUsername + "' WHERE USERNAME2 = '" + oldUsername + "';"
+               + "UPDATE FriendRequests SET Receiver = '" + newUsername + "' WHERE Receiver = '" + oldUsername + "';"
+               + "UPDATE FriendRequests SET Sender = '" + newUsername + "' WHERE Sender = '" + oldUsername + "';"
+               + "UPDATE PendingInvitations SET Requester = '" + newUsername + "' WHERE Requester = '" + oldUsername + "';"
+               + "UPDATE PendingInvitations SET Receiver = '" + newUsername + "' WHERE Receiver = '" + oldUsername + "';";
 
     char *query = (char *) command.c_str();
 
@@ -191,6 +202,19 @@ PublicAccountInfos Database::getUsrInfosByUsrname(std::string username) {
     exec(query, callback_account_usrname, &infos, zErrMsg);
 
     return infos;
+}
+
+std::string Database::getUsernameByID(int ID) {
+    std::string username;
+    char *zErrMsg = 0;
+    std::string command = "";
+    command += "select username from Accounts WHERE id='" + std::to_string(ID) + "'";
+
+    char *query = (char *) command.c_str();
+
+    exec(query, callback_username, &username, zErrMsg);
+
+    return username;
 }
 
 int Database::getIDbyUsername(std::string username) {
