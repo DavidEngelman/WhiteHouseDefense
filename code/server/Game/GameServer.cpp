@@ -344,7 +344,7 @@ void *GameServer::staticProcessSpectatorCommandThread(void *arguments) {
     GameServer* self = args.gameServer;
     self->getAndProcessSpectatorCommand(supporterSocketFd);
 
-    delete arguments;
+    delete (static_cast<argsForSpectatorCommandThread*>(arguments));
     return nullptr;
 }
 
