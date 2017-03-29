@@ -3,6 +3,8 @@
 
 #include <string>
 
+static const std::string GAMESTATE_STRING = "Gamestate";
+
 static const std::string GAME_STARTING_STRING = "GameStarting";
 static const std::string CLASSIC_MODE = "ClassicMode";
 static const std::string TIMED_MODE = "TimedMode";

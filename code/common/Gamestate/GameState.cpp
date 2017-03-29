@@ -9,6 +9,8 @@ GameState::GameState(std::string mode) : mode(mode), isGameOver(false) {}
 std::string *GameState::serialize() {
     std::string *serialized_me = new std::string();
 
+    *serialized_me += GAMESTATE_STRING + "!";
+
     *serialized_me += mode + "!";
 
     *serialized_me += bool_to_string(isGameOver) + "!";

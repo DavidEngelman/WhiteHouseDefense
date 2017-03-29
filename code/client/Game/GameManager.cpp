@@ -55,7 +55,11 @@ void GameManager::updateMap() {
             gameUI->handleWaveStart();
             if (!isSupporter) gameUI->enableSpells();
         } else {
-            unSerializeGameState(server_msg_buff);
+            char buff[20];
+            strncpy(buff, server_msg_buff, GAMESTATE_STRING.size());
+            if (strcmp(buff, GAMESTATE_STRING.c_str()) == 0) {
+                unSerializeGameState(server_msg_buff);
+            }
         }
 
         gameUI->display(*gameState, quadrant);
