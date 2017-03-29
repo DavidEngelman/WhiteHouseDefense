@@ -513,7 +513,7 @@ void GameServer::sendWavePhase() {
 
     for (SupporterConnection &supporterConnection : supporterConnections) {
         int socketFd = supporterConnection.getSupporterSocket();
-        attemptSendMessageToClientSocket(socketFd, "t");
+        attemptSendMessageToClientSocket(socketFd, "w");
     }
 }
 
