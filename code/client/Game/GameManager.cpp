@@ -510,15 +510,17 @@ std::string GameManager::getWinner() {
 /* In-Game Chat */
 
 void GameManager::sendMessageToPlayers(const std::string &message) {
-    std::string username = master_app->getUsername();
-    if (isSupporter) {
-        username = "[Supporter] " + username;
+    if (message.length() > 0){
+        std::string username = master_app->getUsername();
+        if (isSupporter) {
+            username = "[Supporter] " + username;
+        }
+        std::string request = SEND_MESSAGE_STRING + ","
+                              + std::to_string(message.size()) + ","
+                              + message + ","
+                              + username + ";";
+        send_message(server_socket, request.c_str());
     }
-    std::string request = SEND_MESSAGE_STRING + ","
-                          + std::to_string(message.size()) + ","
-                          + message + ","
-                          + username + ";";
-    send_message(server_socket, request.c_str());
 }
 
 
