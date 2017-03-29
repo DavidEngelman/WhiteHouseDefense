@@ -14,7 +14,6 @@ InGameChatWidget::InGameChatWidget(GameManager *gameManager) : gameManager(gameM
 
     /* Send message form */
     QHBoxLayout *fieldsLayout = new QHBoxLayout();
-    QHBoxLayout *buttonLayout = new QHBoxLayout();
 
     messageLineEdit = new QLineEdit;
     sendButton = new QHandPointerButton("SEND", 150, 25);
@@ -60,7 +59,9 @@ void InGameChatWidget::addChatMessage(const std::string &message, const std::str
 
     QListWidgetItem *item = new QListWidgetItem(totalMessage.c_str());
     if (sender == gameManager->getUsername()) item->setForeground(Qt::darkGreen);
-    if (message == MESSAGES_CONTENT[1]) playSound("../../qt_ui/game_pictures/sounds/america_great_again.mp3");
+    if (message == MESSAGES_CONTENT[1]) {
+        playSound("../../qt_ui/game_pictures/sounds/america_great_again.mp3");
+    }
 
     messagesListWidget->addItem(item);
 }
