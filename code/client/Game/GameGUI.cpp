@@ -487,6 +487,7 @@ void GameGUI::displayCurrentPlayerInfo(GameState &gameState, int quadrant) {
     text += "\nHP : " + std::to_string(playerState.getHp());
     text += "\nNPC killed : " + std::to_string(playerState.getPnjKilled());
     text += "\nQuadrant : " + QUADRANT_NAMES[quadrant];
+    text += "\nSupported: " + bool_to_string(playerState.getIsSupported());
 
     playerStateL->setText(QString::fromStdString(text));
     playerStateL->show();
