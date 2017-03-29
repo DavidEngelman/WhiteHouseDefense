@@ -10,8 +10,8 @@ ssize_t receive_data(int socket_fd, void* message, int length) {
 int get_data_from_socket(int socket_fd, char *buffer, int size) {
     ssize_t data_bytes_read = receive_data(socket_fd, buffer, size);
 
-    if (data_bytes_read == -1) {
-        perror("Receive: packet data");
+    if (data_bytes_read <= -1) {
+        perror("Receive - message data");
         return -1;
     }
 
@@ -28,8 +28,8 @@ int get_message_length(int socket_fd) {
     size_t length;
     ssize_t length_bytes_read = receive_data(socket_fd, &length, sizeof(length));
 
-    if (length_bytes_read == -1) {
-        perror("Receive: packet length");
+    if (length_bytes_read <= -1) {
+        perror("receive_message - message length");
         return -1;
     } else if (length_bytes_read == 0){
         // Le client a fermé le socket
@@ -48,8 +48,6 @@ int receive_message(int socket_fd, char *buffer) {
     if (length == -1){ // Socket fermé
         return -1;
     }
-
-//    ensure_buffer_is_big_enough(buffer, length);
 
     return get_data_from_socket(socket_fd, buffer, length);  // Gets the data
 }
