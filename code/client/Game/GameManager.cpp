@@ -37,7 +37,6 @@ void GameManager::updateMap() {
         if (errorCode <= 0) {
             std::cout << "GameManager::updateMap: The error code is " << errorCode << std::endl;
         }
-        std::string string_server_msg = std::string(server_msg_buff);
         if (strncmp(server_msg_buff, RECEIVE_MESSAGE_STRING.c_str(), RECEIVE_MESSAGE_STRING.length()) == 0) {
             Command command;
             command.parse(server_msg_buff);
