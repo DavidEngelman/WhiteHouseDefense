@@ -10,18 +10,20 @@ GameManager::GameManager(int socket, bool _isSupporter, App *app) :
         AbstractManager(app),
         server_socket(socket),
         isSupporter(_isSupporter) {
-    if (!isConsole) {
-        gameUI = new GameGUI(isSupporter, getMapSeedFromServer(), this);
-    } else {
-        gameUI = new GameConsoleUI(isSupporter, getMapSeedFromServer(), this);
-    }
 
+    int mapSeed = getMapSeedFromServer();
     quadrant = getQuadrantFromServer();
-    getInitialGameStateFromServer();
+    getInitialGameStateFromServer(); // Need gameMode for UI
+
+    if (!isConsole) {
+        gameUI = new GameGUI(isSupporter, mapSeed, this);
+    } else {
+        gameUI = new GameConsoleUI(isSupporter, mapSeed, this);
+    }
 }
 
 void GameManager::run() {
-    if (!isConsole){
+    if (!isConsole) {
         QTimer::singleShot(10, this, SLOT(updateMap()));
     } else {
         updateMap();
@@ -55,7 +57,7 @@ void GameManager::updateMap() {
         gameUI->display(*gameState, quadrant);
 
 
-        if (!isConsole){
+        if (!isConsole) {
             QTimer::singleShot(10, this, SLOT(updateMap()));
             return;
         }
@@ -379,9 +381,11 @@ void GameManager::unSerializePNJ(std::string serialized_pnj, Wave *wave) {
     }
 
     PNJ *pnj;
-    if (typeOfPNJ == MEXICAN_PNJ_STR) pnj = new MexicanPNJ(Position(transitionPointX, transitionPointY), health, wave->getQuadrant(), frozen);
-    else if (typeOfPNJ == MUSLIM_PNJ_STR) pnj = new MuslimPNJ(Position(transitionPointX, transitionPointY), health, wave->getQuadrant(),frozen);
-    else pnj = new CommunistPNJ(Position(transitionPointX, transitionPointY), health, wave->getQuadrant(),frozen);
+    if (typeOfPNJ == MEXICAN_PNJ_STR)
+        pnj = new MexicanPNJ(Position(transitionPointX, transitionPointY), health, wave->getQuadrant(), frozen);
+    else if (typeOfPNJ == MUSLIM_PNJ_STR)
+        pnj = new MuslimPNJ(Position(transitionPointX, transitionPointY), health, wave->getQuadrant(), frozen);
+    else pnj = new CommunistPNJ(Position(transitionPointX, transitionPointY), health, wave->getQuadrant(), frozen);
 
     wave->addPNJ(*pnj);
 }
@@ -470,7 +474,8 @@ bool GameManager::placeMissileTower(Position towerPos) {
     if (checkValidity(towerPos, *gameState, MISSILE_TOWER_STR)) {
         sendBuyRequest(towerPos, MISSILE_TOWER_STR);
         return true;
-    }return false;
+    }
+    return false;
 }
 
 bool GameManager::sellTower(Position toSell) {
@@ -550,7 +555,6 @@ void GameManager::sendAdSpellRequest() {
     std::string message = AD_SPELL_COMMAND_STRING + ","
                           + gameState->getPlayerStates()[quadrant].getUsername() + ";";
     send_message(server_socket, message.c_str());
-    std::cout << message << " sended" << std::endl;
 }
 
 GameManager::~GameManager() {
@@ -582,4 +586,21 @@ void GameManager::sendAirStrikeRequest(int targetQuadrant) {
                           + std::to_string(quadrant) + ","
                           + std::to_string(targetQuadrant) + ";";
     send_message(server_socket, message.c_str());
+}
+
+const std::string GameManager::getMode() {
+    return gameState->getMode();
+}
+
+void GameManager::launchTeamHeal() {
+    sendTeamHealRequest(quadrant);
+    gameUI->disableTeamHeal();
+
+}
+
+void GameManager::sendTeamHealRequest(int quadrant) {
+    std::string message = HEAL_TEAM_COMMAND_STRING + ","
+                          + std::to_string(quadrant) + ";";
+    send_message(server_socket, message.c_str());
+
 }

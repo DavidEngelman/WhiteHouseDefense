@@ -331,4 +331,6 @@ void GameConsoleUI::handleWaveStart() {
 
 void GameConsoleUI::adPopUp() {}
 
+void GameConsoleUI::disableTeamHeal() {}
+
 

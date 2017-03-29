@@ -92,6 +92,8 @@ public:
     void freezeWave(int quadrant);
 
     void launchAirStrike(int i);
+
+    void teamHeal(int quadrant);
 };
 
 

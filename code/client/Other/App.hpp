@@ -9,8 +9,14 @@
 
 
 class AbstractManager;
+
 class QMatchMakingThread;
 
+/***
+ * The App class handles the transitions between the managers,
+ * and the queue when a player want to join a game.
+ *
+ */
 class App : public QObject {
 Q_OBJECT
 
@@ -26,7 +32,8 @@ private:
 
     QWidget *mainWindow;
     QMediaPlayer *mediaPlayer;
-    //QMediaPlaylist *playlist;
+
+    bool friendListActive = false;
 
 
 public slots:
@@ -52,8 +59,6 @@ public:
 
     QWidget *getMainWindow();
 
-    ~App();
-
     bool isInQueue();
 
     void leaveQueue();
@@ -65,6 +70,12 @@ public:
     virtual void centerWindow();
 
     void launchSupporter(int gameServerSocket);
+
+    void setFriendListActive(bool isFriendListActive);
+
+    bool isFriendListActive() const;
+
+    ~App();
 };
 
 

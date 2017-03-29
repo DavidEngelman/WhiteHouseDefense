@@ -2,8 +2,7 @@
 
 GameEngine::GameEngine(unsigned int mapSeed, std::string mode) : map(mapSeed),
                                                                  numOfPNJsPerWave(INITIAL_NUMBER_OF_PNJS_PER_WAVE),
-                                                                 gameState(mode)
-{
+                                                                 gameState(mode) {
     timerSinceWaveStart.start();
     timerSinceGameStart.start();
 }
@@ -65,7 +64,7 @@ void GameEngine::dealDamageToBase() {
                 player_state.decrease_hp(pnj->getDamage());
                 pnj->setHealthPoints(0);
                 std::cout << "Killed a PNJ in (" << pnj->getPosition().getX() << ","
-                                                 << pnj->getPosition().getY() << ")" << std::endl;
+                          << pnj->getPosition().getY() << ")" << std::endl;
                 // On enleve pas les PNJ morts dans le vagues maintenant, parce que ça va
                 // être fait dans updateWaves au round suivant
             }
@@ -308,6 +307,16 @@ void GameEngine::launchAirStrike(int quadrant) {
     int target_current_hp = target.getHp();
 
     target.setHp(target_current_hp - min(target_current_hp, AIR_STRIKE_DAMAGE));
+
+}
+
+void GameEngine::teamHeal(int quadrant) {
+    PlayerState &teammate = gameState.getPlayerStates()[PARTNERS[quadrant]];
+    int teammate_cuurent_hp = teammate.getHp();
+
+    if (teammate_cuurent_hp > 0) {
+        teammate.setHp(teammate_cuurent_hp + min(PLAYER_STARTING_HP - teammate_cuurent_hp, HEAL_AMOUNT));
+    }
 
 }
 

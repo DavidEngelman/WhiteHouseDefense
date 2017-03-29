@@ -52,7 +52,8 @@ void MainGUI::display() {
     fieldsLayout->addRow(settings);
 
     fields->setLayout(fieldsLayout);
-    fields->move(this->size().width() / 2 - 125, this->size().height() / 2 - 60);
+    fields->setStyleSheet("background-image: url(../../qt_ui/game_pictures/backgrounds/goldBg.png);");
+    fields->move(this->size().width() / 2 - 125, this->size().height() / 2 - 100);
 
     if (manager->isInQueue()) {
         showInQueue();

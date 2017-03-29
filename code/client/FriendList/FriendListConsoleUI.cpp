@@ -3,7 +3,8 @@
 //
 
 #include "FriendListConsoleUI.h"
-FriendListConsoleUI::FriendListConsoleUI(FriendListManager *manager) : FriendListUI(manager){}
+
+FriendListConsoleUI::FriendListConsoleUI(FriendListManager *manager) : FriendListUI(manager) {}
 
 void FriendListConsoleUI::displayMenu() {
     /*Show user's menu*/
@@ -27,10 +28,10 @@ void FriendListConsoleUI::display() {
         if (choice == 1) {
             displayFriendList(manager->getRequestServer(GET_FRIENDLIST, manager->getUsername()), "friends");
         } else if (choice == 2) {
-            displayFriendList(manager->getRequestServer(GET_FRIEND_REQUESTS,manager->getUsername()),
+            displayFriendList(manager->getRequestServer(GET_FRIEND_REQUESTS, manager->getUsername()),
                               "friend requests");
         } else if (choice == 3) {
-            displayFriendList(manager->getRequestServer(GET_PENDING_INVITATIONS,manager->getUsername()),
+            displayFriendList(manager->getRequestServer(GET_PENDING_INVITATIONS, manager->getUsername()),
                               "pending");
 
 
@@ -78,9 +79,8 @@ void FriendListConsoleUI::display() {
         }
         displayMenu();
         choice = select();
-
     }
-
+    manager->goBackToMainMenu();
 }
 
 void FriendListConsoleUI::displayError() {

@@ -58,7 +58,7 @@ void MatchMaker::get_and_process_command(int socket_fd) {
                 matchmakingCommand.parse(command_buffer);
                 addPlayerToPendingMatch(matchmakingCommand.getPlayerConnection(), matchmakingCommand.getMode());
             }
-        }else {
+        } else {
             communication_over = true;
         }
     }

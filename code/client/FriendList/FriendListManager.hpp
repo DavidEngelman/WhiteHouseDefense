@@ -36,7 +36,10 @@ public:
 
 	void run() override;
 
+	~FriendListManager();
 
+
+	void goBackToMainMenu();
 };
 
 #endif

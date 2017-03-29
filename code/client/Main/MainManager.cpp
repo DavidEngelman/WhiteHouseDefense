@@ -39,8 +39,10 @@ void MainManager::handleUserMenuChoice() {
             master_app->transition(profile);
             break;
         } case 4: {
-            FriendListManager *friendListManager = new FriendListManager(ACCOUNT_SERVER_PORT, master_app);
-            friendListManager->run();
+            if (!master_app->isFriendListActive()) {
+                FriendListManager *friendListManager = new FriendListManager(ACCOUNT_SERVER_PORT, master_app);
+                friendListManager->run();
+            }
             break;
         } case 5: {
             RankingManager *rankingManager = new RankingManager(ACCOUNT_SERVER_PORT, master_app);

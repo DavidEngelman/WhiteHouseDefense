@@ -1,14 +1,3 @@
-QPushButton {
-                            padding: 0 8px;
-                            border-image: url(../../qt_ui/game_pictures/buttons/addFriend.png) ;
-
-                            font-family:
-                            verdana 14px;
-}
-QPushButton:pressed {
-                            border-image: url(../../qt_ui/game_pictures/buttons/addfriendPressed.png) ;
-}
-
 QTabWidget::pane { /* The tab widget frame */
     border-bottom-right-radius : 10px;
     border-bottom-left-radius : 10px;

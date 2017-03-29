@@ -7,7 +7,8 @@
 App::App(char *serverIpAddr) : serverIpAddress(serverIpAddr),
                                playerId(-1), username("\0"), is_in_queue(false),
                                currentManager(nullptr), mainWindow(nullptr),
-                               mediaPlayer(new QMediaPlayer(this)) {
+                               mediaPlayer(new QMediaPlayer(this)),
+                               matchMakingThread(nullptr) {
     if (!isConsole) {
         mainWindow = new QWidget();
         mainWindow->setFixedSize(750, 600); // Will be resized for the menu and games;
@@ -18,7 +19,6 @@ App::App(char *serverIpAddr) : serverIpAddress(serverIpAddr),
 }
 
 void App::transition(AbstractManager *new_manager) {
-
     delete (currentManager);
     currentManager = new_manager;
     currentManager->run();
@@ -111,6 +111,16 @@ void App::centerWindow() {
     mainWindow->move(QApplication::desktop()->screen()->rect().center() - mainWindow->rect().center());
 }
 
+
+void App::launchSupporter(int gameServerSocket) {
+    std::cout << "Starting game" << std::endl;
+    if (!isConsole) {
+        getMainWindow()->setVisible(false);//So we can reuse the window after the game
+    }
+    GameManager *gameManager = new GameManager(gameServerSocket, true, this);
+    transition(gameManager);
+}
+
 App::~App() {
     // Si le joeur est connecté, on envoye un message de deconnexion au AccountServer
     // et si il est dans un queue du matchmaking, on sort de la queue
@@ -128,12 +138,11 @@ App::~App() {
     }
 }
 
-void App::launchSupporter(int gameServerSocket) {
-    std::cout << "Starting game" << std::endl;
-    if (!isConsole) {
-        getMainWindow()->setVisible(false);//So we can reuse the window after the game
-    }
-    GameManager *gameManager = new GameManager(gameServerSocket, true, this);
-    transition(gameManager);
+void App::setFriendListActive(bool isFriendListActive) {
+    App::friendListActive = isFriendListActive;
+}
+
+bool App::isFriendListActive() const {
+    return friendListActive;
 }
 

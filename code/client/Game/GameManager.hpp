@@ -46,7 +46,6 @@ public:
 
 private:
 
-
     unsigned int getMapSeedFromServer() const;
 
     void unSerializeGameState(char *seriarlizedGamestate);
@@ -93,9 +92,9 @@ public:
 
     bool placeShockTower(Position towerPos);
 
-    bool sellTower(Position toSell);
+    bool placeMissileTower(Position towerPos);
 
-    //void updateMap();
+    bool sellTower(Position toSell);
 
     void sendMessageToPlayers(const std::string &message);
 
@@ -111,7 +110,25 @@ public:
 
     void sendNuclearRequest();
 
-    bool placeMissileTower(Position towerPos);
+    void launchFreezeSpell();
+
+    void launchAirStrike(int i);
+
+    void launchAdSpell();
+
+    void launchTeamHeal();
+
+    void sendFreezeSpellRequest();
+
+    std::string getWinner();
+
+    bool isAirStikeAvailable();
+
+    void sendAirStrikeRequest(int quadrant);
+
+    void sendAdSpellRequest();
+
+    const std::string getMode();
 
     void comeBackToMenu();
 
@@ -123,22 +140,8 @@ public slots:
 
     void updateMap();
 
-    void launchFreezeSpell();
 
-    void sendFreezeSpellRequest();
-
-
-    std::string getWinner();
-
-    void launchAirStrike(int i);
-
-    bool isAirStikeAvailable();
-
-    void sendAirStrikeRequest(int quadrant);
-
-    void launchAdSpell();
-
-    void sendAdSpellRequest();
+    void sendTeamHealRequest(int quadrant);
 };
 
 #endif

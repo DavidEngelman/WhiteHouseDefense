@@ -22,6 +22,7 @@ static const std::string NUCLEAR_BOMB_COMMAND_STRING = "NuclearBomb";
 static const std::string FREEZE_PNJS_COMMAND_STRING = "FreezeSpell";
 static const std::string AIR_STRIKE_COMMAND_STRING = "AirStrike";
 static const std::string AD_SPELL_COMMAND_STRING = "adSpell";
+static const std::string HEAL_TEAM_COMMAND_STRING = "heal";
 
 
 static const std::string SUPPORT_PLAYER_STRING = "SupportPlayer";

@@ -94,6 +94,7 @@ void SettingsGUI::changeUsername(){
     usernameB->setVisible(false);
     lineEditU = new QLineEdit();
     lineEditU->setFixedSize(300,40);
+    lineEditU->setStyleSheet("QLineEdit,QLineEdit:hover{border-radius : 10px;border-style :solid ;border-color: gold ;border-width: 2px;background-image: url(../../qt_ui/game_pictures/backgrounds/goldBg.png);}");
     QObject::connect(lineEditU, SIGNAL(returnPressed()), this, SLOT(applyUsernameChange()));
     lineEditU->setPlaceholderText("New username");
     buttonsLayout->insertWidget(0, lineEditU);
@@ -106,6 +107,7 @@ void SettingsGUI::changePassword(){
     lineEditP = new QLineEdit();
     lineEditP->setFixedSize(300,40);
     lineEditP->setPlaceholderText("New Password");
+    lineEditP->setStyleSheet("QLineEdit,QLineEdit:hover{border-radius : 10px;border-style :solid ;border-color: gold ;border-width: 2px;background-image: url(../../qt_ui/game_pictures/backgrounds/goldBg.png);}");
     QObject::connect(lineEditP, SIGNAL(returnPressed()), this, SLOT(applyPasswordChange()));
 
     buttonsLayout->insertWidget(1, lineEditP);

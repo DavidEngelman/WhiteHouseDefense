@@ -7,6 +7,7 @@ FriendListManager::FriendListManager(int port, App *my_master_app) :
         friendRequests(getRequestServer(GET_FRIEND_REQUESTS, master_app->getUsername())),
         pendingInvitations(getRequestServer(GET_PENDING_INVITATIONS, master_app->getUsername()))
 {
+    master_app->setFriendListActive(true);
     if(isConsole){
         friendListUI = new FriendListConsoleUI(this);
     }else{
@@ -82,5 +83,16 @@ std::string FriendListManager::getUsername() {
 
 std::string FriendListManager::getStatus(std::string username) {
     return getRequestServer(GET_STATUS,username);
+}
+
+FriendListManager::~FriendListManager() {
+    master_app->setFriendListActive(false);
+    friendListUI->destroy();
+}
+
+void FriendListManager::goBackToMainMenu() {
+    MainManager* mainManager = new MainManager(ACCOUNT_SERVER_PORT,master_app);
+    master_app->transition(mainManager);
+
 }
 

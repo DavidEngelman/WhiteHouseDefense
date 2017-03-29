@@ -56,12 +56,15 @@ GameGUI::GameGUI(bool isSupporter, unsigned seed, GameManager *manager) : Abstra
     map = new MapGUI(seed, this, centralLayout);
     centralLayout->addStretch();
 
-    QPixmap *adImage = new QPixmap("../../qt_ui/game_pictures/ads/steaks.jpg");
+
+    QVBoxLayout *Vlayout = new QVBoxLayout;
+    QMovie *adImage = new QMovie("../../qt_ui/game_pictures/ads/kenoAd.gif");
     QLabel *imageLabel = new QLabel();
     // MAYBE: DYNAMIC CAST??
     imageLabel->setScaledContents(true);
-    imageLabel->setMaximumSize((static_cast<MapGUI *> (map))->width(), 80);
-    imageLabel->setPixmap(*adImage);
+    imageLabel->setMaximumSize((static_cast<MapGUI *> (map))->width(), 250);
+    imageLabel->setMovie(adImage);
+    adImage->start();
     centralLayout->addWidget(imageLabel);
 
     otherPlayerHealthBarBox = new QGroupBox;
@@ -211,7 +214,7 @@ void GameGUI::displayTowerShop() {
     QSize size = QSize(1400 / scl, 1060 / scl);
     std::string tooltip;
 
-    tooltip = "Tower that can attack one npc at the time\nwith a small range but with great damages\n";
+    tooltip = "Tower that can attack one npc at the time\nwith a small range but with great damages.\n";
     tooltip += "\nPrice : " + std::to_string(GUN_TOWER_PRICE) + " $";
     tooltip += "\nDamage : " + std::to_string(GUN_TOWER_DAMAGE);
     tooltip += "\nRange : " + std::to_string(GUN_TOWER_RANGE);
@@ -222,7 +225,7 @@ void GameGUI::displayTowerShop() {
     gunTowerB->setToolTip(QString::fromStdString(tooltip));
     gunTowerB->setEnabled(false);
 
-    tooltip = "Tower that can attack one npc at the time\nwith a great range but with small damages\n";
+    tooltip = "Tower that can attack one npc at the time\nwith a great range but with small damages.\n";
     tooltip += "\nPrice : " + std::to_string(SNIPER_TOWER_PRICE) + " $";
     tooltip += "\nDamage : " + std::to_string(SNIPER_TOWER_DAMAGE);
     tooltip += "\nRange : " + std::to_string(SNIPER_TOWER_RANGE);
@@ -233,7 +236,7 @@ void GameGUI::displayTowerShop() {
     sniperTowerB->setToolTip(QString::fromStdString(tooltip));
     sniperTowerB->setEnabled(false);
 
-    tooltip = "Tower that attack all the npc in it's range\nwith a small range and small damages\n";
+    tooltip = "Tower that attack all the npc in it's range\nwith a small range and small damages.\n";
     tooltip += "\nPrice : " + std::to_string(SHOCK_TOWER_PRICE) + " $";
     tooltip += "\nDamage : " + std::to_string(SHOCK_TOWER_DAMAGE);
     tooltip += "\nRange : " + std::to_string(SHOCK_TOWER_RANGE);
@@ -244,7 +247,7 @@ void GameGUI::displayTowerShop() {
     shockTowerB->setToolTip(QString::fromStdString(tooltip));
     shockTowerB->setEnabled(false);
 
-    tooltip = "Tower that can attack one npc at the time\nbut deal zone damage around the npc\nwith a middle range and great damages\n";
+    tooltip = "Tower that can attack one npc at the time\nbut deal zone damage around the npc\nwith a middle range and great damages.\n";
     tooltip += "\nPrice : " + std::to_string(MISSILE_TOWER_PRICE) + " $";
     tooltip += "\nDamage : " + std::to_string(MISSILE_TOWER_DAMAGE);
     tooltip += "\nRange : " + std::to_string(MISSILE_TOWER_RANGE);
@@ -274,17 +277,43 @@ void GameGUI::displayDeleteAndUpgradeBox() {
 
     int scl = 10;
     QSize size = QSize(1400 / scl, 1060 / scl);
+    std::string tooltip;
+
+    tooltip = "Selling a tower will grant you\na percentage of its original price.\n";
+    tooltip += "\nGunTower : " + std::to_string((int) (GUN_TOWER_PRICE * PERCENTAGE_RECOVERED_MONEY)) + " $";
+    tooltip += "\nSniperTower : " + std::to_string((int) (SNIPER_TOWER_PRICE * PERCENTAGE_RECOVERED_MONEY)) + " $";
+    tooltip += "\nShockTower : " + std::to_string((int) (SHOCK_TOWER_PRICE * PERCENTAGE_RECOVERED_MONEY)) + " $";
+    tooltip += "\nMissileTower : " + std::to_string((int) (MISSILE_TOWER_PRICE * PERCENTAGE_RECOVERED_MONEY)) + " $";
 
     deleteTowerB = new QHandPointerButton;
     deleteTowerB->setEnabled(false);
     deleteTowerB->setIcon(QIcon("../../qt_ui/game_pictures/towers/sell.png"));
     deleteTowerB->setIconSize(size);
+    deleteTowerB->setToolTip(QString::fromStdString(tooltip));
+
+    tooltip = "Upgrading a tower will enhance its\nabilities, with its price raising for\neach upgrade.\n";
+    tooltip += "\nGunTower : " + std::to_string((int) (GUN_TOWER_PRICE * PERCENTAGE_RECOVERED_MONEY)) + " / "
+               + std::to_string((int) (GUN_TOWER_PRICE * 2 * PERCENTAGE_RECOVERED_MONEY)) + " / "
+               + std::to_string((int) (GUN_TOWER_PRICE * 3 * PERCENTAGE_RECOVERED_MONEY)) + " / "
+               + std::to_string((int) (GUN_TOWER_PRICE * (LEVEL_MAX - 1) * PERCENTAGE_RECOVERED_MONEY)) + " $";
+    tooltip += "\nSniperTower : " + std::to_string((int) (SNIPER_TOWER_PRICE * PERCENTAGE_RECOVERED_MONEY)) + " / "
+               + std::to_string((int) (SNIPER_TOWER_PRICE * 2 * PERCENTAGE_RECOVERED_MONEY)) + " / "
+               + std::to_string((int) (SNIPER_TOWER_PRICE * 3 * PERCENTAGE_RECOVERED_MONEY)) + " / "
+               + std::to_string((int) (SNIPER_TOWER_PRICE * (LEVEL_MAX - 1) * PERCENTAGE_RECOVERED_MONEY)) + " $";
+    tooltip += "\nShockTower : " + std::to_string((int) (SHOCK_TOWER_PRICE * PERCENTAGE_RECOVERED_MONEY)) + " / "
+               + std::to_string((int) (SHOCK_TOWER_PRICE * 2 * PERCENTAGE_RECOVERED_MONEY)) + " / "
+               + std::to_string((int) (SHOCK_TOWER_PRICE * 3 * PERCENTAGE_RECOVERED_MONEY)) + " / "
+               + std::to_string((int) (SHOCK_TOWER_PRICE * (LEVEL_MAX - 1) * PERCENTAGE_RECOVERED_MONEY)) + " $";
+    tooltip += "\nMissileTower : " + std::to_string((int) (MISSILE_TOWER_PRICE * PERCENTAGE_RECOVERED_MONEY)) + " / "
+               + std::to_string((int) (MISSILE_TOWER_PRICE * 2 * PERCENTAGE_RECOVERED_MONEY)) + " / "
+               + std::to_string((int) (MISSILE_TOWER_PRICE * 3 * PERCENTAGE_RECOVERED_MONEY)) + " / "
+               + std::to_string((int) (MISSILE_TOWER_PRICE * (LEVEL_MAX - 1) * PERCENTAGE_RECOVERED_MONEY)) + " $";
 
     upgradeTowerB = new QHandPointerButton;
     upgradeTowerB->setEnabled(false);
     upgradeTowerB->setIcon(QIcon("../../qt_ui/game_pictures/towers/upgrade.png"));
     upgradeTowerB->setIconSize(size);
-
+    upgradeTowerB->setToolTip(QString::fromStdString(tooltip));
 
     QGridLayout *layout = new QGridLayout;
     layout->addWidget(deleteTowerB, 0, 0);
@@ -347,6 +376,7 @@ void GameGUI::handleBuyingTower(int typeOfTower) {
 
 void GameGUI::handleSellingTower() {
     manager->sellTower(map->getHighlightedPosition());
+
 }
 
 void GameGUI::handleUpgradingTower() {
@@ -357,23 +387,41 @@ void GameGUI::handleUpgradingTower() {
 void GameGUI::displaySpellBox() {
     int scl = 10;
     QSize size = QSize(1400 / scl, 1060 / scl);
+    std::string tooltip;
+    QGridLayout *layout = new QGridLayout;
 
+    tooltip = "A nuclear bomb kills all npcs within your side of the map.\n";
     nukeB = new QHandPointerButton;
     nukeB->setEnabled(false);
     nukeB->setIcon(QIcon("../../qt_ui/game_pictures/spells/trumpnuclear.png"));
     nukeB->setIconSize(size);
+    nukeB->setToolTip(QString::fromStdString(tooltip));
 
+    tooltip = "Frozes npcs within your side of the map,\nimmobilizing them for a short time.\n";
     freezeB = new QHandPointerButton;
     freezeB->setEnabled(false);
     freezeB->setIcon(QIcon("../../qt_ui/game_pictures/spells/frozentrump.png"));
     freezeB->setIconSize(size);
+    freezeB->setToolTip(QString::fromStdString(tooltip));
 
+    tooltip = "Launch an airstrike on your opponents to\ndeal 20 damage to their base.\n";
     airStrikeB = new QHandPointerButton;
     airStrikeB->setEnabled(false);
     airStrikeB->setIcon(QIcon("../../qt_ui/game_pictures/spells/airstrike.png"));
     airStrikeB->setIconSize(size);
+    airStrikeB->setToolTip(QString::fromStdString(tooltip));
 
-    QGridLayout *layout = new QGridLayout;
+    if (manager->getMode() == TEAM_MODE) {
+        tooltip = "Give your teammate 20 health points back.\n";
+        teamHealB = new QHandPointerButton;
+        teamHealB->setIcon(QIcon("../../qt_ui/game_pictures/spells/heal.png"));
+        teamHealB->setIconSize(size);
+        teamHealB->setToolTip(QString::fromStdString(tooltip));
+        QObject::connect(teamHealB, SIGNAL(clicked()), this, SLOT(handleTeamHeal()));
+        layout->addWidget(teamHealB, 1, 1);
+
+    }
+
     layout->addWidget(nukeB, 0, 0);
     layout->addWidget(freezeB, 0, 1);
     layout->addWidget(airStrikeB, 1, 0);
@@ -383,6 +431,7 @@ void GameGUI::displaySpellBox() {
     QObject::connect(nukeB, SIGNAL(clicked()), this, SLOT(handleNukeSpell()));
     QObject::connect(freezeB, SIGNAL(clicked()), this, SLOT(handleFreezeSpell()));
     QObject::connect(airStrikeB, SIGNAL(clicked()), this, SLOT(handleAirStrike()));
+
 
 }
 
@@ -400,6 +449,11 @@ void GameGUI::handleAirStrike() {
     int targetQuadrant = map->computeQuadrant(map->getHighlightedPosition());
     manager->launchAirStrike(targetQuadrant);
     playSound("../../qt_ui/game_pictures/sounds/airstrike.mp3");
+}
+
+void GameGUI::handleTeamHeal() {
+    manager->launchTeamHeal();
+    //TODO: rajouter un son
 }
 
 void GameGUI::displayPlayerInfos(GameState &gameState, int quadrant) {
@@ -458,12 +512,20 @@ void GameGUI::disableAirStrike() {
 
 }
 
-void GameGUI::enableAirStrike() {
-    if ((map->isEnemyBaseInHighlightedPosition(manager->getQuadrant())) && (manager->isAirStikeAvailable())) {
-        std::cout << "Enabling air strike" << std::endl;
-        airStrikeB->setEnabled(true);
-    }
+bool GameGUI::isAirStrikeActivable() {
+    return ((map->isEnemyBaseInHighlightedPosition(manager->getQuadrant())) &&
+            (map->computeQuadrant(map->getHighlightedPosition()) != PARTNERS[manager->getQuadrant()]) &&
+            (manager->isAirStikeAvailable()));
 
+}
+
+void GameGUI::enableAirStrike() {
+    airStrikeB->setEnabled(true);
+
+}
+
+void GameGUI::disableTeamHeal() {
+    teamHealB->setEnabled(false);
 }
 
 void GameGUI::enableSpells() {
@@ -566,11 +628,12 @@ void GameGUI::setUpstatBox(GameState &gameState) {
     /////////PLAYER 1
 
     int index = 0;
-    QString statString1 = "Username : " + QString::fromStdString(gameState.getPlayerStates()[index].getUsername()) + "\n"
-                          + "NPC killed : " + QString::number(gameState.getPlayerStates()[index].getNPCKilled()) + "\n"
-                          + "Damagage dealt : " + QString::number(gameState.getPlayerStates()[index].getDamageDealt()) + "\n"
-                          + "Money spend : " + QString::number(gameState.getPlayerStates()[index].getMoneySpend()) + "\n"
-                          + "Towers placed : " + QString::number(gameState.getPlayerStates()[index].getNbTowersPlaced());
+    QString statString1 =
+            "Username : " + QString::fromStdString(gameState.getPlayerStates()[index].getUsername()) + "\n"
+            + "NPC killed : " + QString::number(gameState.getPlayerStates()[index].getNPCKilled()) + "\n"
+            + "Damagage dealt : " + QString::number(gameState.getPlayerStates()[index].getDamageDealt()) + "\n"
+            + "Money spend : " + QString::number(gameState.getPlayerStates()[index].getMoneySpend()) + "\n"
+            + "Towers placed : " + QString::number(gameState.getPlayerStates()[index].getNbTowersPlaced());
 
     statViewP1 = new QLabel;
     statViewP1->setFont(font);
@@ -585,11 +648,12 @@ void GameGUI::setUpstatBox(GameState &gameState) {
     /////////PLAYER 2
 
     index = 1;
-    QString statString2 = "Username : " + QString::fromStdString(gameState.getPlayerStates()[index].getUsername()) + "\n"
-                          + "NPC killed : " + QString::number(gameState.getPlayerStates()[index].getNPCKilled()) + "\n"
-                          + "Damagage dealt : " + QString::number(gameState.getPlayerStates()[index].getDamageDealt()) + "\n"
-                          + "Money spend : " + QString::number(gameState.getPlayerStates()[index].getMoneySpend()) + "\n"
-                          + "Towers placed : " + QString::number(gameState.getPlayerStates()[index].getNbTowersPlaced());
+    QString statString2 =
+            "Username : " + QString::fromStdString(gameState.getPlayerStates()[index].getUsername()) + "\n"
+            + "NPC killed : " + QString::number(gameState.getPlayerStates()[index].getNPCKilled()) + "\n"
+            + "Damagage dealt : " + QString::number(gameState.getPlayerStates()[index].getDamageDealt()) + "\n"
+            + "Money spend : " + QString::number(gameState.getPlayerStates()[index].getMoneySpend()) + "\n"
+            + "Towers placed : " + QString::number(gameState.getPlayerStates()[index].getNbTowersPlaced());
 
     statViewP2 = new QLabel;
     statViewP2->setText(statString2);
@@ -604,11 +668,12 @@ void GameGUI::setUpstatBox(GameState &gameState) {
     /////PLAYER 3
 
     index = 2;
-    QString statString3 = "Username : " + QString::fromStdString(gameState.getPlayerStates()[index].getUsername()) + "\n"
-                          + "NPC killed : " + QString::number(gameState.getPlayerStates()[index].getNPCKilled()) + "\n"
-                          + "Damagage dealt : " + QString::number(gameState.getPlayerStates()[index].getDamageDealt()) + "\n"
-                          + "Money spend : " + QString::number(gameState.getPlayerStates()[index].getMoneySpend()) + "\n"
-                          + "Towers placed : " + QString::number(gameState.getPlayerStates()[index].getNbTowersPlaced());
+    QString statString3 =
+            "Username : " + QString::fromStdString(gameState.getPlayerStates()[index].getUsername()) + "\n"
+            + "NPC killed : " + QString::number(gameState.getPlayerStates()[index].getNPCKilled()) + "\n"
+            + "Damagage dealt : " + QString::number(gameState.getPlayerStates()[index].getDamageDealt()) + "\n"
+            + "Money spend : " + QString::number(gameState.getPlayerStates()[index].getMoneySpend()) + "\n"
+            + "Towers placed : " + QString::number(gameState.getPlayerStates()[index].getNbTowersPlaced());
 
     statViewP3 = new QLabel;
     statViewP3->setText(statString3);
@@ -622,11 +687,12 @@ void GameGUI::setUpstatBox(GameState &gameState) {
     /////PLAYER 4
 
     index = 3;
-    QString statString4 = "Username : " + QString::fromStdString(gameState.getPlayerStates()[index].getUsername()) + "\n"
-                          + "NPC killed : " + QString::number(gameState.getPlayerStates()[index].getNPCKilled()) + "\n"
-                          + "Damagage dealt : " + QString::number(gameState.getPlayerStates()[index].getDamageDealt()) + "\n"
-                          + "Money spend : " + QString::number(gameState.getPlayerStates()[index].getMoneySpend()) + "\n"
-                          + "Towers placed : " + QString::number(gameState.getPlayerStates()[index].getNbTowersPlaced());
+    QString statString4 =
+            "Username : " + QString::fromStdString(gameState.getPlayerStates()[index].getUsername()) + "\n"
+            + "NPC killed : " + QString::number(gameState.getPlayerStates()[index].getNPCKilled()) + "\n"
+            + "Damagage dealt : " + QString::number(gameState.getPlayerStates()[index].getDamageDealt()) + "\n"
+            + "Money spend : " + QString::number(gameState.getPlayerStates()[index].getMoneySpend()) + "\n"
+            + "Towers placed : " + QString::number(gameState.getPlayerStates()[index].getNbTowersPlaced());
 
     statViewP4 = new QLabel;
     statViewP4->setText(statString4);
@@ -684,7 +750,7 @@ void GameGUI::displaySupporterActionBox() {
     QSize size = QSize(1400 / scl, 1060 / scl);
 
     adSpellB = new QHandPointerButton;
-    adSpellB->setIcon(QIcon("../../qt_ui/game_pictures/towers/missiletower.png"));
+    adSpellB->setIcon(QIcon("../../qt_ui/game_pictures/spells/adSpell.jpg"));
     adSpellB->setIconSize(size);
     adSpellB->setEnabled(true);
 
@@ -702,12 +768,11 @@ void GameGUI::handleAdSpell() {
 }
 
 void GameGUI::adPopUp() {
-    std::cout << "displaying popUp" << std::endl;
     QWidget *popUpWindow = new QWidget;
     popUpWindow->setFixedSize(500, 500);
     QVBoxLayout *adLayout = new QVBoxLayout;
     QLabel *adPictureLabel = new QLabel;
-    if (rand() % 2 == 0){
+    if (rand() % 2 == 0) {
         adPictureLabel->setPixmap(QPixmap("../../qt_ui/game_pictures/ads/loreal.jpg"));
     } else {
         adPictureLabel->setPixmap(QPixmap("../../qt_ui/game_pictures/ads/Trump-Lego-Box.png"));
@@ -715,6 +780,8 @@ void GameGUI::adPopUp() {
 
     adLayout->addWidget(adPictureLabel);
     popUpWindow->setLayout(adLayout);
+    popUpWindow->move(QApplication::desktop()->screen()->rect().center() - popUpWindow->rect().center());
+    popUpWindow->setWindowModality(Qt::ApplicationModal);
     popUpWindow->show();
 }
 
@@ -735,3 +802,5 @@ void GameGUI::playSound(QString musicPath) {
     mediaPlayer->setPlaylist(playlist);
     mediaPlayer->play();
 }
+
+
