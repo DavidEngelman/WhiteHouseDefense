@@ -185,7 +185,7 @@ void GameServer::getAndProcessUserInput(int clientSocketFd, char *buffer) {
             command.parse(buffer);
             int quadrant = command.getNextInt();
             gameEngine->teamHeal(quadrant);
-
+            sendNotification(quadrant, 2);
         }
     } else {
         removeClosedSocketFromSocketLists(clientSocketFd);
@@ -196,6 +196,11 @@ void GameServer::sendMessageToOtherPlayers(std::string &userMessage, std::string
     std::string message = makeMessage(userMessage, senderUsername);
     for (PlayerConnection &playerConnection : playerConnections) {
         int socketFd = playerConnection.getSocketFd();
+        send_message(socketFd, message.c_str());
+    }
+
+    for (SupporterConnection &supporterConnection : supporterConnections) {
+        int socketFd = supporterConnection.getSupporterSocket();
         send_message(socketFd, message.c_str());
     }
 }
@@ -218,6 +223,8 @@ void GameServer::sendNotification(int quadrant, int notificationID) {
         notification = sender + " launched a nuclear bomb";
     } else if (notificationID == 1) {
         notification = sender + " used the frozen spell";
+    } else if (notificationID == 2){
+        notification = sender + " healed his teammate";
     }
     std::string message = makeMessage(notification, "[SERVER] ");
     for (PlayerConnection &playerConnection : playerConnections) {
