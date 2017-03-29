@@ -37,7 +37,7 @@ void GameManager::updateMap() {
         if (errorCode <= 0) {
             std::cout << "GameManager::updateMap: The error code is " << errorCode << std::endl;
         }
-
+        std::string string_server_msg = std::string(server_msg_buff);
         if (strncmp(server_msg_buff, RECEIVE_MESSAGE_STRING.c_str(), RECEIVE_MESSAGE_STRING.length()) == 0) {
             Command command;
             command.parse(server_msg_buff);
@@ -54,12 +54,8 @@ void GameManager::updateMap() {
         } else if (strcmp(server_msg_buff, WAVE) == 0) {
             gameUI->handleWaveStart();
             if (!isSupporter) gameUI->enableSpells();
-        } else {
-            char buff[20];
-            strncpy(buff, server_msg_buff, GAMESTATE_STRING.size());
-            if (strcmp(buff, GAMESTATE_STRING.c_str()) == 0) {
-                unSerializeGameState(server_msg_buff);
-            }
+        } else if (strncmp(server_msg_buff, GAMESTATE_STRING.c_str(), GAMESTATE_STRING.length()) == 0){
+            unSerializeGameState(server_msg_buff);
         }
 
         gameUI->display(*gameState, quadrant);
@@ -162,19 +158,19 @@ void GameManager::unSerializeGameState(char *seriarlizedGamestate) {
     for (char *c = seriarlizedGamestate; *c; ++c) {
         if (*c == '!') {
             switch (count) {
-                case 0: // isGameOver
+                case 1: // isGameOver
                     gameState->setGameMode(part);
                     break;
-                case 1: // isGameOver
+                case 2: // isGameOver
                     gameState->setIsGameOver(part == "true");
                     break;
-                case 2: // PlayerStates
+                case 3: // PlayerStates
                     unSerializePlayerStates(part);
                     break;
-                case 3: // Towers
+                case 4: // Towers
                     unSerializeTowers(part);
                     break;
-                default: // Waves
+                case 5: // Waves
                     unSerializeWaves(part);
                     break;
             }
