@@ -26,7 +26,7 @@ void MapGUI::display() {
 
 void MapGUI::paintEvent(QPaintEvent *) {
     QPainter painter(this);
-    QImage image;
+    QImage* image;
 
     std::vector<AbstractTower *> &towers = gameState.getTowers();
     std::vector<Wave> &waves = gameState.getWaves();
@@ -44,26 +44,26 @@ void MapGUI::paintEvent(QPaintEvent *) {
 
             if (typeOfPNJ == MEXICAN_PNJ_STR) {
                 if (frozen == 0) {
-                    image = NPC_images[MEXICAN];
+                    image = &NPC_images[MEXICAN];
                 } else {
-                    image = NPC_images[FROZEN_MEXICAN];
+                    image = &NPC_images[FROZEN_MEXICAN];
                 }
             } else if (typeOfPNJ == COMMUNIST_PNJ_STR) {
                 if (frozen == 0) {
-                    image = NPC_images[COMMUNIST];
+                    image = &NPC_images[COMMUNIST];
                 } else {
-                    image = NPC_images[FROZEN_COMMUNIST];
+                    image = &NPC_images[FROZEN_COMMUNIST];
                 }
             } else if (typeOfPNJ == MUSLIM_PNJ_STR) {
                 if (frozen == 0) {
-                    image = NPC_images[MUSLIM];
+                    image = &NPC_images[MUSLIM];
                 } else {
-                    image = NPC_images[FROZEN_MUSLIM];
+                    image = &NPC_images[FROZEN_MUSLIM];
                 }
             }
 
             pos = pnj->getTransitionPosition();
-            painter.drawImage(pos.getX(), pos.getY(), image);
+            painter.drawImage(pos.getX(), pos.getY(), *image);
         }
     }
 
@@ -73,18 +73,18 @@ void MapGUI::paintEvent(QPaintEvent *) {
         typeOfTower = tower->getType();
 
         if (typeOfTower == GUN_TOWER_STR) {
-            image = tower_images[GUN_TOWER];
+            image = &tower_images[GUN_TOWER];
         } else if (typeOfTower == SNIPER_TOWER_STR) {
-            image = tower_images[SNIPER_TOWER];
+            image = &tower_images[SNIPER_TOWER];
         } else if (typeOfTower == SHOCK_TOWER_STR) {
-            image = tower_images[SHOCK_TOWER];
+            image = &tower_images[SHOCK_TOWER];
         } else {
-            image = tower_images[MISSILE_TOWER];
+            image = &tower_images[MISSILE_TOWER];
         }
 
         pos = tower->getPosition();
-        int offset = image.height() - TILES_SIZE;
-        painter.drawImage(pos.getX() * TILES_SIZE, pos.getY() * TILES_SIZE - offset, image);
+        int offset = image->height() - TILES_SIZE;
+        painter.drawImage(pos.getX() * TILES_SIZE, pos.getY() * TILES_SIZE - offset, *image);
     }
 
     QRect rect = QRect(highlighted.getX() * TILES_SIZE, highlighted.getY() * TILES_SIZE, TILES_SIZE - 1,
