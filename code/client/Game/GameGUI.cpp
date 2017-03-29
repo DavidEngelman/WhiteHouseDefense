@@ -9,7 +9,7 @@
 GameGUI::GameGUI(bool isSupporter, unsigned seed, GameManager *manager) : AbstractGUI(nullptr),
                                                                           GameUI(isSupporter, seed, manager) {
 
-
+    this->setFixedSize(1280,980);
     mainLayout = new QHBoxLayout();
     leftPanel = new QVBoxLayout;
 
@@ -52,9 +52,7 @@ GameGUI::GameGUI(bool isSupporter, unsigned seed, GameManager *manager) : Abstra
     QVBoxLayout *centralLayout = new QVBoxLayout;
     setUpHealthBar();
     centralLayout->addWidget(baseHealthBar);
-    centralLayout->addStretch();
     map = new MapGUI(seed, this, centralLayout);
-    centralLayout->addStretch();
 
 
     QVBoxLayout *Vlayout = new QVBoxLayout;
@@ -62,7 +60,7 @@ GameGUI::GameGUI(bool isSupporter, unsigned seed, GameManager *manager) : Abstra
     QLabel *imageLabel = new QLabel();
     // MAYBE: DYNAMIC CAST??
     imageLabel->setScaledContents(true);
-    imageLabel->setMaximumSize((static_cast<MapGUI *> (map))->width(), 250);
+    imageLabel->setMaximumSize((static_cast<MapGUI *> (map))->width(), 200);
     imageLabel->setMovie(adImage);
     adImage->start();
     centralLayout->addWidget(imageLabel);
@@ -81,7 +79,7 @@ GameGUI::GameGUI(bool isSupporter, unsigned seed, GameManager *manager) : Abstra
     this->setLayout(mainLayout);
     //playerInfo->setLayout(playerInfoLayout);
 
-    this->showMaximized();
+    this->show();
 //    this->showFullScreen();
 
 
@@ -210,7 +208,7 @@ void GameGUI::display(GameState &gameState, int quadrant) {
 }
 
 void GameGUI::displayTowerShop() {
-    int scl = 10;
+    int scl = 15;
     QSize size = QSize(1400 / scl, 1060 / scl);
     std::string tooltip;
 
@@ -222,6 +220,7 @@ void GameGUI::displayTowerShop() {
     gunTowerB = new QCustomButton(0);
     gunTowerB->setIcon(QIcon("../../qt_ui/game_pictures/towers/guntower.png"));
     gunTowerB->setIconSize(size);
+    gunTowerB->setFixedSize(size);
     gunTowerB->setToolTip(QString::fromStdString(tooltip));
     gunTowerB->setEnabled(false);
 
@@ -233,6 +232,7 @@ void GameGUI::displayTowerShop() {
     sniperTowerB = new QCustomButton(1);
     sniperTowerB->setIcon(QIcon("../../qt_ui/game_pictures/towers/snipertower.png"));
     sniperTowerB->setIconSize(size);
+    sniperTowerB->setFixedSize(size);
     sniperTowerB->setToolTip(QString::fromStdString(tooltip));
     sniperTowerB->setEnabled(false);
 
@@ -244,6 +244,7 @@ void GameGUI::displayTowerShop() {
     shockTowerB = new QCustomButton(2);
     shockTowerB->setIcon(QIcon("../../qt_ui/game_pictures/towers/shocktower.png"));
     shockTowerB->setIconSize(size);
+    shockTowerB->setFixedSize(size);
     shockTowerB->setToolTip(QString::fromStdString(tooltip));
     shockTowerB->setEnabled(false);
 
@@ -257,6 +258,7 @@ void GameGUI::displayTowerShop() {
     missileTowerB = new QCustomButton(3);
     missileTowerB->setIcon(QIcon("../../qt_ui/game_pictures/towers/missiletower.png"));
     missileTowerB->setIconSize(size);
+    missileTowerB->setFixedSize(size);
     missileTowerB->setToolTip(QString::fromStdString(tooltip));
     missileTowerB->setEnabled(false);
 
@@ -275,7 +277,7 @@ void GameGUI::displayTowerShop() {
 
 void GameGUI::displayDeleteAndUpgradeBox() {
 
-    int scl = 10;
+    int scl = 15;
     QSize size = QSize(1400 / scl, 1060 / scl);
     std::string tooltip;
 
@@ -289,6 +291,7 @@ void GameGUI::displayDeleteAndUpgradeBox() {
     deleteTowerB->setEnabled(false);
     deleteTowerB->setIcon(QIcon("../../qt_ui/game_pictures/towers/sell.png"));
     deleteTowerB->setIconSize(size);
+    deleteTowerB->setFixedSize(size);
     deleteTowerB->setToolTip(QString::fromStdString(tooltip));
 
     tooltip = "Upgrading a tower will enhance its\nabilities, with its price raising for\neach upgrade.\n";
@@ -313,6 +316,7 @@ void GameGUI::displayDeleteAndUpgradeBox() {
     upgradeTowerB->setEnabled(false);
     upgradeTowerB->setIcon(QIcon("../../qt_ui/game_pictures/towers/upgrade.png"));
     upgradeTowerB->setIconSize(size);
+    upgradeTowerB->setFixedSize(size);
     upgradeTowerB->setToolTip(QString::fromStdString(tooltip));
 
     QGridLayout *layout = new QGridLayout;
@@ -385,7 +389,7 @@ void GameGUI::handleUpgradingTower() {
 
 
 void GameGUI::displaySpellBox() {
-    int scl = 10;
+    int scl = 15;
     QSize size = QSize(1400 / scl, 1060 / scl);
     std::string tooltip;
     QGridLayout *layout = new QGridLayout;
@@ -395,6 +399,8 @@ void GameGUI::displaySpellBox() {
     nukeB->setEnabled(false);
     nukeB->setIcon(QIcon("../../qt_ui/game_pictures/spells/trumpnuclear.png"));
     nukeB->setIconSize(size);
+    nukeB->setFixedSize(size);
+
     nukeB->setToolTip(QString::fromStdString(tooltip));
 
     tooltip = "Frozes npcs within your side of the map,\nimmobilizing them for a short time.\n";
@@ -402,6 +408,7 @@ void GameGUI::displaySpellBox() {
     freezeB->setEnabled(false);
     freezeB->setIcon(QIcon("../../qt_ui/game_pictures/spells/frozentrump.png"));
     freezeB->setIconSize(size);
+    freezeB->setFixedSize(size);
     freezeB->setToolTip(QString::fromStdString(tooltip));
 
     tooltip = "Launch an airstrike on your opponents to\ndeal 20 damage to their base.\n";
@@ -409,6 +416,7 @@ void GameGUI::displaySpellBox() {
     airStrikeB->setEnabled(false);
     airStrikeB->setIcon(QIcon("../../qt_ui/game_pictures/spells/airstrike.png"));
     airStrikeB->setIconSize(size);
+    airStrikeB->setFixedSize(size);
     airStrikeB->setToolTip(QString::fromStdString(tooltip));
 
     if (manager->getMode() == TEAM_MODE) {
@@ -416,6 +424,7 @@ void GameGUI::displaySpellBox() {
         teamHealB = new QHandPointerButton;
         teamHealB->setIcon(QIcon("../../qt_ui/game_pictures/spells/heal.png"));
         teamHealB->setIconSize(size);
+        teamHealB->setFixedSize(size);
         teamHealB->setToolTip(QString::fromStdString(tooltip));
         QObject::connect(teamHealB, SIGNAL(clicked()), this, SLOT(handleTeamHeal()));
         layout->addWidget(teamHealB, 1, 1);
