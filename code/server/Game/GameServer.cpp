@@ -198,6 +198,11 @@ void GameServer::sendMessageToOtherPlayers(std::string &userMessage, std::string
         int socketFd = playerConnection.getSocketFd();
         send_message(socketFd, message.c_str());
     }
+
+    for (SupporterConnection &supporterConnection : supporterConnections) {
+        int socketFd = supporterConnection.getSupporterSocket();
+        send_message(socketFd, message.c_str());
+    }
 }
 
 void GameServer::sendAdPopUP(std::string &playerSupportedUserName) {
