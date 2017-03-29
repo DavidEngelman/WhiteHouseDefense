@@ -764,12 +764,13 @@ void GameGUI::setUpSpellsBoxForSupporter() {
 }
 
 void GameGUI::displaySupporterActionBox() {
-    int scl = 10;
+    int scl = 15;
     QSize size = QSize(1400 / scl, 1060 / scl);
 
     adSpellB = new QHandPointerButton;
     adSpellB->setIcon(QIcon("../../qt_ui/game_pictures/spells/adSpell.jpg"));
     adSpellB->setIconSize(size);
+    adSpellB->setFixedSize(size);
     adSpellB->setEnabled(true);
 
     QGridLayout *layout = new QGridLayout;
