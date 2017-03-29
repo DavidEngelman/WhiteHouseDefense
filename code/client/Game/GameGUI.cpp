@@ -351,10 +351,13 @@ void GameGUI::enableTowerShop() {
             enableDeleteAndUpgradeBox();
         } else {
             int playerMoney = manager->getGameState().getPlayerStates()[quadrant].getMoney();
-            if (playerMoney > GUN_TOWER_PRICE) gunTowerB->setEnabled(true);
-            if (playerMoney > SNIPER_TOWER_PRICE) sniperTowerB->setEnabled(true);
-            if (playerMoney > SHOCK_TOWER_PRICE) shockTowerB->setEnabled(true);
-            if (playerMoney > MISSILE_TOWER_PRICE) missileTowerB->setEnabled(true);
+            int playerHealth = manager->getGameState().getPlayerStates()[quadrant].getHp();
+            if (playerHealth > 0){
+                if (playerMoney > GUN_TOWER_PRICE) gunTowerB->setEnabled(true);
+                if (playerMoney > SNIPER_TOWER_PRICE) sniperTowerB->setEnabled(true);
+                if (playerMoney > SHOCK_TOWER_PRICE) shockTowerB->setEnabled(true);
+                if (playerMoney > MISSILE_TOWER_PRICE) missileTowerB->setEnabled(true);
+            }
         }
     }
 }
@@ -529,8 +532,10 @@ bool GameGUI::isAirStrikeActivable() {
 }
 
 void GameGUI::enableAirStrike() {
-    airStrikeB->setEnabled(true);
-
+    int playerHealth = manager->getGameState().getPlayerStates()[manager->getQuadrant()].getHp();
+    if (playerHealth > 0) {
+        airStrikeB->setEnabled(true);
+    }
 }
 
 void GameGUI::disableTeamHeal() {
@@ -538,11 +543,14 @@ void GameGUI::disableTeamHeal() {
 }
 
 void GameGUI::enableSpells() {
-    if (manager->isNukeSpellAvailable()) {
-        enableNukeSpell();
-    }
-    if (manager->isFreezeSpellAvailable()) {
-        enableFreezeSpell();
+    int playerHealth = manager->getGameState().getPlayerStates()[manager->getQuadrant()].getHp();
+    if (playerHealth > 0) {
+        if (manager->isNukeSpellAvailable()) {
+            enableNukeSpell();
+        }
+        if (manager->isFreezeSpellAvailable()) {
+            enableFreezeSpell();
+        }
     }
 }
 
