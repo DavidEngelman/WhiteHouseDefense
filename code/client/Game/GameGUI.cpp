@@ -40,7 +40,7 @@ GameGUI::GameGUI(bool isSupporter, unsigned seed, GameManager *manager) : Abstra
     QString chatBoxTitle = QString::fromStdString("Chat");
     chatBox = new QGroupBox(chatBoxTitle);
     inGameChatWidget = new InGameChatWidget(manager);
-    inGameChatWidget->setStyleSheet("border-image:url(../../qt_ui/game_pictures/backgrounds/goldBg.png);");
+    inGameChatWidget->setStyleSheet("border-image:url(../../qt_ui/game_pictures/backgrounds/goldBg.png);color : black;");
 
     QHBoxLayout *chatLayout = new QHBoxLayout;
     chatLayout->addWidget(inGameChatWidget);
