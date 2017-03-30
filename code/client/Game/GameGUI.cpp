@@ -11,7 +11,7 @@ GameGUI::GameGUI(bool isSupporter, unsigned seed, GameManager *manager) : Abstra
     this->setFixedSize(1280,980);
     QFrame* mainFrame = new QFrame(this);
     mainFrame->setFrameStyle(QFrame::StyledPanel);
-    mainFrame->setStyleSheet("QFrame{background-image: url(../../qt_ui/game_pictures/backgrounds/bluebg.png);border-style :solid ;border-color: gold ;border-width : 1px;border-radius:5px; color : gold; }");
+
     mainFrame->setFixedSize(1280,980);
     mainLayout = new QHBoxLayout();
     leftPanel = new QVBoxLayout;
@@ -75,8 +75,8 @@ GameGUI::GameGUI(bool isSupporter, unsigned seed, GameManager *manager) : Abstra
 
     /* Main Layout */
     mainLayout->addLayout(leftPanel, 1);
-    mainLayout->addLayout(centralLayout, 1);
-    mainLayout->addLayout(actionLayout, 1);
+    mainLayout->addLayout(centralLayout, 2);
+    mainLayout->addLayout(actionLayout, 3);
 
 
     mainFrame->setLayout(mainLayout);
@@ -107,6 +107,7 @@ void GameGUI::setUpSpellsBox() {
     spellBox = new QGroupBox(spellBoxTitle);
     displaySpellBox();
     actionLayout->addWidget(spellBox);
+
 }
 
 void GameGUI::setUpStatsBox() {
@@ -145,7 +146,7 @@ void GameGUI::displayPlayersPlacingTowersMessage() {
 ///HEALTH BARS
 void GameGUI::setUpHealthBar() {
     baseHealthBar = new QProgressBar;
-    baseHealthBar->setStyleSheet(QString("QProgressBar {color: black}"));
+    baseHealthBar->setStyleSheet(QString("QProgressBar {color: black;background-image: url(../../qt_ui/game_pictures/backgrounds/bluebg.png); }"));
     baseHealthBar->setMaximum(PLAYER_STARTING_HP);
     baseHealthBar->setMinimum(0);
     QPalette p = baseHealthBar->palette();
@@ -158,7 +159,7 @@ void GameGUI::setUpOtherPlayerHealthBar() {
     QHBoxLayout *layout = new QHBoxLayout;
     for (int i = 0; i < 3; i++) {
         QProgressBar *healthBar = new QProgressBar;
-        healthBar->setStyleSheet(QString("QProgressBar {color: black}"));
+        healthBar->setStyleSheet(QString("QProgressBar {color: black;background-image: url(../../qt_ui/game_pictures/backgrounds/bluebg.png);}"));
         healthBar->setMaximum(PLAYER_STARTING_HP);
         healthBar->setMinimum(0);
         QPalette p = healthBar->palette();
