@@ -133,6 +133,7 @@ set(CLIENT_FILES client/Other/ClientLauncher.cpp
         client/Other/QHandPointerButton.hpp
         client/Other/InQueueWidget.cpp
 
+
         )
 
 
@@ -194,7 +195,8 @@ set(SERVER_FILES "server/Other/ServerLauncher.cpp"
         common/Other/Networking.cpp
         common/Other/Credentials.cpp
         common/Other/Message.cpp
-        common/Other/RankingInfos.hpp server/Game/global.h)
+        common/Other/RankingInfos.hpp
+        )
 
 add_executable(server ${SERVER_FILES})
 

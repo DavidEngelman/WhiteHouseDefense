@@ -1,11 +1,11 @@
 #include <iostream>
 #include "GameState.hpp"
 #include "../Other/Tools.hpp"
-#include "../../server/Game/global.h"
+
 
 GameState::GameState() : isGameOver(false) {}
 
-GameState::GameState(std::string mode) : mode(mode), isGameOver(false) {}
+GameState::GameState(std::string mode) : mode(mode), isGameOver(false), mutex(new std::mutex()) {}
 
 std::string *GameState::serialize() {
     std::string *serialized_me = new std::string();
@@ -22,11 +22,11 @@ std::string *GameState::serialize() {
 
     *serialized_me += "!";
 
-    mutex.lock();
+    mutex->lock();
     for (AbstractTower * tower: towers) {
         *serialized_me += tower->serialize();
     }
-    mutex.unlock();
+    mutex->unlock();
 
     *serialized_me += "!";
 
@@ -90,9 +90,9 @@ bool GameState::isPlayerAlive(const int quadrant) {
 
 void GameState::addTower(AbstractTower *tower, int quadrant) {
     player_states[quadrant].spendMoney(tower->getPrice());
-    mutex.lock();
+    mutex->lock();
     towers.push_back(tower);
-    mutex.unlock();
+    mutex->unlock();
 }
 
 void GameState::deleteTower(Position &position, int quadrant) {
@@ -101,9 +101,9 @@ void GameState::deleteTower(Position &position, int quadrant) {
         if ((*iter)->getPosition() == position) {
             float amountPaidBack = (*iter)->getPrice() * PERCENTAGE_RECOVERED_MONEY;
             getPlayerStates()[quadrant].earnMoney((int) amountPaidBack);
-            mutex.lock();
+            mutex->lock();
             towers.erase(iter);
-            mutex.unlock();
+            mutex->unlock();
             return;
         }
     }

@@ -13,7 +13,6 @@
 #include <time.h>
 #include "../../common/Other/Constants.hpp"
 #include "../../common/Other/Tools.hpp"
-#include <mutex>
 
 class GameServer;
 typedef struct argsForSpectatorCommandThread {

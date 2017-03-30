@@ -11,6 +11,7 @@
 
 class AbstractTower; // Ah, les dependences circulaires :(
 
+
 /*
  *
  * Represents the changing parts of the game: the towers, the waves and NPCs, the player
@@ -25,6 +26,8 @@ private:
     bool isGameOver;
 
     std::string mode;
+
+    std::mutex * mutex;
 
 
 public:
