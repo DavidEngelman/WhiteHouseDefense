@@ -9,6 +9,7 @@ InGameChatWidget::InGameChatWidget(GameManager *gameManager) : gameManager(gameM
 
     /* Message list view */
     messagesListWidget = new QListWidget();
+    messagesListWidget->setFixedWidth(250);
     messagesListWidget->setStyleSheet("border-image:url(../../qt_ui/game_pictures/backgrounds/goldBg.png);color : black;border-radius : 5px;;border-width : 2px;border-style :solid ;border-color: gold ;");
 
 

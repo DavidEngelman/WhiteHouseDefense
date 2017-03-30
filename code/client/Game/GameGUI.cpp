@@ -737,8 +737,7 @@ void GameGUI::displayInfoForSupporter(GameState &gameState, int quadrant) {
     PlayerState playerSupported = gameState.getPlayerStates()[quadrant];
     std::string &playerSupportedUsrName = playerSupported.getUsername();
 
-    usernameL->setText("You are Supporting " + QString::fromStdString(playerSupportedUsrName)
-                       + " (" + QString::fromStdString(QUADRANT_NAMES[quadrant]) + ")");
+    usernameL->setText(QString::fromStdString(playerSupportedUsrName));
     usernameL->show();
 
     std::string text;
