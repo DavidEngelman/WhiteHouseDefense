@@ -52,6 +52,7 @@ void ProfileGUI::display() {
     usernameLineEdit->setPlaceholderText("SEARCH PROFILE...");
     usernameLineEdit->setFixedWidth(300);
     usernameLineEdit->setFixedHeight(35);
+    usernameLineEdit->setStyleSheet("QLineEdit,QLineEdit:hover{border-radius : 10px;border-style :solid ;border-color: gold ;border-width: 2px;background-image: url(../../qt_ui/game_pictures/backgrounds/goldBg.png);}");
 
     QString usernameString = "Username";
     QString searchButtonString = "SEARCH";
