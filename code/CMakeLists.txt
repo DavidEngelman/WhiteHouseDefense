@@ -194,7 +194,7 @@ set(SERVER_FILES "server/Other/ServerLauncher.cpp"
         common/Other/Networking.cpp
         common/Other/Credentials.cpp
         common/Other/Message.cpp
-        common/Other/RankingInfos.hpp)
+        common/Other/RankingInfos.hpp server/Game/global.h)
 
 add_executable(server ${SERVER_FILES})
 

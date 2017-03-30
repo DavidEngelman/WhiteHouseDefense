@@ -205,7 +205,7 @@ Position GameGUI::getPosSellingTower() {
 }
 
 void GameGUI::display(GameState &gameState, int quadrant) {
-    map->display(&gameState, quadrant);
+    map->display(gameState, quadrant);
     displayPlayerInfos(gameState, quadrant);
 }
 

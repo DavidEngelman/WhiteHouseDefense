@@ -23,7 +23,6 @@ private:
     std::vector<AbstractTower *> towers;
     std::vector<Wave> waves;
     bool isGameOver;
-    std::mutex mutex;
 
     std::string mode;
 

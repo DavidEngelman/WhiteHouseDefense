@@ -12,7 +12,7 @@ MapGUI::MapGUI(unsigned int seed, GameGUI *gameGUI, QVBoxLayout *layout = 0) : M
     }
 }
 
-void MapGUI::display(GameState *gameStateUpdate, int quadrantUpdate) {
+void MapGUI::display(GameState &gameStateUpdate, int quadrantUpdate) {
     gameState = gameStateUpdate;
     quadrant = quadrantUpdate;
     update();
