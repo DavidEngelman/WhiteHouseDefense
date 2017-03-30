@@ -55,7 +55,7 @@ public:
 
     void giveGold(PlayerState &playerState, PNJ *pnj);
 
-    Wave &getWaveInSameQuadrant(AbstractTower &tower, std::vector<Wave> &waves);
+    Wave * getWaveInSameQuadrant(AbstractTower &tower, std::vector<Wave> &waves);
 
     void increaseWaveDifficulty();
 

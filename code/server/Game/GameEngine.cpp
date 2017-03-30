@@ -77,10 +77,12 @@ void GameEngine::dealDamageToBase() {
 
 void GameEngine::dealDamage(std::vector<Wave> &waves) {
     for (AbstractTower *tower: gameState.getTowers()) {
-        Wave &wave = getWaveInSameQuadrant(*tower, waves);
-        const std::vector<PNJ *> &killedPNJ = tower->shoot(wave, getPlayerStateForWave(wave));
+        Wave * wave = getWaveInSameQuadrant(*tower, waves);
+        if (wave == nullptr) { continue; }
+
+        const std::vector<PNJ *> &killedPNJ = tower->shoot(*wave, getPlayerStateForWave(*wave));
         for (auto &&pnj : killedPNJ) {
-            PlayerState &player_state = getPlayerStateForWave(wave);
+            PlayerState &player_state = getPlayerStateForWave(*wave);
             addKillToStat(player_state);
             giveGold(player_state, pnj);
         }
@@ -112,13 +114,14 @@ void GameEngine::movePNJsInWave(Wave &wave) {
     }
 }
 
-Wave &GameEngine::getWaveInSameQuadrant(AbstractTower &tower, std::vector<Wave> &waves) {
+Wave * GameEngine::getWaveInSameQuadrant(AbstractTower &tower, std::vector<Wave> &waves) {
     int quadrant = tower.getQuadrant();
     for (Wave &wave: waves) {
         if (quadrant == wave.getQuadrant()) {
-            return wave;
+            return &wave;
         }
     }
+    return nullptr;
 }
 
 void GameEngine::removeDeadPNJsFromWaves() {
