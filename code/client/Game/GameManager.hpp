@@ -34,6 +34,7 @@ private:
     GameUI *gameUI;
     int quadrant;
     bool isSupporter;
+    char server_msg_buff[BUFFER_SIZE];
 
     bool nukeSpellAvailable = true;
     bool freezeSpellAvailable = true;

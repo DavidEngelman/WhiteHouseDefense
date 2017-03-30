@@ -3,19 +3,33 @@
 
 // Receive
 
-ssize_t receive_data(int socket_fd, void* message, int length) {
-    return recv(socket_fd, message, (size_t) length, 0);
+int receive_data(int socket_fd, void *message, int length) {
+    int bytes_read = 0;
+    int bytes_to_read = length;
+    char * pointer = (char*) message;
+    while (bytes_to_read > 0){
+        ssize_t data_bytes_read = recv(socket_fd, pointer, (size_t) length, 0);
+        bytes_read += data_bytes_read;
+        bytes_to_read -= data_bytes_read;
+        pointer += data_bytes_read;
+
+        if (data_bytes_read <= -1) {
+            return -1;
+        }
+    }
+
+    return bytes_read;
 }
 
 int get_data_from_socket(int socket_fd, char *buffer, int size) {
-    ssize_t data_bytes_read = receive_data(socket_fd, buffer, size);
-
-    if (data_bytes_read <= -1) {
+    int errorCode = receive_data(socket_fd, buffer, size);
+    if (errorCode <= -1) {
         perror("Receive - message data");
+        std::cout << "The size of the message is " << size << std::endl;
         return -1;
     }
 
-    return (int) data_bytes_read;
+    return size;
 }
 
 int get_message_length(int socket_fd) {
@@ -83,7 +97,7 @@ bool receive_message_with_timeout(int socket_fd, char *buffer, int timeout_val){
 
 void send_data(int socket_fd, char *buffer, int length){
 
-    if (send(socket_fd, buffer, sizeof(length), MSG_NOSIGNAL) == - 1) {
+    if (send(socket_fd, buffer, (size_t) length, MSG_NOSIGNAL) <= - 1) {
         perror("Send");
     }
 }
@@ -92,11 +106,11 @@ int send_message(int socket_fd, const char *message) {
     size_t length = strlen(message) + 1;
     //std::cout << "Sending message of size (including \\0) of " << length << " bytes" << std::endl;
     //std::cout << "Message: " << message << "to" << socket_fd <<  std::endl;
-    if (send(socket_fd, &length, sizeof(length), MSG_NOSIGNAL) == -1){
+    if (send(socket_fd, &length, sizeof(length), MSG_NOSIGNAL) <= -1){
         perror("Send message - Message length");
         return -1;
     } // Send the length
-    if (send(socket_fd, message, length, MSG_NOSIGNAL) == -1){
+    if (send(socket_fd, message, length, MSG_NOSIGNAL) <= -1){
         perror("Send message - Message data");
         return -1;
     }        // Send the data
@@ -112,7 +126,7 @@ int init_connection_to_server(char* server_ip_address, int port){
     }
 
     serv_socket = create_socket();
-    if (connect_to_server(serv_socket, port, he) == -1) {
+    if (connect_to_server(serv_socket, port, he) <= -1) {
         const std::string& message = "The connect to the server with port "
                                      + std::to_string(port) + " has failed:";
         perror(message.c_str());

@@ -84,6 +84,7 @@ void GameServer::runWave() {
     while (!isWaveFinished && !playerConnections.empty()) {
         while (!isWaveFinished && timer.elapsedTimeInMiliseconds() < INTERVAL_BETWEEN_SENDS_IN_MS) {
             isWaveFinished = gameEngine->update();
+            usleep(2000);
         }
         sendGameStateToPlayers();
         timer.reset();
@@ -92,13 +93,15 @@ void GameServer::runWave() {
 
 
 void GameServer::sendGameStateToPlayers() {
+    const std::string *serialized_game_state = gameEngine->serializeGameState();
     for (int i = 0; i < NUM_PLAYERS; i++) {
-        sendGameStateToPlayer(playerConnections[i]);
+        send_message(playerConnections[i].getSocketFd(), (*serialized_game_state).c_str());
     }
 
     for (SupporterConnection &supporterConnection: supporterConnections) {
-        sendGameStateToPlayer(supporterConnection.getSupporterSocket());
+        send_message(supporterConnection.getSupporterSocket(), (*serialized_game_state).c_str());
     }
+    delete serialized_game_state;
 }
 
 
