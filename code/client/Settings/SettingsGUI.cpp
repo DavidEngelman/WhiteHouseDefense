@@ -14,7 +14,7 @@ void SettingsGUI::display() {
     this->setFixedWidth(1000);
 
     /* Set background */
-    setBackgroundFromPath("../../qt_ui/game_pictures/backgrounds/trump_background.png");
+    setBackgroundFromPath("../../qt_ui/resources/backgrounds/trump_background.png");
 
     /* Layouts */
 
@@ -26,7 +26,7 @@ void SettingsGUI::display() {
     /* Home Button*/
     QHandPointerButton* homeButton = new QHandPointerButton("HOME", 70, 35, this);
     homeButton->setSizePolicy( QSizePolicy::Maximum, QSizePolicy::Preferred );
-    homeButton->setStyleSheet("border-image:url(../../qt_ui/game_pictures/buttons/mainmenu.png);");
+    homeButton->setStyleSheet("border-image:url(../../qt_ui/resources/buttons/mainmenu.png);");
     QObject::connect(homeButton, SIGNAL(clicked()), this, SLOT(goToMain()));
     topLayout->addWidget(homeButton);
     topLayout->addStretch();
@@ -44,13 +44,13 @@ void SettingsGUI::display() {
 
     /*Menu*/
     usernameB = new QHandPointerButton("Change Username", 300,40);
-    usernameB->setStyleSheet("border-image:url(../../qt_ui/game_pictures/buttons/mainmenu.png);");
+    usernameB->setStyleSheet("border-image:url(../../qt_ui/resources/buttons/mainmenu.png);");
 
     passwordB = new QHandPointerButton("Change Password", 300,40);
-    passwordB->setStyleSheet("border-image:url(../../qt_ui/game_pictures/buttons/mainmenu.png);");
+    passwordB->setStyleSheet("border-image:url(../../qt_ui/resources/buttons/mainmenu.png);");
 
     iconB = new QHandPointerButton("Change icon", 300,40);
-    iconB->setStyleSheet("border-image:url(../../qt_ui/game_pictures/buttons/mainmenu.png);");
+    iconB->setStyleSheet("border-image:url(../../qt_ui/resources/buttons/mainmenu.png);");
 
     buttonsLayout->addWidget(usernameB);
     buttonsLayout->addWidget(passwordB);
@@ -94,7 +94,7 @@ void SettingsGUI::changeUsername(){
     usernameB->setVisible(false);
     lineEditU = new QLineEdit();
     lineEditU->setFixedSize(300,40);
-    lineEditU->setStyleSheet("QLineEdit,QLineEdit:hover{border-radius : 10px;border-style :solid ;border-color: gold ;border-width: 2px;background-image: url(../../qt_ui/game_pictures/backgrounds/goldBg.png);}");
+    lineEditU->setStyleSheet("QLineEdit,QLineEdit:hover{border-radius : 10px;border-style :solid ;border-color: gold ;border-width: 2px;background-image: url(../../qt_ui/resources/backgrounds/goldBg.png);}");
     QObject::connect(lineEditU, SIGNAL(returnPressed()), this, SLOT(applyUsernameChange()));
     lineEditU->setPlaceholderText("New username");
     buttonsLayout->insertWidget(0, lineEditU);
@@ -107,7 +107,7 @@ void SettingsGUI::changePassword(){
     lineEditP = new QLineEdit();
     lineEditP->setFixedSize(300,40);
     lineEditP->setPlaceholderText("New Password");
-    lineEditP->setStyleSheet("QLineEdit,QLineEdit:hover{border-radius : 10px;border-style :solid ;border-color: gold ;border-width: 2px;background-image: url(../../qt_ui/game_pictures/backgrounds/goldBg.png);}");
+    lineEditP->setStyleSheet("QLineEdit,QLineEdit:hover{border-radius : 10px;border-style :solid ;border-color: gold ;border-width: 2px;background-image: url(../../qt_ui/resources/backgrounds/goldBg.png);}");
     lineEditP->setEchoMode(QLineEdit::Password);
     QObject::connect(lineEditP, SIGNAL(returnPressed()), this, SLOT(applyPasswordChange()));
 

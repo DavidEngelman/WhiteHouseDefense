@@ -75,7 +75,7 @@ void SpectatorGUI::fillTable() {
 void SpectatorGUI::setUp() {
     this->setFixedHeight(600);
     this->setFixedWidth(1000);
-    setBackgroundFromPath("../../qt_ui/game_pictures/backgrounds/supporter_bg.png");
+    setBackgroundFromPath("../../qt_ui/resources/backgrounds/supporter_bg.png");
 }
 
 void SpectatorGUI::createTable() {
@@ -105,9 +105,9 @@ void SpectatorGUI::setStyle() {
                           "border: 10px solid grey;}"
                           "QPushButton {border: 2px solid darkbrown;"
                           "padding: 0 8px;"
-                          "border-image:url(../../qt_ui/game_pictures/buttons/gold_button_2.svg);"
+                          "border-image:url(../../qt_ui/resources/buttons/gold_button_2.svg);"
                           "font-family: verdana 14px; }"
-                          "QPushButton:pressed {background-image : url(../../qt_ui/game_pictures/buttons/connectPressed.png);}"
+                          "QPushButton:pressed {background-image : url(../../qt_ui/resources/buttons/connectPressed.png);}"
     );
 
 }

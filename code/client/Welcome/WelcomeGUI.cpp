@@ -30,7 +30,7 @@ void WelcomeGUI::display() {
     fields->setLayout(fieldsLayout);
     fields->move(this->size().width() / 2 - 125, this->size().height() / 2 + 100);
 
-    manager->setMusicFromPath("../../qt_ui/game_pictures/sounds/americanAnthem.mp3");
+    manager->setMusicFromPath("../../qt_ui/resources/sounds/americanAnthem.mp3");
     this->show();
     AbstractGUI::parent->show();
     // On affiche la fenetre principale qu'à partir du moment ou WelcomeGUI est pret pour que ce soit plus smooth
@@ -50,7 +50,7 @@ void WelcomeGUI::setTheme() {
     this->setFixedWidth(750);
 
     setStylesheetFromPath("../../qt_ui/americanMain.qss");
-    setBackgroundFromPath("../../qt_ui/game_pictures/backgrounds/americanBg");
+    setBackgroundFromPath("../../qt_ui/resources/backgrounds/americanBg");
 }
 
 void WelcomeGUI::quit(){

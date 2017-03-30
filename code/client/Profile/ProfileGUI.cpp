@@ -21,7 +21,7 @@ void ProfileGUI::display() {
     this->setFixedWidth(1000);
 
     /* Set background */
-    setBackgroundFromPath("../../qt_ui/game_pictures/backgrounds/profile_bckgrd-2.png");
+    setBackgroundFromPath("../../qt_ui/resources/backgrounds/profile_bckgrd-2.png");
 
     QFont policeUsername("calibri", 24, QFont::Bold);
     QFont policeStandart("calibri", 12, QFont::Bold);
@@ -39,7 +39,7 @@ void ProfileGUI::display() {
     ///----------HOME_BUTTON----------
 
     homeButton = new QHandPointerButton("HOME", 70, 35, this);
-    homeButton->setStyleSheet("QPushButton{ border-image: url(../../qt_ui/game_pictures/buttons/mainmenu.png) ;} QPushButton:pressed{border-image:url(../../qt_ui/game_pictures/buttons/connectPressed.png);}");
+    homeButton->setStyleSheet("QPushButton{ border-image: url(../../qt_ui/resources/buttons/mainmenu.png) ;} QPushButton:pressed{border-image:url(../../qt_ui/resources/buttons/connectPressed.png);}");
     QObject::connect(homeButton, SIGNAL(clicked()), this, SLOT(goToMain()));
 
 
@@ -52,13 +52,13 @@ void ProfileGUI::display() {
     usernameLineEdit->setPlaceholderText("SEARCH PROFILE...");
     usernameLineEdit->setFixedWidth(300);
     usernameLineEdit->setFixedHeight(35);
-    usernameLineEdit->setStyleSheet("QLineEdit,QLineEdit:hover{border-radius : 10px;border-style :solid ;border-color: gold ;border-width: 2px;background-image: url(../../qt_ui/game_pictures/backgrounds/goldBg.png);}");
+    usernameLineEdit->setStyleSheet("QLineEdit,QLineEdit:hover{border-radius : 10px;border-style :solid ;border-color: gold ;border-width: 2px;background-image: url(../../qt_ui/resources/backgrounds/goldBg.png);}");
 
     QString usernameString = "Username";
     QString searchButtonString = "SEARCH";
 
     searchButton = new QHandPointerButton(searchButtonString, 130, 35, this);
-    searchButton->setStyleSheet("QPushButton{ border-image:url(../../qt_ui/game_pictures/buttons/mainmenu.png);} QPushButton:pressed{border-image:url(../../qt_ui/game_pictures/buttons/connectPressed.png);}");
+    searchButton->setStyleSheet("QPushButton{ border-image:url(../../qt_ui/resources/buttons/mainmenu.png);} QPushButton:pressed{border-image:url(../../qt_ui/resources/buttons/connectPressed.png);}");
 
     QObject::connect(searchButton, SIGNAL(clicked()), this, SLOT(showUser()));
     QObject::connect(usernameLineEdit, SIGNAL(returnPressed()), searchButton, SIGNAL(clicked()));
@@ -116,7 +116,7 @@ void ProfileGUI::display() {
     victoriesLabel->setText(*victoriesT);
     victoriesLabel->setStyleSheet("padding-left: 0;color : gold;");
 
-    QPixmap* victoryPic = new QPixmap("../../qt_ui/game_pictures/pictures/trophy2.png");
+    QPixmap* victoryPic = new QPixmap("../../qt_ui/resources/pictures/trophy2.png");
     QLabel *victoryPicLabel = new QLabel(this);
     victoryPicLabel->setFixedWidth(400);
     victoryPicLabel->setPixmap(*victoryPic);
@@ -140,7 +140,7 @@ void ProfileGUI::display() {
     NPCKilledLabel->setStyleSheet("padding-right: 0;color : gold;");
 
 
-    QPixmap* mexicanPic = new QPixmap("../../qt_ui/game_pictures/pictures/mexican.gif");
+    QPixmap* mexicanPic = new QPixmap("../../qt_ui/resources/pictures/mexican.gif");
     QLabel *mexicanPicLabel = new QLabel(this);
     mexicanPicLabel->setFixedWidth(400);
     mexicanPicLabel->setPixmap(*mexicanPic);
@@ -182,7 +182,7 @@ void ProfileGUI::updateProfile() {
     *usernameT = QString::fromStdString(profileManager->getUsername());
     *victoriesT = QString::fromStdString("Victories: " + std::to_string(profileManager->getVictories()));
     *NPCKilledT = QString::fromStdString("NPC killed: " + std::to_string(profileManager->getNPCKilled()));
-    *iconT =  QString::fromStdString("../../qt_ui/game_pictures/icons/" + std::to_string(profileManager->getIconID()) + ".jpg");
+    *iconT =  QString::fromStdString("../../qt_ui/resources/icons/" + std::to_string(profileManager->getIconID()) + ".jpg");
 
 
     userNameLabel->setText(*usernameT);

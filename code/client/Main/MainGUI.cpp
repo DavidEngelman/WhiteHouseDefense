@@ -10,8 +10,8 @@ void MainGUI::display() {
     this->setFixedWidth(1000);
 
     setStylesheetFromPath("../../qt_ui/americanMain.qss");
-    setBackgroundFromPath("../../qt_ui/game_pictures/backgrounds/whitehouse_bckgrd.png");
-    manager->setMusicFromPath("../../qt_ui/game_pictures/sounds/trump_song.mp3");
+    setBackgroundFromPath("../../qt_ui/resources/backgrounds/whitehouse_bckgrd.png");
+    manager->setMusicFromPath("../../qt_ui/resources/sounds/trump_song.mp3");
 
     QFont police("calibri");
 
@@ -52,7 +52,7 @@ void MainGUI::display() {
     fieldsLayout->addRow(settings);
 
     fields->setLayout(fieldsLayout);
-    fields->setStyleSheet("background-image: url(../../qt_ui/game_pictures/backgrounds/goldBg.png);");
+    fields->setStyleSheet("background-image: url(../../qt_ui/resources/backgrounds/goldBg.png);");
     fields->move(this->size().width() / 2 - 125, this->size().height() / 2 - 100);
 
     if (manager->isInQueue()) {
@@ -71,7 +71,7 @@ void MainGUI::displayGameModesMenu() {
     dialog_game_mode_choice->setWindowTitle("Select a game mode");
     dialog_game_mode_choice->setWindowModality(Qt::ApplicationModal);
     dialog_game_mode_choice->setStyleSheet(
-            ".QWidget{background-image: url(../../qt_ui/game_pictures/backgrounds/goldBg.png);}");
+            ".QWidget{background-image: url(../../qt_ui/resources/backgrounds/goldBg.png);}");
     dialog_game_mode_choice->setFixedSize(650, 250);
 
     dialog_game_mode_choice->setGeometry(
@@ -88,18 +88,18 @@ void MainGUI::displayGameModesMenu() {
 
     classicMode = new QCustomButton(0, "", dialog_game_mode_choice);
     classicMode->setStyleSheet(
-            "QPushButton{ border-image: url(../../qt_ui/game_pictures/icons/classicIcon.png) ; padding : 55px;}QPushButton:pressed{ border-style :solid ;border-color: black ;border-width : 3px;}");
+            "QPushButton{ border-image: url(../../qt_ui/resources/icons/classicIcon.png) ; padding : 55px;}QPushButton:pressed{ border-style :solid ;border-color: black ;border-width : 3px;}");
     classicMode->setFixedSize(150, 150);
 
 
     teamMode = new QCustomButton(1, "", dialog_game_mode_choice);
     teamMode->setStyleSheet(
-            "QPushButton{ border-image: url(../../qt_ui/game_pictures/icons/teamIcon.png) ; padding : 50px;} QPushButton:pressed{ border-style :solid ;border-color: black ;border-width : 3px;}");
+            "QPushButton{ border-image: url(../../qt_ui/resources/icons/teamIcon.png) ; padding : 50px;} QPushButton:pressed{ border-style :solid ;border-color: black ;border-width : 3px;}");
     teamMode->setFixedSize(150, 150);
 
     timedMode = new QCustomButton(2, "", dialog_game_mode_choice);
     timedMode->setStyleSheet(
-            "QPushButton{ border-image: url(../../qt_ui/game_pictures/icons/chrono.png);padding : 50px ;} QPushButton:pressed{ border-style :solid ;border-color: black ;border-width : 3px;}");
+            "QPushButton{ border-image: url(../../qt_ui/resources/icons/chrono.png);padding : 50px ;} QPushButton:pressed{ border-style :solid ;border-color: black ;border-width : 3px;}");
     timedMode->setFixedSize(150, 150);
 
     popup_h_layout->addWidget(classicMode);

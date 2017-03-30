@@ -5,9 +5,9 @@
 FriendListGUI::FriendListGUI(FriendListManager *manager, QWidget* _parent) : AbstractGUI(_parent), FriendListUI(manager) {
     specManager = new SpectatorManager(MATCHMAKER_SERVER_PORT, manager->getMasterApp());
     this->setWindowFlags(Qt::Window);
-    iconsArray[0] = QIcon("../../qt_ui/game_pictures/icons/inGameIcon.png");
-    iconsArray[1] = QIcon("../../qt_ui/game_pictures/icons/onlineIcon.png");
-    iconsArray[2] = QIcon("../../qt_ui/game_pictures/icons/offlineIcon.png");
+    iconsArray[0] = QIcon("../../qt_ui/resources/icons/inGameIcon.png");
+    iconsArray[1] = QIcon("../../qt_ui/resources/icons/onlineIcon.png");
+    iconsArray[2] = QIcon("../../qt_ui/resources/icons/offlineIcon.png");
 }
 
 
@@ -15,7 +15,7 @@ void FriendListGUI::display() {
 
     this->setFixedHeight(480);
     this->setFixedWidth(280);
-    this->setBackgroundFromPath("../../qt_ui/game_pictures/backgrounds/bluebg.png", 1);
+    this->setBackgroundFromPath("../../qt_ui/resources/backgrounds/bluebg.png", 1);
     setStylesheetFromPath("../../qt_ui/friendList.qss");
     QFont police("calibri");
 
@@ -32,10 +32,10 @@ void FriendListGUI::display() {
     toAdd->setFixedWidth(200);
     toAdd->setFixedHeight(40);
     toAdd->setAlignment(Qt::AlignHCenter);
-    toAdd->setStyleSheet("QLineEdit,QLineEdit:hover{border-radius : 10px;border-style :solid ;border-color: gold ;border-width: 2px;background-image: url(../../qt_ui/game_pictures/backgrounds/goldBg.png);}");
+    toAdd->setStyleSheet("QLineEdit,QLineEdit:hover{border-radius : 10px;border-style :solid ;border-color: gold ;border-width: 2px;background-image: url(../../qt_ui/resources/backgrounds/goldBg.png);}");
 
     addFriend = new QHandPointerButton("", 50, 42);
-    addFriend->setStyleSheet("QPushButton {padding: 0 8px;border-image: url(../../qt_ui/game_pictures/buttons/addFriend.png) ;font-family:verdana 14px;} QPushButton:pressed {border-image: url(../../qt_ui/game_pictures/buttons/addfriendPressed.png);}");
+    addFriend->setStyleSheet("QPushButton {padding: 0 8px;border-image: url(../../qt_ui/resources/buttons/addFriend.png) ;font-family:verdana 14px;} QPushButton:pressed {border-image: url(../../qt_ui/resources/buttons/addfriendPressed.png);}");
     QObject::connect(addFriend, SIGNAL(clicked()), this, SLOT(sendFriendRequest()));
 
     fieldsLayout->addRow(tabWidget);
@@ -147,7 +147,7 @@ void FriendListGUI::setupFriendList() {
         spectateButton->setFixedSize(20,20);
         if (status == 0) {
             spectateButton->setStyleSheet(
-                    "QPushButton{ border-image: url(../../qt_ui/game_pictures/icons/spectateIcon.png) ;} QPushButton:pressed{ border-style :solid ;border-color: gold ;border-width : 0.5px;}");
+                    "QPushButton{ border-image: url(../../qt_ui/resources/icons/spectateIcon.png) ;} QPushButton:pressed{ border-style :solid ;border-color: gold ;border-width : 0.5px;}");
             spectateButton->setFixedSize(QSize(20, 20));
 
             QSignalMapper *spectateMapper = new QSignalMapper(this);
@@ -156,14 +156,14 @@ void FriendListGUI::setupFriendList() {
             connect(spectateMapper, SIGNAL(mapped(int)), this, SLOT(spectate(int)));
         }else {
             spectateButton->setStyleSheet(
-                    "QPushButton{ border-image: url(../../qt_ui/game_pictures/icons/spectateIconUnclickable.png); }");
+                    "QPushButton{ border-image: url(../../qt_ui/resources/icons/spectateIconUnclickable.png); }");
             spectateButton->setFixedSize(QSize(20, 20));
 
         }
 
         QPushButton *deleteButton = new QHandPointerButton("");
         deleteButton->setFixedSize(20,20);
-        deleteButton->setStyleSheet("QPushButton{ border-image: url(../../qt_ui/game_pictures/icons/deleteIcon.png) ;} QPushButton:pressed{ border-style :solid ;border-color: gold ;border-width : 0.5px;}");
+        deleteButton->setStyleSheet("QPushButton{ border-image: url(../../qt_ui/resources/icons/deleteIcon.png) ;} QPushButton:pressed{ border-style :solid ;border-color: gold ;border-width : 0.5px;}");
         deleteButton->setFixedSize(QSize(20, 20));
 
         QHBoxLayout *buttonBox = new QHBoxLayout(buttonWidgets);
@@ -209,12 +209,12 @@ void FriendListGUI::setupFriendRequests() {
 
         QPushButton *acceptButton = new QHandPointerButton("");
         acceptButton->setFixedSize(20,20);
-        acceptButton->setStyleSheet("QPushButton{ border-image: url(../../qt_ui/game_pictures/icons/accept-128.png) ;} QPushButton:pressed{ border-style :solid ;border-color: gold ;border-width : 0.5px;}");
+        acceptButton->setStyleSheet("QPushButton{ border-image: url(../../qt_ui/resources/icons/accept-128.png) ;} QPushButton:pressed{ border-style :solid ;border-color: gold ;border-width : 0.5px;}");
         acceptButton->setFixedSize(QSize(20, 20));
 
         QPushButton *declineButton = new QHandPointerButton("");
         declineButton->setFixedSize(20,20);
-        declineButton->setStyleSheet("QPushButton{ border-image: url(../../qt_ui/game_pictures/icons/deleteIcon.png) ;} QPushButton:pressed{ border-style :solid ;border-color: gold ;border-width : 0.5px;}");
+        declineButton->setStyleSheet("QPushButton{ border-image: url(../../qt_ui/resources/icons/deleteIcon.png) ;} QPushButton:pressed{ border-style :solid ;border-color: gold ;border-width : 0.5px;}");
         declineButton->setFixedSize(QSize(20, 20));
 
         QHBoxLayout *buttonBox2 = new QHBoxLayout(buttonWidgets2);
@@ -264,7 +264,7 @@ void FriendListGUI::setupPendingInvitations() {
 
         QPushButton *deleteButton = new QHandPointerButton("");
         deleteButton->setFixedSize(20,20);
-        deleteButton->setStyleSheet("QPushButton{ border-image: url(../../qt_ui/game_pictures/icons/deleteIcon.png) ;} QPushButton:pressed{ border-style :solid ;border-color: gold ;border-width : 0.5px;}");
+        deleteButton->setStyleSheet("QPushButton{ border-image: url(../../qt_ui/resources/icons/deleteIcon.png) ;} QPushButton:pressed{ border-style :solid ;border-color: gold ;border-width : 0.5px;}");
         deleteButton->setFixedSize(QSize(20, 20));
 
         QHBoxLayout *buttonBox = new QHBoxLayout(buttonWidgets);

@@ -59,7 +59,7 @@ GameGUI::GameGUI(bool isSupporter, unsigned seed, GameManager *manager) : Abstra
 
 
     QVBoxLayout *Vlayout = new QVBoxLayout;
-    QMovie *adImage = new QMovie("../../qt_ui/game_pictures/ads/kenoAd.gif");
+    QMovie *adImage = new QMovie("../../qt_ui/resources/ads/kenoAd.gif");
     QLabel *imageLabel = new QLabel();
     // MAYBE: DYNAMIC CAST??
     imageLabel->setScaledContents(true);
@@ -146,7 +146,7 @@ void GameGUI::displayPlayersPlacingTowersMessage() {
 ///HEALTH BARS
 void GameGUI::setUpHealthBar() {
     baseHealthBar = new QProgressBar;
-    baseHealthBar->setStyleSheet(QString("QProgressBar {color: black;background-image: url(../../qt_ui/game_pictures/backgrounds/bluebg.png); }"));
+    baseHealthBar->setStyleSheet(QString("QProgressBar {color: black;background-image: url(../../qt_ui/resources/backgrounds/bluebg.png); }"));
     baseHealthBar->setMaximum(PLAYER_STARTING_HP);
     baseHealthBar->setMinimum(0);
     QPalette p = baseHealthBar->palette();
@@ -159,7 +159,7 @@ void GameGUI::setUpOtherPlayerHealthBar() {
     QHBoxLayout *layout = new QHBoxLayout;
     for (int i = 0; i < 3; i++) {
         QProgressBar *healthBar = new QProgressBar;
-        healthBar->setStyleSheet(QString("QProgressBar {color: black;background-image: url(../../qt_ui/game_pictures/backgrounds/bluebg.png);}"));
+        healthBar->setStyleSheet(QString("QProgressBar {color: black;background-image: url(../../qt_ui/resources/backgrounds/bluebg.png);}"));
         healthBar->setMaximum(PLAYER_STARTING_HP);
         healthBar->setMinimum(0);
         QPalette p = healthBar->palette();
@@ -221,7 +221,7 @@ void GameGUI::displayTowerShop() {
     tooltip += "\nRange : " + std::to_string(GUN_TOWER_RANGE);
 
     gunTowerB = new QCustomButton(0);
-    gunTowerB->setIcon(QIcon("../../qt_ui/game_pictures/towers/guntower.png"));
+    gunTowerB->setIcon(QIcon("../../qt_ui/resources/towers/guntower.png"));
     gunTowerB->setIconSize(size);
     gunTowerB->setFixedSize(size);
     gunTowerB->setToolTip(QString::fromStdString(tooltip));
@@ -233,7 +233,7 @@ void GameGUI::displayTowerShop() {
     tooltip += "\nRange : " + std::to_string(SNIPER_TOWER_RANGE);
 
     sniperTowerB = new QCustomButton(1);
-    sniperTowerB->setIcon(QIcon("../../qt_ui/game_pictures/towers/snipertower.png"));
+    sniperTowerB->setIcon(QIcon("../../qt_ui/resources/towers/snipertower.png"));
     sniperTowerB->setIconSize(size);
     sniperTowerB->setFixedSize(size);
     sniperTowerB->setToolTip(QString::fromStdString(tooltip));
@@ -245,7 +245,7 @@ void GameGUI::displayTowerShop() {
     tooltip += "\nRange : " + std::to_string(SHOCK_TOWER_RANGE);
 
     shockTowerB = new QCustomButton(2);
-    shockTowerB->setIcon(QIcon("../../qt_ui/game_pictures/towers/shocktower.png"));
+    shockTowerB->setIcon(QIcon("../../qt_ui/resources/towers/shocktower.png"));
     shockTowerB->setIconSize(size);
     shockTowerB->setFixedSize(size);
     shockTowerB->setToolTip(QString::fromStdString(tooltip));
@@ -259,7 +259,7 @@ void GameGUI::displayTowerShop() {
     tooltip += "\nSub Range : " + std::to_string(MISSILE_TOWER_SUBRANGE);
 
     missileTowerB = new QCustomButton(3);
-    missileTowerB->setIcon(QIcon("../../qt_ui/game_pictures/towers/missiletower.png"));
+    missileTowerB->setIcon(QIcon("../../qt_ui/resources/towers/missiletower.png"));
     missileTowerB->setIconSize(size);
     missileTowerB->setFixedSize(size);
     missileTowerB->setToolTip(QString::fromStdString(tooltip));
@@ -292,7 +292,7 @@ void GameGUI::displayDeleteAndUpgradeBox() {
 
     deleteTowerB = new QHandPointerButton;
     deleteTowerB->setEnabled(false);
-    deleteTowerB->setIcon(QIcon("../../qt_ui/game_pictures/towers/sell.png"));
+    deleteTowerB->setIcon(QIcon("../../qt_ui/resources/towers/sell.png"));
     deleteTowerB->setIconSize(size);
     deleteTowerB->setFixedSize(size);
     deleteTowerB->setToolTip(QString::fromStdString(tooltip));
@@ -317,7 +317,7 @@ void GameGUI::displayDeleteAndUpgradeBox() {
 
     upgradeTowerB = new QHandPointerButton;
     upgradeTowerB->setEnabled(false);
-    upgradeTowerB->setIcon(QIcon("../../qt_ui/game_pictures/towers/upgrade.png"));
+    upgradeTowerB->setIcon(QIcon("../../qt_ui/resources/towers/upgrade.png"));
     upgradeTowerB->setIconSize(size);
     upgradeTowerB->setFixedSize(size);
     upgradeTowerB->setToolTip(QString::fromStdString(tooltip));
@@ -403,7 +403,7 @@ void GameGUI::displaySpellBox() {
     tooltip = "A nuclear bomb kills all npcs within your side of the map.\n";
     nukeB = new QHandPointerButton;
     nukeB->setEnabled(false);
-    nukeB->setIcon(QIcon("../../qt_ui/game_pictures/spells/trumpnuclear.png"));
+    nukeB->setIcon(QIcon("../../qt_ui/resources/spells/trumpnuclear.png"));
     nukeB->setIconSize(size);
     nukeB->setFixedSize(size);
 
@@ -412,7 +412,7 @@ void GameGUI::displaySpellBox() {
     tooltip = "Frozes npcs within your side of the map,\nimmobilizing them for a short time.\n";
     freezeB = new QHandPointerButton;
     freezeB->setEnabled(false);
-    freezeB->setIcon(QIcon("../../qt_ui/game_pictures/spells/frozentrump.png"));
+    freezeB->setIcon(QIcon("../../qt_ui/resources/spells/frozentrump.png"));
     freezeB->setIconSize(size);
     freezeB->setFixedSize(size);
     freezeB->setToolTip(QString::fromStdString(tooltip));
@@ -420,7 +420,7 @@ void GameGUI::displaySpellBox() {
     tooltip = "Launch an airstrike on your opponents to\ndeal 20 damage to their base.\n";
     airStrikeB = new QHandPointerButton;
     airStrikeB->setEnabled(false);
-    airStrikeB->setIcon(QIcon("../../qt_ui/game_pictures/spells/airstrike.png"));
+    airStrikeB->setIcon(QIcon("../../qt_ui/resources/spells/airstrike.png"));
     airStrikeB->setIconSize(size);
     airStrikeB->setFixedSize(size);
     airStrikeB->setToolTip(QString::fromStdString(tooltip));
@@ -428,7 +428,7 @@ void GameGUI::displaySpellBox() {
     if (manager->getMode() == TEAM_MODE) {
         tooltip = "Give your teammate 20 health points back.\n";
         teamHealB = new QHandPointerButton;
-        teamHealB->setIcon(QIcon("../../qt_ui/game_pictures/spells/heal.png"));
+        teamHealB->setIcon(QIcon("../../qt_ui/resources/spells/heal.png"));
         teamHealB->setIconSize(size);
         teamHealB->setFixedSize(size);
         teamHealB->setToolTip(QString::fromStdString(tooltip));
@@ -452,18 +452,18 @@ void GameGUI::displaySpellBox() {
 
 void GameGUI::handleNukeSpell() {
     manager->nuclearBombSpell();
-    playSound("../../qt_ui/game_pictures/sounds/explosion.mp3");
+    playSound("../../qt_ui/resources/sounds/explosion.mp3");
 }
 
 void GameGUI::handleFreezeSpell() {
     manager->launchFreezeSpell();
-    playSound("../../qt_ui/game_pictures/sounds/freezeSpell.mp3");
+    playSound("../../qt_ui/resources/sounds/freezeSpell.mp3");
 }
 
 void GameGUI::handleAirStrike() {
     int targetQuadrant = map->computeQuadrant(map->getHighlightedPosition());
     manager->launchAirStrike(targetQuadrant);
-    playSound("../../qt_ui/game_pictures/sounds/airstrike.mp3");
+    playSound("../../qt_ui/resources/sounds/airstrike.mp3");
 }
 
 void GameGUI::handleTeamHeal() {
@@ -776,7 +776,7 @@ void GameGUI::displaySupporterActionBox() {
     QSize size = QSize(1400 / scl, 1060 / scl);
 
     adSpellB = new QHandPointerButton;
-    adSpellB->setIcon(QIcon("../../qt_ui/game_pictures/spells/launchads.png"));
+    adSpellB->setIcon(QIcon("../../qt_ui/resources/spells/launchads.png"));
     adSpellB->setIconSize(size);
     adSpellB->setFixedSize(size);
     adSpellB->setEnabled(true);
@@ -800,9 +800,9 @@ void GameGUI::adPopUp() {
     QVBoxLayout *adLayout = new QVBoxLayout;
     QLabel *adPictureLabel = new QLabel;
     if (rand() % 2 == 0) {
-        adPictureLabel->setPixmap(QPixmap("../../qt_ui/game_pictures/ads/loreal.jpg"));
+        adPictureLabel->setPixmap(QPixmap("../../qt_ui/resources/ads/loreal.jpg"));
     } else {
-        adPictureLabel->setPixmap(QPixmap("../../qt_ui/game_pictures/ads/Trump-Lego-Box.png"));
+        adPictureLabel->setPixmap(QPixmap("../../qt_ui/resources/ads/Trump-Lego-Box.png"));
     }
 
     adLayout->addWidget(adPictureLabel);

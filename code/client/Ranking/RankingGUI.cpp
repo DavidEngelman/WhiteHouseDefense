@@ -13,7 +13,7 @@ void RankingGUI::setUp() {
     this->setFixedHeight(600);
     this->setFixedWidth(1000);
 
-    setBackgroundFromPath("../../qt_ui/game_pictures/backgrounds/trump_background.png");
+    setBackgroundFromPath("../../qt_ui/resources/backgrounds/trump_background.png");
     createTable();
 }
 
@@ -28,9 +28,9 @@ void RankingGUI::createTable() {
                           "border: 10px solid grey;}"
                           "QPushButton {border: 2px solid darkbrown;"
                           "padding: 0 8px;"
-                          "border-image:url(../../qt_ui/game_pictures/buttons/mainmenu.png);"
+                          "border-image:url(../../qt_ui/resources/buttons/mainmenu.png);"
                           "font-family: verdana 14px; }"
-                          "QPushButton:pressed {border-image:url(../../qt_ui/game_pictures/buttons/connectPressed.png);}"
+                          "QPushButton:pressed {border-image:url(../../qt_ui/resources/buttons/connectPressed.png);}"
 
     );
 

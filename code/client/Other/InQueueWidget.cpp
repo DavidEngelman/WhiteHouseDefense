@@ -10,7 +10,7 @@ InQueueWidget::InQueueWidget(QWidget *parent) {
     this->setStyleSheet("border: 2px solid white;");
 
     QVBoxLayout *Vlayout = new QVBoxLayout;
-    QMovie *movie = new QMovie("../../qt_ui/game_pictures/backgrounds/particles_gold_bg.gif");
+    QMovie *movie = new QMovie("../../qt_ui/resources/backgrounds/particles_gold_bg.gif");
     this->setMovie(movie);
     movie->start();
 
@@ -18,7 +18,7 @@ InQueueWidget::InQueueWidget(QWidget *parent) {
     leaveQueuButton = new QHandPointerButton("LEAVE QUEUE");
     leaveQueuButton->setFixedSize(160, 25);
     leaveQueuButton->setStyleSheet(
-            "background-color: rgba(0, 0, 0, 0); border-image:url(../../qt_ui/game_pictures/buttons/mainmenu.png);"
+            "background-color: rgba(0, 0, 0, 0); border-image:url(../../qt_ui/resources/buttons/mainmenu.png);"
                     "color: black; border:1px solid white;");
     inQueueText = new QLabel("In Queue...");
     inQueueText->setStyleSheet("color : black; border: 0px solid white;");

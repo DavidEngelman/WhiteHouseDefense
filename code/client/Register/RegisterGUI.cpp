@@ -15,7 +15,7 @@ void RegisterGUI::display() {
     this->setFixedHeight(600);
     this->setFixedWidth(750);
 
-    setBackgroundFromPath("../../qt_ui/game_pictures/backgrounds/americanBg");
+    setBackgroundFromPath("../../qt_ui/resources/backgrounds/americanBg");
 
     QFont police("calibri");
 

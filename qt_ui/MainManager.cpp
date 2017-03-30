@@ -6,7 +6,7 @@ MainManager::MainManager(QWidget *parent) : QWidget(parent){
     this->setFixedHeight(480);
     this->setFixedWidth(852);
 
-    QPixmap bkgnd("../qt_ui/game_pictures/backgrounds/profile_bckgrd.jpeg");
+    QPixmap bkgnd("../qt_ui/resources/backgrounds/profile_bckgrd.jpeg");
     bkgnd = bkgnd.scaled(this->size(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
     QPalette palette;
     palette.setBrush(QPalette::Background, bkgnd);
@@ -63,7 +63,7 @@ MainManager::MainManager(QWidget *parent) : QWidget(parent){
     victoriesLabel->setText(*victoriesT);
     victoriesLabel->setStyleSheet("padding-left: 200;color : gold;");
 
-    QPixmap* victoryPic = new QPixmap("../qt_ui/game_pictures/pictures/trophy2.png");
+    QPixmap* victoryPic = new QPixmap("../qt_ui/resources/pictures/trophy2.png");
     QLabel *victoryPicLabel = new QLabel(this);
     victoryPicLabel->setFixedWidth(400);
     victoryPicLabel->setPixmap(*victoryPic);
@@ -87,7 +87,7 @@ MainManager::MainManager(QWidget *parent) : QWidget(parent){
     NPCKilledLabel->setStyleSheet("padding-right: 200;color : gold;");
 
 
-    QPixmap* mexicanPic = new QPixmap("../qt_ui/game_pictures/pictures/mexican.gif");
+    QPixmap* mexicanPic = new QPixmap("../qt_ui/resources/pictures/mexican.gif");
     QLabel *mexicanPicLabel = new QLabel(this);
     mexicanPicLabel->setFixedWidth(400);
     mexicanPicLabel->setPixmap(*mexicanPic);

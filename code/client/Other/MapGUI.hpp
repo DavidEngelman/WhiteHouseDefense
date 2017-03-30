@@ -34,17 +34,17 @@ private:
     Position highlighted;
 
     GameGUI *gameGUI;
-    std::vector<QImage> tower_images = {QImage("../../qt_ui/game_pictures/tiles/guntower.png"),
-                                        QImage("../../qt_ui/game_pictures/tiles/shocktower.png"),
-                                        QImage("../../qt_ui/game_pictures/tiles/snipertower.png"),
-                                        QImage("../../qt_ui/game_pictures/tiles/missiletower.png")};
+    std::vector<QImage> tower_images = {QImage("../../qt_ui/resources/tiles/guntower.png"),
+                                        QImage("../../qt_ui/resources/tiles/shocktower.png"),
+                                        QImage("../../qt_ui/resources/tiles/snipertower.png"),
+                                        QImage("../../qt_ui/resources/tiles/missiletower.png")};
 
-    std::vector<QImage> NPC_images = {QImage("../../qt_ui/game_pictures/tiles/mexican.png"),
-                                      QImage("../../qt_ui/game_pictures/tiles/muslim.png"),
-                                      QImage("../../qt_ui/game_pictures/tiles/communist.png"),
-                                      QImage("../../qt_ui/game_pictures/tiles/frozenCommunist.png"),
-                                      QImage("../../qt_ui/game_pictures/tiles/frozenMexican.png"),
-                                      QImage("../../qt_ui/game_pictures/tiles/frozenMuslim.png")};
+    std::vector<QImage> NPC_images = {QImage("../../qt_ui/resources/tiles/mexican.png"),
+                                      QImage("../../qt_ui/resources/tiles/muslim.png"),
+                                      QImage("../../qt_ui/resources/tiles/communist.png"),
+                                      QImage("../../qt_ui/resources/tiles/frozenCommunist.png"),
+                                      QImage("../../qt_ui/resources/tiles/frozenMexican.png"),
+                                      QImage("../../qt_ui/resources/tiles/frozenMuslim.png")};
 
 
 protected:

@@ -4,7 +4,7 @@ QTabWidget::pane { /* The tab widget frame */
     border-style :solid ;
     border-color: gold ;
     border-width: 2px;
-    background-image: url(../../qt_ui/game_pictures/backgrounds/goldBg.png);
+    background-image: url(../../qt_ui/resources/backgrounds/goldBg.png);
     width : 250px
 }
 
@@ -13,7 +13,7 @@ QTabWidget::pane { /* The tab widget frame */
 /* Style the tab using the tab sub-control. */
 
 QTabBar::tab {
-    background-image: url(../../qt_ui/game_pictures/backgrounds/goldBg.png);
+    background-image: url(../../qt_ui/resources/backgrounds/goldBg.png);
     border-bottom-color: gold; /* same as the pane color */
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
@@ -43,7 +43,7 @@ QLineEdit{
 }
 
 QListWidget{
-    background-image: url(../../qt_ui/game_pictures/backgrounds/goldBg.png);
+    background-image: url(../../qt_ui/resources/backgrounds/goldBg.png);
     border-bottom-right-radius : 10px;
     border-bottom-left-radius : 10px;
     border-width : 2px;
@@ -60,7 +60,7 @@ QListWidget::item{
 }
 
 QTableWidget{
-     background-image: url(../../qt_ui/game_pictures/backgrounds/goldBg.png);
+     background-image: url(../../qt_ui/resources/backgrounds/goldBg.png);
 
 }
 QTableWidget::item{
