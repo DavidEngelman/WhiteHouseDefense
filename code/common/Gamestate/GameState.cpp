@@ -21,9 +21,11 @@ std::string *GameState::serialize() {
 
     *serialized_me += "!";
 
-    for (AbstractTower *tower: towers) {
-        *serialized_me += (*tower).serialize();
+    mutex.lock();
+    for (AbstractTower * tower: towers) {
+        *serialized_me += tower->serialize();
     }
+    mutex.unlock();
 
     *serialized_me += "!";
 
@@ -87,7 +89,9 @@ bool GameState::isPlayerAlive(const int quadrant) {
 
 void GameState::addTower(AbstractTower *tower, int quadrant) {
     player_states[quadrant].spendMoney(tower->getPrice());
+    mutex.lock();
     towers.push_back(tower);
+    mutex.unlock();
 }
 
 void GameState::deleteTower(Position &position, int quadrant) {
@@ -96,8 +100,10 @@ void GameState::deleteTower(Position &position, int quadrant) {
         if ((*iter)->getPosition() == position) {
             float amountPaidBack = (*iter)->getPrice() * PERCENTAGE_RECOVERED_MONEY;
             getPlayerStates()[quadrant].earnMoney((int) amountPaidBack);
+            mutex.lock();
             towers.erase(iter);
-            break;
+            mutex.unlock();
+            return;
         }
     }
 }

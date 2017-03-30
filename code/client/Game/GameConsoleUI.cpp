@@ -84,7 +84,7 @@ void GameConsoleUI::display(GameState &gameState, int quadrant) {
 }
 
 void GameConsoleUI::displayMap(GameState &gameState, int quadrant){
-    map->display(gameState, quadrant);
+    map->display(&gameState, quadrant);
 }
 
 /*Display the player info*/

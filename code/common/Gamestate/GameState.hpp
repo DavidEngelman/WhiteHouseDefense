@@ -2,6 +2,7 @@
 #define GAMESTATE_HPP
 
 #include <vector>
+#include <mutex>
 #include "PlayerState.hpp"
 #include "../Tower/AbstractTower.hpp"
 #include "../Npc/PNJ.hpp"
@@ -22,6 +23,7 @@ private:
     std::vector<AbstractTower *> towers;
     std::vector<Wave> waves;
     bool isGameOver;
+    std::mutex mutex;
 
     std::string mode;
 
