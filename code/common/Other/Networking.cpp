@@ -8,9 +8,9 @@ int receive_data(int socket_fd, void *message, int length) {
     int bytes_to_read = length;
     char * pointer = (char*) message;
     while (bytes_to_read > 0){
-        ssize_t data_bytes_read = recv(socket_fd, pointer, (size_t) length, 0);
-        bytes_read += data_bytes_read;
-        bytes_to_read -= data_bytes_read;
+        ssize_t data_bytes_read = recv(socket_fd, pointer, (size_t) bytes_to_read, 0);
+        bytes_read += (int) data_bytes_read;
+        bytes_to_read -= (int) data_bytes_read;
         pointer += data_bytes_read;
 
         if (data_bytes_read <= -1) {
