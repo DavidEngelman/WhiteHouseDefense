@@ -30,13 +30,16 @@ InGameChatWidget::InGameChatWidget(GameManager *gameManager) : gameManager(gameM
 
     QHBoxLayout *buttonsLayout = new QHBoxLayout();
     QCustomButton *button1 = new QCustomButton(0, QString::fromStdString(MESSAGES_BUTTONS[0]));
+    button1->setFont(QFont("calibri", 7));
     button1->setFixedSize(75,30);
     button1->setStyleSheet("QPushButton{ border-image:url(../../qt_ui/resources/buttons/mainmenu.png);color :black;} QPushButton:pressed{ border-image:url(../../qt_ui/resources/buttons/connectPressed.png);color :black;}");
     QCustomButton *button2 = new QCustomButton(1, QString::fromStdString(MESSAGES_BUTTONS[1]));
     button2->setFixedSize(75,30);
+    button2->setFont(QFont("calibri", 7));
     button2->setStyleSheet("QPushButton{ border-image:url(../../qt_ui/resources/buttons/mainmenu.png);color :black;} QPushButton:pressed{ border-image:url(../../qt_ui/resources/buttons/connectPressed.png);color :black;}");
 
     QCustomButton *button3 = new QCustomButton(2, QString::fromStdString(MESSAGES_BUTTONS[2]));
+    button3->setFont(QFont("calibri", 7));
     button3->setFixedSize(75,30);
 
     button3->setStyleSheet("QPushButton{ border-image:url(../../qt_ui/resources/buttons/mainmenu.png);color :black;} QPushButton:pressed{ border-image:url(../../qt_ui/resources/buttons/connectPressed.png);color :black;}");
