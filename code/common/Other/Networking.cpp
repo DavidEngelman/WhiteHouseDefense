@@ -3,20 +3,32 @@
 
 // Receive
 
-ssize_t receive_data(int socket_fd, void* message, int length) {
-    return recv(socket_fd, message, (size_t) length, 0);
+int receive_data(int socket_fd, void *message, int length) {
+    int bytes_read = 0;
+    int bytes_to_read = length;
+    while (bytes_to_read > 0){
+        ssize_t data_bytes_read = receive_data(socket_fd, message, length);
+        bytes_read += data_bytes_read;
+        bytes_to_read -= data_bytes_read;
+        message += data_bytes_read;
+
+        if (data_bytes_read <= -1) {
+            return -1;
+        }
+    }
+
+    return bytes_read;
 }
 
 int get_data_from_socket(int socket_fd, char *buffer, int size) {
-    ssize_t data_bytes_read = receive_data(socket_fd, buffer, size);
-
-    if (data_bytes_read <= -1) {
+    int errorCode = receive_data(socket_fd, buffer, size);
+    if (errorCode <= -1) {
         perror("Receive - message data");
         std::cout << "The size of the message is " << size << std::endl;
         return -1;
     }
 
-    return (int) data_bytes_read;
+    return size;
 }
 
 int get_message_length(int socket_fd) {
