@@ -141,6 +141,9 @@ void GameEngine::createWaves() {
         if (gameState.isPlayerAlive(direction)) {
             Wave wave(numOfPNJsPerWave, direction);
             gameState.addWave(wave);
+        } else {
+            Wave wave(0, direction);
+            gameState.addWave(wave);
         }
     }
 }
