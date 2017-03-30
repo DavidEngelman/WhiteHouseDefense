@@ -1,6 +1,7 @@
 #include <iostream>
 #include "GameState.hpp"
 #include "../Other/Tools.hpp"
+#include "../../server/Game/global.h"
 
 GameState::GameState() : isGameOver(false) {}
 

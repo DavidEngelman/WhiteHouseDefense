@@ -43,7 +43,7 @@ protected:
 
 public:
     Map(unsigned seed);
-    virtual void display(GameState *gameState, int quadrant);
+    virtual void display(GameState &gameState, int quadrant);
     bool isPath(const Position &pos) const;
     bool isObstacle(const Position &pos) const;
     bool isBase(const Position &pos) const;
