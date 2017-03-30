@@ -529,11 +529,18 @@ void GameGUI::disableAirStrike() {
 }
 
 bool GameGUI::isAirStrikeActivable() {
-    return ((map->isEnemyBaseInHighlightedPosition(manager->getQuadrant())) &&
-            ((map->computeQuadrant(map->getHighlightedPosition()) != PARTNERS[manager->getQuadrant()] &&
-              manager->getMode() != TEAM_MODE)) &&
-            (manager->isAirStikeAvailable()));
+    bool activable = false;
 
+    if (manager->getMode() == TEAM_MODE) {
+        return ((map->isEnemyBaseInHighlightedPosition(manager->getQuadrant())) &&
+                (map->computeQuadrant(map->getHighlightedPosition()) != PARTNERS[manager->getQuadrant()]) &&
+                (manager->isAirStikeAvailable()));
+
+    } else {
+        return ((map->isEnemyBaseInHighlightedPosition(manager->getQuadrant())) &&
+                (manager->isAirStikeAvailable()));
+
+    }
 }
 
 void GameGUI::enableAirStrike() {
