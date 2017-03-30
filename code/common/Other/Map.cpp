@@ -133,18 +133,20 @@ void Map::display(GameState &gameState, int quadrant) {
     std::cout << std::endl;
 }
 
+bool Map::isPositionInMap(const Position &pos) {
+    return    ((0 <= pos.getX()) && (pos.getX() < SIZE)
+            && (0 <= pos.getY()) && (pos.getY() < SIZE));
+}
+
 bool Map::isPath(const Position &pos) const {
-    assert(0 <= pos.getX() < SIZE);
-    assert(0 <= pos.getY() < SIZE);
-    return matrix[pos.getX()][pos.getY()] == PATH_INT;
+    return (isPositionInMap(pos) && (matrix[pos.getX()][pos.getY()] == PATH_INT));
 }
 
 /*
  * This function return in which quadrant is the Position pos
  */
 int Map::computeQuadrant(const Position &pos) {
-    assert(0 <= pos.getX() <= SIZE);
-    assert(0 <= pos.getY() <= SIZE);
+    assert(isPositionInMap(pos));
     // The origin of the map is in the upper-left corner
     // The growing diagonal is : y = -x + size-1,
     // The decreasing diagonal is : y = x
@@ -163,8 +165,9 @@ int Map::computeQuadrant(const Position &pos) {
 }
 
 bool Map::isObstacle(const Position &pos) const {
-    assert(0 <= pos.getX() < SIZE);
-    assert(0 <= pos.getY() < SIZE);
+    if (!isPositionInMap(pos)) return false;
+
+
     int cell = matrix[pos.getX()][pos.getY()];
 
     return cell == GRASS_ROCK_INT or cell == TREE_INT or cell == PINE_INT
@@ -196,9 +199,7 @@ void Map::initMapFromFile(std::string filename) {
 }
 
 bool Map::isBase(const Position &pos) const {
-    assert(0 <= pos.getX() < SIZE);
-    assert(0 <= pos.getY() < SIZE);
-    return matrix[pos.getX()][pos.getY()] == BASE_INT;
+    return (isPositionInMap(pos)) && matrix[pos.getX()][pos.getY()] == BASE_INT;
 }
 
 

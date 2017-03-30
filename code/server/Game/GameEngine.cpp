@@ -19,6 +19,7 @@ bool GameEngine::update() {
         shootWaves();
         updateWaves();
         updatePlayerStates();
+        removeDeadPNJsFromWaves();
         currentTickNumber += 1;
     }
     return gameState.getIsGameOver() || gameState.isRoundFinished();
@@ -32,13 +33,11 @@ void GameEngine::updateWaves() {
 }
 
 void GameEngine::shootWaves() {
-    removeDeadPNJsFromWaves();
-    if (currentTickNumber % NUM_TICKS_BETWEEN_SHOOTS_IN_MS != 0) return;
+    if (currentTickNumber % NUM_TICKS_BETWEEN_SHOOTS != 0) return;
     dealDamage(gameState.getWaves());
 }
 
 void GameEngine::updatePlayerStates() {
-    std::vector<PlayerState> &playerStates = gameState.getPlayerStates();
     addMoney();
     dealDamageToBase();
 }
@@ -63,8 +62,12 @@ void GameEngine::dealDamageToBase() {
             if (pnj->isInPlayerBase()) {
                 player_state.decrease_hp(pnj->getDamage());
                 pnj->setHealthPoints(0);
-                std::cout << "Killed a PNJ in (" << pnj->getPosition().getX() << ","
-                          << pnj->getPosition().getY() << ")" << std::endl;
+                std::cout << "Killed a PNJ in ("
+                          << pnj->getPosition().getX() << ","
+                          << pnj->getPosition().getY() << ") and in transition position ("
+                          << pnj->getTransitionPosition().getX() << ","
+                          << pnj->getTransitionPosition().getY() << ")"
+                          << std::endl;
                 // On enleve pas les PNJ morts dans le vagues maintenant, parce que ça va
                 // être fait dans updateWaves au round suivant
             }

@@ -52,6 +52,8 @@ public:
     virtual Position getHighlightedPosition() const { return Position(-1, -1); }
 
     virtual bool isEnemyBaseInHighlightedPosition(int quadrant) {return false;}
+
+    static bool isPositionInMap(const Position &pos);
 };
 
 #endif

@@ -48,7 +48,7 @@ void PNJ::advance(Map &map) {
             std::cout << "No direction was good for PNJ in ("
                       << position.getX() << ","
                       << position.getY() << ")"
-                      << " and the transition position "
+                      << " and the transition position ("
                       << transitionPosition.getX() << ","
                       << transitionPosition.getY() << ")"
                       << std::endl;
