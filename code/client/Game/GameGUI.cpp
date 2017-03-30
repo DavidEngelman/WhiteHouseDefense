@@ -8,7 +8,7 @@
 
 GameGUI::GameGUI(bool isSupporter, unsigned seed, GameManager *manager) : AbstractGUI(nullptr),
                                                                           GameUI(isSupporter, seed, manager) {
-
+    this->setFixedSize(1280,720);
     QFrame* mainFrame = new QFrame(this);
     mainFrame->setStyleSheet("background-image: url(../../qt_ui/game_pictures/backgrounds/blueBg.png); color : gold;");
     mainLayout = new QHBoxLayout();
