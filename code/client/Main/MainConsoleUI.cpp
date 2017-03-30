@@ -12,9 +12,9 @@ void MainConsoleUI::display() {
     std::cin.clear();
     std::cout << "   Enter your choice: ";
     std::cin >> x;
-    while (std::cin.fail() or 0 > x or x > 7) {
-        displayMenuChoices();;
-        std::cout << "   Error, enter a integer between 1 and 7 " << std::endl;
+    while (std::cin.fail() or 0 > x or x > 6) {
+        displayMenuChoices();
+        std::cout << "   Error, enter a integer between 1 and 6 " << std::endl;
         std::cout << "   Enter your choice: ";
 
         std::cin.clear();
@@ -22,6 +22,10 @@ void MainConsoleUI::display() {
         std::cin >> x;
     }
     menuChoice = x;
+    // We don't have a settings menu, so the 6th option actually coresponds to the 7th option of the manager
+    if (menuChoice == 6){
+        menuChoice = 7;
+    }
     manager->handleUserMenuChoice();
 }
 
@@ -34,8 +38,7 @@ void MainConsoleUI::displayMenuChoices() const {
     std::cout << "   |        3. Profile                  |   " << std::endl;
     std::cout << "   |        4. Friend List              |   " << std::endl;
     std::cout << "   |        5. Leaderboard              |   " << std::endl;
-    std::cout << "   |        6. Settings                 |   " << std::endl;
-    std::cout << "   |        7. Exit                     |   " << std::endl;
+    std::cout << "   |        6. Exit                     |   " << std::endl;
     std::cout << "   |                                    |   " << std::endl;
     std::cout << "   ======================================   " << std::endl;
 }

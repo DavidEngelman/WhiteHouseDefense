@@ -7,7 +7,7 @@
 class MexicanPNJ : public PNJ {
 public:
     MexicanPNJ(int direction);
-    MexicanPNJ(Position transitionPosition, int healthPoints, int direction, int isFrozen);
+    MexicanPNJ(Position position, Position transitionPosition, int healthPoints, int direction, int isFrozen);
 };
 
 

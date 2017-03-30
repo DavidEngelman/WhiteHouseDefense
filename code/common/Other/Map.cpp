@@ -74,7 +74,7 @@ void Map::display(GameState &gameState, int quadrant) {
                     for (auto &wave : waves) {
                         std::vector<PNJ*> &pnjs = wave.getPnjs();
                         for (auto &pnj : pnjs) {
-                            Position pos = pnj->getNormalizedPosition();
+                            Position pos = pnj->getPosition();
                             if (x == pos.getX() && y == pos.getY()) {
                                 typeOfPNJ = pnj->getType();
                                 break;
@@ -133,7 +133,7 @@ void Map::display(GameState &gameState, int quadrant) {
     std::cout << std::endl;
 }
 
-bool Map::isPath(Position pos) const {
+bool Map::isPath(const Position &pos) const {
     assert(0 <= pos.getX() <= SIZE);
     assert(0 <= pos.getY() <= SIZE);
     return matrix[pos.getX()][pos.getY()] == PATH_INT;
@@ -142,7 +142,7 @@ bool Map::isPath(Position pos) const {
 /*
  * This function return in which quadrant is the Position pos
  */
-int Map::computeQuadrant(Position pos) {
+int Map::computeQuadrant(const Position &pos) {
     assert(0 <= pos.getX() <= SIZE);
     assert(0 <= pos.getY() <= SIZE);
     // The origin of the map is in the upper-left corner
@@ -162,7 +162,7 @@ int Map::computeQuadrant(Position pos) {
     }
 }
 
-bool Map::isObstacle(Position pos) const {
+bool Map::isObstacle(const Position &pos) const {
     assert(0 <= pos.getX() <= SIZE);
     assert(0 <= pos.getY() <= SIZE);
     int cell = matrix[pos.getX()][pos.getY()];
@@ -195,7 +195,7 @@ void Map::initMapFromFile(std::string filename) {
     }
 }
 
-bool Map::isBase(Position pos) const {
+bool Map::isBase(const Position &pos) const {
     assert(0 <= pos.getX() <= SIZE);
     assert(0 <= pos.getY() <= SIZE);
     return matrix[pos.getX()][pos.getY()] == BASE_INT;
