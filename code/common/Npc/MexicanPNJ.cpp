@@ -8,5 +8,5 @@ MexicanPNJ::MexicanPNJ(int direction) : PNJ(direction) {
 }
 
 // Constructor used when unserializing
-MexicanPNJ::MexicanPNJ(Position transitionPosition, int healthPoints, int direction, int isFrozen)
-        : PNJ(transitionPosition, healthPoints, direction, isFrozen) { typeOfPNJ = MEXICAN_PNJ_STR;}
+MexicanPNJ::MexicanPNJ(Position position, Position transitionPosition, int healthPoints, int direction, int isFrozen)
+        : PNJ(position, transitionPosition, healthPoints, direction, isFrozen) { typeOfPNJ = MEXICAN_PNJ_STR;}

@@ -1,8 +1,8 @@
 #include "PNJ.hpp"
 
 // Constructor used when unserializing
-PNJ::PNJ(Position transitionPosition, int healthPoints, int direction, int frozen) :
-        position(Position(-1, -1)), transitionPosition(transitionPosition), healthPoints(healthPoints),
+PNJ::PNJ(Position position, Position transitionPosition, int healthPoints, int direction, int frozen) :
+        position(position), transitionPosition(transitionPosition), healthPoints(healthPoints),
         quadrant(direction), damage(-1), value(-1), freezeTicksLeft(0),
         last_position(Position(-1000, -1000)),
         inTransition(false), frozen(frozen)  {}
@@ -89,26 +89,6 @@ bool PNJ::isDead() {
 const Position& PNJ::getPosition() const {
     return this->position;
 }
-
-/*
- * The client only receives the transition positions, which have greater precision.
- * For example, the transition X position can vary between 0 and SIZE * TILES_SIZE.
- * This is great for making a smooth path in the GUI.
- *
- * On the console, this doesn't make sense however, so we need to find the equivalent position
- * such that the X and Y coordinate are between 0 and SIZE. This method returns that position.
- *
- * Example: in the GUI, there are 600 possible X values, because there are 30 squares and within
- * those square 20 transition points. Therefore, 0 <= X < 600. On the console, however there
- * are only square (and no transition points), so 0 <= X < 30. This methods transforms a position
- * of the first format into the second format.
- *
- * Position(62, 100) -> Position(62 // 20, 100 // 20) = Position(3, 5).
- */
-const Position PNJ::getNormalizedPosition() const  {
-    return Position(transitionPosition.getX() / TILES_SIZE, transitionPosition.getY() / TILES_SIZE);
-}
-
 
 void PNJ::setPosition(Position& position) {
     this->position = position;
@@ -207,10 +187,13 @@ std::string PNJ::serialize() {
     std::string serialized_me;
 
     serialized_me +=
+            std::to_string(getPosition().getX()) + "," +
+            std::to_string(getPosition().getY()) + "," +
             std::to_string(getTransitionPosition().getX()) + "," +
             std::to_string(getTransitionPosition().getY()) + "," +
             std::to_string(getHealthPoints()) + "," +
-            getType() + "," + std::to_string(frozen) +  "|";
+            getType() + "," +
+            std::to_string(frozen) + "|";
 
     return serialized_me;
 }

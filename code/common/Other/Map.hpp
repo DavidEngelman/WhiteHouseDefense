@@ -44,10 +44,10 @@ protected:
 public:
     Map(unsigned seed);
     virtual void display(GameState& gameState, int quadrant);
-    bool isPath(Position pos) const;
-    bool isObstacle(Position pos) const;
-    bool isBase(Position pos) const;
-    static int computeQuadrant(Position pos);
+    bool isPath(const Position &pos) const;
+    bool isObstacle(const Position &pos) const;
+    bool isBase(const Position &pos) const;
+    static int computeQuadrant(const Position &pos);
 
     virtual Position getHighlightedPosition() const { return Position(-1, -1); }
 

@@ -40,7 +40,7 @@ public:
 
 	PNJ(int direction);
 
-    PNJ(Position position, int healthPoints, int direction, int frozen);
+    PNJ(Position position, Position transitionPosition, int healthPoints, int direction, int frozen);
 
     virtual ~PNJ() = 0;
 
@@ -96,7 +96,6 @@ public:
 
 	void freeze();
 
-    const Position getNormalizedPosition() const;
 };
 
 inline PNJ::~PNJ(){}

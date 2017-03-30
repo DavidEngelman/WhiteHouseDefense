@@ -351,6 +351,8 @@ void GameManager::unSerializePNJ(std::string serialized_pnj, Wave *wave) {
     std::string elem = "";
     unsigned count = 0;
 
+    int positionX = 0;
+    int positionY = 0;
     int transitionPointX = 0;
     int transitionPointY = 0;
     int health = 0;
@@ -360,21 +362,26 @@ void GameManager::unSerializePNJ(std::string serialized_pnj, Wave *wave) {
         if (c == ',') {
             switch (count) {
                 case 0:
-                    transitionPointX = std::stoi(elem);
+                    positionX = std::stoi(elem);
                     break;
                 case 1:
-                    transitionPointY = std::stoi(elem);
+                    positionY = std::stoi(elem);
                     break;
                 case 2:
-                    health = std::stoi(elem);
+                    transitionPointX = std::stoi(elem);
                     break;
                 case 3:
+                    transitionPointY = std::stoi(elem);
+                    break;
+                case 4:
+                    health = std::stoi(elem);
+                    break;
+                case 5:
                     typeOfPNJ = elem;
                     break;
                 default:
                     frozen = std::stoi(elem);
                     break;
-
             }
             elem = "";
             count++;
@@ -384,11 +391,14 @@ void GameManager::unSerializePNJ(std::string serialized_pnj, Wave *wave) {
     }
 
     PNJ *pnj;
+    Position position(positionX, positionY);
+    Position transitionPoint(transitionPointX, transitionPointY);
+
     if (typeOfPNJ == MEXICAN_PNJ_STR)
-        pnj = new MexicanPNJ(Position(transitionPointX, transitionPointY), health, wave->getQuadrant(), frozen);
+        pnj = new MexicanPNJ(position, transitionPoint, health, wave->getQuadrant(), frozen);
     else if (typeOfPNJ == MUSLIM_PNJ_STR)
-        pnj = new MuslimPNJ(Position(transitionPointX, transitionPointY), health, wave->getQuadrant(), frozen);
-    else pnj = new CommunistPNJ(Position(transitionPointX, transitionPointY), health, wave->getQuadrant(), frozen);
+        pnj = new MuslimPNJ(position, transitionPoint, health, wave->getQuadrant(), frozen);
+    else pnj = new CommunistPNJ(position, transitionPoint, health, wave->getQuadrant(), frozen);
 
     wave->addPNJ(*pnj);
 }

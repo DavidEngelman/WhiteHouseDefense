@@ -8,8 +8,8 @@ MuslimPNJ::MuslimPNJ(int direction) : PNJ(direction) {
 }
 
 // Constructor used when unserializing
-MuslimPNJ::MuslimPNJ(Position transitionPosition, int healthPoints, int direction, int isFrozen)
-        : PNJ(transitionPosition, healthPoints, direction, isFrozen) { typeOfPNJ = MUSLIM_PNJ_STR; }
+MuslimPNJ::MuslimPNJ(Position position, Position transitionPosition, int healthPoints, int direction, int isFrozen)
+        : PNJ(position, transitionPosition, healthPoints, direction, isFrozen) { typeOfPNJ = MUSLIM_PNJ_STR; }
 
 
 
