@@ -134,8 +134,8 @@ void Map::display(GameState &gameState, int quadrant) {
 }
 
 bool Map::isPath(const Position &pos) const {
-    assert(0 <= pos.getX() <= SIZE);
-    assert(0 <= pos.getY() <= SIZE);
+    assert(0 <= pos.getX() < SIZE);
+    assert(0 <= pos.getY() < SIZE);
     return matrix[pos.getX()][pos.getY()] == PATH_INT;
 }
 
@@ -163,8 +163,8 @@ int Map::computeQuadrant(const Position &pos) {
 }
 
 bool Map::isObstacle(const Position &pos) const {
-    assert(0 <= pos.getX() <= SIZE);
-    assert(0 <= pos.getY() <= SIZE);
+    assert(0 <= pos.getX() < SIZE);
+    assert(0 <= pos.getY() < SIZE);
     int cell = matrix[pos.getX()][pos.getY()];
 
     return cell == GRASS_ROCK_INT or cell == TREE_INT or cell == PINE_INT
@@ -196,8 +196,8 @@ void Map::initMapFromFile(std::string filename) {
 }
 
 bool Map::isBase(const Position &pos) const {
-    assert(0 <= pos.getX() <= SIZE);
-    assert(0 <= pos.getY() <= SIZE);
+    assert(0 <= pos.getX() < SIZE);
+    assert(0 <= pos.getY() < SIZE);
     return matrix[pos.getX()][pos.getY()] == BASE_INT;
 }
 

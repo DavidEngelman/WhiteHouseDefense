@@ -248,7 +248,7 @@ bool PNJ::isInTransition() {
 void PNJ::setTransitionPosition(Position &position) {
     transitionPosition = position;
 
-    if (position.getX() % TILES_SIZE == 0 && position.getY() % TILES_SIZE == 0) {
+    if ((position.getX() % TILES_SIZE == 0) && (position.getY() % TILES_SIZE == 0)) {
         inTransition = false;
         Position currentPos = Position(position.getX() / TILES_SIZE, position.getY() / TILES_SIZE);
         setPosition(currentPos);
