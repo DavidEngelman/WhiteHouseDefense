@@ -31,7 +31,6 @@ void GameManager::run() {
 }
 
 void GameManager::updateMap() {
-    char server_msg_buff[BUFFER_SIZE];
     while (!gameState->getIsGameOver()) {
         int errorCode = receive_message(server_socket, server_msg_buff);
         if (errorCode <= 0) {
