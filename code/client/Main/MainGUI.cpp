@@ -128,12 +128,16 @@ void MainGUI::handleGameModeChoice(int choice) {
 
 void MainGUI::showInQueue() {
     newGame->setEnabled(false);
+    settings->setEnabled(false);
+    spectator->setEnabled(false);
     queueWidget = new InQueueWidget(this);
     queueWidget->move(this->width() - 280, this->height() - 80);
 }
 
 void MainGUI::leaveQueue() {
     newGame->setEnabled(true);
+    settings->setEnabled(true);
+    spectator->setEnabled(true);
     queueWidget->hide();
     queueWidget->deleteLater();
     manager->leaveQueue();
