@@ -768,7 +768,7 @@ void GameGUI::displaySupporterActionBox() {
     QSize size = QSize(1400 / scl, 1060 / scl);
 
     adSpellB = new QHandPointerButton;
-    adSpellB->setIcon(QIcon("../../qt_ui/game_pictures/spells/adSpell.jpg"));
+    adSpellB->setIcon(QIcon("../../qt_ui/game_pictures/spells/launchads.png"));
     adSpellB->setIconSize(size);
     adSpellB->setFixedSize(size);
     adSpellB->setEnabled(true);
