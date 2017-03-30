@@ -1,3 +1,4 @@
+#include <iostream>
 #include "PNJ.hpp"
 
 // Constructor used when unserializing
@@ -5,7 +6,7 @@ PNJ::PNJ(Position position, Position transitionPosition, int healthPoints, int d
         position(position), transitionPosition(transitionPosition), healthPoints(healthPoints),
         quadrant(direction), damage(-1), value(-1), freezeTicksLeft(0),
         last_position(Position(-1000, -1000)),
-        inTransition(false), frozen(frozen)  {}
+        inTransition(false), frozen(frozen) {}
 
 PNJ::PNJ(int direction) :
         position(Position(SIZE / 2, SIZE / 2)),
@@ -26,7 +27,7 @@ void PNJ::get_random_direction() {
 void PNJ::advance(Map &map) {
     if (freezeTicksLeft > 0) { // The PNJ doesn't move if it's freezed
         freezeTicksLeft -= 1;
-        if (freezeTicksLeft == 0){
+        if (freezeTicksLeft == 0) {
             frozen = 0;
         }
         return;
@@ -43,6 +44,14 @@ void PNJ::advance(Map &map) {
             get_right_direction();
         } else if (can_go_backward(map)) {
             get_backward_direction();
+        } else {
+            std::cout << "No direction was good for PNJ in ("
+                      << position.getX() << ","
+                      << position.getY() << ")"
+                      << " and the transition position "
+                      << transitionPosition.getX() << ","
+                      << transitionPosition.getY() << ")"
+                      << std::endl;
         }
 
         setLastPosition(getPosition());
@@ -86,11 +95,11 @@ bool PNJ::isDead() {
     return getHealthPoints() <= 0;
 }
 
-const Position& PNJ::getPosition() const {
+const Position &PNJ::getPosition() const {
     return this->position;
 }
 
-void PNJ::setPosition(Position& position) {
+void PNJ::setPosition(Position &position) {
     this->position = position;
 }
 
@@ -237,7 +246,7 @@ void PNJ::freeze() {
     freezeTicksLeft = NUM_FREEZE_TICKS_FOR_PNJ;
 }
 
-const Position& PNJ::getTransitionPosition() const {
+const Position &PNJ::getTransitionPosition() const {
     return transitionPosition;
 }
 
