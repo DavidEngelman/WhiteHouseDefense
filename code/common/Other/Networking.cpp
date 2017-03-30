@@ -83,7 +83,7 @@ bool receive_message_with_timeout(int socket_fd, char *buffer, int timeout_val){
 
 void send_data(int socket_fd, char *buffer, int length){
 
-    if (send(socket_fd, buffer, sizeof(length), MSG_NOSIGNAL) == - 1) {
+    if (send(socket_fd, buffer, (size_t) length, MSG_NOSIGNAL) <= - 1) {
         perror("Send");
     }
 }
@@ -92,11 +92,11 @@ int send_message(int socket_fd, const char *message) {
     size_t length = strlen(message) + 1;
     //std::cout << "Sending message of size (including \\0) of " << length << " bytes" << std::endl;
     //std::cout << "Message: " << message << "to" << socket_fd <<  std::endl;
-    if (send(socket_fd, &length, sizeof(length), MSG_NOSIGNAL) == -1){
+    if (send(socket_fd, &length, sizeof(length), MSG_NOSIGNAL) <= -1){
         perror("Send message - Message length");
         return -1;
     } // Send the length
-    if (send(socket_fd, message, length, MSG_NOSIGNAL) == -1){
+    if (send(socket_fd, message, length, MSG_NOSIGNAL) <= -1){
         perror("Send message - Message data");
         return -1;
     }        // Send the data
@@ -112,7 +112,7 @@ int init_connection_to_server(char* server_ip_address, int port){
     }
 
     serv_socket = create_socket();
-    if (connect_to_server(serv_socket, port, he) == -1) {
+    if (connect_to_server(serv_socket, port, he) <= -1) {
         const std::string& message = "The connect to the server with port "
                                      + std::to_string(port) + " has failed:";
         perror(message.c_str());

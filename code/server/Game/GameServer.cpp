@@ -84,6 +84,7 @@ void GameServer::runWave() {
     while (!isWaveFinished && !playerConnections.empty()) {
         while (!isWaveFinished && timer.elapsedTimeInMiliseconds() < INTERVAL_BETWEEN_SENDS_IN_MS) {
             isWaveFinished = gameEngine->update();
+            usleep(2000);
         }
         sendGameStateToPlayers();
         timer.reset();
