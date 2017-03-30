@@ -43,7 +43,6 @@ void GameManager::updateMap() {
             const std::string &sender = command.getNextToken();
             gameUI->addChatMessage(message, sender);
         } else if (strcmp(server_msg_buff, AD_POPUP) == 0) {
-            std::cout << server_msg_buff << std::endl;
             gameUI->adPopUp();
         } else if (strcmp(server_msg_buff, PLACING_TOWER) == 0) {
             gameUI->handlePlaceTowerPhaseStart();
