@@ -108,6 +108,7 @@ void SettingsGUI::changePassword(){
     lineEditP->setFixedSize(300,40);
     lineEditP->setPlaceholderText("New Password");
     lineEditP->setStyleSheet("QLineEdit,QLineEdit:hover{border-radius : 10px;border-style :solid ;border-color: gold ;border-width: 2px;background-image: url(../../qt_ui/game_pictures/backgrounds/goldBg.png);}");
+    lineEditP->setEchoMode(QLineEdit::Password);
     QObject::connect(lineEditP, SIGNAL(returnPressed()), this, SLOT(applyPasswordChange()));
 
     buttonsLayout->insertWidget(1, lineEditP);
