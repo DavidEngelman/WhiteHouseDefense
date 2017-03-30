@@ -530,7 +530,8 @@ void GameGUI::disableAirStrike() {
 
 bool GameGUI::isAirStrikeActivable() {
     return ((map->isEnemyBaseInHighlightedPosition(manager->getQuadrant())) &&
-            (map->computeQuadrant(map->getHighlightedPosition()) != PARTNERS[manager->getQuadrant()]) &&
+            ((map->computeQuadrant(map->getHighlightedPosition()) != PARTNERS[manager->getQuadrant()] &&
+                    manager->getMode() != TEAM_MODE)) &&
             (manager->isAirStikeAvailable()));
 
 }
@@ -652,8 +653,8 @@ void GameGUI::setUpstatBox(GameState &gameState) {
     QString statString1 =
             "Username : " + QString::fromStdString(gameState.getPlayerStates()[index].getUsername()) + "\n"
             + "NPC killed : " + QString::number(gameState.getPlayerStates()[index].getNPCKilled()) + "\n"
-            + "Damagage dealt : " + QString::number(gameState.getPlayerStates()[index].getDamageDealt()) + "\n"
-            + "Money spend : " + QString::number(gameState.getPlayerStates()[index].getMoneySpend()) + "\n"
+            + "Damage dealt : " + QString::number(gameState.getPlayerStates()[index].getDamageDealt()) + "\n"
+            + "Money spent : " + QString::number(gameState.getPlayerStates()[index].getMoneySpend()) + "\n"
             + "Towers placed : " + QString::number(gameState.getPlayerStates()[index].getNbTowersPlaced());
 
     statViewP1 = new QLabel;
