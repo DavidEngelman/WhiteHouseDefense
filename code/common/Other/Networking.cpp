@@ -39,7 +39,7 @@ int get_message_length(int socket_fd) {
      * If the socket is closed, returns -1
      * Otherwise, returns the length of the message
      * */
-    size_t length;
+    size_t length = 0;
     ssize_t length_bytes_read = receive_data(socket_fd, &length, sizeof(length));
 
     if (length_bytes_read <= -1) {
