@@ -4,7 +4,7 @@
 
 
 void * launch_account_server(void * dummy){
-    AccountServer accountServer(5555, "database.db");
+    AccountServer accountServer(5555, "../../database/database.db");
     accountServer.run();
     return nullptr;
 }
