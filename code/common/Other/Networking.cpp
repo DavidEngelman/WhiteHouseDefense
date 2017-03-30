@@ -95,25 +95,35 @@ bool receive_message_with_timeout(int socket_fd, char *buffer, int timeout_val){
 
 // Send
 
-void send_data(int socket_fd, char *buffer, int length){
+int send_data(int socket_fd, char *buffer, int length){
+    int bytes_sent = 0;
+    int bytes_to_send = length;
+    while (bytes_to_send > 0){
+        ssize_t data_bytes_sent = send(socket_fd, buffer, (size_t) bytes_to_send, 0);
+        bytes_sent += (int) data_bytes_sent;
+        bytes_to_send -= (int) data_bytes_sent;
+        buffer += data_bytes_sent;
 
-    if (send(socket_fd, buffer, (size_t) length, MSG_NOSIGNAL) <= - 1) {
-        perror("Send");
+        if (data_bytes_sent <= -1) {
+            return -1;
+        }
     }
+
+    return bytes_sent;
 }
 
 int send_message(int socket_fd, const char *message) {
     size_t length = strlen(message) + 1;
     //std::cout << "Sending message of size (including \\0) of " << length << " bytes" << std::endl;
     //std::cout << "Message: " << message << "to" << socket_fd <<  std::endl;
-    if (send(socket_fd, &length, sizeof(length), MSG_NOSIGNAL) <= -1){
+    if (send_data(socket_fd, (char *) &length, sizeof(length)) <= -1){
         perror("Send message - Message length");
         return -1;
     } // Send the length
-    if (send(socket_fd, message, length, MSG_NOSIGNAL) <= -1){
+    if (send_data(socket_fd, (char *) message, (int) length) <= -1){
         perror("Send message - Message data");
         return -1;
-    }        // Send the data
+    } // Send the data
     return (int) length;
 }
 
