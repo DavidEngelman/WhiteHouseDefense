@@ -28,9 +28,9 @@ void MapGUI::paintEvent(QPaintEvent *) {
     QPainter painter(this);
     QImage* image;
 
-    std::vector<AbstractTower *> &towers = gameState->getTowers();
-    std::vector<Wave> &waves = gameState->getWaves();
-    std::string &mode = gameState->getMode();
+    std::vector<AbstractTower *> &towers = gameState.getTowers();
+    std::vector<Wave> &waves = gameState.getWaves();
+    std::string &mode = gameState.getMode();
 
     Position pos;
     std::string typeOfPNJ;

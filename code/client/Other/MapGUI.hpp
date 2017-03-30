@@ -29,7 +29,7 @@ class MapGUI : public QWidget, public Map {
 
 private:
 
-    GameState & gameState;
+    GameState gameState;
     int quadrant;
     Position highlighted;
 
