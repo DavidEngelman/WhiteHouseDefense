@@ -10,7 +10,9 @@ GameGUI::GameGUI(bool isSupporter, unsigned seed, GameManager *manager) : Abstra
                                                                           GameUI(isSupporter, seed, manager) {
     this->setFixedSize(1280,980);
     QFrame* mainFrame = new QFrame(this);
-    mainFrame->setStyleSheet("background-image: url(../../qt_ui/game_pictures/backgrounds/blueBg.png); color : gold;");
+    mainFrame->setFrameStyle(QFrame::StyledPanel);
+    mainFrame->setStyleSheet("QFrame{background-image: url(../../qt_ui/game_pictures/backgrounds/bluebg.png);border-style :solid ;border-color: gold ;border-width : 1px;border-radius:5px; color : gold; }");
+    mainFrame->setFixedSize(1280,980);
     mainLayout = new QHBoxLayout();
     leftPanel = new QVBoxLayout;
 
@@ -30,7 +32,7 @@ GameGUI::GameGUI(bool isSupporter, unsigned seed, GameManager *manager) : Abstra
     /* Player Info */
 
     QString playerStatsBoxTitle = QString::fromStdString("Stats");
-    playerStatsBox = new QGroupBox(playerStatsBoxTitle);
+    playerStatsBox = new QGroupBox();
 
 
     setUpStatsBox();
@@ -38,9 +40,8 @@ GameGUI::GameGUI(bool isSupporter, unsigned seed, GameManager *manager) : Abstra
 
     /* In Game Chat UI */
     QString chatBoxTitle = QString::fromStdString("Chat");
-    chatBox = new QGroupBox(chatBoxTitle);
+    chatBox = new QGroupBox();
     inGameChatWidget = new InGameChatWidget(manager);
-    inGameChatWidget->setStyleSheet("border-image:url(../../qt_ui/game_pictures/backgrounds/goldBg.png);color : black;");
 
     QHBoxLayout *chatLayout = new QHBoxLayout;
     chatLayout->addWidget(inGameChatWidget);
@@ -80,7 +81,6 @@ GameGUI::GameGUI(bool isSupporter, unsigned seed, GameManager *manager) : Abstra
 
     mainFrame->setLayout(mainLayout);
     //playerInfo->setLayout(playerInfoLayout);
-
     this->show();
 //    this->showFullScreen();
 
