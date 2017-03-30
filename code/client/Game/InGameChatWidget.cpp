@@ -77,6 +77,7 @@ void InGameChatWidget::addChatMessage(const std::string &message, const std::str
     else if (sender.find("[SERVER]") != std::string::npos) item->setForeground(Qt::darkRed);
     else if (sender.find("[TEAM]") != std::string::npos) item->setForeground(Qt::darkMagenta);
     else if (sender.find("[PRIVATE]") != std::string::npos) item->setForeground(Qt::darkBlue);
+    else if (sender.find("[SUPPORTER]") != std::string::npos) item->setForeground(Qt::darkYellow);
 
     if (message == MESSAGES_CONTENT[1]) {
         playSound("../../qt_ui/resources/sounds/america_great_again.mp3");
