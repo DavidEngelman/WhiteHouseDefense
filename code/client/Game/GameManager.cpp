@@ -167,7 +167,7 @@ void GameManager::unSerializeGameState(char *seriarlizedGamestate) {
                 case 4: // Towers
                     unSerializeTowers(part);
                     break;
-                case 5: // Waves
+                default: // Waves
                     unSerializeWaves(part);
                     break;
             }
