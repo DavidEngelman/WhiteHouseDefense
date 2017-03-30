@@ -12,6 +12,7 @@ int get_data_from_socket(int socket_fd, char *buffer, int size) {
 
     if (data_bytes_read <= -1) {
         perror("Receive - message data");
+        std::cout << "The size of the message is " << size << std::endl;
         return -1;
     }
 
