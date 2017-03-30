@@ -29,7 +29,7 @@ class MapGUI : public QWidget, public Map {
 
 private:
 
-    GameState gameState;
+    GameState * gameState;
     int quadrant;
     Position highlighted;
 
@@ -57,7 +57,7 @@ public:
 
     void display();
 
-    void display(GameState &gameState, int quadrant) override;
+    void display(GameState *gameState, int quadrant) override;
 
     void mousePressEvent(QMouseEvent *event) override;
 

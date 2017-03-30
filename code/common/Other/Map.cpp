@@ -17,10 +17,10 @@ Map::Map(unsigned seed) {
 /*
  * Display the map on the screen using the gameState for drawing the towers and the pnjs
  */
-void Map::display(GameState &gameState, int quadrant) {
-    std::vector<AbstractTower *> &towers = gameState.getTowers();
-    std::vector<Wave> &waves = gameState.getWaves();
-    std::string &mode = gameState.getMode();
+void Map::display(GameState *gameState, int quadrant) {
+    std::vector<AbstractTower *> &towers = gameState->getTowers();
+    std::vector<Wave> &waves = gameState->getWaves();
+    std::string &mode = gameState->getMode();
 
     system("clear");
     std::cout << "\t";
