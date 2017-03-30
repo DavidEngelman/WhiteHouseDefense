@@ -5,18 +5,21 @@
 
 InGameChatWidget::InGameChatWidget(GameManager *gameManager) : gameManager(gameManager) {
     QFont police("calibri");
-
     QVBoxLayout *mainLayout = new QVBoxLayout();
 
     /* Message list view */
     messagesListWidget = new QListWidget();
+    messagesListWidget->setStyleSheet("border-image:url(../../qt_ui/game_pictures/backgrounds/goldBg.png);color : black;border-radius : 5px;;border-width : 2px;border-style :solid ;border-color: gold ;");
 
 
     /* Send message form */
     QHBoxLayout *fieldsLayout = new QHBoxLayout();
 
     messageLineEdit = new QLineEdit;
-    sendButton = new QHandPointerButton("SEND", 150, 25);
+    messageLineEdit->setStyleSheet("QLineEdit,QLineEdit:hover{border-radius : 10px;border-style :solid ;border-color: gold ;border-width: 2px;background-image: url(../../qt_ui/game_pictures/backgrounds/goldBg.png);color :black;}");
+    messageLineEdit->setFixedSize(200,30);
+    sendButton = new QHandPointerButton("SEND", 50, 25);
+    sendButton->setStyleSheet("QPushButton{ border-image:url(../../qt_ui/game_pictures/buttons/mainmenu.png);color :black;} QPushButton:pressed{ border-image:url(../../qt_ui/game_pictures/buttons/connectPressed.png);color :black;}");
 
     QObject::connect(messageLineEdit, SIGNAL(returnPressed()), sendButton, SIGNAL(clicked()));
     QObject::connect(sendButton, SIGNAL(clicked()), this, SLOT(sendMessage()));
@@ -26,8 +29,16 @@ InGameChatWidget::InGameChatWidget(GameManager *gameManager) : gameManager(gameM
 
     QHBoxLayout *buttonsLayout = new QHBoxLayout();
     QCustomButton *button1 = new QCustomButton(0, QString::fromStdString(MESSAGES_BUTTONS[0]));
+    button1->setFixedSize(75,30);
+    button1->setStyleSheet("QPushButton{ border-image:url(../../qt_ui/game_pictures/buttons/mainmenu.png);color :black;} QPushButton:pressed{ border-image:url(../../qt_ui/game_pictures/buttons/connectPressed.png);color :black;}");
     QCustomButton *button2 = new QCustomButton(1, QString::fromStdString(MESSAGES_BUTTONS[1]));
+    button2->setFixedSize(75,30);
+    button2->setStyleSheet("QPushButton{ border-image:url(../../qt_ui/game_pictures/buttons/mainmenu.png);color :black;} QPushButton:pressed{ border-image:url(../../qt_ui/game_pictures/buttons/connectPressed.png);color :black;}");
+
     QCustomButton *button3 = new QCustomButton(2, QString::fromStdString(MESSAGES_BUTTONS[2]));
+    button3->setFixedSize(75,30);
+
+    button3->setStyleSheet("QPushButton{ border-image:url(../../qt_ui/game_pictures/buttons/mainmenu.png);color :black;} QPushButton:pressed{ border-image:url(../../qt_ui/game_pictures/buttons/connectPressed.png);color :black;}");
 
     connect(button1, SIGNAL(clicked(int)), this, SLOT(handleMessageChoice(int)));
     connect(button2, SIGNAL(clicked(int)), this, SLOT(handleMessageChoice(int)));
